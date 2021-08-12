@@ -18,7 +18,7 @@ export class AdditionsService {
     return [...this.navigationItems]
   }
 
-  public setNanigationItems(items: NavigationCardModel[]) {
+  public setNavigationStatus(items: NavigationCardModel[]) {
     this.navigationItems = items
   }
   public findItenIndex(key: string, value: any): number {
@@ -26,6 +26,8 @@ export class AdditionsService {
   }
 
   public setNanigationStatus(item : NavigationCardModel, key : string) {
+
+    console.log(item)
 
     const indexToUnActive = this.findItenIndex('isActive', true)
     const indexToActive = this.findItenIndex(key, item[key])

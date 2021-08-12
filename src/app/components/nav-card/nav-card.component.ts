@@ -9,17 +9,19 @@ import { NavigationCardModel } from 'src/app/models/nav-card-model';
 })
 export class NavCardComponent implements OnInit {
 
-  @Input() public item: NavigationCardModel = {}
+  @Input() public item: NavigationCardModel = {  }
 
   constructor(
-    private additionsService : AdditionsService
+    private additionsService: AdditionsService
   ) { }
 
   ngOnInit(): void {
   }
 
-  public onCardClick() : void {
-    this.additionsService.emitItem(this.item);
+  public onCardClick(): void {
+    if (!this.item.isActive) {
+      this.additionsService.emitItem(this.item);
+    }
   }
 
 }
