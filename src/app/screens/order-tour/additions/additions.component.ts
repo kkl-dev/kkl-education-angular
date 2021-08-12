@@ -1,3 +1,4 @@
+import { AdditionsService } from './../../../services/additions.service';
 import { Component, OnInit } from '@angular/core';
 import { NavigationCardModel } from 'src/app/models/nav-card-model';
 
@@ -8,7 +9,7 @@ import { NavigationCardModel } from 'src/app/models/nav-card-model';
 })
 export class AdditionsComponent implements OnInit {
 
-  public navigationGrid : NavigationCardModel[]  = [
+  public navigationItems : NavigationCardModel[]  = [
     {
       title : 'כלכלה',
       active : false,
@@ -51,13 +52,24 @@ export class AdditionsComponent implements OnInit {
     },
   ]
 
-  constructor() { }
+  constructor(
+    private additionsService : AdditionsService
+  ) { }
 
   ngOnInit(): void {
+    this.additionsService.setNanigationItems(this.navigationItems)
   }
 
+  private subscribeToSubject() {
+    this.additionsService.navButton$.subscribe(
+      (item : NavigationCardModel) => {
+        
+      })
+  }
+
+
   private findItemIndex = (itemToFind : NavigationCardModel, key : string) => {
-    return this.navigationGrid.find((item)=> itemToFind[key] === item[key])
+    return this.navigationItems.find((item)=> itemToFind[key] === item[key])
   }
 
   public onCardClick = (itemToUpdate : NavigationCardModel) => {

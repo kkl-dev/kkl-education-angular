@@ -8,23 +8,29 @@ import { NavigationCardModel } from '../models/nav-card-model';
 export class AdditionsService {
 
 
-
+  private navigationItems: NavigationCardModel[] = []
   private navigationButtonSubject = new Subject<NavigationCardModel>()
   public navButton$: Observable<NavigationCardModel> = this.navigationButtonSubject.asObservable();
 
   constructor() { }
 
-  public findItenIndex(key: string, value: any, items: any[]): number {
-    return items.findIndex((item) => item[key] === value)
+  public getNavigationItems(): NavigationCardModel[] {
+    return [...this.navigationItems]
   }
 
-  public setItems(items: NavigationCardModel[], indexActive: number, indexUnActive: number): NavigationCardModel[] {
-  items[indexActive].active = true
-  items[indexUnActive].active = false
-  return items
-}
+  public setNanigationItems(items: NavigationCardModel[]) {
+    this.navigationItems = items
+  }
+  public findItenIndex(key: string, value: any): number {
+    return this.navigationItems.findIndex((item) => item[key] === value)
+  }
 
-public emitItem(item : NavigationCardModel) {
-  this.navigationButtonSubject.next(item)
-}
+  public setNanigationStatus(indexActive: number, indexUnActive: number) {
+    this.navigationItems[indexActive].active = true
+    this.navigationItems[indexUnActive].active = false
+  }
+
+  public emitItem(item: NavigationCardModel) {
+    this.navigationButtonSubject.next(item)
+  }
 }
