@@ -25,9 +25,13 @@ export class AdditionsService {
     return this.navigationItems.findIndex((item) => item[key] === value)
   }
 
-  public setNanigationStatus(indexActive: number, indexUnActive: number) {
-    this.navigationItems[indexActive].isActive = true
-    this.navigationItems[indexUnActive].isActive = false
+  public setNanigationStatus(item : NavigationCardModel, key : string) {
+
+    const indexToUnActive = this.findItenIndex('isActive', true)
+    const indexToActive = this.findItenIndex(key, item[key])
+
+    this.navigationItems[indexToActive].isActive = true
+    this.navigationItems[indexToUnActive].isActive = false
   }
 
   public emitItem(item: NavigationCardModel) {

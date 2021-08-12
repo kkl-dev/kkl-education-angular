@@ -9,51 +9,51 @@ import { NavigationCardModel } from 'src/app/models/nav-card-model';
 })
 export class AdditionsComponent implements OnInit {
 
-  public navigationItems : NavigationCardModel[]  = [
+  public navigationItems: NavigationCardModel[] = [
     {
-      title : 'כלכלה',
-      isActive : false,
-      svgUrl : 'football'
+      title: 'כלכלה',
+      isActive: false,
+      svgUrl: 'football'
     },
     {
-      title : 'אתרים',
-      isActive : false,
-      svgUrl : ''
+      title: 'אתרים',
+      isActive: false,
+      svgUrl: ''
     },
     {
-      title : 'אבטחה',
-      isActive : false,
-      svgUrl : ''
+      title: 'אבטחה',
+      isActive: false,
+      svgUrl: ''
     },
     {
-      title : 'היסעים',
-      isActive : true,
-      svgUrl : 'bus'
+      title: 'היסעים',
+      isActive: true,
+      svgUrl: 'bus'
     },
     {
-      title : 'בתי כנסת',
-      isActive : false,
-      svgUrl : 'judaism'
+      title: 'בתי כנסת',
+      isActive: false,
+      svgUrl: 'judaism'
     },
     {
-      title : 'אירוח',
-      isActive : false,
-      svgUrl : 'climbing'
+      title: 'אירוח',
+      isActive: false,
+      svgUrl: 'climbing'
     },
     {
-      title : 'הפעלה מוסיקלית',
-      isActive : false,
-      svgUrl : ''
+      title: 'הפעלה מוסיקלית',
+      isActive: false,
+      svgUrl: ''
     },
     {
-      title : 'אוהלי אירוח',
-      isActive : false,
-      svgUrl : ''
+      title: 'אוהלי אירוח',
+      isActive: false,
+      svgUrl: ''
     },
   ]
 
   constructor(
-    private additionsService : AdditionsService
+    private additionsService: AdditionsService
   ) { }
 
   ngOnInit(): void {
@@ -62,15 +62,15 @@ export class AdditionsComponent implements OnInit {
 
   private subscribeToSubject() {
     this.additionsService.navButton$.subscribe(
-      (item : NavigationCardModel) => {
-        const itemToActiveIndex =  this.additionsService.findItenIndex("title", item.title)
-        const itemToUnActiveIndex =  this.additionsService.findItenIndex("isActive",true)
+      (item: NavigationCardModel) => {
+
+        this.additionsService.setNanigationStatus(item, 'title')
       })
   }
 
 
-  private findItemIndex = (itemToFind : NavigationCardModel, key : string) => {
-    return this.navigationItems.find((item)=> itemToFind[key] === item[key])
+  private findItemIndex = (itemToFind: NavigationCardModel, key: string) => {
+    return this.navigationItems.find((item) => itemToFind[key] === item[key])
   }
 
 
