@@ -3,17 +3,18 @@
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">מועד ושם הטיול</h3>
     </div>
-    <app-form-container
+    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
       [questions]="TimeAndNameFormInputs"
-      [showButton]="false"
+      [showButton]="true"
+      #tourDetailsFormCustomQuestionRef
     ></app-form-container>
   </div>
   <div class="assamble-tour__form">
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">לקוח</h3>
     </div>
-    <app-form-container
-      [showButton]="false"
+    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
+      [showButton]="true"
       [questions]="customerFormInputs"
     ></app-form-container>
   </div>
@@ -21,27 +22,19 @@
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">הרכב הקבוצה</h3>
     </div>
-    <!-- <app-form-container
-      [showButton]="false"
+    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
+      [showButton]="true"
       [questions]="groupAssambleFormInputs"
-      [overrides]="{
-        radios: 
-      }"
     >
-    <template ref="" >
-      <app-counter></app-counter>
-    </template>
-  </app-form-container> -->
+      <!-- <app-wizard></app-wizard>  -->
+  </app-form-container>
 
-  <!-- <ng-container #age let-form-optin> 
-    <app-counter/>
-  </ng-container> -->
   </div>
   <div class="assamble-tour__form">
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">פרטי הטיול</h3>
     </div>
-    <app-form-container
+    <app-form-container [customQuestionTemplates]='tourDetailsFormCustomQuestion' 
       [questions]="tourDetailsFormInputs"
     ></app-form-container>
   </div>
