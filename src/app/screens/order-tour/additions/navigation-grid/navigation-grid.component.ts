@@ -1,12 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NavigationCardModel } from 'src/app/models/nav-card-model';
 
-export interface NavigationCardModel {
-  svgUrl? : string,
-  title? : string,
-  onNext? : Function,
-  onPrev? : Function
-  active ?  : boolean
-}
 
 @Component({
   selector: 'app-navigation-grid',
@@ -21,8 +15,6 @@ export class NavigationGridComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
-    console.log(this.navigationGrid)
   }
 
 }
