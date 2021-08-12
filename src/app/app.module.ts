@@ -49,6 +49,7 @@ import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
 import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
 import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
+import { NavCardComponent } from './components/nav-card/nav-card.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { NavigationGridComponent } from './screens/order-tour/additions/navigati
     WorkingStepsComponent,
     Main2Component,
     AdditionsComponent,
-    NavigationGridComponent
+    NavigationGridComponent,
+    NavCardComponent
   ], 
   imports: [
     BrowserModule,

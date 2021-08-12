@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationCardModel } from './navigation-grid/navigation-grid.component';
 
 @Component({
   selector: 'app-additions',
