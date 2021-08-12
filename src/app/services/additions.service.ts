@@ -26,8 +26,8 @@ export class AdditionsService {
   }
 
   public setNanigationStatus(indexActive: number, indexUnActive: number) {
-    this.navigationItems[indexActive].active = true
-    this.navigationItems[indexUnActive].active = false
+    this.navigationItems[indexActive].isActive = true
+    this.navigationItems[indexUnActive].isActive = false
   }
 
   public emitItem(item: NavigationCardModel) {

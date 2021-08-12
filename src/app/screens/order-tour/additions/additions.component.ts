@@ -12,42 +12,42 @@ export class AdditionsComponent implements OnInit {
   public navigationItems : NavigationCardModel[]  = [
     {
       title : 'כלכלה',
-      active : false,
+      isActive : false,
       svgUrl : 'football'
     },
     {
       title : 'אתרים',
-      active : false,
+      isActive : false,
       svgUrl : ''
     },
     {
       title : 'אבטחה',
-      active : false,
+      isActive : false,
       svgUrl : ''
     },
     {
       title : 'היסעים',
-      active : true,
+      isActive : true,
       svgUrl : 'bus'
     },
     {
       title : 'בתי כנסת',
-      active : false,
+      isActive : false,
       svgUrl : 'judaism'
     },
     {
       title : 'אירוח',
-      active : false,
+      isActive : false,
       svgUrl : 'climbing'
     },
     {
       title : 'הפעלה מוסיקלית',
-      active : false,
+      isActive : false,
       svgUrl : ''
     },
     {
       title : 'אוהלי אירוח',
-      active : false,
+      isActive : false,
       svgUrl : ''
     },
   ]
@@ -63,17 +63,14 @@ export class AdditionsComponent implements OnInit {
   private subscribeToSubject() {
     this.additionsService.navButton$.subscribe(
       (item : NavigationCardModel) => {
-        
+        const itemToActiveIndex =  this.additionsService.findItenIndex("title", item.title)
+        const itemToUnActiveIndex =  this.additionsService.findItenIndex("isActive",true)
       })
   }
 
 
   private findItemIndex = (itemToFind : NavigationCardModel, key : string) => {
     return this.navigationItems.find((item)=> itemToFind[key] === item[key])
-  }
-
-  public onCardClick = (itemToUpdate : NavigationCardModel) => {
-    itemToUpdate.active = !itemToUpdate.active
   }
 
 
