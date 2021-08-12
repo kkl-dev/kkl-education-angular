@@ -40,13 +40,13 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
-import { Main2Component } from './components/main2/main2.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
+import { NumberInputComponent } from './components/number-input/number-input.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +79,8 @@ import { EducationComponent } from './screens/search/education/education.compone
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    Main2Component
+    
+    NumberInputComponent
   ], 
   imports: [
     BrowserModule,

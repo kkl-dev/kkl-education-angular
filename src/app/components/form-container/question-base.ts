@@ -1,5 +1,5 @@
 export class QuestionBase<T> {
-  value: T | undefined;
+  value: T | undefined | number;
   key: string;
   label: string;
   required: boolean;
@@ -9,14 +9,14 @@ export class QuestionBase<T> {
   component:string;
   innerLabel:string;
   type: string;
-  radioValue: string;
+  templateName: string;
   options: { key: string; value: string }[];
 
   constructor(
     options: {
       value?: T;
       key?: string;
-      radioValue?: string;
+      templateName?: string;
       label?: string;
       required?: boolean;
       order?: number;
@@ -30,7 +30,7 @@ export class QuestionBase<T> {
   ) {
     this.value = options.value;
     this.key = options.key || '';
-    this.radioValue = options.radioValue || '';
+    this.templateName = options.templateName || '';
     this.label = options.label || '';
     this.required = !!options.required;
     this.columns = options.columns || 'hide';

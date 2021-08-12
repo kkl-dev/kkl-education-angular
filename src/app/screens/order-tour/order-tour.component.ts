@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderTourComponent implements OnInit {
   public activePage:number = 0;
-
+  public nextPage:string ='education/search'
+  public prevPage:string ='education/results'
   public pages:{
     svgSrc: string;
     text: string;
