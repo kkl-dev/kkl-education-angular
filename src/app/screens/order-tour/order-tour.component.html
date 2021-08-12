@@ -13,8 +13,8 @@
     </div>
     <app-bottom-navigation
     [currentPage]= 0
-    previousUrl="'/education/my-tours'"
-    nextUrl="'/education/search'"
+    previousUrl='prevPage'
+    nextUrl='nextPage'
     [lastPage]='pages.length'
     (changePage)='changeActivePageBottomNavigation($event)'
     ></app-bottom-navigation>

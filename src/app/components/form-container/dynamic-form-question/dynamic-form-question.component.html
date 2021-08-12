@@ -43,22 +43,31 @@
       />
     </div>
 
-    <div *ngSwitchCase="'radio'">
-      <div *ngFor="let opt of question.options">
+    <div *ngSwitchCase="'date'">
+      <p>{{ question.innerLabel }}</p>
       <input
-        class=""
-        type="radio"
-        [id]="question.key"
+        type="date"
+        class="form-group__input number-input"
         [formControlName]="question.key"
-        [value]="opt.value"
-        [name]="question.key "
+        [id]="question.key"
       />
-      <label for="{{ question.key }}">{{ opt.value }}</label>
     </div>
+
+    <div class="radio-input" *ngSwitchCase="'radio'">
+      <div *ngFor="let opt of question.options">
+        <input
+          type="radio"
+          [id]="question.key"
+          [formControlName]="question.key"
+          [value]="opt.value"
+          [name]="question.key"
+        />
+        <label for="{{ question.key }}">{{ opt.value }}</label>
+      </div>
     </div>
 
     <textarea
-      *ngSwitchCase="'textarea'" 
+      *ngSwitchCase="'textarea'"
       cols="12"
       rows="4"
       class="form-group__input"

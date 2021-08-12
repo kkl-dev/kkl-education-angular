@@ -40,7 +40,6 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
-import { Main2Component } from './components/main2/main2.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -50,6 +49,7 @@ import { EducationComponent } from './screens/search/education/education.compone
 import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
 import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
 import { NavCardComponent } from './components/nav-card/nav-card.component';
+import { NumberInputComponent } from './components/number-input/number-input.component';
 
 @NgModule({
   declarations: [
@@ -82,11 +82,11 @@ import { NavCardComponent } from './components/nav-card/nav-card.component';
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    Main2Component,
     AdditionsComponent,
     NavigationGridComponent,
-    NavCardComponent
-  ], 
+    NavCardComponent,
+    NumberInputComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -18,15 +18,13 @@ export class FormContainerComponent implements OnInit {
   @Input() questions: QuestionBase<string>[] | null = [];
   @Input() showButton:boolean=true
   form!: FormGroup; 
-  payLoad = '';
+  @Input() customQuestionTemplates={}
+  payLoad:string = '';
 
   constructor(private qcs: QuestionControlService) {
-    console.log(this.questions);
-    
   }
 
   ngOnInit() {
-    // console.log(this.questions);
     this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
   }
 

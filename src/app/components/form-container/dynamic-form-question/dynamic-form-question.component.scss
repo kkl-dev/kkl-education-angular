@@ -18,8 +18,16 @@
     border-radius: 5px;
     box-sizing: border-box;
   }
+
+
 }
 
+
+.radio-input{
+  display: flex !important;
+  justify-content: space-around;
+
+}
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
