@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+export interface NavigationCardModel {
+  svgUrl? : string,
+  title? : string,
+  onNext? : Function,
+  onPrev? : Function
+}
 
 @Component({
   selector: 'app-navigation-grid',
@@ -6,6 +13,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation-grid.component.scss']
 })
 export class NavigationGridComponent implements OnInit {
+
+  @Input() public title : string = ""
+  @Input() public navigationGrid : NavigationCardModel[] = []
 
   constructor() { }
 

@@ -1,1 +1,21 @@
-<p>navigation-grid works!</p>
+<div class="nav-container">
+  <mat-grid-list cols="1" rowHeight="6vh">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <div class="nav-tab-title-container">
+        <span class="nav-tab-title">
+          {{ title }}
+        </span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="8">
+      <mat-grid-list cols="4" rowHeight="20vh">
+        <div>
+          <mat-grid-tile *ngFor="let item of navigationGrid">
+            <app-navigation-tab [item]="item"></app-navigation-tab>
+          </mat-grid-tile>
+        </div>
+      </mat-grid-list>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
