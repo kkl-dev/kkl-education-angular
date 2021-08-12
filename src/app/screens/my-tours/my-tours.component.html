@@ -1,0 +1,22 @@
+<div class="my-tours">
+  <h1 class="my-tours__headline">הטיולים שלי</h1>
+  <div class="my-tours__table-area">
+    <div class="my-tours__table-area-controllers">
+      <div class="my-tours__table-area-controllers-select">
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedOption">
+            <mat-option
+              *ngFor="let option of tableSelectOptions"
+              value="{{ option.value }}"
+              >{{ option.text }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button class="my-tours__table-area-controllers-button">
+        <span class="plus-sign"></span> הוספת משתמש חדש
+      </button>
+    </div>
+    <app-tours-table></app-tours-table>
+  </div>
+</div>

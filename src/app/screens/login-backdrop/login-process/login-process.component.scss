@@ -1,0 +1,22 @@
+@import "../../../../styles.scss";
+
+.login-form {
+  position: absolute;
+  top: 32%;
+  right: 22.5%;
+  transform: translateX(50%);
+
+  &__heading {
+    text-align: center;
+    &-main {
+      font-size: 38px;
+      font-weight: bold;
+      padding-bottom: 10px;
+      letter-spacing: 0 !important;
+    }
+    &-secondery {
+      font-size: 20px;
+      font-weight: 300;
+    }
+  }
+}

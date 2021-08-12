@@ -1,0 +1,40 @@
+.form-group {
+  width: 100%;
+
+  flex: 1 1 100%;
+  height: fit-content !important;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+  &__label {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  &__input {
+    width: 100%;
+    border: 1px solid #c0c0c0;
+    min-height: 30px;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+}
+
+.number-input {
+}
+/* csslint ignore:start */
+input[type="number"]::-webkit-inner-spin-button::before {
+  content: "\e823";
+  color: rgba(0, 0, 0, 0.54);
+}
+
+input[type="number"]::-webkit-outer-spin-button::after {
+  content: "1351561561";
+  color: rgba(0, 0, 0, 1);
+}
+/* csslint ignore:end */

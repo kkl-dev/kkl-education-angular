@@ -1,0 +1,24 @@
+<mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport 
+
+        [attr.role]=" 'navigation'"
+        [mode]="'over'"
+        [opened]="false" 
+        position="end"
+        [ngClass]="{
+            'sidenav-education': prefix === 'education',
+            'sidenav-forestry': prefix === 'forestry'
+          }"
+        >
+     <app-user-info></app-user-info>
+     <app-links class="app-link"></app-links>
+    </mat-sidenav>
+    <mat-sidenav-content>
+   <app-navbar (menuToggle)="drawer.toggle()"></app-navbar>
+   <app-wizard *ngIf="showSteps"></app-wizard>
+   <router-outlet>
+  
+  </router-outlet>
+  </mat-sidenav-content>
+  </mat-sidenav-container>
+  

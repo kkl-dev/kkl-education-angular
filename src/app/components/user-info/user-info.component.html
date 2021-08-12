@@ -1,0 +1,14 @@
+<div class="user-info">
+    <div class="user-info__img">
+        <img class="user-info__img" [src]="userInfo.imgSrc" alt="asdasd">
+    </div>
+    <span class="user-info__details">
+        <span class="user-info__details-name">{{userInfo.name}}</span>
+        <a routerLink="/login" class="user-info__details-button"
+        [ngClass]="{
+            'exit-education': prefix === 'education',
+            'exit-forestry': prefix === 'forestry'
+          }"
+        >החלף משתמש</a>
+    </span>
+</div>

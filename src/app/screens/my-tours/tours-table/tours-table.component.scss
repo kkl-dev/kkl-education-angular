@@ -1,0 +1,104 @@
+table {
+  width: 90%;
+  margin: auto;
+  direction: rtl;
+  text-align: right;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+th.mat-header-cell {
+  text-align: right;
+  color: white;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: right;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  margin: 0 15px;
+}
+
+.order-status-container {
+  &__progress {
+    width: 100%;
+    height: 5px;
+    border-radius: 80px;
+    position: relative;
+    z-index: 5;
+    background-color: #f3f3f3;
+
+    &-bar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      background-color: #52bc0c;
+      height: 5px;
+      border-radius: 80px;
+      width: 50%;
+    }
+  }
+}
+.cell-content {
+  max-width: fit-content;
+  padding: 0 10px !important;
+}
+
+td.mat-cell{
+  border-bottom-style: none;
+}
+.mat-row {
+  height: 65px;
+  text-align: right;
+  border-bottom: none;
+
+  &::after {
+    position: absolute;
+    left: 0;
+    content: " ";
+    display: block;
+    height: 65px;
+    border-bottom: 1px solid #E6E7E4;
+    width: 100%;
+    z-index: 100;
+}
+
+}
+
+.mat-header-row {
+  background-color: #448ecd;
+  color: white;
+}
+
+::ng-deep .mat-checkbox-frame {
+  border-color: #448ecd;
+}
+
+::ng-deep th.mat-header-cell > .mat-checkbox > .mat-checkbox-frame {
+  border-color: white !important ;
+}
+.mat-checkbox-layout > .mat-checkbox-frame {
+  border: 1px solid white !important;
+  border-color: white;
+}
+
+:ng-deep .mat-checkbox-layout[for="mat-checkbox-1-input"] {
+  background-color: black;
+  height: 100px;
+  margin: 10000px;
+}
+
+::ng-deep .white.mat-checkbox > .mat-checkbox-layout > .mat-checkbox-inner-container > .mat-checkbox-frame
+   {
+       border-color: white !important;
+  border:2px solid white !important;
+}
+

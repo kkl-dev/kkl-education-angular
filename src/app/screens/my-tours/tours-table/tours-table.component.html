@@ -1,0 +1,105 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox
+        (change)="$event ? masterToggle() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()"
+        [aria-label]="checkboxLabel()"
+        class="white"
+      >
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox
+        (click)="$event.stopPropagation()"
+        (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)"
+        [aria-label]="checkboxLabel(row)"
+      >
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- characteristic Column -->
+  <ng-container matColumnDef="characteristic">
+    <th mat-header-cell *matHeaderCellDef>מאפיין</th>
+    <td mat-cell *matCellDef="let element">{{ element.characteristic }}</td>
+  </ng-container>
+  <!-- orderDate Column -->
+  <ng-container matColumnDef="orderDate">
+    <th mat-header-cell *matHeaderCellDef>תאריך הזמנה</th>
+    <td mat-cell *matCellDef="let element">{{ element.orderDate }}</td>
+  </ng-container>
+
+  <!-- projectName Column -->
+  <ng-container matColumnDef="projectName">
+    <th mat-header-cell *matHeaderCellDef>שם הפרויקט</th>
+    <td mat-cell *matCellDef="let element">{{ element.projectName }}</td>
+  </ng-container>
+
+  <!-- destination Column -->
+  <ng-container matColumnDef="destination">
+    <th mat-header-cell *matHeaderCellDef>יעד</th>
+    <td mat-cell *matCellDef="let element">{{ element.destination }}</td>
+  </ng-container>
+
+  <!-- participantsNumber Column -->
+  <ng-container matColumnDef="participantsNumber">
+    <th mat-header-cell *matHeaderCellDef>כמות משתתפים</th>
+    <td mat-cell *matCellDef="let element">{{ element.participantsNumber }}</td>
+  </ng-container>
+
+  <!-- nightsCount Column -->
+  <ng-container matColumnDef="nightsCount">
+    <th mat-header-cell *matHeaderCellDef>מס' לילות</th>
+    <td mat-cell *matCellDef="let element">{{ element.nightsCount }}</td>
+  </ng-container>
+
+  <!-- departureDate Column -->
+  <ng-container matColumnDef="departureDate">
+    <th mat-header-cell *matHeaderCellDef>תאריך יציאה</th>
+    <td mat-cell *matCellDef="let element">{{ element.departureDate }}</td>
+  </ng-container>
+
+  <!-- arrivalDate Column -->
+  <ng-container matColumnDef="arrivalDate">
+    <th mat-header-cell *matHeaderCellDef>תאריך חזרה</th>
+    <td mat-cell *matCellDef="let element">{{ element.arrivalDate }}</td>
+  </ng-container>
+
+  <!-- orderStatus Column -->
+  <ng-container matColumnDef="orderStatus">
+    <th mat-header-cell *matHeaderCellDef>סטטוס הזמנה</th>
+    <td mat-cell *matCellDef="let element">
+      <div class="order-status-container">
+        <p class="order-status-container__text">
+          {{ element.orderStatus.text }}
+        </p>
+        <div class="order-status-container__progress">
+          <span
+            [ngStyle]="{ width: element.orderStatus.precent + '%' }"
+            class="order-status-container__progress-bar"
+          ></span>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <!-- comments Column -->
+  <ng-container matColumnDef="comments">
+    <th mat-header-cell *matHeaderCellDef>הערות</th>
+    <td mat-cell *matCellDef="let element">
+      <svg-icon  *ngIf='element.comments.length === 0' src="assets/images/leafs.svg"></svg-icon
+      ><svg-icon *ngIf='element.comments.length > 0 '  src="assets/images/football.svg"></svg-icon>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="selection.toggle(row)"
+  ></tr>
+</table>

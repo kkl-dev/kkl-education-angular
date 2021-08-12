@@ -1,0 +1,22 @@
+<div class="order-tour">
+    <div class="order-tour__steps">
+
+        <app-working-steps
+        [steps]='pages'
+        (changeActiveStep)="changeActivePage($event)"
+        [activeStep]='activePage'
+        ></app-working-steps>
+    </div>
+    <div class="order-tour__main"> 
+        <app-squad-assamble ></app-squad-assamble>
+    </div>
+    <app-bottom-navigation
+    [currentPage]= 0
+    previousUrl="'/education/my-tours'"
+    nextUrl="'/education/search'" 
+    [lastPage]='pages.length'
+    (changePage)='changeActivePageBottomNavigation($event)'
+    ></app-bottom-navigation>
+</div>
+
+

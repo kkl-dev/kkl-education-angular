@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
+import { Router } from '@angular/router';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UserDataService } from './services/user-data.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +13,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'kkl-education';
+  public prefix:string =''
+
+  constructor(
+    private router: Router,
+    private overlayContainer: OverlayContainer,
+    private userDataService:UserDataService
+  ) {
+this.prefix= this.userDataService.user.urlPrefix
+  }
+
+
 }

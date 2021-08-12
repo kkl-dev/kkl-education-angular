@@ -1,0 +1,11 @@
+<div class="login-form">
+    <div class="login-form__heading">
+      <p class="login-form__heading-main">כניסה לאזור האישי</p>
+      <p class="login-form__heading-secondery">
+        להתחברות אנא הזן את הפרטים המבוקשים
+      </p>
+    </div>
+   <app-login-form *ngIf="!otp" (nextStep)="proceedToOtp()"></app-login-form>
+   <app-otp-form *ngIf="otp"></app-otp-form>
+  </div>
+  

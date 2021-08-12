@@ -1,0 +1,48 @@
+<div class="assamble-tour">
+  <div class="assamble-tour__form">
+    <div class="assamble-tour__form-headline-container">
+      <h3 class="assamble-tour__form-headline">מועד ושם הטיול</h3>
+    </div>
+    <app-form-container
+      [questions]="TimeAndNameFormInputs"
+      [showButton]="false"
+    ></app-form-container>
+  </div>
+  <div class="assamble-tour__form">
+    <div class="assamble-tour__form-headline-container">
+      <h3 class="assamble-tour__form-headline">לקוח</h3>
+    </div>
+    <app-form-container
+      [showButton]="false"
+      [questions]="customerFormInputs"
+    ></app-form-container>
+  </div>
+  <div class="assamble-tour__form">
+    <div class="assamble-tour__form-headline-container">
+      <h3 class="assamble-tour__form-headline">הרכב הקבוצה</h3>
+    </div>
+    <!-- <app-form-container
+      [showButton]="false"
+      [questions]="groupAssambleFormInputs"
+      [overrides]="{
+        radios: 
+      }"
+    >
+    <template ref="" >
+      <app-counter></app-counter>
+    </template>
+  </app-form-container> -->
+
+  <!-- <ng-container #age let-form-optin> 
+    <app-counter/>
+  </ng-container> -->
+  </div>
+  <div class="assamble-tour__form">
+    <div class="assamble-tour__form-headline-container">
+      <h3 class="assamble-tour__form-headline">פרטי הטיול</h3>
+    </div>
+    <app-form-container
+      [questions]="tourDetailsFormInputs"
+    ></app-form-container>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="wizard">
+  <div class="list">
+    <div
+      class="list__item"
+      (click)="changeWizardItem(i)"
+      [ngClass]="{
+        chosen: i === chosenWizardItem,
+        'education-background-color':
+          prefix === 'education' && i === chosenWizardItem,
+        'forestry-background-color':
+          prefix === 'forestry' && i === chosenWizardItem
+      }"
+      *ngFor="let item of wizardItems; let i = index"
+    >
+      <svg-icon
+        class="list__item-svg"
+        [ngClass]="{
+          ' education-svg': i != chosenWizardItem,
+          white: i == chosenWizardItem
+        }"
+        src="{{ item.src }}"
+      >
+      </svg-icon>
+      <div class="list__item-text">
+        <span class="list__item-text-centerd">{{ item.text }}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<form class="login-form__form">
+  <div class="login-form__form-radio-area">
+ 
+    <div class="login-form__form-radio-group">
+      <input
+      class="login-form__form-radio-btn"
+      type="radio"
+      id="worker"
+      name="workerType"
+      value="worker"
+      checked
+      />
+      <label
+      for="worker"
+      class="login-form__form-radio-label"
+      (click)="setUserType('worker')"
+      >
+      <span class="login-form__form-radio-label-text">עובד קק"ל</span>
+      
+      <span class="login-form__form-radio-label-btn"></span
+        ></label>
+      </div>
+      <div class="login-form__form-radio-group left">
+        <input
+        class="login-form__form-radio-btn "
+        type="radio"
+        id="outsider" 
+        name="workerType"
+        value="outsider"
+      />
+      <label
+        for="outsider"
+        class="login-form__form-radio-label "
+        (click)="setUserType('outsider')"
+      >
+        <span class="login-form__form-radio-label-text ">עובד חיצוני</span>
+      
+        <span class="login-form__form-radio-label-btn"></span
+      ></label>
+    </div>
+  </div>
+
+  <div class="login-form__form-inputs">
+      <input class="login-form__form-input-name" type="text" placeholder="שם משתמש" >
+      <input class="login-form__form-input-password "
+      [ngClass]="{ 'checked-fade-out': userType === 'outsider','checked-fade-in': (userType === 'worker' && !firstLoad) }"
+       type="text" placeholder="סיסמא" >
+  </div>
+   <button (click)="proceed()" class="login-form__form-btn"><span class="login-form__form-btn-text">כניסה</span></button>
+</form>

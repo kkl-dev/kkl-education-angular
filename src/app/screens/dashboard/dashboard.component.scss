@@ -1,0 +1,73 @@
+@import "../../../styles.scss";
+
+.dashboard {
+  height: calc(100% - 90px);
+  background-image: url("../../../assets/images/education-table-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  width: 100% !important;
+  direction: rtl;
+
+  &__content {
+    position: absolute;  
+    top: calc(50%);
+    left: 50%;
+    transform: translate(-50%, -70%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 12px;
+    &-item {
+      margin: 0 20px;
+      padding: 20px;
+      background-color: rgba($color: #ffffff, $alpha: 0.82);
+      border-radius: 10px;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+
+      &-icon {
+        margin-top: auto;
+        margin-bottom: 25px;
+        align-self: center;
+        justify-self: stretch;
+        width: 80%;
+        height: 40%;
+        display: flex;
+
+        & * {
+          // fill: $--green-color-bright;
+          height: 100%;
+          width: 100%;
+          justify-self: center;
+          align-self: flex-end;
+
+        }
+      }
+      &-text {
+        margin-bottom: 10px;
+        color: black;
+        font-size: 18px;
+        align-self: center;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.education-svg{
+  fill: $--blue-color-bright !important;
+  & *{
+    fill: $--blue-color-bright !important;
+  }
+}
+
+.forestry-svg{
+  &>*{
+    fill: $--green-color-bright !important;
+  }
+}

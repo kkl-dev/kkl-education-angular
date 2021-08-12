@@ -1,0 +1,24 @@
+<div id="pagination" class="pagination"  *ngIf="pagesCount >=2 ">
+  <span   
+ 
+    class="pagination-next"
+    [ngClass]="{ disabled: +pagesCount === +currentPage }"
+    (click)="nextPage()"
+    >הבא</span
+  >
+  <span class="pagination-pages"
+    ><span
+      class="pagination-pages-page"
+      *ngFor="let item of pagesToShow; let i = index"
+      [ngClass]="{ chosen: item === +currentPage }"
+    >
+      <span *ngIf="pagesCount  >= +item">{{ item }}</span></span
+    ></span
+  >
+  <span
+    class="pagination-prev"
+    [ngClass]="{ disabled: 1 === +currentPage }"
+    (click)="prevPage()"
+    >הקודם</span
+  >
+</div>

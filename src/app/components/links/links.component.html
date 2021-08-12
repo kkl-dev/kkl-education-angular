@@ -1,0 +1,66 @@
+<div class="links themed-element">
+  <div
+    class="links-title"
+    [ngClass]="{
+      'title-education': prefix === 'education',
+      'title-forestry': prefix === 'forestry'
+    }"
+  >
+    ראשי
+  </div>
+  <mat-list class="list" role="list" *ngFor="let link of links; let i = index">
+    <mat-list-item
+      class="list__headline"
+      [ngClass]="{
+        'headline-education': prefix === 'education',
+        'headline-forestry': prefix === 'forestry'
+      }"
+      role="listitem"
+    >
+     
+    
+    {{ link.headline }}</mat-list-item
+    >
+    <mat-list-item
+      role="listitem"
+      *ngFor="let item of link.links; let j = index"
+      class="{{
+        j === chosenLink && i === chosenCategory
+          ? 'item__list chosen-list'
+          : 'item__list'
+      }}"
+    >
+      <div
+        (click)="changeLink(i, j)"
+        class="item__list-div"
+        [ngClass]="{
+          chosen: j === chosenLink && i === chosenCategory,
+          'chosen-forestry':
+            prefix === 'forestry' && j === chosenLink && i === chosenCategory,
+          'chosen-education':
+            prefix === 'education' && j === chosenLink && i === chosenCategory
+        }"
+      >
+        <svg-icon
+          class="list-icon"
+          src="assets/images/right-arrow.svg"
+        ></svg-icon>
+        {{ item }}
+      </div>
+    </mat-list-item>
+  </mat-list>
+  <a
+    class="links__sign-out"
+    [ngClass]="{
+      'sign-out-education': prefix === 'education',
+      'sign-out-forestry': prefix === 'forestry'
+    }"
+    routerLink="/login"
+    ><span class="links__sign-out-text"> יציאה</span></a
+  >
+
+  <svg-icon
+    class="links__bottom-icon"
+    src="assets/images/path270.svg"
+  ></svg-icon>
+</div>

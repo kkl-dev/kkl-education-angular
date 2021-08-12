@@ -1,0 +1,60 @@
+.user-info{
+display: flex;
+margin: 15px ;
+padding-left: 25px;
+padding-bottom: 10px;
+justify-content: space-around;
+border-bottom: 1px solid #a2a2a2;
+
+&__img{
+    margin-right: 7px;
+    margin-left: 6px;
+    border-radius: 100px;
+}
+ 
+&__details{
+    margin-left: auto;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: center;
+    margin-bottom: 10px;
+ 
+    &-button{
+        color: #0d916d;
+        background-color: inherit; 
+        outline: none;
+        border: none;
+        padding: 0;
+        font-size: 13px !important;
+        text-decoration: none;
+    }
+}
+} 
+
+
+.exit-education{
+ color: #009eee !important;
+
+}
+
+.exit-forestry{
+    color: #0d916d !important;
+   
+   }
+
+
+
+
+
+
+
+
+// <div class="user-info">
+// <img class="user-info__img" [src]="userInfo.imgSrc" alt="asdasd">
+// <span class="user-info__details">
+//     <span class="user-info__details-name">שלום, {{userInfo.name}}</span>
+//     <button class="user-info__details-button">יציאה</button>
+// </span>
+// </div>

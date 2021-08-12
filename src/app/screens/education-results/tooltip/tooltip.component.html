@@ -1,0 +1,16 @@
+<div class="tooltip">
+    <div class="tooltip__header">
+        שעות זמינות:
+    </div>
+    <div class="tooltip__hours-container">
+        <div class="tooltip__hours" *ngFor='let item of hours'>
+            <span class="tooltip__hours-text" >
+                {{item.hour}}
+            </span>
+            <span class="tooltip__hours-availability" [ngClass]="{'fill': item.avialable}"></span>
+        </div>
+    </div>
+    <button class="tooltip__button">
+        שריין
+    </button>
+</div>

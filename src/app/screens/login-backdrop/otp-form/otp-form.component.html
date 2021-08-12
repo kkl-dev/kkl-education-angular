@@ -1,0 +1,32 @@
+<div class="otp">
+  <div class="otp__heading">
+    <p class="otp__heading-main">עליך להזין קוד בן 6 ספרות</p>
+    <p class="otp__heading-secondery">
+      הנשלח אלייך לנייד המסתיים ב-{{ phoneNumber }}
+    </p>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="signupForm" class="otp__form">
+    <div class="otp__form-inputs">
+      <input
+        focus="i===0"
+        (input)="keytab($event)"
+        *ngFor="let item of otpArray; let i = index"
+        formControlName="{{ this.prefix + i }}"
+        class="otp__form-inputs-input"
+        type="number"
+        required
+      />
+    </div>
+    <a class="results-header__link" routerLink="{{'/'+ nextUrl}}">
+      <button
+        *ngIf="signupForm"
+        [disabled]="!signupForm.valid"
+        type="submit"
+        class="otp__btn"
+      >
+        <span class="otp__btn-text">כניסה</span>
+      </button>
+    </a>
+  </form>
+</div>

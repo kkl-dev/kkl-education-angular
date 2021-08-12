@@ -1,0 +1,82 @@
+// @import "../../../styles.scss";
+
+.wizard {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  box-shadow: -3px 0px 12px #4b4b4b3b;
+  background-color: #ffffff;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  width: 76px;
+  height: fit-content;
+  text-align: center;
+  z-index: 101;
+}
+
+.list {
+  &__item {
+    width: 64px !important;
+    height: 75px !important;
+    margin-bottom: 5px;
+    margin: 5px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &-svg {
+      height: 26.75px !important;
+      width: 26.75px !important;
+      margin-bottom: 7px;
+    }
+
+    &-svg *{
+      height: 26.75px !important;
+      width: 31.75px !important;
+    }
+
+    &-text{
+      display: flex !important;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center; 
+      flex-wrap: wrap;
+      &-centerd{
+        line-height: 12px;
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+
+.chosen{
+  border-radius: 3px;
+  color: white !important;
+}
+
+::ng-deep .mat-list-base .mat-list-item .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+  width: 100% !important;
+  padding: 0 !important;
+  height: 100% !important;
+}
+
+
+.education-background-color{
+  background-color:#448ecd !important;
+}
+
+.education-svg{
+  fill:#448ecd !important;
+  & *{
+    fill:#448ecd !important;
+  }
+}
+
+.white *{
+  fill: #ffffff !important;
+  color: white !important;
+}

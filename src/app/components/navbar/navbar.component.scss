@@ -1,0 +1,204 @@
+@import "../../../styles.scss";
+
+* {
+  direction: rtl;
+}
+
+.navbar {
+  height: 90px;
+  backdrop-filter: blur(15px) saturate(70%) contrast(70%) brightness(130%);
+  background-color: #ffffff;
+  opacity: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #fbfbfb;
+  box-sizing: border-box;
+}
+
+// toggle button styles
+.sidebar-toggle {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: $--green-color-bright;
+  height: 100%;
+  width: 50px;
+  z-index: 101;
+  margin-top: 4px;
+
+  &__icon {
+    margin-top: auto;
+    height: 40px;
+    margin-bottom: 3px;
+  }
+  .closed * {
+    // fill: $--green-color-bright !important;
+  }
+
+  &__text {
+    margin-bottom: auto;
+    font-size: 0.8rem;
+    line-height: 10px;
+    text-align: center;
+  }
+}
+
+.worker-position {
+  font-size: 28px;
+  align-self: center;
+  margin-left: auto;
+  margin-bottom: -5px;
+  font-weight: 600;
+}
+
+// main area item
+
+.project-status {
+  display: flex;
+  z-index: 10111;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+
+  &__item {
+    margin-bottom: -130px;
+    &:not(:first-child) {
+      padding-right: 190px;
+    }
+
+    &:first-child > .project-status__item-badge {
+      margin-right: -190px;
+      background-color: sienna;
+    }
+    display: flex;
+    position: relative;
+
+    &-icon {
+      border-radius: 100px;
+      height: 75px;
+      width: 75px;
+      background-color: #ffffff;
+      border: 1px solid #00000029;
+      display: flex;
+      -webkit-box-shadow: 0px 5px 0px 5px #ffffff;
+      box-shadow: 0px 0px 0px 6px #ffffff;
+    }
+  }
+
+  #svg-fill {
+    margin: auto;
+    width: 37.5px;
+    height: 37.5px;
+  }
+  #svg-fill * {
+    fill: #747474 !important;
+    width: 37.5px;
+    height: 37.5px;
+  }
+
+  &__item-badge {
+    position: absolute;
+    top: 15px;
+    right: 199px;
+  }
+
+  &__item-text {
+    font-weight: bold;
+    align-self: flex-start;
+    margin-right: 15px;
+    margin-top: 40px;
+  }
+}
+
+.results-header {
+  margin-left: 50px;
+  margin-right: auto;
+
+  &__link {
+    display: flex;
+    text-decoration: none;
+    color: #a2a2a2;
+    align-self: center;
+    font-weight: 200;
+  }
+
+  &__text {
+    margin: auto 0;
+    justify-self: center;
+    font-size: 20px;
+  }
+  &__icon {
+    padding-right: 10px;
+    color: $--blue-color-bright;
+    align-self: center;
+    padding-top: 2px;
+    font-weight: bold;
+  }
+}
+
+//left logos area
+
+.left-logos {
+  margin-left: 23px;
+  min-width: fit-content;
+  flex: 0 0 auto;
+  align-self: center;
+  z-index: 101;
+  height: 90%;
+}
+
+.left-logos * {
+  margin-top: 7px;
+  display: inline;
+  height: 80%;
+}
+
+.left-logo-years {
+  padding-left: 20px;
+}
+
+.badge-education {
+  & .mat-badge-content {
+    background-color: $--green-color-bright !important;
+    color: #ffffff;
+  }
+}
+
+.badge-forestry {
+  & .mat-badge-content {
+    background-color: $--blue-color-bright !important;
+    color: #ffffff;
+  }
+}
+
+.education-fill {
+  color: #009eee;
+  & * {
+    fill: #009eee !important;
+  }
+}
+
+.education-border {
+  border-bottom: #009eee solid 3px;
+}
+
+.forestry-fill {
+  color: #00c466;
+  & * {
+    fill: #00c466 !important;
+  }
+}
+.forestry-border {
+  border-bottom: $--green-color-bright solid 3px;
+}
+
+ ::ng-deep .list__item-svg .a {
+  fill: #00c466 !important;
+}

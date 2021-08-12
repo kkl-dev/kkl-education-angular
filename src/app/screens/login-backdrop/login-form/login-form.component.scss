@@ -1,0 +1,205 @@
+@import "../../../../styles.scss";
+
+.login-form {
+  position: absolute;
+  top: 32%;
+  right: 22.5%;
+  transform: translateX(50%);
+
+  &__heading {
+    text-align: center;
+    &-main {
+      font-size: 38px;
+      font-weight: bold;
+      padding-bottom: 10px;
+      letter-spacing: 0 !important;
+    }
+    &-secondery {
+      font-size: 20px;
+      font-weight: 300;
+    }
+  }
+
+  &__form-radio-checked {
+    height: 0.75rem;
+    width: 0.75rem;
+    border-radius: 100px;
+    z-index: 100;
+    background-color: $--green-color-bright;
+    position: absolute;
+    top: 109px;
+    right: 25px;
+    transition: all 0.5s linear;
+  }
+
+  &__form-radio-area {
+    width: 90%;
+    margin: 40px 0;
+    text-align: center;
+  }
+  &__form-radio-group {
+    display: inline-block;
+    width: 50%;
+    font-size: 30px;
+  }
+
+  &__form-radio-btn {
+    display: none;
+    &:checked ~ .login-form__form-radio-label .login-form__form-radio-label-btn::after {
+      opacity: 1;
+  }
+
+  }
+  &__form-radio-label {
+    cursor: pointer;
+    position: relative;
+    &-text {
+      font-size: 20px;
+      margin-right: 25px;
+    }
+    &-btn {
+      height: 1rem;
+      width: 1rem;
+      border: 1px solid black;
+      border-radius: 50%;
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      top: 60%;
+      transform: translateY(-50%);
+      background-color: white;
+      &::after {
+        content: "";
+        display: block;
+        height: 0.75rem;
+        width: 0.75rem;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $--green-color-bright;
+        opacity: 0; 
+        transition: opacity 1s;
+        
+    }
+    }
+  }
+
+  &__form-inputs {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+  &__form-input-name,
+  &__form-input-password {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    height: 50px;
+    border-radius: 3px;
+    font-size: 20px;
+    border: 1px solid #707070;
+    color: black;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  &__form-input-name:focus,
+  &__form-input-password:focus {
+    border: 2px solid $--green-color-bright;
+    outline: none;
+  }
+
+  &__form-input-password {
+    transition: all 1s linear, border 1ms;
+    opacity: 1;
+    margin-bottom: 20px;
+  }
+
+  &__form-input-name[type="text"]::placeholder,
+  &__form-input-password[type="text"]::placeholder {
+    color: black;
+    padding-right: 10px;
+
+    font-size: 20px;
+  }
+
+  &__form-btn {
+    margin-top: 40px;
+    text-decoration: none;
+    height: 50px;
+    width: 70%;
+    margin: 0 auto;
+    color: #ffffff;
+    border: none;
+    font-size: 14px;
+    background-color: $--green-color-bright;
+    border-radius: 7px;
+    z-index: 203;
+    display: flex;
+    -webkit-box-shadow: 5px 5px 17px 2px rgba(0, 196, 102, 0.3);
+    box-shadow: 5px 5px 17px 2px rgba(0, 196, 102, 0.3);
+    cursor: pointer !important; 
+
+    &-text {
+      margin: auto;
+      font-size: 25px;
+      font-weight: 400;
+    }
+  }
+}
+
+.checked-position {
+  right: 191px;
+}
+
+.checked-fade-out {
+  animation: inputFadeOut 1s forwards linear;
+}
+
+.checked-fade-in {
+  animation: inputFadeIn 1s forwards linear;
+}
+
+@keyframes inputFadeOut {
+  0% {
+    opacity: 1;
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+
+  50% {
+    opacity: 0;
+    margin-bottom: -50px;
+    z-index: -1;
+  }
+
+  100% {
+    opacity: 0;
+    margin-bottom: -50px;
+    visibility: hidden;
+  }
+}
+
+@keyframes inputFadeIn {
+  0% {
+    opacity: 0;
+    margin-bottom: -50px;
+    visibility: visible;
+  }
+
+  1% {
+    opacity: 0;
+    margin-bottom: -50px;
+    z-index: -1;
+  }
+
+  100% {
+    opacity: 1;
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+}
+
+.left {
+  text-align: left;
+}

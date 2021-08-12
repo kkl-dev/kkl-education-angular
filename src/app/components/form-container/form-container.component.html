@@ -1,0 +1,21 @@
+<!-- <div class="form-container">
+    <div class="form-container__form-group" *ngFor="let item of formInputsArray; let i = index" [ngStyle]="{'grid-column': item.columns}">
+        <label for="item.name" class="form-container__form-group-label">{{item.label}}</label>
+        <input type="{{item.type}}" class="form-container__form-group-input">
+    </div>
+</div>  -->
+    <form  class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
+  
+      <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}">
+        <!-- <ng-container *ngIf="templates[question.key]" *ngTemplateOutlet="templates[question.key"/> -->
+        <app-question [question]="question" [form]="form" *ngIf="question.key" ></app-question>
+      </div>
+  
+      <div class="form-row" *ngIf="showButton">
+        <button type="submit" [disabled]="!form.valid">Save</button>
+      </div>
+    </form>
+  
+    <!-- <div *ngIf="payLoad" class="form-row">
+      <strong>Saved the following values</strong><br>{{payLoad}}
+    </div> -->

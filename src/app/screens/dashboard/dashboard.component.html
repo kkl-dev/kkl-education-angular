@@ -1,0 +1,20 @@
+<div class="dashboard" >
+  <div class="dashboard__content">
+    <a
+      routerLink="{{'/' + prefix + '/' + item.url }}"
+      class="dashboard__content-item"
+      *ngFor="let item of dashboardArray; let i = index"
+    >
+      <div class="dashboard__content-item-icon">
+        <svg-icon
+          [ngClass]="{
+            'education-svg': prefix === 'education'
+          }"
+          src="{{ item.svgUrl }}"
+        >
+        </svg-icon>
+      </div>
+      <div class="dashboard__content-item-text">{{ item.name }}</div>
+    </a>
+  </div>
+</div>

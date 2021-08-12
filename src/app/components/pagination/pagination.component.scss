@@ -1,0 +1,35 @@
+.pagination {
+  width: 100%;
+ 
+  margin: 0 auto;
+  padding: 10px 0;
+  text-align: center;
+  background-color: white;
+
+  &-next,
+  &-prev {
+    color: #04c568;
+    cursor: pointer;
+  }
+
+  &-pages {
+    display: inline-flex;
+    &-page {
+        text-align: center;
+      width: fit-content;
+      padding: 0 8px;
+      margin: 0 5px;
+      width: 8px;
+      border: 3px solid transparent !important;
+    }
+  }
+}
+
+.chosen {
+  border: 3px solid #04c568 !important;
+  color: #04c568;
+}
+
+.disabled {
+  color: #9f9f9f;
+}

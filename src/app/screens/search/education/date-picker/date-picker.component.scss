@@ -1,0 +1,66 @@
+.date-picker {
+  align-self: center;
+  justify-self: center;
+  // height: 51px;
+  align-self: center;
+    position: relative;
+&__starting-date{
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    width: 120%;
+    border: 1px solid blue;
+    &-headline{
+        
+    }
+}
+
+
+
+  &__input {
+    border: 1px solid #cdcece;
+    width: 265px;
+    height: 51px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__input-group {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 265px;
+    padding: 0 10px;
+    text-align: right;
+    overflow: hidden;
+    padding-bottom: 22.5px;
+
+    &-text {
+      font-size: 20px;
+        margin-right: 10px;
+    }
+
+    &-svg  *{
+        width: 36px;
+        height: 36px;
+        margin-left: 10px;
+    }
+
+    &-label {
+      font-size: 14px;
+      font-weight: bold;
+      padding-bottom: 15px;
+    }
+  }
+
+  &__inputs {
+    width: fit-content;
+    &-input {
+      border: 2px solid #cdcece;
+      width: 265px;
+      height: 51px;
+      background-color: white;
+    }
+  }
+}
