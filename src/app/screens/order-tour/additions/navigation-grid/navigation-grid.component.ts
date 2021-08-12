@@ -5,6 +5,7 @@ export interface NavigationCardModel {
   title? : string,
   onNext? : Function,
   onPrev? : Function
+  active ?  : boolean
 }
 
 @Component({

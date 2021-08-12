@@ -77,7 +77,7 @@ export class EducationComponent implements OnInit {
 
   public dateObjChanged(e: string) {
     if (e.includes('-')) {
-      let tempDateArr = [];
+      let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       console.log(tempDateArr);
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
