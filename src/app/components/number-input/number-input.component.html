@@ -1,0 +1,15 @@
+<div class="input-container" [formGroup]="form">
+  <p>{{ innerLabel }}</p>
+  <input
+    type="number"
+    class="input"
+    [formControlName]="formControlName"
+    [id]="id"
+    [type]="type"
+    [(ngModel)]='value'
+
+  />
+<!-- 
+  <div class="div" (click)="decrementValue()">-</div>
+  <div class="div" (click)="incrementValue()">+</div> -->
+</div>

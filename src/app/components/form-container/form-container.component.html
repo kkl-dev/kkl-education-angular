@@ -6,9 +6,21 @@
 </div>  -->
     <form  class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
   
-      <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}">
-        <!-- <ng-container *ngIf="templates[question.key]" *ngTemplateOutlet="templates[question.key"/> -->
-        <app-question [question]="question" [form]="form" *ngIf="question.key" ></app-question>
+      <div *ngFor="let question of questions"
+       class="form-row" [ngStyle]="{'grid-column': question.columns}">
+        
+        <ng-container *ngIf="question.templateName" >
+        <app-number-input
+        [formControlName]="question.key"
+        [id]="question.key"
+        [type]="question.type"
+        [innerLabel]='question.innerLabel'
+        [form]="form"
+        [value]='question.value'  
+        > </app-number-input>  
+        </ng-container> 
+      
+        <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question>
       </div>
   
       <div class="form-row" *ngIf="showButton">
