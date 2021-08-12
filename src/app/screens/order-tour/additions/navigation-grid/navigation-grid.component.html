@@ -12,7 +12,7 @@
       <mat-grid-list cols="4" rowHeight="20vh">
         <div>
           <mat-grid-tile *ngFor="let item of navigationGrid">
-            <app-nav-card></app-nav-card>
+            <app-nav-card [item]="item"></app-nav-card>
           </mat-grid-tile>
         </div>
       </mat-grid-list>

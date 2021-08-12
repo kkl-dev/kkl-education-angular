@@ -7,13 +7,14 @@
         [activeStep]='activePage'
         ></app-working-steps>
     </div>
-    <div class="order-tour__main"> 
-        <app-squad-assamble ></app-squad-assamble>
+    <div class="order-tour__main">
+        <app-squad-assamble *ngIf="activePage === 0" ></app-squad-assamble>
+        <app-additions *ngIf="activePage === 3"></app-additions>
     </div>
     <app-bottom-navigation
     [currentPage]= 0
     previousUrl="'/education/my-tours'"
-    nextUrl="'/education/search'" 
+    nextUrl="'/education/search'"
     [lastPage]='pages.length'
     (changePage)='changeActivePageBottomNavigation($event)'
     ></app-bottom-navigation>

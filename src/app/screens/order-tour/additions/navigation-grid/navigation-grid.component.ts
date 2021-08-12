@@ -20,6 +20,8 @@ export class NavigationGridComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    console.log(this.navigationGrid)
   }
 
 }
