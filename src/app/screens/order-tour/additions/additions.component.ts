@@ -11,7 +11,7 @@ export class AdditionsComponent implements OnInit {
   public navigationGrid : NavigationCardModel[]  = [
     {
       title : 'היסעים',
-      svgUrl : 'bus-station'
+      svgUrl : 'bus'
     },
     {
       title : 'אבטחה',
@@ -39,7 +39,7 @@ export class AdditionsComponent implements OnInit {
     },
     {
       title : 'בתי כנסת',
-      svgUrl : ''
+      svgUrl : 'judaism'
     },
   ]
 

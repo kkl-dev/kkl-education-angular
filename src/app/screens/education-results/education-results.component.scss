@@ -12,7 +12,6 @@
   &__right {
     height: 100%;
     width: 50%;
-    // padding-right: 85px;
     text-align: center;
     background-color: white;
 
@@ -27,13 +26,13 @@
       display: flex;
       padding: 0 100px;
       margin-bottom: 40px;
-      
+
       &-item {
         display: flex;
         margin: 0 ;
         padding-bottom: 10px;
         border-bottom: 3px solid #dcdcdc;
-      } 
+      }
       & > * {
         flex: 1;
       }
@@ -42,7 +41,7 @@
         margin-left: auto;
         margin-right: 10px;
       }
-      
+
       &-item-date {
         margin-right: auto;
         font-size: 18px;
@@ -99,7 +98,7 @@
             &-number{
               width: 35px;
               height: 35px;
-              margin: auto 0; 
+              margin: auto 0;
               background-color: #f6f6f6;
 display: flex;
               & > * {
@@ -200,7 +199,7 @@ display: flex;
       border-radius: 4px;
       border: none;
       box-shadow:0px  0px 12px 1px #448ecd;
-      
+
       &-container {
         padding: 0 100px;
         text-align: left;
@@ -221,5 +220,5 @@ app-tooltip {
 }
 .font-color-blue{
   color: #66a3d6;
- 
+
 }

@@ -1,0 +1,42 @@
+.assamble-tour {
+  display: flex;
+  height: 100%;
+  width: calc(100% - 80px);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.assamble-tour__form:not(:last-child) {
+  border-left: 1px solid #e8e8e8;
+  margin-left: 35px;
+}
+
+.assamble-tour__form {
+  box-sizing: border-box;
+  flex: 1;
+  margin: 0 10px;
+}
+
+.assamble-tour__form * {
+  width: 80%;
+}
+
+.assamble-tour__form-headline {
+  width: fit-content !important;
+  position: relative;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  border-bottom: 3px solid #448ecd;
+  padding-left: 10px;
+  margin-bottom: -3px !important;
+}
+
+.assamble-tour__form-headline-container {
+  margin-bottom: 16px;
+  border-bottom: 3px solid #dbdbdb;
+  width: 60% !important;
+}
+
+app-form-container {
+  width: 60% !important;
+}
