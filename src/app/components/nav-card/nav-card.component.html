@@ -1,5 +1,5 @@
 <div class="nav-container">
-  <div class="svg-container">
+  <div class="svg-container" (click)="onCardClick()">
     <mat-card [ngClass]="{'nav-container' : true, 'active' : item.active}">
       <mat-card-content>
         <svg-icon [ngClass]="{'active' : item.active}" src="assets/images/{{item.svgUrl}}.svg"></svg-icon>

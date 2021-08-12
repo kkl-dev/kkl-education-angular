@@ -23,4 +23,8 @@ export class AdditionsService {
   items[indexUnActive].active = false
   return items
 }
+
+public emitItem(item : NavigationCardModel) {
+  this.navigationButtonSubject.next(item)
+}
 }

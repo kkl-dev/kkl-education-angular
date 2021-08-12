@@ -1,3 +1,4 @@
+import { AdditionsService } from './../../services/additions.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { NavigationCardModel } from 'src/app/models/nav-card-model';
 
@@ -8,11 +9,17 @@ import { NavigationCardModel } from 'src/app/models/nav-card-model';
 })
 export class NavCardComponent implements OnInit {
 
-  @Input() public item : NavigationCardModel = {}
+  @Input() public item: NavigationCardModel = {}
 
-  constructor() { }
+  constructor(
+    private additionsService : AdditionsService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  public onCardClick() : void {
+    this.additionsService.emitItem(this.item);
   }
 
 }
