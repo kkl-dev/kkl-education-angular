@@ -10,24 +10,28 @@ export class AdditionsComponent implements OnInit {
 
   public navigationGrid : NavigationCardModel[]  = [
     {
-      title : 'היסעים',
-      svgUrl : 'bus'
-    },
-    {
-      title : 'אבטחה',
-      svgUrl : ''
+      title : 'כלכלה',
+      svgUrl : 'football'
     },
     {
       title : 'אתרים',
       svgUrl : ''
     },
     {
-      title : 'כלכלה',
+      title : 'אבטחה',
       svgUrl : ''
     },
     {
+      title : 'היסעים',
+      svgUrl : 'bus'
+    },
+    {
+      title : 'בתי כנסת',
+      svgUrl : 'judaism'
+    },
+    {
       title : 'אירוח',
-      svgUrl : ''
+      svgUrl : 'climbing'
     },
     {
       title : 'הפעלה מוסיקלית',
@@ -36,10 +40,6 @@ export class AdditionsComponent implements OnInit {
     {
       title : 'אוהלי אירוח',
       svgUrl : ''
-    },
-    {
-      title : 'בתי כנסת',
-      svgUrl : 'judaism'
     },
   ]
 

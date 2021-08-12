@@ -1,8 +1,8 @@
 <div class="nav-container">
   <div class="svg-container">
-    <mat-card class="nav-container">
+    <mat-card [ngClass]="{'nav-container' : true, 'active' : true}">
       <mat-card-content>
-        <svg-icon src="assets/images/{{item.svgUrl}}.svg"></svg-icon>
+        <svg-icon [ngClass]="{'active' : true}" src="assets/images/{{item.svgUrl}}.svg"></svg-icon>
       </mat-card-content>
     </mat-card>
   </div>
