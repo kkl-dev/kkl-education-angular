@@ -47,6 +47,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
+import { InfoCardComponent } from './components/info-card/info-card.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { EducationComponent } from './screens/search/education/education.compone
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    Main2Component
+    Main2Component,
+    InfoCardComponent
   ], 
   imports: [
     BrowserModule,
