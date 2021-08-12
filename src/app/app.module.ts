@@ -48,6 +48,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
 import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { AdditionsComponent } from './screens/order-tour/additions/additions.com
     BottomNavigationComponent,
     WorkingStepsComponent,
     Main2Component,
-    AdditionsComponent
+    AdditionsComponent,
+    NavigationGridComponent
   ], 
   imports: [
     BrowserModule,
