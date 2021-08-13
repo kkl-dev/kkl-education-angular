@@ -7,8 +7,7 @@
             'education-svg': prefix === 'education'
           }" src="{{ item.svgUrl }}">
         </svg-icon> -->
-        <!-- <mat-icon color="primary" svgIcon="{{item.svgUrl}}"></mat-icon> -->
-        <app-icon type="svg" [key]="item.svgUrl"></app-icon>
+        <app-icon type="svg" [color]="'primary'" [key]="item.svgUrl"></app-icon>
 
       </div>
       <div class="dashboard__content-item-text">{{ item.name }}</div>

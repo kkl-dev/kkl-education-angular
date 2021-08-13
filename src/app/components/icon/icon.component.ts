@@ -10,6 +10,7 @@ export class IconComponent implements OnInit {
 
   @Input() public type: string = ""
   @Input() public key: string = ""
+  @Input() public color: string = ""
 
   constructor(
     private iconsService: IconsService
