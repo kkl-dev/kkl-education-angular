@@ -1,11 +1,14 @@
 
 import { ErrorHandler, Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
+
 export class GlobalErrorHandler implements ErrorHandler {
 
-   public handleError(error : any) {
-     console.log(2)
+  public handleError(error: Error) {
+    console.log(2)
     console.error(error)
     console.error(error.stack)
   }
