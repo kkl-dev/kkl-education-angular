@@ -1,4 +1,4 @@
-import { AdditionsService } from './../../services/additions.service';
+import { AdditionsService } from '../../utilities/services/additions.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { NavigationCardModel } from 'src/app/models/nav-card-model';
 

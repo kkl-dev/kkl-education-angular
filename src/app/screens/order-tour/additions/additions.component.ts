@@ -1,7 +1,7 @@
-import { AdditionsService } from './../../../services/additions.service';
 import { Component, OnInit } from '@angular/core';
 import { NavigationCardModel } from 'src/app/models/nav-card-model';
 import { Subscription } from 'rxjs';
+import { AdditionsService } from '../../../utilities/services/additions.service';
 
 @Component({
   selector: 'app-additions',

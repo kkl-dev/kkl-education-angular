@@ -5,10 +5,10 @@ import { QuestionBase } from '../question-base';
 
 @Component({
   selector: 'app-question',
-  templateUrl: './dynamic-form-question.component.html',
-  styleUrls: ['./dynamic-form-question.component.scss']
+  templateUrl: './form-question.component.html',
+  styleUrls: ['./form-question.component.scss']
 })
-export class DynamicFormQuestionComponent {
+export class FormQuestionComponent {
   @Input() question!: QuestionBase<string>;
   @Input() form!: FormGroup;
   get isValid() { return this.form.controls[this.question.key].valid; }
