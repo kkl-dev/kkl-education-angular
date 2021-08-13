@@ -39,6 +39,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       label: 'שם הטיול',
       value: '',
       order: 1,
+      icon : 'mode_edit'
     }),
 
     new QuestionSelect({

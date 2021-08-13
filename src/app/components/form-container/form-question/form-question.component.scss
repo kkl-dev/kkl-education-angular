@@ -6,35 +6,56 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 40px;
+
   &__label {
     margin-bottom: 10px;
     font-weight: bold;
   }
 
-  &__input {
-    width: 100%;
-    border: 1px solid #c0c0c0;
+  &__form-field {
     min-height: 30px;
     border-radius: 5px;
+    border: 1px solid #c0c0c0;
+    width: 100%;
+    display: flex;
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
     box-sizing: border-box;
   }
+
+  &__input-container {
+    width: 100%;
+  }
+
+  &__icon-container {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
 
 
 }
 
 
-.radio-input{
+.radio-input {
   display: flex !important;
   justify-content: space-around;
 
 }
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.number-input {
-}
+.number-input {}
+
 /* csslint ignore:start */
 input[type="number"]::-webkit-inner-spin-button::before {
   content: "\e823";
@@ -45,4 +66,5 @@ input[type="number"]::-webkit-outer-spin-button::after {
   content: "1351561561";
   color: rgba(0, 0, 0, 1);
 }
+
 /* csslint ignore:end */
