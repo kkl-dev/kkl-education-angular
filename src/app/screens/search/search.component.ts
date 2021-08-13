@@ -1,6 +1,6 @@
+import { UserDataService } from './../../utilities/services/user-data.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-search',

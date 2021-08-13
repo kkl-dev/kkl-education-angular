@@ -1,6 +1,6 @@
+import { UserDataService } from './../../utilities/services/user-data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,13 +33,13 @@ export class DashboardComponent implements OnInit {
         name: 'טיול חדש',
         url: 'search',
       },
-      { 
+      {
         svgUrl: 'assets/images/report.svg',
         name: 'הטיולים שלי',
         url: 'search',
       },
     ]
- 
+
   }
 
   ngOnInit(): void {}
