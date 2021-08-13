@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { GlobalErrorHandler } from './utilities/interceptors/error';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -79,9 +80,9 @@ import { NumberInputComponent } from './components/number-input/number-input.com
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    
+
     NumberInputComponent
-  ], 
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -101,7 +102,7 @@ import { NumberInputComponent } from './components/number-input/number-input.com
     MatIconModule,
     MatListModule
   ],
-  providers: [],
+  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
