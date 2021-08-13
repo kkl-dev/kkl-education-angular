@@ -1,6 +1,4 @@
-import { map } from 'rxjs/operators';
-import { IconsService } from './../../utilities/icons/icons.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -9,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   public activeRoute: string = '';
   public dashboardArray: {
     svgUrl: string
@@ -20,7 +18,6 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(
-    private iconsService: IconsService
   ) {
     this.prefix = 'education';
     this.dashboardArray = [
@@ -35,14 +32,11 @@ export class DashboardComponent implements OnInit {
         url: 'search',
       },
       {
-        svgUrl: 'assets/images/report.svg',
+        svgUrl: 'report',
         name: 'דוחות',
         url: 'search',
       },
     ]
   }
 
-  ngOnInit(): void {
-    this.iconsService.setIconsList(this.dashboardArray)
-  }
 }

@@ -48,6 +48,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
+import { IconComponent } from './components/icon/icon.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { NumberInputComponent } from './components/number-input/number-input.com
     BottomNavigationComponent,
     WorkingStepsComponent,
 
-    NumberInputComponent
+    NumberInputComponent,
+      IconComponent
   ],
   imports: [
     BrowserModule,
