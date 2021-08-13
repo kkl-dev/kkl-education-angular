@@ -1,9 +1,9 @@
+import { UserDataService } from './utilities/services/user-data.service';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserDataService } from './services/user-data.service';
 
 
 @Component({
