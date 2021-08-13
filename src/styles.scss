@@ -1,8 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./theme..scss";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
-@import url(https://fonts.googleapis.com/earlyaccess/opensanshebrew.css);
+@import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
 
 $--green-color-dark: #0d916d;
 $--green-color-bright: #00c466;
@@ -25,4 +23,4 @@ body {
 
 .education{
   background-color: #448Ecd;
-} 
+}

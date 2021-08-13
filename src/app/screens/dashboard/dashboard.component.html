@@ -1,18 +1,14 @@
-<div class="dashboard" >
+<div class="dashboard">
   <div class="dashboard__content">
-    <a
-      routerLink="{{'/' + prefix + '/' + item.url }}"
-      class="dashboard__content-item"
-      *ngFor="let item of dashboardArray; let i = index"
-    >
+    <a routerLink="{{'/' + prefix + '/' + item.url }}" class="dashboard__content-item"
+      *ngFor="let item of dashboardArray; let i = index">
       <div class="dashboard__content-item-icon">
-        <svg-icon
-          [ngClass]="{
+        <svg-icon [ngClass]="{
             'education-svg': prefix === 'education'
-          }"
-          src="{{ item.svgUrl }}"
-        >
+          }" src="{{ item.svgUrl }}">
         </svg-icon>
+        <mat-icon color="primary" svgIcon="thumbs-up"></mat-icon>
+
       </div>
       <div class="dashboard__content-item-text">{{ item.name }}</div>
     </a>

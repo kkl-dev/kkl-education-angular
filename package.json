@@ -29,6 +29,7 @@
     "angular-svg-icon": "^12.0.0",
     "comrax-alex-airbnb-calendar": "^1.0.0",
     "rxjs": "~6.6.0",
+    "sass": "^1.37.5",
     "svg-icon": "^0.8.2",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"

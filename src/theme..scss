@@ -1,0 +1,48 @@
+@use '~@angular/material'as mat;
+
+@include mat.core();
+
+
+$eduction-primary :('50': 'e9f1f9',
+  50 : #e9f1f9,
+  100 : #c7ddf0,
+  200 : #a2c7e6,
+  300 : #7cb0dc,
+  400 : #609fd5,
+  500 : #448ecd,
+  600 : #3e86c8,
+  700 : #357bc1,
+  800 : #2d71ba,
+  900 : #1f5fae,
+  A100 : #e7f1ff,
+  A200 : #b4d3ff,
+  A400 : #81b6ff,
+  A700 : #68a7ff,
+  contrast : (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  ));
+
+$my-primary: mat.define-palette($eduction-primary);
+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-theme: mat.define-light-theme((color: (primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    )));
+
+@include mat.core-theme($my-theme);
+@include mat.all-component-themes($my-theme);
