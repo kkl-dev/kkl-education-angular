@@ -19,7 +19,7 @@ import { MatInput } from '@angular/material/input';
 })
 export class FormInputComponent implements OnInit {
 
-  @ViewChild(MatInput) input!: HTMLInputElement;
+  @ViewChild('input') input!: HTMLInputElement;
 
   @Input() public control!: FormControl
 
@@ -36,7 +36,7 @@ export class FormInputComponent implements OnInit {
   public error!: string
   public serverError!: string
 
-  public OnChange!: (event : Event) => void
+  public OnChange!: (event: Event) => void
   public onTouched!: () => void
   public disabled!: boolean
 
@@ -67,16 +67,13 @@ export class FormInputComponent implements OnInit {
     this.disabled = isDisabled
   }
 
-  public handleChange(event: Event) {
-    console.log(event)
-
+  public handleChange(value: any) {
+    this.value = value
   }
 
   // subscription section
-
-
   private subscribeToControl() {
-   
+
   }
 
 

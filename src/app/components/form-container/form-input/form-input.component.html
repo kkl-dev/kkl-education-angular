@@ -1,9 +1,9 @@
 <mat-form-field class="full-width" appearance="outline">
 
   <mat-label>{{label | titlecase}}</mat-label>
-  
+
   <input matInput [type]="type" [disabled]="disabled" [formControl]="control" control="control" autocomplete="off"
-    (input)="handleChange($event)" [name]="type" (focusout)="validate()" #input>
+  (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" #input>
 
 
   <!-- price icons -->
