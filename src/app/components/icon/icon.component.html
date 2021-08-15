@@ -1,4 +1,4 @@
 <div class="icon-container">
   <mat-icon *ngIf="type === 'svg'" [color]="color" [svgIcon]="key"></mat-icon>
-  <mat-icon *ngIf="type !== 'svg'" color="primary">{{key}}</mat-icon>
+  <mat-icon *ngIf="type !== 'svg'" [color]="color">{{key}}</mat-icon>
 </div>
