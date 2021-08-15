@@ -47,6 +47,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
+import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 
@@ -81,9 +82,9 @@ import { IconComponent } from './components/icon/icon.component';
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-
+    InfoCardComponent,
     NumberInputComponent,
-      IconComponent
+    IconComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +105,7 @@ import { IconComponent } from './components/icon/icon.component';
     MatIconModule,
     MatListModule
   ],
-  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
