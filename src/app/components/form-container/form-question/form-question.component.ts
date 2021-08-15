@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { QuestionBase } from '../question-base';
 
 @Component({
-  selector: 'app-form-question',
+  selector: 'app-question',
   templateUrl: './form-question.component.html',
   styleUrls: ['./form-question.component.scss']
 })

@@ -1,23 +1,24 @@
-<div class="order-tour">
-    <div class="order-tour__steps">
-
-        <app-working-steps
-        [steps]='pages'
-        (changeActiveStep)="changeActivePage($event)"
-        [activeStep]='activePage'
-        ></app-working-steps>
+<mat-grid-list cols="1" rowHeight="15vh">
+  <mat-grid-tile>
+    <div class="stepper">
+      <app-working-steps [steps]='pages' (changeActiveStep)="changeActivePage($event)" [activeStep]='activePage'>
+      </app-working-steps>
     </div>
-    <div class="order-tour__main">
-        <app-squad-assamble *ngIf="activePage === 0" ></app-squad-assamble>
-        <app-additions *ngIf="activePage === 3"></app-additions>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="4">
+    <app-squad-assamble></app-squad-assamble>
+  </mat-grid-tile>
+  <mat-grid-tile class="bottom-navigation">
+    <app-bottom-navigation [currentPage]=0 previousUrl='prevPage' nextUrl='nextPage' [lastPage]='pages.length'
+      (changePage)='changeActivePageBottomNavigation($event)'></app-bottom-navigation>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<!-- <div class="order-tour">
+  <div class="order-tour__steps">
+
     </div>
-    <app-bottom-navigation
-    [currentPage]= 0
-    previousUrl='prevPage'
-    nextUrl='nextPage'
-    [lastPage]='pages.length'
-    (changePage)='changeActivePageBottomNavigation($event)'
-    ></app-bottom-navigation>
-</div>
+  <div class="order-tour__main">
+  </div>
 
-
+</div> -->

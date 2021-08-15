@@ -2,24 +2,24 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } fr
 import { QuestionSelect } from 'src/app/components/form-container/question-select';
 import { QuestionBase } from 'src/app/components/form-container/question-base';
 import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
-import { QuestionCustom } from 'src/app/components/form-container/question-custom';
-import { of } from 'rxjs';
-import { QuestionNumber } from 'src/app/components/form-container/question-number';
 import { QuestionRadio } from 'src/app/components/form-container/form-question/question-radio';
 import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
 import { Offset } from 'src/app/components/form-container/form-question/question-offset';
 import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
 import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
-import { NgForm } from '@angular/forms';
+import { Validators } from '@angular/forms';
+
+export interface formGroupGrid {
+  title: string;
+  questions: QuestionBase<string>[]
+}
 
 @Component({
   selector: 'app-squad-assamble',
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit {
-
-
+export class SquadAssambleComponent implements OnInit, OnDestroy {
 
   tourDetailsFormCustomQuestion: {} = {
     boys: true,
@@ -32,22 +32,18 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
     girlsMedics: true
   }
 
-
-
-  TimeAndNameFormInputs: QuestionBase<string>[] = [
+  timeAndNameFormInputs: QuestionBase<string>[] = [
 
     new TextboxQuestion({
       key: 'tourName',
-      columns: 'span 12',
       label: 'שם הטיול',
       value: '',
       order: 1,
-      icon: 'mode_edit'
+      validations: [Validators.required]
     }),
 
     new QuestionSelect({
       key: 'fieldCenter',
-      columns: 'span 12',
       label: 'מרכז שדה',
       options: [
         { key: 'solid', value: '12123' },
@@ -56,29 +52,31 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
         { key: 'unproven', value: '123123123' },
       ],
       order: 2,
+      validations: [Validators.required]
     }),
 
 
     new QuestionCalendar({
       key: 'startDate',
-      columns: 'span 12',
       label: 'תאריך התחלה',
       value: '',
       order: 3,
+      validations: [Validators.required]
+
     }),
     new QuestionCalendar({
       key: 'endDate',
-      columns: 'span 12',
       label: 'תאריך סיום',
       value: '',
       order: 4,
+      validations: [Validators.required]
+
     }),
   ];
 
   customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'customerName',
-      columns: 'span 12',
       label: 'מי הלקוח',
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
@@ -91,7 +89,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
     new TextboxQuestion({
       key: 'teamRepresentative',
-      columns: 'span 12',
       label: 'נציג הקבוצה',
       value: '',
       order: 2,
@@ -124,13 +121,11 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
     new TextboxQuestion({
       key: 'email',
       label: 'מייל',
-      columns: 'span 12',
       type: 'text',
       order: 5,
     }),
     new QuestionSelect({
       key: 'payerName',
-      columns: 'span 12',
       label: 'לקוח משלם',
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
@@ -145,7 +140,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   groupAssambleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
-      columns: 'span 12',
       label: 'קבוצת גיל',
       options: [
         { key: '1', value: '1' },
@@ -174,14 +168,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
     //   value:0,
     //   order: 3,
     // }),
-    new QuestionNumber({
-      key: 'boysChaperone',
-      columns: 'span 5',
-      type: 'number',
-      label: 'מלווים',
-      value: 0,
-      order: 4,
-    }),
     // new QuestionNumber({
     //   key: 'boysChaperone',
     //   columns: 'span 5',
@@ -253,7 +239,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'characteristic',
-      columns: 'span 12',
       label: 'מאפיין',
       options: [
         { key: 'פרומלי', value: 'פרומלי' },
@@ -266,7 +251,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
     }),
     new QuestionSelect({
       key: 'activityType',
-      columns: 'span 12',
       label: 'סוג הפעילות',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
@@ -280,7 +264,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
       label: 'מחלקה',
       options: [{ key: '', value: 'ישראל' }, { key: '', value: 'חו"ל' }],
       value: 'ישראל',
-      columns: 'span 12',
       order: 5,
     }),
 
@@ -289,44 +272,38 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
       label: 'פנים/חוץ מרכז שדה',
       options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
       value: 'ישראל',
-      columns: 'span 12',
       order: 5,
     }),
 
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      columns: 'span 12',
       order: 7,
       value: ''
     }),
 
   ];
 
+  public squadForm: formGroupGrid[] = [
+    { title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
+    { title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
+    { title: 'לקוח', questions: this.customerFormInputs },
+    {
+      title: 'מועד ושם הטיול',
+      questions: this.timeAndNameFormInputs
+    },
+  ]
 
   @ViewChild('tourDetailsFormCustomQuestionRef', { static: true }) tourDetailsRef: ElementRef = new ElementRef(FormContainerComponent)
 
 
   constructor() {
-    console.log(this.tourDetailsRef)
   }
 
   ngOnInit(): void {
-    console.log( this.tourDetailsRef)
-
   }
 
-  ngAfterViewInit(): void {
-    console.log(this.tourDetailsRef)
-
-  }
   ngOnDestroy(): void {
-    console.log('asdasd');
-
   }
 
-  a(a: any) {
-    console.log('asd')
-    console.log(a.value)
-  }
 }

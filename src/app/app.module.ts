@@ -52,6 +52,8 @@ import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
+import { FormInputComponent } from './components/form-container/form-input/form-input.component';
+import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,7 @@ import { FormQuestionComponent } from './components/form-container/form-question
     FormQuestionComponent,
 
     OrderTourComponent,
+    FormQuestionComponent,
     NavigationComponent,
     SpinnerComponent,
     BottomNavigationComponent,
@@ -98,7 +101,9 @@ import { FormQuestionComponent } from './components/form-container/form-question
     NavigationGridComponent,
     NavCardComponent,
     NumberInputComponent,
-    IconComponent
+    IconComponent,
+    FormInputComponent,
+    SquadGroupComponent
   ],
   imports: [
     BrowserModule,
@@ -119,12 +124,7 @@ import { FormQuestionComponent } from './components/form-container/form-question
     MatIconModule,
     MatListModule
   ],
-  providers: [
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler
-    }
-  ],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
