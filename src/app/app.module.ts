@@ -36,7 +36,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { SquadAssambleComponent } from './screens/order-tour/squad-assamble/squad-assamble.component';
 import { FormContainerComponent } from './components/form-container/form-container.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
-import { DynamicFormQuestionComponent } from './components/form-container/dynamic-form-question/dynamic-form-question.component';
+import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
@@ -76,7 +76,7 @@ import { IconComponent } from './components/icon/icon.component';
     SquadAssambleComponent,
     FormContainerComponent,
     OrderTourComponent,
-    DynamicFormQuestionComponent,
+    FormQuestionComponent,
     NavigationComponent,
     SpinnerComponent,
     BottomNavigationComponent,

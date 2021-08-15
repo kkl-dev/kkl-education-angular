@@ -5,9 +5,9 @@ import { TextboxQuestion } from 'src/app/components/form-container/question-text
 import { QuestionCustom } from 'src/app/components/form-container/question-custom';
 import { of } from 'rxjs';
 import { QuestionNumber } from 'src/app/components/form-container/question-number';
-import { QuestionRadio } from 'src/app/components/form-container/dynamic-form-question/question-radio';
+import { QuestionRadio } from 'src/app/components/form-container/form-question/question-radio';
 import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
-import { Offset } from 'src/app/components/form-container/dynamic-form-question/question-offset';
+import { Offset } from 'src/app/components/form-container/form-question/question-offset';
 import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
 import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
 import { NgForm } from '@angular/forms';
@@ -28,14 +28,14 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     girlsChaperone:true,
     boysInstructors:true,
     girlsInstructors:true,
-    boysMedics:true, 
+    boysMedics:true,
     girlsMedics:true
   }
 
 
 
   TimeAndNameFormInputs: QuestionBase<string>[] = [
-    
+
     new TextboxQuestion({
       key: 'tourName',
       columns: 'span 12',
@@ -43,7 +43,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       value: '',
       order: 1,
     }),
-    
+
     new QuestionSelect({
       key: 'fieldCenter',
       columns: 'span 12',
@@ -293,7 +293,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       columns: 'span 12',
       order: 5,
     }),
-    
+
     new QuestionRadio({
       key: 'tripLocation',
       label: 'פנים/חוץ מרכז שדה',
@@ -303,7 +303,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       columns: 'span 12',
       order: 5,
     }),
-    
+
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
@@ -325,18 +325,18 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
 
   ngOnInit(): void {
     console.log( this.tourDetailsRef)
-    
+
   }
 
   ngAfterViewInit(): void {
     console.log( this.tourDetailsRef)
-    
+
   }
   ngOnDestroy():void{
     console.log('asdasd');
-    
+
   }
-  
+
   a(a:any){
     console.log('asd' )
     console.log( a.value)
