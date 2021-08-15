@@ -1,0 +1,145 @@
+---
+openapi: 3.0.1
+info:
+  title: kkl Education API
+  description: Education new project|
+  contact:
+    email: yochai@one1.co.il
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: user
+  description: Users functions
+- name: admin
+  description: Admin functions only
+paths:
+  /lookup/FieldForestCenter:
+    get:
+      tags:
+      - user
+      operationId: getLookupFieldForestCenters
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldForestCenter'
+  /lookup/acommodationType:
+    get:
+      tags:
+      - user
+      operationId: getLookupAcommodationType
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcommodationType'
+  /GetAvailableDates:
+    post:
+      tags:
+      - user
+      operationId: GetAvailableDates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchAvailableDatesOptions'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AvailableDate'
+components:
+  schemas:
+    FieldForestCenter:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: FieldForestCenter ID
+          type: integer
+          description: FieldForestCenter unique ID
+          example: 101
+        name:
+          title: FieldForestCenter Name
+          type: string
+          description: Field & Forest Center name
+          example: נס הרים
+        iconPath:
+          title: icon
+          type: string
+          description: yochai will check for path or base64
+          example: href...
+    AcommodationType:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Guest cabin
+          type: integer
+          description: Accomodation Type Id
+          example: 20
+        name:
+          title: Accomodation Name
+          type: string
+          description: Accomodation type name
+          example: בקתה
+    AvailableDate:
+      required:
+      - availableUnits
+      - date
+      type: object
+      properties:
+        date:
+          title: date
+          type: string
+          description: Current date of a month title
+          format: date
+          example: 0028-04-12
+        availableUnits:
+          title: available units
+          minimum: -1
+          type: integer
+          description: number of available units  use -1 for unknown
+          example: 3
+    SearchAvailableDatesOptions:
+      type: object
+      properties:
+        FieldForestCenter:
+          $ref: '#/components/schemas/FieldForestCenter'
+        fromDate:
+          title: from date
+          type: string
+          description: First date range in reservation order
+          format: date
+          example: 0030-04-13
+        tillDate:
+          title: from date
+          type: string
+          description: sklskldskdlkdlsk
+          format: date
+          example: 0032-04-12
+        acommodationType:
+          $ref: '#/components/schemas/AcommodationType'
+        SingleDay:
+          title: single day
+          type: boolean
+          description: Only one day tour
+          example: false
