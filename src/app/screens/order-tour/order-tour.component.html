@@ -8,7 +8,7 @@
   <mat-grid-tile rowspan="4">
     <app-squad-assamble></app-squad-assamble>
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile class="bottom-navigation">
     <app-bottom-navigation [currentPage]=0 previousUrl='prevPage' nextUrl='nextPage' [lastPage]='pages.length'
       (changePage)='changeActivePageBottomNavigation($event)'></app-bottom-navigation>
   </mat-grid-tile>
