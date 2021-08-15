@@ -1,3 +1,4 @@
+import { FormService } from './form.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -24,13 +25,12 @@ export class FormContainerComponent implements OnInit {
   @Input() customQuestionTemplates = {}
   payLoad: string = '';
 
-  constructor(private qcs: QuestionControlService) {
+  constructor(private formService: FormService) {
   }
 
   ngOnInit() {
-    // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
-    console.log(this.questions)
-    this.formTemplate = this.qcs.setGroup(this.questions)
+    // this.form = this.formService.toFormGroup(this.questions as QuestionBase<string>[]);
+    this.formTemplate = this.formService.setGroup(this.questions)
   }
 
   onSubmit() {

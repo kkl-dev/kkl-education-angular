@@ -1,3 +1,4 @@
+import { FormService } from '../form.service';
 import { QuestionControlService } from './../question-control.service';
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
@@ -42,7 +43,8 @@ export class FormInputComponent implements OnInit {
   public disabled!: boolean
 
   constructor(
-    private qcs: QuestionControlService
+    private qcs: QuestionControlService,
+    private formService : FormService
   ) { }
 
   ngOnInit(): void {
@@ -83,13 +85,11 @@ export class FormInputComponent implements OnInit {
   // method to handle validation messages
   public validate() {
 
-    this.error = this.qcs.getErrorMessage(this.control, this.placeHolder)
-
-    console.log(this.control)
+    this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
 
     this.control.valueChanges.subscribe(
       () => {
-        this.error = this.qcs.getErrorMessage(this.control, this.placeHolder)
+        this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
       }
     )
   }
