@@ -1,17 +1,21 @@
-<mat-form-field class="full-width" appearance="outline">
+<mat-form-field class="full-width" appearance="outline" floatLabel="never">
 
-  <mat-label>{{label | titlecase}}</mat-label>
+  <input *ngIf="type !== 'select'" matInput [type]="type" [disabled]="disabled" [formControl]="control"
+    control="control" autocomplete="off" (input)="handleChange($event.target.value)" [name]="type"
+    (focusout)="validate()" #input [placeholder]="label | titlecase">
 
-  <!-- <input matInput [type]="type" [disabled]="disabled" [formControl]="control" control="control" autocomplete="off"
-    (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" #input> -->
-
-  <mat-select color="primary">
-    <mat-option *ngFor="let food of foods" [value]="food.value">
-      {{food.viewValue}}
+  <mat-select color="primary" [formControl]="control"
+  *ngIf="type === 'select'"
+  (change)="handleChange($event.value)"
+  >
+    <mat-option>{{label | titlecase}}</mat-option>
+    <mat-option *ngFor="let option of options" [value]="option.value">
+      {{option.key}}
     </mat-option>
   </mat-select>
   <!-- icons -->
-  <mat-icon *ngIf="icon" matPrefix>{{icon}}</mat-icon>
+
+  <mat-icon matPrefix>{{type === 'select' ? 'keyboard_arrow_down' : icon}}</mat-icon>
 
 
   <!-- shred input hint -->

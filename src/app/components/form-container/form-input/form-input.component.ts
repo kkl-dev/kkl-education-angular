@@ -32,6 +32,7 @@ export class FormInputComponent implements OnInit {
   @Input() public hint!: string;
   @Input() public controlName!: string;
   @Input() public icon!: string;
+  @Input() public options!: []
 
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;
@@ -56,7 +57,6 @@ export class FormInputComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.subscribeToControl();
   }
 

@@ -46,6 +46,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
 
     new QuestionSelect({
       key: 'fieldCenter',
+      type: 'select',
       label: 'מרכז שדה',
       options: [
         { key: 'solid', value: '12123' },
@@ -54,7 +55,8 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'unproven', value: '123123123' },
       ],
       order: 2,
-      validations: [Validators.required]
+      icon: 'keyboard_arrow_down',
+      validations: [Validators.required],
     }),
 
 
@@ -79,6 +81,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
   customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'customerName',
+      type: 'select',
       label: 'מי הלקוח',
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
@@ -129,6 +132,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionSelect({
       key: 'payerName',
       label: 'לקוח משלם',
+      type: "select",
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
         { key: 'עוד לקוח', value: 'עוד לקוח' },
@@ -142,6 +146,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
   groupAssambleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
+      type: "select",
       label: 'קבוצת גיל',
       options: [
         { key: '1', value: '1' },
@@ -251,6 +256,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionSelect({
       key: 'characteristic',
       label: 'מאפיין',
+      type: 'select',
       options: [
         { key: 'פרומלי', value: 'פרומלי' },
         { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
@@ -263,6 +269,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
+      type: 'select',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
         { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
