@@ -16,8 +16,9 @@ import { QuestionControlService } from './question-control.service';
 export class FormContainerComponent implements OnInit {
 
   public form!: FormGroup;
-  
-  @Input() questions: QuestionBase<string>[] | null = [];
+  public formTemplate!: FormGroup;
+
+  @Input() questions!: QuestionBase<string>[]
   @Input() showButton:boolean=true
   @Input() customQuestionTemplates={}
   payLoad:string = '';
@@ -27,6 +28,8 @@ export class FormContainerComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
+    this.formTemplate = this.qcs.setGroup(this.questions)
+    console.log(this.formTemplate)
   }
 
   onSubmit() {

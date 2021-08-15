@@ -1,12 +1,14 @@
+<div class="form">
 
-    <form  class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
 
-      <div *ngFor="let question of questions"
-       class="form-row" [ngStyle]="{'grid-column': question.columns}">
 
-        <!-- <ng-container *ngIf="question.templateName" >
+    <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}">
 
-        <app-number-input
+      <!-- <app-form-input></app-form-input> -->
+      <!-- <ng-container *ngIf="question.templateName" >
+
+      <app-number-input
         [formControlName]="question.key"
         [id]="question.key"
         [type]="question.type"
@@ -17,10 +19,12 @@
 
         </ng-container> -->
 
-        <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question>
-      </div>
+      <!-- <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question> -->
+    </div>
 
-      <div class="form-row" *ngIf="showButton">
-        <button type="submit" [disabled]="!form.valid">Save</button>
-      </div>
-    </form>
+    <div class="form-row" *ngIf="showButton">
+      <!-- <button type="submit" [disabled]="!form.valid">Save</button> -->
+    </div>
+  </form>
+
+</div>

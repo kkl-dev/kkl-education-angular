@@ -1,9 +1,10 @@
-<div
-  [formGroup]="form"
-  class="form-group"
-  [ngStyle]="{ 'grid-column': question.columns }"
->
-  <label
+<div>
+
+  <form [formGroup]="form" class="form-group" [ngStyle]="{ 'grid-column': question.columns }">
+    <app-form-input></app-form-input>
+  </form>
+</div>
+<!-- <label
     class="form-group__label"
     [attr.for]="question.key"
     [ngStyle]="{ visibility: question.label == 'hide' ? 'hidden' : 'visable' }"
@@ -62,9 +63,9 @@
         />
         <label for="{{ question.key }}">{{ opt.value }}</label>
       </div>
-    </div>
+    </div> -->
 
-    <textarea
+<!-- <textarea
       *ngSwitchCase="'textarea'"
       cols="12"
       rows="4"
@@ -72,9 +73,9 @@
       [id]="question.key"
       [formControlName]="question.key"
     ></textarea>
-  </div>
 
-  <div class="errorMessage" *ngIf="!isValid">
+  </div> -->
+
+<!-- <div class="errorMessage" *ngIf="!isValid">
     {{ question.label }} is required
-  </div>
-</div>
+  </div> -->

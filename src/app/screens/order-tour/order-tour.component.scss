@@ -11,7 +11,7 @@
     justify-self: stretch;
     width: 60%;
     padding: 0px 20%;
-    flex: 1 1 100%;
+    flex: 0 1;
     // margin: 0 auto;
     background: linear-gradient(0deg, #ffffff 0%, rgba(#d8d8d8, 0.5) 100%);
   }
@@ -82,4 +82,9 @@
     box-sizing: border-box;
     text-shadow: 0 0 0.01px black;
   }
+}
+
+mat-grid-list, mat-grid-tile, app-squad-assamble {
+  width: 100%;
+  height: 100%;
 }

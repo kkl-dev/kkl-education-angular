@@ -50,6 +50,7 @@ import { EducationComponent } from './screens/search/education/education.compone
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { FormInputComponent } from './components/form-container/form-input/form-input.component';
+import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
 
 @NgModule({
   declarations: [
@@ -84,8 +85,9 @@ import { FormInputComponent } from './components/form-container/form-input/form-
     WorkingStepsComponent,
 
     NumberInputComponent,
-      IconComponent,
-      FormInputComponent
+    IconComponent,
+    FormInputComponent,
+    SquadGroupComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +108,7 @@ import { FormInputComponent } from './components/form-container/form-input/form-
     MatIconModule,
     MatListModule
   ],
-  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

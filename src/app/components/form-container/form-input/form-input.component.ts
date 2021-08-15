@@ -21,12 +21,13 @@ export class FormInputComponent implements OnInit {
 
   @ViewChild(MatInput) input!: HTMLInputElement;
 
-  @Input() public control: FormControl = new FormControl();
+  @Input() public control!: FormControl
 
   @Input() public type!: string;
+  @Input() public label!: string;
+  @Input() public placeHolder!: string;
   @Input() public hint!: string;
   @Input() public controlName!: string;
-  @Input() public placeHolder!: string;
 
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;

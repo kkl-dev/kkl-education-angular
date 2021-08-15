@@ -12,14 +12,17 @@ import { QuestionCalendar } from 'src/app/components/form-container/question-cal
 import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
 import { NgForm } from '@angular/forms';
 
+export interface formGroupGrid {
+  title: string;
+  questions: QuestionBase<string>[]
+}
+
 @Component({
   selector: 'app-squad-assamble',
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
 export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit {
-
-
 
   tourDetailsFormCustomQuestion: {} = {
     boys: true,
@@ -34,7 +37,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
 
-  TimeAndNameFormInputs: QuestionBase<string>[] = [
+  timeAndNameFormInputs: QuestionBase<string>[] = [
 
     new TextboxQuestion({
       key: 'tourName',
@@ -302,6 +305,16 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
     }),
 
   ];
+
+  public squadForm: formGroupGrid[] = [
+    {
+      title: 'מועד ושם הטיול',
+      questions: this.timeAndNameFormInputs
+    },
+    { title: 'לקוח', questions: this.customerFormInputs },
+    { title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
+    { title: 'פרטי הטיול', questions: this.tourDetailsFormInputs }
+  ]
 
 
   @ViewChild('tourDetailsFormCustomQuestionRef', { static: true }) tourDetailsRef: ElementRef = new ElementRef(FormContainerComponent)
