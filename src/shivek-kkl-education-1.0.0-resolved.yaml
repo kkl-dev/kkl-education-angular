@@ -7,7 +7,7 @@ info:
     email: yochai@one1.co.il
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.0.0
+- url: https://virtserver.swaggerhub.c om/shivek/kkl-education/1.0.0
   description: SwaggerHub API Auto Mocking
 tags:
 - name: user

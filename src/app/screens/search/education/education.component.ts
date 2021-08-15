@@ -4,7 +4,9 @@ import { FormBuilder, NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
-
+import { HttpClient } from '@angular/common/http';
+import { UserService } from '../../../api/v1/api/user.service';
+import { TripService } from '../../../services/trip.service'
 @Component({
   selector: 'app-education',
   templateUrl: './education.component.html',
@@ -12,15 +14,15 @@ import { Locale, getYear } from 'date-fns';
 })
 export class EducationComponent implements OnInit {
   @ViewChild('educationForm') signupForm: NgForm | undefined;
-
+  disable = true;
   public checked = false;
   sleepingPlace: string = '';
-  constructor() {
+  formOptions: any;
+  constructor(private httpClient: HttpClient, public usersService: UserService, public tripService: TripService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
     );
-
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
@@ -33,14 +35,25 @@ export class EducationComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
-
-  public formOptions = [
-    { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: '1' },
-    { imgSrc: 'assets/images/select-2.jpg', text: 'לביא', value: '2' },
-    { imgSrc: 'assets/images/select-3.jpg', text: 'נס הרים', value: '31' },
-    { imgSrc: 'assets/images/select-4.jpg', text: 'יתיר', value: '51' },
-  ];
+  ngOnInit() {
+    this.usersService.getLookupFieldForestCenters().subscribe(
+      response => {
+        console.log(response);
+        this.formOptions = response;
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+  selectChange(event: any) {
+    if (this.tripService.CenterField !== undefined) { this.disable = false; }
+  }
+  // public formOptions = [
+  //   { id: 101, name: "ציפורי", iconPath: 'assets/images/select-1.jpg' },
+  //   { id: 102, name: 'לביא', iconPath: 'assets/images/select-2.jpg' },
+  //   { id: 103, name: 'נס הרים', iconPath: 'assets/images/select-3.jpg' },
+  //   { id: 104, name: 'יתיר', iconPath: 'assets/images/select-4.jpg' },
+  // ];
 
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
@@ -93,6 +106,7 @@ export class EducationComponent implements OnInit {
       this.dateObj.from = e;
       this.dateObj.to = '';
     }
+    this.tripService.dateObj = this.dateObj;
   }
 
   hideSelectPlaceholder(sel: MatSelect) {
