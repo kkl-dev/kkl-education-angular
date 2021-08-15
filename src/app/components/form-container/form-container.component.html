@@ -2,10 +2,19 @@
 
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
 
+    <mat-grid-list [cols]="cols" rowHeight="10vh">
+      <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || 1">
+        <app-form-input [control]="formTemplate.controls[question.key || question.label]" [type]="question.type"
+          [label]='question.label'></app-form-input>
+        </mat-grid-tile>
 
-    <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}">
 
-      <!-- <app-form-input></app-form-input> -->
+
+      </mat-grid-list>
+
+
+    <!-- <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}"> -->
+
       <!-- <ng-container *ngIf="question.templateName" >
 
       <app-number-input
@@ -20,7 +29,6 @@
         </ng-container> -->
 
       <!-- <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question> -->
-    </div>
 
     <div class="form-row" *ngIf="showButton">
       <!-- <button type="submit" [disabled]="!form.valid">Save</button> -->

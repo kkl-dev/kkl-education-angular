@@ -34,7 +34,7 @@ export class QuestionBase<T> {
     this.templateName = options.templateName || '';
     this.label = options.label || '';
     this.required = !!options.required;
-    this.columns = options.columns || 'hide';
+    this.columns = options.columns || '1';
     this.validations = [],
     this.order = options.order === undefined ? 1 : options.order;
     this.controlType = options.controlType || '';

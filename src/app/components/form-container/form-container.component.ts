@@ -9,7 +9,7 @@ import { QuestionControlService } from './question-control.service';
   selector: 'app-form-container',
   templateUrl: './form-container.component.html',
   styleUrls: ['./form-container.component.scss'],
-  providers: [ QuestionControlService ]
+  providers: [QuestionControlService]
 })
 
 
@@ -18,10 +18,11 @@ export class FormContainerComponent implements OnInit {
   public form!: FormGroup;
   public formTemplate!: FormGroup;
 
+  @Input() cols: string = "1"
   @Input() questions!: QuestionBase<string>[]
-  @Input() showButton:boolean=true
-  @Input() customQuestionTemplates={}
-  payLoad:string = '';
+  @Input() showButton: boolean = true
+  @Input() customQuestionTemplates = {}
+  payLoad: string = '';
 
   constructor(private qcs: QuestionControlService) {
   }

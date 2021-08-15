@@ -41,7 +41,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
     new TextboxQuestion({
       key: 'tourName',
-      columns: 'span 12',
       label: 'שם הטיול',
       value: '',
       order: 1,
@@ -49,7 +48,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
     new QuestionSelect({
       key: 'fieldCenter',
-      columns: 'span 12',
       label: 'מרכז שדה',
       options: [
         { key: 'solid', value: '12123' },
@@ -63,14 +61,12 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
     new QuestionCalendar({
       key: 'startDate',
-      columns: 'span 12',
       label: 'תאריך התחלה',
       value: '',
       order: 3,
     }),
     new QuestionCalendar({
       key: 'endDate',
-      columns: 'span 12',
       label: 'תאריך סיום',
       value: '',
       order: 4,
@@ -80,7 +76,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'customerName',
-      columns: 'span 12',
       label: 'מי הלקוח',
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
@@ -93,7 +88,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
     new TextboxQuestion({
       key: 'teamRepresentative',
-      columns: 'span 12',
       label: 'נציג הקבוצה',
       value: '',
       order: 2,
@@ -126,13 +120,11 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
     new TextboxQuestion({
       key: 'email',
       label: 'מייל',
-      columns: 'span 12',
       type: 'text',
       order: 5,
     }),
     new QuestionSelect({
       key: 'payerName',
-      columns: 'span 12',
       label: 'לקוח משלם',
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
@@ -147,7 +139,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   groupAssambleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
-      columns: 'span 12',
       label: 'קבוצת גיל',
       options: [
         { key: '1', value: '1' },
@@ -256,7 +247,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'characteristic',
-      columns: 'span 12',
       label: 'מאפיין',
       options: [
         { key: 'פרומלי', value: 'פרומלי' },
@@ -269,7 +259,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
     }),
     new QuestionSelect({
       key: 'activityType',
-      columns: 'span 12',
       label: 'סוג הפעילות',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
@@ -283,7 +272,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
       label: 'מחלקה',
       options: [{ key: '', value: 'ישראל' }, { key: '', value: 'חו"ל' }],
       value: 'ישראל',
-      columns: 'span 12',
       order: 5,
     }),
 
@@ -292,14 +280,12 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
       label: 'פנים/חוץ מרכז שדה',
       options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
       value: 'ישראל',
-      columns: 'span 12',
       order: 5,
     }),
 
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      columns: 'span 12',
       order: 7,
       value: ''
     }),
@@ -307,13 +293,13 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   ];
 
   public squadForm: formGroupGrid[] = [
+    { title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
+    { title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
+    { title: 'לקוח', questions: this.customerFormInputs },
     {
       title: 'מועד ושם הטיול',
       questions: this.timeAndNameFormInputs
     },
-    { title: 'לקוח', questions: this.customerFormInputs },
-    { title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
-    { title: 'פרטי הטיול', questions: this.tourDetailsFormInputs }
   ]
 
 

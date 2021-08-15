@@ -32,7 +32,7 @@ export class FormInputComponent implements OnInit {
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;
 
-  public value: any
+  public value!: any
   public error!: string
   public serverError!: string
 
@@ -76,14 +76,7 @@ export class FormInputComponent implements OnInit {
 
 
   private subscribeToControl() {
-    this.control.statusChanges.subscribe(
-      (status) => {
-
-        if (status === "VALID") {
-          this.input.focus()
-
-        }
-      })
+   
   }
 
 
