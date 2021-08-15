@@ -14,10 +14,11 @@ import { QuestionControlService } from './question-control.service';
 
 
 export class FormContainerComponent implements OnInit {
+
+  public form!: FormGroup;
   
   @Input() questions: QuestionBase<string>[] | null = [];
   @Input() showButton:boolean=true
- public form!: FormGroup; 
   @Input() customQuestionTemplates={}
   payLoad:string = '';
 
@@ -31,7 +32,7 @@ export class FormContainerComponent implements OnInit {
   onSubmit() {
     this.payLoad = JSON.stringify(this.form.getRawValue());
     console.log(this.payLoad);
-    
+
   }
 
 }

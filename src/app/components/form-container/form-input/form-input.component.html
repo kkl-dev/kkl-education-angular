@@ -1,0 +1,22 @@
+<mat-form-field class="full-width" appearance="fill">
+
+  <mat-label>{{placeHolder | titlecase}}</mat-label>
+  <input matInput [type]="type" [disabled]="disabled" [formControl]="control" control="control" autocomplete="off"
+    (input)="handleChange($event)" [name]="type" (focusout)="validate()" required #input>
+
+
+  <!-- price icons -->
+  <!-- <ng-container *ngIf="placeHolder === 'Price'">
+    <span matPrefix></span>
+    <span *ngIf="placeHolder === 'Price'" matSuffix>.00</span>
+  </ng-container> -->
+
+
+  <!-- shred input hint -->
+  <mat-hint *ngIf="control.invalid && !hint">{{'Please enter '+ hint}}</mat-hint>
+
+  <!-- shred input error -->
+  <mat-error *ngIf=control.errors>{{error}}</mat-error>
+
+</mat-form-field>
+

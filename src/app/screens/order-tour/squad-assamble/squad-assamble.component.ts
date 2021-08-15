@@ -175,16 +175,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     //   value:0,
     //   order: 3,
     // }),
- new QuestionNumber({
-      key: 'boysChaperone',
-      columns: 'span 5',
-      type: 'number',
-      label: 'מלווים',
-      innerLabel: 'בנים',
-      value:0,
-    templateName:'boys',
-      order: 4,
-    }),
+
     // new QuestionNumber({
     //   key: 'boysChaperone',
     //   columns: 'span 5',

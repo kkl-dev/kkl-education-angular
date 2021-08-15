@@ -33,7 +33,7 @@ export class EducationComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public formOptions = [
     { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: '1' },
@@ -68,8 +68,6 @@ export class EducationComponent implements OnInit {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
     closeOnSelected: true,
-    // minDate: addDays(new Date(), 5),
-    // maxDate: addDays(new Date(), 10),
     minYear: 2019,
     maxYear: 2021,
     freeSpacesArray: this.freeSpacesArray,
@@ -77,7 +75,7 @@ export class EducationComponent implements OnInit {
 
   public dateObjChanged(e: string) {
     if (e.includes('-')) {
-      let tempDateArr = [];
+      let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       console.log(tempDateArr);
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {

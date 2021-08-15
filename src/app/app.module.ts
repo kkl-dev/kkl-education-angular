@@ -49,6 +49,7 @@ import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
+import { FormInputComponent } from './components/form-container/form-input/form-input.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { IconComponent } from './components/icon/icon.component';
     WorkingStepsComponent,
 
     NumberInputComponent,
-      IconComponent
+      IconComponent,
+      FormInputComponent
   ],
   imports: [
     BrowserModule,
