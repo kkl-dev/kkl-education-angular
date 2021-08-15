@@ -2,10 +2,14 @@
 
   <mat-label>{{label | titlecase}}</mat-label>
 
-  <input matInput [type]="type" [disabled]="disabled" [formControl]="control" control="control" autocomplete="off"
-    (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" #input>
+  <!-- <input matInput [type]="type" [disabled]="disabled" [formControl]="control" control="control" autocomplete="off"
+    (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" #input> -->
 
-
+  <mat-select color="primary">
+    <mat-option *ngFor="let food of foods" [value]="food.value">
+      {{food.viewValue}}
+    </mat-option>
+  </mat-select>
   <!-- icons -->
   <mat-icon *ngIf="icon" matPrefix>{{icon}}</mat-icon>
 

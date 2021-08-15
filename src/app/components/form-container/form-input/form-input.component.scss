@@ -2,4 +2,23 @@ mat-form-field {
   text-align: right !important;
   width: 100%;
 
+  mat-select {
+    display: flex;
+    color: blueviolet;
+
+    div.mat-select-trigger {}
+  }
+
+  ::ng-deep div.mat-form-field-outline.mat-form-field-outline-thick {
+    padding-left: 5% !important;
+  }
+
+  ::ng-deep div.mat-form-field-outline-gap {
+    padding-left: 10% !important;
+  }
+
+  ::ng-deep .mat-select-arrow {
+    // color: red
+  }
+
 }

@@ -3,8 +3,10 @@ import { QuestionControlService } from './../question-control.service';
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 
-
-import { MatInput } from '@angular/material/input';
+interface Food {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-form-input',
@@ -34,6 +36,12 @@ export class FormInputComponent implements OnInit {
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;
 
+  public foods: Food[] = [
+    { value: 'steak-0', viewValue: 'Steak' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' }
+  ];
+
   public value!: any
   public error!: string
   public serverError!: string
@@ -44,7 +52,7 @@ export class FormInputComponent implements OnInit {
 
   constructor(
     private qcs: QuestionControlService,
-    private formService : FormService
+    private formService: FormService
   ) { }
 
   ngOnInit(): void {
