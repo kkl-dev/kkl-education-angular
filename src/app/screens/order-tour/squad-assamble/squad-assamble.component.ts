@@ -1,4 +1,4 @@
-import { Component, OnInit , OnDestroy,ViewChild, ElementRef ,AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { QuestionSelect } from 'src/app/components/form-container/question-select';
 import { QuestionBase } from 'src/app/components/form-container/question-base';
 import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
@@ -17,19 +17,19 @@ import { NgForm } from '@angular/forms';
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
+export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-  tourDetailsFormCustomQuestion:{}={
-    boys:true,
-    girls:true,
-    boysChaperone:true,
-    girlsChaperone:true,
-    boysInstructors:true,
-    girlsInstructors:true,
-    boysMedics:true,
-    girlsMedics:true
+  tourDetailsFormCustomQuestion: {} = {
+    boys: true,
+    girls: true,
+    boysChaperone: true,
+    girlsChaperone: true,
+    boysInstructors: true,
+    girlsInstructors: true,
+    boysMedics: true,
+    girlsMedics: true
   }
 
 
@@ -278,7 +278,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     new QuestionRadio({
       key: 'tripLocation',
       label: 'מחלקה',
-      innerLabel: '',
       options: [{ key: '', value: 'ישראל' }, { key: '', value: 'חו"ל' }],
       value: 'ישראל',
       columns: 'span 12',
@@ -288,7 +287,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     new QuestionRadio({
       key: 'tripLocation',
       label: 'פנים/חוץ מרכז שדה',
-      innerLabel: '',
       options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
       value: 'ישראל',
       columns: 'span 12',
@@ -298,38 +296,37 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      innerLabel: '',
       columns: 'span 12',
       order: 7,
-      value:''
+      value: ''
     }),
 
   ];
 
 
-  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef:ElementRef = new ElementRef(FormContainerComponent)
+  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true }) tourDetailsRef: ElementRef = new ElementRef(FormContainerComponent)
 
 
   constructor() {
-    console.log( this.tourDetailsRef)
+    console.log(this.tourDetailsRef)
   }
 
   ngOnInit(): void {
-    console.log( this.tourDetailsRef)
+    console.log(this.tourDetailsRef)
 
   }
 
   ngAfterViewInit(): void {
-    console.log( this.tourDetailsRef)
+    console.log(this.tourDetailsRef)
 
   }
-  ngOnDestroy():void{
+  ngOnDestroy(): void {
     console.log('asdasd');
 
   }
 
-  a(a:any){
-    console.log('asd' )
-    console.log( a.value)
+  a(a: any) {
+    console.log('asd')
+    console.log(a.value)
   }
 }

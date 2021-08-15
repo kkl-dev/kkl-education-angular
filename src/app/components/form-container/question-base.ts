@@ -1,3 +1,4 @@
+import { Validators } from '@angular/forms';
 export class QuestionBase<T> {
   value: T | undefined | number;
   key: string;
@@ -6,8 +7,8 @@ export class QuestionBase<T> {
   order: number;
   controlType: string;
   columns: string;
-  component:string;
-  innerLabel:string;
+  component: string;
+  validations: Validators[];
   type: string;
   templateName: string;
   options: { key: string; value: string }[];
@@ -20,11 +21,11 @@ export class QuestionBase<T> {
       label?: string;
       required?: boolean;
       order?: number;
-      innerLabel?: string;
       controlType?: string;
       type?: string;
       columns?: string;
-      component?:string;
+      component?: string;
+      validations?: Validators[];
       options?: { key: string; value: string }[];
     } = {}
   ) {
@@ -34,7 +35,7 @@ export class QuestionBase<T> {
     this.label = options.label || '';
     this.required = !!options.required;
     this.columns = options.columns || 'hide';
-    this.innerLabel = options.innerLabel || '';
+    this.validations = [],
     this.order = options.order === undefined ? 1 : options.order;
     this.controlType = options.controlType || '';
     this.type = options.type || '';

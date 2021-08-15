@@ -4,7 +4,7 @@
       <div *ngFor="let question of questions"
        class="form-row" [ngStyle]="{'grid-column': question.columns}">
 
-        <ng-container *ngIf="question.templateName" >
+        <!-- <ng-container *ngIf="question.templateName" >
 
         <app-number-input
         [formControlName]="question.key"
@@ -15,7 +15,7 @@
         [value]='question.value'
         > </app-number-input>
 
-        </ng-container>
+        </ng-container> -->
 
         <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question>
       </div>
