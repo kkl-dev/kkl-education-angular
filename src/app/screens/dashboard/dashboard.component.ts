@@ -1,15 +1,15 @@
-import { UserDataService } from './../../utilities/services/user-data.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+
+export class DashboardComponent {
   public activeRoute: string = '';
-  public dashboardArray:{
+  public dashboardArray: {
     svgUrl: string
     name: string
     url: string
@@ -18,29 +18,25 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(
-    private route: ActivatedRoute,
-    private userDataService: UserDataService
   ) {
     this.prefix = 'education';
-    this.dashboardArray =[
+    this.dashboardArray = [
       {
-        svgUrl: 'assets/images/05-destination.svg',
+        svgUrl: 'destination',
         name: 'הטיולים שלי',
         url: 'search',
       },
       {
-        svgUrl: 'assets/images/button.svg',
+        svgUrl: 'button',
         name: 'טיול חדש',
         url: 'search',
       },
       {
-        svgUrl: 'assets/images/report.svg',
-        name: 'הטיולים שלי',
+        svgUrl: 'report',
+        name: 'דוחות',
         url: 'search',
       },
     ]
-
   }
 
-  ngOnInit(): void {}
 }

@@ -1,16 +1,25 @@
-<form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
 
-  <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}">
+    <form  class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
 
-    <ng-container *ngIf="question.templateName">
-      <app-number-input [formControlName]="question.key" [id]="question.key" [type]="question.type"
-        [innerLabel]='question.innerLabel' [form]="form" [value]='question.value'> </app-number-input>
-    </ng-container>
+      <div *ngFor="let question of questions"
+       class="form-row" [ngStyle]="{'grid-column': question.columns}">
 
-    <app-form-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"></app-form-question>
-  </div>
+        <ng-container *ngIf="question.templateName" >
 
-  <div class="form-row" *ngIf="showButton">
-    <button type="submit" [disabled]="!form.valid">Save</button>
-  </div>
-</form>
+        <app-number-input
+        [formControlName]="question.key"
+        [id]="question.key"
+        [type]="question.type"
+        [innerLabel]='question.innerLabel'
+        [form]="form"
+        [value]='question.value'
+        > </app-number-input>
+
+        </ng-container>
+
+      </div>
+
+      <div class="form-row" *ngIf="showButton">
+        <button type="submit" [disabled]="!form.valid">Save</button>
+      </div>
+    </form>

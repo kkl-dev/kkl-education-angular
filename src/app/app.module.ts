@@ -36,7 +36,6 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { SquadAssambleComponent } from './screens/order-tour/squad-assamble/squad-assamble.component';
 import { FormContainerComponent } from './components/form-container/form-container.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
-import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
@@ -51,6 +50,8 @@ import { AdditionsComponent } from './screens/order-tour/additions/additions.com
 import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
 import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
+import { IconComponent } from './components/icon/icon.component';
+import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { NumberInputComponent } from './components/number-input/number-input.com
     AdditionsComponent,
     NavigationGridComponent,
     NavCardComponent,
-    NumberInputComponent
+    NumberInputComponent,
+    IconComponent
   ],
   imports: [
     BrowserModule,

@@ -8,8 +8,6 @@ import { ErrorHandler, Injectable } from '@angular/core';
 export class GlobalErrorHandler implements ErrorHandler {
 
   public handleError(error: Error) {
-    console.log(2)
-    console.error(error)
-    console.error(error.stack)
+    console.error(error.message)
   }
 }
