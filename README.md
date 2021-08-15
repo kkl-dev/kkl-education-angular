@@ -25,4 +25,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
- ----test -yael
+
+ ## to execute yaml
+ openapi-generator-cli generate -i src/shivek-kkl-education-1.0.0-resolved.yaml -g typescript-angular -o src/app/api/v1
