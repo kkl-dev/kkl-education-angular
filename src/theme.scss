@@ -102,13 +102,14 @@ $icon: (
 
 $my-primary: mat.define-palette($eduction-primary);
 $my-accent: mat.define-palette($education-accent, A200, A100, A400);
-$my-icon: mat.define-palette($icon, A200, A100, A400);
 $my-warn: mat.define-palette(mat.$red-palette);
 
-$my-theme: mat.define-light-theme((color: (primary: $my-primary,
+$my-icon: mat.define-palette($icon, A200, A100, A400);
+
+$primary-theme: mat.define-light-theme((color:
+(primary: $my-primary,
       accent: $my-accent,
       warn: $my-warn,
     )));
 
-@include mat.core-theme($my-theme);
-@include mat.all-component-themes($my-theme);
+    @include mat.all-component-themes($primary-theme);
