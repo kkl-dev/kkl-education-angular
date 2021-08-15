@@ -7,6 +7,7 @@ import { QuestionTextarea } from 'src/app/components/form-container/question-tex
 import { Offset } from 'src/app/components/form-container/form-question/question-offset';
 import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
 import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
+import { Validators } from '@angular/forms';
 
 export interface formGroupGrid {
   title: string;
@@ -40,6 +41,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       label: 'שם הטיול',
       value: '',
       order: 1,
+      validations: [Validators.required]
     }),
 
     new QuestionSelect({
@@ -52,6 +54,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'unproven', value: '123123123' },
       ],
       order: 2,
+      validations: [Validators.required]
     }),
 
 
@@ -60,12 +63,16 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       label: 'תאריך התחלה',
       value: '',
       order: 3,
+      validations: [Validators.required]
+
     }),
     new QuestionCalendar({
       key: 'endDate',
       label: 'תאריך סיום',
       value: '',
       order: 4,
+      validations: [Validators.required]
+
     }),
   ];
 

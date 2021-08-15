@@ -11,7 +11,7 @@
 
 
   <!-- shred input hint -->
-  <mat-hint *ngIf="control.invalid && !hint">{{'Please enter '+ hint}}</mat-hint>
+  <mat-hint *ngIf="hint">{{'Please enter '+ hint}}</mat-hint>
 
   <!-- shred input error -->
   <mat-error *ngIf=control.errors>{{error}}</mat-error>

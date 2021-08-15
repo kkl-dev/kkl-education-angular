@@ -35,7 +35,7 @@ constructor(
   this.disabled = true;
   this.label = options.label || '';
   this.columns = options.columns || '1';
-  this.validations = [],
+  this.validations = options.validations || [],
     this.order = options.order === undefined ? 1 : options.order;
   this.controlType = options.controlType || '';
   this.type = options.type || '';
