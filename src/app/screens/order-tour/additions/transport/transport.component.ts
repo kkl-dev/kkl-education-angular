@@ -14,24 +14,22 @@ export class TransportComponent implements OnInit {
   transportForm: QuestionBase<string>[] = [
 
     new TextboxQuestion({
-      key: '1',
-      label: 'שם הטיול',
+      key: 'participants',
+      label: 'משתתפים',
       value: '',
       order: 1,
       validations: [Validators.required]
     }),
-
     new TextboxQuestion({
-      key: '2',
-      label: 'שם הטיול',
+      key: 'quentity',
+      label: 'כמות',
       value: '',
       order: 1,
       validations: [Validators.required]
     }),
-
     new QuestionSelect({
-      key: '3',
-      label: 'מרכז שדה',
+      key: 'suplier',
+      label: 'בחר ספק',
       options: [
         { key: 'solid', value: '12123' },
         { key: 'great', value: '23' },
@@ -39,48 +37,53 @@ export class TransportComponent implements OnInit {
         { key: 'unproven', value: '123123123' },
       ],
       order: 2,
+      type: 'select',
       validations: [Validators.required]
     }),
     new QuestionSelect({
-      key: '4',
-      label: 'מרכז שדה',
+      key: 'item',
+      label: 'בחר פריט',
       options: [
         { key: 'solid', value: '12123' },
         { key: 'great', value: '23' },
         { key: 'good', value: '123' },
         { key: 'unproven', value: '123123123' },
       ],
+      type: 'select',
       order: 2,
       validations: [Validators.required]
     }),
-    new TextboxQuestion({
-      key: '6',
-      label: 'שם הטיול',
-      value: '',
-      order: 1,
-      validations: [Validators.required]
-    }),
+
+
+
 
     new TextboxQuestion({
-      key: '5',
-      label: 'שם הטיול',
+      key: 'total',
+      label: 'סה"כ',
       value: '',
       order: 1,
       validations: [Validators.required]
     }),
     new TextboxQuestion({
-      key: 'tourName',
-      label: 'שם 7',
+      key: 'customeCost',
+      label: 'חיוב לקוח',
       value: '',
       order: 1,
       validations: [Validators.required]
     }),
-
     new TextboxQuestion({
-      key: '8',
-      label: 'שם הטיול',
+      key: 'suplierCost',
+      label: 'חיוב ספק',
       value: '',
       order: 1,
+      validations: [Validators.required]
+    }),
+    new TextboxQuestion({
+      key: 'price',
+      label: 'מחיר',
+      value: '',
+      order: 1,
+      type: 'number',
       validations: [Validators.required]
     }),
 
