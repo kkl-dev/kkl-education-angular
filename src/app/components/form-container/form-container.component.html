@@ -6,16 +6,13 @@
       <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || 1">
         <app-form-input [control]="formTemplate.controls[question.key || question.label]" [type]="question.type"
           [label]='question.label'></app-form-input>
-        </mat-grid-tile>
-
-
-
-      </mat-grid-list>
+      </mat-grid-tile>
+    </mat-grid-list>
 
 
     <!-- <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}"> -->
 
-      <!-- <ng-container *ngIf="question.templateName" >
+    <!-- <ng-container *ngIf="question.templateName" >
 
       <app-number-input
         [formControlName]="question.key"
@@ -28,10 +25,10 @@
 
         </ng-container> -->
 
-      <!-- <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question> -->
+    <!-- <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question> -->
 
     <div class="form-row" *ngIf="showButton">
-      <!-- <button type="submit" [disabled]="!form.valid">Save</button> -->
+      <button type="submit" mat-button (click)="onSubmit()">submit</button>
     </div>
   </form>
 

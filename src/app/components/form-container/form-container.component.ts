@@ -28,14 +28,13 @@ export class FormContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
+    // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
     this.formTemplate = this.qcs.setGroup(this.questions)
-    console.log(this.formTemplate)
   }
 
   onSubmit() {
     this.payLoad = JSON.stringify(this.form.getRawValue());
-    console.log(this.payLoad);
+    console.log(this.formTemplate.value);
 
   }
 
