@@ -1,4 +1,5 @@
-<div class="assamble-tour">
+<div class="assamble-tour" >
+  <button (click)="a(tourDetailsFormCustomQuestionRef.form)">sdfgsdgsfsdf</button>
   <div class="assamble-tour__form">
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">מועד ושם הטיול</h3>
@@ -35,7 +36,7 @@
       <h3 class="assamble-tour__form-headline">פרטי הטיול</h3>
     </div>
     <app-form-container [customQuestionTemplates]='tourDetailsFormCustomQuestion' 
-      [questions]="tourDetailsFormInputs"
+      [questions]="tourDetailsFormInputs" 
     ></app-form-container>
   </div>
 </div>

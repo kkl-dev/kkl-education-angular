@@ -49,6 +49,7 @@ import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
+import { IconComponent } from './components/icon/icon.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { NumberInputComponent } from './components/number-input/number-input.com
     BottomNavigationComponent,
     WorkingStepsComponent,
     InfoCardComponent,
-    NumberInputComponent
+    NumberInputComponent,
+    IconComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +105,7 @@ import { NumberInputComponent } from './components/number-input/number-input.com
     MatIconModule,
     MatListModule
   ],
-  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

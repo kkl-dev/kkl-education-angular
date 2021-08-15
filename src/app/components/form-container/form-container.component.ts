@@ -17,7 +17,7 @@ export class FormContainerComponent implements OnInit {
   
   @Input() questions: QuestionBase<string>[] | null = [];
   @Input() showButton:boolean=true
-  form!: FormGroup; 
+ public form!: FormGroup; 
   @Input() customQuestionTemplates={}
   payLoad:string = '';
 
