@@ -10,20 +10,20 @@ export class QuestionControlService {
     private fb: FormBuilder
   ) { }
 
-  public toFormGroup(questions: QuestionBase<string>[]) {
-    const group: any = {};
+  // public toFormGroup(questions: QuestionBase<string>[]) {
+  //   const group: any = {};
 
-    questions.forEach((question) => {
-      group[question.key] = question.required
-        ? new FormControl(question.value || '', Validators.required)
-        : new FormControl(question.value || '');
-    });
-    return new FormGroup(group);
-  }
+  //   questions.forEach((question) => {
+  //     group[question.key] = question.required
+  //       ? new FormControl(question.value || '', Validators.required)
+  //       : new FormControl(question.value || '');
+  //   });
+  //   return new FormGroup(group);
+  // }
 
   private setFormGroup = (formTemplate: QuestionBase<string>[]) => formTemplate.map((question) => question).reduce((acc, control) => {
     const { key, label, validations } = control;
-    return { ...acc, [key || label.toLowerCase()]: validations };
+    return { ...acc, [key || label.toLowerCase()]: ['', validations] };
   }, {});
 
 

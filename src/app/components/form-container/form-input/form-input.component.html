@@ -3,14 +3,11 @@
   <mat-label>{{label | titlecase}}</mat-label>
 
   <input matInput [type]="type" [disabled]="disabled" [formControl]="control" control="control" autocomplete="off"
-  (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" #input>
+    (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" #input>
 
 
-  <!-- price icons -->
-  <!-- <ng-container *ngIf="placeHolder === 'Price'">
-    <span matPrefix></span>
-    <span *ngIf="placeHolder === 'Price'" matSuffix>.00</span>
-  </ng-container> -->
+  <!-- icons -->
+  <mat-icon *ngIf="icon" matPrefix>{{icon}}</mat-icon>
 
 
   <!-- shred input hint -->
@@ -20,4 +17,3 @@
   <mat-error *ngIf=control.errors>{{error}}</mat-error>
 
 </mat-form-field>
-

@@ -1,6 +1,6 @@
 <div class="form">
 
-  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formTemplate">
 
     <mat-grid-list [cols]="cols" rowHeight="10vh">
       <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || 1">

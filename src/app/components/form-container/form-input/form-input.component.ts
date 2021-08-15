@@ -28,6 +28,7 @@ export class FormInputComponent implements OnInit {
   @Input() public placeHolder!: string;
   @Input() public hint!: string;
   @Input() public controlName!: string;
+  @Input() public icon!: string;
 
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;

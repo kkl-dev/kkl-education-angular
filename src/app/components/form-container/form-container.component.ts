@@ -33,7 +33,6 @@ export class FormContainerComponent implements OnInit {
   }
 
   onSubmit() {
-    this.payLoad = JSON.stringify(this.form.getRawValue());
     console.log(this.formTemplate.value);
 
   }

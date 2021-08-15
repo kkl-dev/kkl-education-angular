@@ -2,15 +2,11 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } fr
 import { QuestionSelect } from 'src/app/components/form-container/question-select';
 import { QuestionBase } from 'src/app/components/form-container/question-base';
 import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
-import { QuestionCustom } from 'src/app/components/form-container/question-custom';
-import { of } from 'rxjs';
-import { QuestionNumber } from 'src/app/components/form-container/question-number';
 import { QuestionRadio } from 'src/app/components/form-container/form-question/question-radio';
 import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
 import { Offset } from 'src/app/components/form-container/form-question/question-offset';
 import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
 import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
-import { NgForm } from '@angular/forms';
 
 export interface formGroupGrid {
   title: string;
@@ -22,7 +18,7 @@ export interface formGroupGrid {
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SquadAssambleComponent implements OnInit, OnDestroy {
 
   tourDetailsFormCustomQuestion: {} = {
     boys: true,
@@ -307,25 +303,12 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
   constructor() {
-    console.log(this.tourDetailsRef)
   }
 
   ngOnInit(): void {
-    console.log(this.tourDetailsRef)
-
   }
 
-  ngAfterViewInit(): void {
-    console.log(this.tourDetailsRef)
-
-  }
   ngOnDestroy(): void {
-    console.log('asdasd');
-
   }
 
-  a(a: any) {
-    console.log('asd')
-    console.log(a.value)
-  }
 }
