@@ -1,0 +1,13 @@
+<mat-grid-list cols="1" rowHeight="30vh">
+  <mat-grid-tile>
+    <mat-grid-list cols="1" rowHeight="5vh">
+      <mat-grid-tile>
+        <span>הוספת נוסעים</span>
+      </mat-grid-tile>
+      <mat-grid-tile rowspan="5">
+        <app-form-container [questions]="transportForm" [cols]="4"></app-form-container>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-grid-tile>
+  <mat-grid-tile></mat-grid-tile>
+</mat-grid-list>
