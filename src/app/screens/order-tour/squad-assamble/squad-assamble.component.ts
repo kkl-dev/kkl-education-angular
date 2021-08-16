@@ -34,13 +34,8 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
 
-<<<<<<< HEAD
-  TimeAndNameFormInputs: QuestionBase<string>[] = [
+  timeAndNameFormInputs: QuestionBase<string | Date>[] = [
 
-=======
-  TimeAndNameFormInputs: QuestionBase<string | Date>[] = [
-    
->>>>>>> 7aaf2f4e5e1b4ca11e396356f055d521d20177e8
     new TextboxQuestion({
       key: 'tourName',
       columns: 'span 12',
@@ -160,27 +155,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
       ],
       order: 1,
     }),
-<<<<<<< HEAD
-    // new QuestionNumber({
-    //   key: 'boys',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'נוער/מבוגרים',
-    //   value:0,
-    //   order: 2,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-    // new QuestionNumber({
-    //   key: 'girls',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   value:0,
-    //   order: 3,
-    // }),
-=======
     new QuestionNumber({
       key: 'boys',
       columns: 'span 5',
@@ -203,83 +177,11 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
       order: 3,
     }),
 
->>>>>>> 7aaf2f4e5e1b4ca11e396356f055d521d20177e8
     new QuestionNumber({
       key: 'boysChaperone',
       columns: 'span 5',
       type: 'number',
       label: 'מלווים',
-<<<<<<< HEAD
-      value: 0,
-      order: 4,
-    }),
-    // new QuestionNumber({
-    //   key: 'boysChaperone',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'מלווים',
-    //   value:0,
-
-    //   order: 4,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-
-    // new QuestionNumber({
-    //   key: 'girlsChaperone',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   value:0,
-
-    //   order: 5,
-    // }),
-    // new QuestionNumber({
-    //   key: 'boysInstructors',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'מדריכים',
-    //   value:0,
-
-    //   order: 7,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-
-    // new QuestionNumber({
-    //   key: 'girlsInstructors',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   value:0,
-
-    //   order: 8,
-    // }),
-    // new QuestionNumber({
-    //   key: 'boysMedics',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'חובשים',
-    //   value:0,
-
-    //   order: 9,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-
-    // new QuestionNumber({
-    //   key: 'girlsMedics',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   value:0,
-
-    //   order: 10,
-    // }),
-=======
       innerLabel: 'בנים',
       value:0,
 
@@ -347,7 +249,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
       order: 10,
     }),
->>>>>>> 7aaf2f4e5e1b4ca11e396356f055d521d20177e8
   ];
 
   tourDetailsFormInputs: QuestionBase<string>[] = [
@@ -404,52 +305,25 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   ];
 
 
-<<<<<<< HEAD
-  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true }) tourDetailsRef: ElementRef = new ElementRef(FormContainerComponent)
-
-
-  constructor() {
-    console.log(this.tourDetailsRef)
-  }
-
-  ngOnInit(): void {
-    console.log( this.tourDetailsRef)
-
-  }
-
-  ngAfterViewInit(): void {
-    console.log(this.tourDetailsRef)
-
-  }
-  ngOnDestroy(): void {
-    console.log('asdasd');
-
-  }
-
-  a(a: any) {
-    console.log('asd')
-    console.log(a.value)
-=======
-  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent 
+  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent
 
 
   constructor() {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   ngAfterViewInit(): void {
-    
+
   }
   ngOnDestroy():void{
-    
+
     console.log( this.tourDetailsRef.form.value)
   }
-  
+
   a(a:any){
     console.log('asd' )
->>>>>>> 7aaf2f4e5e1b4ca11e396356f055d521d20177e8
   }
 }

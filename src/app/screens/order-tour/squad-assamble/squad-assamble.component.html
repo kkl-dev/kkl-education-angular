@@ -5,7 +5,7 @@
       <h3 class="assamble-tour__form-headline">מועד ושם הטיול</h3>
     </div>
     <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
-      [questions]="TimeAndNameFormInputs"
+      [questions]="timeAndNameFormInputs"
       [showButton]="false"
       #tourDetailsFormCustomQuestionRef
     ></app-form-container>
@@ -35,10 +35,10 @@
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">פרטי הטיול</h3>
     </div>
-    <app-form-container [customQuestionTemplates]='tourDetailsFormCustomQuestion' 
+    <app-form-container [customQuestionTemplates]='tourDetailsFormCustomQuestion'
     [showButton]="false"
 
-      [questions]="tourDetailsFormInputs" 
+      [questions]="tourDetailsFormInputs"
     ></app-form-container>
   </div>
 </div>

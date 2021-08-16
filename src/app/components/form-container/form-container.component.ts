@@ -14,12 +14,12 @@ import { QuestionControlService } from './question-control.service';
 
 
 export class FormContainerComponent implements OnInit, OnChanges {
-  
+
   @Output() emitFormValues:EventEmitter<any> =new EventEmitter()
   @Input() questions: QuestionBase<string | Date>[] | null = [];
   @Input() showButton:boolean=true
   @Input() buttonText:string='המשך'
- public form!: FormGroup; 
+ public form!: FormGroup;
   @Input() customQuestionTemplates={}
   payLoad:string = '';
 
@@ -35,12 +35,12 @@ export class FormContainerComponent implements OnInit, OnChanges {
     this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
   }
   onSubmit() {
-    
+
     this.payLoad = JSON.stringify(this.form.getRawValue());
     console.log('asdasd');
-    
+
     this.emitFormValues.emit(this.form.getRawValue())
-    
+
   }
 
 }

@@ -1,5 +1,5 @@
 export class QuestionBase<T> {
-  value: T | undefined | number;
+  value: any;
   key: string;
   label: string;
   required: boolean;
@@ -15,7 +15,7 @@ export class QuestionBase<T> {
 
   constructor(
     options: {
-      value?: T;
+      value?: any;
       key?: string;
       templateName?: string;
       label?: string;
