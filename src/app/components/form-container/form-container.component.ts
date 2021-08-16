@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { QuestionBase } from './question-base';
@@ -13,10 +13,12 @@ import { QuestionControlService } from './question-control.service';
 })
 
 
-export class FormContainerComponent implements OnInit {
+export class FormContainerComponent implements OnInit, OnChanges {
   
-  @Input() questions: QuestionBase<string>[] | null = [];
+  @Output() emitFormValues:EventEmitter<any> =new EventEmitter()
+  @Input() questions: QuestionBase<string | Date>[] | null = [];
   @Input() showButton:boolean=true
+  @Input() buttonText:string='המשך'
  public form!: FormGroup; 
   @Input() customQuestionTemplates={}
   payLoad:string = '';
@@ -25,12 +27,19 @@ export class FormContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
+    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
   }
 
+  ngOnChanges(){
+    console.log('onChanges');
+    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
+  }
   onSubmit() {
+    
     this.payLoad = JSON.stringify(this.form.getRawValue());
-    console.log(this.payLoad);
+    console.log('asdasd');
+    
+    this.emitFormValues.emit(this.form.getRawValue())
     
   }
 

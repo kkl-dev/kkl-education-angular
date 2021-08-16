@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -49,7 +50,10 @@ import { EducationComponent } from './screens/search/education/education.compone
 import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
 import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
 import { NavCardComponent } from './components/nav-card/nav-card.component';
+import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
+
 import { IconComponent } from './components/icon/icon.component';
 import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
 
@@ -98,6 +102,9 @@ import { FormQuestionComponent } from './components/form-container/form-question
     NavigationGridComponent,
     NavCardComponent,
     NumberInputComponent,
+    DrawerComponent,
+    InfoCardComponent,
+    NumberInputComponent,
     IconComponent
   ],
   imports: [
@@ -119,12 +126,7 @@ import { FormQuestionComponent } from './components/form-container/form-question
     MatIconModule,
     MatListModule
   ],
-  providers: [
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler
-    }
-  ],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
