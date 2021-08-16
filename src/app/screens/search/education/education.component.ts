@@ -14,15 +14,21 @@ import { TripService } from '../../../services/trip.service'
 })
 export class EducationComponent implements OnInit {
   @ViewChild('educationForm') signupForm: NgForm | undefined;
-  disable = true;
+  disableDates = true;
+  disableContinueBtn = true;
   public checked = false;
+  routerLinkContinue = '/education/results'
   sleepingPlace: string = '';
   formOptions: any;
-  constructor(private httpClient: HttpClient, public usersService: UserService, public tripService: TripService) {
+  startDate = new Date();
+  endDate = new Date();
+  constructor(public usersService: UserService, public tripService: TripService) {
+    this.endDate.setMonth(this.startDate.getMonth() + 4)
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
-      new Date(2022, 11, 17)
+      this.endDate
     );
+    //new Date(2022, 11, 17)
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
@@ -40,14 +46,14 @@ export class EducationComponent implements OnInit {
       response => {
         console.log(response);
         this.formOptions = response;
-        this.tripService.centerField=this.formOptions[0];
+        this.tripService.centerField = this.formOptions[0];
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
-  selectChange(event: any) {
-    if (this.tripService.centerField !== undefined) { this.disable = false; }
+  selectChange() {
+    if (this.tripService.centerField !== undefined) { this.disableDates = false; }
   }
   dateFromClick() { document.getElementById('calendar-input')?.click(); }
   // public formOptions = [
@@ -108,6 +114,7 @@ export class EducationComponent implements OnInit {
       this.dateObj.from = e;
       this.dateObj.to = '';
     }
+    this.disableContinueBtn = false;
     this.tripService.dateObj = this.dateObj;
   }
 
@@ -130,4 +137,5 @@ export class EducationComponent implements OnInit {
       console.log(this.signupForm.form.value);
     }
   }
+  singleDayTrip() { if (this.checked) { this.routerLinkContinue = '/education/my-tours' } }
 }
