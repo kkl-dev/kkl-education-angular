@@ -105,25 +105,18 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     }),
 
     new TextboxQuestion({
-      key: 'phoneNumberNoPrefix',
-      label: '',
+      key: 'phone',
+      label: 'נייד איש קשר',
       type: 'text',
-    }),
-    new QuestionSelect({
-      key: 'phoneNumberPrefix',
-      label: '',
-      type: 'select',
-      options: [
-        { key: '054', value: '054' },
-        { key: '052', value: '052' },
-        { key: '052', value: '052' },
-        { key: '077', value: '077' },
-      ],
-    }),
-    new TextboxQuestion({
+      validations: [Validators.required]
+
+         }),
+     new TextboxQuestion({
       key: 'email',
       label: 'מייל',
       type: 'text',
+      validations: [Validators.required]
+
     }),
 
   ];

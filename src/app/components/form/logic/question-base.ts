@@ -1,4 +1,11 @@
 import { Validators } from '@angular/forms';
+
+export interface SelectOption {
+  key: string
+  value: string
+}
+
+
 export class QuestionBase<T> {
   value: T | undefined | number;
   key: string;
@@ -11,7 +18,7 @@ export class QuestionBase<T> {
   custom: boolean;
   validations: Validators[];
   type: string;
-  options: { key: string; value: string }[];
+  options: SelectOption[];
 
   constructor(
     options: {
@@ -37,7 +44,7 @@ export class QuestionBase<T> {
     this.columns = options.columns || '1';
     this.rows = options.rows || '2';
     this.validations = options.validations || [],
-    this.controlType = options.controlType || 'text';
+      this.controlType = options.controlType || 'text';
     this.type = options.type || '';
     this.custom = options.custom || false;
     this.options = options.options || [];

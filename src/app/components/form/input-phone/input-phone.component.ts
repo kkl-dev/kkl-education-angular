@@ -1,3 +1,4 @@
+import { SelectOption } from './../logic/question-base';
 import { FormControl } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormService } from '../logic/form.service';
@@ -19,7 +20,7 @@ export class InputPhoneComponent implements OnInit {
   @Input() public controlName!: string;
   @Input() public icon!: string;
   @Input() public status!: string;
-  @Input() public options!: []
+  @Input() public options!: SelectOption[]
 
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;
@@ -27,12 +28,13 @@ export class InputPhoneComponent implements OnInit {
   public value!: any
   public error!: string
   public serverError!: string
-  
+
   constructor(
     private formService: FormService
   ) { }
 
   ngOnInit(): void {
+    console.log(this.options)
   }
 
   public handleChange(value: any) {

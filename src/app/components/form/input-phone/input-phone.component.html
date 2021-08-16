@@ -6,19 +6,34 @@
 
     <mat-form-field class="full-width" appearance="outline">
 
-      <mat-select color="primary" [formControl]="control" (change)="handleChange($event.value)">
-        <mat-option>{{label | titlecase}}</mat-option>
-        <mat-option *ngFor="let option of options" [value]="option.value">
-          {{option.key}}
-        </mat-option>
-      </mat-select>
 
-      <input matInput type="text" [formControl]="control" control="control" autocomplete="off"
-        (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" #input>
+
+      <mat-grid-list cols="6" rowHeight="2vh">
+        <mat-grid-tile colspan="2">
+
+          <mat-select color="primary" [formControl]="control" (change)="handleChange($event.value)">
+            <mat-option>{{label | titlecase}}</mat-option>
+            <mat-option *ngFor="let option of options" [value]="option.value">
+              054
+            </mat-option>
+            <mat-option *ngFor="let option of options" [value]="option.value">
+              {{option.key}}
+            </mat-option>
+          </mat-select>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="4">
+          <input matInput type="text" [formControl]="control" control="control" autocomplete="off"
+          placeholder="phone"
+            (input)="handleChange($event.target.value)" (focusout)="validate()" #input>
+
+        </mat-grid-tile>
+      </mat-grid-list>
 
 
       <!-- icons -->
-      <mat-icon matPrefix>{{icon}}</mat-icon>
+      <mat-icon matPrefix>{{controlType === 'select' ? 'keyboard_arrow_down' :
+        icon}}</mat-icon>
 
       <!-- shred input hint -->
       <mat-hint *ngIf="hint">{{'Please enter '+ hint}}</mat-hint>

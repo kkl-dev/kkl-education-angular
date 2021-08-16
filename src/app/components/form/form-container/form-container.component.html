@@ -4,17 +4,15 @@
 
     <mat-grid-list [cols]="cols || 1" rowHeight="6vh">
 
-      <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || cols"
-      [rowspan]="question.rows"
-      >
+      <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || cols" [rowspan]="question.rows">
 
 
-        <app-form-input *ngIf="!question.custom" [control]="formTemplate.controls[question.key || question.label]"
-          [type]="question.type" [label]='question.label' [icon]="question.icon" [options]="question.options"
+        <app-form-input *ngIf="!question.custom" [control]="formTemplate.controls[question.key]" [type]="question.type"
+          [label]='question.label' [icon]="question.icon" [options]="question.options"
           [controlType]="question.controlType"></app-form-input>
 
 
-      </mat-grid-tile>
+        </mat-grid-tile>
 
 
 
