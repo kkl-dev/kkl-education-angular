@@ -3,12 +3,13 @@
     <span> תזכורת </span>
   </div>
   <h4 class="drawer__headline">הוספת תזכורת</h4>
-  <app-form-container
+  
+  <app-form-container #drawerForm
     [questions]="reminderForm"
     (emitFormValues)="newCommentHandler($event)"
   >
-    <button class="clear-form">מחק</button>
-  </app-form-container>
+    <button class="clear-form" (click)="deleteFormInputs($event)">מחק</button>
+  </app-form-container >
 
   <div class="reminder" *ngFor="let comment of reminderArray; let i = index">
     <div class="reminder__content">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { QuestionBase } from './question-base';
@@ -13,7 +13,7 @@ import { QuestionControlService } from './question-control.service';
 })
 
 
-export class FormContainerComponent implements OnInit {
+export class FormContainerComponent implements OnInit, OnChanges {
   
   @Output() emitFormValues:EventEmitter<any> =new EventEmitter()
   @Input() questions: QuestionBase<string | Date>[] | null = [];
@@ -30,6 +30,10 @@ export class FormContainerComponent implements OnInit {
     this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
   }
 
+  ngOnChanges(){
+    console.log('onChanges');
+    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
+  }
   onSubmit() {
     
     this.payLoad = JSON.stringify(this.form.getRawValue());
