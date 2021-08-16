@@ -1,4 +1,4 @@
-import { Component, OnInit , OnDestroy,ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit , OnDestroy,ViewChild, ElementRef ,AfterViewInit } from '@angular/core';
 import { QuestionSelect } from 'src/app/components/form-container/question-select';
 import { QuestionBase } from 'src/app/components/form-container/question-base';
 import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
@@ -10,13 +10,16 @@ import { QuestionTextarea } from 'src/app/components/form-container/question-tex
 import { Offset } from 'src/app/components/form-container/dynamic-form-question/question-offset';
 import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
 import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-squad-assamble',
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit, OnDestroy {
+export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
+
+
 
   tourDetailsFormCustomQuestion:{}={
     boys:true,
@@ -31,7 +34,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
 
 
 
-  TimeAndNameFormInputs: QuestionBase<string>[] = [
+  TimeAndNameFormInputs: QuestionBase<string | Date>[] = [
     
     new TextboxQuestion({
       key: 'tourName',
@@ -59,14 +62,14 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'startDate',
       columns: 'span 12',
       label: 'תאריך התחלה',
-      value: '',
+      value: new Date(),
       order: 3,
     }),
     new QuestionCalendar({
       key: 'endDate',
       columns: 'span 12',
       label: 'תאריך סיום',
-      value: '',
+      value: new Date(),
       order: 4,
     }),
   ];
@@ -304,19 +307,25 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
   ];
 
 
-  @ViewChild(FormContainerComponent) tourDetailsRef:ElementRef=new ElementRef('tourDetailsFormCustomQuestionRef')
+  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent 
 
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
-    console.log( this.tourDetailsRef);
     
   }
 
+  ngAfterViewInit(): void {
+    
+  }
   ngOnDestroy():void{
-    console.log('asdasd');
     
+    console.log( this.tourDetailsRef.form.value)
   }
-
+  
+  a(a:any){
+    console.log('asd' )
+  }
 }

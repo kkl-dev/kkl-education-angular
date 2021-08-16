@@ -10,19 +10,19 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   @Output() menuToggle = new EventEmitter();
 
-  public status:{
-    text:string;
-    src: string;
+  public status: {
+    text: string;
+    svgUrl: string;
     count: number
   }[] = [
 
-  ];
-  public platformName: string ='education'
+    ];
+  public platformName: string = 'education'
   public isOpen: boolean = true;
   public urlAdress = 'main';
-  public showSteps:boolean = true;
-  public componentType:string= '';
-  public prefix:string=''
+  public showSteps: boolean = true;
+  public componentType: string = '';
+  public prefix: string = ''
 
   public toggleMenu() {
     this.isOpen = !this.isOpen;
@@ -35,15 +35,23 @@ export class NavbarComponent implements OnInit {
     private userDataService: UserDataService
   ) {
 
-     this.prefix = this.userDataService.user.urlPrefix;
+    this.prefix = this.userDataService.user.urlPrefix;
     this.status = [
       {
         text: 'בתהליך',
-        src: 'assets/images/reload.svg',
+        svgUrl: 'reload',
         count: 3,
       },
-      { text: 'מחכה לאישור', src: 'assets/images/report.svg', count: 1 },
-      { text: 'סגור', src: 'assets/images/finish-flag.svg', count: 20 },
+      {
+        text: 'מחכה לאישור',
+        svgUrl: 'report',
+        count: 1
+      },
+      {
+        text: 'סגור',
+        svgUrl: 'flag',
+        count: 20
+      },
     ]
 
 
@@ -53,12 +61,12 @@ export class NavbarComponent implements OnInit {
 
       this.showSteps =
         this.urlAdress === '/education' ||
-        this.urlAdress === '/education/search' ||
-        this.urlAdress === '/education/my-tours'
+          this.urlAdress === '/education/search' ||
+          this.urlAdress === '/education/my-tours'
           ? true
           : false;
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

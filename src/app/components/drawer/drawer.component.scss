@@ -1,0 +1,81 @@
+.drawer {
+  position: absolute;
+  top: 0;
+  right: 0%;
+  width: 18%;
+  background-color: #ffffff;
+  z-index: 100;
+  height: 100%;
+  padding: 0 20px;
+  transition: all 0.3s;
+
+  &__headline {
+    padding-right: 20px;
+    padding-top: 20px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  &-toggle {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 15px;
+    left: -80px;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 100px;
+    display: flex;
+    background-color: #ffffff;
+    & span {
+      margin: auto;
+    }
+  }
+}
+
+.reminder {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 12px;
+  &:hover &__controllers {
+    visibility: visible;
+  }
+  &__content {
+    padding-left: 10px;
+  }
+
+  &__controllers {
+    visibility: hidden;
+
+    &:hover {
+      visibility: visible;
+    }
+  }
+}
+
+.clear-form {
+  border: 2px solid #448ecd;
+  background-color: #ffffff;
+  color: #448ecd;
+  padding: 5px 15px;
+}
+
+::ng-deep .btn-row {
+  grid-column: 12;
+  display: flex;
+}
+
+::ng-deep .btn {
+  margin-right: 30px;
+  background-color: #448ecd;
+  border: 0;
+  width: 60px;
+  padding: 5px 15px;
+  color: #ffffff;
+  height: 40px;
+  box-shadow: 0px 3px 15px 2px rgba($color: #000, $alpha: 0.2);
+}
+
+.closed {
+  right: -20% !important;
+}

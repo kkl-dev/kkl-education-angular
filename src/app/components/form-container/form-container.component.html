@@ -10,7 +10,8 @@
        class="form-row" [ngStyle]="{'grid-column': question.columns}">
         
         <ng-container *ngIf="question.templateName" >
-        <app-number-input
+
+        <!-- <app-number-input
         [formControlName]="question.key"
         [id]="question.key"
         [type]="question.type"
@@ -18,13 +19,15 @@
         [form]="form"
         [value]='question.value'  
         > </app-number-input>  
+         -->
         </ng-container> 
       
         <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question>
       </div>
   
-      <div class="form-row" *ngIf="showButton">
-        <button type="submit" [disabled]="!form.valid">Save</button>
+      <div class="form-row btn-row" *ngIf="showButton">
+        <ng-content></ng-content>
+        <button type="submit" class="btn" [disabled]="!form.valid">{{buttonText}}</button>
       </div>
     </form>
   
