@@ -40,7 +40,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'tourName',
       label: 'שם הטיול',
       value: '',
-      order: 1,
       validations: [Validators.required]
     }),
 
@@ -54,7 +53,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'good', value: '123' },
         { key: 'unproven', value: '123123123' },
       ],
-      order: 2,
       icon: 'keyboard_arrow_down',
       validations: [Validators.required],
     }),
@@ -64,7 +62,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'startDate',
       label: 'תאריך התחלה',
       value: '',
-      order: 3,
       validations: [Validators.required]
 
     }),
@@ -72,7 +69,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'endDate',
       label: 'תאריך סיום',
       value: '',
-      order: 4,
       validations: [Validators.required]
 
     }),
@@ -89,14 +85,12 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
         { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
       ],
-      order: 1,
     }),
 
     new TextboxQuestion({
       key: 'teamRepresentative',
       label: 'נציג הקבוצה',
       value: '',
-      order: 2,
     }),
 
     new TextboxQuestion({
@@ -104,7 +98,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       label: 'נייד',
       columns: 'span 8',
       type: 'text',
-      order: 3,
     }),
     new Offset({
       columns: 'span 1 ',
@@ -115,7 +108,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       label: 'hide',
       columns: 'span 3',
       type: 'text',
-      order: 4,
       options: [
         { key: '054', value: '054' },
         { key: '052', value: '052' },
@@ -127,7 +119,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'email',
       label: 'מייל',
       type: 'text',
-      order: 5,
     }),
     new QuestionSelect({
       key: 'payerName',
@@ -139,7 +130,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
         { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
       ],
-      order: 6,
     }),
   ];
 
@@ -154,7 +144,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'לקוח מספר שלוש', value: '20+' },
         { key: 'לקוח מספר ארבע', value: '30+' },
       ],
-      order: 1,
     }),
     // new QuestionNumber({
     //   key: 'boys',
@@ -163,7 +152,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   label: 'נוער/מבוגרים',
     //   innerLabel: 'בנים',
     //   value:0,
-    //   order: 2,
     // }),
     // new Offset({
     //   columns: 'span 2 ',
@@ -175,7 +163,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   label: 'hide',
     //   innerLabel: 'בנות',
     //   value:0,
-    //   order: 3,
     // }),
 
     // new QuestionNumber({
@@ -186,7 +173,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   innerLabel: 'בנים',
     //   value:0,
 
-    //   order: 4,
     // }),
     // new Offset({
     //   columns: 'span 2 ',
@@ -200,7 +186,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   innerLabel: 'בנות',
     //   value:0,
 
-    //   order: 5,
     // }),
     // new QuestionNumber({
     //   key: 'boysInstructors',
@@ -210,7 +195,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   innerLabel: 'בנים',
     //   value:0,
 
-    //   order: 7,
     // }),
     // new Offset({
     //   columns: 'span 2 ',
@@ -224,7 +208,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   innerLabel: 'בנות',
     //   value:0,
 
-    //   order: 8,
     // }),
     // new QuestionNumber({
     //   key: 'boysMedics',
@@ -234,7 +217,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   innerLabel: 'בנים',
     //   value:0,
 
-    //   order: 9,
     // }),
     // new Offset({
     //   columns: 'span 2 ',
@@ -248,7 +230,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   innerLabel: 'בנות',
     //   value:0,
 
-    //   order: 10,
     // }),
   ];
 
@@ -264,7 +245,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'חו"ל', value: 'חו"ל' },
         { key: 'הנהלת אגף', value: 'הנהלת אגף' },
       ],
-      order: 1,
     }),
     new QuestionSelect({
       key: 'activityType',
@@ -274,7 +254,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
         { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
       ],
-      order: 2,
     }),
 
     new QuestionRadio({
@@ -282,7 +261,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       label: 'מחלקה',
       options: [{ key: '', value: 'ישראל' }, { key: '', value: 'חו"ל' }],
       value: 'ישראל',
-      order: 5,
     }),
 
     new QuestionRadio({
@@ -290,13 +268,11 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       label: 'פנים/חוץ מרכז שדה',
       options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
       value: 'ישראל',
-      order: 5,
     }),
 
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      order: 7,
       value: ''
     }),
 
