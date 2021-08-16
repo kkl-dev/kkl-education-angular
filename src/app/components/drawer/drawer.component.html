@@ -1,15 +1,22 @@
 <div class="drawer" [ngClass]="{ closed: isOpen }">
-  <div class="drawer-toggle" (click)="toggleDrawer()">
+  <div
+    class="drawer-toggle"
+    (click)="toggleDrawer()"
+    [ngClass]="{ 'closed-toggle': isOpen }"
+  >
+    <app-icon [color]="'primary'" type="svg" [key]="'bell'"></app-icon>
     <span> תזכורת </span>
+    <span *ngIf="!isOpen" class="drawer-toggle__close"><span>x</span></span>
   </div>
   <h4 class="drawer__headline">הוספת תזכורת</h4>
-  
-  <app-form-container #drawerForm
+
+  <app-form-container
+    #drawerForm
     [questions]="reminderForm"
     (emitFormValues)="newCommentHandler($event)"
   >
     <button class="clear-form" (click)="deleteFormInputs($event)">מחק</button>
-  </app-form-container >
+  </app-form-container>
 
   <div class="reminder" *ngFor="let comment of reminderArray; let i = index">
     <div class="reminder__content">
@@ -19,8 +26,15 @@
       {{ comment.date | date: "dd/MM/yyyy" }} {{ comment.time }}
     </div>
     <div class="reminder__controllers">
-      <span (click)="editComment(i)">+</span>
-      <span (click)="deleteComment(i)">-</span>
+
+      <span class="reminder__controllers-svg" (click)="editComment(i)">
+        <app-icon [color]="'primary'" type="svg" [key]="'edit'"></app-icon>
+      </span>
+
+      
+      <span (click)="deleteComment(i)" class="reminder__controllers-delete">
+        <span>x</span>
+      </span>
     </div>
   </div>
 </div>

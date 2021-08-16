@@ -4,7 +4,7 @@
   width: calc(100% - 80px);
   margin: 0 auto;
   box-sizing: border-box;
-  
+
   &__form:not(:last-child) {
     border-left: 1px solid #e8e8e8;
     margin-left: 35px;
@@ -25,8 +25,13 @@
       border-bottom: 3px solid #448ecd;
       padding-left: 10px;
       margin-bottom: -3px !important;
-
+      &-svg {
+        position: absolute;
+        top: 0;
+        left: -80px;
+      }
       &-container {
+        position: relative;
         margin-bottom: 16px;
         border-bottom: 3px solid #dbdbdb;
         width: 60% !important;
@@ -39,4 +44,3 @@
 app-form-container {
   width: 60% !important;
 }
-

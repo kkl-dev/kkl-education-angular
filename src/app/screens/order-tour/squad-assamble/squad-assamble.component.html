@@ -1,44 +1,59 @@
-<div class="assamble-tour" >
+<div class="assamble-tour">
   <!-- <button (click)="a(tourDetailsFormCustomQuestionRef.form)">sdfgsdgsfsdf</button> -->
   <div class="assamble-tour__form">
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">מועד ושם הטיול</h3>
     </div>
-    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
+    <app-form-container
+      customQuestionTemplates="tourDetailsFormCustomQuestion"
       [questions]="TimeAndNameFormInputs"
       [showButton]="false"
-      #tourDetailsFormCustomQuestionRef
+      #TimeAndNameRef
     ></app-form-container>
   </div>
   <div class="assamble-tour__form">
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">לקוח</h3>
     </div>
-    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
+    <app-form-container
+    #customerFormInputsRef
+      customQuestionTemplates="tourDetailsFormCustomQuestion"
       [showButton]="false"
       [questions]="customerFormInputs"
     ></app-form-container>
   </div>
   <div class="assamble-tour__form">
     <div class="assamble-tour__form-headline-container">
-      <h3 class="assamble-tour__form-headline">הרכב הקבוצה</h3>
+      <app-icon
+        class="assamble-tour__form-headline-svg"
+        (click)="changeGroupAssembleForm()"
+        [color]="'alert'"
+        type="svg"
+        [key]="'bell'"
+      ></app-icon>
+      <h3 class="assamble-tour__form-headline">
+        <span> הרכב הקבוצה </span>
+      </h3>
     </div>
-    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
+    <app-form-container
+    #groupAssambleFormInputsRef
+
+      customQuestionTemplates="tourDetailsFormCustomQuestion"
       [showButton]="false"
       [questions]="groupAssambleFormInputs"
     >
       <!-- <app-wizard></app-wizard>  -->
-  </app-form-container>
-
+    </app-form-container>
   </div>
   <div class="assamble-tour__form">
     <div class="assamble-tour__form-headline-container">
       <h3 class="assamble-tour__form-headline">פרטי הטיול</h3>
     </div>
-    <app-form-container [customQuestionTemplates]='tourDetailsFormCustomQuestion' 
-    [showButton]="false"
-
-      [questions]="tourDetailsFormInputs" 
+    <app-form-container
+    #tourDetailsFormInputsRef
+      [customQuestionTemplates]="tourDetailsFormCustomQuestion"
+      [showButton]="false"
+      [questions]="tourDetailsFormInputs"
     ></app-form-container>
   </div>
 </div>

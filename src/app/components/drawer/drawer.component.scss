@@ -16,18 +16,41 @@
     font-size: 20px;
   }
   &-toggle {
-    height: 40px;
-    width: 40px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 3px 15px 2px rgba($color: #000, $alpha: 0.2);
     position: absolute;
     top: 15px;
-    left: -80px;
-    width: fit-content;
+    left: -30px;
     padding: 10px;
+
+    width: fit-content;
     border-radius: 100px;
     display: flex;
     background-color: #ffffff;
+
+    &__close {
+      background-color: black;
+      position: absolute;
+      top: -10px;
+      left: -18px;
+      height: 22px;
+      width: 22px;
+      display: flex;
+      border-radius: 100px;
+      color: #ffffff;
+      transform: translate(50%, 50%);
+
+      & span {
+        margin: auto;
+      }
+    }
+
     & span {
-      margin: auto;
+      margin-bottom: auto;
+    }
+    & app-icon {
+      margin-top: auto;
     }
   }
 }
@@ -37,6 +60,8 @@
   justify-content: space-between;
   margin-bottom: 15px;
   font-size: 12px;
+  cursor: pointer;
+
   &:hover &__controllers {
     visibility: visible;
   }
@@ -45,8 +70,33 @@
   }
 
   &__controllers {
-    visibility: hidden;
+    display: flex;
 
+    &-delete {
+      height: 15px;
+      width: 15px;
+      border-radius: 50px;
+      background-color: red;
+      display: flex;
+      & * {
+        height: 15px;
+        margin: auto;
+        font-size: 10px;
+        color: #ffffff;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(-25%);
+        font-weight: bold;
+      }
+    }
+
+    &-svg {
+      height: 15px;
+      width: 15px;
+      transform: scale(0.4);
+      margin-left: 6px;
+    }
+    visibility: hidden;
     &:hover {
       visibility: visible;
     }
@@ -61,8 +111,10 @@
 }
 
 ::ng-deep .btn-row {
-  grid-column: 12;
+  grid-column: span 12;
   display: flex;
+  text-align: left;
+  justify-content: flex-end;
 }
 
 ::ng-deep .btn {
@@ -78,4 +130,7 @@
 
 .closed {
   right: -20% !important;
+}
+.closed-toggle {
+  left: -80px !important;
 }
