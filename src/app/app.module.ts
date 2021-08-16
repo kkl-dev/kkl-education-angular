@@ -47,6 +47,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
+import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { FormInputComponent } from './components/form-container/form-input/form-input.component';
@@ -83,7 +84,7 @@ import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-grou
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-
+    InfoCardComponent,
     NumberInputComponent,
     IconComponent,
     FormInputComponent,

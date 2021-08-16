@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { TooltipDataModel } from './tooltip/tooltip.component';
+
+export interface InfoCard {
+  svgUrl: string;
+  headline: string;
+  subHeadline?: string;
+  availability: TooltipDataModel[];
+}
 
 @Component({
   selector: 'app-education-results',
@@ -12,38 +20,37 @@ export class EducationResultsComponent implements OnInit {
     { date: '17.06.21', text: 'זמינות יום 3' },
   ];
 
-  public chosenDate=0
+  public chosenDate = 0;
 
   public sleepingOptionsArray = [
     {
       svgUrl: 'assets/images/cabin.svg',
       sleepingAreas: 2,
       avialableSpaces: 16,
-      type:'בקתות',
-      singleUnit:'בבקתה'
-      
+      type: 'בקתות',
+      singleUnit: 'בבקתה',
     },
     {
       svgUrl: 'assets/images/tent.svg',
       sleepingAreas: 4,
       avialableSpaces: 36,
-      type:'אוהלים',
-      singleUnit:'באוהל'
+      type: 'אוהלים',
+      singleUnit: 'באוהל',
     },
     {
       svgUrl: 'assets/images/camp.svg',
       sleepingAreas: 1,
       avialableSpaces: 120,
-      type:'גיחה',
-      singleUnit:'לנים'
+      type: 'גיחה',
+      singleUnit: 'לנים',
     },
   ];
 
-  public changeDate(newDate:number){
-    this.chosenDate=newDate
+  public changeDate(newDate: number) {
+    this.chosenDate = newDate;
   }
 
-  public facilitiesArray = [
+  public facilitiesArray : InfoCard[] = [
     {
       svgUrl: 'assets/images/stage.svg',
       headline: 'תאטרון',
@@ -92,6 +99,7 @@ export class EducationResultsComponent implements OnInit {
     {
       svgUrl: 'assets/images/football.svg',
       headline: 'מגרש ספורט',
+      subHeadline: '',
       availability: [
         { hour: 8, avialable: true },
         { hour: 9, avialable: true },
