@@ -32,7 +32,9 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     girlsMedics: true
   }
 
-  timeAndNameFormInputs: QuestionBase<string>[] = [
+
+
+  timeAndNameFormInputs: QuestionBase<string | Date>[] = [
 
     new TextboxQuestion({
       key: 'tourName',
@@ -59,7 +61,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionCalendar({
       key: 'startDate',
       label: 'תאריך התחלה',
-      value: '',
+      value: new Date(),
       order: 3,
       validations: [Validators.required]
 
@@ -67,7 +69,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionCalendar({
       key: 'endDate',
       label: 'תאריך סיום',
-      value: '',
+      value: new Date(),
       order: 4,
       validations: [Validators.required]
 
@@ -294,7 +296,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     },
   ]
 
-  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true }) tourDetailsRef: ElementRef = new ElementRef(FormContainerComponent)
+  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent
 
 
   constructor() {

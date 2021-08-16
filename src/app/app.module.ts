@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -46,15 +47,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
+import { NavCardComponent } from './components/nav-card/nav-card.component';
+import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
 import { FormInputComponent } from './components/form-container/form-input/form-input.component';
 import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
 import { TransportComponent } from './screens/order-tour/additions/transport/transport.component';
-import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
 import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +108,11 @@ import { AdditionsComponent } from './screens/order-tour/additions/additions.com
     IconComponent,
     FormInputComponent,
     SquadGroupComponent,
-    TransportComponent
+    TransportComponent,
+    DrawerComponent,
+    InfoCardComponent,
+    NumberInputComponent,
+    IconComponent
   ],
   imports: [
     BrowserModule,
@@ -126,7 +133,7 @@ import { AdditionsComponent } from './screens/order-tour/additions/additions.com
     MatIconModule,
     MatListModule
   ],
-  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

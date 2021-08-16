@@ -9,7 +9,7 @@ import { QuestionBase } from '../question-base';
   styleUrls: ['./form-question.component.scss']
 })
 export class FormQuestionComponent {
-  @Input() question!: QuestionBase<string>;
+  @Input() question!: QuestionBase<string | Date>;
   @Input() form!: FormGroup;
   get isValid() { return this.form.controls[this.question.key].valid; }
 }

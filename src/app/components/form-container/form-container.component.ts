@@ -33,6 +33,12 @@ export class FormContainerComponent implements OnInit {
     this.formTemplate = this.formService.setGroup(this.questions)
   }
 
+  ngOnChanges(){
+    console.log('onChanges');
+    this.formTemplate.reset()
+    // this.formTemplate = this.formService.setGroup( (this.questions as QuestionBase<string | Date>[]))
+   ;
+  }
   onSubmit() {
     console.log(this.formTemplate.value);
 

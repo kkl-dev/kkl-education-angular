@@ -83,43 +83,19 @@
       </div>
 
       <!-- avialable facilities  -->
-
       <div class="education-results__right-facilities">
         <h4 class="education-results__right-facilities-headline">מתקנים</h4>
         <div class="education-results__right-facilities-items">
-          <div
+          <app-info-card
             class="education-results__right-facilities-items-item"
             *ngFor="let item of facilitiesArray; let i = index"
+            [item]="item" 
           >
-            <div
-              class="
-                education-results__right-facilities-items-item-svg-container
-              "
-            >
-              <app-tooltip
-                id="app-tooltip"
-                [hours]="[item.availability[0]]"
-              ></app-tooltip>
-              <svg-icon
-                class="education-results__right-facilities-items-item-svg"
-                src="{{ item.svgUrl }}"
-              ></svg-icon>
-            </div>
-            <div
-              class="education-results__right-facilities-items-item-headline"
-            >
-              {{ item.headline }}
-            </div>
-            <div
-              class="education-results__right-facilities-items-item-subheadline"
-            >
-              {{ item.subHeadline }}
-            </div>
-          </div>
+            <app-tooltip class="app-tooltip" [hours]="item.availability"></app-tooltip>
+          </app-info-card>
         </div>
       </div>
     </div>
-
     <!-- submit form -->
     <div class="education-results__right-button-container">
       <button class="education-results__right-button">הזמן</button>

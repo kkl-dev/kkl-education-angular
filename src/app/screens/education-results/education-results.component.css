@@ -1,0 +1,224 @@
+.education-results {
+  position: relative;
+  z-index: 100;
+  display: flex;
+}
+
+.education-results__left {
+  width: 50%;
+  background-color: white;
+  background-size: contain;
+  background-image: url("../../../assets/images/education-results-back.png");
+}
+
+.education-results__right {
+  height: 100%;
+  width: 50%;
+  text-align: center;
+  background-color: white;
+}
+
+.education-results__right-header {
+  margin-bottom: 40px;
+  color: #66a3d6;
+}
+
+.education-results__right-availability {
+  direction: rtl;
+  display: flex;
+  padding: 0 100px;
+  margin-bottom: 40px;
+}
+
+.education-results__right-availability-item {
+  display: flex;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #dcdcdc;
+}
+
+.education-results__right-availability > * {
+  flex: 1;
+}
+
+.education-results__right-availability-item-text {
+  font-size: 16px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.education-results__right-availability-item-date {
+  margin-right: auto;
+  font-size: 18px;
+}
+
+.education-results__right-sleep-areas {
+  padding: 0 100px;
+  direction: rtl;
+  text-align: right;
+}
+
+.education-results__right-sleep-areas-headline {
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.education-results__right-sleep-areas-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  border-bottom: 1px solid #f9f9f9;
+  padding-bottom: 40px;
+}
+
+.education-results__right-sleep-areas-options-item {
+  display: flex;
+  text-align: center;
+  align-self: center;
+  gap: 10px;
+}
+
+.education-results__right-sleep-areas-options-item > * {
+  margin: 0;
+  padding: 0;
+}
+
+.education-results__right-sleep-areas-options-item-svg * {
+  width: 32.5px;
+  height: 37.5px;
+  margin-left: 5px;
+}
+
+.education-results__right-sleep-areas-options-item-count {
+  margin-right: 10px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.education-results__right-sleep-areas-options-item-count-number {
+  width: 35px;
+  height: 35px;
+  margin: auto 0;
+  background-color: #f6f6f6;
+  display: flex;
+}
+
+.education-results__right-sleep-areas-options-item-count-number > * {
+  margin: auto;
+}
+
+.education-results__right-facilities {
+  padding: 0 20px;
+  direction: rtl;
+  text-align: right;
+  margin-top: 20px;
+}
+
+.education-results__right-facilities-headline {
+  font-size: 17px;
+  margin-right: 80px;
+}
+
+.education-results__right-facilities-items {
+  flex-wrap: wrap;
+  display: flex;
+  row-gap: 35px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.education-results__right-facilities-items-item {
+  text-align: center;
+  flex: 1 0 25%;
+  margin: 0 !important;
+}
+
+.education-results__right-facilities-items-item-svg {
+  margin: auto;
+  width: 36px;
+  height: 36px;
+}
+
+.education-results__right-facilities-items-item-svg * {
+  width: 36px;
+  height: 36px;
+  fill: #66a3d6 !important;
+}
+
+.education-results__right-facilities-items-item-svg-container {
+  position: relative;
+  margin: 0 auto;
+  border: 1px solid #ffffff;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  background: #eeeeee;
+  background: linear-gradient(0deg, #eeeeee 0%, #fefefe 100%);
+  -webkit-box-shadow: 0px 0px 1px 2px #e5e5e5;
+  box-shadow: 0px 0px 1px 2px #e5e5e5;
+  border-radius: 10px;
+}
+
+.education-results__right-facilities-items-item-svg-container:hover .education-results__right-facilities-items-item-svg * {
+  fill: #11a11a !important;
+}
+
+::ng-deep .education-results__right-facilities-items-item-svg-container:hover > .app-tooltip {
+  display: block;
+}
+
+.education-results__right-facilities-items-item-headline {
+  font-size: 12px;
+  margin-bottom: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.education-results__right-facilities-items-item-subheadline {
+  margin-top: -8px;
+  font-size: 10px;
+}
+
+.education-results__right-button {
+  cursor: pointer;
+  margin-right: auto;
+  text-align: left;
+  height: 44px;
+  width: 160px;
+  text-align: center;
+  background-color: #448ecd;
+  color: white;
+  font-size: 18px;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0px 0px 12px 1px #448ecd;
+}
+
+.education-results__right-button-container {
+  padding: 0 100px;
+  text-align: left;
+  padding-bottom: 50px;
+}
+
+.chosen {
+  border-bottom: 3px solid #11a11a;
+}
+
+.font-color {
+  color: #11a11a;
+}
+
+app-tooltip {
+  display: none;
+}
+
+.font-color-blue {
+  color: #66a3d6;
+}
