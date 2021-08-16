@@ -40,14 +40,16 @@ export class EducationComponent implements OnInit {
       response => {
         console.log(response);
         this.formOptions = response;
+        this.tripService.centerField=this.formOptions[0];
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
   selectChange(event: any) {
-    if (this.tripService.CenterField !== undefined) { this.disable = false; }
+    if (this.tripService.centerField !== undefined) { this.disable = false; }
   }
+  dateFromClick() { document.getElementById('calendar-input')?.click(); }
   // public formOptions = [
   //   { id: 101, name: "ציפורי", iconPath: 'assets/images/select-1.jpg' },
   //   { id: 102, name: 'לביא', iconPath: 'assets/images/select-2.jpg' },

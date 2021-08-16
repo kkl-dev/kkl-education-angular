@@ -5,8 +5,8 @@
       <div class="education__form-group" disableOptionCentering="false">
         <label class="education__form-group-label">איפה ישנים</label>
         <mat-form-field>
-          <mat-select #select [(ngModel)]="tripService.CenterField"(selectionChange)="selectChange($event)" name="sleepingPlace" class="education__form-group-select"
-            (opened)="hideSelectPlaceholder(select)" (closed)="showSelectPlaceholder(select)">
+          <mat-select #select [(ngModel)]="tripService.centerField" name="sleepingPlace" class="education__form-group-select"
+            (opened)="hideSelectPlaceholder(select)" (closed)="showSelectPlaceholder(select)"(selectionChange)="selectChange($event)">
             <mat-option value="{{ option.id }}" *ngFor="let option of formOptions">
               <span class="education__select-option">
                 <img [src]="option.iconPath" class="education__select-option-svg" />
@@ -18,11 +18,11 @@
       </div>
       <div class="education__form-group">
         <label class="education__form-group-label">מתאריך</label>
-        <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
+        <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg" (click)="dateFromClick()"></svg-icon>
 
         <label class="header__form-group-pseudo-input label-input" for="calendar-input">
           <input class="header__form-group-input" airbnb-calendar type="text" [(ngModel)]="date" [options]="options"
-            (ngModelChange)="dateObjChanged($event)" name="calendar-input" id="calendar-input" />
+            (ngModelChange)="dateObjChanged($event)" name="calendar-input" id="calendar-input" [disabled]="disable"/>
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.from }}</span>
         </label>
