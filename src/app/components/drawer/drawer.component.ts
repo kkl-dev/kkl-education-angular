@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Offset } from '../form-container/dynamic-form-question/question-offset';
 import { FormContainerComponent } from '../form-container/form-container.component';
 import { QuestionBase } from '../form-container/question-base';
 import { QuestionCalendar } from '../form-container/question-calendar';
 import { QuestionTextarea } from '../form-container/question-textarea';
 import { TextboxQuestion } from '../form-container/question-textbox';
 import { DatePipe } from '@angular/common';
+import { Offset } from '../form-container/form-question/question-offset';
 @Component({
   selector: 'app-drawer',
   templateUrl: './drawer.component.html',
@@ -34,7 +34,6 @@ export class DrawerComponent implements OnInit {
     new QuestionTextarea({
       key: 'comment',
       label: 'תזכורת',
-      innerLabel: '',
       columns: 'span 12',
       order: 7,
       value: '',
