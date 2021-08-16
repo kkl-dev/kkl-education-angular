@@ -29,7 +29,7 @@ export class FormContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.form = this.formService.toFormGroup(this.questions as QuestionBase<string>[]);
+    console.log(this.questions)
     this.formTemplate = this.formService.setGroup(this.questions)
   }
 

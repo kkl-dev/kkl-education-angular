@@ -20,6 +20,7 @@ export class FormInputComponent implements OnInit {
   @ViewChild('input') input!: HTMLInputElement;
 
   @Input() public control!: FormControl
+  @Input() public controlType!: string
 
   @Input() public type!: string;
   @Input() public label!: string;
@@ -48,6 +49,7 @@ export class FormInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToControl();
+    console.log(this.controlType)
   }
 
   // ControlValueAccessor logic
