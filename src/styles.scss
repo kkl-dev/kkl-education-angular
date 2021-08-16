@@ -3,23 +3,12 @@
 @import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
 
 $--green-color-bright: #37c563;
-$--blue-color-bright: #448ECD;
+$education-primary: #448ECD;
 
 $colors: (
-  primary: $--blue-color-bright,
+  primary: $education-primary,
 );
 
-$grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 840px,
-  lg: 992px,
-  xl: 1200px,
-);
-
-@function size($breakpoints) {
-  @return map-get($grid-breakpoints, $breakpoints);
-}
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
@@ -42,7 +31,7 @@ body {
 }
 
 .education {
-  background-color: $--blue-color-bright;
+  background-color: color(primary);
 }
 
 ::ng-deep mat-grid-list,

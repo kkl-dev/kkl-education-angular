@@ -2,7 +2,7 @@
 
 .sidenav-container {
   height: 100%;
-  
+
 }
 
 
@@ -16,19 +16,19 @@ mat-sidenav-content{
   width: fit-content;
   margin-top: 88px;
   height: calc(100% - 90px);
-  direction: rtl; 
+  direction: rtl;
   // overflow: hidden;
 }
 .sidenav-education{
-  border-top:  $--blue-color-bright solid 3px;
-  
+  border-top:  color(primary) solid 3px;
+
 }
 
 .forestry-education{
   border-top:  $--green-color-bright solid 3px;
 
 }
- 
+
 ::ng-deep .mat-drawer{
   background-color: rgba($color: #F5F5F5, $alpha: .5) !important;
   backdrop-filter: blur(15px) saturate(70%) contrast(70%) brightness(130%) opacity(1.1);
@@ -38,8 +38,8 @@ mat-sidenav-content{
 ::ng-deep .mat-drawer:before {
   background-color: rgba(0, 0, 0, 0);
   backdrop-filter: blur(15px) saturate(70%) contrast(70%) brightness(130%) opacity(1.1);
-  content: '';  
-  height: 100%; 
+  content: '';
+  height: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
