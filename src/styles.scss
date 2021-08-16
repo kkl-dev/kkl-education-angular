@@ -5,6 +5,26 @@
 $--green-color-bright: #37c563;
 $--blue-color-bright: #448ECD;
 
+$colors: (
+  primary: $--blue-color-bright,
+);
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 840px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+@function size($breakpoints) {
+  @return map-get($grid-breakpoints, $breakpoints);
+}
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
+
 html,
 body {
   height: 100vh;

@@ -50,7 +50,7 @@ import { EducationComponent } from './screens/search/education/education.compone
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { FormInputComponent } from './components/form-container/form-input/form-input.component';
-import { SquadGroupComponent } from './order-tour/squad-group/squad-group.component';
+import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
 
 @NgModule({
   declarations: [
