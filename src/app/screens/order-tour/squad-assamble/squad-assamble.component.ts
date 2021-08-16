@@ -34,7 +34,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
 
 
 
-  TimeAndNameFormInputs: QuestionBase<string>[] = [
+  TimeAndNameFormInputs: QuestionBase<string | Date>[] = [
     
     new TextboxQuestion({
       key: 'tourName',
@@ -62,14 +62,14 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       key: 'startDate',
       columns: 'span 12',
       label: 'תאריך התחלה',
-      value: '',
+      value: new Date(),
       order: 3,
     }),
     new QuestionCalendar({
       key: 'endDate',
       columns: 'span 12',
       label: 'תאריך סיום',
-      value: '',
+      value: new Date(),
       order: 4,
     }),
   ];
@@ -154,109 +154,100 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       ],
       order: 1,
     }),
-    // new QuestionNumber({
-    //   key: 'boys',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'נוער/מבוגרים',
-    //   innerLabel: 'בנים',
-    //   value:0,
-    //   order: 2,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-    // new QuestionNumber({
-    //   key: 'girls',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   innerLabel: 'בנות',
-    //   value:0,
-    //   order: 3,
-    // }),
- new QuestionNumber({
+    new QuestionNumber({
+      key: 'boys',
+      columns: 'span 5',
+      type: 'number',
+      label: 'נוער/מבוגרים',
+      innerLabel: 'בנים',
+      value:0,
+      order: 2,
+    }),
+    new Offset({
+      columns: 'span 2 ',
+    }),
+    new QuestionNumber({
+      key: 'girls',
+      columns: 'span 5',
+      type: 'number',
+      label: 'hide',
+      innerLabel: 'בנות',
+      value:0,
+      order: 3,
+    }),
+
+    new QuestionNumber({
       key: 'boysChaperone',
       columns: 'span 5',
       type: 'number',
       label: 'מלווים',
       innerLabel: 'בנים',
       value:0,
-    templateName:'boys',
+
       order: 4,
     }),
-    // new QuestionNumber({
-    //   key: 'boysChaperone',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'מלווים',
-    //   innerLabel: 'בנים',
-    //   value:0,
+    new Offset({
+      columns: 'span 2 ',
+    }),
 
-    //   order: 4,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
+    new QuestionNumber({
+      key: 'girlsChaperone',
+      columns: 'span 5',
+      type: 'number',
+      label: 'hide',
+      innerLabel: 'בנות',
+      value:0,
 
-    // new QuestionNumber({
-    //   key: 'girlsChaperone',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   innerLabel: 'בנות',
-    //   value:0,
+      order: 5,
+    }),
+    new QuestionNumber({
+      key: 'boysInstructors',
+      columns: 'span 5',
+      type: 'number',
+      label: 'מדריכים',
+      innerLabel: 'בנים',
+      value:0,
 
-    //   order: 5,
-    // }),
-    // new QuestionNumber({
-    //   key: 'boysInstructors',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'מדריכים',
-    //   innerLabel: 'בנים',
-    //   value:0,
+      order: 7,
+    }),
+    new Offset({
+      columns: 'span 2 ',
+    }),
 
-    //   order: 7,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
+    new QuestionNumber({
+      key: 'girlsInstructors',
+      columns: 'span 5',
+      type: 'number',
+      label: 'hide',
+      innerLabel: 'בנות',
+      value:0,
 
-    // new QuestionNumber({
-    //   key: 'girlsInstructors',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   innerLabel: 'בנות',
-    //   value:0,
+      order: 8,
+    }),
+    new QuestionNumber({
+      key: 'boysMedics',
+      columns: 'span 5',
+      type: 'number',
+      label: 'חובשים',
+      innerLabel: 'בנים',
+      value:0,
 
-    //   order: 8,
-    // }),
-    // new QuestionNumber({
-    //   key: 'boysMedics',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'חובשים',
-    //   innerLabel: 'בנים',
-    //   value:0,
+      order: 9,
+    }),
+    new Offset({
+      columns: 'span 2 ',
+    }),
 
-    //   order: 9,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
+    new QuestionNumber({
+      key: 'girlsMedics',
+      columns: 'span 5',
+      type: 'number',
+      label: 'hide',
+      innerLabel: 'בנות',
+      value:0,
 
-    // new QuestionNumber({
-    //   key: 'girlsMedics',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   innerLabel: 'בנות',
-    //   value:0,
-
-    //   order: 10,
-    // }),
+      order: 10,
+    }),
   ];
 
   tourDetailsFormInputs: QuestionBase<string>[] = [
@@ -316,29 +307,25 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
   ];
 
 
-  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef:ElementRef = new ElementRef(FormContainerComponent)
+  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent 
 
 
   constructor() {
-    console.log( this.tourDetailsRef)
   }
 
   ngOnInit(): void {
-    console.log( this.tourDetailsRef)
     
   }
 
   ngAfterViewInit(): void {
-    console.log( this.tourDetailsRef)
     
   }
   ngOnDestroy():void{
-    console.log('asdasd');
     
+    console.log( this.tourDetailsRef.form.value)
   }
   
   a(a:any){
     console.log('asd' )
-    console.log( a.value)
   }
 }
