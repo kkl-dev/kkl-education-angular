@@ -7,6 +7,7 @@ export class QuestionBase<T> {
   disabled: boolean;
   controlType: string;
   columns: string;
+  rows: string;
   custom: boolean;
   validations: Validators[];
   type: string;
@@ -22,6 +23,7 @@ export class QuestionBase<T> {
       controlType?: string;
       type?: string;
       columns?: string;
+      rows?: string;
       custom?: boolean;
       validations?: Validators[];
       options?: { key: string; value: string }[];
@@ -33,6 +35,7 @@ export class QuestionBase<T> {
     this.disabled = true;
     this.label = options.label || '';
     this.columns = options.columns || '1';
+    this.rows = options.rows || '1';
     this.validations = options.validations || [],
     this.controlType = options.controlType || 'text';
     this.type = options.type || '';

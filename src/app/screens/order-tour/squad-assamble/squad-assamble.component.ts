@@ -77,7 +77,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionSelect({
       key: 'customerName',
       type: 'select',
-      columns: '3',
       label: 'מי הלקוח',
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
@@ -90,7 +89,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionSelect({
       key: 'payerName',
       label: 'לקוח משלם',
-      columns: '3',
       type: "select",
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
@@ -103,24 +101,17 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new TextboxQuestion({
       key: 'teamRepresentative',
       label: 'נציג הקבוצה',
-      columns: '3',
       value: '',
     }),
 
     new TextboxQuestion({
       key: 'phoneNumberNoPrefix',
       label: '',
-      columns: '1',
       type: 'text',
     }),
-    // new Offset({
-    //   columns: 'span 1 ',
-    // }),
-
     new QuestionSelect({
       key: 'phoneNumberPrefix',
       label: '',
-      columns: '1',
       type: 'select',
       options: [
         { key: '054', value: '054' },
@@ -132,7 +123,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new TextboxQuestion({
       key: 'email',
       label: 'מייל',
-      columns: '3',
       type: 'text',
     }),
 
@@ -200,7 +190,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
   public squadForm: formGroupGrid[] = [
     { cols: '1', title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
     { cols: '1', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
-    { cols: '3', title: 'לקוח', questions: this.customerFormInputs },
+    { cols: '1', title: 'לקוח', questions: this.customerFormInputs },
     {
       cols: '1',
       title: 'מועד ושם הטיול',
