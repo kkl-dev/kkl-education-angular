@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { QuestionBase } from './question-base';
@@ -22,20 +22,32 @@ export class FormContainerComponent implements OnInit {
   @Input() questions!: QuestionBase<string>[]
   @Input() showButton: boolean = true
   @Input() customQuestionTemplates = {}
-  payLoad: string = '';
 
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter()
+  @Input() buttonText: string = 'המשך'
+
+  public payLoad: string = '';
   constructor(private qcs: QuestionControlService) {
   }
 
   ngOnInit() {
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
     this.formTemplate = this.qcs.setGroup(this.questions)
     console.log(this.formTemplate)
+    // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
   }
 
+  ngOnChanges() {
+    console.log('onChanges');
+    // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
+  }
   onSubmit() {
+
     this.payLoad = JSON.stringify(this.form.getRawValue());
     console.log(this.payLoad);
+
+    console.log('asdasd');
+
+    this.emitFormValues.emit(this.form.getRawValue())
 
   }
 

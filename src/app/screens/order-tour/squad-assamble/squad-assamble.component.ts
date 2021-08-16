@@ -62,13 +62,13 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
     new QuestionCalendar({
       key: 'startDate',
       label: 'תאריך התחלה',
-      value: '',
+      value: new Date(),
       order: 3,
     }),
     new QuestionCalendar({
       key: 'endDate',
       label: 'תאריך סיום',
-      value: '',
+      value: new Date(),
       order: 4,
     }),
   ];

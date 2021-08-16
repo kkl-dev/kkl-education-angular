@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpClientModule } from '@angular/common/http';
+import {DatePipe} from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -49,6 +50,8 @@ import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
+
 import { IconComponent } from './components/icon/icon.component';
 import { FormInputComponent } from './components/form-container/form-input/form-input.component';
 import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
@@ -84,6 +87,8 @@ import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-grou
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
+    NumberInputComponent,
+         DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
     IconComponent,
@@ -109,7 +114,7 @@ import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-grou
     MatIconModule,
     MatListModule
   ],
-  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
