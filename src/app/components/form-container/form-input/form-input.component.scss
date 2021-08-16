@@ -2,14 +2,22 @@ mat-form-field {
   text-align: right !important;
   width: 100%;
 
-  ::ng-deep mat-select {
-    // display: flex;
-
-    .mat-select-arrow-wrapper {
-      display: none !important;
-    }
-
-  }
+}
 
 
+::ng-deep .cdk-overlay-pane {
+  transform: translateX(-15%) !important;
+  margin-top: 2%;
+}
+
+.mat-option {
+  text-align: right;
+}
+
+::ng-deep .mat-select-panel {
+  max-height: 150px !important;
+}
+
+::ng-deep .mat-select-arrow-wrapper {
+  opacity: 0 !important;
 }

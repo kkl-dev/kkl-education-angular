@@ -2,7 +2,7 @@
 
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formTemplate">
 
-    <mat-grid-list [cols]="cols" rowHeight="10vh">
+    <mat-grid-list [cols]="cols" rowHeight="11vh">
       <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || 1">
         <app-form-input
         [control]="formTemplate.controls[question.key || question.label]"

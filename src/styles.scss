@@ -28,6 +28,8 @@ body {
 ::ng-deep mat-grid-list,
 mat-grid-tile {
   text-align: right;
+  height: 100%;
+  width: 100%;
 }
 
 mat-grid-tile {
@@ -35,7 +37,6 @@ mat-grid-tile {
   &.text>figure.mat-figure {
     display: flex;
     flex-direction: column;
-    // align-content: center;
-    // justify-content: flex-start;
   }
 }
+
