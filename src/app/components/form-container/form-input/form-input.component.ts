@@ -3,11 +3,6 @@ import { QuestionControlService } from './../question-control.service';
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-form-input',
   templateUrl: './form-input.component.html',
@@ -32,16 +27,11 @@ export class FormInputComponent implements OnInit {
   @Input() public hint!: string;
   @Input() public controlName!: string;
   @Input() public icon!: string;
+  @Input() public status!: string;
   @Input() public options!: []
 
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;
-
-  public foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' }
-  ];
 
   public value!: any
   public error!: string

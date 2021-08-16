@@ -1,7 +1,9 @@
+@import '../../../../styles.scss';
+
+
 mat-form-field {
   text-align: right !important;
   width: 100%;
-
 }
 
 
@@ -20,4 +22,8 @@ mat-form-field {
 
 ::ng-deep .mat-select-arrow-wrapper {
   opacity: 0 !important;
+}
+
+mat-icon {
+  color: $--blue-color-bright;
 }
