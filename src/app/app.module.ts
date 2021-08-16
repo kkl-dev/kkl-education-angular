@@ -55,7 +55,7 @@ import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
 
-// import { IconComponent } from './components/icon/icon.component';
+import { IconComponent } from './components/icon/icon.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +95,7 @@ import { DrawerComponent } from './components/drawer/drawer.component';
     DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
-    // IconComponent
+    IconComponent
   ],
   imports: [
     BrowserModule,
