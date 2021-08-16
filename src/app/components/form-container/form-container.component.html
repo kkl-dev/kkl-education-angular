@@ -2,17 +2,22 @@
 
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formTemplate">
 
-    <mat-grid-list [cols]="cols" rowHeight="11vh">
+    <mat-grid-list [cols]="cols || 1" rowHeight="11vh">
+
       <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || 1">
-        <app-form-input
-        [control]="formTemplate.controls[question.key || question.label]"
-        [type]="question.type"
-          [label]='question.label'
-          [icon]="question.icon"
-          [options]="question.options"
-          [controlType]="question.controlType"
-          ></app-form-input>
+
+
+        <app-form-input *ngIf="!question.custom" [control]="formTemplate.controls[question.key || question.label]"
+          [type]="question.type" [label]='question.label' [icon]="question.icon" [options]="question.options"
+          [controlType]="question.controlType"></app-form-input>
+
+        <!-- <app-question [question]="question" *ngIf="question.custom"></app-question> -->
+
+
       </mat-grid-tile>
+
+
+
     </mat-grid-list>
 
 

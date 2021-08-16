@@ -11,6 +11,7 @@ import { Validators } from '@angular/forms';
 
 export interface formGroupGrid {
   title: string;
+  cols?: string;
   questions: QuestionBase<string>[]
 }
 
@@ -78,7 +79,21 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionSelect({
       key: 'customerName',
       type: 'select',
+      columns: '3',
       label: 'מי הלקוח',
+      options: [
+        { key: 'שם נוסף', value: 'שם נוסף' },
+        { key: 'עוד לקוח', value: 'עוד לקוח' },
+        { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+        { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+      ],
+    }),
+
+    new QuestionSelect({
+      key: 'payerName',
+      label: 'לקוח משלם',
+      columns: '3',
+      type: "select",
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
         { key: 'עוד לקוח', value: 'עוד לקוח' },
@@ -90,13 +105,15 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new TextboxQuestion({
       key: 'teamRepresentative',
       label: 'נציג הקבוצה',
+      columns: '3',
       value: '',
     }),
 
     new TextboxQuestion({
       key: 'phoneNumberNoPrefix',
       label: 'נייד',
-      columns: 'span 8',
+      columns: '2',
+      custom: true,
       type: 'text',
     }),
     new Offset({
@@ -105,8 +122,9 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
 
     new QuestionSelect({
       key: 'phoneNumberPrefix',
-      label: 'hide',
-      columns: 'span 3',
+      label: '',
+      columns: '1',
+      custom: true,
       type: 'text',
       options: [
         { key: '054', value: '054' },
@@ -118,19 +136,10 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new TextboxQuestion({
       key: 'email',
       label: 'מייל',
+      columns: '3',
       type: 'text',
     }),
-    new QuestionSelect({
-      key: 'payerName',
-      label: 'לקוח משלם',
-      type: "select",
-      options: [
-        { key: 'שם נוסף', value: 'שם נוסף' },
-        { key: 'עוד לקוח', value: 'עוד לקוח' },
-        { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-        { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-      ],
-    }),
+
   ];
 
   groupAssambleFormInputs: QuestionBase<string>[] = [
@@ -193,10 +202,11 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
   ];
 
   public squadForm: formGroupGrid[] = [
-    { title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
-    { title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
-    { title: 'לקוח', questions: this.customerFormInputs },
+    { cols: '1', title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
+    { cols: '1', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
+    { cols: '3', title: 'לקוח', questions: this.customerFormInputs },
     {
+      cols: '1',
       title: 'מועד ושם הטיול',
       questions: this.timeAndNameFormInputs
     },

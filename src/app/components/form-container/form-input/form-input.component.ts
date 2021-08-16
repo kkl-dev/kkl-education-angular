@@ -1,5 +1,4 @@
 import { FormService } from '../form.service';
-import { QuestionControlService } from './../question-control.service';
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 
@@ -43,13 +42,11 @@ export class FormInputComponent implements OnInit {
   public disabled!: boolean
 
   constructor(
-    private qcs: QuestionControlService,
     private formService: FormService
   ) { }
 
   ngOnInit(): void {
     this.subscribeToControl();
-    console.log(this.controlType)
   }
 
   // ControlValueAccessor logic

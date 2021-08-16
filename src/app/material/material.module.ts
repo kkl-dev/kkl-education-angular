@@ -1,3 +1,4 @@
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,8 +37,14 @@ const MaterialComponents = [MatButtonModule];
     MatTooltipModule,
     MatCheckboxModule,
     MatIconModule,
-    MatProgressSpinnerModule
-    
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
+
   ],
   exports: [
     MatButtonModule,
@@ -55,7 +62,13 @@ const MaterialComponents = [MatButtonModule];
     MatTooltipModule,
     MatCheckboxModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
 })
 export class MaterialModule {}
