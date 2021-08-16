@@ -164,7 +164,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'tripLocation',
       label: 'מחלקה',
       custom: true,
-      rows: "3",
+      rows: "2",
       options: [{ key: 'ישראל', value: 'ישראל' }, { key: 'חו"ל', value: 'חו"ל' }],
       value: 'ישראל',
     }),
