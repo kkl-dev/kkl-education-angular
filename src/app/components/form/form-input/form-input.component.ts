@@ -1,6 +1,6 @@
-import { FormService } from '../form.service';
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { FormService } from '../logic/form.service';
 
 @Component({
   selector: 'app-form-input',

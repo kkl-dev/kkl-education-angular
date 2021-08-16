@@ -1,16 +1,12 @@
-import { FormService } from './form.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-
-import { QuestionBase } from './question-base';
-import { QuestionControlService } from './question-control.service';
-
+import { FormService } from '../logic/form.service';
+import { QuestionBase } from '../logic/question-base';
 
 @Component({
   selector: 'app-form-container',
   templateUrl: './form-container.component.html',
   styleUrls: ['./form-container.component.scss'],
-  providers: [QuestionControlService]
 })
 
 

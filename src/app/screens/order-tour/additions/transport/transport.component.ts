@@ -1,6 +1,6 @@
-import { QuestionBase } from 'src/app/components/form-container/question-base';
-import { QuestionSelect } from 'src/app/components/form-container/question-select';
-import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
+import { QuestionBase } from 'src/app/components/form/form-container/question-base';
+import { QuestionSelect } from 'src/app/components/form/form-container/question-select';
+import { TextboxQuestion } from 'src/app/components/form/form-container/question-textbox';
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 
@@ -72,7 +72,7 @@ export class TransportComponent implements OnInit {
       key: 'tourName',
       label: 'שם 7',
       value: '',
-      order: 1, 
+      order: 1,
       validations: [Validators.required]
     }),
 

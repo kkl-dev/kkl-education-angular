@@ -38,8 +38,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { LinksComponent } from './components/links/links.component';
 import { MainComponent } from './components/main/main.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { FormContainerComponent } from './components/form-container/form-container.component';
-import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
+import { FormContainerComponent } from './components/form/form-container/form-container.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
@@ -47,7 +46,10 @@ import { WorkingStepsComponent } from './components/working-steps/working-steps.
 import { EducationComponent } from './screens/search/education/education.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
-import { FormInputComponent } from './components/form-container/form-input/form-input.component';
+
+import { InputPhoneComponent } from './components/form/input-phone/input-phone.component';
+import { FormQuestionComponent } from './components/form/form-question/form-question.component';
+import { FormInputComponent } from './components/form/form-input/form-input.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,10 @@ import { FormInputComponent } from './components/form-container/form-input/form-
     SquadAssambleComponent,
     FormContainerComponent,
     OrderTourComponent,
+
     FormQuestionComponent,
+    FormInputComponent,
+
     NavigationComponent,
     SpinnerComponent,
     BottomNavigationComponent,
@@ -83,8 +88,8 @@ import { FormInputComponent } from './components/form-container/form-input/form-
 
     NumberInputComponent,
     IconComponent,
-    FormInputComponent,
-    SquadGroupComponent
+    SquadGroupComponent,
+    InputPhoneComponent
   ],
   imports: [
     BrowserModule,

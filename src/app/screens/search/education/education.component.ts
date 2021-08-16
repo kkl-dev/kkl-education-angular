@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
-import { subDays, addDays } from 'date-fns';
-import { Locale, getYear } from 'date-fns';
+import { getYear } from 'date-fns';
 
 @Component({
   selector: 'app-education',

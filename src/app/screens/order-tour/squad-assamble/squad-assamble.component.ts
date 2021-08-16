@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { QuestionSelect } from 'src/app/components/form-container/question-select';
-import { QuestionBase } from 'src/app/components/form-container/question-base';
-import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
-import { QuestionRadio } from 'src/app/components/form-container/form-question/question-radio';
-import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
-import { Offset } from 'src/app/components/form-container/form-question/question-offset';
-import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
-import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
+import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { Validators } from '@angular/forms';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 
 export interface formGroupGrid {
   title: string;
@@ -111,21 +109,19 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
 
     new TextboxQuestion({
       key: 'phoneNumberNoPrefix',
-      label: 'נייד',
-      columns: '2',
-      custom: true,
+      label: '',
+      columns: '1',
       type: 'text',
     }),
-    new Offset({
-      columns: 'span 1 ',
-    }),
+    // new Offset({
+    //   columns: 'span 1 ',
+    // }),
 
     new QuestionSelect({
       key: 'phoneNumberPrefix',
       label: '',
       columns: '1',
-      custom: true,
-      type: 'text',
+      type: 'select',
       options: [
         { key: '054', value: '054' },
         { key: '052', value: '052' },

@@ -1,5 +1,5 @@
-import { QuestionBase } from 'src/app/components/form-container/question-base';
 import { Component, Input } from '@angular/core';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
 
 @Component({
   selector: 'app-squad-group',
