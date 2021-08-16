@@ -86,9 +86,14 @@
       width: 75px;
       background-color: #ffffff;
       border: 1px solid #00000029;
-      display: flex;
+      // display: flex;
       -webkit-box-shadow: 0px 5px 0px 5px #ffffff;
       box-shadow: 0px 0px 0px 6px #ffffff;
+
+      .icon-container {
+        height: 100%;
+        transform: scale(1.5);
+      }
     }
   }
 
@@ -98,6 +103,7 @@
     height: 37.5px;
   }
   #svg-fill * {
+    transform: scale(2.5);
     fill: #747474 !important;
     width: 37.5px;
     height: 37.5px;

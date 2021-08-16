@@ -1,9 +1,9 @@
+import { UserDataService } from './../../utilities/services/user-data.service';
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-main',
@@ -30,7 +30,7 @@ export class MainComponent implements OnInit {
     this.prefix = this.userDataService.user.urlPrefix;
     this.router.events.subscribe((val: any) => {
       this.urlAdress = val.url ? val.url : this.urlAdress;
-      
+
       this.showSteps =
         this.urlAdress !== '/forestry' &&
         this.urlAdress !== '/education' &&

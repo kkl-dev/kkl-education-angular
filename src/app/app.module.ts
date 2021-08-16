@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { GlobalErrorHandler } from './utilities/interceptors/error';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,8 +48,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
+import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
+
+import { IconComponent } from './components/icon/icon.component';
 
 @NgModule({
   declarations: [
@@ -81,10 +85,12 @@ import { DrawerComponent } from './components/drawer/drawer.component';
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    
     NumberInputComponent,
-         DrawerComponent
-  ], 
+         DrawerComponent,
+    InfoCardComponent,
+    NumberInputComponent,
+    IconComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -104,7 +110,7 @@ import { DrawerComponent } from './components/drawer/drawer.component';
     MatIconModule,
     MatListModule
   ],
-  providers: [DatePipe],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, DatePipe],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
