@@ -2,19 +2,18 @@
 
 .order-tour {
   width: 100%;
-  height: calc(100% - 90px);
   display: flex;
   flex-direction: column;
   background-color: white;
   justify-content: flex-end;
   direction: rtl !important;
+  position: relative;
 
   &__steps {
     justify-self: stretch;
     width: 60%;
     padding: 0px 20%;
-    flex: 0 1;
-    // margin: 0 auto;
+    flex: 1 1 100%;
     background: linear-gradient(0deg, #ffffff 0%, rgba(#d8d8d8, 0.5) 100%);
   }
 

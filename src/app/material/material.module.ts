@@ -16,6 +16,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 //import and export material modules
+import {MatCardModule} from '@angular/material/card';
 
 const MaterialComponents = [MatButtonModule];
 
@@ -36,8 +37,10 @@ const MaterialComponents = [MatButtonModule];
     MatTooltipModule,
     MatCheckboxModule,
     MatIconModule,
-    MatProgressSpinnerModule
-    
+    MatProgressSpinnerModule,
+    MatCardModule
+
+
   ],
   exports: [
     MatButtonModule,
@@ -55,7 +58,8 @@ const MaterialComponents = [MatButtonModule];
     MatTooltipModule,
     MatCheckboxModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
-})
+}) 
 export class MaterialModule {}

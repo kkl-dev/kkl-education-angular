@@ -1,24 +1,26 @@
 import { Validators } from '@angular/forms';
 export class QuestionBase<T> {
-  value: T | undefined | number;
+  value: any | undefined | number;
+  type: string;
   key: string;
   label: string;
   icon: string;
   disabled: boolean;
+  order: number;
   controlType: string;
   columns: string;
   component: string;
   validations: Validators[];
-  type: string;
   options: { key: string; value: string }[];
 
   constructor(
     options: {
-      value?: T;
+      value?: any;
       key?: string;
       icon?: string;
       disabled?: string;
       label?: string;
+      order?: number;
       controlType?: string;
       type?: string;
       columns?: string;
@@ -34,7 +36,8 @@ export class QuestionBase<T> {
     this.label = options.label || '';
     this.columns = options.columns || '1';
     this.validations = options.validations || [],
-    this.controlType = options.controlType || 'text';
+      this.order = options.order === undefined ? 1 : options.order;
+    this.controlType = options.controlType || '';
     this.type = options.type || '';
     this.component = options.component || '';
     this.options = options.options || [];

@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -34,9 +35,9 @@ import { MyToursComponent } from './screens/my-tours/my-tours.component';
 import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SquadAssambleComponent } from './screens/order-tour/squad-assamble/squad-assamble.component';
-import { FormContainerComponent } from './components/form-container/form-container.component';
+import { FormContainerComponent } from './components/form/form-container/form-container.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
-import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
+import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
@@ -47,43 +48,65 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
+import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
+import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
+
 import { IconComponent } from './components/icon/icon.component';
-import { FormInputComponent } from './components/form-container/form-input/form-input.component';
 import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
+import { NavCardComponent } from './components/nav-card/nav-card.component';
+import { FormInputComponent } from './components/form/form-input/form-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    MainComponent,
+    DashboardComponent,
     NavbarComponent,
     WizardComponent,
-    UserInfoComponent,
     LinksComponent,
+    UserInfoComponent,
+
+    // LOGIN COMPS
     LoginComponent,
     LoginBackdropComponent,
     LoginFormComponent,
-    MainComponent,
-    DashboardComponent,
     OtpFormComponent,
     LoginProcessComponent,
+
     SearchComponent,
-    EducationComponent,
     DatePickerComponent,
+
+    // EDUCTIOM COMPS
+    EducationComponent,
     EducationResultsComponent,
+
     HeaderComponent,
     TooltipComponent,
-    MyToursComponent,
-    ToursTableComponent,
     PaginationComponent,
+
+    ToursTableComponent,
+    MyToursComponent,
     SquadAssambleComponent,
+
+    // form comps
     FormContainerComponent,
+    FormQuestionComponent,
+
     OrderTourComponent,
     FormQuestionComponent,
     NavigationComponent,
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-
+    AdditionsComponent,
+    NavigationGridComponent,
+    NavCardComponent,
+    NumberInputComponent,
+    DrawerComponent,
+    InfoCardComponent,
     NumberInputComponent,
     IconComponent,
     FormInputComponent,
@@ -108,7 +131,7 @@ import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-grou
     MatIconModule,
     MatListModule
   ],
-  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
