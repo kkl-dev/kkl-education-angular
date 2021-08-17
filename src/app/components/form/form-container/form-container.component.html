@@ -3,17 +3,21 @@
 
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
 
-    <mat-grid-list [cols]="cols" rowHeight="11vh">
-      <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || 1">
-        <app-form-input
-        [control]="form.controls[question.key || question.label]"
-        [type]="question.type"
-          [label]='question.label'
-          [icon]="question.icon"
-          [options]="question.options"
-          [controlType]="question.controlType"
-          ></app-form-input>
+    <mat-grid-list [cols]="cols || 1" rowHeight="3vh">
+
+      <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || cols" [rowspan]="question.rows">
+
+        <app-form-input *ngIf="!question.custom" [control]="formTemplate.controls[question.key]" [type]="question.type"
+          [label]='question.label' [icon]="question.icon" [options]="question.options"
+          [controlType]="question.controlType"></app-form-input>
+
+        <app-input-radio [control]="formTemplate.controls[question.key]" [question]="question" *ngIf="question.custom">
+        </app-input-radio>
+
       </mat-grid-tile>
+
+
+
     </mat-grid-list>
 
     <div class="form-row" *ngIf="showButton">

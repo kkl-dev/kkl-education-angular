@@ -1,18 +1,23 @@
-.form-container{
+.form-container {
   width: inherit;
   padding: 10px 0;
   box-sizing: border-box;
 }
 
 .form {
-height: 100%;
-width: 100%;
+  height: 100%;
+  width: 100%;
 
-.form-row {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
+  .form-row {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
 }
 
+app-input-radio {
+  width: 70%;
+  height: 70%;
 }

@@ -7,6 +7,11 @@
     <mat-form-field class="full-width" appearance="outline">
 
 
+      <input *ngIf="controlType !== 'select' && controlType !== 'textarea'" matInput [type]="type" [disabled]="disabled"
+        [formControl]="control" control="control" autocomplete="off" (input)="handleChange($event.target.value)"
+        [name]="type" (focusout)="validate()" #input>
+
+
       <mat-select color="primary" [formControl]="control" *ngIf="controlType === 'select'"
         (change)="handleChange($event.value)">
         <mat-option>{{label | titlecase}}</mat-option>
@@ -15,11 +20,8 @@
         </mat-option>
       </mat-select>
 
-      <input *ngIf="controlType !== 'select'" matInput [type]="type" [disabled]="disabled" [formControl]="control"
-        control="control" autocomplete="off" (input)="handleChange($event.target.value)" [name]="type"
-        (focusout)="validate()" #input>
 
-      <textarea [formControl]="control" *ngIf="controlType === 'textarea'" matInput></textarea>
+      <textarea rows="4" [formControl]="control" *ngIf="controlType === 'textarea'" matInput></textarea>
 
 
       <!-- icons -->

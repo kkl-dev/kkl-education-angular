@@ -1,7 +1,9 @@
-<mat-grid-list cols="4" rowHeight="60vh">
+<mat-grid-list cols="6" rowHeight="60vh">
+  <mat-grid-tile></mat-grid-tile>
   <mat-grid-tile *ngFor="let squad of squadForm">
-    <app-squad-group [title]="squad.title" [questions]="squad.questions"></app-squad-group>
+    <app-squad-group [formCols]="squad.cols" [title]="squad.title" [questions]="squad.questions"></app-squad-group>
   </mat-grid-tile>
+  <mat-grid-tile></mat-grid-tile>
 </mat-grid-list>
 
 <!-- <div class="assamble-tour" >

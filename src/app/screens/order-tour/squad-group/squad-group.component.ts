@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 
 @Component({
@@ -9,9 +9,14 @@ import { QuestionBase } from 'src/app/components/form/logic/question-base';
 export class SquadGroupComponent {
 
   @Input() public title!: string
+  @Input() public formCols!: string
   @Input() public showButton!: boolean
   @Input() public questions!: QuestionBase<string>[]
 
-  constructor() { }
+  constructor() {
+  }
+
+
+
 
 }

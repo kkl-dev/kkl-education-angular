@@ -3,7 +3,6 @@ import { Component, OnInit,ViewChild  } from '@angular/core';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
-import { Offset } from 'src/app/components/form/logic/question-offset';
 import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
@@ -11,6 +10,7 @@ import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox'
 
 export interface formGroupGrid {
   title: string;
+  cols?: string;
   questions: QuestionBase<string>[]
 }
 
@@ -89,39 +89,6 @@ export class SquadAssambleComponent implements OnInit{
       ],
     }),
 
-    new TextboxQuestion({
-      key: 'teamRepresentative',
-      label: 'נציג הקבוצה',
-      value: '',
-    }),
-
-    new TextboxQuestion({
-      key: 'phoneNumberNoPrefix',
-      label: 'נייד',
-      columns: 'span 8',
-      type: 'text',
-    }),
-    new Offset({
-      columns: 'span 1 ',
-    }),
-
-    new QuestionSelect({
-      key: 'phoneNumberPrefix',
-      label: 'hide',
-      columns: 'span 3',
-      type: 'text',
-      options: [
-        { key: '054', value: '054' },
-        { key: '052', value: '052' },
-        { key: '052', value: '052' },
-        { key: '077', value: '077' },
-      ],
-    }),
-    new TextboxQuestion({
-      key: 'email',
-      label: 'מייל',
-      type: 'text',
-    }),
     new QuestionSelect({
       key: 'payerName',
       label: 'לקוח משלם',
@@ -133,6 +100,28 @@ export class SquadAssambleComponent implements OnInit{
         { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
       ],
     }),
+
+    new TextboxQuestion({
+      key: 'teamRepresentative',
+      label: 'נציג הקבוצה',
+      value: '',
+    }),
+
+    new TextboxQuestion({
+      key: 'phone',
+      label: 'נייד איש קשר',
+      type: 'text',
+      validations: [Validators.required]
+
+    }),
+    new TextboxQuestion({
+      key: 'email',
+      label: 'מייל',
+      type: 'text',
+      validations: [Validators.required]
+
+    }),
+
   ];
 
   groupAssambleFormInputs: QuestionBase<string>[] = [
@@ -165,6 +154,7 @@ export class SquadAssambleComponent implements OnInit{
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
+      rows: "4",
       type: 'select',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
@@ -172,17 +162,21 @@ export class SquadAssambleComponent implements OnInit{
       ],
     }),
 
-    // new QuestionRadio({
-    //   key: 'tripLocation',
-    //   label: 'מחלקה',
-    //   options: [{ key: '', value: 'ישראל' }, { key: '', value: 'חו"ל' }],
-    //   value: 'ישראל',
-    // }),
-
     new QuestionRadio({
       key: 'tripLocation',
+      label: 'מחלקה',
+      custom: true,
+      rows: "2",
+      options: [{ key: 'ישראל', value: 'ישראל' }, { key: 'חו"ל', value: 'חו"ל' }],
+      value: 'ישראל',
+    }),
+
+    new QuestionRadio({
+      custom: true,
+      key: 'tripCenter',
+      rows: "3",
       label: 'פנים/חוץ מרכז שדה',
-      options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
+      options: [{ key: 'פנים', value: 'פנים' }, { key: 'חוץ', value: 'חוץ' }],
       value: 'ישראל',
     }),
 
@@ -195,10 +189,11 @@ export class SquadAssambleComponent implements OnInit{
   ];
 
   public squadForm: formGroupGrid[] = [
-    { title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
-    { title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
-    { title: 'לקוח', questions: this.customerFormInputs },
+    { cols: '1', title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
+    { cols: '1', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
+    { cols: '1', title: 'לקוח', questions: this.customerFormInputs },
     {
+      cols: '1',
       title: 'מועד ושם הטיול',
       questions: this.timeAndNameFormInputs
     },

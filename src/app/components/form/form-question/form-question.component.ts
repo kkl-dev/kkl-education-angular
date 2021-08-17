@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-
 import { QuestionBase } from '../logic/question-base';
 
 @Component({
