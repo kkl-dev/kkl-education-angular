@@ -42,7 +42,7 @@ export class FormInputComponent implements OnInit {
   public disabled!: boolean
 
   constructor(
-    private formService: FormService
+    private formService : FormService
   ) { }
 
   ngOnInit(): void {

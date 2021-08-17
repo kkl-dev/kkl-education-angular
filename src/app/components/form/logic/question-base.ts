@@ -5,28 +5,29 @@ export interface SelectOption {
   value: string
 }
 
-
 export class QuestionBase<T> {
-  value: T | undefined | number;
+  value: any | undefined | number;
+  type: string;
   key: string;
   label: string;
   icon: string;
   disabled: boolean;
+  order: number;
   controlType: string;
   columns: string;
   rows: string;
   custom: boolean;
   validations: Validators[];
-  type: string;
   options: SelectOption[];
 
   constructor(
     options: {
-      value?: T;
+      value?: any;
       key?: string;
       icon?: string;
       disabled?: string;
       label?: string;
+      order?: number;
       controlType?: string;
       type?: string;
       columns?: string;
@@ -44,7 +45,7 @@ export class QuestionBase<T> {
     this.columns = options.columns || '1';
     this.rows = options.rows || '2';
     this.validations = options.validations || [],
-      this.controlType = options.controlType || 'text';
+      this.controlType = options.controlType || 'textbox';
     this.type = options.type || '';
     this.custom = options.custom || false;
     this.options = options.options || [];

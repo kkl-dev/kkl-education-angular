@@ -16,7 +16,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-//import and export material modules
+import {MatCardModule} from '@angular/material/card';
 
 const MaterialComponents = [MatButtonModule];
 
@@ -43,7 +43,8 @@ const MaterialComponents = [MatButtonModule];
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatCardModule
 
   ],
   exports: [
@@ -68,7 +69,8 @@ const MaterialComponents = [MatButtonModule];
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatCardModule
   ],
 })
 export class MaterialModule {}

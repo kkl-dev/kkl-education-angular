@@ -1,4 +1,4 @@
-import { FormControl, FormBuilder, ValidationErrors } from '@angular/forms';
+import { FormControl, FormBuilder } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
 

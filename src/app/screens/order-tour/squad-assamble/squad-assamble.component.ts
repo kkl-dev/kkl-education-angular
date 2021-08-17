@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { Validators } from '@angular/forms';
+import { Component, OnInit,ViewChild  } from '@angular/core';
+import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
-import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
-import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
 
 export interface formGroupGrid {
   title: string;
@@ -18,22 +19,24 @@ export interface formGroupGrid {
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit, OnDestroy {
+export class SquadAssambleComponent implements OnInit{
 
-  tourDetailsFormCustomQuestion: {} = {
-    boys: true,
-    girls: true,
-    boysChaperone: true,
-    girlsChaperone: true,
-    boysInstructors: true,
-    girlsInstructors: true,
-    boysMedics: true,
-    girlsMedics: true
+
+
+  tourDetailsFormCustomQuestion:{}={
+    boys:true,
+    girls:true,
+    boysChaperone:true,
+    girlsChaperone:true,
+    boysInstructors:true,
+    girlsInstructors:true,
+    boysMedics:true,
+    girlsMedics:true
   }
 
 
 
-  timeAndNameFormInputs: QuestionBase<string>[] = [
+  timeAndNameFormInputs: QuestionBase<string | Date>[] = [
 
     new TextboxQuestion({
       key: 'tourName',
@@ -60,14 +63,14 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionCalendar({
       key: 'startDate',
       label: 'תאריך התחלה',
-      value: '',
+      value: new Date(),
       validations: [Validators.required]
 
     }),
     new QuestionCalendar({
       key: 'endDate',
       label: 'תאריך סיום',
-      value: '',
+      value: new Date(),
       validations: [Validators.required]
 
     }),
@@ -165,12 +168,12 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     //   value: 'ישראל',
     // }),
 
-    // new QuestionRadio({
-    //   key: 'tripLocation',
-    //   label: 'פנים/חוץ מרכז שדה',
-    //   options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
-    //   value: 'ישראל',
-    // }),
+    new QuestionRadio({
+      key: 'tripLocation',
+      label: 'פנים/חוץ מרכז שדה',
+      options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
+      value: 'ישראל',
+    }),
 
     new QuestionTextarea({
       key: 'comments',
@@ -192,16 +195,13 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
   ]
 
 
-  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true }) tourDetailsRef: ElementRef = new ElementRef(FormContainerComponent)
+  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent
 
 
   constructor() {
   }
 
   ngOnInit(): void {
-  }
 
-  ngOnDestroy(): void {
   }
-
 }

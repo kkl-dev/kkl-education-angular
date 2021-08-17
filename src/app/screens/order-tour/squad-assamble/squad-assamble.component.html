@@ -1,7 +1,48 @@
-<mat-grid-list cols="6" rowHeight="60vh">
-  <mat-grid-tile></mat-grid-tile>
+<mat-grid-list cols="4" rowHeight="60vh">
   <mat-grid-tile *ngFor="let squad of squadForm">
     <app-squad-group [formCols]="squad.cols" [title]="squad.title" [questions]="squad.questions"></app-squad-group>
   </mat-grid-tile>
-  <mat-grid-tile></mat-grid-tile>
 </mat-grid-list>
+
+<!-- <div class="assamble-tour" >
+  <div class="assamble-tour__form">
+    <div class="assamble-tour__form-headline-container">
+      <h3 class="assamble-tour__form-headline">מועד ושם הטיול</h3>
+    </div>
+    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
+      [questions]="timeAndNameFormInputs"
+      [showButton]="false"
+      #tourDetailsFormCustomQuestionRef
+    ></app-form-container>
+  </div>
+  <div class="assamble-tour__form">
+    <div class="assamble-tour__form-headline-container">
+      <h3 class="assamble-tour__form-headline">לקוח</h3>
+    </div>
+    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
+      [showButton]="false"
+      [questions]="customerFormInputs"
+    ></app-form-container>
+  </div>
+  <div class="assamble-tour__form">
+    <div class="assamble-tour__form-headline-container">
+      <h3 class="assamble-tour__form-headline">הרכב הקבוצה</h3>
+    </div>
+    <app-form-container customQuestionTemplates='tourDetailsFormCustomQuestion'
+      [showButton]="false"
+      [questions]="groupAssambleFormInputs"
+    >
+  </app-form-container>
+
+  </div>
+  <div class="assamble-tour__form">
+    <div class="assamble-tour__form-headline-container">
+      <h3 class="assamble-tour__form-headline">פרטי הטיול</h3>
+    </div>
+    <app-form-container [customQuestionTemplates]='tourDetailsFormCustomQuestion'
+    [showButton]="false"
+
+      [questions]="tourDetailsFormInputs"
+    ></app-form-container>
+  </div>
+</div> -->
