@@ -10,7 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpClientModule } from '@angular/common/http';
-import {DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -48,6 +48,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
+import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
+import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
@@ -85,8 +88,11 @@ import { IconComponent } from './components/icon/icon.component';
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
+    AdditionsComponent,
+    NavigationGridComponent,
+    NavCardComponent,
     NumberInputComponent,
-         DrawerComponent,
+    DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
     IconComponent

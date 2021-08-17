@@ -1,26 +1,27 @@
 .order-tour {
   width: 100%;
-  // height: calc(100% - 90px);
+  height: calc(100% - 90px);
   display: flex;
   flex-direction: column;
   background-color: white;
   justify-content: flex-end;
   direction: rtl !important;
-  position: relative;
-  
-  &__steps {
-    justify-self: stretch;
-    width: 60%;
-    padding: 0px 20%;
-    flex: 1 1 100%;
-    background: linear-gradient(0deg, #ffffff 0%, rgba(#d8d8d8, 0.5) 100%);
-  }
-
-  &__main {
-    box-sizing: border-box;
-    flex: 1;
-  }
 }
+
+.order-tour__steps {
+  justify-self: stretch;
+  width: 60%;
+  padding: 0px 20%;
+  flex: 1 1 100%;
+  background: linear-gradient(0deg, #ffffff 0%, rgba(216, 216, 216, 0.5) 100%);
+}
+
+.order-tour__main {
+  box-sizing: border-box;
+  flex: 1;
+  border-bottom: 5px solid black;
+}
+
 ::ng-deep div#working-steps {
   border-bottom: 0;
   padding: 0 !important;
@@ -36,27 +37,27 @@
   border: 0;
   cursor: pointer;
   padding: 5px 30px;
-  box-shadow: 0px 3px 10px 2px rgba($color: #000, $alpha: 0.2);
-
+  box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.2);
   font-size: 18px;
+}
 
-  &::before {
-    border-style: solid;
-    border-color: #37c56b;
-    border-width: 0.25em 0.25em 0 0;
-    display: inline-block;
-    height: 0.45em;
-    transform: rotate(45deg);
-    margin: auto;
-    width: 0.45em;
-  }
+::ng-deep .bottom-navigation__forward::before {
+  border-style: solid;
+  border-color: #37c56b;
+  border-width: 0.25em 0.25em 0 0;
+  display: inline-block;
+  height: 0.45em;
+  transform: rotate(45deg);
+  margin: auto;
+  width: 0.45em;
 }
 
 ::ng-deep div.working-steps__backstroke {
-  width: 90% !important;
+  width: 85% !important;
   top: calc(50% - 10px) !important;
   background-color: #e8e8e8 !important;
 }
+
 ::ng-deep .bottom-navigation {
   box-sizing: border-box;
   margin: 10px 30px;
@@ -74,10 +75,10 @@
 
 ::ng-deep .chosen {
   background-color: #448ecd !important;
-  &__text {
-    // font-weight: bold;
-    border-bottom: 3px solid #448ecd !important;
-    box-sizing: border-box;
-    text-shadow: 0 0 0.01px black;
-  }
+}
+
+::ng-deep .chosen__text {
+  border-bottom: 3px solid #448ecd !important;
+  box-sizing: border-box;
+  text-shadow: 0 0 0.01px black;
 }
