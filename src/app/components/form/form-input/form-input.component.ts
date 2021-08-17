@@ -1,9 +1,6 @@
+import { FormService } from '../logic/form.service';
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
-
-
-import { MatInput } from '@angular/material/input';
-// import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-form-input',
@@ -19,7 +16,7 @@ import { MatInput } from '@angular/material/input';
 })
 export class FormInputComponent implements OnInit {
 
-  @ViewChild(MatInput) input!: HTMLInputElement;
+  @ViewChild('input') input!: HTMLInputElement;
 
   @Input() public control!: FormControl
 
@@ -28,6 +25,7 @@ export class FormInputComponent implements OnInit {
   @Input() public placeHolder!: string;
   @Input() public hint!: string;
   @Input() public controlName!: string;
+  @Input() public icon!: string;
 
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;
@@ -36,12 +34,12 @@ export class FormInputComponent implements OnInit {
   public error!: string
   public serverError!: string
 
-  public OnChange!: (event : Event) => void
+  public OnChange!: (event: Event) => void
   public onTouched!: () => void
   public disabled!: boolean
 
   constructor(
-    // private messageServcie: MessageService
+    private formService : FormService
   ) { }
 
   ngOnInit(): void {
@@ -67,16 +65,13 @@ export class FormInputComponent implements OnInit {
     this.disabled = isDisabled
   }
 
-  public handleChange(event: Event) {
-    console.log(event)
-
+  public handleChange(value: any) {
+    this.value = value
   }
 
   // subscription section
-
-
   private subscribeToControl() {
-   
+
   }
 
 
@@ -85,11 +80,11 @@ export class FormInputComponent implements OnInit {
   // method to handle validation messages
   public validate() {
 
-    // this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
+    this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
 
     this.control.valueChanges.subscribe(
       () => {
-        // this.error = this.messageServcie.getErrorMessage(this.control, this.placeHolder)
+        this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
       }
     )
   }

@@ -1,3 +1,4 @@
+import { Validators } from '@angular/forms';
 import { Component, OnInit,ViewChild  } from '@angular/core';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
@@ -42,7 +43,7 @@ export class SquadAssambleComponent implements OnInit{
       label: 'שם הטיול',
       value: '',
       order: 1,
-      icon: 'mode_edit'
+      validations: [Validators.required],
     }),
 
     new QuestionSelect({
@@ -55,6 +56,7 @@ export class SquadAssambleComponent implements OnInit{
         { key: 'unproven', value: '123123123' },
       ],
       order: 2,
+      validations: [Validators.required]
     }),
 
 
@@ -63,12 +65,16 @@ export class SquadAssambleComponent implements OnInit{
       label: 'תאריך התחלה',
       value: new Date(),
       order: 3,
+      validations: [Validators.required]
+
     }),
     new QuestionCalendar({
       key: 'endDate',
       label: 'תאריך סיום',
       value: new Date(),
       order: 4,
+      validations: [Validators.required]
+
     }),
   ];
 
@@ -304,7 +310,6 @@ export class SquadAssambleComponent implements OnInit{
 
 
   constructor() {
-    console.log(this.tourDetailsRef)
   }
 
   ngOnInit(): void {

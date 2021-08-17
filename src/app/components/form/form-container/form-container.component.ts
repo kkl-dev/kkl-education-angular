@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
+import { FormService } from './../logic/form.service';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { QuestionBase } from '../logic/question-base';
@@ -16,7 +17,6 @@ import { QuestionControlService } from '../logic/question-control.service';
 export class FormContainerComponent implements OnInit {
 
   public form!: FormGroup;
-  public formTemplate!: FormGroup;
 
   @Input() cols: string = "1"
   @Input() questions!: QuestionBase<string>[]
@@ -27,29 +27,26 @@ export class FormContainerComponent implements OnInit {
   @Input() buttonText: string = 'המשך'
 
   public payLoad: string = '';
+
   constructor
-  (private qcs: QuestionControlService,
+    (
+      private formService: FormService
     ) {
   }
 
   ngOnInit() {
-    // this.formTemplate = this.qcs.setGroup(this.questions)
-    console.log(this.formTemplate)
-    // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
+    this.form = this.formService.setGroup(this.questions)
   }
 
-  ngOnChanges() {
-    console.log('onChanges');
-    // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
-  }
+
   onSubmit() {
 
-    this.payLoad = JSON.stringify(this.form.getRawValue());
+    this.payLoad = JSON.stringify(this.form.value());
     console.log(this.payLoad);
 
     console.log('asdasd');
 
-    this.emitFormValues.emit(this.form.getRawValue())
+    this.emitFormValues.emit(this.form.value())
 
   }
 

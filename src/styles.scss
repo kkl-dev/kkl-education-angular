@@ -9,7 +9,9 @@ html,
 body {
   height: 100vh;
   box-sizing: border-box;
+  text-align: right;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -19,7 +21,21 @@ body {
 
 }
 
+.education {
+  background-color: $--blue-color-bright;
+}
 
-.education{
-  background-color: #448Ecd;
+::ng-deep mat-grid-list,
+mat-grid-tile {
+  text-align: right;
+}
+
+mat-grid-tile {
+
+  &.text>figure.mat-figure {
+    display: flex;
+    flex-direction: column;
+    // align-content: center;
+    // justify-content: flex-start;
+  }
 }

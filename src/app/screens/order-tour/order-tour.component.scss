@@ -20,6 +20,7 @@
     flex: 1;
   }
 }
+
 ::ng-deep div#working-steps {
   border-bottom: 0;
   padding: 0 !important;
@@ -56,6 +57,7 @@
   top: calc(50% - 10px) !important;
   background-color: #e8e8e8 !important;
 }
+
 ::ng-deep .bottom-navigation {
   box-sizing: border-box;
   margin: 10px 30px;
@@ -73,6 +75,7 @@
 
 ::ng-deep .chosen {
   background-color: #448ecd !important;
+
   &__text {
     // font-weight: bold;
     border-bottom: 3px solid #448ecd !important;
@@ -81,7 +84,34 @@
   }
 }
 
-mat-grid-list, mat-grid-tile, app-squad-assamble {
+mat-grid-list,
+mat-grid-tile,
+app-squad-assamble,
+app-working-steps,
+app-bottom-navigation {
   width: 100%;
   height: 100%;
+
+}
+
+.stepper {
+  width: 60%;
+  direction: rtl;
+  display: flex;
+  justify-content: space-between;
+}
+
+app-bottom-navigation {
+  width: 90%;
+}
+
+
+::ng-deep mat-grid-tile.bottom-navigation {
+  direction: rtl;
+
+  div {
+    width: 100%;
+    justify-content: center;
+    // justify-content: space-between;
+  }
 }
