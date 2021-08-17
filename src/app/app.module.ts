@@ -56,6 +56,7 @@ import { InputPhoneComponent } from './components/form/input-phone/input-phone.c
 import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
+import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { FormInputComponent } from './components/form/form-input/form-input.comp
     NumberInputComponent,
     IconComponent,
     SquadGroupComponent,
-    InputPhoneComponent
+    InputPhoneComponent,
+    InputRadioComponent
   ],
   imports: [
     BrowserModule,
