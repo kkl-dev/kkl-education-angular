@@ -7,11 +7,11 @@
 
       <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || cols" [rowspan]="question.rows">
 
-        <app-form-input *ngIf="!question.custom" [control]="formTemplate.controls[question.key]" [type]="question.type"
+        <app-form-input *ngIf="!question.custom" [control]="form.controls[question.key]" [type]="question.type"
           [label]='question.label' [icon]="question.icon" [options]="question.options"
           [controlType]="question.controlType"></app-form-input>
 
-        <app-input-radio [control]="formTemplate.controls[question.key]" [question]="question" *ngIf="question.custom">
+        <app-input-radio [control]="form.controls[question.key]" [question]="question" *ngIf="question.custom">
         </app-input-radio>
 
       </mat-grid-tile>

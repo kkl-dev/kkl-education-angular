@@ -6,16 +6,17 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization" :false,
     "noImplicitAny": false,
     "moduleResolution": "node",
     "importHelpers": true,
+    "strictNullChecks" : false,
     "target": "es2017",
     "module": "es2020",
     "lib": ["es2018", "dom"]
@@ -26,6 +27,7 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": false,
     "noImplicitAny": false,
+    "strictNullChecks" : false,
     "strictPropertyInitialization" :false,
 
   }

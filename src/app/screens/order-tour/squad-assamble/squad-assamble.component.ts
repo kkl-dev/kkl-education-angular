@@ -21,8 +21,6 @@ export interface formGroupGrid {
 })
 export class SquadAssambleComponent implements OnInit{
 
-
-
   tourDetailsFormCustomQuestion:{}={
     boys:true,
     girls:true,
@@ -33,8 +31,6 @@ export class SquadAssambleComponent implements OnInit{
     boysMedics:true,
     girlsMedics:true
   }
-
-
 
   timeAndNameFormInputs: QuestionBase<string | Date>[] = [
 
@@ -198,7 +194,6 @@ export class SquadAssambleComponent implements OnInit{
       questions: this.timeAndNameFormInputs
     },
   ]
-
 
   @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent
 

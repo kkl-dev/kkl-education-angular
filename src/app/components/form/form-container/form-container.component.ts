@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
@@ -13,23 +13,24 @@ import { QuestionBase } from '../logic/question-base';
 export class FormContainerComponent implements OnInit {
 
   public form!: FormGroup;
-  public formTemplate!: FormGroup;
+  @Output() emitFormValues:EventEmitter<any> =new EventEmitter()
 
   @Input() cols: string = "1"
   @Input() questions!: QuestionBase<string>[]
   @Input() showButton: boolean = true
   @Input() customQuestionTemplates = {}
-  payLoad: string = '';
+  @Input() buttonText:string='המשך'
 
   constructor(private formService: FormService) {
   }
 
   ngOnInit() {
-    this.formTemplate = this.formService.setGroup(this.questions)
+    this.form = this.formService.setGroup(this.questions)
   }
 
   onSubmit() {
-    console.log(this.formTemplate.value);
+    console.log(this.form.value);
+    this.emitFormValues.emit(this.form.getRawValue())
 
   }
 

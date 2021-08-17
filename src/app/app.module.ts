@@ -1,3 +1,4 @@
+import { InputPhoneComponent } from './components/form/input-phone/input-phone.component';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -45,14 +46,13 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
 import { EducationComponent } from './screens/search/education/education.component';
-import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
-import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
-import { DrawerComponent } from './components/drawer/drawer.component';
-
 import { IconComponent } from './components/icon/icon.component';
-import { InputPhoneComponent } from './components/form/input-phone/input-phone.component';
+import { TransportComponent } from './screens/order-tour/additions/transport/transport.component';
+import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
+import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
 import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
@@ -95,7 +95,6 @@ import { InputRadioComponent } from './components/form/input-radio/input-radio.c
     FormQuestionComponent,
 
     OrderTourComponent,
-
     FormQuestionComponent,
     FormInputComponent,
 
@@ -107,6 +106,10 @@ import { InputRadioComponent } from './components/form/input-radio/input-radio.c
     NavigationGridComponent,
     NavCardComponent,
     NumberInputComponent,
+    IconComponent,
+    FormInputComponent,
+    SquadGroupComponent,
+    TransportComponent,
     DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
