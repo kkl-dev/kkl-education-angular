@@ -10,6 +10,7 @@ export class QuestionBase<T> {
   type: string;
   key: string;
   label: string;
+  sublabel: string;
   icon: string;
   disabled: boolean;
   order: number;
@@ -27,6 +28,7 @@ export class QuestionBase<T> {
       icon?: string;
       disabled?: string;
       label?: string;
+      sublabel?: string;
       order?: number;
       controlType?: string;
       type?: string;

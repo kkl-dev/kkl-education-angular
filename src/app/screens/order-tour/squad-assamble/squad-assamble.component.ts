@@ -12,6 +12,7 @@ import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 export interface formGroupGrid {
   title: string;
   cols?: string;
+  formCols?: string;
   questions: QuestionBase<string>[]
 }
 
@@ -170,6 +171,7 @@ export class SquadAssambleComponent implements OnInit {
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
+      rows: "4",
       type: 'select',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
@@ -202,12 +204,27 @@ export class SquadAssambleComponent implements OnInit {
   ];
 
   public squadForm: formGroupGrid[] = [
-    { cols: '1', title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
-    { cols: '2', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
-    { cols: '1', title: 'לקוח', questions: this.customerFormInputs },
     {
-      cols: '1',
+      formCols: '1',
+      title: 'פרטי הטיול',
+      questions: this.tourDetailsFormInputs
+    },
+    {
+      formCols: '2',
+      title: 'הרכב הקבוצה',
+      cols: "2",
+      questions: this.groupAssambleFormInputs
+    },
+    {
+      formCols: '2',
+      cols: "2",
+      title: 'לקוח',
+      questions: this.customerFormInputs
+    },
+    {
+      formCols: '1',
       title: 'מועד ושם הטיול',
+      cols: "2",
       questions: this.timeAndNameFormInputs
     },
   ]
