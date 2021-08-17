@@ -16,7 +16,7 @@
       cursor: pointer;
 
       &.active {
-        background-color: $--blue-color-bright !important;
+        background-color: color(primary) !important;
 
       }
     }
@@ -28,7 +28,7 @@
 
 svg-icon {
   & * {
-    fill: $--blue-color-bright !important;
+    fill: color(primary) !important;
     width: 60px;
     height: 60px;
   }
