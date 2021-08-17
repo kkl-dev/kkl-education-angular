@@ -1,4 +1,3 @@
-import { InputPhoneComponent } from './components/form/input-phone/input-phone.component';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -115,7 +114,6 @@ import { InputRadioComponent } from './components/form/input-radio/input-radio.c
     NumberInputComponent,
     IconComponent,
     SquadGroupComponent,
-    InputPhoneComponent,
     InputRadioComponent
   ],
   imports: [
