@@ -26,6 +26,7 @@ export class FormContainerComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formService.buildGroup(this.questions)
+    console.log(this.form)
   }
 
   onSubmit() {

@@ -6,14 +6,13 @@ export interface SelectOption {
 }
 
 export class QuestionBase<T> {
-  value: any | undefined | number;
+  value: T | undefined;
   type: string;
   key: string;
   label: string;
   sublabel: string;
   icon: string;
   disabled: boolean;
-  order: number;
   controlType: string;
   cols: string;
   rows: string;
@@ -25,7 +24,7 @@ export class QuestionBase<T> {
 
   constructor(
     options: {
-      value?: any;
+      value?: T;
       key?: string;
       icon?: string;
       disabled?: string;
@@ -44,7 +43,7 @@ export class QuestionBase<T> {
     } = {}
 
   ) {
-    this.value = options.value || '';
+    this.value = options.value;
     this.key = options.key || '';
     this.icon = options.icon || '';
     this.disabled = true;
