@@ -15,10 +15,26 @@
 </mat-grid-list>
 
 <!-- <div class="order-tour">
-  <div class="order-tour__steps">
+    <div class="order-tour__steps">
+        <app-drawer></app-drawer>
 
+        <app-working-steps
+        [steps]='pages'
+        (changeActiveStep)="changeActivePage($event)"
+        [activeStep]='activePage'
+        ></app-working-steps>
     </div>
-  <div class="order-tour__main">
-  </div>
-
+    <div class="order-tour__main">
+        <app-squad-assamble *ngIf="activePage === 0" ></app-squad-assamble>
+        <app-additions *ngIf="activePage === 3"></app-additions>
+    </div>
+    <app-bottom-navigation
+    [currentPage]= 0
+    previousUrl='prevPage'
+    nextUrl='nextPage'
+    [lastPage]='pages.length'
+    (changePage)='changeActivePageBottomNavigation($event)'
+    ></app-bottom-navigation>
 </div> -->
+
+

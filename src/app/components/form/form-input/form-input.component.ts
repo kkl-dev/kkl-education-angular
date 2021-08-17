@@ -1,10 +1,6 @@
-import { FormService } from '../form.service';
-import { QuestionControlService } from './../question-control.service';
+import { FormService } from '../logic/form.service';
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
-
-
-import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-form-input',
@@ -43,7 +39,6 @@ export class FormInputComponent implements OnInit {
   public disabled!: boolean
 
   constructor(
-    private qcs: QuestionControlService,
     private formService : FormService
   ) { }
 
