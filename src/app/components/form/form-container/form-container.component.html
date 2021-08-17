@@ -1,36 +1,26 @@
-<!-- <div class="form-container">
-    <div class="form-container__form-group" *ngFor="let item of formInputsArray; let i = index" [ngStyle]="{'grid-column': item.columns}">
-        <label for="item.name" class="form-container__form-group-label">{{item.label}}</label>
-        <input type="{{item.type}}" class="form-container__form-group-input">
-    </div>
-</div>  -->
-    <form  class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
-  
-      <div *ngFor="let question of questions"
-       class="form-row" [ngStyle]="{'grid-column': question.columns}">
-        
-        <ng-container *ngIf="question.templateName" >
+<form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
 
-        <!-- <app-number-input
+  <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}">
+
+    <ng-container *ngIf="question.templateName">
+
+      <!-- <app-number-input
         [formControlName]="question.key"
         [id]="question.key"
         [type]="question.type"
         [innerLabel]='question.innerLabel'
         [form]="form"
-        [value]='question.value'  
-        > </app-number-input>  
+        [value]='question.value'
+        > </app-number-input>
          -->
-        </ng-container> 
-      
-        <app-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form"  ></app-question>
-      </div>
-  
-      <div class="form-row btn-row" *ngIf="showButton">
-        <ng-content></ng-content>
-        <button type="submit" class="btn" [disabled]="!form.valid">{{buttonText}}</button>
-      </div>
-    </form>
-  
-    <!-- <div *ngIf="payLoad" class="form-row">
-      <strong>Saved the following values</strong><br>{{payLoad}}
-    </div> -->
+    </ng-container>
+
+    <!-- <app-form-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form">
+    </app-form-question> -->
+  </div>
+
+  <div class="form-row btn-row" *ngIf="showButton">
+    <ng-content></ng-content>
+    <button type="submit" class="btn" [disabled]="!form.valid">{{buttonText}}</button>
+  </div>
+</form>

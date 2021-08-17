@@ -14,7 +14,7 @@ import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox'
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
+export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
@@ -31,7 +31,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
 
 
 
-  TimeAndNameFormInputs: QuestionBase<string | Date>[] = [
+  timeAndNameFormInputs: QuestionBase<string | Date>[] = [
 
     new TextboxQuestion({
       key: 'tourName',
@@ -39,6 +39,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       label: 'שם הטיול',
       value: '',
       order: 1,
+      icon: 'mode_edit'
     }),
 
     new QuestionSelect({
@@ -275,7 +276,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     new QuestionRadio({
       key: 'tripLocation',
       label: 'מחלקה',
-      innerLabel: '',
       options: [{ key: '', value: 'ישראל' }, { key: '', value: 'חו"ל' }],
       value: 'ישראל',
       columns: 'span 12',
@@ -285,7 +285,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     new QuestionRadio({
       key: 'tripLocation',
       label: 'פנים/חוץ מרכז שדה',
-      innerLabel: '',
       options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
       value: 'ישראל',
       columns: 'span 12',
@@ -295,10 +294,9 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      innerLabel: '',
       columns: 'span 12',
       order: 7,
-      value:''
+      value: ''
     }),
 
   ];

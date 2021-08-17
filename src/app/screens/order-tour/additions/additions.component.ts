@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationCardModel } from 'src/app/models/nav-card-model';
+import { Subscription } from 'rxjs';
+import { AdditionsService } from '../../../utilities/services/additions.service';
 
 @Component({
   selector: 'app-additions',
@@ -8,61 +10,72 @@ import { NavigationCardModel } from 'src/app/models/nav-card-model';
 })
 export class AdditionsComponent implements OnInit {
 
-  public navigationGrid : NavigationCardModel[]  = [
-    {
-      title : 'כלכלה',
-      active : false,
-      svgUrl : 'football'
-    },
-    {
-      title : 'אתרים',
-      active : false,
-      svgUrl : ''
-    },
-    {
-      title : 'אבטחה',
-      active : false,
-      svgUrl : ''
-    },
-    {
-      title : 'היסעים',
-      active : true,
-      svgUrl : 'bus'
-    },
-    {
-      title : 'בתי כנסת',
-      active : false,
-      svgUrl : 'judaism'
-    },
-    {
-      title : 'אירוח',
-      active : false,
-      svgUrl : 'climbing'
-    },
-    {
-      title : 'הפעלה מוסיקלית',
-      active : false,
-      svgUrl : ''
-    },
-    {
-      title : 'אוהלי אירוח',
-      active : false,
-      svgUrl : ''
-    },
-  ]
+  private unsubscribe: Subscription = this.additionsService.navButton$.subscribe()
 
-  constructor() { }
+  public navigationItems: NavigationCardModel[] =
+    this.additionsService.getNavigationItems().length > 0 ?
+      this.additionsService.getNavigationItems() :
+      [
+        {
+          title: 'כלכלה',
+          isActive: false,
+          svgUrl: 'football'
+        },
+        {
+          title: 'אתרים',
+          isActive: false,
+          svgUrl: ''
+        },
+        {
+          title: 'אבטחה',
+          isActive: false,
+          svgUrl: ''
+        },
+        {
+          title: 'היסעים',
+          isActive: true,
+          svgUrl: 'bus'
+        },
+        {
+          title: 'בתי כנסת',
+          isActive: false,
+          svgUrl: 'judaism'
+        },
+        {
+          title: 'אירוח',
+          isActive: false,
+          svgUrl: 'climbing'
+        },
+        {
+          title: 'הפעלה מוסיקלית',
+          isActive: false,
+          svgUrl: ''
+        },
+        {
+          title: 'אוהלי אירוח',
+          isActive: false,
+          svgUrl: ''
+        },
+      ]
+
+  constructor(
+    private additionsService: AdditionsService
+  ) { }
 
   ngOnInit(): void {
+    this.subscribeToSubject()
+    this.additionsService.setNavigationStatus(this.navigationItems)
   }
 
-  private findItemIndex = (itemToFind : NavigationCardModel, key : string) => {
-    return this.navigationGrid.find((item)=> itemToFind[key] === item[key])
+  ngOnDestroy(): void {
+    this.unsubscribe.unsubscribe()
   }
 
-  public onCardClick = (itemToUpdate : NavigationCardModel) => {
-    itemToUpdate.active = !itemToUpdate.active
+  private subscribeToSubject() {
+    this.unsubscribe = this.additionsService.navButton$.subscribe(
+      (item: NavigationCardModel) => {
+        this.additionsService.setNanigationStatus(item, 'title')
+      })
   }
-
 
 }

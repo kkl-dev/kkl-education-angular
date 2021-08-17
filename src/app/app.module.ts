@@ -60,28 +60,39 @@ import { IconComponent } from './components/icon/icon.component';
 @NgModule({
   declarations: [
     AppComponent,
+    MainComponent,
+    DashboardComponent,
     NavbarComponent,
     WizardComponent,
-    UserInfoComponent,
     LinksComponent,
+    UserInfoComponent,
+
+    // LOGIN COMPS
     LoginComponent,
     LoginBackdropComponent,
     LoginFormComponent,
-    MainComponent,
-    DashboardComponent,
     OtpFormComponent,
     LoginProcessComponent,
+
     SearchComponent,
-    EducationComponent,
     DatePickerComponent,
+
+    // EDUCTIOM COMPS
+    EducationComponent,
     EducationResultsComponent,
+
     HeaderComponent,
     TooltipComponent,
-    MyToursComponent,
-    ToursTableComponent,
     PaginationComponent,
+
+    ToursTableComponent,
+    MyToursComponent,
     SquadAssambleComponent,
+
+    // form comps
     FormContainerComponent,
+    FormQuestionComponent,
+
     OrderTourComponent,
     FormQuestionComponent,
     NavigationComponent,
