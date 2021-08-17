@@ -1,6 +1,6 @@
 .order-tour {
   width: 100%;
-  // height: calc(100% - 90px);
+  height: calc(100% - 90px);
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -12,8 +12,7 @@
     justify-self: stretch;
     width: 60%;
     padding: 0px 20%;
-    flex: 1 1 100%;
-    // margin: 0 auto;
+    margin-bottom: 30px;
     background: linear-gradient(0deg, #ffffff 0%, rgba(#d8d8d8, 0.5) 100%);
   }
 
@@ -25,8 +24,6 @@
 ::ng-deep div#working-steps {
   border-bottom: 0;
   padding: 0 !important;
-  // padding-top: 40px !important;
-  // margin-bottom: 5px !important;
 }
 
 ::ng-deep .chevron {

@@ -1,8 +1,8 @@
-<div class="assamble-tour">
+<div class="assemble-tour">
   <!-- <button (click)="a(tourDetailsFormCustomQuestionRef.form)">sdfgsdgsfsdf</button> -->
-  <div class="assamble-tour__form">
-    <div class="assamble-tour__form-headline-container">
-      <h3 class="assamble-tour__form-headline">מועד ושם הטיול</h3>
+  <div class="assemble-tour__form">
+    <div class="assemble-tour__form-headline-container">
+      <h3 class="assemble-tour__form-headline">מועד ושם הטיול</h3>
     </div>
     <app-form-container
       customQuestionTemplates="tourDetailsFormCustomQuestion"
@@ -11,9 +11,9 @@
       #TimeAndNameRef
     ></app-form-container>
   </div>
-  <div class="assamble-tour__form">
-    <div class="assamble-tour__form-headline-container">
-      <h3 class="assamble-tour__form-headline">לקוח</h3>
+  <div class="assemble-tour__form">
+    <div class="assemble-tour__form-headline-container">
+      <h3 class="assemble-tour__form-headline">לקוח</h3>
     </div>
     <app-form-container
     #customerFormInputsRef
@@ -22,32 +22,32 @@
       [questions]="customerFormInputs"
     ></app-form-container>
   </div>
-  <div class="assamble-tour__form">
-    <div class="assamble-tour__form-headline-container">
+  <div class="assemble-tour__form">
+    <div class="assemble-tour__form-headline-container">
       <app-icon
-        class="assamble-tour__form-headline-svg"
+        class="assemble-tour__form-headline-svg"
         (click)="changeGroupAssembleForm()"
         [color]="'alert'"
         type="svg"
         [key]="'bell'"
       ></app-icon>
-      <h3 class="assamble-tour__form-headline">
+      <h3 class="assemble-tour__form-headline">
         <span> הרכב הקבוצה </span>
       </h3>
     </div>
     <app-form-container
-    #groupAssambleFormInputsRef
+    #groupAssembleFormInputsRef
 
       customQuestionTemplates="tourDetailsFormCustomQuestion"
       [showButton]="false"
-      [questions]="groupAssambleFormInputs"
+      [questions]="groupAssembleFormInputs"
     >
       <!-- <app-wizard></app-wizard>  -->
     </app-form-container>
   </div>
-  <div class="assamble-tour__form">
-    <div class="assamble-tour__form-headline-container">
-      <h3 class="assamble-tour__form-headline">פרטי הטיול</h3>
+  <div class="assemble-tour__form">
+    <div class="assemble-tour__form-headline-container">
+      <h3 class="assemble-tour__form-headline">פרטי הטיול</h3>
     </div>
     <app-form-container
     #tourDetailsFormInputsRef

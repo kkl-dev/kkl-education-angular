@@ -20,11 +20,11 @@ import { FormContainerComponent } from 'src/app/components/form-container/form-c
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-squad-assamble',
-  templateUrl: './squad-assamble.component.html',
-  styleUrls: ['./squad-assamble.component.scss'],
+  selector: 'app-squad-assemble',
+  templateUrl: './squad-assemble.component.html',
+  styleUrls: ['./squad-assemble.component.scss'],
 })
-export class SquadAssambleComponent
+export class SquadAssembleComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
   tourDetailsFormCustomQuestion: {} = {
@@ -38,7 +38,7 @@ export class SquadAssambleComponent
     girlsMedics: true,
   };
 
-  groupAssambleForm: QuestionBase<string>[] = [
+  groupAssembleForm: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
       columns: 'span 12',
@@ -99,7 +99,7 @@ export class SquadAssambleComponent
   
   ];
 
-  separatedGroupAssambleForm: QuestionBase<string>[] = [
+  separatedGroupAssembleForm: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
       columns: 'span 12',
@@ -313,7 +313,7 @@ export class SquadAssambleComponent
     }),
   ];
 
-  groupAssambleFormInputs: QuestionBase<string>[] = [];
+  groupAssembleFormInputs: QuestionBase<string>[] = [];
 
   tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
@@ -378,11 +378,11 @@ export class SquadAssambleComponent
   separated: boolean = false;
   @ViewChild('TimeAndNameRef', { static: true }) TimeAndDateRef!: FormContainerComponent;
   @ViewChild('customerFormInputsRef', { static: true }) customerRef!: FormContainerComponent;
-  @ViewChild('groupAssambleFormInputsRef', { static: true }) groupAssambleRef!: FormContainerComponent;
+  @ViewChild('groupAssembleFormInputsRef', { static: true }) groupAssembleRef!: FormContainerComponent;
   @ViewChild('tourDetailsFormInputsRef', { static: true }) tourDetailsRef!: FormContainerComponent;
 
   constructor() {
-    this.groupAssambleFormInputs = this.groupAssambleForm;
+    this.groupAssembleFormInputs = this.groupAssembleForm;
   }
 
   ngOnInit(): void {}
@@ -392,14 +392,14 @@ export class SquadAssambleComponent
     console.log(this.tourDetailsRef.form.value);
     console.log(this.customerRef.form.value);
     console.log(this.TimeAndDateRef.form.value);
-    console.log(this.groupAssambleRef.form.value);
+    console.log(this.groupAssembleRef.form.value);
   }
 
   changeGroupAssembleForm() {
     this.separated = !this.separated;
-    this.groupAssambleFormInputs = this.separated
-      ? this.separatedGroupAssambleForm
-      : this.groupAssambleForm;
+    this.groupAssembleFormInputs = this.separated
+      ? this.separatedGroupAssembleForm
+      : this.groupAssembleForm;
   }
 
   a(a: any) {

@@ -11,6 +11,7 @@ import {
   BELL_ICON,
   EDIT_ICON,
   BOYS_GIRLS_ICON,
+  V_SIGN,
 } from './icons.list';
 
 export interface IconItem {
@@ -37,9 +38,13 @@ export class IconsService {
       svgUrl: DESTINATION_ICON,
     },
     {
+      key: 'vSign',
+      svgUrl: V_SIGN,
+    },
+    {
       key: 'edit',
       svgUrl: EDIT_ICON,
-    }, 
+    },
     {
       key: 'boysGirls',
       svgUrl: BOYS_GIRLS_ICON,
