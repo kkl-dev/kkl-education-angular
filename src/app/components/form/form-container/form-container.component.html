@@ -10,7 +10,7 @@
 
           <app-form-input *ngIf="!question.custom" [control]="form.controls[question.key]" [type]="question.type"
             [label]='question.label' [icon]="question.icon" [options]="question.options"
-            [controlType]="question.controlType" [split]="(cols > question.cols)"></app-form-input>
+            [controlType]="question.controlType"></app-form-input>
 
           <app-input-radio [control]="form.controls[question.key]" [question]="question" *ngIf="question.custom">
           </app-input-radio>
@@ -21,7 +21,7 @@
           <mat-grid-tile rowspan="1" colspan="2">
             {{question.label}}
           </mat-grid-tile>
-          <mat-grid-tile *ngFor="let item of question.group" rowspan="2">
+          <mat-grid-tile *ngFor="let item of question.group" rowspan="3">
             <app-form-input [control]="form.controls[question.key].controls[item.key]" [label]="item.label"
               [split]="(cols > question.cols)"
               [theme]="item.key === 'girls' && 'accent'"

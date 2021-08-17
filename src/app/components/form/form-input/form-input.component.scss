@@ -4,13 +4,7 @@
 mat-form-field {
   text-align: right !important;
   width: 100%;
-
-  &.split {
-    width: 100%;
-  }
 }
-
-
 
 
 ::ng-deep .cdk-overlay-pane {
@@ -32,4 +26,13 @@ mat-form-field {
 
 mat-icon {
   color: color(primary)
+}
+
+::ng-deep.mat-form-field-outline-start {
+  width: 100% !important;
+}
+
+
+::ng-deep .mat-form-field-outline-gap {
+  width: calc(25%) !important;
 }
