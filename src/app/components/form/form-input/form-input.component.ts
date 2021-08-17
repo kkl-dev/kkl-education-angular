@@ -1,6 +1,7 @@
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { FormService } from '../logic/form.service';
+import { QuestionBase } from '../logic/question-base';
 
 @Component({
   selector: 'app-form-input',
@@ -18,21 +19,21 @@ export class FormInputComponent implements OnInit {
 
   @ViewChild('input') input!: HTMLInputElement;
 
-  @Input() public control!: FormControl
-  @Input() public controlType!: string
-  @Input() public split!: boolean
+  @Input() public question!: QuestionBase<string | number | Date>
 
+  @Input() public control!: FormControl
   @Input() public type!: string;
   @Input() public label!: string;
-  @Input() public placeHolder!: string;
   @Input() public hint!: string;
-  @Input() public controlName!: string;
-  @Input() public icon!: string;
-  @Input() public status!: string;
+  @Input() public controlType!: string
   @Input() public options!: []
 
+  @Input() public split!: boolean
+  @Input() public theme!: string
+  @Input() public icon!: string;
+  @Input() public status!: string;
+
   @Input() public serverErrorMode!: boolean;
-  @Input() public pendingHint!: boolean;
 
   public value!: any
   public error!: string
@@ -43,7 +44,7 @@ export class FormInputComponent implements OnInit {
   public disabled!: boolean
 
   constructor(
-    private formService : FormService
+    private formService: FormService
   ) { }
 
   ngOnInit(): void {
@@ -84,11 +85,11 @@ export class FormInputComponent implements OnInit {
   // method to handle validation messages
   public validate() {
 
-    this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
+    this.error = this.formService.getErrorMessage(this.control, this.label)
 
     this.control.valueChanges.subscribe(
       () => {
-        this.error = this.formService.getErrorMessage(this.control, this.placeHolder)
+        this.error = this.formService.getErrorMessage(this.control, this.label)
       }
     )
   }

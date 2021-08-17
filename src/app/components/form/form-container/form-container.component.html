@@ -23,7 +23,9 @@
           </mat-grid-tile>
           <mat-grid-tile *ngFor="let item of question.group" rowspan="2">
             <app-form-input [control]="form.controls[question.key].controls[item.key]" [label]="item.label"
-              [split]="(cols > question.cols)">
+              [split]="(cols > question.cols)"
+              [theme]="item.key === 'girls' && 'accent'"
+              >
             </app-form-input>
           </mat-grid-tile>
         </ng-container>
