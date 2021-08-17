@@ -6,7 +6,7 @@
 
       <mat-grid-tile *ngFor="let question of questions" [colspan]="question.cols || cols" [rowspan]="question.rows">
 
-        <app-form-input *ngIf="!question.custom" [control]="form.controls[question.key]" [type]="question.type"
+        <app-form-input *ngIf="!question.custom && !question.isGroup" [control]="form.controls[question.key]" [type]="question.type"
           [label]='question.label' [icon]="question.icon" [options]="question.options"
           [controlType]="question.controlType" [split]="(cols > question.cols)"></app-form-input>
 

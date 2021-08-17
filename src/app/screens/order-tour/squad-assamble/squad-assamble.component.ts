@@ -135,23 +135,70 @@ export class SquadAssambleComponent implements OnInit {
         { key: 'לקוח מספר ארבע', value: '30+' },
       ],
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'participants',
-      cols: "1",
       label: 'נוער / מבוגרים',
+      cols: "2",
+      isGroup: true,
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+        }),
+      ]
+      ,
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'escorts',
+      cols: "2",
+      isGroup: true,
       label: 'מלווים',
-      cols: "1",
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+        }),
+      ]
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'guides',
+      isGroup: true,
+      cols: "2",
       label: 'מדריכים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+        }),
+      ]
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'medics',
+      isGroup: true,
+      cols: "2",
       label: 'חובשים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+        }),
+      ]
     }),
   ];
 
@@ -171,7 +218,6 @@ export class SquadAssambleComponent implements OnInit {
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
-      rows: "4",
       type: 'select',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
