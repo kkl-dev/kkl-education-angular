@@ -1,9 +1,9 @@
-<div class="drawer" [ngClass]="{ closed: isOpen }">
+<div class="drawer" [ngClass]="{ closed: !isOpen }">
   <div class="drawer-toggle" (click)="toggleDrawer()">
     <span> תזכורת </span>
   </div>
   <h4 class="drawer__headline">הוספת תזכורת</h4>
-  
+
   <app-form-container #drawerForm
     [questions]="reminderForm"
     (emitFormValues)="newCommentHandler($event)"
