@@ -42,7 +42,7 @@ export class QuestionBase<T> {
     this.disabled = true;
     this.label = options.label || '';
     this.columns = options.columns || '1';
-    this.rows = options.rows || '2';
+    this.rows = options.rows || '4';
     this.validations = options.validations || [],
       this.controlType = options.controlType || 'text';
     this.type = options.type || '';

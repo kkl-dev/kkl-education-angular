@@ -50,6 +50,7 @@ import { IconComponent } from './components/icon/icon.component';
 import { InputPhoneComponent } from './components/form/input-phone/input-phone.component';
 import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
+import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { FormInputComponent } from './components/form/form-input/form-input.comp
     NumberInputComponent,
     IconComponent,
     SquadGroupComponent,
-    InputPhoneComponent
+    InputPhoneComponent,
+    InputRadioComponent
   ],
   imports: [
     BrowserModule,

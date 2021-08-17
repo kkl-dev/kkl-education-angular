@@ -1,3 +1,4 @@
+import { QuestionRadio } from './../../../components/form/logic/question-radio';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { Validators } from '@angular/forms';
@@ -110,8 +111,8 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       type: 'text',
       validations: [Validators.required]
 
-         }),
-     new TextboxQuestion({
+    }),
+    new TextboxQuestion({
       key: 'email',
       label: 'מייל',
       type: 'text',
@@ -151,6 +152,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
+      rows: "4",
       type: 'select',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
@@ -158,19 +160,23 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       ],
     }),
 
-    // new QuestionRadio({
-    //   key: 'tripLocation',
-    //   label: 'מחלקה',
-    //   options: [{ key: '', value: 'ישראל' }, { key: '', value: 'חו"ל' }],
-    //   value: 'ישראל',
-    // }),
+    new QuestionRadio({
+      key: 'tripLocation',
+      label: 'מחלקה',
+      custom: true,
+      rows: "2",
+      options: [{ key: 'ישראל', value: 'ישראל' }, { key: 'חו"ל', value: 'חו"ל' }],
+      value: 'ישראל',
+    }),
 
-    // new QuestionRadio({
-    //   key: 'tripLocation',
-    //   label: 'פנים/חוץ מרכז שדה',
-    //   options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
-    //   value: 'ישראל',
-    // }),
+    new QuestionRadio({
+      custom: true,
+      key: 'tripCenter',
+      rows: "3",
+      label: 'פנים/חוץ מרכז שדה',
+      options: [{ key: 'פנים', value: 'פנים' }, { key: 'חוץ', value: 'חוץ' }],
+      value: 'ישראל',
+    }),
 
     new QuestionTextarea({
       key: 'comments',
