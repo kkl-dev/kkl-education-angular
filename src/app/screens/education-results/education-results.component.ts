@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { UserService } from '../../api/v1/api/user.service';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-education-results',
@@ -6,41 +10,77 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./education-results.component.scss'],
 })
 export class EducationResultsComponent implements OnInit {
+  centerField: string = 'מרכז שדה - נס הרים';
+
+  constructor(public usersService: UserService, private route: ActivatedRoute, private userDataService: UserDataService, private tripService: TripService) { }
+
+  ngOnInit(): void {
+
+    this.usersService.getLookupFieldForestCenters().subscribe(
+      response => {
+        console.log(response);
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    );
+
+    // this.usersService.getLookupFieldForestCenters().subscribe((data: any) => {
+    //   //  this.spinner.hide();
+    //     if (data) {
+    //       console.log({ data });        
+    //     }
+    //     else {
+    //       console.log('no data in GetCountries');
+    //     }
+    //   },
+    //     error => {
+    //   //    this.spinner.hide();
+    //       console.log({ error })
+    //     });
+
+    
+    console.log('userDataService:', this.userDataService);
+    console.log('tripService:', this.tripService);
+
+    this.availabilityItemsArray = this.tripService.dateObj;
+    //this.centerField = this.tripService.centerField
+  }
+
   public availabilityItemsArray = [
     { date: '15.06.21', text: 'זמינות יום 1' },
     { date: '16.06.21', text: 'זמינות יום 2' },
     { date: '17.06.21', text: 'זמינות יום 3' },
   ];
 
-  public chosenDate=0
+  public chosenDate: number = 0
 
   public sleepingOptionsArray = [
     {
       svgUrl: 'assets/images/cabin.svg',
       sleepingAreas: 2,
       avialableSpaces: 16,
-      type:'בקתות',
-      singleUnit:'בבקתה'
-      
+      type: 'בקתות',
+      singleUnit: 'בבקתה'
+
     },
     {
       svgUrl: 'assets/images/tent.svg',
       sleepingAreas: 4,
       avialableSpaces: 36,
-      type:'אוהלים',
-      singleUnit:'באוהל'
+      type: 'אוהלים',
+      singleUnit: 'באוהל'
     },
     {
       svgUrl: 'assets/images/camp.svg',
       sleepingAreas: 1,
       avialableSpaces: 120,
-      type:'גיחה',
-      singleUnit:'לנים'
-    },
+      type: 'גיחה',
+      singleUnit: 'לנים'
+    }
   ];
 
-  public changeDate(newDate:number){
-    this.chosenDate=newDate
+  public changeDate(newDate: number) {
+    this.chosenDate = newDate;
   }
 
   public facilitiesArray = [
@@ -163,7 +203,4 @@ export class EducationResultsComponent implements OnInit {
     },
   ];
 
-  constructor() {}
-
-  ngOnInit(): void {}
 }

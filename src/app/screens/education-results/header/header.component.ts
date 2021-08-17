@@ -4,6 +4,9 @@ import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { UserService } from '../../../api/v1/api/user.service';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-header',
@@ -16,9 +19,47 @@ export class HeaderComponent implements OnInit {
   date: string | null = null;
 
   dateObj: { from: string; to: string } = { from: '', to: '' };
+  centerField: any = null;
+  formOptions: any;
 
-  // dateObj:{from:string, to:string} ={from:'', to:''}
   freeSpacesArray1: FreeSpace[] = [];
+
+  constructor(public usersService: UserService, private userDataService: UserDataService, private tripService: TripService) {
+    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
+      new Date(),
+      new Date(2022, 11, 17)
+    );
+
+    this.options = {
+      firstCalendarDay: 0,
+      format: 'LL/dd/yyyy',
+      closeOnSelected: true,
+      // minDate: addDays(new Date(), 5),
+      // maxDate: addDays(new Date(), 10),
+      minYear: getYear(new Date()) - 1,
+      maxYear: getYear(new Date()) + 1,
+      freeSpacesArray: this.freeSpacesArray1,
+    };
+
+  }
+  ngOnInit(): void {
+
+    this.usersService.getLookupFieldForestCenters().subscribe(
+      response => {
+        console.log(response);
+        this.formOptions = response;
+        this.tripService.centerField=this.formOptions[0];
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+
+    console.log('userDataService:', this.userDataService);
+    console.log('tripService:', this.tripService);
+
+    this.dateObj = this.tripService.dateObj;
+    this.centerField = this.tripService.centerField;
+  }
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
@@ -68,30 +109,12 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  public formOptions: { imgSrc: string; text: string; value: string }[] = [
-    { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'נס הרים', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: '1' },
-  ];
+  // public formOptions: { imgSrc: string; text: string; value: string }[] = [
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: '1' },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: '1' },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'נס הרים', value: '1' },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: '1' },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: '1' },
+  // ];
 
-  constructor() {
-    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
-      new Date(),
-      new Date(2022, 11, 17)
-    );
-
-    this.options = {
-      firstCalendarDay: 0,
-      format: 'LL/dd/yyyy',
-      closeOnSelected: true,
-      // minDate: addDays(new Date(), 5),
-      // maxDate: addDays(new Date(), 10),
-      minYear: getYear(new Date()) - 1,
-      maxYear: getYear(new Date()) + 1,
-      freeSpacesArray: this.freeSpacesArray1,
-    };
-  }
-  ngOnInit(): void {}
 }
