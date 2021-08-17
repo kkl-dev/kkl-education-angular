@@ -15,27 +15,24 @@ export class DrawerComponent implements OnInit {
   reminderForm: QuestionBase<string | Date>[] = [
     new QuestionCalendar({
       key: 'date',
-      columns: 'span 6',
+      cols: 'span 6',
       label: 'תאריך',
       value: new Date(),
-      order: 3,
     }),
     new Offset({
-      columns: 'span 1',
+      cols: 'span 1',
     }),
 
     new TextboxQuestion({
       key: 'time',
-      columns: 'span 5',
+      cols: 'span 5',
       label: 'שעה',
       value: '',
-      order: 1,
     }),
     new QuestionTextarea({
       key: 'comment',
       label: 'תזכורת',
-      columns: 'span 12',
-      order: 7,
+      cols: 'span 12',
       value: '',
     }),
   ];

@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { Component, OnInit,ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
@@ -7,6 +7,7 @@ import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
+import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 
 export interface formGroupGrid {
   title: string;
@@ -19,17 +20,17 @@ export interface formGroupGrid {
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit{
+export class SquadAssambleComponent implements OnInit {
 
-  tourDetailsFormCustomQuestion:{}={
-    boys:true,
-    girls:true,
-    boysChaperone:true,
-    girlsChaperone:true,
-    boysInstructors:true,
-    girlsInstructors:true,
-    boysMedics:true,
-    girlsMedics:true
+  tourDetailsFormCustomQuestion: {} = {
+    boys: true,
+    girls: true,
+    boysChaperone: true,
+    girlsChaperone: true,
+    boysInstructors: true,
+    girlsInstructors: true,
+    boysMedics: true,
+    girlsMedics: true
   }
 
   timeAndNameFormInputs: QuestionBase<string | Date>[] = [
@@ -124,6 +125,7 @@ export class SquadAssambleComponent implements OnInit{
     new QuestionSelect({
       key: 'age',
       type: "select",
+      cols: "2",
       label: 'קבוצת גיל',
       options: [
         { key: '1', value: '1' },
@@ -131,6 +133,22 @@ export class SquadAssambleComponent implements OnInit{
         { key: 'לקוח מספר שלוש', value: '20+' },
         { key: 'לקוח מספר ארבע', value: '30+' },
       ],
+    }),
+    new QuestionNumber({
+      key: 'participants',
+      label: 'נוער / מבוגרים',
+    }),
+    new QuestionNumber({
+      key: 'escorts',
+      label: 'מלווים',
+    }),
+    new QuestionNumber({
+      key: 'guides',
+      label: 'מדריכים',
+    }),
+    new QuestionNumber({
+      key: 'medics',
+      label: 'חובשים',
     }),
   ];
 
@@ -186,7 +204,7 @@ export class SquadAssambleComponent implements OnInit{
 
   public squadForm: formGroupGrid[] = [
     { cols: '1', title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
-    { cols: '1', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
+    { cols: '2', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
     { cols: '1', title: 'לקוח', questions: this.customerFormInputs },
     {
       cols: '1',
@@ -195,7 +213,7 @@ export class SquadAssambleComponent implements OnInit{
     },
   ]
 
-  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent
+  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true }) tourDetailsRef!: FormContainerComponent
 
 
   constructor() {

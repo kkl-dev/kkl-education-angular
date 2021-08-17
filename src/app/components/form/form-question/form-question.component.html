@@ -1,4 +1,4 @@
-<div [formGroup]="form" class="form-group" [ngStyle]="{ 'grid-column': question.columns }">
+<div [formGroup]="form" class="form-group" [ngStyle]="{ 'grid-column': question.cols }">
   <label class="form-group__label" [attr.for]="question.key"
     [ngStyle]="{ visibility: question.label == 'hide' ? 'hidden' : 'visable' }">{{ question.label }}</label>
 
