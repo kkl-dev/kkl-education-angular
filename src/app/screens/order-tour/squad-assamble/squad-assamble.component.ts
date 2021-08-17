@@ -44,7 +44,6 @@ export class SquadAssambleComponent implements OnInit{
       value: '',
       order: 1,
       validations: [Validators.required],
-      icon: 'mode_edit'
     }),
 
     new QuestionSelect({
