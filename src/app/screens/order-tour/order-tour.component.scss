@@ -1,13 +1,12 @@
 .order-tour {
   width: 100%;
-  // height: calc(100% - 90px);
   display: flex;
   flex-direction: column;
   background-color: white;
   justify-content: flex-end;
   direction: rtl !important;
   position: relative;
-  
+
   &__steps {
     justify-self: stretch;
     width: 60%;
@@ -80,4 +79,9 @@
     box-sizing: border-box;
     text-shadow: 0 0 0.01px black;
   }
+}
+
+mat-grid-list, mat-grid-tile, app-squad-assamble {
+  width: 100%;
+  height: 100%;
 }

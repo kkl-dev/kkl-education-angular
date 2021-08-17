@@ -9,34 +9,44 @@ import { QuestionControlService } from '../logic/question-control.service';
   selector: 'app-form-container',
   templateUrl: './form-container.component.html',
   styleUrls: ['./form-container.component.scss'],
-  providers: [ QuestionControlService ]
+  providers: [QuestionControlService]
 })
 
 
-export class FormContainerComponent implements OnInit, OnChanges {
+export class FormContainerComponent implements OnInit {
 
-  @Output() emitFormValues:EventEmitter<any> =new EventEmitter()
-  @Input() questions: QuestionBase<string | Date>[] | null = [];
-  @Input() showButton:boolean=true
-  @Input() buttonText:string='המשך'
- public form!: FormGroup;
-  @Input() customQuestionTemplates={}
-  payLoad:string = '';
+  public form!: FormGroup;
+  public formTemplate!: FormGroup;
 
-  constructor(private qcs: QuestionControlService) {
+  @Input() cols: string = "1"
+  @Input() questions!: QuestionBase<string>[]
+  @Input() showButton: boolean = true
+  @Input() customQuestionTemplates = {}
+
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter()
+  @Input() buttonText: string = 'המשך'
+
+  public payLoad: string = '';
+  constructor
+  (private qcs: QuestionControlService,
+    ) {
   }
 
   ngOnInit() {
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
+    // this.formTemplate = this.qcs.setGroup(this.questions)
+    console.log(this.formTemplate)
+    // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     console.log('onChanges');
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
+    // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
   }
   onSubmit() {
 
     this.payLoad = JSON.stringify(this.form.getRawValue());
+    console.log(this.payLoad);
+
     console.log('asdasd');
 
     this.emitFormValues.emit(this.form.getRawValue())

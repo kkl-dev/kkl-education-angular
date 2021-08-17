@@ -50,12 +50,14 @@ import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
 import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
 import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
-import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
 
 import { IconComponent } from './components/icon/icon.component';
+import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
+import { NavCardComponent } from './components/nav-card/nav-card.component';
+import { FormInputComponent } from './components/form/form-input/form-input.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +108,9 @@ import { IconComponent } from './components/icon/icon.component';
     DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
-    IconComponent
+    IconComponent,
+    FormInputComponent,
+    SquadGroupComponent
   ],
   imports: [
     BrowserModule,

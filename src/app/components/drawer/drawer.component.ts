@@ -34,7 +34,6 @@ export class DrawerComponent implements OnInit {
     new QuestionTextarea({
       key: 'comment',
       label: 'תזכורת',
-      innerLabel: '',
       columns: 'span 12',
       order: 7,
       value: '',

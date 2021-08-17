@@ -93,5 +93,5 @@ export class HeaderComponent implements OnInit {
       freeSpacesArray: this.freeSpacesArray1,
     };
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

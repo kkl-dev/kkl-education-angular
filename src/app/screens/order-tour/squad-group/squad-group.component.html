@@ -1,0 +1,9 @@
+<mat-grid-list cols="1" rowHeight="5vh">
+  <mat-grid-tile>
+    <h3 class="assamble-tour__form-headline">{{title}}</h3>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="10">
+    <app-form-container  [questions]="questions"
+      [showButton]="true"></app-form-container>
+  </mat-grid-tile>
+</mat-grid-list>

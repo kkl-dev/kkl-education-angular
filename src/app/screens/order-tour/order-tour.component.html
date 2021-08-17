@@ -1,4 +1,18 @@
-<div class="order-tour">
+<mat-grid-list cols="1" rowHeight="15vh">
+  <mat-grid-tile>
+    <app-working-steps [steps]='pages' (changeActiveStep)="changeActivePage($event)" [activeStep]='activePage'>
+    </app-working-steps>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="4">
+    <app-squad-assamble></app-squad-assamble>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <app-bottom-navigation [currentPage]=0 previousUrl='prevPage' nextUrl='nextPage' [lastPage]='pages.length'
+      (changePage)='changeActivePageBottomNavigation($event)'></app-bottom-navigation>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<!-- <div class="order-tour">
     <div class="order-tour__steps">
         <app-drawer></app-drawer>
 
@@ -19,6 +33,6 @@
     [lastPage]='pages.length'
     (changePage)='changeActivePageBottomNavigation($event)'
     ></app-bottom-navigation>
-</div>
+</div> -->
 
 
