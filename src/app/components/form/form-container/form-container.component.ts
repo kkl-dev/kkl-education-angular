@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { QuestionBase } from './question-base';
-import { QuestionControlService } from './question-control.service';
+import { QuestionBase } from '../logic/question-base';
+import { QuestionControlService } from '../logic/question-control.service';
 
 
 @Component({

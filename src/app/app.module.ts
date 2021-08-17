@@ -35,8 +35,9 @@ import { MyToursComponent } from './screens/my-tours/my-tours.component';
 import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SquadAssambleComponent } from './screens/order-tour/squad-assamble/squad-assamble.component';
-import { FormContainerComponent } from './components/form-container/form-container.component';
+import { FormContainerComponent } from './components/form/form-container/form-container.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
+import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
@@ -55,7 +56,6 @@ import { NumberInputComponent } from './components/number-input/number-input.com
 import { DrawerComponent } from './components/drawer/drawer.component';
 
 import { IconComponent } from './components/icon/icon.component';
-import { FormQuestionComponent } from './components/form-container/form-question/form-question.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +94,7 @@ import { FormQuestionComponent } from './components/form-container/form-question
     FormQuestionComponent,
 
     OrderTourComponent,
+    FormQuestionComponent,
     NavigationComponent,
     SpinnerComponent,
     BottomNavigationComponent,

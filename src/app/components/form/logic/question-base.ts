@@ -9,7 +9,7 @@ export class QuestionBase<T> {
   component:string;
   innerLabel:string;
   type: string;
-  icon : any;
+  icon : string;
   templateName: string;
   options: { key: string; value: string }[];
 
@@ -24,7 +24,7 @@ export class QuestionBase<T> {
       innerLabel?: string;
       controlType?: string;
       type?: string;
-      icon? : any
+      icon? : string
       columns?: string;
       component?:string;
       options?: { key: string; value: string }[];
@@ -41,7 +41,7 @@ export class QuestionBase<T> {
     this.controlType = options.controlType || '';
     this.type = options.type || '';
     this.component = options.component || '';
-    this.icon = options.icon,
+    this.icon = options.icon || '',
     this.options = options.options || [];
   }
 }

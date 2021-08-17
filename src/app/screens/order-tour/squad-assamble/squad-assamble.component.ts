@@ -1,16 +1,13 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { QuestionSelect } from 'src/app/components/form-container/question-select';
-import { QuestionBase } from 'src/app/components/form-container/question-base';
-import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
-import { QuestionCustom } from 'src/app/components/form-container/question-custom';
-import { of } from 'rxjs';
-import { QuestionNumber } from 'src/app/components/form-container/question-number';
-import { QuestionRadio } from 'src/app/components/form-container/form-question/question-radio';
-import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
-import { Offset } from 'src/app/components/form-container/form-question/question-offset';
-import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
-import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit , OnDestroy,ViewChild ,AfterViewInit } from '@angular/core';
+import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionNumber } from 'src/app/components/form/logic/question-number';
+import { Offset } from 'src/app/components/form/logic/question-offset';
+import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
 
 @Component({
   selector: 'app-squad-assamble',
@@ -21,15 +18,15 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
 
-  tourDetailsFormCustomQuestion: {} = {
-    boys: true,
-    girls: true,
-    boysChaperone: true,
-    girlsChaperone: true,
-    boysInstructors: true,
-    girlsInstructors: true,
-    boysMedics: true,
-    girlsMedics: true
+  tourDetailsFormCustomQuestion:{}={
+    boys:true,
+    girls:true,
+    boysChaperone:true,
+    girlsChaperone:true,
+    boysInstructors:true,
+    girlsInstructors:true,
+    boysMedics:true,
+    girlsMedics:true
   }
 
 

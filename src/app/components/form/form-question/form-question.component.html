@@ -2,22 +2,14 @@
   <label class="form-group__label" [attr.for]="question.key"
     [ngStyle]="{ visibility: question.label == 'hide' ? 'hidden' : 'visable' }">{{ question.label }}</label>
 
-  <div [ngSwitch]="question.controlType">
 
-    <div class="form-group__form-field" *ngSwitchCase="'textbox'">
-      <div class="form-group__input-container">
-        <input class="form-group__input" [formControlName]="question.key" [id]="question.key" [type]="question.type" />
-      </div>
-      <div class="form-group__icon-container">
-        <mat-icon *ngIf="question.icon" color="primary">
-          {{question.icon}}</mat-icon>
-      </div>
-    </div>
+  <div [ngSwitch]="question.controlType">
+    <input *ngSwitchCase="'textbox'" class="form-group__input" [formControlName]="question.key" [id]="question.key"
+      [type]="question.type" />
 
     <p *ngSwitchCase="'offset'"></p>
 
-    <select [id]="question.key" *ngSwitchCase="'select'" class="form-group__form-field"
-      [formControlName]="question.key">
+    <select [id]="question.key" *ngSwitchCase="'select'" class="form-group__input" [formControlName]="question.key">
       <option *ngFor="let opt of question.options" [value]="opt.key">
         {{ opt.value }}
       </option>
@@ -25,14 +17,13 @@
 
     <div *ngSwitchCase="'number'">
       <p>{{ question.innerLabel }}</p>
-      <input type="number" class="form-group__form-field number-input" [formControlName]="question.key"
-        [id]="question.key" [type]="question.type" />
+      <input type="number" class="form-group__input number-input" [formControlName]="question.key" [id]="question.key"
+        [type]="question.type" />
     </div>
 
     <div *ngSwitchCase="'date'">
       <p>{{ question.innerLabel }}</p>
-      <input type="date" class="form-group__form-field number-input" [formControlName]="question.key"
-        [id]="question.key" />
+      <input type="date" class="form-group__input " [formControlName]="question.key" [id]="question.key" />
     </div>
 
     <div class="radio-input" *ngSwitchCase="'radio'">
@@ -43,7 +34,7 @@
       </div>
     </div>
 
-    <textarea *ngSwitchCase="'textarea'" cols="12" rows="4" class="form-group__form-field" [id]="question.key"
+    <textarea *ngSwitchCase="'textarea'" cols="12" rows="4" class="form-group__input" [id]="question.key"
       [formControlName]="question.key"></textarea>
   </div>
 
