@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { QuestionBase } from './question-base';
-import { QuestionControlService } from './question-control.service';
+import { QuestionBase } from '../logic/question-base';
+import { QuestionControlService } from '../logic/question-control.service';
 
 
 @Component({
@@ -27,11 +27,13 @@ export class FormContainerComponent implements OnInit {
   @Input() buttonText: string = 'המשך'
 
   public payLoad: string = '';
-  constructor(private qcs: QuestionControlService) {
+  constructor
+  (private qcs: QuestionControlService,
+    ) {
   }
 
   ngOnInit() {
-    this.formTemplate = this.qcs.setGroup(this.questions)
+    // this.formTemplate = this.qcs.setGroup(this.questions)
     console.log(this.formTemplate)
     // this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | Date>[]);
   }

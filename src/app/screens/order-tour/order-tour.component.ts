@@ -12,9 +12,9 @@ export class OrderTourComponent implements OnInit {
   public pages:{
     svgSrc: string;
     text: string;
-  }[] = [ 
- 
-    { 
+  }[] = [
+
+    {
       svgSrc: 'assets/images/trees.svg',
       text: 'הרכב קבוצה',
     },
@@ -38,11 +38,9 @@ export class OrderTourComponent implements OnInit {
 
   changeActivePage(newActivePage:number):void {
     this.activePage = +newActivePage;
-    console.log(this.activePage);
   }
   changeActivePageBottomNavigation(newActivePage:number):void {
     this.activePage = +newActivePage;
-    console.log(newActivePage);
   }
   constructor() { }
 

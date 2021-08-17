@@ -1,16 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { QuestionSelect } from 'src/app/components/form-container/question-select';
-import { QuestionBase } from 'src/app/components/form-container/question-base';
-import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
-import { QuestionCustom } from 'src/app/components/form-container/question-custom';
-import { of } from 'rxjs';
-import { QuestionNumber } from 'src/app/components/form-container/question-number';
-import { QuestionRadio } from 'src/app/components/form-container/form-question/question-radio';
-import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
-import { Offset } from 'src/app/components/form-container/form-question/question-offset';
-import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
-import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit,ViewChild  } from '@angular/core';
+import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { Offset } from 'src/app/components/form/logic/question-offset';
+import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
 
 export interface formGroupGrid {
   title: string;
@@ -22,28 +18,31 @@ export interface formGroupGrid {
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SquadAssambleComponent implements OnInit{
 
-  tourDetailsFormCustomQuestion: {} = {
-    boys: true,
-    girls: true,
-    boysChaperone: true,
-    girlsChaperone: true,
-    boysInstructors: true,
-    girlsInstructors: true,
-    boysMedics: true,
-    girlsMedics: true
+
+
+  tourDetailsFormCustomQuestion:{}={
+    boys:true,
+    girls:true,
+    boysChaperone:true,
+    girlsChaperone:true,
+    boysInstructors:true,
+    girlsInstructors:true,
+    boysMedics:true,
+    girlsMedics:true
   }
 
 
 
-  timeAndNameFormInputs: QuestionBase<string>[] = [
+  timeAndNameFormInputs: QuestionBase<string | Date>[] = [
 
     new TextboxQuestion({
       key: 'tourName',
       label: 'שם הטיול',
       value: '',
       order: 1,
+      icon: 'mode_edit'
     }),
 
     new QuestionSelect({
@@ -280,13 +279,11 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
       label: 'פנים/חוץ מרכז שדה',
       options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
       value: 'ישראל',
-      order: 5,
     }),
 
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      order: 7,
       value: ''
     }),
 
@@ -303,7 +300,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   ]
 
 
-  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true }) tourDetailsRef: ElementRef = new ElementRef(FormContainerComponent)
+  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent
 
 
   constructor() {
@@ -311,21 +308,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngOnInit(): void {
-    console.log(this.tourDetailsRef)
 
-  }
-
-  ngAfterViewInit(): void {
-    console.log(this.tourDetailsRef)
-
-  }
-  ngOnDestroy(): void {
-    console.log('asdasd');
-
-  }
-
-  a(a: any) {
-    console.log('asd')
-    console.log(a.value)
   }
 }

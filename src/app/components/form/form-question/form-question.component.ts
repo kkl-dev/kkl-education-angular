@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { QuestionBase } from '../question-base';
+import { QuestionBase } from '../logic/question-base';
 
 @Component({
-  selector: 'app-question',
+  selector: 'app-form-question',
   templateUrl: './form-question.component.html',
   styleUrls: ['./form-question.component.scss']
 })

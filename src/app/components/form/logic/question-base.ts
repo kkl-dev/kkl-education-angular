@@ -10,6 +10,7 @@ export class QuestionBase<T> {
   component: string;
   validations: Validators[];
   type: string;
+  icon : string;
   templateName: string;
   options: { key: string; value: string }[];
 
@@ -23,6 +24,7 @@ export class QuestionBase<T> {
       order?: number;
       controlType?: string;
       type?: string;
+      icon? : string
       columns?: string;
       component?: string;
       validations?: Validators[];
@@ -40,6 +42,7 @@ export class QuestionBase<T> {
     this.controlType = options.controlType || '';
     this.type = options.type || '';
     this.component = options.component || '';
+    this.icon = options.icon || '',
     this.options = options.options || [];
   }
 }
