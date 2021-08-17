@@ -24,7 +24,7 @@
           <mat-grid-tile *ngFor="let item of question.group" rowspan="4">
             <app-form-input [groupLabel]="item.key === 'girls' ? question.label : 'g'"
               [control]="form.controls[question.key].controls[item.key]" [label]="item.label"
-              [split]="(cols > question.cols)" [theme]="item.key === 'girls' && 'accent'">
+              [split]="(cols > question.cols)" [theme]="item.key === 'girls' && 'accent'" [type]="item.controlType">
             </app-form-input>
           </mat-grid-tile>
         </ng-container>

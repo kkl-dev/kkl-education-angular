@@ -145,10 +145,13 @@ export class SquadAssambleComponent implements OnInit {
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
+          type : 'number'
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
+          type : 'number'
+
         }),
       ]
       ,
@@ -162,10 +165,14 @@ export class SquadAssambleComponent implements OnInit {
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
+          type : 'number'
+
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
+          type : 'number'
+
         }),
       ]
     }),
@@ -178,10 +185,14 @@ export class SquadAssambleComponent implements OnInit {
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
+          type : 'number'
+
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
+          type : 'number'
+
         }),
       ]
     }),
@@ -194,10 +205,13 @@ export class SquadAssambleComponent implements OnInit {
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
+          type : 'number'
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
+          type : 'number'
+
         }),
       ]
     }),
