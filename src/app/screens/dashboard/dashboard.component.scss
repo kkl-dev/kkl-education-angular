@@ -64,10 +64,10 @@
 }
 
 .education-svg {
-  fill: $--blue-color-bright !important;
+  fill: color(primary) !important;
 
   & * {
-    fill: $--blue-color-bright !important;
+    fill: color(primary) !important;
   }
 }
 

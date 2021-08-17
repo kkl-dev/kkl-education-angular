@@ -3,7 +3,16 @@
 @import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
 
 $--green-color-bright: #37c563;
-$--blue-color-bright: #448ECD;
+$education-primary: #448ECD;
+
+$colors: (
+  primary: $education-primary,
+);
+
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
 
 html,
 body {
@@ -22,12 +31,14 @@ body {
 }
 
 .education {
-  background-color: $--blue-color-bright;
+  background-color: color(primary);
 }
 
 ::ng-deep mat-grid-list,
 mat-grid-tile {
   text-align: right;
+  height: 100%;
+  width: 100%;
 }
 
 mat-grid-tile {
@@ -35,7 +46,6 @@ mat-grid-tile {
   &.text>figure.mat-figure {
     display: flex;
     flex-direction: column;
-    // align-content: center;
-    // justify-content: flex-start;
   }
 }
+
