@@ -46,14 +46,17 @@ export class EducationComponent implements OnInit {
       response => {
         console.log(response);
         this.formOptions = response;
-        this.tripService.centerField = this.formOptions[0];
+        // this.tripService.centerField = this.formOptions[0];
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
-  selectChange() {
-    if (this.tripService.centerField !== undefined) { this.disableDates = false; }
+  selectChange(event: any) {
+    if (this.tripService.centerField !== undefined) {
+      this.disableDates = false;
+      this.tripService.centerField = this.formOptions.filter((el: { id: number; }) => el.id === parseInt(this.tripService.centerField))[0];
+    }
   }
   dateFromClick() { document.getElementById('calendar-input')?.click(); }
   // public formOptions = [

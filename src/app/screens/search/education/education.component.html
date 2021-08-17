@@ -7,7 +7,7 @@
         <mat-form-field>
           <mat-select #select [(ngModel)]="tripService.centerField" name="sleepingPlace"
             class="education__form-group-select" (opened)="hideSelectPlaceholder(select)"
-            (closed)="showSelectPlaceholder(select)" (selectionChange)="selectChange()">
+            (closed)="showSelectPlaceholder(select)" (selectionChange)="selectChange($event)">
             <mat-option value="{{ option.id }}" *ngFor="let option of formOptions">
               <span class="education__select-option">
                 <img [src]="option.iconPath" class="education__select-option-svg" />

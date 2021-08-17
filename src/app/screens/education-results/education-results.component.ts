@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-education-results',
@@ -163,7 +164,9 @@ export class EducationResultsComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(public tripService: TripService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.tripService.centerField)
+  }
 }
