@@ -1,15 +1,14 @@
-
 <div class="form">
 
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
 
-    <mat-grid-list [cols]="cols || 1" rowHeight="3vh">
+    <mat-grid-list [cols]="cols || 1" rowHeight="3vh" gutterSize="10">
 
-      <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || cols" [rowspan]="question.rows">
+      <mat-grid-tile *ngFor="let question of questions" [colspan]="question.cols || cols" [rowspan]="question.rows">
 
         <app-form-input *ngIf="!question.custom" [control]="form.controls[question.key]" [type]="question.type"
           [label]='question.label' [icon]="question.icon" [options]="question.options"
-          [controlType]="question.controlType"></app-form-input>
+          [controlType]="question.controlType" [split]="(cols > question.cols)"></app-form-input>
 
         <app-input-radio [control]="form.controls[question.key]" [question]="question" *ngIf="question.custom">
         </app-input-radio>

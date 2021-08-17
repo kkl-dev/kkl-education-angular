@@ -4,7 +4,13 @@
 mat-form-field {
   text-align: right !important;
   width: 100%;
+
+  &.split {
+    width: 100%;
+  }
 }
+
+
 
 
 ::ng-deep .cdk-overlay-pane {

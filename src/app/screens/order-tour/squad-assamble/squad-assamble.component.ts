@@ -136,11 +136,13 @@ export class SquadAssambleComponent implements OnInit {
     }),
     new QuestionNumber({
       key: 'participants',
+      cols: "1",
       label: 'נוער / מבוגרים',
     }),
     new QuestionNumber({
       key: 'escorts',
       label: 'מלווים',
+      cols: "1",
     }),
     new QuestionNumber({
       key: 'guides',
@@ -168,7 +170,6 @@ export class SquadAssambleComponent implements OnInit {
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
-      rows: "4",
       type: 'select',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
@@ -180,7 +181,6 @@ export class SquadAssambleComponent implements OnInit {
       key: 'tripLocation',
       label: 'מחלקה',
       custom: true,
-      rows: "2",
       options: [{ key: 'ישראל', value: 'ישראל' }, { key: 'חו"ל', value: 'חו"ל' }],
       value: 'ישראל',
     }),
@@ -188,7 +188,6 @@ export class SquadAssambleComponent implements OnInit {
     new QuestionRadio({
       custom: true,
       key: 'tripCenter',
-      rows: "3",
       label: 'פנים/חוץ מרכז שדה',
       options: [{ key: 'פנים', value: 'פנים' }, { key: 'חוץ', value: 'חוץ' }],
       value: 'ישראל',
