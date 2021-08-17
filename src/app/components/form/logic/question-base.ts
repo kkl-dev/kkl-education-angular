@@ -1,6 +1,13 @@
 import { Validators } from '@angular/forms';
+
+export interface SelectOption {
+  key: string
+  value: string
+}
+
 export class QuestionBase<T> {
-  value: any;
+  value: any | undefined | number;
+  type: string;
   key: string;
   label: string;
   icon: string;
@@ -8,10 +15,10 @@ export class QuestionBase<T> {
   order: number;
   controlType: string;
   columns: string;
-  component: string;
+  rows: string;
+  custom: boolean;
   validations: Validators[];
-  type: string;
-  options: { key: string; value: string }[];
+  options: SelectOption[];
 
   constructor(
     options: {
@@ -24,22 +31,23 @@ export class QuestionBase<T> {
       controlType?: string;
       type?: string;
       columns?: string;
-      component?: string;
+      rows?: string;
+      custom?: boolean;
       validations?: Validators[];
       options?: { key: string; value: string }[];
     } = {}
   ) {
     this.value = options.value;
     this.key = options.key || '';
-    this.icon = options.key || '';
+    this.icon = options.icon || '';
     this.disabled = true;
     this.label = options.label || '';
     this.columns = options.columns || '1';
+    this.rows = options.rows || '4';
     this.validations = options.validations || [],
-      this.order = options.order === undefined ? 1 : options.order;
-    this.controlType = options.controlType || '';
+      this.controlType = options.controlType || 'textbox';
     this.type = options.type || '';
-    this.component = options.component || '';
+    this.custom = options.custom || false;
     this.options = options.options || [];
   }
 }

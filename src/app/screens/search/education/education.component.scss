@@ -9,7 +9,6 @@ form {
   background-image: url("../../../../assets/images/education-table-background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  // position: relative;
   display: flex;
   width: 100% !important;
 
@@ -149,9 +148,7 @@ mat-select {
   text-align: center;
 }
 
-#input {
-  // margin-top: 18px;
-}
+
 ::ng-deep .mat-select-value,
 ::ng-deep .mat-select-value-text,
 ::ng-deep .mat-select-min-line {

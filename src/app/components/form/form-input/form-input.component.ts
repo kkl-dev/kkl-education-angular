@@ -1,10 +1,6 @@
-import { FormService } from '../form.service';
-import { QuestionControlService } from './../question-control.service';
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
-
-
-import { MatInput } from '@angular/material/input';
+import { FormService } from '../logic/form.service';
 
 @Component({
   selector: 'app-form-input',
@@ -23,6 +19,7 @@ export class FormInputComponent implements OnInit {
   @ViewChild('input') input!: HTMLInputElement;
 
   @Input() public control!: FormControl
+  @Input() public controlType!: string
 
   @Input() public type!: string;
   @Input() public label!: string;
@@ -30,6 +27,8 @@ export class FormInputComponent implements OnInit {
   @Input() public hint!: string;
   @Input() public controlName!: string;
   @Input() public icon!: string;
+  @Input() public status!: string;
+  @Input() public options!: []
 
   @Input() public serverErrorMode!: boolean;
   @Input() public pendingHint!: boolean;
@@ -43,12 +42,10 @@ export class FormInputComponent implements OnInit {
   public disabled!: boolean
 
   constructor(
-    private qcs: QuestionControlService,
     private formService : FormService
   ) { }
 
   ngOnInit(): void {
-
     this.subscribeToControl();
   }
 

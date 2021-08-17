@@ -1,8 +1,8 @@
-import { QuestionBase } from 'src/app/components/form-container/question-base';
-import { QuestionSelect } from 'src/app/components/form-container/question-select';
-import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
 
 @Component({
   selector: 'app-transport',
@@ -36,7 +36,6 @@ export class TransportComponent implements OnInit {
         { key: 'good', value: '123' },
         { key: 'unproven', value: '123123123' },
       ],
-      order: 2,
       type: 'select',
       validations: [Validators.required]
     }),
@@ -50,12 +49,8 @@ export class TransportComponent implements OnInit {
         { key: 'unproven', value: '123123123' },
       ],
       type: 'select',
-      order: 2,
       validations: [Validators.required]
     }),
-
-
-
 
     new TextboxQuestion({
       key: 'total',

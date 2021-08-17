@@ -1,16 +1,16 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { QuestionSelect } from 'src/app/components/form-container/question-select';
-import { QuestionBase } from 'src/app/components/form-container/question-base';
-import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
-import { QuestionRadio } from 'src/app/components/form-container/form-question/question-radio';
-import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
-import { Offset } from 'src/app/components/form-container/form-question/question-offset';
-import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
-import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
 import { Validators } from '@angular/forms';
+import { Component, OnInit,ViewChild  } from '@angular/core';
+import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
 
 export interface formGroupGrid {
   title: string;
+  cols?: string;
   questions: QuestionBase<string>[]
 }
 
@@ -19,20 +19,18 @@ export interface formGroupGrid {
   templateUrl: './squad-assamble.component.html',
   styleUrls: ['./squad-assamble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit, OnDestroy {
+export class SquadAssambleComponent implements OnInit{
 
-  tourDetailsFormCustomQuestion: {} = {
-    boys: true,
-    girls: true,
-    boysChaperone: true,
-    girlsChaperone: true,
-    boysInstructors: true,
-    girlsInstructors: true,
-    boysMedics: true,
-    girlsMedics: true
+  tourDetailsFormCustomQuestion:{}={
+    boys:true,
+    girls:true,
+    boysChaperone:true,
+    girlsChaperone:true,
+    boysInstructors:true,
+    girlsInstructors:true,
+    boysMedics:true,
+    girlsMedics:true
   }
-
-
 
   timeAndNameFormInputs: QuestionBase<string | Date>[] = [
 
@@ -40,12 +38,12 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'tourName',
       label: 'שם הטיול',
       value: '',
-      order: 1,
       validations: [Validators.required]
     }),
 
     new QuestionSelect({
       key: 'fieldCenter',
+      type: 'select',
       label: 'מרכז שדה',
       options: [
         { key: 'solid', value: '12123' },
@@ -53,8 +51,8 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'good', value: '123' },
         { key: 'unproven', value: '123123123' },
       ],
-      order: 2,
-      validations: [Validators.required]
+      icon: 'keyboard_arrow_down',
+      validations: [Validators.required],
     }),
 
 
@@ -62,7 +60,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'startDate',
       label: 'תאריך התחלה',
       value: new Date(),
-      order: 3,
       validations: [Validators.required]
 
     }),
@@ -70,7 +67,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
       key: 'endDate',
       label: 'תאריך סיום',
       value: new Date(),
-      order: 4,
       validations: [Validators.required]
 
     }),
@@ -79,6 +75,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
   customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'customerName',
+      type: 'select',
       label: 'מי הלקוח',
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
@@ -86,62 +83,47 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
         { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
       ],
-      order: 1,
     }),
 
-    new TextboxQuestion({
-      key: 'teamRepresentative',
-      label: 'נציג הקבוצה',
-      value: '',
-      order: 2,
-    }),
-
-    new TextboxQuestion({
-      key: 'phoneNumberNoPrefix',
-      label: 'נייד',
-      columns: 'span 8',
-      type: 'text',
-      order: 3,
-    }),
-    new Offset({
-      columns: 'span 1 ',
-    }),
-
-    new QuestionSelect({
-      key: 'phoneNumberPrefix',
-      label: 'hide',
-      columns: 'span 3',
-      type: 'text',
-      order: 4,
-      options: [
-        { key: '054', value: '054' },
-        { key: '052', value: '052' },
-        { key: '052', value: '052' },
-        { key: '077', value: '077' },
-      ],
-    }),
-    new TextboxQuestion({
-      key: 'email',
-      label: 'מייל',
-      type: 'text',
-      order: 5,
-    }),
     new QuestionSelect({
       key: 'payerName',
       label: 'לקוח משלם',
+      type: "select",
       options: [
         { key: 'שם נוסף', value: 'שם נוסף' },
         { key: 'עוד לקוח', value: 'עוד לקוח' },
         { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
         { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
       ],
-      order: 6,
     }),
+
+    new TextboxQuestion({
+      key: 'teamRepresentative',
+      label: 'נציג הקבוצה',
+      value: '',
+    }),
+
+    new TextboxQuestion({
+      key: 'phone',
+      label: 'נייד איש קשר',
+      type: 'text',
+      validations: [Validators.required]
+
+    }),
+    new TextboxQuestion({
+      key: 'email',
+      label: 'מייל',
+      type: 'text',
+      validations: [Validators.required]
+
+    }),
+
   ];
 
   groupAssambleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
+      type: "select",
       label: 'קבוצת גיל',
       options: [
         { key: '1', value: '1' },
@@ -149,99 +131,14 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'לקוח מספר שלוש', value: '20+' },
         { key: 'לקוח מספר ארבע', value: '30+' },
       ],
-      order: 1,
     }),
-    // new QuestionNumber({
-    //   key: 'boys',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'נוער/מבוגרים',
-    //   value:0,
-    //   order: 2,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-    // new QuestionNumber({
-    //   key: 'girls',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   value:0,
-    //   order: 3,
-    // }),
-    // new QuestionNumber({
-    //   key: 'boysChaperone',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'מלווים',
-    //   value:0,
-
-    //   order: 4,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-
-    // new QuestionNumber({
-    //   key: 'girlsChaperone',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   value:0,
-
-    //   order: 5,
-    // }),
-    // new QuestionNumber({
-    //   key: 'boysInstructors',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'מדריכים',
-    //   value:0,
-
-    //   order: 7,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-
-    // new QuestionNumber({
-    //   key: 'girlsInstructors',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   value:0,
-
-    //   order: 8,
-    // }),
-    // new QuestionNumber({
-    //   key: 'boysMedics',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'חובשים',
-    //   value:0,
-
-    //   order: 9,
-    // }),
-    // new Offset({
-    //   columns: 'span 2 ',
-    // }),
-
-    // new QuestionNumber({
-    //   key: 'girlsMedics',
-    //   columns: 'span 5',
-    //   type: 'number',
-    //   label: 'hide',
-    //   value:0,
-
-    //   order: 10,
-    // }),
   ];
 
   tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'characteristic',
       label: 'מאפיין',
+      type: 'select',
       options: [
         { key: 'פרומלי', value: 'פרומלי' },
         { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
@@ -249,48 +146,50 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
         { key: 'חו"ל', value: 'חו"ל' },
         { key: 'הנהלת אגף', value: 'הנהלת אגף' },
       ],
-      order: 1,
     }),
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
+      rows: "4",
+      type: 'select',
       options: [
         { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
         { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
       ],
-      order: 2,
     }),
 
     new QuestionRadio({
       key: 'tripLocation',
       label: 'מחלקה',
-      options: [{ key: '', value: 'ישראל' }, { key: '', value: 'חו"ל' }],
+      custom: true,
+      rows: "2",
+      options: [{ key: 'ישראל', value: 'ישראל' }, { key: 'חו"ל', value: 'חו"ל' }],
       value: 'ישראל',
-      order: 5,
     }),
 
     new QuestionRadio({
-      key: 'tripLocation',
+      custom: true,
+      key: 'tripCenter',
+      rows: "3",
       label: 'פנים/חוץ מרכז שדה',
-      options: [{ key: '', value: 'פנים' }, { key: '', value: 'חוץ' }],
+      options: [{ key: 'פנים', value: 'פנים' }, { key: 'חוץ', value: 'חוץ' }],
       value: 'ישראל',
-      order: 5,
     }),
 
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      order: 7,
       value: ''
     }),
 
   ];
 
   public squadForm: formGroupGrid[] = [
-    { title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
-    { title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
-    { title: 'לקוח', questions: this.customerFormInputs },
+    { cols: '1', title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
+    { cols: '1', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
+    { cols: '1', title: 'לקוח', questions: this.customerFormInputs },
     {
+      cols: '1',
       title: 'מועד ושם הטיול',
       questions: this.timeAndNameFormInputs
     },
@@ -303,9 +202,6 @@ export class SquadAssambleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-  }
 
-  ngOnDestroy(): void {
   }
-
 }

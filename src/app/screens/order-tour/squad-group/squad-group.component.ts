@@ -1,5 +1,5 @@
-import { QuestionBase } from 'src/app/components/form-container/question-base';
 import { Component, Input } from '@angular/core';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
 
 @Component({
   selector: 'app-squad-group',
@@ -9,9 +9,14 @@ import { Component, Input } from '@angular/core';
 export class SquadGroupComponent {
 
   @Input() public title!: string
+  @Input() public formCols!: string
   @Input() public showButton!: boolean
   @Input() public questions!: QuestionBase<string>[]
 
-  constructor() { }
+  constructor() {
+  }
+
+
+
 
 }

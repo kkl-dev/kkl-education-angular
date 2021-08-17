@@ -1,0 +1,55 @@
+
+<div class="form">
+
+  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
+
+    <mat-grid-list [cols]="cols || 1" rowHeight="3vh">
+
+      <mat-grid-tile *ngFor="let question of questions" [colspan]="question.columns || cols" [rowspan]="question.rows">
+
+        <app-form-input *ngIf="!question.custom" [control]="form.controls[question.key]" [type]="question.type"
+          [label]='question.label' [icon]="question.icon" [options]="question.options"
+          [controlType]="question.controlType"></app-form-input>
+
+        <app-input-radio [control]="form.controls[question.key]" [question]="question" *ngIf="question.custom">
+        </app-input-radio>
+
+      </mat-grid-tile>
+
+
+
+    </mat-grid-list>
+
+    <div class="form-row" *ngIf="showButton">
+      <button type="submit" mat-button (click)="onSubmit()">submit</button>
+    </div>
+  </form>
+
+</div>
+
+<!-- <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
+
+  <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}">
+
+    <ng-container *ngIf="question.templateName">
+
+      <app-number-input
+        [formControlName]="question.key"
+        [id]="question.key"
+        [type]="question.type"
+        [innerLabel]='question.innerLabel'
+        [form]="form"
+        [value]='question.value'
+        > </app-number-input>
+
+    </ng-container>
+
+    <app-form-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form">
+    </app-form-question>
+  </div>
+
+  <div class="form-row btn-row" *ngIf="showButton">
+    <ng-content></ng-content>
+    <button type="submit" class="btn" [disabled]="!form.valid">{{buttonText}}</button>
+  </div>
+</form> -->
