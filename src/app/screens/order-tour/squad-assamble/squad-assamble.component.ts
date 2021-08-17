@@ -153,54 +153,54 @@ export class SquadAssambleComponent implements OnInit {
       ]
       ,
     }),
-    // new QuestionBase({
-    //   key: 'escorts',
-    //   cols: "2",
-    //   isGroup: true,
-    //   label: 'מלווים',
-    //   group: [
-    //     new QuestionNumber({
-    //       key: 'boys',
-    //       label: 'בנים',
-    //     }),
-    //     new QuestionNumber({
-    //       key: 'girls',
-    //       label: 'בנות',
-    //     }),
-    //   ]
-    // }),
-    // new QuestionBase({
-    //   key: 'guides',
-    //   isGroup: true,
-    //   cols: "2",
-    //   label: 'מדריכים',
-    //   group: [
-    //     new QuestionNumber({
-    //       key: 'boys',
-    //       label: 'בנים',
-    //     }),
-    //     new QuestionNumber({
-    //       key: 'girls',
-    //       label: 'בנות',
-    //     }),
-    //   ]
-    // }),
-    // new QuestionBase({
-    //   key: 'medics',
-    //   isGroup: true,
-    //   cols: "2",
-    //   label: 'חובשים',
-    //    group: [
-    //     new QuestionNumber({
-    //       key: 'boys',
-    //       label: 'בנים',
-    //     }),
-    //     new QuestionNumber({
-    //       key: 'girls',
-    //       label: 'בנות',
-    //     }),
-    //   ]
-    // }),
+    new QuestionBase({
+      key: 'escorts',
+      cols: "2",
+      isGroup: true,
+      label: 'מלווים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+        }),
+      ]
+    }),
+    new QuestionBase({
+      key: 'guides',
+      isGroup: true,
+      cols: "2",
+      label: 'מדריכים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+        }),
+      ]
+    }),
+    new QuestionBase({
+      key: 'medics',
+      isGroup: true,
+      cols: "2",
+      label: 'חובשים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+        }),
+      ]
+    }),
   ];
 
   tourDetailsFormInputs: QuestionBase<string>[] = [
@@ -263,7 +263,7 @@ export class SquadAssambleComponent implements OnInit {
       questions: this.groupAssambleFormInputs
     },
     {
-      formCols: '2',
+      formCols: '1',
       cols: "2",
       title: 'לקוח',
       questions: this.customerFormInputs
