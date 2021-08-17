@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { QuestionBase } from '../question-base';
+import { QuestionBase } from '../logic/question-base';
 
 @Component({
   selector: 'app-question',
-  templateUrl: './dynamic-form-question.component.html',
-  styleUrls: ['./dynamic-form-question.component.scss']
+  templateUrl: './form-question.component.html',
+  styleUrls: ['./form-question.component.scss']
 })
-export class DynamicFormQuestionComponent {
+export class FormQuestionComponent {
   @Input() question!: QuestionBase<string | Date>;
   @Input() form!: FormGroup;
   get isValid() { return this.form.controls[this.question.key].valid; }

@@ -1,16 +1,13 @@
-import { Component, OnInit , OnDestroy,ViewChild, ElementRef ,AfterViewInit } from '@angular/core';
-import { QuestionSelect } from 'src/app/components/form-container/question-select';
-import { QuestionBase } from 'src/app/components/form-container/question-base';
-import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
-import { QuestionCustom } from 'src/app/components/form-container/question-custom';
-import { of } from 'rxjs';
-import { QuestionNumber } from 'src/app/components/form-container/question-number';
-import { QuestionRadio } from 'src/app/components/form-container/dynamic-form-question/question-radio';
-import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
-import { Offset } from 'src/app/components/form-container/dynamic-form-question/question-offset';
-import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
-import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit , OnDestroy,ViewChild ,AfterViewInit } from '@angular/core';
+import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionNumber } from 'src/app/components/form/logic/question-number';
+import { Offset } from 'src/app/components/form/logic/question-offset';
+import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
 
 @Component({
   selector: 'app-squad-assamble',
@@ -28,14 +25,14 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
     girlsChaperone:true,
     boysInstructors:true,
     girlsInstructors:true,
-    boysMedics:true, 
+    boysMedics:true,
     girlsMedics:true
   }
 
 
 
   TimeAndNameFormInputs: QuestionBase<string | Date>[] = [
-    
+
     new TextboxQuestion({
       key: 'tourName',
       columns: 'span 12',
@@ -43,7 +40,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       value: '',
       order: 1,
     }),
-    
+
     new QuestionSelect({
       key: 'fieldCenter',
       columns: 'span 12',
@@ -284,7 +281,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       columns: 'span 12',
       order: 5,
     }),
-    
+
     new QuestionRadio({
       key: 'tripLocation',
       label: 'פנים/חוץ מרכז שדה',
@@ -294,7 +291,7 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
       columns: 'span 12',
       order: 5,
     }),
-    
+
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
@@ -307,24 +304,24 @@ export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
   ];
 
 
-  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent 
+  @ViewChild('tourDetailsFormCustomQuestionRef',{static:true}) tourDetailsRef!:FormContainerComponent
 
 
   constructor() {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   ngAfterViewInit(): void {
-    
+
   }
   ngOnDestroy():void{
-    
+
     console.log( this.tourDetailsRef.form.value)
   }
-  
+
   a(a:any){
     console.log('asd' )
   }
