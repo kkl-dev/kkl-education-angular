@@ -19,7 +19,7 @@ export class AdditionsComponent implements OnInit {
         {
           title: 'כלכלה',
           isActive: false,
-          svgUrl: 'football'
+          svgUrl: 'dinner'
         },
         {
           title: 'אתרים',
@@ -32,29 +32,24 @@ export class AdditionsComponent implements OnInit {
           svgUrl: 'shield'
         },
         {
-          title: 'היסעים',
-          isActive: false,
-          svgUrl: 'flag'
-        },
-        {
-          title: 'בתי כנסת',
-          isActive: false,
-          svgUrl: 'judaism'
-        },
-        {
           title: 'אירוח',
           isActive: false,
-          svgUrl: 'climbing'
+          svgUrl: 'tent'
         },
         {
           title: 'הפעלה מוסיקלית',
           isActive: false,
-          svgUrl: ''
+          svgUrl: 'music'
         },
         {
-          title: 'אוהלי אירוח',
+          title: 'הדרכה',
           isActive: false,
-          svgUrl: ''
+          svgUrl: 'guide'
+        },
+        {
+          title: 'היסעים',
+          isActive: false,
+          svgUrl: 'bus'
         },
       ]
 
