@@ -24,7 +24,7 @@ export class AdditionsComponent implements OnInit {
         {
           title: 'אתרים',
           isActive: false,
-          svgUrl: ''
+          svgUrl: 'site'
         },
         {
           title: 'אבטחה',
@@ -34,7 +34,7 @@ export class AdditionsComponent implements OnInit {
         {
           title: 'היסעים',
           isActive: false,
-          svgUrl: 'bus'
+          svgUrl: 'flag'
         },
         {
           title: 'בתי כנסת',

@@ -3,7 +3,8 @@
     <mat-card [ngClass]="{'nav-container' : true, 'active' : item.isActive}">
       <mat-card-content>
         <div class="icon-container">
-          <app-icon [isActive]="item.isActive" [color]="'default'" type="'svg'" [key]="item.svgUrl"></app-icon>
+          <app-icon [isActive]="item.isActive" type="svg"  [key]="item.svgUrl"></app-icon>
+
         </div>
       </mat-card-content>
     </mat-card>
