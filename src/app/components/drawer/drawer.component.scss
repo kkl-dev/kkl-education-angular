@@ -74,6 +74,7 @@
 
 .reminder {
   display: flex;
+  direction: rtl;
   justify-content: space-between;
   margin-bottom: 15px;
   font-size: 12px;
@@ -191,4 +192,3 @@
   background-color: #37c56b !important;
 
 }
-

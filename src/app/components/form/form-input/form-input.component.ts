@@ -46,7 +46,6 @@ export class FormInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToControl();
-    console.log(this.type);
   }
 
   // ControlValueAccessor logic

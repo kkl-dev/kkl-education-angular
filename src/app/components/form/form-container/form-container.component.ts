@@ -27,12 +27,11 @@ export class FormContainerComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formService.buildGroup(this.questions)
-    console.log(this.form)
   }
 
   onSubmit() {
     console.log(this.form.value);
-    this.emitFormValues.emit(this.form.getRawValue())
+    this.emitFormValues.emit(this.form.value())
 
   }
 
