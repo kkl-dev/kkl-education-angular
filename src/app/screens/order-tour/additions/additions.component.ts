@@ -6,71 +6,71 @@ import { AdditionsService } from '../../../utilities/services/additions.service'
 @Component({
   selector: 'app-additions',
   templateUrl: './additions.component.html',
-  styleUrls: ['./additions.component.scss']
+  styleUrls: ['./additions.component.scss'],
 })
 export class AdditionsComponent implements OnInit {
-
-  private unsubscribe: Subscription = this.additionsService.navButton$.subscribe()
+  private unsubscribe: Subscription =
+    this.additionsService.navButton$.subscribe();
 
   public navigationItems: NavigationCardModel[] =
-    this.additionsService.getNavigationItems().length > 0 ?
-      this.additionsService.getNavigationItems() :
-      [
-        {
-          title: 'כלכלה',
-          isActive: false,
-          svgUrl: 'dinner'
-        },
-        {
-          title: 'אתרים',
-          isActive: false,
-          svgUrl: 'site'
-        },
-        {
-          title: 'אבטחה',
-          isActive: true,
-          svgUrl: 'shield'
-        },
-        {
-          title: 'אירוח',
-          isActive: false,
-          svgUrl: 'tent'
-        },
-        {
-          title: 'הפעלה מוסיקלית',
-          isActive: false,
-          svgUrl: 'music'
-        },
-        {
-          title: 'הדרכה',
-          isActive: false,
-          svgUrl: 'guide'
-        },
-        {
-          title: 'היסעים',
-          isActive: false,
-          svgUrl: 'bus'
-        },
-      ]
+    this.additionsService.getNavigationItems().length > 0
+      ? this.additionsService.getNavigationItems()
+      : [
+          {
+            title: 'הפעלה מוסיקלית',
+            isActive: false,
+            svgUrl: 'music',
+          },
+          {
+            title: 'הדרכה',
+            isActive: false,
+            svgUrl: 'guide',
+          },
+          {
+            title: 'אירוח',
+            isActive: false,
+            svgUrl: 'tent',
+          },
+          {
+            title: 'כלכלה',
+            isActive: false,
+            svgUrl: 'dinner',
+          },
+          {
+            title: 'אתרים',
+            isActive: false,
+            svgUrl: 'site',
+          },
+          {
+            title: 'אבטחה',
+            isActive: false,
+            svgUrl: 'shield',
+          },
 
-  constructor(
-    private additionsService: AdditionsService
-  ) { }
+          {
+            title: 'היסעים',
+            isActive: true,
+            svgUrl: 'bus',
+            badgeValue: 3,
+          },
+        ];
+
+  constructor(private additionsService: AdditionsService) {}
 
   ngOnInit(): void {
-    this.subscribeToSubject()
-    this.additionsService.setNavigationStatus(this.navigationItems)
+    this.subscribeToSubject();
+    this.additionsService.setNavigationStatus(this.navigationItems);
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe.unsubscribe()
+    this.unsubscribe.unsubscribe();
   }
 
   private subscribeToSubject() {
     this.unsubscribe = this.additionsService.navButton$.subscribe(
       (item: NavigationCardModel) => {
-        this.additionsService.setNanigationStatus(item, 'title')
-      })
+        this.additionsService.setNanigationStatus(item, 'title');
+      }
+    );
   }
-
 }

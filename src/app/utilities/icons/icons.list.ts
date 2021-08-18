@@ -84,7 +84,7 @@ width="64.367" height="41.536" viewBox="0 0 64.367 41.536"><defs>
 </svg>`;
 export const GUIDE_ICON = `<svg xmlns="http://www.w3.org/2000/svg"
 width="34.105" height="48.367" viewBox="0 0 34.105 48.367"><defs>
-<style>.guide{fill:#bababa;}.b{fill:none;stroke:#bababa;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.142px;}</style>
+<style>.guide{fill:"none";}.b{fill:none;stroke:#bababa;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.142px;}</style>
 </defs><ellipse class="guide" cx="4.456" cy="4.456" rx="4.456" ry="4.456" transform="translate(10.162 0)"/>
 <path class="guide" d="M16.223,7.266c-.165-1.131-1.043-1.811-1.683-1.632l-4.649,1.3c-.639.182-.858,1.666-.678,2.311l3.83,15.727c.188.646.573.966,1.214.781l3.141-.68c2.53-2.083,2.515-3.9,2-6.4Z" transform="translate(4.558 4.924)"/>
 <path class="guide" d="M10.428,16.109l.8,5.57s2.049,4.867,3.458,7.726c1.065,2.166,1.567,3.727.834,4.118-1.123.6-2.634-.742-4.215-3.209-2.652-4.137-4.018-6.2-4.529-7.21l-.8-2.626S9.91,17.873,10.428,16.109Z" transform="translate(14.341 14.152)"/>
@@ -107,7 +107,6 @@ width="51.598" height="41.803"
 viewBox="0 0 51.598 41.803"><defs><style>
 .site{fill:"none";}</style></defs><g
 transform="translate(0 -45.56)">
-
 <path class="site" d="M4.885,323.513,0,334.653H13L16.47,322.8a37.3,37.3,0,0,0-11.585.708Z" transform="translate(0 -247.29)"/>
 <path class="site" d="M67.556,248.735a34.185,34.185,0,0,1,3.447.244l1.622-5.539H62.614l-2.544,5.8A43.252,43.252,0,0,1,67.556,248.735Z" transform="translate(-53.613 -176.609)"/><path class="site" d="M203.187,255.64l-1.65-5.33a76.662,76.662,0,0,1-5.862-6.87h-2.45l-1.8,6.131a14.638,14.638,0,0,1,6.9,3.6A9.587,9.587,0,0,0,203.187,255.64Z" transform="translate(-170.852 -176.609)"/><path class="site" d="M161.047,332.051a11.7,11.7,0,0,0-5.527-2.791l-3.31,11.306h18.553l-1.522-4.918A13.473,13.473,0,0,1,161.047,332.051Z" transform="translate(-135.848 -253.203)"/>
 <path class="site" d="M331.672,246.9q-.672.89-1.434,1.822a78.786,78.786,0,0,1-6.528,7.055l.99,3.2h12.266Z" transform="translate(-288.912 -179.697)"/>

@@ -1,10 +1,17 @@
 <div class="nav-container">
   <div class="svg-container" (click)="onCardClick()">
-    <mat-card [ngClass]="{'nav-container' : true, 'active' : item.isActive}">
+    <mat-card
+      [ngClass]="{ 'nav-container': true, active: item.isActive }"
+      [matBadge]="item.badgeValue"
+      matBadgeColor="accent"
+    >
       <mat-card-content>
         <div class="icon-container">
-          <app-icon [isActive]="item.isActive" type="svg"  [key]="item.svgUrl"></app-icon>
-
+          <app-icon
+            [isActive]="item.isActive"
+            type="svg"
+            [key]="item.svgUrl"
+          ></app-icon>
         </div>
       </mat-card-content>
     </mat-card>

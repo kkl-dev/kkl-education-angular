@@ -17,7 +17,6 @@
 
       &.active {
         background-color: color(primary) !important;
-
       }
     }
   }
@@ -26,9 +25,18 @@
   }
 }
 
-.icon-container{
+.icon-container {
   transform: scale(2.5);
+}
 
-  &.active {
-  }
+::ng-deep.mat-badge-content {
+  width: auto;
+  display: grid;
+  min-width: 32px;
+  min-height: 28px;
+  text-align: center;
+  align-items: center;
+  padding: 5px 3px;
+  top: -20px;
+  right: -22px;
 }
