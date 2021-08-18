@@ -53,6 +53,9 @@ import { NumberInputComponent } from './components/number-input/number-input.com
 import { DrawerComponent } from './components/drawer/drawer.component';
 
 import { IconComponent } from './components/icon/icon.component';
+import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
+import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
+import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +92,10 @@ import { IconComponent } from './components/icon/icon.component';
          DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
-    IconComponent
+    IconComponent,
+    SleepingOptionsComponent,
+    SleepingOptionsFormComponent,
+    SleepingOptionsByDayComponent
   ],
   imports: [
     BrowserModule,

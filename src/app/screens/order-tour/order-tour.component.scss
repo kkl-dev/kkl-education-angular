@@ -7,6 +7,8 @@
   justify-content: flex-end;
   direction: rtl !important;
   position: relative;
+
+
   
   &__steps {
     justify-self: stretch;
@@ -81,3 +83,9 @@
     text-shadow: 0 0 0.01px black;
   }
 }
+
+.sleeping-width{
+  width: 50%;
+  margin-left: 50%;
+} 
+ 
