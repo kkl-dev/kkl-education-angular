@@ -1,5 +1,14 @@
+<div class="form-container">
+  <mat-grid-list cols="4" rowHeight="60vh" gutterSize="5">
+    <mat-grid-tile *ngFor="let squad of squadForm">
+      <app-squad-group [formCols]="squad.formCols" [title]="squad.title" [questions]="squad.questions">
+      </app-squad-group>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<!--
 <div class="assemble-tour">
-  <!-- <button (click)="a(tourDetailsFormCustomQuestionRef.form)">sdfgsdgsfsdf</button> -->
   <div class="assemble-tour__form">
     <div class="assemble-tour__form-headline-container">
       <h3 class="assemble-tour__form-headline">מועד ושם הטיול</h3>
@@ -42,7 +51,6 @@
       [showButton]="false"
       [questions]="groupAssembleFormInputs"
     >
-      <!-- <app-wizard></app-wizard>  -->
     </app-form-container>
   </div>
   <div class="assemble-tour__form">
@@ -56,4 +64,4 @@
       [questions]="tourDetailsFormInputs"
     ></app-form-container>
   </div>
-</div>
+</div> -->

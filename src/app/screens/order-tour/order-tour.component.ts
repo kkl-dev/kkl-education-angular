@@ -3,17 +3,16 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-order-tour',
   templateUrl: './order-tour.component.html',
-  styleUrls: ['./order-tour.component.scss']
+  styleUrls: ['./order-tour.component.scss'],
 })
 export class OrderTourComponent implements OnInit {
-  public activePage:number =1;
-  public nextPage:string ='education/search'
-  public prevPage:string ='education/results'
-  public pages:{
+  public activePage: number = 0;
+  public nextPage: string = 'education/search';
+  public prevPage: string = 'education/results';
+  public pages: {
     svgSrc: string;
     text: string;
   }[] = [
-
     {
       svgSrc: 'assets/images/trees.svg',
       text: 'הרכב קבוצה',
@@ -36,15 +35,13 @@ export class OrderTourComponent implements OnInit {
     },
   ];
 
-  changeActivePage(newActivePage:number):void {
+  changeActivePage(newActivePage: number): void {
     this.activePage = +newActivePage;
   }
-  changeActivePageBottomNavigation(newActivePage:number):void {
+  changeActivePageBottomNavigation(newActivePage: number): void {
     this.activePage = +newActivePage;
   }
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

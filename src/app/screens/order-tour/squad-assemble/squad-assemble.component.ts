@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
@@ -12,7 +12,8 @@ import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 export interface formGroupGrid {
   title: string;
   cols?: string;
-  questions: QuestionBase<string>[]
+  formCols?: string;
+  questions: QuestionBase<string | Date | number>[]
 }
 
 @Component({
@@ -20,9 +21,8 @@ export interface formGroupGrid {
   templateUrl: './squad-assemble.component.html',
   styleUrls: ['./squad-assemble.component.scss'],
 })
-export class SquadAssembleComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+export class SquadAssembleComponent implements OnInit {
+
   tourDetailsFormCustomQuestion: {} = {
     boys: true,
     girls: true,
@@ -48,20 +48,15 @@ export class SquadAssembleComponent
       type: 'select',
       label: 'מרכז שדה',
       options: [
-        { key: '1', value: '1' },
-        { key: 'עוד לקוח', value: '10+' },
-        { key: 'לקוח מספר שלוש', value: '20+' },
-        { key: 'לקוח מספר ארבע', value: '30+' },
+        { key: 'solid', value: '12123' },
+        { key: 'great', value: '23' },
+        { key: 'good', value: '123' },
+        { key: 'unproven', value: '123123123' },
       ],
       icon: 'keyboard_arrow_down',
       validations: [Validators.required],
     }),
 
-    new QuestionNumber({
-      key: 'chaperone',
-      type: 'number',
-      label: 'מלווים',
-      value: 0,}),
 
     new QuestionCalendar({
       key: 'startDate',
@@ -77,7 +72,6 @@ export class SquadAssembleComponent
       validations: [Validators.required]
 
     }),
-
   ];
 
   customerFormInputs: QuestionBase<string>[] = [
@@ -128,7 +122,7 @@ export class SquadAssembleComponent
 
   ];
 
-  separatedGroupAssembleForm: QuestionBase<string>[] = [
+  groupAssambleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
       type: "select",
@@ -141,27 +135,86 @@ export class SquadAssembleComponent
         { key: 'לקוח מספר ארבע', value: '30+' },
       ],
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'participants',
-      cols: "1",
       label: 'נוער / מבוגרים',
+      cols: "2",
+      isGroup: true,
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type : 'number'
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type : 'number'
+
+        }),
+      ]
+      ,
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'escorts',
+      cols: "2",
+      isGroup: true,
       label: 'מלווים',
-      cols: "1",
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type : 'number'
+
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type : 'number'
+
+        }),
+      ]
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'guides',
+      isGroup: true,
+      cols: "2",
       label: 'מדריכים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type : 'number'
+
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type : 'number'
+
+        }),
+      ]
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'medics',
+      isGroup: true,
+      cols: "2",
       label: 'חובשים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type : 'number'
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type : 'number'
+
+        }),
+      ]
     }),
   ];
-
-  private groupAssambleFormInputs = []
 
   tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
@@ -207,15 +260,31 @@ export class SquadAssembleComponent
       label: 'הערות מנהליות',
       value: ''
     }),
+
   ];
 
   public squadForm: formGroupGrid[] = [
-    { cols: '1', title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
-    { cols: '2', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
-    { cols: '1', title: 'לקוח', questions: this.customerFormInputs },
     {
-      cols: '1',
+      formCols: '1',
+      title: 'פרטי הטיול',
+      questions: this.tourDetailsFormInputs
+    },
+    {
+      formCols: '2',
+      title: 'הרכב הקבוצה',
+      cols: "2",
+      questions: this.groupAssambleFormInputs
+    },
+    {
+      formCols: '1',
+      cols: "2",
+      title: 'לקוח',
+      questions: this.customerFormInputs
+    },
+    {
+      formCols: '1',
       title: 'מועד ושם הטיול',
+      cols: "2",
       questions: this.timeAndNameFormInputs
     },
   ]
@@ -234,7 +303,7 @@ export class SquadAssembleComponent
   ngOnDestroy(): void {
     // console.log(this.tourDetailsRef.form.value);
     // console.log(this.customerRef.form.value);
-    // console.log(this.TimeAndDateRef.form.value);
+    // console.log(this.timeAndDateRef.form.value);
     // console.log(this.groupAssembleRef.form.value);
   }
 
@@ -244,6 +313,4 @@ export class SquadAssembleComponent
     //   ? this.separatedGroupAssembleForm
     //   : this.groupAssembleForm;
   }
-
-
 }

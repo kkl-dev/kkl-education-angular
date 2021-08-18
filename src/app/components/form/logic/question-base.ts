@@ -1,4 +1,4 @@
-import { Validators } from '@angular/forms';
+import { ValidatorFn } from '@angular/forms';
 
 export interface SelectOption {
   key: string
@@ -6,36 +6,42 @@ export interface SelectOption {
 }
 
 export class QuestionBase<T> {
-  value: any | undefined | number;
+  value: T | undefined;
   type: string;
   key: string;
   label: string;
+  sublabel: string;
   icon: string;
   disabled: boolean;
-  order: number;
   controlType: string;
   cols: string;
   rows: string;
   custom: boolean;
-  validations: Validators[];
+  validations: ValidatorFn[];
   options: SelectOption[];
+  isGroup: boolean;
+  group: any;
 
   constructor(
     options: {
-      value?: any;
+      value?: T;
       key?: string;
       icon?: string;
       disabled?: string;
       label?: string;
+      sublabel?: string;
       order?: number;
       controlType?: string;
       type?: string;
       cols?: string;
       rows?: string;
       custom?: boolean;
-      validations?: Validators[];
-      options?: { key: string; value: string }[];
+      validations?: ValidatorFn[];
+      options?: SelectOption[];
+      isGroup?: boolean;
+      group?: any
     } = {}
+
   ) {
     this.value = options.value;
     this.key = options.key || '';
@@ -49,5 +55,7 @@ export class QuestionBase<T> {
     this.type = options.type || '';
     this.custom = options.custom || false;
     this.options = options.options || [];
+    this.isGroup = options.isGroup || false;
+    this.group = options.group || {}
   }
 }
