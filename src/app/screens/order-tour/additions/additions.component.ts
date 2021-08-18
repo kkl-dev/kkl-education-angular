@@ -28,12 +28,12 @@ export class AdditionsComponent implements OnInit {
         },
         {
           title: 'אבטחה',
-          isActive: false,
-          svgUrl: ''
+          isActive: true,
+          svgUrl: 'shield'
         },
         {
           title: 'היסעים',
-          isActive: true,
+          isActive: false,
           svgUrl: 'bus'
         },
         {

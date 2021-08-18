@@ -26,16 +26,9 @@
   }
 }
 
-svg-icon {
-  & * {
-    fill: color(primary) !important;
-    width: 60px;
-    height: 60px;
-  }
+.icon-container{
+  transform: scale(2.5);
 
   &.active {
-    & * {
-      fill: white !important
-    }
   }
 }

@@ -1,7 +1,7 @@
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Injectable } from '@angular/core';
-import { BUTTON_ICON, DESTINATION_ICON, THUMBUP_ICON, REPORTS_ICON, RELOAD_ICON, FLAG_ICON } from './icons.list';
+import { BUTTON_ICON, DESTINATION_ICON, THUMBUP_ICON, REPORTS_ICON, RELOAD_ICON, FLAG_ICON, SHIELD_ICON } from './icons.list';
 
 export interface IconItem {
   key: string;
@@ -44,6 +44,10 @@ export class IconsService {
       {
         key: 'flag',
         svgUrl: FLAG_ICON
+      },
+      {
+        key: 'shield',
+        svgUrl: SHIELD_ICON
       },
     ]
 
