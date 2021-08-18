@@ -10,7 +10,7 @@
 }
 
 .chosen-education{
-  background-color:$--blue-color-bright;
+  background-color: color(primary);
 }
 
 .chosen-forestry{
@@ -25,7 +25,7 @@
   width: fit-content !important;
   border-bottom-left-radius: 50px;
   border-top-left-radius: 50px;
-} 
+}
 
 .sign-out-education, .title-education, .headline-education{
 color: #009eee !important;
@@ -96,7 +96,7 @@ background: none !important;
 
 .item__list{
   padding-left: 20px !important ;
-  
+
 }
 .item__list-div{
   padding: 5px 0 !important;

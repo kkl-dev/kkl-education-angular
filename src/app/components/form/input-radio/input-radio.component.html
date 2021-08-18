@@ -1,0 +1,9 @@
+<mat-radio-group [formControl]="control" [name]="question.key" (change)="handleChange($event)">
+  <div>
+    {{question.label}}
+  </div>
+  <div class="radio-container">
+    <mat-radio-button color="primary" *ngFor="let option of question.options" [value]="option.value">{{option.key}}
+    </mat-radio-button>
+  </div>
+</mat-radio-group>

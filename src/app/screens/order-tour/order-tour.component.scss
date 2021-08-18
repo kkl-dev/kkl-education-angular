@@ -1,3 +1,5 @@
+@import '../../../styles.scss';
+
 .order-tour {
   width: 100%;
   height: calc(100% - 90px);
@@ -9,7 +11,7 @@
   position: relative;
 
 
-  
+
   &__steps {
     justify-self: stretch;
     width: 60%;
@@ -23,17 +25,18 @@
     flex: 1;
   }
 }
+
 ::ng-deep div#working-steps {
   border-bottom: 0;
   padding: 0 !important;
 }
 
 ::ng-deep .chevron {
-  border-color: #448ecd !important;
+  border-color: color(primary) !important;
 }
 
 ::ng-deep .bottom-navigation__forward {
-  background-color: #448ecd;
+  background-color: color(primary);
   color: #fff;
   border: 0;
   cursor: pointer;
@@ -59,6 +62,7 @@
   top: calc(50% - 10px) !important;
   background-color: #e8e8e8 !important;
 }
+
 ::ng-deep .bottom-navigation {
   box-sizing: border-box;
   margin: 10px 30px;
@@ -75,17 +79,49 @@
 }
 
 ::ng-deep .chosen {
-  background-color: #448ecd !important;
+  background-color: color(primary) !important;
+
   &__text {
     // font-weight: bold;
-    border-bottom: 3px solid #448ecd !important;
+    border-bottom: 3px solid color(primary) !important;
     box-sizing: border-box;
     text-shadow: 0 0 0.01px black;
+  }
+}
+
+mat-grid-list,
+mat-grid-tile,
+app-squad-assemble,
+app-working-steps,
+app-bottom-navigation,
+app-additions {
+  width: 100%;
+  height: 100%;
+
+}
+
+.stepper {
+  width: 60%;
+  direction: rtl;
+  display: flex;
+  justify-content: space-between;
+}
+
+app-bottom-navigation {
+  width: 90%;
+}
+
+
+::ng-deep mat-grid-tile.bottom-navigation {
+  direction: rtl;
+
+  div {
+    width: 100%;
+    justify-content: center;
   }
 }
 
 .sleeping-width{
   width: 50%;
   margin-left: 50%;
-} 
- 
+}

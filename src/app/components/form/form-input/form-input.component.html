@@ -1,0 +1,39 @@
+<div class="input-container">
+
+  <div>
+    <mat-form-field [color]="theme" appearance="outline">
+
+      <mat-label>{{label}}</mat-label>
+      <input *ngIf="controlType !== 'select' && controlType !== 'textarea'" matInput [type]="type" [disabled]="disabled"
+        [formControl]="control" control="control" autocomplete="off" (input)="handleChange($event.target.value)"
+        [name]="type" (focusout)="validate()" #input [placeholder]="label">
+
+
+      <mat-select color="primary" [formControl]="control" *ngIf="controlType === 'select'"
+        (change)="handleChange($event.value)">
+        <mat-option>{{label | titlecase}}</mat-option>
+        <mat-option *ngFor="let option of options" [value]="option.value">
+          {{option.key}}
+        </mat-option>
+      </mat-select>
+
+
+      <textarea rows="4" [formControl]="control" *ngIf="controlType === 'textarea'" matInput></textarea>
+
+
+      <!-- icons -->
+      <mat-icon matPrefix>{{controlType === 'select' ? 'keyboard_arrow_down' :
+        icon}}</mat-icon>
+
+      <!-- shred input hint -->
+      <mat-hint *ngIf="hint">{{'Please enter '+ hint}}</mat-hint>
+
+      <!-- shred input error -->
+      <mat-error *ngIf=control.errors>{{error}}</mat-error>
+
+    </mat-form-field>
+
+    <div>
+    </div>
+
+  </div>

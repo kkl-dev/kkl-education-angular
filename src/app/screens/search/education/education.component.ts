@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
-import { subDays, addDays } from 'date-fns';
-import { Locale, getYear } from 'date-fns';
+import { getYear } from 'date-fns';
 
 @Component({
   selector: 'app-education',
@@ -33,7 +32,7 @@ export class EducationComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public formOptions = [
     { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: '1' },
@@ -68,8 +67,6 @@ export class EducationComponent implements OnInit {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
     closeOnSelected: true,
-    // minDate: addDays(new Date(), 5),
-    // maxDate: addDays(new Date(), 10),
     minYear: 2019,
     maxYear: 2021,
     freeSpacesArray: this.freeSpacesArray,
@@ -77,7 +74,7 @@ export class EducationComponent implements OnInit {
 
   public dateObjChanged(e: string) {
     if (e.includes('-')) {
-      let tempDateArr = [];
+      let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       console.log(tempDateArr);
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {

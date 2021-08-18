@@ -2,7 +2,7 @@
   <div
     class="drawer-toggle"
     (click)="toggleDrawer()"
-    [ngClass]="{ 'closed-toggle': !isOpen }" 
+    [ngClass]="{ 'closed-toggle': !isOpen }"
   >
     <app-icon [color]="'primary'" type="svg" [key]="'bell'"></app-icon>
     <span> תזכורת </span>
@@ -24,6 +24,7 @@
   <div [ngClass]="{ 'open-form': isFormOpen }" class="drawer__form-container">
     <app-form-container
       #drawerForm
+      cols="2"
       [questions]="reminderForm"
       (emitFormValues)="newCommentHandler($event)"
     >
@@ -37,7 +38,7 @@
         <span
           (click)="toggleReminderStatus(i)"
           class="reminder__content-toggle-done"
-          >
+        >
           <!-- <svg-icon src="assets/images/v-sign.svg"
           *ngIf="comment.status"></svg-icon> -->
           <!-- <app-icon
@@ -46,9 +47,7 @@
           type="svg"
           [key]="'vSign'"
         ></app-icon> -->
-          <span  [ngClass]="{ 'marked-done': comment.status }">
-          
-          </span>
+          <span [ngClass]="{ 'marked-done': comment.status }"> </span>
         </span>
         {{ comment.comment }}
       </div>
@@ -56,7 +55,12 @@
     </div>
     <div class="reminder__controllers">
       <span class="reminder__controllers-svg" (click)="editComment(i)">
-        <app-icon class="vSign-icon-container" [color]="'primary'" type="svg" [key]="'edit'"></app-icon>
+        <app-icon
+          class="vSign-icon-container"
+          [color]="'primary'"
+          type="svg"
+          [key]="'edit'" 
+        ></app-icon>
       </span>
 
       <span (click)="deleteComment(i)" class="reminder__controllers-delete">

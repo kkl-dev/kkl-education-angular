@@ -1,0 +1,43 @@
+<div class="form">
+
+  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
+
+    <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
+
+      <ng-container *ngFor="let question of questions">
+
+        <mat-grid-tile *ngIf="!question.isGroup" [colspan]="question.cols || cols" [rowspan]="4">
+
+          <app-form-input *ngIf="!question.custom" [control]="form.controls[question.key]" [type]="question.type"
+            [label]='question.label' [icon]="question.icon" [options]="question.options"
+            [controlType]="question.controlType"></app-form-input>
+
+          <app-input-radio [control]="form.controls[question.key]" [question]="question" *ngIf="question.custom">
+          </app-input-radio>
+
+        </mat-grid-tile>
+
+        <ng-container *ngIf="question.isGroup">
+          <mat-grid-tile colspan="2">
+            {{question.label | titlecase}}
+          </mat-grid-tile>
+          <mat-grid-tile *ngFor="let item of question.group" rowspan="4">
+            <app-form-input [groupLabel]="item.key === 'girls' ? question.label : 'g'"
+              [control]="form.controls[question.key].controls[item.key]" [label]="item.label"
+              [split]="(cols > question.cols)" [theme]="item.key === 'girls' && 'accent'" [type]="item.controlType">
+            </app-form-input>
+          </mat-grid-tile>
+        </ng-container>
+
+      </ng-container>
+
+
+
+    </mat-grid-list>
+
+    <div class="form-row" *ngIf="showButton">
+      <button type="submit" mat-button (click)="onSubmit()">submit</button>
+    </div>
+  </form>
+
+</div>
