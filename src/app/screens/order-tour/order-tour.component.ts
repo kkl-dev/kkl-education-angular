@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order-tour.component.scss'],
 })
 export class OrderTourComponent implements OnInit {
-  public activePage: number = 0;
+  public activePage: number = 3;
   public nextPage: string = 'education/search';
   public prevPage: string = 'education/results';
   public pages: {
