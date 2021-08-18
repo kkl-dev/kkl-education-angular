@@ -53,7 +53,9 @@
       width: 30px;
       fill: #575757;
     }
-
+    &-text{
+      text-align: center;
+    }
     &-text::before {
       display: block;
       content: attr(title);

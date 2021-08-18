@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
@@ -16,12 +16,13 @@ export interface formGroupGrid {
 }
 
 @Component({
-  selector: 'app-squad-assamble',
-  templateUrl: './squad-assamble.component.html',
-  styleUrls: ['./squad-assamble.component.scss'],
+  selector: 'app-squad-assemble',
+  templateUrl: './squad-assemble.component.html',
+  styleUrls: ['./squad-assemble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit {
-
+export class SquadAssembleComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   tourDetailsFormCustomQuestion: {} = {
     boys: true,
     girls: true,
@@ -47,15 +48,20 @@ export class SquadAssambleComponent implements OnInit {
       type: 'select',
       label: 'מרכז שדה',
       options: [
-        { key: 'solid', value: '12123' },
-        { key: 'great', value: '23' },
-        { key: 'good', value: '123' },
-        { key: 'unproven', value: '123123123' },
+        { key: '1', value: '1' },
+        { key: 'עוד לקוח', value: '10+' },
+        { key: 'לקוח מספר שלוש', value: '20+' },
+        { key: 'לקוח מספר ארבע', value: '30+' },
       ],
       icon: 'keyboard_arrow_down',
       validations: [Validators.required],
     }),
 
+    new QuestionNumber({
+      key: 'chaperone',
+      type: 'number',
+      label: 'מלווים',
+      value: 0,}),
 
     new QuestionCalendar({
       key: 'startDate',
@@ -71,6 +77,7 @@ export class SquadAssambleComponent implements OnInit {
       validations: [Validators.required]
 
     }),
+
   ];
 
   customerFormInputs: QuestionBase<string>[] = [
@@ -121,7 +128,7 @@ export class SquadAssambleComponent implements OnInit {
 
   ];
 
-  groupAssambleFormInputs: QuestionBase<string>[] = [
+  separatedGroupAssembleForm: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
       type: "select",
@@ -153,6 +160,8 @@ export class SquadAssambleComponent implements OnInit {
       label: 'חובשים',
     }),
   ];
+
+  private groupAssambleFormInputs = []
 
   tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
@@ -198,7 +207,6 @@ export class SquadAssambleComponent implements OnInit {
       label: 'הערות מנהליות',
       value: ''
     }),
-
   ];
 
   public squadForm: formGroupGrid[] = [
@@ -216,9 +224,26 @@ export class SquadAssambleComponent implements OnInit {
 
 
   constructor() {
+    // this.groupAssembleFormInputs = this.groupAssembleForm;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
+  ngAfterViewInit(): void {}
+
+  ngOnDestroy(): void {
+    // console.log(this.tourDetailsRef.form.value);
+    // console.log(this.customerRef.form.value);
+    // console.log(this.TimeAndDateRef.form.value);
+    // console.log(this.groupAssembleRef.form.value);
   }
+
+  changeGroupAssembleForm() {
+    // this.separated = !this.separated;
+    // this.groupAssembleFormInputs = this.separated
+    //   ? this.separatedGroupAssembleForm
+    //   : this.groupAssembleForm;
+  }
+
+
 }

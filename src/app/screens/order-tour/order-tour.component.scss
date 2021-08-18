@@ -2,6 +2,7 @@
 
 .order-tour {
   width: 100%;
+  height: calc(100% - 90px);
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -9,11 +10,13 @@
   direction: rtl !important;
   position: relative;
 
+
+
   &__steps {
     justify-self: stretch;
     width: 60%;
     padding: 0px 20%;
-    flex: 1 1 100%;
+    margin-bottom: 30px;
     background: linear-gradient(0deg, #ffffff 0%, rgba(#d8d8d8, 0.5) 100%);
   }
 
@@ -115,6 +118,5 @@ app-bottom-navigation {
   div {
     width: 100%;
     justify-content: center;
-    // justify-content: space-between;
   }
 }

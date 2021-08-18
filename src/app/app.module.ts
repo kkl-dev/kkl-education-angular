@@ -30,15 +30,14 @@ import { HeaderComponent } from './screens/education-results/header/header.compo
 import { TooltipComponent } from './screens/education-results/tooltip/tooltip.component';
 import { MyToursComponent } from './screens/my-tours/my-tours.component';
 import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
-import { SquadAssambleComponent } from './screens/order-tour/squad-assamble/squad-assamble.component';
 import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { LinksComponent } from './components/links/links.component';
 import { MainComponent } from './components/main/main.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
 import { FormContainerComponent } from './components/form/form-container/form-container.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -56,6 +55,10 @@ import { FormQuestionComponent } from './components/form/form-question/form-ques
 import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
 import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
+import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
+import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
+import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
+import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
 
 @NgModule({
   declarations: [
@@ -87,9 +90,8 @@ import { InputRadioComponent } from './components/form/input-radio/input-radio.c
 
     ToursTableComponent,
     MyToursComponent,
-    SquadAssambleComponent,
-
     // form comps
+    // SquadAssembleComponent,
     FormContainerComponent,
     FormQuestionComponent,
 
@@ -114,7 +116,11 @@ import { InputRadioComponent } from './components/form/input-radio/input-radio.c
     NumberInputComponent,
     IconComponent,
     SquadGroupComponent,
-    InputRadioComponent
+    InputRadioComponent,
+    SleepingOptionsComponent,
+    SleepingOptionsFormComponent,
+    SleepingOptionsByDayComponent,
+    SquadAssembleComponent
   ],
   imports: [
     BrowserModule,
