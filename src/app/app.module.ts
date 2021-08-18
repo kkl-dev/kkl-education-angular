@@ -62,6 +62,7 @@ import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-opti
 import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
 import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
+import { TypographyComponent } from './components/typography/typography.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/to
     SleepingOptionsFormComponent,
     SleepingOptionsByDayComponent,
     SquadAssembleComponent,
-    TourPanelComponent
+    TourPanelComponent,
+    TypographyComponent
   ],
   imports: [
     BrowserModule,

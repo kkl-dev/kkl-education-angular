@@ -1,19 +1,12 @@
 <div class="additions-container">
-  <mat-grid-list cols="1" rowHeight="20vh">
-    <mat-grid-tile>
-      <app-navigation-grid
-        [navigationGrid]="navigationItems"
-      ></app-navigation-grid>
-    </mat-grid-tile>
-    <mat-grid-tile
-      rowspan="1"
-      *ngFor="let day of tourDays"
-      class="additions-content"
-    >
-      <ng-container>
-        <!-- <app-tour-panel [tourDay]="day"></app-tour-panel> -->
-        {{ day.date }}
-      </ng-container>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="nav-grid">
+    <app-navigation-grid
+      [navigationGrid]="navigationItems"
+    ></app-navigation-grid>
+  </div>
+  <div class="additions-content">
+    <div *ngFor="let tourDay of tour; index as i">
+      <app-tour-panel [tourDay]="tourDay" [i]="i + 1"></app-tour-panel>
+    </div>
+  </div>
 </div>

@@ -10,18 +10,7 @@ export class TourPanelComponent implements OnInit {
   constructor() {}
 
   @Input() tourDay: TourDayModel;
-
-  public items: [
-    {
-      title: 'dsjkdjskdjs';
-    },
-    {
-      title: 'dsjkdjskdjs';
-    },
-    {
-      title: 'dsjkdjskdjs';
-    }
-  ];
+  @Input() i: number;
 
   ngOnInit(): void {}
 }

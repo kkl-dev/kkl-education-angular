@@ -1,0 +1,12 @@
+@import "../../../styles.scss";
+
+span.primary {
+  color: color(primary);
+}
+
+span.secondary {
+  color: color(secondary);
+}
+span.warn {
+  color: color(warn);
+}
