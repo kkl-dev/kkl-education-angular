@@ -3,6 +3,11 @@ import { NavigationCardModel } from 'src/app/models/nav-card-model';
 import { Subscription } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
 
+export interface TourDayModel {
+  date: Date;
+  locations: any[];
+}
+
 @Component({
   selector: 'app-additions',
   templateUrl: './additions.component.html',
@@ -54,6 +59,11 @@ export class AdditionsComponent implements OnInit {
             badgeValue: 3,
           },
         ];
+
+  public tourDays = [
+    { date: new Date(), locations: [] },
+    { date: new Date(), locations: [] },
+  ];
 
   constructor(private additionsService: AdditionsService) {}
 

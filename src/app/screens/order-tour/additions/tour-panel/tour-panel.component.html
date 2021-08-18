@@ -1,0 +1,14 @@
+<div class="tour-container">
+  <div>
+    <span>{{ tourDay.date }}</span>
+  </div>
+  <div>
+    <mat-accordion [displayMode]="'gutter'">
+      <ng-container>
+        <app-expend-panel *ngFor="let panel of items">
+          <span title>panel.title</span>
+        </app-expend-panel>
+      </ng-container>
+    </mat-accordion>
+  </div>
+</div>
