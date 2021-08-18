@@ -20,15 +20,36 @@ export class FormService {
   };
 
 
-  private setFormGroup = (formTemplate: QuestionBase<string>[]) => formTemplate.map((question) => question).reduce((acc, control) => {
-    const { key, value, label, validations } = control;
-    return { ...acc, [key || label.toLowerCase()]: [value, validations] };
-  }, {});
-
-
-  public setGroup(quiestions: QuestionBase<string>[]) {
-    return this.fb.group(this.setFormGroup(quiestions))
+  private setGroup(formTemplate: QuestionBase<string>[]) {
+    return formTemplate.map((question) => question).reduce((acc, control) => {
+      const { key, value, isGroup, group, validations } = control;
+      return { ...acc, [key]: isGroup ? this.setGroup(group) : [value, validations] };
+    }, {});
   }
+
+  private formatForm(questions) {
+    return questions.map((question) => {
+      const { key, value, isGroup, group, validations } = question;
+      return {
+        key: key,
+        isGroup,
+        template: isGroup ? this.setGroup(group) : [value, validations]
+      };
+    });
+  }
+
+  public setForm(formTemplate: any[]) {
+    return formTemplate.map((question) => question).reduce((acc, control) => {
+      const { key, isGroup, template } = control;
+      return { ...acc, [key]: isGroup ? this.fb.group(template) : this.fb.control(template[0], template[1]) };
+    }, {});
+
+  }
+
+  public buildGroup(quiestions: QuestionBase<string>[]) {
+    return this.fb.group(this.setForm(this.formatForm(quiestions)))
+  }
+
 
   // handle input error messages
   public getErrorMessage(control: FormControl, placeHolder: string): string {
