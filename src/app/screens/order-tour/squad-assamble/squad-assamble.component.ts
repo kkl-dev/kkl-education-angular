@@ -9,10 +9,12 @@ import { QuestionTextarea } from 'src/app/components/form/logic/question-textare
 import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 
+
 export interface formGroupGrid {
   title: string;
   cols?: string;
-  questions: QuestionBase<string>[]
+  formCols?: string;
+  questions: QuestionBase<string | Date | number>[]
 }
 
 @Component({
@@ -134,23 +136,84 @@ export class SquadAssambleComponent implements OnInit {
         { key: 'לקוח מספר ארבע', value: '30+' },
       ],
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'participants',
-      cols: "1",
       label: 'נוער / מבוגרים',
+      cols: "2",
+      isGroup: true,
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type : 'number'
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type : 'number'
+
+        }),
+      ]
+      ,
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'escorts',
+      cols: "2",
+      isGroup: true,
       label: 'מלווים',
-      cols: "1",
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type : 'number'
+
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type : 'number'
+
+        }),
+      ]
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'guides',
+      isGroup: true,
+      cols: "2",
       label: 'מדריכים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type : 'number'
+
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type : 'number'
+
+        }),
+      ]
     }),
-    new QuestionNumber({
+    new QuestionBase({
       key: 'medics',
+      isGroup: true,
+      cols: "2",
       label: 'חובשים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type : 'number'
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type : 'number'
+
+        }),
+      ]
     }),
   ];
 
@@ -202,12 +265,27 @@ export class SquadAssambleComponent implements OnInit {
   ];
 
   public squadForm: formGroupGrid[] = [
-    { cols: '1', title: 'פרטי הטיול', questions: this.tourDetailsFormInputs },
-    { cols: '2', title: 'הרכב הקבוצה', questions: this.groupAssambleFormInputs },
-    { cols: '1', title: 'לקוח', questions: this.customerFormInputs },
     {
-      cols: '1',
+      formCols: '1',
+      title: 'פרטי הטיול',
+      questions: this.tourDetailsFormInputs
+    },
+    {
+      formCols: '2',
+      title: 'הרכב הקבוצה',
+      cols: "2",
+      questions: this.groupAssambleFormInputs
+    },
+    {
+      formCols: '1',
+      cols: "2",
+      title: 'לקוח',
+      questions: this.customerFormInputs
+    },
+    {
+      formCols: '1',
       title: 'מועד ושם הטיול',
+      cols: "2",
       questions: this.timeAndNameFormInputs
     },
   ]
