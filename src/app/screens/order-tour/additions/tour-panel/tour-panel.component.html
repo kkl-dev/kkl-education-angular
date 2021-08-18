@@ -1,13 +1,17 @@
 <div class="tour-container">
   <div class="tour-header">
-    <app-typography [variant]="'mat-title'" [color]="'primary'"> title </app-typography>
-    <!-- <span color="primary" class="mat-title">יום {{i}} {{ tourDay.date | date: "M/d/yy" }}</span> -->
+    <app-typography [variant]="'mat-subheading-2'" [color]="'text'">
+      יום {{ i }} {{ tourDay.date | date: "M/d/yy" }}
+    </app-typography>
   </div>
   <div class="tour-days">
     <mat-accordion [displayMode]="'gutter'">
       <ng-container>
         <app-expend-panel *ngFor="let panel of tourDay.locations">
-          <span title>{{ panel.title }}</span>
+          <app-typography title
+          
+          [variant]="'mat-title'" [color]="'primary'"
+          >{{ panel.title }}</app-typography>
         </app-expend-panel>
       </ng-container>
     </mat-accordion>
