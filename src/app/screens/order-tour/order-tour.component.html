@@ -1,8 +1,8 @@
-<div class="order-tour">
+<div class="order-tour" [ngClass]="{'sleeping-width' : activePage === 1}">
     <div class="order-tour__steps">
-        <app-drawer>
+        <app-drawer *ngIf="activePage === 0"> 
         </app-drawer>
-
+        
         <app-working-steps
         [steps]='pages'
         (changeActiveStep)="changeActivePage($event)"
@@ -10,7 +10,8 @@
         ></app-working-steps>
     </div>
     <div class="order-tour__main"> 
-        <app-squad-assemble *ngIf="activePage === 0" ></app-squad-assemble>
+        <app-squad-assemble *ngIf="activePage === 0" ></app-squad-assemble> 
+        <app-sleeping-options *ngIf="activePage === 1" ></app-sleeping-options>
     </div>
     <app-bottom-navigation
     [currentPage]= 0
@@ -20,5 +21,4 @@
     (changePage)='changeActivePageBottomNavigation($event)'
     ></app-bottom-navigation>
 </div>
-
 
