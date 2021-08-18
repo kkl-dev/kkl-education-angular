@@ -1,0 +1,12 @@
+<div class="form-container">
+  <mat-grid-list cols="4" rowHeight="60vh" gutterSize="5">
+    <mat-grid-tile *ngFor="let squad of squadForm">
+      <app-squad-group
+        [formCols]="squad.formCols"
+        [title]="squad.title"
+        [questions]="squad.questions"
+      >
+      </app-squad-group>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

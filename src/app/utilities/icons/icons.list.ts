@@ -9,6 +9,32 @@ export const THUMBUP_ICON =
   </svg>
 `;
 
+export const V_SIGN=`<svg xmlns="http://www.w3.org/2000/svg"
+ width="17.956" height="17.331" viewBox="0 0 17.956 17.331">
+ <defs><style>.a{fill:#fff;opacity:0;}.b{fill:none;stroke:#6dc066;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}.c,.d{stroke:none;}.d{fill:#dfdfdf;}</style></defs><g transform="translate(0.332 0.331)"><g class="a"><path class="c" d="M 8.5 16.25 C 4.226640224456787 16.25 0.75 12.77336025238037 0.75 8.5 C 0.75 6.115330219268799 1.804280042648315 3.984380006790161 3.798870086669922 2.337510108947754 C 4.990379810333252 1.342460036277771 6.746600151062012 0.75 8.5 0.75 C 12.77336025238037 0.75 16.25 4.226640224456787 16.25 8.5 C 16.25 12.77336025238037 12.77336025238037 16.25 8.5 16.25 Z"/><path class="d" d="M 8.5 1.5 C 6.916910171508789 1.5 5.340410232543945 2.027279853820801 4.28285026550293 2.910479545593262 L 4.276379585266113 2.915849685668945 C 2.460060119628906 4.415530204772949 1.5 6.346500396728516 1.5 8.5 C 1.5 12.35980987548828 4.640190124511719 15.5 8.5 15.5 C 12.35980987548828 15.5 15.5 12.35980987548828 15.5 8.5 C 15.5 4.640190124511719 12.35980987548828 1.5 8.5 1.5 M 8.5 0 C 13.19441986083984 0 17 3.805580139160156 17 8.5 C 17 13.19441986083984 13.19441986083984 17 8.5 17 C 3.805580139160156 17 0 13.19441986083984 0 8.5 C 0 5.866430282592773 1.197699546813965 3.512599945068359 3.32135009765625 1.759169578552246 C 4.549599647521973 0.7334194183349609 6.439149856567383 0 8.5 0 Z"/></g><g transform="translate(0.631 0.581)"><path class="b" d="M18.933,9.965v.706a7.72,7.72,0,0,1-5.708,7.357,8.116,8.116,0,0,1-8.942-3.183A7.456,7.456,0,0,1,4.911,5.68a8.171,8.171,0,0,1,9.3-2.024" transform="translate(-3 -2.991)"/><path class="b" d="M23.856,6,15.89,13.974l-2.39-2.39"
+ transform="translate(-7.923 -4.402)"/></g></g></svg>`
+
+export const BOYS_GIRLS_ICON=`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="47" height="47" viewBox="0 0 47 47"><defs><style>.a{fill:black;opacity:0.74;}.b{filter:url(#a);}</style><filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/><feGaussianBlur stdDeviation="3" result="b"/>
+<feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/><feComposite in="SourceGraphic"/></filter></defs>
+<g class="b" transform="matrix(1, 0, 0, 1, 0, 0)">
+<rect class="a" width="29" height="29" rx="5" transform="translate(9 6)"/></g></svg>`
+
+export const EDIT_ICON=`<svg xmlns="http://www.w3.org/2000/svg"
+ width="12.228" height="12.228"
+ viewBox="0 0 12.228 12.228"><defs><style>.edit{fill:none;}</style></defs><path class="a"
+  d="M4.5,14.177v2.547H7.047L14.56,9.212,12.013,6.665ZM16.53,7.242a.676.676,0,0,0,0-.958L14.94,4.695a.676.676,0,0,0-.958,0L12.739,5.938l2.547,2.547L16.53,7.242Z"
+   transform="translate(-4.5 -4.496)"/></svg>`
+
+export const BELL_ICON = `<svg xmlns="http://www.w3.org/2000/svg"
+ width="20.107" height="22.307" viewBox="0 0 20.107 22.307">
+ <defs><style>.bell{fill:#448ecd;}</style></defs>
+ <g transform="translate(-25.25)"><g transform="translate(32.336)"><path class="bell"
+  d="M190.857,0a2.971,2.971,0,0,0-2.968,2.968v.9h1.535v-.9a1.433,1.433,0,0,1,2.865,0v.9h1.535v-.9A2.971,2.971,0,0,0,190.857,0Z"
+   transform="translate(-187.89)"/></g><g transform="translate(31.671 18.7)"><path class="bell"
+    d="M178.354,429.2a2.075,2.075,0,0,1-2.072,2.072h-.051a2.075,2.075,0,0,1-2.072-2.072h-1.535a3.611,3.611,0,0,0,3.607,3.607h.051a3.611,3.611,0,0,0,3.607-3.607Z" transform="translate(-172.624 -429.205)"/>
+    </g><g transform="translate(25.25 2.84)"><path class="bell" d="M45.235,80.748l-2.18-3.392V73a7.752,7.752,0,1,0-15.5,0v4.354l-2.18,3.392a.768.768,0,0,0,.645,1.183H44.59a.767.767,0,0,0,.645-1.182ZM27.423,80.4,28.965,78a.767.767,0,0,0,.122-.415V73A6.217,6.217,0,1,1,41.52,73v4.579a.768.768,0,0,0,.122.415l1.542,2.4Z"
+    transform="translate(-25.25 -65.174)"/></g></g></svg>`;
+
 export const BUTTON_ICON = `<svg xmlns="http://www.w3.org/2000/svg"
   width="26.76" height="26.76"
   viewBox="0 0 26.76 26.76"><defs>

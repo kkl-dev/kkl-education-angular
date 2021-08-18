@@ -1,4 +1,4 @@
-.assamble-tour {
+.assemble-tour {
   display: flex;
   // height: 100%;
   width: calc(100% - 80px);
@@ -27,8 +27,13 @@
       border-bottom: 3px solid #448ecd;
       padding-left: 10px;
       margin-bottom: -3px !important;
-
+      &-svg {
+        position: absolute;
+        top: 0;
+        left: -80px;
+      }
       &-container {
+        position: relative;
         margin-bottom: 16px;
         border-bottom: 3px solid #dbdbdb;
         width: 60% !important;

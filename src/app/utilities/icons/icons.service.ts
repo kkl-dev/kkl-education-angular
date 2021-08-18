@@ -16,6 +16,10 @@ import {
   GUIDE_ICON,
   DINNER_ICON,
   MUSIC_ICON,
+  BELL_ICON,
+  EDIT_ICON,
+  BOYS_GIRLS_ICON,
+  V_SIGN,
 } from './icons.list';
 
 export interface IconItem {
@@ -45,6 +49,23 @@ export class IconsService {
       key: 'button',
       svgUrl: BUTTON_ICON,
     },
+    {
+      key: 'vSign',
+      svgUrl: V_SIGN,
+    },
+    {
+      key: 'edit',
+      svgUrl: EDIT_ICON,
+    },
+    {
+      key: 'boysGirls',
+      svgUrl: BOYS_GIRLS_ICON,
+    },
+    {
+      key: 'button',
+      svgUrl: BUTTON_ICON,
+    },
+
     {
       key: 'report',
       svgUrl: REPORTS_ICON,
@@ -88,6 +109,10 @@ export class IconsService {
     {
       key: 'music',
       svgUrl: MUSIC_ICON,
+    },
+    {
+      key: 'bell',
+      svgUrl: BELL_ICON,
     },
   ];
 

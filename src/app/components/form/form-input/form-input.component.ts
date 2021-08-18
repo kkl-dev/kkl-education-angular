@@ -11,87 +11,77 @@ import { QuestionBase } from '../logic/question-base';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => FormInputComponent),
-      multi: true
+      multi: true,
     },
-  ]
+  ],
 })
 export class FormInputComponent implements OnInit {
-
   @ViewChild('input') input!: HTMLInputElement;
 
-  @Input() public question!: QuestionBase<string | number | Date>
+  @Input() public question!: QuestionBase<string | number | Date>;
 
-  @Input() public control!: FormControl
+  @Input() public control!: FormControl;
   @Input() public type!: string;
   @Input() public label!: string;
   @Input() public hint!: string;
-  @Input() public controlType!: string
-  @Input() public options!: []
+  @Input() public controlType!: string;
+  @Input() public options!: [];
 
-  @Input() public groupLabel!: string
-  @Input() public theme!: string
+  @Input() public groupLabel!: string;
+  @Input() public theme!: string;
   @Input() public icon!: string;
   @Input() public status!: string;
 
   @Input() public serverErrorMode!: boolean;
 
-  public value!: any
-  public error!: string
-  public serverError!: string
+  public value!: any;
+  public error!: string;
+  public serverError!: string;
 
-  public OnChange!: (event: Event) => void
-  public onTouched!: () => void
-  public disabled!: boolean
+  public OnChange!: (event: Event) => void;
+  public onTouched!: () => void;
+  public disabled!: boolean;
 
-  constructor(
-    private formService: FormService
-  ) { }
+  constructor(private formService: FormService) {}
 
   ngOnInit(): void {
     this.subscribeToControl();
-    console.log(this.type)
   }
 
   // ControlValueAccessor logic
 
   public writeValue(value: any): void {
-    this.value = value ? value : ""
+    this.value = value ? value : '';
   }
 
   public registerOnChange(fn: any): void {
-    this.OnChange = fn
+    this.OnChange = fn;
   }
 
   public registerOnTouched(fn: any): void {
-    this.onTouched = fn
+    this.onTouched = fn;
   }
 
   public setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled
+    this.disabled = isDisabled;
   }
 
   public handleChange(value: any) {
-    this.value = value
+    this.value = value;
   }
 
   // subscription section
-  private subscribeToControl() {
-
-  }
-
+  private subscribeToControl() {}
 
   // LOGIC SECTION
 
   // method to handle validation messages
   public validate() {
+    this.error = this.formService.getErrorMessage(this.control, this.label);
 
-    this.error = this.formService.getErrorMessage(this.control, this.label)
-
-    this.control.valueChanges.subscribe(
-      () => {
-        this.error = this.formService.getErrorMessage(this.control, this.label)
-      }
-    )
+    this.control.valueChanges.subscribe(() => {
+      this.error = this.formService.getErrorMessage(this.control, this.label);
+    });
   }
 
   // end of logic section

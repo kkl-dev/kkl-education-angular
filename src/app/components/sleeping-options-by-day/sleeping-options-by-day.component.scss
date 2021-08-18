@@ -1,0 +1,112 @@
+.SOBD {
+  height: 100%;
+  border: 1px solid black;
+
+  &__days {
+    text-align: center;
+
+    &-current-day {
+        &-next{
+            margin-right: 5px; 
+        }
+      &-previous,
+      &-next {
+        color: #448ecd;
+        font-weight: bold;
+        transform: scale(1.3);
+        background-color: #fff;
+        border: 0;
+        padding-bottom: 3px;
+        box-sizing: border-box;
+      }
+
+      font-size: 18px;
+      &-text {
+        & span {
+          color: #37c56b;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  &__days-paginatior{
+      display: flex;
+      justify-content: space-between;
+      & span{
+        border-bottom: 1px solid #000;
+        flex: 1;
+        margin: 5px
+      }
+  }
+
+  
+    //sleeping areas section
+    &__sleep-areas {
+        padding: 0 100px;
+        direction: rtl;
+        text-align: right;
+  
+        &-headline {
+          font-size: 17px;
+          margin-bottom: 20px;
+        }
+  
+        &-options {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          text-align: center;
+          border-bottom: 1px solid rgba($color: #f9f9f9, $alpha: 1);
+          padding-bottom: 40px;
+  
+          &-item {
+            display: flex;
+            text-align: center;
+            align-self: center;
+            gap: 10px;
+            & > * {
+              margin: 0;
+              padding: 0;
+            }
+            &-svg {
+              & * {
+                width: 32.5px;
+                height: 37.5px;
+                margin-left: 5px;
+              }
+            }
+            &-count {
+              margin-right: 10px;
+              align-self: center;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              border-radius: 5px;
+  
+              &-number {
+                width: 35px;
+                height: 35px;
+                margin: auto 0;
+                background-color: #f6f6f6;
+                display: flex;
+                & > * {
+                  margin: auto;
+                }
+              }
+            }
+          }
+        }
+      }
+  
+}
+
+.flex{
+    display: flex;
+}
+.disabled {
+  cursor: none;
+  color: #eeeeee;
+}

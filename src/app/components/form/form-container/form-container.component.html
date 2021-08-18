@@ -1,10 +1,8 @@
 <div class="form">
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
-    <mat-grid-list
-      [cols]="cols || 1"
-      rowHeight="2vh"
-      [gutterSize]="gutter || '3'"
-    >
+
+    <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
+
       <ng-container *ngFor="let question of questions">
         <mat-grid-tile
           *ngIf="!question.isGroup"
@@ -53,30 +51,3 @@
     </div>
   </form>
 </div>
-
-<!-- <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
-
-  <div *ngFor="let question of questions" class="form-row" [ngStyle]="{'grid-column': question.columns}">
-
-    <ng-container *ngIf="question.templateName">
-
-      <app-number-input
-        [formControlName]="question.key"
-        [id]="question.key"
-        [type]="question.type"
-        [innerLabel]='question.innerLabel'
-        [form]="form"
-        [value]='question.value'
-        > </app-number-input>
-
-    </ng-container>
-
-    <app-form-question *ngIf="!question.templateName && question.key" [question]="question" [form]="form">
-    </app-form-question>
-  </div>
-
-  <div class="form-row btn-row" *ngIf="showButton">
-    <ng-content></ng-content>
-    <button type="submit" class="btn" [disabled]="!form.valid">{{buttonText}}</button>
-  </div>
-</form> -->

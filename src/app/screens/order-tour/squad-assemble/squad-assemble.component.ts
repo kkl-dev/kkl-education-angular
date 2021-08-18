@@ -18,11 +18,11 @@ export interface formGroupGrid {
 }
 
 @Component({
-  selector: 'app-squad-assamble',
-  templateUrl: './squad-assamble.component.html',
-  styleUrls: ['./squad-assamble.component.scss'],
+  selector: 'app-squad-assemble',
+  templateUrl: './squad-assemble.component.html',
+  styleUrls: ['./squad-assemble.component.scss'],
 })
-export class SquadAssambleComponent implements OnInit {
+export class SquadAssembleComponent implements OnInit {
 
   tourDetailsFormCustomQuestion: {} = {
     boys: true,
@@ -294,9 +294,24 @@ export class SquadAssambleComponent implements OnInit {
 
 
   constructor() {
+    // this.groupAssembleFormInputs = this.groupAssembleForm;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
+  ngAfterViewInit(): void {}
+
+  ngOnDestroy(): void {
+    // console.log(this.tourDetailsRef.form.value);
+    // console.log(this.customerRef.form.value);
+    // console.log(this.timeAndDateRef.form.value);
+    // console.log(this.groupAssembleRef.form.value);
+  }
+
+  changeGroupAssembleForm() {
+    // this.separated = !this.separated;
+    // this.groupAssembleFormInputs = this.separated
+    //   ? this.separatedGroupAssembleForm
+    //   : this.groupAssembleForm;
   }
 }
