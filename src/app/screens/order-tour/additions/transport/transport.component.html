@@ -1,20 +1,18 @@
 <div class="container">
-
-  <mat-grid-list cols="1" rowHeight="30vh">
+  <mat-grid-list cols="1" rowHeight="10vh">
     <mat-grid-tile>
-      <mat-grid-list cols="1" rowHeight="5vh">
-        <mat-grid-tile rowspan="5">
-          <app-form-container [questions]="transportForm" [cols]="'8'"></app-form-container>
-        </mat-grid-tile>
-      </mat-grid-list>
+      <app-form-container
+        [questions]="transportForm"
+        [cols]="'8'"
+        [gutter]="'15'"
+      ></app-form-container>
     </mat-grid-tile>
     <mat-grid-tile>
-      <mat-grid-list cols="1" rowHeight="5vh">
-        <mat-grid-tile rowspan="5">
-          <app-form-container [questions]="transportForm" [cols]="'8'"></app-form-container>
-        </mat-grid-tile>
-      </mat-grid-list>
+      <app-form-container
+        [questions]="transportForm"
+        [cols]="'8'"
+        [gutter]="'15'"
+      ></app-form-container>
     </mat-grid-tile>
   </mat-grid-list>
-
 </div>

@@ -16,6 +16,7 @@ export class FormContainerComponent implements OnInit {
   @Output() emitFormValues:EventEmitter<any> =new EventEmitter()
 
   @Input() cols: string = "1"
+  @Input() gutter: string = "1"
   @Input() questions!: QuestionBase<string>[]
   @Input() showButton: boolean = true
   @Input() customQuestionTemplates = {}
