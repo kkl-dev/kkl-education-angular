@@ -1,26 +1,67 @@
-<div class="drawer" [ngClass]="{ closed: isOpen }">
-  <div class="drawer-toggle" (click)="toggleDrawer()">
-    <span> תזכורת </span>
-  </div>
-  <h4 class="drawer__headline">הוספת תזכורת</h4>
-  
-  <app-form-container #drawerForm
-    [questions]="reminderForm"
-    (emitFormValues)="newCommentHandler($event)"
+<div class="drawer" [ngClass]="{ closed: !isOpen }">
+  <div
+    class="drawer-toggle"
+    (click)="toggleDrawer()"
+    [ngClass]="{ 'closed-toggle': !isOpen }" 
   >
-    <button class="clear-form" (click)="deleteFormInputs($event)">מחק</button>
-  </app-form-container >
+    <app-icon [color]="'primary'" type="svg" [key]="'bell'"></app-icon>
+    <span> תזכורת </span>
+    <span
+      [ngClass]="{ 'closed-toggle-btn': !isOpen }"
+      class="drawer-toggle__close"
+      ><span>{{ isOpen ? "x" : "+" }}</span></span
+    >
+  </div>
+  <h4 class="drawer__headline">תזכורות</h4>
+
+  <button
+    *ngIf="!isFormOpen"
+    class="drawer__open-form-btn"
+    (click)="openFormHandler()"
+  >
+    + &nbsp;&nbsp; הוספת תזכורת חדשה
+  </button>
+  <div [ngClass]="{ 'open-form': isFormOpen }" class="drawer__form-container">
+    <app-form-container
+      #drawerForm
+      [questions]="reminderForm"
+      (emitFormValues)="newCommentHandler($event)"
+    >
+      <button class="clear-form" (click)="deleteFormInputs($event)">מחק</button>
+    </app-form-container>
+  </div>
 
   <div class="reminder" *ngFor="let comment of reminderArray; let i = index">
     <div class="reminder__content">
-      <div class="reminder__content__msg">
+      <div class="reminder__content-msg">
+        <span
+          (click)="toggleReminderStatus(i)"
+          class="reminder__content-toggle-done"
+          >
+          <!-- <svg-icon src="assets/images/v-sign.svg"
+          *ngIf="comment.status"></svg-icon> -->
+          <!-- <app-icon
+          [color]="'primary'"
+          *ngIf="comment.status"
+          type="svg"
+          [key]="'vSign'"
+        ></app-icon> -->
+          <span  [ngClass]="{ 'marked-done': comment.status }">
+          
+          </span>
+        </span>
         {{ comment.comment }}
       </div>
       {{ comment.date | date: "dd/MM/yyyy" }} {{ comment.time }}
     </div>
     <div class="reminder__controllers">
-      <span (click)="editComment(i)">+</span>
-      <span (click)="deleteComment(i)">-</span>
+      <span class="reminder__controllers-svg" (click)="editComment(i)">
+        <app-icon class="vSign-icon-container" [color]="'primary'" type="svg" [key]="'edit'"></app-icon>
+      </span>
+
+      <span (click)="deleteComment(i)" class="reminder__controllers-delete">
+        <span>x</span>
+      </span>
     </div>
   </div>
 </div>

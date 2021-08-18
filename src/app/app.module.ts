@@ -34,7 +34,7 @@ import { TooltipComponent } from './screens/education-results/tooltip/tooltip.co
 import { MyToursComponent } from './screens/my-tours/my-tours.component';
 import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { SquadAssambleComponent } from './screens/order-tour/squad-assamble/squad-assamble.component';
+import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
 import { FormContainerComponent } from './components/form-container/form-container.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
 import { DynamicFormQuestionComponent } from './components/form-container/dynamic-form-question/dynamic-form-question.component';
@@ -77,7 +77,7 @@ import { IconComponent } from './components/icon/icon.component';
     MyToursComponent,
     ToursTableComponent,
     PaginationComponent,
-    SquadAssambleComponent,
+    SquadAssembleComponent,
     FormContainerComponent,
     OrderTourComponent,
     DynamicFormQuestionComponent,
