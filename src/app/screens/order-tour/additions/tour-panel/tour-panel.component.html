@@ -7,11 +7,15 @@
   <div class="tour-days">
     <mat-accordion [displayMode]="'gutter'">
       <ng-container>
-        <app-expend-panel *ngFor="let panel of tourDay.locations">
-          <app-typography title
-          
-          [variant]="'mat-title'" [color]="'primary'"
-          >{{ panel.title }}</app-typography>
+        <app-expend-panel
+          *ngFor="let panel of tourDay.locations"
+          class="icon"
+          matBadge="priority_high"
+          matBadgeColor="accent"
+        >
+          <app-typography title [variant]="'mat-title'" [color]="'primary'">{{
+            panel.title
+          }}</app-typography>
         </app-expend-panel>
       </ng-container>
     </mat-accordion>
