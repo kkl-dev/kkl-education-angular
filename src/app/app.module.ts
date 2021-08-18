@@ -57,6 +57,7 @@ import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
 import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
+import { CardTitleComponent } from './screens/additions/card-title/card-title.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import { ExpendPanelComponent } from './components/expend-panel/expend-panel.com
     IconComponent,
     SquadGroupComponent,
     InputRadioComponent,
-    ExpendPanelComponent
+    ExpendPanelComponent,
+    CardTitleComponent
   ],
   imports: [
     BrowserModule,

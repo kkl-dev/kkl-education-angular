@@ -6,12 +6,15 @@
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{ title }}
+        <ng-content select="[title]"></ng-content>
       </mat-panel-title>
       <mat-panel-description>
-        {{subtitle}}
+        {{ subtitle }}
+        <ng-content select="[subtitle]"></ng-content>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div>
+      <ng-content select="[content]"></ng-content>
       {{ content }}
     </div>
   </mat-expansion-panel>
