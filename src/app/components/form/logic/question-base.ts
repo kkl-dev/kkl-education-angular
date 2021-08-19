@@ -18,8 +18,8 @@ export class QuestionBase<T> {
   custom: boolean;
   validations: ValidatorFn[];
   isGroup: boolean;
+  group?: any;
   inputProps: {
-    group?: any;
     options?: SelectOption[];
     labelLength?: string;
   };
@@ -39,8 +39,8 @@ export class QuestionBase<T> {
       custom?: boolean;
       validations?: ValidatorFn[];
       isGroup?: boolean;
+      group?: QuestionBase<string | Date | number>[];
       inputProps?: {
-        group?: any;
         options?: SelectOption[];
         labelLength?: string;
       };
@@ -57,6 +57,9 @@ export class QuestionBase<T> {
       (this.controlType = options.controlType || 'textbox');
     this.type = options.type || '';
     this.custom = options.custom || false;
-    (this.isGroup = options.isGroup), (this.inputProps = options.inputProps);
+    this.custom = options.custom || false;
+    this.isGroup = options.isGroup,
+    this.group = options.group;
+    this.inputProps = options.inputProps;
   }
 }

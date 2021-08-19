@@ -143,80 +143,72 @@ export class SquadAssembleComponent implements OnInit {
       label: 'נוער / מבוגרים',
       cols: '2',
       isGroup: true,
-      inputProps: {
-        group: [
-          new QuestionNumber({
-            key: 'boys',
-            label: 'בנים',
-            type: 'number',
-          }),
-          new QuestionNumber({
-            key: 'girls',
-            label: 'בנות',
-            type: 'number',
-          }),
-        ],
-      },
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type: 'number',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type: 'number',
+        }),
+      ],
     }),
     new QuestionBase({
       key: 'escorts',
       cols: '2',
       isGroup: true,
       label: 'מלווים',
-      inputProps: {
-        group: [
-          new QuestionNumber({
-            key: 'boys',
-            label: 'בנים',
-            type: 'number',
-          }),
-          new QuestionNumber({
-            key: 'girls',
-            label: 'בנות',
-            type: 'number',
-          }),
-        ],
-      },
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type: 'number',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type: 'number',
+        }),
+      ],
     }),
     new QuestionBase({
       key: 'guides',
       isGroup: true,
       cols: '2',
       label: 'מדריכים',
-      inputProps: {
-        group: [
-          new QuestionNumber({
-            key: 'boys',
-            label: 'בנים',
-            type: 'number',
-          }),
-          new QuestionNumber({
-            key: 'girls',
-            label: 'בנות',
-            type: 'number',
-          }),
-        ],
-      },
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type: 'number',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type: 'number',
+        }),
+      ],
     }),
     new QuestionBase({
       key: 'medics',
       isGroup: true,
       cols: '2',
       label: 'חובשים',
-      inputProps: {
-        group: [
-          new QuestionNumber({
-            key: 'boys',
-            label: 'בנים',
-            type: 'number',
-          }),
-          new QuestionNumber({
-            key: 'girls',
-            label: 'בנות',
-            type: 'number',
-          }),
-        ],
-      },
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type: 'number',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type: 'number',
+        }),
+      ],
     }),
   ];
 
