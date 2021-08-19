@@ -127,7 +127,7 @@ import { TypographyComponent } from './components/typography/typography.componen
     SleepingOptionsByDayComponent,
     SquadAssembleComponent,
     TourPanelComponent,
-    TypographyComponent
+    TypographyComponent,
   ],
   imports: [
     BrowserModule,

@@ -57,6 +57,7 @@ export class TransportComponent implements OnInit {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
+        labelLength: 'extraWide',
         options: [
           { key: 'solid', value: '12123' },
           { key: 'great', value: '23' },
@@ -104,6 +105,9 @@ export class TransportComponent implements OnInit {
       icon: 'schedule',
       type: 'time',
       validations: [Validators.required],
+      inputProps: {
+        labelLength: 'extraWide',
+      },
     }),
 
     new QuestionCalendar({
@@ -118,6 +122,9 @@ export class TransportComponent implements OnInit {
       value: '',
       validations: [Validators.required],
       icon: 'place',
+      inputProps: {
+        labelLength: 'extraWide',
+      },
     }),
 
     new QuestionTextbox({
@@ -126,6 +133,9 @@ export class TransportComponent implements OnInit {
       value: '',
       icon: 'place',
       validations: [Validators.required],
+      inputProps: {
+        labelLength: 'extraWide',
+      },
     }),
     new QuestionTextbox({
       key: 'gatherHour',
@@ -139,6 +149,9 @@ export class TransportComponent implements OnInit {
       key: 'gatherDate',
       label: 'תאריך איסוף',
       validations: [Validators.required],
+      inputProps: {
+        labelLength: 'extraWide',
+      },
     }),
   ];
 

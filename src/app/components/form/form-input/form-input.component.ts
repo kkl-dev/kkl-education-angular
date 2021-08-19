@@ -49,6 +49,7 @@ export class FormInputComponent implements OnInit {
   ngOnInit(): void {
     this.subscribeToControl();
     if (this.labelLength) {
+      console.log(this.label);
       console.log(this.labelLength);
     }
   }

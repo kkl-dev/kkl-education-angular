@@ -46,6 +46,10 @@ mat-icon {
   width: 25% !important;
 }
 
+::ng-deep .extraWide .mat-form-field-outline-gap {
+  width: 40% !important;
+}
+
 input[type="time"]::-webkit-calendar-picker-indicator {
   background: none;
 }
