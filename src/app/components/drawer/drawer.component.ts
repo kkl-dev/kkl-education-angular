@@ -3,8 +3,7 @@ import { FormContainerComponent } from '../form/form-container/form-container.co
 import { DatePipe } from '@angular/common';
 import { QuestionBase } from '../form/logic/question-base';
 import { QuestionCalendar } from '../form/logic/question-calendar';
-import { TextboxQuestion } from '../form/logic/question-textbox';
-import { Offset } from '../form/logic/question-offset';
+import { QuestionTextbox } from '../form/logic/question-textbox';
 import { QuestionTextarea } from '../form/logic/question-textarea';
 @Component({
   selector: 'app-drawer',
@@ -24,11 +23,8 @@ export class DrawerComponent implements OnInit {
       label: 'תאריך',
       value: new Date(),
     }),
-    // new Offset({
-    // cols: 'span 1',
-    // }),
 
-    new TextboxQuestion({
+    new QuestionTextbox({
       key: 'time',
       label: 'שעה',
       value: '',

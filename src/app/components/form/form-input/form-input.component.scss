@@ -36,3 +36,11 @@ mat-icon {
 ::ng-deep .mat-form-field-outline-gap {
   width: calc(25%) !important;
 }
+
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: none;
+}

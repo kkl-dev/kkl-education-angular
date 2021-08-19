@@ -6,7 +6,7 @@ import { QuestionCalendar } from 'src/app/components/form/logic/question-calenda
 import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
-import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
+import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 
 
@@ -37,7 +37,7 @@ export class SquadAssembleComponent implements OnInit {
 
   timeAndNameFormInputs: QuestionBase<string | Date>[] = [
 
-    new TextboxQuestion({
+    new QuestionTextbox({
       key: 'tourName',
       label: 'שם הטיול',
       value: '',
@@ -100,20 +100,20 @@ export class SquadAssembleComponent implements OnInit {
       ],
     }),
 
-    new TextboxQuestion({
+    new QuestionTextbox({
       key: 'teamRepresentative',
       label: 'נציג הקבוצה',
       value: '',
     }),
 
-    new TextboxQuestion({
+    new QuestionTextbox({
       key: 'phone',
       label: 'נייד איש קשר',
       type: 'text',
       validations: [Validators.required]
 
     }),
-    new TextboxQuestion({
+    new QuestionTextbox({
       key: 'email',
       label: 'מייל',
       type: 'text',
