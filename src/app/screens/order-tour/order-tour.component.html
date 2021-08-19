@@ -1,32 +1,31 @@
 <mat-grid-list
   cols="1"
   rowHeight="15vh"
-  [ngClass]="{ 'sleeping-width': activePage === 1 }"
+  [ngClass]="{ 'sleeping-width': activeStep === 1 }"
 >
-  <app-drawer *ngIf="activePage === 0"></app-drawer>
+  <app-drawer *ngIf="activeStep === 0"></app-drawer>
   <mat-grid-tile>
     <div class="stepper">
       <app-working-steps
-        [steps]="pages"
-        (changeActiveStep)="changeActivePage($event)"
-        [activeStep]="activePage"
+        [steps]="steps"
+        (changeActiveStep)="changeActiveStep($event)"
+        [activeStep]="activeStep"
       >
       </app-working-steps>
     </div>
   </mat-grid-tile>
   <mat-grid-tile rowspan="4">
-    <router-outlet></router-outlet>
-    <!-- <app-squad-assemble *ngIf="activePage === 0"></app-squad-assemble>
-    <app-sleeping-options *ngIf="activePage === 1"></app-sleeping-options>
-    <app-additions *ngIf="activePage === 3"></app-additions> -->
+    <div class="steps-container">
+      <router-outlet></router-outlet>
+    </div>
   </mat-grid-tile>
   <mat-grid-tile class="bottom-navigation">
     <app-bottom-navigation
       [currentPage]="0"
       previousUrl="prevPage"
       nextUrl="nextPage"
-      [lastPage]="pages.length"
-      (changePage)="changeActivePageBottomNavigation($event)"
+      [lastPage]="steps.length"
+      (changePage)="changeActiveStepBottomNavigation($event)"
     ></app-bottom-navigation>
   </mat-grid-tile>
 </mat-grid-list>

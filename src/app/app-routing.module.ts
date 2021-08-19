@@ -18,13 +18,17 @@ const routes: Routes = [
   {
     path: 'education/my-tours',
     component: MyToursComponent,
+  },
+  {
+    path: 'education/order-tour',
+    component: OrderTourComponent,
     children: [
       {
         path: 'squad-assemble',
         component: SquadAssembleComponent,
       },
       {
-        path: 'sleepings',
+        path: 'sleeping',
         component: SleepingOptionsComponent,
       },
       {
@@ -33,7 +37,6 @@ const routes: Routes = [
       },
     ],
   },
-  { path: 'education/order-tour', component: OrderTourComponent },
   { path: '**', component: LoginBackdropComponent, pathMatch: 'full' },
 ];
 
