@@ -28,12 +28,12 @@ export class QuestionBase<T> {
     options: {
       value?: T;
       key?: string;
+      type?: string;
       icon?: string;
       disabled?: string;
       label?: string;
       order?: number;
       controlType?: string;
-      type?: string;
       cols?: string;
       rows?: string;
       custom?: boolean;

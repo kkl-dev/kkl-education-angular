@@ -31,6 +31,10 @@ mat-icon {
 }
 
 ::ng-deep .small .mat-form-field-outline-gap {
+  width: 10% !important;
+}
+
+::ng-deep .base .mat-form-field-outline-gap {
   width: 15% !important;
 }
 

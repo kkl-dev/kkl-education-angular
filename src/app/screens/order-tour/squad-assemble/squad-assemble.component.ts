@@ -106,7 +106,9 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionTextbox({
       key: 'teamRepresentative',
       label: 'נציג הקבוצה',
-      value: '',
+      inputProps: {
+        labelLength: 'medium',
+      },
     }),
 
     new QuestionTextbox({
@@ -114,12 +116,18 @@ export class SquadAssembleComponent implements OnInit {
       label: 'נייד איש קשר',
       type: 'text',
       validations: [Validators.required],
+      inputProps: {
+        labelLength: 'medium',
+      },
     }),
     new QuestionTextbox({
       key: 'email',
       label: 'מייל',
       type: 'text',
       validations: [Validators.required],
+      inputProps: {
+        labelLength: 'small',
+      },
     }),
   ];
 
@@ -218,6 +226,7 @@ export class SquadAssembleComponent implements OnInit {
       label: 'מאפיין',
       type: 'select',
       inputProps: {
+        labelLength: 'small',
         options: [
           { key: 'פרומלי', value: 'פרומלי' },
           { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
@@ -232,6 +241,7 @@ export class SquadAssembleComponent implements OnInit {
       label: 'סוג הפעילות',
       type: 'select',
       inputProps: {
+        labelLength: 'medium',
         options: [
           { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
           { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },

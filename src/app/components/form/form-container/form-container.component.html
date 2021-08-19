@@ -1,8 +1,6 @@
 <div class="form">
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
-
     <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
-
       <ng-container *ngFor="let question of questions">
         <mat-grid-tile
           *ngIf="!question.isGroup"
@@ -17,6 +15,7 @@
             [icon]="question.icon"
             [options]="question.options"
             [controlType]="question.controlType"
+            [labelLength]="question.inputProps?.labelLength"
           ></app-form-input>
 
           <app-input-radio
@@ -39,6 +38,7 @@
               [split]="cols > question.cols"
               [theme]="item.key === 'girls' && 'accent'"
               [type]="item.controlType"
+              [labelLength]="question.inputProps?.labelLength"
             >
             </app-form-input>
           </mat-grid-tile>

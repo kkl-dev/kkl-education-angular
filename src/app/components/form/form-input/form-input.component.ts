@@ -27,11 +27,12 @@ export class FormInputComponent implements OnInit {
   @Input() public controlType!: string;
   @Input() public options!: [];
 
-  @Input() public labelLength: string = 'small';
+  @Input() public labelLength: string;
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
   @Input() public status!: string;
+  @Input() public inputProps: {};
 
   @Input() public serverErrorMode!: boolean;
 
@@ -47,6 +48,9 @@ export class FormInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToControl();
+    if (this.labelLength) {
+      console.log(this.labelLength);
+    }
   }
 
   // ControlValueAccessor logic
