@@ -3,85 +3,13 @@
   <div class="education-results__right">
     <!-- search header component -->
     <app-header></app-header>
-
+ 
+    <app-sleeping-options-by-day (emitCurrentDay)="emitCurrentDayHandler($event)" [sleepingOptionsByDay]="sleepingOptionsByDay">
+      <h4 >זמינות לינה</h4>
+  </app-sleeping-options-by-day>
     <!-- avialable dates -->
+
     <div class="education-results__right-content">
-      <h2 class="education-results__right-header">מרכז שדה - נס הרים</h2>
-
-      <div class="education-results__right-availability">
-        <span
-          class="education-results__right-availability-item"
-          *ngFor="let item of availabilityItemsArray; let i = index"
-          [ngClass]="{ chosen: i == chosenDate }"
-          (click)="changeDate(i)"
-        >
-          <div
-            [ngClass]="{ 'font-color': i == chosenDate }"
-            class="education-results__right-availability-item-date"
-          >
-            {{ item.date }}
-          </div>
-          <div class="education-results__right-availability-item-text">
-            {{ item.text }}
-          </div>
-        </span>
-      </div>
-
-      <!-- avialable sleeping options -->
-
-      <div class="education-results__right-sleep-areas">
-        <h4 class="education-results__right-sleep-areas-headline">לינה</h4>
-        <div class="education-results__right-sleep-areas-options">
-          <div
-            class="education-results__right-sleep-areas-options-item"
-            *ngFor="let item of sleepingOptionsArray; let i = index"
-          >
-            <svg-icon
-              class="education-results__right-sleep-areas-options-item-svg"
-              src="{{ item.svgUrl }}"
-            ></svg-icon>
-            <p
-              class="
-                education-results__right-sleep-areas-options-item-count
-                font-color-blue
-              "
-            >
-              <span
-                class="
-                  education-results__right-sleep-areas-options-item-count-number
-                "
-              >
-                <span>{{ item.sleepingAreas }}</span></span
-              >
-              <span>{{ item.type }}</span>
-            </p>
-            <p class="education-results__right-sleep-areas-options-item-count">
-              <span
-                class="
-                  education-results__right-sleep-areas-options-item-count-number
-                "
-                ><span>{{ item.avialableSpaces }}</span></span
-              >
-              <span>{{ item.singleUnit }}</span>
-            </p>
-            <p
-              *ngIf="item.singleUnit !== 'לנים'"
-              class="education-results__right-sleep-areas-options-item-count"
-            >
-              <span
-                class="
-                  education-results__right-sleep-areas-options-item-count-number
-                "
-                ><span>{{
-                  item.sleepingAreas * item.avialableSpaces
-                }}</span></span
-              >
-              <span>לנים</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
       <!-- avialable facilities  -->
       <div class="education-results__right-facilities">
         <h4 class="education-results__right-facilities-headline">מתקנים</h4>
@@ -91,7 +19,8 @@
             *ngFor="let item of facilitiesArray; let i = index"
             [item]="item" 
           >
-            <app-tooltip class="app-tooltip" [hours]="item.availability"></app-tooltip>
+            <app-tooltip class="app-tooltip" [hours]="item.availability">
+            </app-tooltip>
           </app-info-card>
         </div>
       </div>
