@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { TooltipDataModel } from './tooltip/tooltip.component';
 
+
+
+
 export interface InfoCard {
   svgUrl: string;
   headline: string;
   subHeadline?: string;
   availability: TooltipDataModel[];
 }
+
 
 @Component({
   selector: 'app-education-results',
@@ -22,27 +26,145 @@ export class EducationResultsComponent implements OnInit {
 
   public chosenDate = 0;
 
-  public sleepingOptionsArray = [
+  sleepingOptionsByDay: {
+    day: string;
+    options: {
+      svgUrl: string;
+      sleepingAreas: number;
+      avialableSpaces: number;
+      type: string;
+      singleUnit: string;
+    }[];
+  }[] = [
     {
-      svgUrl: 'assets/images/cabin.svg',
-      sleepingAreas: 2,
-      avialableSpaces: 16,
-      type: 'בקתות',
-      singleUnit: 'בבקתה',
+      day: '15.6.21',
+      options: [
+        {
+          svgUrl: 'assets/images/cabin.svg',
+          sleepingAreas: 2,
+          avialableSpaces: 16,
+          type: 'בקתות',
+          singleUnit: 'בבקתה',
+        },
+        {
+          svgUrl: 'assets/images/tent.svg',
+          sleepingAreas: 4,
+          avialableSpaces: 6,
+          type: 'אוהלים',
+          singleUnit: 'באוהל',
+        },
+        {
+          svgUrl: 'assets/images/camp.svg',
+          sleepingAreas: 1,
+          avialableSpaces: 1670,
+          type: 'גיחה',
+          singleUnit: 'לנים',
+        },
+      ],
     },
     {
-      svgUrl: 'assets/images/tent.svg',
-      sleepingAreas: 4,
-      avialableSpaces: 36,
-      type: 'אוהלים',
-      singleUnit: 'באוהל',
+      day: '16.6.21',
+      options: [
+        {
+          svgUrl: 'assets/images/cabin.svg',
+          sleepingAreas: 2,
+          avialableSpaces: 16,
+          type: 'בקתות',
+          singleUnit: 'בבקתה',
+        },
+        {
+          svgUrl: 'assets/images/tent.svg',
+          sleepingAreas: 4,
+          avialableSpaces: 36,
+          type: 'אוהלים',
+          singleUnit: 'באוהל',
+        },
+        {
+          svgUrl: 'assets/images/camp.svg',
+          sleepingAreas: 1,
+          avialableSpaces: 670,
+          type: 'גיחה',
+          singleUnit: 'לנים',
+        },
+      ],
     },
     {
-      svgUrl: 'assets/images/camp.svg',
-      sleepingAreas: 1,
-      avialableSpaces: 120,
-      type: 'גיחה',
-      singleUnit: 'לנים',
+      day: '17.6.21',
+      options: [
+        {
+          svgUrl: 'assets/images/cabin.svg',
+          sleepingAreas: 2,
+          avialableSpaces: 46,
+          type: 'בקתות',
+          singleUnit: 'בבקתה',
+        },
+        {
+          svgUrl: 'assets/images/tent.svg',
+          sleepingAreas: 4,
+          avialableSpaces: 32,
+          type: 'אוהלים',
+          singleUnit: 'באוהל',
+        },
+        {
+          svgUrl: 'assets/images/camp.svg',
+          sleepingAreas: 1,
+          avialableSpaces: 10,
+          type: 'גיחה',
+          singleUnit: 'לנים',
+        },
+      ],
+    },
+    {
+      day: '18.6.21',
+      options: [
+        {
+          svgUrl: 'assets/images/cabin.svg',
+          sleepingAreas: 2,
+          avialableSpaces: 16,
+          type: 'בקתות',
+          singleUnit: 'בבקתה',
+        },
+        {
+          svgUrl: 'assets/images/tent.svg',
+          sleepingAreas: 4,
+          avialableSpaces: 36,
+          type: 'אוהלים',
+          singleUnit: 'באוהל',
+        },
+        {
+          svgUrl: 'assets/images/camp.svg',
+          sleepingAreas: 1,
+          avialableSpaces: 120,
+          type: 'גיחה',
+          singleUnit: 'לנים',
+        },
+      ],
+    },
+    {
+      day: '19.6.21',
+      options: [
+        {
+          svgUrl: 'assets/images/cabin.svg',
+          sleepingAreas: 2,
+          avialableSpaces: 16,
+          type: 'בקתות',
+          singleUnit: 'בבקתה',
+        },
+        {
+          svgUrl: 'assets/images/tent.svg',
+          sleepingAreas: 4,
+          avialableSpaces: 36,
+          type: 'אוהלים',
+          singleUnit: 'באוהל',
+        },
+        {
+          svgUrl: 'assets/images/camp.svg',
+          sleepingAreas: 1,
+          avialableSpaces: 120,
+          type: 'גיחה',
+          singleUnit: 'לנים',
+        },
+      ],
     },
   ];
 
@@ -50,20 +172,34 @@ export class EducationResultsComponent implements OnInit {
     this.chosenDate = newDate;
   }
 
-  public facilitiesArray : InfoCard[] = [
+  emitCurrentDayHandler(newCurrentDay: number) {
+    this.chosenDate = newCurrentDay;
+  }
+
+  public facilitiesArray: InfoCard[] = [
     {
       svgUrl: 'assets/images/stage.svg',
       headline: 'תאטרון',
       subHeadline: 'עד 320 משתתפים',
       availability: [
-        { hour: 8, avialable: true },
-        { hour: 9, avialable: true },
-        { hour: 10, avialable: false },
-        { hour: 11, avialable: true },
-        { hour: 12, avialable: false },
-        { hour: 13, avialable: false },
-        { hour: 14, avialable: false },
-        { hour: 15, avialable: true },
+        {
+          startingHour: 8,
+          endingHour: 10,
+          totalTime: 2,
+          user: 'גנים',
+        },
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'יוסי',
+        },
+        {
+          startingHour: 19.75,
+          endingHour: 24,
+          totalTime: 4.25,
+          user: 'יוסי',
+        },
       ],
     },
     {
@@ -71,14 +207,12 @@ export class EducationResultsComponent implements OnInit {
       headline: 'תאטרון',
       subHeadline: 'עד 320 משתתפים',
       availability: [
-        { hour: 8, avialable: true },
-        { hour: 9, avialable: true },
-        { hour: 10, avialable: false },
-        { hour: 11, avialable: true },
-        { hour: 12, avialable: false },
-        { hour: 13, avialable: false },
-        { hour: 14, avialable: false },
-        { hour: 15, avialable: true },
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'אורנים',
+        },
       ],
     },
     {
@@ -86,14 +220,12 @@ export class EducationResultsComponent implements OnInit {
       headline: 'תאטרון',
       subHeadline: 'עד 20 משתתפים',
       availability: [
-        { hour: 8, avialable: true },
-        { hour: 9, avialable: true },
-        { hour: 10, avialable: false },
-        { hour: 11, avialable: true },
-        { hour: 12, avialable: false },
-        { hour: 13, avialable: false },
-        { hour: 14, avialable: false },
-        { hour: 15, avialable: true },
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'רתמים',
+        },
       ],
     },
     {
@@ -101,28 +233,19 @@ export class EducationResultsComponent implements OnInit {
       headline: 'מגרש ספורט',
       subHeadline: '',
       availability: [
-        { hour: 8, avialable: true },
-        { hour: 9, avialable: true },
-        { hour: 10, avialable: false },
-        { hour: 11, avialable: true },
-        { hour: 12, avialable: false },
-        { hour: 13, avialable: false },
-        { hour: 14, avialable: false },
-        { hour: 15, avialable: true },
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'נחלאות',
+        },
       ],
     },
     {
       svgUrl: 'assets/images/leafs.svg',
       headline: 'סיור במשתלה',
       availability: [
-        { hour: 8, avialable: true },
-        { hour: 9, avialable: true },
-        { hour: 10, avialable: false },
-        { hour: 11, avialable: true },
-        { hour: 12, avialable: false },
-        { hour: 13, avialable: false },
-        { hour: 14, avialable: false },
-        { hour: 15, avialable: true },
+       
       ],
     },
     {
@@ -130,14 +253,12 @@ export class EducationResultsComponent implements OnInit {
       headline: 'מרכז למידה',
       subHeadline: 'עד 40 משתתפים',
       availability: [
-        { hour: 8, avialable: true },
-        { hour: 9, avialable: true },
-        { hour: 10, avialable: false },
-        { hour: 11, avialable: true },
-        { hour: 12, avialable: false },
-        { hour: 13, avialable: false },
-        { hour: 14, avialable: false },
-        { hour: 15, avialable: true },
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
       ],
     },
     {
@@ -145,28 +266,24 @@ export class EducationResultsComponent implements OnInit {
       headline: 'תחנות הפעלה',
       subHeadline: 'עד 40 משתתפים',
       availability: [
-        { hour: 8, avialable: true },
-        { hour: 9, avialable: true },
-        { hour: 10, avialable: false },
-        { hour: 11, avialable: true },
-        { hour: 12, avialable: false },
-        { hour: 13, avialable: false },
-        { hour: 14, avialable: false },
-        { hour: 15, avialable: true },
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'פתח תקווה',
+        },
       ],
     },
     {
       svgUrl: 'assets/images/judaism.svg',
       headline: 'בתי כנסה',
       availability: [
-        { hour: 8, avialable: true },
-        { hour: 9, avialable: true },
-        { hour: 10, avialable: false },
-        { hour: 11, avialable: true },
-        { hour: 12, avialable: false },
-        { hour: 13, avialable: false },
-        { hour: 14, avialable: false },
-        { hour: 15, avialable: true },
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'בני ברק',
+        },
       ],
     },
   ];
