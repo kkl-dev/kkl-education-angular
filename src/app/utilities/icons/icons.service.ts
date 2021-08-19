@@ -20,6 +20,9 @@ import {
   EDIT_ICON,
   BOYS_GIRLS_ICON,
   V_SIGN,
+  ADD_ICON,
+  PLAYGROUND_ICON,
+  LIST_ICON,
 } from './icons.list';
 
 export interface IconItem {
@@ -113,6 +116,22 @@ export class IconsService {
     {
       key: 'bell',
       svgUrl: BELL_ICON,
+    },
+    {
+      key: 'add',
+      svgUrl: ADD_ICON,
+    },
+    {
+      key: 'bed',
+      svgUrl: BED_ICON,
+    },
+    {
+      key: 'playground',
+      svgUrl: PLAYGROUND_ICON,
+    },
+    {
+      key: 'list',
+      svgUrl: LIST_ICON,
     },
   ];
 

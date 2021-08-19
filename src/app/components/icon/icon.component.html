@@ -8,7 +8,7 @@
   </mat-icon>
   <mat-icon
     [ngClass]="{ default: color === 'default', active: isActive }"
-    *ngIf="type !== 'svg'"
+    *ngIf="type === 'mat'"
     [color]="color"
     >{{ key }}</mat-icon
   >

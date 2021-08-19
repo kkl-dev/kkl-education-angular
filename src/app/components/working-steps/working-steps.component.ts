@@ -2,9 +2,10 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 export interface StepModel {
-  svgSrc: string;
   text: string;
   path: string;
+  svgUrl?: string;
+  iconType?: string;
 }
 
 @Component({
@@ -27,7 +28,6 @@ export class WorkingStepsComponent implements OnInit {
   }
 
   public onStepClick({ path, index }) {
-    console.log(index)
     this.setActiveStep(index);
     this.router.navigateByUrl(`/education/order-tour/${path}`);
   }
