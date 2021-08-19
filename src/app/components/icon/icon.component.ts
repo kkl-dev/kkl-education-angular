@@ -18,7 +18,6 @@ export class IconComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.type)
     this.iconsService.setIcon(this.key)
   }
 

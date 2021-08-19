@@ -1,11 +1,9 @@
-@import '../../../../styles.scss';
-
+@import "../../../../styles.scss";
 
 mat-form-field {
   text-align: right !important;
   width: 100%;
 }
-
 
 ::ng-deep .cdk-overlay-pane {
   transform: translateX(-15%) !important;
@@ -25,18 +23,24 @@ mat-form-field {
 }
 
 mat-icon {
-  color: color(primary)
+  color: color(primary);
 }
 
 ::ng-deep.mat-form-field-outline-start {
   width: 100% !important;
 }
 
-
-::ng-deep .mat-form-field-outline-gap {
-  width: calc(25%) !important;
+::ng-deep .small .mat-form-field-outline-gap {
+  width: 15% !important;
 }
 
+::ng-deep .medium .mat-form-field-outline-gap {
+  width: 20% !important;
+}
+
+::ng-deep .wide .mat-form-field-outline-gap {
+  width: 25% !important;
+}
 
 input[type="time"]::-webkit-calendar-picker-indicator {
   background: none;

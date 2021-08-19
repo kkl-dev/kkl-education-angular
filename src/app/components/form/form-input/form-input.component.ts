@@ -27,6 +27,7 @@ export class FormInputComponent implements OnInit {
   @Input() public controlType!: string;
   @Input() public options!: [];
 
+  @Input() public labelLength: string = 'small';
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;

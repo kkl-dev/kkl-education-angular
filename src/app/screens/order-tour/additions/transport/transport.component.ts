@@ -54,27 +54,31 @@ export class TransportComponent implements OnInit {
     new QuestionSelect({
       key: 'item',
       label: 'בחר פריט',
-      options: [
-        { key: 'solid', value: '12123' },
-        { key: 'great', value: '23' },
-        { key: 'good', value: '123' },
-        { key: 'unproven', value: '123123123' },
-      ],
       type: 'select',
       validations: [Validators.required],
+      inputProps: {
+        options: [
+          { key: 'solid', value: '12123' },
+          { key: 'great', value: '23' },
+          { key: 'good', value: '123' },
+          { key: 'unproven', value: '123123123' },
+        ],
+      },
     }),
 
     new QuestionSelect({
       key: 'suplier',
       label: 'ספק',
-      options: [
-        { key: 'solid', value: '12123' },
-        { key: 'great', value: '23' },
-        { key: 'good', value: '123' },
-        { key: 'unproven', value: '123123123' },
-      ],
       type: 'select',
       validations: [Validators.required],
+      inputProps: {
+        options: [
+          { key: 'solid', value: '12123' },
+          { key: 'great', value: '23' },
+          { key: 'good', value: '123' },
+          { key: 'unproven', value: '123123123' },
+        ],
+      },
     }),
   ];
   public gatherForm: QuestionBase<string | Date>[] = [
