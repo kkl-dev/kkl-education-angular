@@ -22,22 +22,11 @@ export interface formGroupGrid {
   styleUrls: ['./squad-assemble.component.scss'],
 })
 export class SquadAssembleComponent implements OnInit {
-  tourDetailsFormCustomQuestion: {} = {
-    boys: true,
-    girls: true,
-    boysChaperone: true,
-    girlsChaperone: true,
-    boysInstructors: true,
-    girlsInstructors: true,
-    boysMedics: true,
-    girlsMedics: true,
-  };
 
   timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tourName',
       label: 'שם הטיול',
-      value: '',
       validations: [Validators.required],
     }),
 
@@ -318,24 +307,7 @@ export class SquadAssembleComponent implements OnInit {
   tourDetailsRef!: FormContainerComponent;
 
   constructor() {
-    // this.groupAssembleFormInputs = this.groupAssembleForm;
   }
 
   ngOnInit(): void {}
-
-  ngAfterViewInit(): void {}
-
-  ngOnDestroy(): void {
-    // console.log(this.tourDetailsRef.form.value);
-    // console.log(this.customerRef.form.value);
-    // console.log(this.timeAndDateRef.form.value);
-    // console.log(this.groupAssembleRef.form.value);
-  }
-
-  changeGroupAssembleForm() {
-    // this.separated = !this.separated;
-    // this.groupAssembleFormInputs = this.separated
-    //   ? this.separatedGroupAssembleForm
-    //   : this.groupAssembleForm;
-  }
 }
