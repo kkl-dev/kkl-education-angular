@@ -18,7 +18,7 @@ export class FormContainerComponent implements OnInit {
   @Input() cols: string = "1"
   @Input() gutter: string = "3"
   @Input() questions!: QuestionBase<string>[]
-  @Input() showButton: boolean = false
+  @Input() hasButton: boolean = false
   @Input() slots: { button: ElementRef }
   @Input() customQuestionTemplates = {}
   @Input() buttonText: string = 'המשך'

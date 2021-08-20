@@ -26,7 +26,8 @@
       </ng-container>
     </mat-grid-list>
 
-    <div class="form-row" *ngIf="showButton">
+    {{hasButton}}
+    <div class="form-row" *ngIf="hasButton">
       <ng-container *ngTemplateOutlet="slots.button"></ng-container>
     </div>
   </form>

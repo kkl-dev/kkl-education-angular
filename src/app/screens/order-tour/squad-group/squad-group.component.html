@@ -4,14 +4,16 @@
       <span>{{title}}</span>
     </mat-grid-tile>
     <mat-grid-tile rowspan="10">
-      <app-form-container [cols]="formCols" [questions]="questions" [showButton]="true" [slots]="{button : formButton}">
+      <app-form-container [cols]="formCols" [questions]="questions" [hasButton]="true" [slots]="{button : formButton}">
       </app-form-container>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
 
 <ng-template #formButton>
-  <div>
-    <button type="submit" mat-button>submit</button>
+  <div class="button-container">
+    <button type="submit" mat-button>
+      <app-icon key="edit" type="mat"></app-icon>
+    </button>
   </div>
 </ng-template>

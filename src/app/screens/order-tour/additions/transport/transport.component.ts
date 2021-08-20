@@ -164,10 +164,11 @@ export class TransportComponent implements OnInit {
 
   public transportForm = [
     {
-      questions: this.deatails
+      questions: this.deatails,
     },
     {
-      questions: this.gather
+      questions: this.gather,
+      hasButton : true
     }
   ]
 
