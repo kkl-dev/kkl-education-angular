@@ -61,6 +61,7 @@ export class SquadAssembleComponent implements OnInit {
       key: 'startDate',
       label: 'תאריך התחלה',
       value: new Date(),
+      rows : 4,
       validations: [Validators.required],
       inputProps: {
         labelLength: 'medium',
@@ -69,6 +70,7 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionCalendar({
       key: 'endDate',
       label: 'תאריך סיום',
+      rows : 4,
       value: new Date(),
       validations: [Validators.required],
     }),
@@ -166,7 +168,7 @@ export class SquadAssembleComponent implements OnInit {
     }),
     new QuestionBase({
       key: 'escorts',
-      cols: '2',
+      cols: 2,
       isGroup: true,
       label: 'מלווים',
       group: [
@@ -174,11 +176,13 @@ export class SquadAssembleComponent implements OnInit {
           key: 'boys',
           label: 'בנים',
           type: 'number',
+          rows : 4
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
           type: 'number',
+          rows : 4
         }),
       ],
     }),
@@ -254,6 +258,7 @@ export class SquadAssembleComponent implements OnInit {
       label: 'מחלקה',
       custom: true,
       value: 'ישראל',
+      rows : 3,
       inputProps: {
         options: [
           { key: 'ישראל', value: 'ישראל' },
@@ -267,6 +272,7 @@ export class SquadAssembleComponent implements OnInit {
       key: 'tripCenter',
       label: 'פנים/חוץ מרכז שדה',
       value: 'ישראל',
+      rows : 3,
       inputProps: {
         options: [
           { key: 'פנים', value: 'פנים' },
@@ -278,7 +284,7 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      value: '',
+      rows : 5,
     }),
   ];
 

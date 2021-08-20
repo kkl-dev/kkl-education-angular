@@ -1,13 +1,16 @@
-<div class="container">
-  <mat-grid-list cols="1" rowHeight="10vh">
+<!-- <div class="container">
+  <mat-grid-list cols="1" rowHeight="5vh">
     <mat-grid-tile>
+      <button mat-raised-button color="primary" >הוספה</button>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="2">
       <app-form-container
         [questions]="transportForm"
         [cols]="'8'"
         [gutter]="'15'"
       ></app-form-container>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile rowspan="6">
       <app-form-container
         [questions]="gatherForm"
         [cols]="'8'"
@@ -15,4 +18,13 @@
       ></app-form-container>
     </mat-grid-tile>
   </mat-grid-list>
+</div> -->
+
+<div fxLayout="column" fxFlexFill>
+  <div fxFlex="5">
+    <button mat-raised-button color="primary">הוספה</button>
+  </div>
+  <div fxFlex="35" *ngFor="let form of transportForm">
+    <app-form-container [questions]="form.questions" [cols]="'8'" [gutter]="'15'"></app-form-container>
+  </div>
 </div>

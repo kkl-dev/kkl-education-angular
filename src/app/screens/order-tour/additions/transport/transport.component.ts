@@ -1,3 +1,4 @@
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
@@ -11,7 +12,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   styleUrls: ['./transport.component.scss'],
 })
 export class TransportComponent implements OnInit {
-  public transportForm: QuestionBase<string>[] = [
+  public deatails: QuestionBase<string>[] = [
     new QuestionTextbox({
       key: 'total',
       label: 'סה"כ',
@@ -82,7 +83,7 @@ export class TransportComponent implements OnInit {
       },
     }),
   ];
-  public gatherForm: QuestionBase<string | Date>[] = [
+  public gather: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'scatterAddress',
       label: 'כתובת פיזור',
@@ -153,9 +154,24 @@ export class TransportComponent implements OnInit {
         labelLength: 'extraWide',
       },
     }),
+    new QuestionTextarea({
+      key: 'comments',
+      label: 'הערות',
+      cols: 8,
+      rows: 4
+    })
   ];
 
-  constructor() {}
+  public transportForm = [
+    {
+      questions: this.deatails
+    },
+    {
+      questions: this.gather
+    }
+  ]
 
-  ngOnInit(): void {}
+  constructor() { }
+
+  ngOnInit(): void { }
 }
