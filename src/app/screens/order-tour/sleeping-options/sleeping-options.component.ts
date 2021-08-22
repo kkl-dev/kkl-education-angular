@@ -4,14 +4,12 @@ import { FormContainerComponent } from 'src/app/components/form/form-container/f
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
-import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
-
 
 export interface formGroupGrid {
   title: string;
   cols?: string;
   formCols?: string;
-  questions: QuestionBase<string | Date | number>[]
+  questions: QuestionBase<string | Date | number>[];
 }
 
 @Component({
@@ -20,7 +18,6 @@ export interface formGroupGrid {
   styleUrls: ['./sleeping-options.component.scss'],
 })
 export class SleepingOptionsComponent implements OnInit {
-
   sleepingOptionsByDay: {
     day: string;
     options: {
@@ -163,50 +160,57 @@ export class SleepingOptionsComponent implements OnInit {
     },
   ];
 
-  formCols:number= 8;
+  formCols: number = 8;
   questions: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'sleepingPlace',
-      type: "select",
-      cols: "2",
+      type: 'select',
+      cols: '2',
       label: 'קבוצת גיל',
-      options: [
-        { key: '1', value: '1' },
-        { key: 'עוד לקוח', value: '10+' },
-        { key: 'לקוח מספר שלוש', value: '20+' },
-        { key: 'לקוח מספר ארבע', value: '30+' },
-      ],
+      inputProps: {
+        options: [
+          { key: '1', value: '1' },
+          { key: 'עוד לקוח', value: '10+' },
+          { key: 'לקוח מספר שלוש', value: '20+' },
+          { key: 'לקוח מספר ארבע', value: '30+' },
+        ],
+      },
     }),
     new QuestionSelect({
       key: 'nightsCount',
-      type: "select",
-      cols: "2",
+      type: 'select',
+      cols: '2',
       label: 'קבוצת גיל',
-      options: [
-        { key: '1', value: '1' },
-        { key: 'עוד לקוח', value: '10+' },
-        { key: 'לקוח מספר שלוש', value: '20+' },
-        { key: 'לקוח מספר ארבע', value: '30+' },
-      ],
-    }),    new QuestionSelect({
-      key: 'saveFor',
-      type: "select",
-      cols: "2",
-      label: 'קבוצת גיל',
-      options: [
-        { key: '1', value: '1' },
-        { key: 'עוד לקוח', value: '10+' },
-        { key: 'לקוח מספר שלוש', value: '20+' },
-        { key: 'לקוח מספר ארבע', value: '30+' },
-      ],
+      inputProps: {
+        options: [
+          { key: '1', value: '1' },
+          { key: 'עוד לקוח', value: '10+' },
+          { key: 'לקוח מספר שלוש', value: '20+' },
+          { key: 'לקוח מספר ארבע', value: '30+' },
+        ],
+      },
     }),
-    new TextboxQuestion({
+    new QuestionSelect({
+      key: 'saveFor',
+      type: 'select',
+      cols: '2',
+      label: 'קבוצת גיל',
+      inputProps: {
+        options: [
+          { key: '1', value: '1' },
+          { key: 'עוד לקוח', value: '10+' },
+          { key: 'לקוח מספר שלוש', value: '20+' },
+          { key: 'לקוח מספר ארבע', value: '30+' },
+        ],
+      },
+    }),
+    new QuestionTextarea({
       key: 'peopleCount',
       label: 'שם הטיול',
       value: '',
-      validations: [Validators.required]
+      validations: [Validators.required],
     }),
-    new TextboxQuestion({
+    new QuestionTextarea({
       key: 'amount',
       label: 'שם הטיול',
       value: '',
@@ -215,11 +219,10 @@ export class SleepingOptionsComponent implements OnInit {
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      cols:'6',
-      value: '', 
-    }), 
+      cols: '6',
+      value: '',
+    }),
   ];
-
 
   changeDatesHandler(newDates: string) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -265,7 +268,7 @@ export class SleepingOptionsComponent implements OnInit {
           {
             svgUrl: 'assets/images/camp.svg',
             sleepingAreas: 1,
-            avialableSpaces: Math.floor(Math.random()*90),
+            avialableSpaces: Math.floor(Math.random() * 90),
             type: 'גיחה',
             singleUnit: 'לנים',
           },
@@ -277,8 +280,6 @@ export class SleepingOptionsComponent implements OnInit {
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
     console.log(this.sleepingOptionsByDay);
   }
-
-
 
   constructor() {}
 

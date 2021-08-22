@@ -14,3 +14,8 @@ app-form-container {
 .text {
   color: color(primary)
 }
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+}
