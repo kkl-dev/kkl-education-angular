@@ -2,13 +2,17 @@
   <div
     class="working-steps__step"
     *ngFor="let step of steps; let i = index"
-    (click)="onStepClick({ path: step.path, index : i })"
+    (click)="onStepClick({ path: step.path, index: i })"
   >
     <div
       class="working-steps__step-icon"
       [ngClass]="{ active: activeStep == i }"
     >
-      <svg-icon src="{{ step.svgSrc }}"></svg-icon>
+      <app-icon
+        [isActive]="activeStep == i"
+        [type]="step.iconType || 'svg'"
+        [key]="step.svgUrl"
+      ></app-icon>
     </div>
     <div
       class="working-steps__step-text"
