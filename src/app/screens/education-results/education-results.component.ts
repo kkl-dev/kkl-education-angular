@@ -16,21 +16,21 @@ export class EducationResultsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.usersService.getLookupFieldForestCenters().subscribe(
-      response => {
-        console.log(response);
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    );
+    // this.usersService.getLookupFieldForestCenters().subscribe(
+    //   response => {
+    //     console.log('response: ', response);
+    //   },
+    //   error => console.log('error:', error),       // error
+    //   () => console.log('completed')     // complete
+    // );
 
     // this.usersService.getLookupFieldForestCenters().subscribe((data: any) => {
     //   //  this.spinner.hide();
     //     if (data) {
-    //       console.log({ data });        
+    //       console.log('getLookupFieldForestCenters: ', data);
     //     }
     //     else {
-    //       console.log('no data in GetCountries');
+    //       console.log('no data in getLookupFieldForestCenters');
     //     }
     //   },
     //     error => {
@@ -38,11 +38,19 @@ export class EducationResultsComponent implements OnInit {
     //       console.log({ error })
     //     });
 
+    // this.usersService.getLookupFieldForestCenters().subscribe(
+    //   response => {
+    //     console.log('response:', response);
+    //   },
+    //   error => console.log('error:', error),       // error
+    //   () => console.log('completed')     // complete
+    // );
+
     
     console.log('userDataService:', this.userDataService);
     console.log('tripService:', this.tripService);
 
-    this.availabilityItemsArray = this.tripService.dateObj;
+    //this.availabilityItemsArray = this.tripService.dateObj;
     //this.centerField = this.tripService.centerField
   }
 
@@ -80,6 +88,8 @@ export class EducationResultsComponent implements OnInit {
   ];
 
   public changeDate(newDate: number) {
+    console.log('changeDate:', newDate);
+
     this.chosenDate = newDate;
   }
 

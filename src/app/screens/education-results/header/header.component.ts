@@ -7,6 +7,7 @@ import { Locale, getYear } from 'date-fns';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { UserService } from '../../../api/v1/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
+import { FakeService } from 'src/app/services/fake.service';
 
 @Component({
   selector: 'app-header',
@@ -15,16 +16,16 @@ import { TripService } from 'src/app/services/trip.service';
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('resultsForm') signupForm: NgForm | undefined;
-
+  //@Input() categoryId: string;
   date: string | null = null;
 
   dateObj: { from: string; to: string } = { from: '', to: '' };
-  centerField: any = null;
+  forestCenterId: number = 101;
   formOptions: any;
 
   freeSpacesArray1: FreeSpace[] = [];
 
-  constructor(public usersService: UserService, private userDataService: UserDataService, private tripService: TripService) {
+  constructor(public usersService: UserService, private userDataService: UserDataService, public tripService: TripService, public fakeApi: FakeService) {
     this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
@@ -43,22 +44,42 @@ export class HeaderComponent implements OnInit {
 
   }
   ngOnInit(): void {
-
-    this.usersService.getLookupFieldForestCenters().subscribe(
-      response => {
-        console.log(response);
-        this.formOptions = response;
-        this.tripService.centerField=this.formOptions[0];
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-
     console.log('userDataService:', this.userDataService);
     console.log('tripService:', this.tripService);
+    //get forest center fake
+    this.fakeApi.getForestCenter().subscribe((forestCenter) => {
+      if (forestCenter) {
+        console.log('forestCenter', { forestCenter });
+        this.formOptions = forestCenter;
 
-    this.dateObj = this.tripService.dateObj;
-    this.centerField = this.tripService.centerField;
+        if (this.tripService.centerField) {
+          this.forestCenterId = this.tripService.centerField.id;
+          this.forestCenterId = 1;
+          this.dateObj = this.tripService.dateObj;
+        }
+      }
+      else {
+        console.log('no data in forestCenter');
+      }
+    },
+      error => {
+        console.log({ error })
+      });
+
+    // this.usersService.getLookupFieldForestCenters().subscribe(
+    //   response => {
+    //     console.log(response);
+    //     this.formOptions = response;
+    //     //this.tripService.centerField = this.formOptions[0];
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
+
+
+
+    //  this.dateObj = this.tripService.dateObj;
+    //  this.forestCenter = this.tripService.centerField;
   }
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
@@ -116,5 +137,4 @@ export class HeaderComponent implements OnInit {
   //   { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: '1' },
   //   { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: '1' },
   // ];
-
 }
