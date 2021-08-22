@@ -10,7 +10,6 @@ export class QuestionBase<T> {
   type: string;
   key: string;
   label: string;
-  sublabel: string;
   icon: string;
   disabled: boolean;
   controlType: string;
@@ -21,6 +20,11 @@ export class QuestionBase<T> {
   options: SelectOption[];
   isGroup: boolean;
   group: any;
+  inputProps: {
+    options?: SelectOption[];
+    labelLength?: string;
+  };
+
 
   constructor(
     options: {
@@ -29,7 +33,6 @@ export class QuestionBase<T> {
       icon?: string;
       disabled?: string;
       label?: string;
-      sublabel?: string;
       order?: number;
       controlType?: string;
       type?: string;
@@ -39,7 +42,11 @@ export class QuestionBase<T> {
       validations?: ValidatorFn[];
       options?: SelectOption[];
       isGroup?: boolean;
-      group?: any
+      group?: any;
+      inputProps?: {
+        options?: SelectOption[];
+        labelLength?: string;
+      };
     } = {}
 
   ) {
@@ -57,5 +64,6 @@ export class QuestionBase<T> {
     this.options = options.options || [];
     this.isGroup = options.isGroup || false;
     this.group = options.group || {}
+    this.inputProps = options.inputProps;
   }
 }

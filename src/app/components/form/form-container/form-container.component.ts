@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
@@ -18,9 +18,10 @@ export class FormContainerComponent implements OnInit {
   @Input() cols: string = "1"
   @Input() gutter: string = "3"
   @Input() questions!: QuestionBase<string>[]
-  @Input() showButton: boolean = true
+  @Input() showButton: boolean = false
+  @Input() slots: { button: ElementRef }
   @Input() customQuestionTemplates = {}
-  @Input() buttonText:string='המשך'
+  @Input() buttonText: string = 'המשך'
 
   constructor(private formService: FormService) {
   }

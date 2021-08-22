@@ -47,7 +47,7 @@
     </mat-grid-list>
 
     <div class="form-row" *ngIf="showButton">
-      <button type="submit" mat-button (click)="onSubmit()">submit</button>
+      <ng-container *ngTemplateOutlet="slots.button"></ng-container>
     </div>
   </form>
 </div>
