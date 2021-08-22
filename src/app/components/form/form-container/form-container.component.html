@@ -3,9 +3,9 @@
     <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
       <ng-container *ngFor="let question of questions">
         <mat-grid-tile
-          *ngIf="!question.isGroup"
+          *ngIf="!question?.isGroup"
           [colspan]="question.cols"
-          [rowspan]="question.rows"
+          [rowspan]="question.rows || 4"
         >
           <app-form-input
             *ngIf="!question.custom"
@@ -51,7 +51,7 @@
     </mat-grid-list>
 
     <div class="form-row" *ngIf="showButton">
-      <ng-container *ngTemplateOutlet="slots.button"></ng-container>
+      <!-- <ng-container *ngTemplateOutlet="slots?.button"></ng-container> -->
     </div>
   </form>
 </div>

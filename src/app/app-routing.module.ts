@@ -14,26 +14,34 @@ const routes: Routes = [
   { path: 'login', component: LoginBackdropComponent },
   { path: ':type', component: DashboardComponent },
   { path: ':type/search', component: SearchComponent },
-  { path: 'education/results', component: EducationResultsComponent },
   {
-    path: 'education/my-tours',
-    component: MyToursComponent,
-  },
-  {
-    path: 'education/order-tour',
-    component: OrderTourComponent,
+    path: 'education',
     children: [
       {
-        path: 'squad-assemble',
-        component: SquadAssembleComponent,
+        path: 'results',
+        component: EducationResultsComponent,
       },
       {
-        path: 'sleeping',
-        component: SleepingOptionsComponent,
+        path: 'my-tours',
+        component: MyToursComponent,
       },
       {
-        path: 'additions',
-        component: AdditionsComponent,
+        path: 'order-tour',
+        component: OrderTourComponent,
+        children: [
+          {
+            path: 'squad-assemble',
+            component: SquadAssembleComponent,
+          },
+          {
+            path: 'sleeping',
+            component: SleepingOptionsComponent,
+          },
+          {
+            path: 'additions',
+            component: AdditionsComponent,
+          },
+        ],
       },
     ],
   },

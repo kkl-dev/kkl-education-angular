@@ -3,7 +3,7 @@
   <div class="education-results__right">
     <!-- search header component -->
     <app-header></app-header>
- 
+
     <app-sleeping-options-by-day (emitCurrentDay)="emitCurrentDayHandler($event)" [sleepingOptionsByDay]="sleepingOptionsByDay">
       <h4 >זמינות לינה</h4>
   </app-sleeping-options-by-day>
@@ -17,7 +17,7 @@
           <app-info-card
             class="education-results__right-facilities-items-item"
             *ngFor="let item of facilitiesArray; let i = index"
-            [item]="item" 
+            [item]="item"
           >
             <app-tooltip class="app-tooltip" [hours]="item.availability">
             </app-tooltip>
@@ -27,7 +27,7 @@
     </div>
     <!-- submit form -->
     <div class="education-results__right-button-container">
-      <button class="education-results__right-button">הזמן</button>
+      <button (click)="onClick()" class="education-results__right-button">הזמן</button>
     </div>
   </div>
 </div>

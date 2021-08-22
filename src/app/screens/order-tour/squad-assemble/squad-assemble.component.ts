@@ -22,11 +22,12 @@ export interface formGroupGrid {
   styleUrls: ['./squad-assemble.component.scss'],
 })
 export class SquadAssembleComponent implements OnInit {
-
   timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tourName',
       label: 'שם הטיול',
+      value: '',
+      rows: 4,
       validations: [Validators.required],
     }),
 
@@ -50,7 +51,7 @@ export class SquadAssembleComponent implements OnInit {
       key: 'startDate',
       label: 'תאריך התחלה',
       value: new Date(),
-      rows : 4,
+      rows: 4,
       validations: [Validators.required],
       inputProps: {
         labelLength: 'medium',
@@ -59,7 +60,7 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionCalendar({
       key: 'endDate',
       label: 'תאריך סיום',
-      rows : 4,
+      rows: 4,
       value: new Date(),
       validations: [Validators.required],
     }),
@@ -127,7 +128,7 @@ export class SquadAssembleComponent implements OnInit {
       key: 'age',
       type: 'select',
       cols: 2,
-      rows : 4,
+      rows: 4,
       label: 'קבוצת גיל',
       inputProps: {
         options: [
@@ -142,20 +143,20 @@ export class SquadAssembleComponent implements OnInit {
       key: 'participants',
       label: 'נוער / מבוגרים',
       cols: 2,
-      rows : 4,
+      rows: 4,
       isGroup: true,
       group: [
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
           type: 'number',
-          rows : 4
+          rows: 4,
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
           type: 'number',
-          rows : 4
+          rows: 4,
         }),
       ],
     }),
@@ -169,13 +170,13 @@ export class SquadAssembleComponent implements OnInit {
           key: 'boys',
           label: 'בנים',
           type: 'number',
-          rows : 4
+          rows: 4,
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
           type: 'number',
-          rows : 4
+          rows: 4,
         }),
       ],
     }),
@@ -189,14 +190,13 @@ export class SquadAssembleComponent implements OnInit {
           key: 'boys',
           label: 'בנים',
           type: 'number',
-          rows : 4
-
+          rows: 4,
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
           type: 'number',
-          rows : 4
+          rows: 4,
         }),
       ],
     }),
@@ -254,7 +254,7 @@ export class SquadAssembleComponent implements OnInit {
       label: 'מחלקה',
       custom: true,
       value: 'ישראל',
-      rows : 4,
+      rows: 4,
       inputProps: {
         options: [
           { key: 'ישראל', value: 'ישראל' },
@@ -268,7 +268,7 @@ export class SquadAssembleComponent implements OnInit {
       key: 'tripCenter',
       label: 'פנים/חוץ מרכז שדה',
       value: 'ישראל',
-      rows : 4,
+      rows: 4,
       inputProps: {
         options: [
           { key: 'פנים', value: 'פנים' },
@@ -280,7 +280,7 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      rows : 6,
+      rows: 6,
     }),
   ];
 
@@ -313,8 +313,7 @@ export class SquadAssembleComponent implements OnInit {
   @ViewChild('tourDetailsFormCustomQuestionRef', { static: true })
   tourDetailsRef!: FormContainerComponent;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {}
 }

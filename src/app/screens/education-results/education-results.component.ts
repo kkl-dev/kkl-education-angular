@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TooltipDataModel } from './tooltip/tooltip.component';
-
-
-
 
 export interface InfoCard {
   svgUrl: string;
@@ -10,7 +8,6 @@ export interface InfoCard {
   subHeadline?: string;
   availability: TooltipDataModel[];
 }
-
 
 @Component({
   selector: 'app-education-results',
@@ -244,9 +241,7 @@ export class EducationResultsComponent implements OnInit {
     {
       svgUrl: 'assets/images/leafs.svg',
       headline: 'סיור במשתלה',
-      availability: [
-       
-      ],
+      availability: [],
     },
     {
       svgUrl: 'assets/images/student-hat.svg',
@@ -288,7 +283,11 @@ export class EducationResultsComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  public onClick() {
+    this.router.navigateByUrl('education/order-tour/squad-assemble');
+  }
 }
