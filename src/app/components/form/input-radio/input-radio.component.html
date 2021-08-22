@@ -3,7 +3,7 @@
     {{question.label}}
   </div>
   <div class="radio-container">
-    <mat-radio-button color="primary" *ngFor="let option of question.options" [value]="option.value">{{option.key}}
+    <mat-radio-button color="primary" *ngFor="let option of question.inputProps.options" [value]="option.value">{{option.key}}
     </mat-radio-button>
   </div>
 </mat-radio-group>

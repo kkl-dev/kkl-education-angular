@@ -14,6 +14,7 @@ export class EducationComponent implements OnInit {
 
   public checked = false;
   sleepingPlace: string = '';
+  
   constructor() {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),

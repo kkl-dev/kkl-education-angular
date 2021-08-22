@@ -17,8 +17,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
 
-const MaterialComponents = [MatButtonModule];
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   imports: [
@@ -44,7 +46,9 @@ const MaterialComponents = [MatButtonModule];
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatExpansionModule,
+    FlexLayoutModule
 
   ],
   exports: [
@@ -70,7 +74,9 @@ const MaterialComponents = [MatButtonModule];
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatExpansionModule,
+    FlexLayoutModule
   ],
 })
 export class MaterialModule {}

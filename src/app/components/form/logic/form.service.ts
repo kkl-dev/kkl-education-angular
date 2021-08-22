@@ -46,8 +46,8 @@ export class FormService {
 
   }
 
-  public buildGroup(quiestions: QuestionBase<string>[]) {
-    return this.fb.group(this.setForm(this.formatForm(quiestions)))
+  public buildGroup(questions: QuestionBase<string>[]) {
+    return this.fb.group(this.setForm(this.formatForm(questions)))
   }
 
 
