@@ -10,7 +10,7 @@
           <app-icon
             [isActive]="item.isActive"
             type="svg"
-            [key]="item.svgUrl"
+            [key]="item.svgUrl || 'like'"
           ></app-icon>
         </div>
       </mat-card-content>

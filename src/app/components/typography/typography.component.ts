@@ -8,8 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TypographyComponent implements OnInit {
   constructor() {}
 
-  @Input() color: string;
-  @Input() variant: string;
+  @Input() color: string = "black";
+  @Input() variant: string = "mat-title";
 
   ngOnInit(): void {}
 }

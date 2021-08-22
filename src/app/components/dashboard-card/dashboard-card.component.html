@@ -1,0 +1,14 @@
+<div
+  [ngStyle]="{ 'width.px': width || 100, 'height.px': height || 100 }"
+  routerLink="{{ '/' + prefix + '/' + item.path }}"
+  class="item"
+>
+  <div class="icon">
+    <app-icon type="svg" [color]="'primary'" [key]="item.svgUrl"></app-icon>
+  </div>
+  <div class="text">
+    <app-typography [variant]="'mat-title'">
+      {{ item.title }}
+    </app-typography>
+  </div>
+</div>

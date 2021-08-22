@@ -10,6 +10,8 @@ import { NavigationCardModel } from 'src/app/models/nav-card-model';
 export class NavCardComponent implements OnInit {
 
   @Input() public item: NavigationCardModel = {  }
+  @Input() public width: NavigationCardModel = {  }
+  @Input() public height: NavigationCardModel = {  }
 
   constructor(
     private additionsService: AdditionsService
