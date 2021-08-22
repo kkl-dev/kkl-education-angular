@@ -126,7 +126,8 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionSelect({
       key: 'age',
       type: 'select',
-      cols: '2',
+      cols: 2,
+      rows : 4,
       label: 'קבוצת גיל',
       inputProps: {
         options: [
@@ -140,18 +141,21 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionBase({
       key: 'participants',
       label: 'נוער / מבוגרים',
-      cols: '2',
+      cols: 2,
+      rows : 4,
       isGroup: true,
       group: [
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
           type: 'number',
+          rows : 4
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
           type: 'number',
+          rows : 4
         }),
       ],
     }),
@@ -185,11 +189,14 @@ export class SquadAssembleComponent implements OnInit {
           key: 'boys',
           label: 'בנים',
           type: 'number',
+          rows : 4
+
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
           type: 'number',
+          rows : 4
         }),
       ],
     }),
@@ -247,7 +254,7 @@ export class SquadAssembleComponent implements OnInit {
       label: 'מחלקה',
       custom: true,
       value: 'ישראל',
-      rows : 3,
+      rows : 4,
       inputProps: {
         options: [
           { key: 'ישראל', value: 'ישראל' },
@@ -261,7 +268,7 @@ export class SquadAssembleComponent implements OnInit {
       key: 'tripCenter',
       label: 'פנים/חוץ מרכז שדה',
       value: 'ישראל',
-      rows : 3,
+      rows : 4,
       inputProps: {
         options: [
           { key: 'פנים', value: 'פנים' },
@@ -273,7 +280,7 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      rows : 5,
+      rows : 6,
     }),
   ];
 
