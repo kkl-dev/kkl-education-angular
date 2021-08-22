@@ -2,10 +2,10 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 export interface StepModel {
+  svgUrl: string;
   text: string;
   path: string;
-  svgUrl?: string;
-  iconType?: string;
+  iconType? : string;
 }
 
 @Component({

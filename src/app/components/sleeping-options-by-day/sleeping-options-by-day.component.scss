@@ -1,20 +1,25 @@
 .SOBD {
-  height: 100%;
-  border: 1px solid black;
-
+  box-sizing: border-box;
+  direction: rtl;
   &__days {
+  margin: 0 auto;
+  margin-bottom: 30px;
     text-align: center;
-
+    width: 50%;
     &-current-day {
-        &-next{
-            margin-right: 5px; 
-        }
+      &-next {
+        margin-right: 5px;
+      }
+      &-previous {
+        margin-left: 5px;
+      }
       &-previous,
       &-next {
+        cursor: pointer;
         color: #448ecd;
         font-weight: bold;
         transform: scale(1.3);
-        background-color: #fff;
+        background-color: transparent;
         border: 0;
         padding-bottom: 3px;
         box-sizing: border-box;
@@ -30,83 +35,99 @@
     }
   }
 
-  &__days-paginatior{
-      display: flex;
-      justify-content: space-between;
-      & span{
-        border-bottom: 1px solid #000;
-        flex: 1;
-        margin: 5px
-      }
+  &__days-paginatior {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 80%;
+    margin:0 auto;
+    & span {
+      border-top: 5px solid #dbdbdb;
+      flex: 1;
+      margin: 5px;
+      cursor: pointer;
+    }
   }
 
-  
-    //sleeping areas section
-    &__sleep-areas {
-        padding: 0 100px;
-        direction: rtl;
-        text-align: right;
-  
-        &-headline {
-          font-size: 17px;
-          margin-bottom: 20px;
+  //sleeping areas section
+  &__sleep-areas {
+    padding: 0 100px;
+    direction: rtl;
+    text-align: right;
+
+    &-headline {
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    &-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      text-align: center;
+      border-bottom: 1px solid rgba($color: #f9f9f9, $alpha: 1);
+      padding-bottom: 40px;
+      margin: 0 auto;
+
+      &-item {
+        justify-content: center;
+        width: 100%;
+        display: flex;
+        gap: 0px;
+        margin-right:10px;
+        & > * { 
+          margin: 0 5px;
+          padding: 0;
         }
-  
-        &-options {
+        &-svg {
+          & * {
+            width: 32.5px;
+            height: 37.5px;
+            margin-left: 5px;
+            fill: #37c56b;
+          }
+        }
+        &-count {
+          margin-right: 5px;
+          align-self: center;
           display: flex;
-          justify-content: space-between;
+          flex-direction: column;
           align-items: center;
-          flex-wrap: wrap;
-          text-align: center;
-          border-bottom: 1px solid rgba($color: #f9f9f9, $alpha: 1);
-          padding-bottom: 40px;
-  
-          &-item {
+          justify-content: center;
+          border-radius: 5px;
+
+          &-number {
+            width: 35px;
+            height: 35px;
+            margin: auto 0;
+            background-color: #f6f6f6;
             display: flex;
-            text-align: center;
-            align-self: center;
-            gap: 10px;
             & > * {
-              margin: 0;
-              padding: 0;
-            }
-            &-svg {
-              & * {
-                width: 32.5px;
-                height: 37.5px;
-                margin-left: 5px;
-              }
-            }
-            &-count {
-              margin-right: 10px;
-              align-self: center;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-              border-radius: 5px;
-  
-              &-number {
-                width: 35px;
-                height: 35px;
-                margin: auto 0;
-                background-color: #f6f6f6;
-                display: flex;
-                & > * {
-                  margin: auto;
-                }
-              }
+              margin: auto;
             }
           }
         }
       }
-  
+    }
+  }
 }
 
-.flex{
-    display: flex;
+.flex {
+  margin: 0 auto;
+  display: flex;
+
 }
 .disabled {
   cursor: none;
   color: #eeeeee;
+}
+
+.chosen {
+  border-top: 5px solid #37c56b !important;
+  background-color: transparent !important;
+}
+
+.font-color-blue {
+  color: #448ecd;
 }

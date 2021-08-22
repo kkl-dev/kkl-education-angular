@@ -106,14 +106,23 @@ app-bottom-navigation {
 
 ::ng-deep mat-grid-tile.bottom-navigation {
   direction: rtl;
-
 }
 
 div.sleeping-width {
-  width: 50% !important;
+  width: 50%;
   margin-left: 50%;
 }
 
+app-sleeping-options {
+  height: inherit;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+mat-grid-list.sleeping-width {
+  width: 50% !important;
+  margin-left: 50%;
+}
 
 div.steps-container {
   padding-right: 5%;

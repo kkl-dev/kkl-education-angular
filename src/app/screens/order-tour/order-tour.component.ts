@@ -21,7 +21,7 @@ export class OrderTourComponent implements OnInit {
       svgUrl: 'groups',
       text: 'הרכב קבוצה',
       path: 'squad-assemble',
-      iconType : 'mat'
+      iconType: 'mat',
     },
     {
       svgUrl: 'bed',
