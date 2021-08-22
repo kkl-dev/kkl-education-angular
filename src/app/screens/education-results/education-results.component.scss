@@ -1,7 +1,10 @@
 .education-results {
   position: relative;
+  height: calc(100% - 90px);
   z-index: 100;
+  box-sizing: border-box;
   display: flex;
+ 
   &__left {
     width: 50%;
     background-color: white;
@@ -10,7 +13,10 @@
   }
 
   &__right {
-    height: 100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 50%;
     text-align: center;
     background-color: white;
@@ -211,7 +217,7 @@
 }
 .font-color {
   color: #11a11a;
-}
+} 
 
 app-tooltip {
   display: none;

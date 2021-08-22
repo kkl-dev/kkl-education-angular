@@ -61,6 +61,7 @@ import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/
 import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
 import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
+import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,7 @@ import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squa
     WizardComponent,
     LinksComponent,
     UserInfoComponent,
-
+    NumberToTimePipe,
     // LOGIN COMPS
     LoginComponent,
     LoginBackdropComponent,
