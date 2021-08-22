@@ -65,6 +65,7 @@ import { ExpendPanelComponent } from './components/expend-panel/expend-panel.com
 import { CardTitleComponent } from './screens/additions/card-title/card-title.component';
 import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
 import { TypographyComponent } from './components/typography/typography.component';
+import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
 
 
 @NgModule({
@@ -131,6 +132,7 @@ import { TypographyComponent } from './components/typography/typography.componen
     SquadAssembleComponent,
     TourPanelComponent,
     TypographyComponent,
+    DashboardCardComponent,
   ],
   imports: [
     BrowserModule,
