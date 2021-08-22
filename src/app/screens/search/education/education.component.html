@@ -5,7 +5,7 @@
       <div class="education__form-group" disableOptionCentering="false">
         <label class="education__form-group-label">איפה ישנים</label>
         <mat-form-field>
-          <mat-select #select [(ngModel)]="tripService.centerField" name="sleepingPlace"
+          <mat-select #select name="sleepingPlace"
             class="education__form-group-select" (opened)="hideSelectPlaceholder(select)"
             (closed)="showSelectPlaceholder(select)" (selectionChange)="selectChange($event)">
             <mat-option value="{{ option.id }}" *ngFor="let option of formOptions">
@@ -47,7 +47,7 @@
       </div>
 
       <mat-checkbox class="education__form-checkbox" [ngModelOptions]="{ standalone: true }" (change)="singleDayTrip()"
-        [(ngModel)]="checked">טיול
+        [(ngModel)]="checkedSingleDay">טיול
         חד יומי</mat-checkbox>
     </form>
   </div>

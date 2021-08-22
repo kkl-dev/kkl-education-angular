@@ -48,7 +48,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { EducationComponent } from './screens/search/education/education.component';
 import { MapsComponent } from './screens/education-results/maps/maps.component';
-
+import { ApiModule } from './api/api.module'
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +82,7 @@ import { MapsComponent } from './screens/education-results/maps/maps.component';
     WorkingStepsComponent,
     Main2Component,
     MapsComponent
-  ], 
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -100,9 +100,11 @@ import { MapsComponent } from './screens/education-results/maps/maps.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    ApiModule
+
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
