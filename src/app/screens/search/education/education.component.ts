@@ -41,10 +41,10 @@ export class EducationComponent implements OnInit {
   ngOnInit(): void {}
 
   public formOptions = [
-    { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: '1' },
-    { imgSrc: 'assets/images/select-2.jpg', text: 'לביא', value: '2' },
-    { imgSrc: 'assets/images/select-3.jpg', text: 'נס הרים', value: '31' },
-    { imgSrc: 'assets/images/select-4.jpg', text: 'יתיר', value: '51' },
+    { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: 'ציפורי' },
+    { imgSrc: 'assets/images/select-2.jpg', text: 'לביא', value: 'לביא' },
+    { imgSrc: 'assets/images/select-3.jpg', text: 'נס הרים', value: 'נס הרים' },
+    { imgSrc: 'assets/images/select-4.jpg', text: 'יתיר', value: 'יתיר' },
   ];
 
   date: string | null = null;
