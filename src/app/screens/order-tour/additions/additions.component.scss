@@ -1,17 +1,25 @@
 mat-grid-list,
 mat-grid-tile,
 app-transport,
-app-navigation-grid,
-app-tour-panel {
+app-navigation-grid {
   width: 100%;
   height: 100%;
 }
 
-.additions-container {
+.additions-container, .nav-grid , .additions-content, .panel-container{
   height: 100%;
   width: 100%;
 }
+
+.additions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .additions-content {
-  width: 100%;
-  height: 100%;
+  padding: 1%;
+  overflow: scroll;
+
 }

@@ -278,7 +278,6 @@ export class SquadAssembleComponent implements OnInit {
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      value: '',
     }),
   ];
 
@@ -312,24 +311,8 @@ export class SquadAssembleComponent implements OnInit {
   tourDetailsRef!: FormContainerComponent;
 
   constructor() {
-    // this.groupAssembleFormInputs = this.groupAssembleForm;
   }
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {}
-
-  ngOnDestroy(): void {
-    // console.log(this.tourDetailsRef.form.value);
-    // console.log(this.customerRef.form.value);
-    // console.log(this.timeAndDateRef.form.value);
-    // console.log(this.groupAssembleRef.form.value);
-  }
-
-  changeGroupAssembleForm() {
-    // this.separated = !this.separated;
-    // this.groupAssembleFormInputs = this.separated
-    //   ? this.separatedGroupAssembleForm
-    //   : this.groupAssembleForm;
-  }
 }

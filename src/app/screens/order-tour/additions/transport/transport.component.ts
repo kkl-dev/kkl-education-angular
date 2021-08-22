@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 
 @Component({
@@ -151,6 +152,14 @@ export class TransportComponent implements OnInit {
       validations: [Validators.required],
       inputProps: {
         labelLength: 'extraWide',
+      },
+    }),
+    new QuestionTextarea({
+      key: 'comments',
+      label: 'הערות',
+      cols: '8',
+      inputProps: {
+        labelLength: 'small',
       },
     }),
   ];
