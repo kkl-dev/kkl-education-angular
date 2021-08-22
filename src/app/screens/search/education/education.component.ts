@@ -22,6 +22,7 @@ export class EducationComponent implements OnInit {
   formOptions: any;
   startDate = new Date();
   endDate = new Date();
+  
   constructor(public usersService: UserService, public tripService: TripService) {
     this.endDate.setMonth(this.startDate.getMonth() + 4)
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
