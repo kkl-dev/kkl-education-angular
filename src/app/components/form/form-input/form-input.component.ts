@@ -49,7 +49,6 @@ export class FormInputComponent implements OnInit {
   ngOnInit(): void {
     this.subscribeToControl();
     if (this.controlType == "textarea") {
-      console.log(this.label)
     }
   }
 
