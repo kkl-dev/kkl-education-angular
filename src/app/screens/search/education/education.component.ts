@@ -7,6 +7,7 @@ import { Locale, getYear } from 'date-fns';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../api/v1/api/user.service';
 import { TripService } from '../../../services/trip.service'
+import { AcommodationType, AvailableDate, FieldForestCenter, SearchAvailableDatesOptions } from 'src/app/api/v1';
 @Component({
   selector: 'app-education',
   templateUrl: './education.component.html',
@@ -16,19 +17,20 @@ export class EducationComponent implements OnInit {
   @ViewChild('educationForm') signupForm: NgForm | undefined;
   disableDates = true;
   disableContinueBtn = true;
-  public checked = false;
+  checkedSingleDay = false;
   routerLinkContinue = '/education/results'
   sleepingPlace: string = '';
-  formOptions: any;
-  startDate = new Date();
-  endDate = new Date();
-  
+  formOptions!: FieldForestCenter[];
+  AcommodationTypes!: AcommodationType[];
+  // newCeremony = {} as Ceremony;
+  SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
+  AcommodationType: AcommodationType = { id: 20, name: 'בקתה' };
   constructor(public usersService: UserService, public tripService: TripService) {
-    this.endDate.setMonth(this.startDate.getMonth() + 4)
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
-      this.endDate
+      new Date()
     );
+    //openapi-generator-cli generate -i ./files-1.0.yaml -g typescript-angular -o src/app/api
     //new Date(2022, 11, 17)
     this.options = {
       firstCalendarDay: 0,
@@ -43,21 +45,47 @@ export class EducationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getLookupFieldForestCenters();
+    this.getLookupAcommodationType();
+  }
+  getLookupFieldForestCenters() {
     this.usersService.getLookupFieldForestCenters().subscribe(
       response => {
-        console.log(response);
         this.formOptions = response;
-        // this.tripService.centerField = this.formOptions[0];
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+  getLookupAcommodationType() {
+    this.usersService.getLookupAcommodationType().subscribe(
+      response => {
+        this.AcommodationTypes = response;
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
   selectChange(event: any) {
-    if (this.tripService.centerField !== undefined) {
-      this.disableDates = false;
-      this.tripService.centerField = this.formOptions.filter((el: { id: number; }) => el.id === parseInt(this.tripService.centerField))[0];
-    }
+    this.tripService.centerField = this.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
+    this.getAvailableDates();
+    this.disableDates = false;
+  }
+  getAvailableDates() {
+    //request body to get available dates 
+    this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
+    this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
+    var tillDate = new Date(new Date().setMonth(new Date().getMonth()+4))
+    this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
+    this.SearchAvailableDatesOptionsRequestBody.acommodationType = this.AcommodationType;
+    this.SearchAvailableDatesOptionsRequestBody.SingleDay = this.checkedSingleDay;
+    this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
+      response => {
+        console.log(response)
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
   }
   dateFromClick() { document.getElementById('calendar-input')?.click(); }
   // public formOptions = [
@@ -141,5 +169,9 @@ export class EducationComponent implements OnInit {
       console.log(this.signupForm.form.value);
     }
   }
-  singleDayTrip() { if (this.checked) { this.routerLinkContinue = '/education/my-tours' } }
+  singleDayTrip() { if (this.checkedSingleDay) { this.routerLinkContinue = '/education/my-tours' } }
+  convertDate(today: any) {//function to change date format '1990-04-13' to '13-04-1990' 
+    var thisDate = today.toISOString().split('T')[0].split('-');
+    return [thisDate[2], thisDate[1], thisDate[0]].join("-");
+  }
 }
