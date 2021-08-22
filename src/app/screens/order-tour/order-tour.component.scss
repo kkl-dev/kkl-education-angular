@@ -1,4 +1,4 @@
-@import '../../../styles.scss';
+@import "../../../styles.scss";
 
 .order-tour {
   width: 100%;
@@ -9,8 +9,6 @@
   justify-content: flex-end;
   direction: rtl !important;
   position: relative;
-
-
 
   &__steps {
     justify-self: stretch;
@@ -82,7 +80,6 @@
   background-color: color(primary) !important;
 
   &__text {
-    // font-weight: bold;
     border-bottom: 3px solid color(primary) !important;
     box-sizing: border-box;
     text-shadow: 0 0 0.01px black;
@@ -91,13 +88,12 @@
 
 mat-grid-list,
 mat-grid-tile,
-app-squad-assemble,
 app-working-steps,
-app-bottom-navigation,
+app-squad-assemble,
+app-sleeping-options,
 app-additions {
   width: 100%;
   height: 100%;
-
 }
 
 .stepper {
@@ -111,7 +107,6 @@ app-bottom-navigation {
   width: 90%;
 }
 
-
 ::ng-deep mat-grid-tile.bottom-navigation {
   direction: rtl;
 
@@ -121,7 +116,13 @@ app-bottom-navigation {
   }
 }
 
-.sleeping-width{
-  width: 50%;
+mat-grid-list.sleeping-width {
+  width: 50% !important;
   margin-left: 50%;
+}
+
+.steps-container {
+  width: 100%;
+  padding-right: 5%;
+  padding-left: 5%;
 }

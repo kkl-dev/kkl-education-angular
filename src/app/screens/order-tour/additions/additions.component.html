@@ -1,14 +1,12 @@
-<mat-grid-list cols="1" rowHeight="25vh">
-  <mat-grid-tile>
+<div class="additions-container">
+  <div class="nav-grid">
     <app-navigation-grid
       [navigationGrid]="navigationItems"
-      title="תוספות"
     ></app-navigation-grid>
-  </mat-grid-tile>
-  <mat-grid-tile rowspan="1">
-    <!-- <app-transport></app-transport> -->
-    <div class="expend-container">
-      <app-expend-panel [title]="'בית ספר תמיר - נס הרים'"></app-expend-panel>
+  </div>
+  <div class="additions-content">
+    <div *ngFor="let tourDay of tour; index as i">
+      <app-tour-panel [tourDay]="tourDay" [i]="i + 1"></app-tour-panel>
     </div>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</div>

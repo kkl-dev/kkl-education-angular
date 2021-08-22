@@ -1,4 +1,11 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Router } from '@angular/router';
+
+export interface StepModel {
+  svgSrc: string;
+  text: string;
+  path: string;
+}
 
 @Component({
   selector: 'app-working-steps',
@@ -6,33 +13,22 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
   styleUrls: ['./working-steps.component.scss'],
 })
 export class WorkingStepsComponent implements OnInit {
-  @Input() activeStep:number = 0;
-  @Input() steps:{
-    svgSrc: string;
-    text: string;
-  }[] =[] ;
-
-  public stepsArray:{
-    svgSrc: string;
-    text: string;
-  }[]=[];
+  @Input() activeStep: number = 0;
+  @Input() steps: StepModel[];
 
   @Output() changeActiveStep = new EventEmitter<number>();
 
-  public chosenStep:number = 0;
+  constructor(private router: Router) {}
 
-  public chooseStep(index :number):void {
-    this.chosenStep = +index;
-  }
+  ngOnInit(): void {}
 
-  constructor() {}
-
-  ngOnInit(): void {
-
-    this.stepsArray=this.steps
-  }
-  setActiveStep(number:number) {
+  setActiveStep(number: number) {
     this.changeActiveStep.emit(+number);
   }
+
+  public onStepClick({ path, index }) {
+    console.log(index)
+    this.setActiveStep(index);
+    this.router.navigateByUrl(`/education/order-tour/${path}`);
+  }
 }
- 

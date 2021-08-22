@@ -1,21 +1,24 @@
-<mat-accordion>
-  <mat-expansion-panel
-    (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false"
-  >
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ title }}
-        <ng-content select="[title]"></ng-content>
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ subtitle }}
-        <ng-content select="[subtitle]"></ng-content>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div>
-      <ng-content select="[content]"></ng-content>
-      {{ content }}
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
+<mat-expansion-panel
+color="primary"
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <ng-content select="[title]"></ng-content>
+    </mat-panel-title>
+    <mat-panel-description>
+      <ng-content select="[subtitle]"></ng-content>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div class="content">
+    <ng-content select="[content]"></ng-content>
+    {{ content }}
+  </div>
+
+  <mat-action-row>
+    <button mat-button color="warn">Previous</button>
+    <button mat-button color="primary">End</button>
+  </mat-action-row>
+</mat-expansion-panel>
