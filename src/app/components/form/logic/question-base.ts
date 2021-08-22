@@ -52,7 +52,7 @@ export class QuestionBase<T> {
     this.disabled = true;
     this.label = options.label || '';
     this.cols = options.cols?.toString() || '1';
-    this.rows = options.rows?.toString() || '3';
+    this.rows = options.rows?.toString() || '4';
     this.validations = options.validations || [];
     this.controlType = options.controlType || 'textbox';
     this.type = options.type || '';
