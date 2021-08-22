@@ -55,11 +55,15 @@ import { FormQuestionComponent } from './components/form/form-question/form-ques
 import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
 import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
+import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
+import { CardTitleComponent } from './screens/additions/card-title/card-title.component';
 import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
 import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
 import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
+import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
+import { TypographyComponent } from './components/typography/typography.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +96,6 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     ToursTableComponent,
     MyToursComponent,
     // form comps
-    // SquadAssembleComponent,
     FormContainerComponent,
     FormQuestionComponent,
 
@@ -118,10 +121,14 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     IconComponent,
     SquadGroupComponent,
     InputRadioComponent,
+    ExpendPanelComponent,
+    CardTitleComponent,
     SleepingOptionsComponent,
     SleepingOptionsFormComponent,
     SleepingOptionsByDayComponent,
-    SquadAssembleComponent
+    SquadAssembleComponent,
+    TourPanelComponent,
+    TypographyComponent
   ],
   imports: [
     BrowserModule,

@@ -9,8 +9,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class IconComponent implements OnInit {
 
   @Input() public type: string = ""
+  @Input() public isActive: boolean = false
   @Input() public key: string = ""
-  @Input() public color: string = ""
+  @Input() public color: string = "primary"
 
   constructor(
     private iconsService: IconsService
