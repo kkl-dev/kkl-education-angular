@@ -63,6 +63,10 @@ export class AdditionsComponent implements OnInit {
   public tour = [
     {
       date: new Date(),
+      locations: [{ title: 'location 1' }, { title: 'location 1' }, { title: 'location 1' }],
+    },
+    {
+      date: new Date(),
       locations: [{ title: 'location 1' }, { title: 'location 1' }],
     },
     {

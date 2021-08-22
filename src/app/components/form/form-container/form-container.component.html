@@ -2,27 +2,12 @@
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
     <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
       <ng-container *ngFor="let question of questions">
-        <mat-grid-tile
-          *ngIf="!question.isGroup"
-          [colspan]="question.cols || cols"
-          [rowspan]="4"
-        >
-          <app-form-input
-            *ngIf="!question.custom"
-            [control]="form.controls[question.key]"
-            [type]="question.type"
-            [label]="question.label"
-            [icon]="question.icon"
-            [options]="question.options"
-            [controlType]="question.controlType"
-            [labelLength]="question.inputProps?.labelLength"
-          ></app-form-input>
+        <mat-grid-tile *ngIf="!question.isGroup" [colspan]="question.cols" [rowspan]="question.rows">
+          <app-form-input *ngIf="!question.custom" [control]="form.controls[question.key]" [type]="question.type"
+            [label]="question.label" [icon]="question.icon" [options]="question.options"
+            [controlType]="question.controlType" [labelLength]="question.inputProps?.labelLength"></app-form-input>
 
-          <app-input-radio
-            [control]="form.controls[question.key]"
-            [question]="question"
-            *ngIf="question.custom"
-          >
+          <app-input-radio [control]="form.controls[question.key]" [question]="question" *ngIf="question.custom">
           </app-input-radio>
         </mat-grid-tile>
 
@@ -30,24 +15,20 @@
           <mat-grid-tile colspan="2">
             {{ question.label | titlecase }}
           </mat-grid-tile>
-          <mat-grid-tile *ngFor="let item of question.group" rowspan="4">
-            <app-form-input
-              [groupLabel]="item.key === 'girls' ? question.label : 'g'"
-              [control]="form.controls[question.key].controls[item.key]"
-              [label]="item.label"
-              [split]="cols > question.cols"
-              [theme]="item.key === 'girls' && 'accent'"
-              [type]="item.controlType"
-              [labelLength]="question.inputProps?.labelLength"
-            >
+          <mat-grid-tile *ngFor="let item of question.group" [rowspan]="item.rows">
+            <app-form-input [groupLabel]="item.key === 'girls' ? question.label : 'g'"
+              [control]="form.controls[question.key].controls[item.key]" [label]="item.label"
+              [split]="cols > question.cols" [theme]="item.key === 'girls' && 'accent'" [type]="item.controlType"
+              [labelLength]="question.inputProps?.labelLength">
             </app-form-input>
           </mat-grid-tile>
         </ng-container>
       </ng-container>
     </mat-grid-list>
 
-    <div class="form-row" *ngIf="showButton">
-      <button type="submit" mat-button (click)="onSubmit()">submit</button>
+    {{hasButton}}
+    <div class="form-row" *ngIf="hasButton">
+      <ng-container *ngTemplateOutlet="slots.button"></ng-container>
     </div>
   </form>
 </div>

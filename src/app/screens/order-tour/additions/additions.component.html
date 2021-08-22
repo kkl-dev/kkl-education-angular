@@ -1,18 +1,12 @@
-<div class="additions-container">
-  <mat-grid-list cols="1" rowHeight="20vh">
-    <mat-grid-tile>
-      <div class="nav-grid">
-        <app-navigation-grid
-          [navigationGrid]="navigationItems"
-        ></app-navigation-grid>
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="tourDay.length" class="additions-content">
-      <div class="panel-container">
-        <div *ngFor="let tourDay of tour; index as i">
-          <app-tour-panel [tourDay]="tourDay" [i]="i + 1"></app-tour-panel>
-        </div>
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div  fxLayout="column" fxFlexFill class="additions-container">
+  <div class="nav-grid" fxFlex="30">
+    <app-navigation-grid
+      [navigationGrid]="navigationItems"
+    ></app-navigation-grid>
+  </div>
+  <div class="additions-content">
+    <div *ngFor="let tourDay of tour; index as i">
+      <app-tour-panel [tourDay]="tourDay" [i]="i + 1"></app-tour-panel>
+    </div>
+  </div>
 </div>
