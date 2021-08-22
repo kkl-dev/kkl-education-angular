@@ -62,6 +62,8 @@ import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-opti
 import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
+import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
+import { TypographyComponent } from './components/typography/typography.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +126,9 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     SleepingOptionsComponent,
     SleepingOptionsFormComponent,
     SleepingOptionsByDayComponent,
-    SquadAssembleComponent
+    SquadAssembleComponent,
+    TourPanelComponent,
+    TypographyComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
+
+export interface PanelModel {
+  title: ElementRef;
+  description: ElementRef;
+  content: ElementRef;
+  actions: ElementRef;
+}
 
 @Component({
   selector: 'app-expend-panel',
@@ -10,7 +17,6 @@ export class ExpendPanelComponent implements OnInit {
 
   public panelOpenState = false;
 
-  @Input() title: string;
   @Input() subtitle: string;
   @Input() content: string;
   @Input() actins: string;

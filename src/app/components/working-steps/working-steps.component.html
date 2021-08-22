@@ -1,14 +1,21 @@
 <div class="working-steps" id="working-steps">
   <div
     class="working-steps__step"
-    *ngFor="let step of stepsArray; let i = index"
-    (click)="setActiveStep(i)"
-
+    *ngFor="let step of steps; let i = index"
+    (click)="onStepClick({ path: step.path, index : i })"
+  >
+    <div
+      class="working-steps__step-icon"
+      [ngClass]="{ active: activeStep == i }"
     >
-    <div class="working-steps__step-icon"   [ngClass]="{chosen : activeStep == i}">
       <svg-icon src="{{ step.svgSrc }}"></svg-icon>
     </div>
-    <div class="working-steps__step-text" [ngClass]="{chosen__text : activeStep == i}">{{ step.text }}</div>
+    <div
+      class="working-steps__step-text"
+      [ngClass]="{ chosen__text: activeStep == i }"
+    >
+      {{ step.text }}
+    </div>
   </div>
   <div class="working-steps__backstroke"></div>
 </div>

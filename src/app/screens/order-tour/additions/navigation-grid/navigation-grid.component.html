@@ -1,9 +1,7 @@
 <div class="nav-container">
-  <mat-grid-list cols="9" rowHeight="25vh">
-    <mat-grid-tile> </mat-grid-tile>
+  <mat-grid-list cols="7" rowHeight="25vh">
     <mat-grid-tile *ngFor="let item of navigationGrid">
       <app-nav-card [item]="item"></app-nav-card>
     </mat-grid-tile>
-    <mat-grid-tile> </mat-grid-tile>
   </mat-grid-list>
 </div>
