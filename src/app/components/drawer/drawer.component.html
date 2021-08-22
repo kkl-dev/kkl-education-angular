@@ -39,14 +39,7 @@
           (click)="toggleReminderStatus(i)"
           class="reminder__content-toggle-done"
         >
-          <!-- <svg-icon src="assets/images/v-sign.svg"
-          *ngIf="comment.status"></svg-icon> -->
-          <!-- <app-icon
-          [color]="'primary'"
-          *ngIf="comment.status"
-          type="svg"
-          [key]="'vSign'"
-        ></app-icon> -->
+
           <span [ngClass]="{ 'marked-done': comment.status }"> </span>
         </span>
         {{ comment.comment }}
@@ -59,7 +52,7 @@
           class="vSign-icon-container"
           [color]="'primary'"
           type="svg"
-          [key]="'edit'" 
+          [key]="'edit'"
         ></app-icon>
       </span>
 
