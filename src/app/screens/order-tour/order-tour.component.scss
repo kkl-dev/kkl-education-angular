@@ -97,6 +97,10 @@ app-additions {
   height: 100%;
 }
 
+mat-grid-tile{
+  overflow: visible;
+}
+
 .stepper {
   width: 60%;
   direction: rtl;
@@ -124,7 +128,6 @@ app-bottom-navigation {
 
 app-sleeping-options {
   height: inherit;
-  border: 5px solid;
   box-sizing: border-box;
   width: 100%;
 }

@@ -1,6 +1,7 @@
 <div class="sleeping-options">
-    <app-sleeping-options-form></app-sleeping-options-form>
+    <app-sleeping-options-form (emitNewDates)="changeDatesHandler($event)"></app-sleeping-options-form>
     <app-sleeping-options-by-day [sleepingOptionsByDay]="sleepingOptionsByDay">
         <h4>זמינות לינה</h4>
     </app-sleeping-options-by-day>
+    <app-form-container [cols]="formCols" [questions]="questions" [showButton]="true"></app-form-container>
 </div>
