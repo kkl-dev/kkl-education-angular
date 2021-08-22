@@ -28,7 +28,7 @@ export class EducationComponent implements OnInit {
   constructor(public usersService: UserService, public tripService: TripService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
-      new Date()
+      new Date(2022, 11, 17)
     );
     //openapi-generator-cli generate -i ./files-1.0.yaml -g typescript-angular -o src/app/api
     //new Date(2022, 11, 17)
@@ -75,7 +75,7 @@ export class EducationComponent implements OnInit {
     //request body to get available dates 
     this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
     this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
-    var tillDate = new Date(new Date().setMonth(new Date().getMonth()+4))
+    var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
     this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
     this.SearchAvailableDatesOptionsRequestBody.acommodationType = this.AcommodationType;
     this.SearchAvailableDatesOptionsRequestBody.SingleDay = this.checkedSingleDay;
