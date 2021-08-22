@@ -1,11 +1,9 @@
-@import '../../../../styles.scss';
-
+@import "../../../../styles.scss";
 
 mat-form-field {
   text-align: right !important;
   width: 100%;
 }
-
 
 ::ng-deep .cdk-overlay-pane {
   transform: translateX(-15%) !important;

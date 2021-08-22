@@ -14,7 +14,7 @@ export class EducationComponent implements OnInit {
 
   public checked = false;
   sleepingPlace: string = '';
-  
+
   constructor() {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
@@ -25,8 +25,6 @@ export class EducationComponent implements OnInit {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
       closeOnSelected: true,
-      // minDate: addDays(new Date(), 5),
-      // maxDate: addDays(new Date(), 10),
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
       freeSpacesArray: this.freeSpacesArray,

@@ -19,7 +19,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 
-const MaterialComponents = [MatButtonModule];
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ const MaterialComponents = [MatButtonModule];
     MatIconModule,
     MatListModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FlexLayoutModule
 
   ],
   exports: [
@@ -73,7 +75,8 @@ const MaterialComponents = [MatButtonModule];
     MatIconModule,
     MatListModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FlexLayoutModule
   ],
 })
 export class MaterialModule {}

@@ -13,7 +13,7 @@ import { QuestionBase } from '../logic/question-base';
 export class FormContainerComponent implements OnInit {
 
   public form!: FormGroup;
-  @Output() emitFormValues:EventEmitter<any> =new EventEmitter()
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter()
 
   @Input() cols: string = "1"
   @Input() gutter: string = "3"

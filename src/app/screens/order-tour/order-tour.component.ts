@@ -82,7 +82,6 @@ export class OrderTourComponent implements OnInit {
   }
 
   private setActiveStep() {
-    console.log(this.currentRoute);
     this.activeStep = this.steps.findIndex(
       (step: StepModel) => this.currentRoute === step.path
     );
