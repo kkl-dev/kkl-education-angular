@@ -4,7 +4,7 @@
     <!-- search header component -->
     <app-header></app-header>
 
-    <app-sleeping-options-by-day (emitCurrentDay)="emitCurrentDayHandler($event)" [sleepingOptionsByDay]="sleepingOptionsByDay">
+    <app-sleeping-options-by-day (emitCurrentDay)="currentDayHandler($event)" [sleepingOptionsByDay]="sleepingOptionsByDay">
       <h4 >זמינות לינה</h4>
   </app-sleeping-options-by-day>
     <!-- avialable dates -->

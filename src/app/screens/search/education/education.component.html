@@ -25,9 +25,9 @@
         <label class="education__form-group-label">מתאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
 
-        <label class="header__form-group-pseudo-input label-input" for="calendar-input">
+        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
           <input class="header__form-group-input" airbnb-calendar type="text" [(ngModel)]="date" [options]="options"
-            (ngModelChange)="dateObjChanged($event)" name="calendar-input" id="calendar-input" />
+            (ngModelChange)="dateObjChanged($event)" name="calendarInput" id="calendarInput" />
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.from }}</span>
         </label>
@@ -36,17 +36,16 @@
         <label class="education__form-group-label">עד תאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
         <!-- <input class="education__form-group-input" type="text" /> -->
-        <label class="header__form-group-pseudo-input label-input" for="calendar-input">
+        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.to }}</span>
           <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
         </label>
       </div>
-
-      <div class="education__link-group" (click)="printFormValues()">
-        <label class="education__form-group-label link-group">buffer</label>
-
-        <a routerLink="/education/results" class="education__link"><span>המשך</span></a>
+ 
+      <div class="education__link-group" (click)="printFormValues()"> 
+        <label class="education__form-group-label link-group">buffer</label> 
+        <a routerLink="/education/results" (click)="printFormValues()" class="education__link"><span>המשך</span></a>
       </div>
 
       <mat-checkbox class="education__form-checkbox" [ngModelOptions]="{ standalone: true }" [(ngModel)]="checked">טיול

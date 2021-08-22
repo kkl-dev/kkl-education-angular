@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { TooltipDataModel } from './tooltip/tooltip.component';
 
 export interface InfoCard {
@@ -167,123 +168,128 @@ export class EducationResultsComponent implements OnInit {
 
   public changeDate(newDate: number) {
     this.chosenDate = newDate;
+    this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newDate].day)
+
   }
 
-  emitCurrentDayHandler(newCurrentDay: number) {
+  currentDayHandler(newCurrentDay: number) {
     this.chosenDate = newCurrentDay;
+this.facilitiesArray=this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day)
   }
 
   public facilitiesArray: InfoCard[] = [
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 8,
-          endingHour: 10,
-          totalTime: 2,
-          user: 'גנים',
-        },
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'יוסי',
-        },
-        {
-          startingHour: 19.75,
-          endingHour: 24,
-          totalTime: 4.25,
-          user: 'יוסי',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/museum.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'אורנים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/classroom.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 20 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'רתמים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/football.svg',
-      headline: 'מגרש ספורט',
-      subHeadline: '',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'נחלאות',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/leafs.svg',
-      headline: 'סיור במשתלה',
-      availability: [],
-    },
-    {
-      svgUrl: 'assets/images/student-hat.svg',
-      headline: 'מרכז למידה',
-      subHeadline: 'עד 40 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/climbing.svg',
-      headline: 'תחנות הפעלה',
-      subHeadline: 'עד 40 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'פתח תקווה',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/judaism.svg',
-      headline: 'בתי כנסה',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'בני ברק',
-        },
-      ],
-    },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 8,
+    //       endingHour: 10,
+    //       totalTime: 2,
+    //       user: 'גנים',
+    //     },
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'יוסי',
+    //     },
+    //     {
+    //       startingHour: 19.75,
+    //       endingHour: 24,
+    //       totalTime: 4.25,
+    //       user: 'יוסי',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/museum.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'אורנים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/classroom.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 20 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'רתמים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/football.svg',
+    //   headline: 'מגרש ספורט',
+    //   subHeadline: '',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'נחלאות',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/leafs.svg',
+    //   headline: 'סיור במשתלה',
+    //   availability: [],
+    // },
+    // {
+    //   svgUrl: 'assets/images/student-hat.svg',
+    //   headline: 'מרכז למידה',
+    //   subHeadline: 'עד 40 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/climbing.svg',
+    //   headline: 'תחנות הפעלה',
+    //   subHeadline: 'עד 40 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'פתח תקווה',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/judaism.svg',
+    //   headline: 'בתי כנסה',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'בני ברק',
+    //     },
+    //   ],
+    // },
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private checkAvailabillityService:CheckAvailabilityService) {
+this.facilitiesArray=this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day)
+  }
 
   ngOnInit(): void {}
 

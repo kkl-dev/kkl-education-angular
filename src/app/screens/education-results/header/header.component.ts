@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
+import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ import { Locale, getYear } from 'date-fns';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild('resultsForm') signupForm: NgForm | undefined;
+  @ViewChild('resultsForm') signupForm: NgForm;
 
   date: string | null = null;
 
@@ -49,8 +50,8 @@ export class HeaderComponent implements OnInit {
   };
 
   public dateObjChanged(e: string) {
-    if (e.includes('-')) {
-      let tempDateArr : string[]= [];
+    if (e && e.includes('-')) {
+      let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       console.log(tempDateArr);
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
@@ -69,14 +70,19 @@ export class HeaderComponent implements OnInit {
   }
 
   public formOptions: { imgSrc: string; text: string; value: string }[] = [
-    { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'נס הרים', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: '1' },
+    { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: 'ציפורי' },
+    { imgSrc: 'assets/images/select-2.jpg', text: 'לביא', value: 'לביא' },
+    { imgSrc: 'assets/images/select-3.jpg', text: 'נס הרים', value: ' נס הרים' },
+    { imgSrc: 'assets/images/select-4.jpg', text: 'יתיר', value: 'יתיר' },
   ];
 
-  constructor() {
+  location: string = '';
+  constructor(private checkAvailabillityService: CheckAvailabilityService) {
+    this.dateObjChanged(
+      this.checkAvailabillityService.checkAvailabilltyValues.calendarInput
+    );
+    this.location =
+      this.checkAvailabillityService.checkAvailabilltyValues.sleepingPlace;
     this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
@@ -93,5 +99,5 @@ export class HeaderComponent implements OnInit {
       freeSpacesArray: this.freeSpacesArray1,
     };
   }
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }
