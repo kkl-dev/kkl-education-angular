@@ -32,7 +32,9 @@
     </div>
     <div fxFlex="15" fxFlex.xs="15" class="bottom-navigation" fxLayoutAlign="center">
       <app-bottom-navigation [currentPage]="0" previousUrl="prevPage" nextUrl="nextPage" [lastPage]="steps.length"
-        (changePage)="changeActiveStepBottomNavigation($event)"></app-bottom-navigation>
+        (changePage)="changeActiveStepBottomNavigation($event)"
+        title="המשך"
+        ></app-bottom-navigation>
     </div>
   </div>
 

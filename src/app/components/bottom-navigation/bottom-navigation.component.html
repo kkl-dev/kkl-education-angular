@@ -1,11 +1,28 @@
 <div class="bottom-navigation">
   <div class="bottom-navigation__back">
-    <button  class="bottom-navigation__back-link"
-    (click)="previousPageHandler()"
-      ><span class="chevron"></span
-    ></button>
+    <button
+      class="bottom-navigation__back-link"
+      (click)="previousPageHandler()"
+    >
+      <app-icon type="mat" key="chevron_right"></app-icon>
+    </button>
   </div>
-  <button class="bottom-navigation__forward"
-  (click)="nextPageHandler()"
-  >המשך</button>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="nextPageHandler()">
+      <div
+        fxLayout="row"
+        class="button-content"
+        xLayoutAlign="space-around stretch"
+      >
+        <div>
+          {{ title }}
+        </div>
+        <div>
+          <app-icon color="" type="mat" key="chevron_left"></app-icon>
+        </div>
+      </div>
+    </button>
+  </div>
 </div>
+
+<!-- class="bottom-navigation__forward" -->
