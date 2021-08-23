@@ -1,6 +1,6 @@
 <div class="tour-container">
   <div class="tour-header">
-    <app-typography [variant]="'mat-subheading-2'" color="primary">
+    <app-typography [variant]="'mat-subheading-2'" [bold]="800" color="primary">
       יום {{ i }} : {{ tourDay.date | date: "M/d/yy" }}
     </app-typography>
   </div>
@@ -14,9 +14,13 @@
           matBadgeColor="accent"
         >
           <div title fxLayout="row" fxLayoutAlign="start center">
-            <app-typography variant="mat-body-1" fxFlex="8">{{
-              tourDay.date | date: "HH:mm"
-            }}</app-typography>
+            <app-typography
+              color="text-light"
+              [bold]="600"
+              variant="mat-body-1"
+              fxFlex="8"
+              >{{ tourDay.date | date: "HH:mm" }}</app-typography
+            >
             <app-typography [variant]="'mat-title'">{{
               panel.title
             }}</app-typography>

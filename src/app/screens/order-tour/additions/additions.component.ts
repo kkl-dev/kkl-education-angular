@@ -61,7 +61,7 @@ export class AdditionsComponent implements OnInit {
         ];
 
   public title: string = 'תוספות';
-  public tourTitle: string = 'טיול שנתי שכבת ן ב"ס תמיר';
+  public tourTitle: string = 'טיול שנתי שכבת ו בי"ס תמיר';
 
   public id: number = 839483;
 

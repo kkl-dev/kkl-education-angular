@@ -7,8 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TypographyComponent implements OnInit {
   @Input() color: string;
-  @Input() bold: string = '';
   @Input() size: string = '';
+  @Input() bold: number;
   @Input() variant: string;
 
   constructor() {}
@@ -21,5 +21,7 @@ export class TypographyComponent implements OnInit {
     } else {
       this.variant = this.variant || 'mat-title';
     }
+
+    this.bold = this.bold || 500;
   }
 }

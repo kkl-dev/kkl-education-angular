@@ -7,7 +7,8 @@ $primary: #448ecd;
 $accent: #d220ba;
 $default: #bababa;
 $paper: #fff;
-$text: black;
+$text: #000000;
+$text-light: #A2A2A2;
 $success: #37c563;
 
 $colors: (
@@ -16,6 +17,7 @@ $colors: (
   default: $default,
   paper: $paper,
   text: $text,
+  text-light: $text-light,
   success : $success
 );
 
