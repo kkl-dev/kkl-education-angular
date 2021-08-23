@@ -52,7 +52,7 @@ mat-grid-tile {
 ::ng-deep.mat-badge-content {
   width: auto;
   display: grid;
-  min-width: 30px;
+  min-width: 25px;
   // min-height: 28px;
   text-align: center;
   align-items: center;
@@ -60,6 +60,7 @@ mat-grid-tile {
   top: -20px;
   right: -22px;
 }
+
 
 
 ::ng-deep .icon .mat-badge-content  {

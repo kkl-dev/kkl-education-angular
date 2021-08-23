@@ -1,10 +1,20 @@
 <div class="dashboard">
-  <div
-    fxLayout="row"
-    fxLayoutAlign="center center"
-  >
-    <div *ngFor="let item of cards; let i = index">
-      <app-dashboard-card [item]="item" prefix="education"></app-dashboard-card>
+  <div  fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div *ngFor="let item of topCards; let i = index">
+        <app-dashboard-card
+          [item]="item"
+          prefix="education"
+        ></app-dashboard-card>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div *ngFor="let item of bottomCards; let i = index">
+        <app-dashboard-card
+          [item]="item"
+          prefix="education"
+        ></app-dashboard-card>
+      </div>
     </div>
   </div>
 </div>

@@ -1,9 +1,9 @@
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport 
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
 
         [attr.role]=" 'navigation'"
         [mode]="'over'"
-        [opened]="false" 
+        [opened]="false"
         position="end"
         [ngClass]="{
             'sidenav-education': prefix === 'education',
@@ -14,11 +14,10 @@
      <app-links class="app-link"></app-links>
     </mat-sidenav>
     <mat-sidenav-content>
-   <app-navbar (menuToggle)="drawer.toggle()"></app-navbar>
-   <app-wizard *ngIf="showSteps"></app-wizard>
+   <app-navbar [showStatus]="showStatus" [status]="status" prefix='education' (menuToggle)="drawer.toggle()"></app-navbar>
+   <app-wizard *ngIf="showWizard"></app-wizard>
    <router-outlet>
-  
+
   </router-outlet>
   </mat-sidenav-content>
   </mat-sidenav-container>
-  
