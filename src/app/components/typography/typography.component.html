@@ -1,3 +1,6 @@
-<span [ngClass]="[variant, color]">
-  <ng-content></ng-content>
-</span>
+<div>
+  <span [ngClass]="['text', color, variant]">
+  <!-- <span [ngClass]="['text', color, variant]" [ngStyle]="{'fontSize.px' : size}"> -->
+    <ng-content></ng-content>
+  </span>
+</div>

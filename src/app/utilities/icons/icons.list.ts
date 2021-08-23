@@ -9,21 +9,25 @@ export const THUMBUP_ICON =
   </svg>
 `;
 
-export const V_SIGN=`<svg xmlns="http://www.w3.org/2000/svg"
+export const V_SIGN = `<svg xmlns="http://www.w3.org/2000/svg"
  width="17.956" height="17.331" viewBox="0 0 17.956 17.331">
- <defs><style>.a{fill:#fff;opacity:0;}.b{fill:none;stroke:#6dc066;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}.c,.d{stroke:none;}.d{fill:#dfdfdf;}</style></defs><g transform="translate(0.332 0.331)"><g class="a"><path class="c" d="M 8.5 16.25 C 4.226640224456787 16.25 0.75 12.77336025238037 0.75 8.5 C 0.75 6.115330219268799 1.804280042648315 3.984380006790161 3.798870086669922 2.337510108947754 C 4.990379810333252 1.342460036277771 6.746600151062012 0.75 8.5 0.75 C 12.77336025238037 0.75 16.25 4.226640224456787 16.25 8.5 C 16.25 12.77336025238037 12.77336025238037 16.25 8.5 16.25 Z"/><path class="d" d="M 8.5 1.5 C 6.916910171508789 1.5 5.340410232543945 2.027279853820801 4.28285026550293 2.910479545593262 L 4.276379585266113 2.915849685668945 C 2.460060119628906 4.415530204772949 1.5 6.346500396728516 1.5 8.5 C 1.5 12.35980987548828 4.640190124511719 15.5 8.5 15.5 C 12.35980987548828 15.5 15.5 12.35980987548828 15.5 8.5 C 15.5 4.640190124511719 12.35980987548828 1.5 8.5 1.5 M 8.5 0 C 13.19441986083984 0 17 3.805580139160156 17 8.5 C 17 13.19441986083984 13.19441986083984 17 8.5 17 C 3.805580139160156 17 0 13.19441986083984 0 8.5 C 0 5.866430282592773 1.197699546813965 3.512599945068359 3.32135009765625 1.759169578552246 C 4.549599647521973 0.7334194183349609 6.439149856567383 0 8.5 0 Z"/></g><g transform="translate(0.631 0.581)"><path class="b" d="M18.933,9.965v.706a7.72,7.72,0,0,1-5.708,7.357,8.116,8.116,0,0,1-8.942-3.183A7.456,7.456,0,0,1,4.911,5.68a8.171,8.171,0,0,1,9.3-2.024" transform="translate(-3 -2.991)"/><path class="b" d="M23.856,6,15.89,13.974l-2.39-2.39"
- transform="translate(-7.923 -4.402)"/></g></g></svg>`
+ <defs><style>.v-sign{fill:"none";opacity:0;}.b{fill:none;stroke:#6dc066;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}.c,.d{stroke:none;}.d{fill:#dfdfdf;}</style></defs><g transform="translate(0.332 0.331)">
+ <g class="v-sign">
+ <path class="c" d="M 8.5 16.25 C 4.226640224456787 16.25 0.75 12.77336025238037 0.75 8.5 C 0.75 6.115330219268799 1.804280042648315 3.984380006790161 3.798870086669922 2.337510108947754 C 4.990379810333252 1.342460036277771 6.746600151062012 0.75 8.5 0.75 C 12.77336025238037 0.75 16.25 4.226640224456787 16.25 8.5 C 16.25 12.77336025238037 12.77336025238037 16.25 8.5 16.25 Z"/><path class="d" d="M 8.5 1.5 C 6.916910171508789 1.5 5.340410232543945 2.027279853820801 4.28285026550293 2.910479545593262 L 4.276379585266113 2.915849685668945 C 2.460060119628906 4.415530204772949 1.5 6.346500396728516 1.5 8.5 C 1.5 12.35980987548828 4.640190124511719 15.5 8.5 15.5 C 12.35980987548828 15.5 15.5 12.35980987548828 15.5 8.5 C 15.5 4.640190124511719 12.35980987548828 1.5 8.5 1.5 M 8.5 0 C 13.19441986083984 0 17 3.805580139160156 17 8.5 C 17 13.19441986083984 13.19441986083984 17 8.5 17 C 3.805580139160156 17 0 13.19441986083984 0 8.5 C 0 5.866430282592773 1.197699546813965 3.512599945068359 3.32135009765625 1.759169578552246 C 4.549599647521973 0.7334194183349609 6.439149856567383 0 8.5 0 Z"/></g><g transform="translate(0.631 0.581)"><path class="b" d="M18.933,9.965v.706a7.72,7.72,0,0,1-5.708,7.357,8.116,8.116,0,0,1-8.942-3.183A7.456,7.456,0,0,1,4.911,5.68a8.171,8.171,0,0,1,9.3-2.024" transform="translate(-3 -2.991)"/><path class="b" d="M23.856,6,15.89,13.974l-2.39-2.39"
+ transform="translate(-7.923 -4.402)"/></g></g></svg>`;
 
-export const BOYS_GIRLS_ICON=`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="47" height="47" viewBox="0 0 47 47"><defs><style>.a{fill:black;opacity:0.74;}.b{filter:url(#a);}</style><filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/><feGaussianBlur stdDeviation="3" result="b"/>
-<feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/><feComposite in="SourceGraphic"/></filter></defs>
+export const BOYS_GIRLS_ICON = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="47" height="47" viewBox="0 0 47 47"><defs>
+<style>.gender{fill:"none";opacity:0.74;}.b{filter:url(#a);}</style><filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/><feGaussianBlur stdDeviation="3" result="b"/>
+<feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/>
+<feComposite in="SourceGraphic"/></filter></defs>
 <g class="b" transform="matrix(1, 0, 0, 1, 0, 0)">
-<rect class="a" width="29" height="29" rx="5" transform="translate(9 6)"/></g></svg>`
+<rect class="gender" width="29" height="29" rx="5" transform="translate(9 6)"/></g></svg>`;
 
-export const EDIT_ICON=`<svg xmlns="http://www.w3.org/2000/svg"
+export const EDIT_ICON = `<svg xmlns="http://www.w3.org/2000/svg"
  width="12.228" height="12.228"
- viewBox="0 0 12.228 12.228"><defs><style>.edit{fill:none;}</style></defs><path class="a"
+ viewBox="0 0 12.228 12.228"><defs><style>.edit{fill:"none";}</style></defs><path class="edit"
   d="M4.5,14.177v2.547H7.047L14.56,9.212,12.013,6.665ZM16.53,7.242a.676.676,0,0,0,0-.958L14.94,4.695a.676.676,0,0,0-.958,0L12.739,5.938l2.547,2.547L16.53,7.242Z"
-   transform="translate(-4.5 -4.496)"/></svg>`
+   transform="translate(-4.5 -4.496)"/></svg>`;
 
 export const BELL_ICON = `<svg xmlns="http://www.w3.org/2000/svg"
  width="20.107" height="22.307" viewBox="0 0 20.107 22.307">
@@ -187,3 +191,21 @@ viewBox="0 0 36 27.316"><defs>
 <style>.bed{fill:"none";}</style></defs><g transform="translate(-4 -62.751)">
 <path class="bed" d="M35.106,74.882H34.6a2.45,2.45,0,0,0-1.409.444V74.169a2.4,2.4,0,0,0-2.395-2.395H23.9c-.291,0-.012,1.1,0,1.055h6.894a1.341,1.341,0,0,1,1.34,1.34v3.745H13.178V74.169a1.341,1.341,0,0,1,1.34-1.34H23.9c.291,0,.291-1.055,0-1.055l-15.944.04c.621-1.126.39-3.8.187-4.556-.075-.281-.043-.065,0,0l-.372-1.388a2.524,2.524,0,0,0-3.9-1.4v-.256A2.467,2.467,0,0,0,1.4,61.751H.894A.9.9,0,0,0,0,62.645V88.174a.9.9,0,0,0,.894.894h2.08a.9.9,0,0,0,.894-.894V83.311h.6c.291,0,.291-1.055,0-1.055h-.6V78.969H32.133v3.287H4.464c-.291,0-.291,1.055,0,1.055H32.133v4.862a.9.9,0,0,0,.894.894h2.08A.9.9,0,0,0,36,88.174v-12.4A.894.894,0,0,0,35.106,74.882ZM3.913,70.96a2.508,2.508,0,0,0,.491.953,2.388,2.388,0,0,0-.537.272v-1.4Zm-1.1,17.052H1.055V62.806H1.4a1.411,1.411,0,0,1,1.409,1.409ZM3.867,74.169a1.341,1.341,0,0,1,1.34-1.34H9.745a2.381,2.381,0,0,0-.411,1.34v3.745H3.867ZM34.945,88.013H33.187V77.346A1.411,1.411,0,0,1,34.6,75.937h.349Z" transform="translate(4 1)"/></g>
 </svg>`;
+
+export const CALENDER_ICON = `
+<svg xmlns="http://www.w3.org/2000/svg"
+width="20.094" height="20.094" viewBox="0 0 20.094 20.094"><defs>
+<style>.calender{fill:"none";}</style></defs><g transform="translate(21)">
+<g transform="translate(-21)">
+<ellipse class="calender" cx="0.913" cy="0.609" rx="0.913" ry="0.609" transform="translate(14.208 7.415)"/>
+<path class="calender" d="M16.954,1.57h-1.02V.785a.785.785,0,0,0-1.57,0V1.57H10.792V.785a.785.785,0,1,0-1.57,0V1.57H5.691V.785a.785.785,0,0,0-1.57,0V1.57H3.14A3.143,3.143,0,0,0,0,4.709V16.954a3.143,3.143,0,0,0,3.14,3.14h6a.785.785,0,0,0,0-1.57h-6a1.572,1.572,0,0,1-1.57-1.57V4.709A1.572,1.572,0,0,1,3.14,3.14h.981v.785a.785.785,0,0,0,1.57,0V3.14H9.223v.785a.785.785,0,1,0,1.57,0V3.14h3.571v.785a.785.785,0,1,0,1.57,0V3.14h1.02a1.572,1.572,0,0,1,1.57,1.57V9.183a.785.785,0,1,0,1.57,0V4.709A3.143,3.143,0,0,0,16.954,1.57Z"/>
+<path class="calender" d="M274.317,270a4.317,4.317,0,1,0,4.317,4.317A4.322,4.322,0,0,0,274.317,270Zm0,7.207a2.89,2.89,0,1,1,2.89-2.89A2.893,2.893,0,0,1,274.317,277.207Z" transform="translate(-258.54 -258.54)"/>
+<path class="calender" d="M372.748,331.463h-.321v-.749a.714.714,0,1,0-1.427,0v1.463a.714.714,0,0,0,.714.714h1.035a.714.714,0,1,0,0-1.427Z" transform="translate(-355.937 -316.828)"/>
+<ellipse class="calender" cx="0.913" cy="0.609" rx="0.913" ry="0.609" transform="translate(10.825 7.415)"/>
+<circle class="calender" cx="0.913" cy="0.913" r="0.913" transform="translate(7.442 10.825)"/>
+<circle class="calender" cx="0.609" cy="0.609" r="0.609" transform="translate(4.045 7.415)"/>
+<ellipse class="calender" cx="0.609" cy="0.913" rx="0.609" ry="0.913" transform="translate(4.045 10.825)"/>
+<ellipse class="calender" cx="0.609" cy="0.913" rx="0.609" ry="0.913" transform="translate(4.045 14.208)"/>
+<circle class="calender" cx="0.913" cy="0.913" r="0.913" transform="translate(7.442 14.208)"/>
+<ellipse class="calender" cx="0.913" cy="0.609" rx="0.913" ry="0.609" transform="translate(7.442 7.415)"/></g></g></svg>
+`;
