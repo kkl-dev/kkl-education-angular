@@ -8,7 +8,6 @@
         [ngClass]="{ disabled: currentDay === 0 }"
         [disabled]="currentDay === 0"
       >
-        &#60;
       </button>
       <span class="SOBD__days-current-day-text"
         ><span> {{ sleepingOptionsByDay[currentDay].day }}</span> זמינות יום
@@ -20,7 +19,6 @@
         [ngClass]="{ disabled: currentDay === sleepingOptionsByDay.length - 1 }"
         [disabled]="currentDay === sleepingOptionsByDay.length - 1"
       >
-        &#62;
       </button>
     </div>
     <div class="SOBD__days-paginatior">
