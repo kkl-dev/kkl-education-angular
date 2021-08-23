@@ -59,17 +59,17 @@ mat-grid-tile {
   }
 }
 
-::ng-deep.mat-badge-content {
-  width: auto;
-  display: grid;
-  min-width: 25px;
-  text-align: center;
-  align-items: center;
-  padding: 5px 3px;
-  top: -20px;
-  right: -22px;
+// ::ng-deep.mat-badge-content {
+//   width: auto;
+//   display: grid;
+//   min-width: 25px;
+//   text-align: center;
+//   align-items: center;
+//   padding: 5px 3px;
+//   top: -20px;
+//   right: -22px;
 
-}
+// }
 
 ::ng-deep .icon .mat-badge-content {
   font-family: "Material Icons";

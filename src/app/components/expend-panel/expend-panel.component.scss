@@ -2,12 +2,10 @@
 
 mat-expansion-panel {
   margin-bottom: 15px;
+  border-bottom: 1px solid color(default);
+  border-radius: 0px;
 
   mat-expansion-panel-header {
     direction: rtl;
   }
-}
-
-.expend-panel {
-  background-color: #EEEEEE;
 }

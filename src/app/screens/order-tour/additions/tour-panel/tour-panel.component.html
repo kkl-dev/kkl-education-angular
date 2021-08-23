@@ -9,10 +9,11 @@
       <ng-container>
         <app-expend-panel
           *ngFor="let panel of tourDay.locations"
-          class="icon small"
-          matBadge="priority_high"
-          matBadgeColor="accent"
-        >
+          class="small"
+          matBadge="!"
+          matBadgeSize="small"
+          matBadgeColor="warn"
+          >
           <div title fxLayout="row" fxLayoutAlign="start center">
             <app-typography
               color="text-light"
