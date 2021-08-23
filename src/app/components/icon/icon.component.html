@@ -1,5 +1,15 @@
 <div class="icon-container">
-  <mat-icon [ngClass]="{'default' : color === 'default'}" *ngIf="type === 'svg'" [color]="color" [svgIcon]="key">
+  <mat-icon
+    [ngClass]="{ default: color === 'default', active: isActive }"
+    *ngIf="type === 'svg'"
+    [color]="color"
+    [svgIcon]="key"
+  >
   </mat-icon>
-  <mat-icon [ngClass]="{'default' : color === 'default'}" *ngIf="type !== 'svg'" [color]="color">{{key}}</mat-icon>
+  <mat-icon
+    [ngClass]="{ default: color === 'default', active: isActive }"
+    *ngIf="type === 'mat'"
+    [color]="color"
+    >{{ key }}</mat-icon
+  >
 </div>

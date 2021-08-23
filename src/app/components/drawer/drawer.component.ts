@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Offset } from '../form-container/dynamic-form-question/question-offset';
-import { FormContainerComponent } from '../form-container/form-container.component';
-import { QuestionBase } from '../form-container/question-base';
-import { QuestionCalendar } from '../form-container/question-calendar';
-import { QuestionTextarea } from '../form-container/question-textarea';
-import { TextboxQuestion } from '../form-container/question-textbox';
+import { FormContainerComponent } from '../form/form-container/form-container.component';
 import { DatePipe } from '@angular/common';
+import { QuestionBase } from '../form/logic/question-base';
+import { QuestionCalendar } from '../form/logic/question-calendar';
+import { QuestionTextbox } from '../form/logic/question-textbox';
+import { QuestionTextarea } from '../form/logic/question-textarea';
 @Component({
   selector: 'app-drawer',
   templateUrl: './drawer.component.html',
@@ -18,56 +17,50 @@ export class DrawerComponent implements OnInit {
   isOpen: boolean = false;
   index: number = -1;
 
-
-
   reminderForm: QuestionBase<string | Date>[] = [
     new QuestionCalendar({
       key: 'date',
-      columns: 'span 6',
       label: 'תאריך',
       value: new Date(),
-      order: 3,
-    }),
-    new Offset({
-      columns: 'span 1',
     }),
 
-    new TextboxQuestion({
+    new QuestionTextbox({
       key: 'time',
-      columns: 'span 5',
       label: 'שעה',
       value: '',
-      order: 1,
     }),
     new QuestionTextarea({
       key: 'comment',
       label: 'תזכורת',
-      innerLabel: '',
-      columns: 'span 12',
-      order: 7,
+      rows: '4',
+      cols: '2',
       value: '',
     }),
-  
   ];
 
-  reminderArray: { date: Date; time: string; comment: string; status:boolean }[] = [
+  reminderArray: {
+    date: Date;
+    time: string;
+    comment: string;
+    status: boolean;
+  }[] = [
     {
       date: new Date(),
       time: '08:00',
       comment: 'לגזום את כל העצים ממזרח לוואדי ',
-      status:false
+      status: false,
     },
     {
       date: new Date(),
       time: '08:00',
       comment: 'להוסיך את קבוצת הילדים החמישית לטיול בנס הרים',
-      status:false
+      status: false,
     },
   ];
 
-  newCommentHandler(newComment: { date: Date; time: string; comment: string ;  }) {
+  newCommentHandler(newComment: { date: Date; time: string; comment: string }) {
     console.log('newComment');
-const newCommentToAdd= {...newComment, status:false}
+    const newCommentToAdd = { ...newComment, status: false };
     if (this.index > -1) {
       this.reminderArray.splice(this.index, 1, newCommentToAdd);
       this.index = -1;
@@ -99,10 +92,8 @@ const newCommentToAdd= {...newComment, status:false}
     this.isOpen = !this.isOpen;
   }
 
-  toggleReminderStatus(index:number){
-    this.reminderArray[index].status=!this.reminderArray[index].status
-  
-  
+  toggleReminderStatus(index: number) {
+    this.reminderArray[index].status = !this.reminderArray[index].status;
   }
 
   openFormHandler() {
@@ -110,7 +101,6 @@ const newCommentToAdd= {...newComment, status:false}
   }
 
   deleteFormInputs(e: Event) {
-
     e.preventDefault();
     this.drawerForm.form.reset();
     this.isFormOpen = false;

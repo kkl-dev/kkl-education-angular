@@ -1,0 +1,57 @@
+<div class="form">
+  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
+      <ng-container *ngFor="let question of questions">
+        <mat-grid-tile
+          *ngIf="!question?.isGroup"
+          [colspan]="question.cols"
+          [rowspan]="question.rows || 4"
+        >
+          <app-form-input
+            *ngIf="!question.custom"
+            [control]="form.controls[question.key]"
+            [type]="question.type"
+            [label]="question.label"
+            [icon]="question.icon"
+            [options]="question.options"
+            [controlType]="question.controlType"
+            [labelLength]="question.inputProps?.labelLength"
+          ></app-form-input>
+
+          <app-input-radio
+            [control]="form.controls[question.key]"
+            [question]="question"
+            *ngIf="question.custom"
+          >
+          </app-input-radio>
+        </mat-grid-tile>
+
+        <ng-container *ngIf="question?.isGroup">
+          <mat-grid-tile colspan="2">
+            {{ question.label | titlecase }}
+          </mat-grid-tile>
+          <mat-grid-tile
+            *ngFor="let item of question.group"
+            [colspan]="item.cols"
+            [rowspan]="item.rows"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+            slots.group;
+            context: {
+              question,
+              form,
+              item
+            }
+            "
+            ></ng-container>
+          </mat-grid-tile>
+        </ng-container>
+      </ng-container>
+    </mat-grid-list>
+
+    <div class="form-row" *ngIf="showButton">
+      <!-- <ng-container *ngTemplateOutlet="slots?.button"></ng-container> -->
+    </div>
+  </form>
+</div>

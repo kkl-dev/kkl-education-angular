@@ -1,0 +1,29 @@
+@import "../../../../styles.scss";
+
+mat-grid-list,
+mat-grid-tile,
+app-form-container {
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  padding-top: 5%;
+}
+
+.text {
+  color: color(primary);
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+div {
+  height: 100%;
+}
+
+app-form-input {
+  width: 100%
+}

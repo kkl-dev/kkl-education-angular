@@ -1,408 +1,319 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-} from '@angular/core';
-import { QuestionSelect } from 'src/app/components/form-container/question-select';
-import { QuestionBase } from 'src/app/components/form-container/question-base';
-import { TextboxQuestion } from 'src/app/components/form-container/question-textbox';
-import { QuestionCustom } from 'src/app/components/form-container/question-custom';
-import { of } from 'rxjs';
-import { QuestionNumber } from 'src/app/components/form-container/question-number';
-import { QuestionRadio } from 'src/app/components/form-container/dynamic-form-question/question-radio';
-import { QuestionTextarea } from 'src/app/components/form-container/question-textarea';
-import { Offset } from 'src/app/components/form-container/dynamic-form-question/question-offset';
-import { QuestionCalendar } from 'src/app/components/form-container/question-calendar';
-import { FormContainerComponent } from 'src/app/components/form-container/form-container.component';
-import { NgForm } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { QuestionNumber } from 'src/app/components/form/logic/question-number';
+
+export interface formGroupGrid {
+  title: string;
+  cols?: string;
+  formCols?: string;
+  questions: QuestionBase<string | Date | number>[];
+}
 
 @Component({
   selector: 'app-squad-assemble',
   templateUrl: './squad-assemble.component.html',
   styleUrls: ['./squad-assemble.component.scss'],
 })
-export class SquadAssembleComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
-  tourDetailsFormCustomQuestion: {} = {
-    boys: true,
-    girls: true,
-    boysChaperone: true,
-    girlsChaperone: true,
-    boysInstructors: true,
-    girlsInstructors: true,
-    boysMedics: true,
-    girlsMedics: true,
-  };
-
-  groupAssembleForm: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'age',
-      columns: 'span 12',
-      label: 'קבוצת גיל',
-      options: [
-        { key: '1', value: '1' },
-        { key: 'עוד לקוח', value: '10+' },
-        { key: 'לקוח מספר שלוש', value: '20+' },
-        { key: 'לקוח מספר ארבע', value: '30+' },
-      ],
-      order: 1,
-    }),
-    new QuestionNumber({
-      key: 'kids',
-      columns: 'span 5',
-      type: 'number',
-      label: 'נוער/מבוגרים',
-      value: 0,
-      order: 2,
-    }),
-    new Offset({
-      columns: 'span 2 ',
-    }),
-
-    new QuestionNumber({
-      key: 'chaperone',
-      columns: 'span 5',
-      type: 'number',
-      label: 'מלווים',
-      value: 0,
-
-      order: 4,
-    }),
-  
-
-    new QuestionNumber({
-      key: 'instructors',
-      columns: 'span 5',
-      type: 'number',
-      label: 'מדריכים',
-      value: 0,
-
-      order: 7,
-    }),
-    new Offset({
-      columns: 'span 2 ',
-    }),
-
-    new QuestionNumber({
-      key: 'medics',
-      columns: 'span 5',
-      type: 'number',
-      label: 'חובשים',
-      value: 0,
-
-      order: 9,
-    }),
-  
-  ];
-
-  separatedGroupAssembleForm: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'age',
-      columns: 'span 12',
-      label: 'קבוצת גיל',
-      options: [
-        { key: '1', value: '1' },
-        { key: 'עוד לקוח', value: '10+' },
-        { key: 'לקוח מספר שלוש', value: '20+' },
-        { key: 'לקוח מספר ארבע', value: '30+' },
-      ],
-      order: 1,
-    }),
-    new QuestionNumber({
-      key: 'boys',
-      columns: 'span 5',
-      type: 'number',
-      label: 'נוער/מבוגרים',
-      innerLabel: 'בנים',
-      value: 0,
-      order: 2,
-    }),
-    new Offset({
-      columns: 'span 2 ',
-    }),
-    new QuestionNumber({
-      key: 'girls',
-      columns: 'span 5',
-      type: 'number',
-      label: 'hide',
-      innerLabel: 'בנות',
-      value: 0,
-      order: 3,
-    }),
-
-    new QuestionNumber({
-      key: 'boysChaperone',
-      columns: 'span 5',
-      type: 'number',
-      label: 'מלווים',
-      innerLabel: 'בנים',
-      value: 0,
-
-      order: 4,
-    }),
-    new Offset({
-      columns: 'span 2 ',
-    }),
-
-    new QuestionNumber({
-      key: 'girlsChaperone',
-      columns: 'span 5',
-      type: 'number',
-      label: 'hide',
-      innerLabel: 'בנות',
-      value: 0,
-
-      order: 5,
-    }),
-    new QuestionNumber({
-      key: 'boysInstructors',
-      columns: 'span 5',
-      type: 'number',
-      label: 'מדריכים',
-      innerLabel: 'בנים',
-      value: 0,
-
-      order: 7,
-    }),
-    new Offset({
-      columns: 'span 2 ',
-    }),
-
-    new QuestionNumber({
-      key: 'girlsInstructors',
-      columns: 'span 5',
-      type: 'number',
-      label: 'hide',
-      innerLabel: 'בנות',
-      value: 0,
-
-      order: 8,
-    }),
-    new QuestionNumber({
-      key: 'boysMedics',
-      columns: 'span 5',
-      type: 'number',
-      label: 'חובשים',
-      innerLabel: 'בנים',
-      value: 0,
-
-      order: 9,
-    }),
-    new Offset({
-      columns: 'span 2 ',
-    }),
-
-    new QuestionNumber({
-      key: 'girlsMedics',
-      columns: 'span 5',
-      type: 'number',
-      label: 'hide',
-      innerLabel: 'בנות',
-      value: 0,
-
-      order: 10,
-    }),
-  ];
-
-  TimeAndNameFormInputs: QuestionBase<string | Date>[] = [
-    new TextboxQuestion({
+export class SquadAssembleComponent implements OnInit {
+  timeAndNameFormInputs: QuestionBase<string | Date>[] = [
+    new QuestionTextbox({
       key: 'tourName',
-      columns: 'span 12',
       label: 'שם הטיול',
       value: '',
-      order: 1,
+      rows: 4,
+      validations: [Validators.required],
     }),
 
     new QuestionSelect({
       key: 'fieldCenter',
-      columns: 'span 12',
+      type: 'select',
       label: 'מרכז שדה',
-      options: [
-        { key: 'solid', value: '12123' },
-        { key: 'great', value: '23' },
-        { key: 'good', value: '123' },
-        { key: 'unproven', value: '123123123' },
-      ],
-      order: 2,
+      inputProps: {
+        options: [
+          { key: 'solid', value: '12123' },
+          { key: 'great', value: '23' },
+          { key: 'good', value: '123' },
+          { key: 'unproven', value: '123123123' },
+        ],
+      },
+      icon: 'keyboard_arrow_down',
+      validations: [Validators.required],
     }),
 
     new QuestionCalendar({
       key: 'startDate',
-      columns: 'span 12',
       label: 'תאריך התחלה',
       value: new Date(),
-      order: 3,
+      rows: 4,
+      validations: [Validators.required],
+      inputProps: {
+        labelLength: 'medium',
+      },
     }),
     new QuestionCalendar({
       key: 'endDate',
-      columns: 'span 12',
       label: 'תאריך סיום',
+      rows: 4,
       value: new Date(),
-      order: 4,
+      validations: [Validators.required],
     }),
   ];
 
   customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'customerName',
-      columns: 'span 12',
+      type: 'select',
       label: 'מי הלקוח',
-      options: [
-        { key: 'שם נוסף', value: 'שם נוסף' },
-        { key: 'עוד לקוח', value: 'עוד לקוח' },
-        { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-        { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-      ],
-      order: 1,
+      inputProps: {
+        options: [
+          { key: 'שם נוסף', value: 'שם נוסף' },
+          { key: 'עוד לקוח', value: 'עוד לקוח' },
+          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+        ],
+      },
     }),
 
-    new TextboxQuestion({
-      key: 'teamRepresentative',
-      columns: 'span 12',
-      label: 'נציג הקבוצה',
-      value: '',
-      order: 2,
-    }),
-
-    new TextboxQuestion({
-      key: 'phoneNumberNoPrefix',
-      label: 'נייד',
-      columns: 'span 8',
-      type: 'text',
-      order: 3,
-    }),
-    new Offset({
-      columns: 'span 1 ',
-    }),
-
-    new QuestionSelect({
-      key: 'phoneNumberPrefix',
-      label: 'hide',
-      columns: 'span 3',
-      type: 'text',
-      order: 4,
-      options: [
-        { key: '054', value: '054' },
-        { key: '052', value: '052' },
-        { key: '052', value: '052' },
-        { key: '077', value: '077' },
-      ],
-    }),
-    new TextboxQuestion({
-      key: 'email',
-      label: 'מייל',
-      columns: 'span 12',
-      type: 'text',
-      order: 5,
-    }),
     new QuestionSelect({
       key: 'payerName',
-      columns: 'span 12',
       label: 'לקוח משלם',
-      options: [
-        { key: 'שם נוסף', value: 'שם נוסף' },
-        { key: 'עוד לקוח', value: 'עוד לקוח' },
-        { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-        { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-      ],
-      order: 6,
+      type: 'select',
+      inputProps: {
+        options: [
+          { key: 'שם נוסף', value: 'שם נוסף' },
+          { key: 'עוד לקוח', value: 'עוד לקוח' },
+          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+        ],
+      },
+    }),
+
+    new QuestionTextbox({
+      key: 'teamRepresentative',
+      label: 'נציג הקבוצה',
+      inputProps: {
+        labelLength: 'medium',
+      },
+    }),
+
+    new QuestionTextbox({
+      key: 'phone',
+      label: 'נייד איש קשר',
+      type: 'text',
+      validations: [Validators.required],
+      inputProps: {
+        labelLength: 'medium',
+      },
+    }),
+    new QuestionTextbox({
+      key: 'email',
+      label: 'מייל',
+      type: 'text',
+      validations: [Validators.required],
+      inputProps: {
+        labelLength: 'small',
+      },
     }),
   ];
 
-  groupAssembleFormInputs: QuestionBase<string>[] = [];
+  groupAssambleFormInputs: QuestionBase<string>[] = [
+    new QuestionSelect({
+      key: 'age',
+      type: 'select',
+      cols: 2,
+      rows: 4,
+      label: 'קבוצת גיל',
+      inputProps: {
+        options: [
+          { key: '1', value: '1' },
+          { key: 'עוד לקוח', value: '10+' },
+          { key: 'לקוח מספר שלוש', value: '20+' },
+          { key: 'לקוח מספר ארבע', value: '30+' },
+        ],
+      },
+    }),
+    new QuestionBase({
+      key: 'participants',
+      label: 'נוער / מבוגרים',
+      cols: 2,
+      rows: 4,
+      isGroup: true,
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type: 'number',
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type: 'number',
+          rows: 4,
+        }),
+      ],
+    }),
+    new QuestionBase({
+      key: 'escorts',
+      cols: 2,
+      isGroup: true,
+      label: 'מלווים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type: 'number',
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type: 'number',
+          rows: 4,
+        }),
+      ],
+    }),
+    new QuestionBase({
+      key: 'guides',
+      isGroup: true,
+      cols: '2',
+      label: 'מדריכים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type: 'number',
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type: 'number',
+          rows: 4,
+        }),
+      ],
+    }),
+    new QuestionBase({
+      key: 'medics',
+      isGroup: true,
+      cols: '2',
+      label: 'חובשים',
+      group: [
+        new QuestionNumber({
+          key: 'boys',
+          label: 'בנים',
+          type: 'number',
+        }),
+        new QuestionNumber({
+          key: 'girls',
+          label: 'בנות',
+          type: 'number',
+        }),
+      ],
+    }),
+  ];
 
   tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'characteristic',
-      columns: 'span 12',
       label: 'מאפיין',
-      options: [
-        { key: 'פרומלי', value: 'פרומלי' },
-        { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
-        { key: 'מעוף', value: 'מעוף' },
-        { key: 'חו"ל', value: 'חו"ל' },
-        { key: 'הנהלת אגף', value: 'הנהלת אגף' },
-      ],
-      order: 1,
+      type: 'select',
+      inputProps: {
+        labelLength: 'small',
+        options: [
+          { key: 'פרומלי', value: 'פרומלי' },
+          { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
+          { key: 'מעוף', value: 'מעוף' },
+          { key: 'חו"ל', value: 'חו"ל' },
+          { key: 'הנהלת אגף', value: 'הנהלת אגף' },
+        ],
+      },
     }),
     new QuestionSelect({
       key: 'activityType',
-      columns: 'span 12',
       label: 'סוג הפעילות',
-      options: [
-        { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
-        { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
-      ],
-      order: 2,
+      type: 'select',
+      inputProps: {
+        labelLength: 'medium',
+        options: [
+          { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
+          { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
+        ],
+      },
     }),
 
     new QuestionRadio({
       key: 'tripLocation',
       label: 'מחלקה',
-      innerLabel: '',
-      options: [
-        { key: '', value: 'ישראל' },
-        { key: '', value: 'חו"ל' },
-      ],
+      custom: true,
       value: 'ישראל',
-      columns: 'span 12',
-      order: 5,
+      rows: 4,
+      inputProps: {
+        options: [
+          { key: 'ישראל', value: 'ישראל' },
+          { key: 'חו"ל', value: 'חו"ל' },
+        ],
+      },
     }),
 
     new QuestionRadio({
-      key: 'tripLocation',
+      custom: true,
+      key: 'tripCenter',
       label: 'פנים/חוץ מרכז שדה',
-      innerLabel: '',
-      options: [
-        { key: '', value: 'פנים' },
-        { key: '', value: 'חוץ' },
-      ],
       value: 'ישראל',
-      columns: 'span 12',
-      order: 5,
+      rows: 4,
+      inputProps: {
+        options: [
+          { key: 'פנים', value: 'פנים' },
+          { key: 'חוץ', value: 'חוץ' },
+        ],
+      },
     }),
 
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
-      innerLabel: '',
-      columns: 'span 12',
-      order: 7,
-      value: '',
+      rows: 6,
     }),
   ];
-  separated: boolean = false;
-  @ViewChild('TimeAndNameRef', { static: true }) TimeAndDateRef!: FormContainerComponent;
-  @ViewChild('customerFormInputsRef', { static: true }) customerRef!: FormContainerComponent;
-  @ViewChild('groupAssembleFormInputsRef', { static: true }) groupAssembleRef!: FormContainerComponent;
-  @ViewChild('tourDetailsFormInputsRef', { static: true }) tourDetailsRef!: FormContainerComponent;
 
-  constructor() {
-    this.groupAssembleFormInputs = this.groupAssembleForm;
-  }
+  public squadForm: formGroupGrid[] = [
+    {
+      formCols: '1',
+      title: 'פרטי הטיול',
+      questions: this.tourDetailsFormInputs,
+    },
+    {
+      formCols: '2',
+      title: 'הרכב הקבוצה',
+      cols: '2',
+      questions: this.groupAssambleFormInputs,
+    },
+    {
+      formCols: '1',
+      cols: '2',
+      title: 'לקוח',
+      questions: this.customerFormInputs,
+    },
+    {
+      formCols: '1',
+      title: 'מועד ושם הטיול',
+      cols: '2',
+      questions: this.timeAndNameFormInputs,
+    },
+  ];
+
+  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true })
+  tourDetailsRef!: FormContainerComponent;
+
+  constructor() {}
 
   ngOnInit(): void {}
-
-  ngAfterViewInit(): void {}
-  ngOnDestroy(): void {
-    console.log(this.tourDetailsRef.form.value);
-    console.log(this.customerRef.form.value);
-    console.log(this.TimeAndDateRef.form.value);
-    console.log(this.groupAssembleRef.form.value);
-  }
-
-  changeGroupAssembleForm() {
-    this.separated = !this.separated;
-    this.groupAssembleFormInputs = this.separated
-      ? this.separatedGroupAssembleForm
-      : this.groupAssembleForm;
-  }
-
-  a(a: any) {
-    console.log('asd');
-  }
 }

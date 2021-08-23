@@ -142,7 +142,7 @@
   }
   &__icon {
     padding-right: 10px;
-    color: $--blue-color-bright;
+    color: color(primary);
     align-self: center;
     padding-top: 2px;
     font-weight: bold;
@@ -179,7 +179,7 @@
 
 .badge-forestry {
   & .mat-badge-content {
-    background-color: $--blue-color-bright !important;
+    background-color: color(primary) !important;
     color: #ffffff;
   }
 }

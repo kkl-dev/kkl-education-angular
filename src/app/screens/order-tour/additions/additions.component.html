@@ -1,0 +1,12 @@
+<div  fxLayout="column" fxFlexFill class="additions-container">
+  <div class="nav-grid" fxFlex="30">
+    <app-navigation-grid
+      [navigationGrid]="navigationItems"
+    ></app-navigation-grid>
+  </div>
+  <div class="additions-content">
+    <div *ngFor="let tourDay of tour; index as i">
+      <app-tour-panel [tourDay]="tourDay" [i]="i + 1"></app-tour-panel>
+    </div>
+  </div>
+</div>

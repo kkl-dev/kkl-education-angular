@@ -1,0 +1,18 @@
+<div fxLayout="column" fxFlexFill>
+  <div fxFlex="5">
+    <button mat-raised-button color="primary">הוספה</button>
+  </div>
+  <div fxFlex="35" *ngFor="let form of transportForm">
+    <app-form-container [questions]="form.questions" [cols]="'8'" [gutter]="'15'" [hasButton]="form.hasButton"
+      [slots]="{button : formButton}">
+    </app-form-container>
+  </div>
+</div>
+
+<ng-template #formButton>
+  <div class="button-container">
+    <button type="submit" mat-button>
+      <app-icon key="edit" type="mat"></app-icon>
+    </button>
+  </div>
+</ng-template>

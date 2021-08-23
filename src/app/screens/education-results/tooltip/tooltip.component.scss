@@ -1,35 +1,67 @@
 .tooltip {
-  
   position: absolute;
-  top: -100%;
-  transform: translate(30px,-37%);
-  background-color: #E3E3E3;
-  padding: 15px; 
+  bottom: 100%;
+  // transform: translate(30px, -37%);
+  background-color: #e3e3e3;
+  padding: 15px;
+  max-width: 160px !important;
   display: flex;
   flex-direction: column;
   z-index: 10;
-   clip-path: polygon(0% 0%, 100% 0%, 100% 94%, 66% 94%, 64% 100%, 62% 94%, 0 94%);
-  border: 1px solid #E3E3E3;
-  
-   
-  &::after{ 
-      content: ""; 
-      position: absolute;
-      z-index: -10;  
-      clip-path: polygon(0% 0%, 100% 0%, 100% 94%, 66% 94%, 64% 100%, 62% 94%, 0 94%);
-      width: 100%;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background-color: white;
-    }
-    &__header {
-      z-index: 10;
-    align-self: flex-start;
+  min-width: 160px;
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 94%,
+    66% 94%,
+    64% 100%,
+    62% 94%,
+    0 94%
+  );
+  border: 1px solid #e3e3e3;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -10;
+    clip-path: polygon(
+      0% 0%,
+      100% 0%,
+      100% 94%,
+      66% 94%,
+      64% 100%,
+      62% 94%,
+      0 94%
+    );
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: white;
   }
 
-  &__hours {
-    font-size: 12px;
+  &__bar-color-type {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    & span {
+      display: list-item;          /* This has to be "list-item"                                               */
+      list-style-type: disc;       /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type     */
+      margin: 5px;
+      font-size: 10px;
+    }
+  }
+
+  &__header {
+    z-index: 10;
+    align-self: flex-start;
+    font-weight: bold;
+  }
+
+  &__occupied-hours {
+    font-size: 11px;
+
     width: fit-content;
     display: flex;
     justify-content: space-around;
@@ -38,37 +70,64 @@
     display: flex;
     flex-direction: column;
 
-    &-availability {
-      width: 14px;
-      height: 14px;
-      border-radius: 100px;
-      align-self: center;
-      border: 1px solid #cacbcb;
-      background-color: #f9f9f9;
-    }
-    &-container {
+    &-bar {
+      width: 100%;
+      height: 12px;
       display: flex;
-    }
-    &-text {
-      align-self: center;
-      width: fit-content;
-      font-size: 12px;
-    }
-  }
+      justify-content: stretch;
 
-  &__button{
-    margin-top: 10px;
-    margin-bottom: 5px;
-    background-color: #448ecd;
-    align-self: flex-end;
-    color:#ffffff;
-    box-shadow: 0px 2px 10px 0px #448ecd;
-    border: none;
-    
+      &-slot {
+        margin-left: auto;
+        height: 5px;
+        &:first-of-type{
+          border-bottom-right-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+        &:last-of-type{
+          border-bottom-left-radius: 10px;
+          border-top-left-radius: 10px;
+        }
+      }
+    }
+
+    &-hour {
+      display: flex;
+
+      &-end {
+        display: flex;
+        margin: 0 2px 0 5px;
+        & span:nth-child(1) {
+          margin-left: 2px;
+        }
+      }
+    }
   }
 }
 
 .fill {
   background-color: #009eee;
   border: 1px solid #009eee;
+}
+
+.background-blue {
+  background-color: #448ecd;
+  border-top: 4px solid #448ecd;
+}
+.background-green {
+  border-top: 4px solid #37c56b;
+  background-color: #37c56b;
+}
+.background-grey {
+  background-color: #ededed;
+  border-top: 4px solid #ededed;
+}
+
+.blue {
+  color: #448ecd;
+}
+.green {
+  color: #37c56b;
+}
+.grey {
+  color: #858585;
 }

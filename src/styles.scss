@@ -3,13 +3,24 @@
 @import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
 
 $--green-color-bright: #37c563;
-$--blue-color-bright: #448ECD;
+$education-primary: #448ECD;
+
+$colors: (
+  primary: $education-primary,
+);
+
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
 
 html,
 body {
   height: 100vh;
   box-sizing: border-box;
+  text-align: right;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -19,7 +30,38 @@ body {
 
 }
 
+.education {
+  background-color: color(primary);
+}
 
-.education{
-  background-color: #448Ecd;
+::ng-deep mat-grid-list,
+mat-grid-tile {
+  text-align: right;
+  height: 100%;
+  width: 100%;
+}
+
+mat-grid-tile {
+
+  &.text>figure.mat-figure {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+::ng-deep.mat-badge-content {
+  width: auto;
+  display: grid;
+  min-width: 30px;
+  // min-height: 28px;
+  text-align: center;
+  align-items: center;
+  padding: 5px 3px;
+  top: -20px;
+  right: -22px;
+}
+
+
+::ng-deep .icon .mat-badge-content  {
+  font-family: "Material Icons";
 }

@@ -1,0 +1,58 @@
+@import "../../../../styles.scss";
+
+mat-form-field {
+  text-align: right !important;
+  width: 100%;
+}
+
+::ng-deep .cdk-overlay-pane {
+  transform: translateX(-15%) !important;
+  margin-top: 2%;
+}
+
+.mat-option {
+  text-align: right;
+}
+
+::ng-deep .mat-select-panel {
+  max-height: 150px !important;
+}
+
+::ng-deep .mat-select-arrow-wrapper {
+  opacity: 0 !important;
+}
+
+mat-icon {
+  color: color(primary);
+}
+
+::ng-deep.mat-form-field-outline-start {
+  width: 100% !important;
+}
+
+::ng-deep .small .mat-form-field-outline-gap {
+  width: 10% !important;
+}
+
+::ng-deep .base .mat-form-field-outline-gap {
+  width: 15% !important;
+}
+
+::ng-deep .medium .mat-form-field-outline-gap {
+  width: 20% !important;
+}
+
+::ng-deep .wide .mat-form-field-outline-gap {
+  width: 25% !important;
+}
+
+::ng-deep .extraWide .mat-form-field-outline-gap {
+  width: 40% !important;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: none;
+}

@@ -1,9 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
-import { subDays, addDays } from 'date-fns';
-import { Locale, getYear } from 'date-fns';
+import { getYear } from 'date-fns';
+import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 
 @Component({
   selector: 'app-education',
@@ -11,11 +17,12 @@ import { Locale, getYear } from 'date-fns';
   styleUrls: ['./education.component.scss'],
 })
 export class EducationComponent implements OnInit {
-  @ViewChild('educationForm') signupForm: NgForm | undefined;
-
+  @ViewChild('educationForm') signupForm: NgForm;
+  @Output() emitFormValues: EventEmitter<NgForm> = new EventEmitter();
   public checked = false;
   sleepingPlace: string = '';
-  constructor() {
+
+  constructor(private checkAvailabilltyService: CheckAvailabilityService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
@@ -25,8 +32,6 @@ export class EducationComponent implements OnInit {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
       closeOnSelected: true,
-      // minDate: addDays(new Date(), 5),
-      // maxDate: addDays(new Date(), 10),
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
       freeSpacesArray: this.freeSpacesArray,
@@ -36,10 +41,10 @@ export class EducationComponent implements OnInit {
   ngOnInit(): void {}
 
   public formOptions = [
-    { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: '1' },
-    { imgSrc: 'assets/images/select-2.jpg', text: 'לביא', value: '2' },
-    { imgSrc: 'assets/images/select-3.jpg', text: 'נס הרים', value: '31' },
-    { imgSrc: 'assets/images/select-4.jpg', text: 'יתיר', value: '51' },
+    { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: 'ציפורי' },
+    { imgSrc: 'assets/images/select-2.jpg', text: 'לביא', value: 'לביא' },
+    { imgSrc: 'assets/images/select-3.jpg', text: 'נס הרים', value: 'נס הרים' },
+    { imgSrc: 'assets/images/select-4.jpg', text: 'יתיר', value: 'יתיר' },
   ];
 
   date: string | null = null;
@@ -68,8 +73,6 @@ export class EducationComponent implements OnInit {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
     closeOnSelected: true,
-    // minDate: addDays(new Date(), 5),
-    // maxDate: addDays(new Date(), 10),
     minYear: 2019,
     maxYear: 2021,
     freeSpacesArray: this.freeSpacesArray,
@@ -77,7 +80,7 @@ export class EducationComponent implements OnInit {
 
   public dateObjChanged(e: string) {
     if (e.includes('-')) {
-      let tempDateArr = [];
+      let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       console.log(tempDateArr);
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
@@ -96,14 +99,10 @@ export class EducationComponent implements OnInit {
   }
 
   hideSelectPlaceholder(sel: MatSelect) {
-    console.log('asdasd');
     sel.placeholder = '';
   }
 
   showSelectPlaceholder(sel: MatSelect) {
-    //check if no value
-    console.log('asdasd');
-
     if (sel.value === '') {
       sel.placeholder = 'בחר מרכז שדה';
     }
@@ -111,7 +110,8 @@ export class EducationComponent implements OnInit {
 
   printFormValues() {
     if (this.signupForm != undefined) {
-      console.log(this.signupForm.form.value);
+      this.emitFormValues.emit(this.signupForm);
+      this.checkAvailabilltyService.saveCheackAvailabilltyValues(this.signupForm)
     }
   }
 }
