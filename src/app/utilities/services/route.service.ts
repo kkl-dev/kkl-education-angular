@@ -32,4 +32,6 @@ export class RouteService {
   public getCurrentPath(url: string): string {
     return this.formatUrl(url);
   }
+
+
 }

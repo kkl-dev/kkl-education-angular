@@ -15,7 +15,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
    <app-navbar [showStatus]="showStatus" [status]="status" prefix='education' (menuToggle)="drawer.toggle()"></app-navbar>
-   <app-wizard *ngIf="showWizard"></app-wizard>
+   <app-wizard *ngIf="!showWizard"></app-wizard>
    <router-outlet>
 
   </router-outlet>

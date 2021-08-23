@@ -18,6 +18,8 @@ export class MainComponent implements OnInit {
   public showStatus: boolean = true;
   public showWizard: boolean = true;
 
+
+
   public status: NavigationCardModel[] = [
     {
       title: 'בתהליך',
@@ -36,7 +38,8 @@ export class MainComponent implements OnInit {
     },
   ];
 
-  private falseSteps: string[] = ['education', 'login'];
+  private falseUrlWizard: string[] = ['education'];
+  private falseUrlStatus: string[] = ['education'];
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -48,18 +51,17 @@ export class MainComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private routeService: RouteService
-  ) {
-    }
+  ) {}
 
   ngOnInit(): void {
     this.routeService.subscribeToRoute().subscribe((url: string) => {
       const path = this.routeService.getCurrentPath(url);
-      this.isShowSteps(path);
+      this.showWizard = this.setShowState(path, this.falseUrlWizard);
+      this.showStatus = this.setShowState(path, this.falseUrlStatus);
     });
   }
 
-  private isShowSteps(path: string) {
-    this.showStatus =
-      this.falseSteps.findIndex((item: string) => item === path) !== -1;
+  private setShowState(path: string, falseSteps: string[]): boolean {
+    return falseSteps.findIndex((item: string) => item === path) !== -1;
   }
 }
