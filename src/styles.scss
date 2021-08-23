@@ -3,12 +3,11 @@
 @import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
 
 $--green-color-bright: #37c563;
-$education-primary: #448ECD;
+$education-primary: #448ecd;
 
 $colors: (
   primary: $education-primary,
 );
-
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
@@ -25,9 +24,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: "open sans hebrew", "Helvetica Neue", sans-serif !important;
-  src: url('assets/fonts/opanSansHebrew/OpenSansHebrew-Regular.ttf') format("opentype");
+  src: url("assets/fonts/opanSansHebrew/OpenSansHebrew-Regular.ttf")
+    format("opentype");
   box-sizing: border-box;
-
 }
 
 .education {
@@ -42,8 +41,7 @@ mat-grid-tile {
 }
 
 mat-grid-tile {
-
-  &.text>figure.mat-figure {
+  &.text > figure.mat-figure {
     display: flex;
     flex-direction: column;
   }
@@ -53,19 +51,18 @@ mat-grid-tile {
   width: auto;
   display: grid;
   min-width: 25px;
-  // min-height: 28px;
   text-align: center;
   align-items: center;
   padding: 5px 3px;
   top: -20px;
   right: -22px;
+
 }
 
-
-
-::ng-deep .icon .mat-badge-content  {
+::ng-deep .icon .mat-badge-content {
   font-family: "Material Icons";
 }
+
 
 
 ::ng-deep mat-card-actions,
