@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
@@ -17,6 +23,7 @@ export class HeaderComponent implements OnInit {
   date: string | null = null;
 
   dateObj: { from: string; to: string } = { from: '', to: '' };
+  @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
 
   // dateObj:{from:string, to:string} ={from:'', to:''}
   freeSpacesArray1: FreeSpace[] = [];
@@ -51,6 +58,7 @@ export class HeaderComponent implements OnInit {
 
   public dateObjChanged(e: string) {
     if (e && e.includes('-')) {
+      this.emitNewDates.emit(e);
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       console.log(tempDateArr);
@@ -72,7 +80,11 @@ export class HeaderComponent implements OnInit {
   public formOptions: { imgSrc: string; text: string; value: string }[] = [
     { imgSrc: 'assets/images/select-1.jpg', text: 'ציפורי', value: 'ציפורי' },
     { imgSrc: 'assets/images/select-2.jpg', text: 'לביא', value: 'לביא' },
-    { imgSrc: 'assets/images/select-3.jpg', text: 'נס הרים', value: ' נס הרים' },
+    {
+      imgSrc: 'assets/images/select-3.jpg',
+      text: 'נס הרים',
+      value: ' נס הרים',
+    },
     { imgSrc: 'assets/images/select-4.jpg', text: 'יתיר', value: 'יתיר' },
   ];
 
@@ -99,5 +111,6 @@ export class HeaderComponent implements OnInit {
       freeSpacesArray: this.freeSpacesArray1,
     };
   }
+
   ngOnInit(): void {}
 }
