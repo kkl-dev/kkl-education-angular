@@ -63,6 +63,8 @@ export class AdditionsComponent implements OnInit {
   public title: string = 'תוספות';
   public tourTitle: string = 'טיול שנתי שכבת | ב"ס תמיר';
 
+  public id: number = 839483;
+
   public tour = [
     {
       date: new Date(),

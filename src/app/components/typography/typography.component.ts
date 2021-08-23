@@ -8,15 +8,18 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TypographyComponent implements OnInit {
   @Input() color: string;
   @Input() bold: string = '';
-  @Input() size: string = '18';
-  @Input() variant: string = 'mat-title';
+  @Input() size: string = '';
+  @Input() variant: string;
 
   constructor() {}
 
   ngOnInit(): void {
     this.color = this.color || 'text';
-    if (this.color !== 'text') {
-      console.log(this.color);
+
+    if (this.size) {
+      this.variant = '';
+    } else {
+      this.variant = this.variant || 'mat-title';
     }
   }
 }
