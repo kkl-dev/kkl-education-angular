@@ -177,6 +177,64 @@ export class EducationResultsComponent implements OnInit {
 this.facilitiesArray=this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day)
   }
 
+  
+  changeDatesHandler(newDates: string) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    const dates = newDates.split('-');
+    let date1 = new Date(dates[0]);
+    let date2 = new Date(dates[1]);
+    const utc1 = Date.UTC(
+      date1.getFullYear(),
+      date1.getMonth(),
+      date1.getDate()
+    );
+    const utc2 = Date.UTC(
+      date2.getFullYear(),
+      date2.getMonth(),
+      date2.getDate()
+    );
+    const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    const newSleepingOptionsByDay = [];
+
+    let newDate = new Date(date1.setDate(date1.getDate()));
+    for (let i = 0; i <= totalDays; i++) {
+      //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
+      const newDateString = `${newDate.getDate()}.${
+        newDate.getMonth() + 1
+      }.${newDate.getFullYear()}`;
+      newSleepingOptionsByDay.push({
+        day: newDateString,
+        options: [
+          {
+            svgUrl: 'assets/images/cabin.svg',
+            sleepingAreas: 2,
+            avialableSpaces: 16,
+            type: 'בקתות',
+            singleUnit: 'בבקתה',
+          },
+          {
+            svgUrl: 'assets/images/tent.svg',
+            sleepingAreas: 4,
+            avialableSpaces: 6,
+            type: 'אוהלים',
+            singleUnit: 'באוהל',
+          },
+          {
+            svgUrl: 'assets/images/camp.svg',
+            sleepingAreas: 1,
+            avialableSpaces: Math.floor(Math.random() * 90),
+            type: 'גיחה',
+            singleUnit: 'לנים',
+          },
+        ],
+      });
+      newDate = new Date(date1.setDate(date1.getDate() + 1));
+    }
+    console.log(newSleepingOptionsByDay);
+    this.sleepingOptionsByDay = newSleepingOptionsByDay;
+    console.log(this.sleepingOptionsByDay);
+  }
+
   public facilitiesArray: InfoCard[] = [
     // {
     //   svgUrl: 'assets/images/stage.svg',

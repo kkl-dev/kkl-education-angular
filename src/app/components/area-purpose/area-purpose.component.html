@@ -1,0 +1,17 @@
+<div class="area-purpose">
+    <div
+      class="area-purpose__item"
+      *ngFor="let item of content; let i = index"
+    >
+      <div class="area-purpose__item-headline" *ngIf="item.headline">
+        {{ item.headline }}
+      </div>
+      <div class="area-purpose__item-text" *ngIf="item.text">
+        {{ item.text }}
+      </div>
+      <div class="area-purpose__item-footer" *ngIf="item.footer">
+        {{ item.footer }}
+      </div>
+    </div>
+  </div>
+  

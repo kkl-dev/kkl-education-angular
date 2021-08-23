@@ -23,6 +23,7 @@ import {
   ADD_ICON,
   PLAYGROUND_ICON,
   LIST_ICON,
+  CALENDER_ICON,
 } from './icons.list';
 
 export interface IconItem {
@@ -132,6 +133,10 @@ export class IconsService {
     {
       key: 'list',
       svgUrl: LIST_ICON,
+    },
+    {
+      key: 'calendar',
+      svgUrl: CALENDER_ICON,
     },
   ];
 

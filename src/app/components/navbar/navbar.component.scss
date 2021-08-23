@@ -75,6 +75,7 @@
       margin-right: -190px;
       background-color: sienna;
     }
+
     display: flex;
     position: relative;
 
@@ -93,18 +94,6 @@
         transform: scale(1.5);
       }
     }
-  }
-
-  #svg-fill {
-    margin: auto;
-    width: 37.5px;
-    height: 37.5px;
-  }
-  #svg-fill * {
-    transform: scale(2.5);
-    fill: #747474 !important;
-    width: 37.5px;
-    height: 37.5px;
   }
 
   &__item-badge {

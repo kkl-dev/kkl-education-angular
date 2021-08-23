@@ -4,7 +4,7 @@
   z-index: 100;
   box-sizing: border-box;
   display: flex;
- 
+
   &__left {
     width: 50%;
     background-color: white;
@@ -13,7 +13,7 @@
   }
 
   &__right {
-    height:100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -21,98 +21,20 @@
     text-align: center;
     background-color: white;
 
+    &-sleeping-options-headline {
+      width: 80%;
+      margin: 0 auto;
+      font-size: 17px;
+      font-weight: bold;
+      text-align: right;
+    }
+
     &-header {
       margin-bottom: 40px;
       color: #66a3d6;
     }
 
     //available dates section
-    &-availability {
-      direction: rtl;
-      display: flex;
-      padding: 0 100px;
-      margin-bottom: 40px;
-
-      &-item {
-        display: flex;
-        margin: 0;
-        padding-bottom: 10px;
-        border-bottom: 3px solid #dcdcdc;
-      }
-      & > * {
-        flex: 1;
-      }
-      &-item-text {
-        font-size: 16px;
-        margin-left: auto;
-        margin-right: 10px;
-      }
-
-      &-item-date {
-        margin-right: auto;
-        font-size: 18px;
-      }
-    }
-
-    //sleeping areas section
-    &-sleep-areas {
-      padding: 0 100px;
-      direction: rtl;
-      text-align: right;
-
-      &-headline {
-        font-size: 17px;
-        margin-bottom: 20px;
-      }
-
-      &-options {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        text-align: center;
-        border-bottom: 1px solid rgba($color: #f9f9f9, $alpha: 1);
-        padding-bottom: 40px;
-
-        &-item {
-          display: flex;
-          text-align: center;
-          align-self: center;
-          gap: 10px;
-          & > * {
-            margin: 0;
-            padding: 0;
-          }
-          &-svg {
-            & * {
-              width: 32.5px;
-              height: 37.5px;
-              margin-left: 5px;
-            }
-          }
-          &-count {
-            margin-right: 10px;
-            align-self: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-
-            &-number {
-              width: 35px;
-              height: 35px;
-              margin: auto 0;
-              background-color: #f6f6f6;
-              display: flex;
-              & > * {
-                margin: auto;
-              }
-            }
-          }
-        }
-      }
-    }
 
     //facilities section
     &-facilities {
@@ -120,10 +42,15 @@
       direction: rtl;
       text-align: right;
       margin-top: 20px;
-
+      
       &-headline {
+        padding: 0 !important;
+        width: 85%;
         font-size: 17px;
-        margin-right: 80px;
+        margin: 0 auto;
+        font-weight: bold;
+        text-align: right;
+        margin-bottom: 20px;
       }
 
       &-items {
@@ -217,11 +144,16 @@
 }
 .font-color {
   color: #11a11a;
-} 
+}
 
 app-tooltip {
   display: none;
 }
 .font-color-blue {
   color: #66a3d6;
+} 
+
+::ng-deep .flex {
+  width: 80%;
+  justify-content: space-between !important;
 }

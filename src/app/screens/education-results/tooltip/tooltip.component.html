@@ -2,6 +2,7 @@
 
     <span class="tooltip__header">תפוסת מתקן:</span>
     <div class="tooltip__occupied-hours">
+      <div class="tooltip__occupied-hours-hour" *ngIf='hours.length===0'> טרם שורינו מקומות </div>
       <div class="tooltip__occupied-hours-hour" *ngFor="let item of hours">
         <span class="tooltip__occupied-hours-hour-start">{{
           item.startingHour | numberToTimePipe
@@ -24,7 +25,7 @@
     <div class="tooltip__bar-color-type">
       <span class="tooltip_bar-color-type-item green">פנוי</span>
       <span class="tooltip_bar-color-type-item grey">תפוס</span>
-      <span class="tooltip_bar-color-type-item blue">שוריין עבורי</span>
+      <!-- <span class="tooltip_bar-color-type-item blue" >שוריין עבורי</span> -->
     </div> 
 </div>
    

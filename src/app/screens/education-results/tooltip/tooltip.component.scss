@@ -1,13 +1,14 @@
 .tooltip {
   position: absolute;
-  top: -100%;
-  transform: translate(30px, -37%);
+  bottom: 100%;
+  // transform: translate(30px, -37%);
   background-color: #e3e3e3;
   padding: 15px;
+  max-width: 160px !important;
   display: flex;
   flex-direction: column;
   z-index: 10;
-  min-width: max-content;
+  min-width: 160px;
   clip-path: polygon(
     0% 0%,
     100% 0%,
@@ -41,9 +42,12 @@
 
   &__bar-color-type {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: flex-start;
+
     & span {
+      display: list-item;          /* This has to be "list-item"                                               */
+      list-style-type: disc;       /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type     */
       margin: 5px;
       font-size: 10px;
     }
@@ -75,6 +79,14 @@
       &-slot {
         margin-left: auto;
         height: 5px;
+        &:first-of-type{
+          border-bottom-right-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+        &:last-of-type{
+          border-bottom-left-radius: 10px;
+          border-top-left-radius: 10px;
+        }
       }
     }
 

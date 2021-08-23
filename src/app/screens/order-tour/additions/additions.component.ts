@@ -17,7 +17,7 @@ export class AdditionsComponent implements OnInit {
   private unsubscribe: Subscription =
     this.additionsService.navButton$.subscribe();
 
-  public navigationItems: NavigationCardModel[] =
+  public cards: NavigationCardModel[] =
     this.additionsService.getNavigationItems().length > 0
       ? this.additionsService.getNavigationItems()
       : [
@@ -99,7 +99,7 @@ export class AdditionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToSubject();
-    this.additionsService.setNavigationStatus(this.navigationItems);
+    this.additionsService.setNavigationStatus(this.cards);
   }
 
   ngOnDestroy(): void {

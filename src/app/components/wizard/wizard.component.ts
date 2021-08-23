@@ -38,6 +38,10 @@ export class WizardComponent implements OnInit {
         src: 'assets/images/report.svg',
         text: 'דוחות',
       },
+      {
+        src: 'assets/images/calendar.svg',
+        text: 'בדיקת זמינות',
+      },
     ]
 
   }

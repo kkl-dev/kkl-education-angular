@@ -62,7 +62,6 @@ import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
-import { CardTitleComponent } from './screens/additions/card-title/card-title.component';
 import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
 import { TypographyComponent } from './components/typography/typography.component';
 import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
@@ -125,7 +124,6 @@ import { DashboardCardComponent } from './components/dashboard-card/dashboard-ca
     SquadGroupComponent,
     InputRadioComponent,
     ExpendPanelComponent,
-    CardTitleComponent,
     SleepingOptionsComponent,
     SleepingOptionsFormComponent,
     SleepingOptionsByDayComponent,
