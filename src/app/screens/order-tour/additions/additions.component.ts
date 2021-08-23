@@ -60,10 +60,17 @@ export class AdditionsComponent implements OnInit {
           },
         ];
 
+  public title: string = 'תוספות';
+  public tourTitle: string = 'טיול שנתי שכבת | ב"ס תמיר';
+
   public tour = [
     {
       date: new Date(),
-      locations: [{ title: 'location 1' }, { title: 'location 1' }, { title: 'location 1' }],
+      locations: [
+        { title: 'location 1' },
+        { title: 'location 1' },
+        { title: 'location 1' },
+      ],
     },
     {
       date: new Date(),

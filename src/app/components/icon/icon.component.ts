@@ -22,6 +22,5 @@ export class IconComponent implements OnInit {
 
   ngOnInit(): void {
     this.iconsService.setIcon(this.key);
-    console.log(this.isActive)
   }
 }
