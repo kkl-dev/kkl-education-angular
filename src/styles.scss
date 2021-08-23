@@ -66,3 +66,10 @@ mat-grid-tile {
 ::ng-deep .icon .mat-badge-content  {
   font-family: "Material Icons";
 }
+
+
+::ng-deep mat-card-actions,
+mat-card-subtitle,
+mat-card-content {
+  margin: 0px !important;
+}
