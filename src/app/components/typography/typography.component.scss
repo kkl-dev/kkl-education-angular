@@ -1,6 +1,6 @@
 @import "../../../styles.scss";
 
-span.text {
+span.fontFamily {
   font-family: "open sans hebrew", "Helvetica Neue", sans-serif !important;
 }
 
@@ -15,7 +15,6 @@ span.warn {
   color: color(warn);
 }
 
-span.text {
-  color: black;
+span.bold {
   font-weight: 600;
 }

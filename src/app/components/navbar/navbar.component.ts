@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NavigationCardModel } from 'src/app/models/nav-card-model';
 
 @Component({
@@ -20,13 +19,6 @@ export class NavbarComponent implements OnInit {
     this.isOpen = !this.isOpen;
     this.menuToggle.emit();
   }
-  //   this.showSteps =
-  //     this.urlAdress === '/education' ||
-  //     this.urlAdress === '/education/search' ||
-  //     this.urlAdress === '/education/my-tours'
-  //       ? true
-  //       : false;
-  // });
 
   constructor() {}
 

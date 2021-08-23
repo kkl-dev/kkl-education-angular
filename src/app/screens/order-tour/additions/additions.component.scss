@@ -1,6 +1,16 @@
+@import "../../../../styles.scss";
 
-.additions-content {
-  // overflow-y: scroll;
-  overflow: visible;
-  padding: 1%;
+.tour-title-container {
+  direction: rtl;
+}
+
+::ng-deep .small .mat-badge-content {
+  width: 20px !important;
+  height: 20px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding: 0px;
+  background-color: color(accent) !important;
 }

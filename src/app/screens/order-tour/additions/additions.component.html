@@ -1,10 +1,39 @@
-<div  fxLayout="column" fxFlexFill class="additions-container">
+<div
+  fxLayout="column"
+  fxFlexFill
+  class="additions-container"
+  fxLayoutGap="80px"
+>
   <div class="nav-grid" fxFlex="30">
-    <app-navigation-grid
-      [cards]="cards"
-    ></app-navigation-grid>
+    <app-navigation-grid [cards]="cards" [title]="title"></app-navigation-grid>
   </div>
   <div class="additions-content">
+    <div
+      class="tour-title-container"
+      fxLayout="row"
+      fxLayoutAlign="start"
+    >
+      <div>
+        <app-typography variant="mat-display-1">
+          {{ tourTitle }}
+        </app-typography>
+      </div>
+      <div fxFlex="55" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="3">
+          <app-icon
+            key="fiber_manual_record"
+            type="mat"
+            color="primary"
+            matScale="scale(0.5)"
+          ></app-icon>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center end">
+          <app-typography variant="mat-subheading-2">
+            {{ id }}
+          </app-typography>
+        </div>
+      </div>
+    </div>
     <div *ngFor="let tourDay of tour; index as i">
       <app-tour-panel [tourDay]="tourDay" [i]="i + 1"></app-tour-panel>
     </div>

@@ -1,6 +1,6 @@
 <div class="tour-container">
   <div class="tour-header">
-    <app-typography [variant]="'mat-subheading-2'" [color]="'text'">
+    <app-typography [variant]="'mat-subheading-2'" color="primary">
       יום {{ i }} : {{ tourDay.date | date: "M/d/yy" }}
     </app-typography>
   </div>
@@ -9,15 +9,20 @@
       <ng-container>
         <app-expend-panel
           *ngFor="let panel of tourDay.locations"
-          class="icon"
+          class="icon small"
           matBadge="priority_high"
           matBadgeColor="accent"
         >
-          <app-typography title [variant]="'mat-title'" [color]="'primary'">{{
-            panel.title
-          }}</app-typography>
-          <div description>
+          <div title fxLayout="row" fxLayoutAlign="start center">
+            <app-typography variant="mat-body-1" fxFlex="8">{{
+              tourDay.date | date: "HH:mm"
+            }}</app-typography>
+            <app-typography [variant]="'mat-title'">{{
+              panel.title
+            }}</app-typography>
           </div>
+
+          <div description></div>
           <app-transport content></app-transport>
         </app-expend-panel>
       </ng-container>

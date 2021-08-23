@@ -60,7 +60,7 @@
   text-align: right;
 
   }
-  
+
 ::ng-deep .mat-form-field-underline {
   display: none;
 
@@ -92,7 +92,7 @@ mat-select,
     transform: rotate(135deg);
     vertical-align: top;
     width: 0.7em;
-    color: $--green-color-bright;
+    color: color(success);
   }
 }
 
@@ -121,7 +121,7 @@ mat-form-field:not(.mat-form-field-should-float) .mat-input-placeholder {
     height:15px;
     position: absolute;
     right: 5px;
-    
+
     background:
       linear-gradient(#fff,#fff),
       linear-gradient(#fff,#fff),

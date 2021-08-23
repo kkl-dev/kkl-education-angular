@@ -1,7 +1,13 @@
+@import "../../../styles.scss";
+
 mat-expansion-panel {
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 
   mat-expansion-panel-header {
     direction: rtl;
   }
+}
+
+.expend-panel {
+  background-color: #EEEEEE;
 }
