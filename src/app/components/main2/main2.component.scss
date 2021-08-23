@@ -1,0 +1,63 @@
+@import "../../../styles.scss";
+
+.sidenav-container {
+  height: 100%;
+  
+}
+
+
+mat-sidenav-content{
+  position: relative;
+  overflow: hidden;
+
+
+}
+.sidenav {
+  width: fit-content;
+  margin-top: 92px;
+  height: calc(100% - 90px);
+  direction: rtl; 
+  // overflow: hidden;
+}
+.sidenav-education{
+  border-top:  $--blue-color-bright solid 3px;
+  
+}
+
+.forestry-education{
+  border-top:  $--green-color-bright solid 3px;
+
+}
+ 
+::ng-deep .mat-drawer{
+  background-color: rgba($color: #F5F5F5, $alpha: .5) !important;
+  backdrop-filter: blur(15px) saturate(70%) contrast(70%) brightness(130%) opacity(1.1);
+
+}
+
+::ng-deep .mat-drawer:before {
+  background-color: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(15px) saturate(70%) contrast(70%) brightness(130%) opacity(1.1);
+  content: '';  
+  height: 100%; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-prry {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+app-form {
+  width: 100%;
+}

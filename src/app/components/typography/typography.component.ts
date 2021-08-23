@@ -6,10 +6,22 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./typography.component.scss'],
 })
 export class TypographyComponent implements OnInit {
+  @Input() color: string;
+  @Input() size: string = '';
+  @Input() bold: number;
+  @Input() variant: string;
+
   constructor() {}
 
-  @Input() color: string = "black";
-  @Input() variant: string = "mat-title";
+  ngOnInit(): void {
+    this.color = this.color || 'text';
 
-  ngOnInit(): void {}
+    if (this.size) {
+      this.variant = '';
+    } else {
+      this.variant = this.variant || 'mat-title';
+    }
+
+    this.bold = this.bold || 500;
+  }
 }

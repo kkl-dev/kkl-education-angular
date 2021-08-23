@@ -1,6 +1,5 @@
-import { UserDataService } from './../../utilities/services/user-data.service';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { NavigationCardModel } from 'src/app/models/nav-card-model';
 
 @Component({
   selector: 'app-navbar',
@@ -10,63 +9,18 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   @Output() menuToggle = new EventEmitter();
 
-  public status: {
-    text: string;
-    svgUrl: string;
-    count: number
-  }[] = [
+  @Input() public prefix: string = '';
+  @Input() public showStatus: boolean = true;
+  @Input() public status: NavigationCardModel[] = [];
 
-    ];
-  public platformName: string = 'education'
   public isOpen: boolean = true;
-  public urlAdress = 'main';
-  public showSteps: boolean = true;
-  public componentType: string = '';
-  public prefix: string = ''
 
   public toggleMenu() {
     this.isOpen = !this.isOpen;
     this.menuToggle.emit();
   }
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private userDataService: UserDataService
-  ) {
+  constructor() {}
 
-    this.prefix = this.userDataService.user.urlPrefix;
-    this.status = [
-      {
-        text: 'בתהליך',
-        svgUrl: 'reload',
-        count: 3,
-      },
-      {
-        text: 'מחכה לאישור',
-        svgUrl: 'report',
-        count: 1
-      },
-      {
-        text: 'סגור',
-        svgUrl: 'flag',
-        count: 20
-      },
-    ]
-
-
-    this.router.events.subscribe((val: any) => {
-
-      this.urlAdress = val.url ? val.url : this.urlAdress;
-
-      this.showSteps =
-        this.urlAdress === '/education' ||
-          this.urlAdress === '/education/search' ||
-          this.urlAdress === '/education/my-tours'
-          ? true
-          : false;
-    });
-  }
-
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

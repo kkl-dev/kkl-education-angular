@@ -9,8 +9,8 @@ import { NavigationCardModel } from 'src/app/models/nav-card-model';
 })
 export class NavigationGridComponent implements OnInit {
 
-  @Input() public title : string = ""
-  @Input() public navigationGrid : NavigationCardModel[] = []
+  @Input() public title : string = "תוספות"
+  @Input() public cards : NavigationCardModel[] = []
 
   constructor() { }
 

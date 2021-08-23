@@ -17,7 +17,7 @@ export class AdditionsComponent implements OnInit {
   private unsubscribe: Subscription =
     this.additionsService.navButton$.subscribe();
 
-  public navigationItems: NavigationCardModel[] =
+  public cards: NavigationCardModel[] =
     this.additionsService.getNavigationItems().length > 0
       ? this.additionsService.getNavigationItems()
       : [
@@ -60,38 +60,22 @@ export class AdditionsComponent implements OnInit {
           },
         ];
 
+  public title: string = 'תוספות';
+  public tourTitle: string = 'טיול שנתי שכבת ו בי"ס תמיר';
+
+  public id: number = 839483;
+
   public tour = [
     {
       date: new Date(),
-      locations: [{ title: 'location 1' }, { title: 'location 1' }, { title: 'location 1' }],
-    },
-    {
-      date: new Date(),
-      locations: [{ title: 'location 1' }, { title: 'location 1' }],
-    },
-    {
-      date: new Date(),
       locations: [
-        { title: 'location 1' },
-        { title: 'location 1' },
-        { title: 'location 1' },
+        { title: 'בית ספר תמיר - נס הרים' },
+        { title: 'נס הרים - בית שדה' },
       ],
     },
     {
       date: new Date(),
-      locations: [
-        { title: 'location 1' },
-        { title: 'location 1' },
-        { title: 'location 1' },
-      ],
-    },
-    {
-      date: new Date(),
-      locations: [
-        { title: 'location 1' },
-        { title: 'location 1' },
-        { title: 'location 1' },
-      ],
+      locations: [{ title: 'הר מירון - אילת' }, { title: 'תל אביב - חיפה' }],
     },
   ];
 
@@ -99,7 +83,7 @@ export class AdditionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToSubject();
-    this.additionsService.setNavigationStatus(this.navigationItems);
+    this.additionsService.setNavigationStatus(this.cards);
   }
 
   ngOnDestroy(): void {
