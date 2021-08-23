@@ -2,11 +2,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
 
-$--green-color-bright: #37c563;
-$education-primary: #448ecd;
+
+$primary: #448ecd;
+$accent: #d220ba;
+$default: #bababa;
+$paper: #fff;
+$text: black;
+$success: #37c563;
 
 $colors: (
-  primary: $education-primary,
+  primary: $primary,
+  accent: $accent,
+  default: $default,
+  paper: $paper,
+  text: $text,
+  success : $success
 );
 
 @function color($color-name) {

@@ -61,7 +61,7 @@ export class AdditionsComponent implements OnInit {
         ];
 
   public title: string = 'תוספות';
-  public tourTitle: string = 'טיול שנתי שכבת | ב"ס תמיר';
+  public tourTitle: string = 'טיול שנתי שכבת ן ב"ס תמיר';
 
   public id: number = 839483;
 
@@ -69,38 +69,13 @@ export class AdditionsComponent implements OnInit {
     {
       date: new Date(),
       locations: [
-        { title: 'location 1' },
-        { title: 'location 1' },
-        { title: 'location 1' },
+        { title: 'בית ספר תמיר - נס הרים' },
+        { title: 'נס הרים - בית שדה' },
       ],
     },
     {
       date: new Date(),
-      locations: [{ title: 'location 1' }, { title: 'location 1' }],
-    },
-    {
-      date: new Date(),
-      locations: [
-        { title: 'location 1' },
-        { title: 'location 1' },
-        { title: 'location 1' },
-      ],
-    },
-    {
-      date: new Date(),
-      locations: [
-        { title: 'location 1' },
-        { title: 'location 1' },
-        { title: 'location 1' },
-      ],
-    },
-    {
-      date: new Date(),
-      locations: [
-        { title: 'location 1' },
-        { title: 'location 1' },
-        { title: 'location 1' },
-      ],
+      locations: [{ title: 'הר מירון - אילת' }, { title: 'תל אביב - חיפה' }],
     },
   ];
 
