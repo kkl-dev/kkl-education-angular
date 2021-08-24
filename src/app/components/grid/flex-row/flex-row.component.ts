@@ -1,3 +1,4 @@
+import { TableCell } from './../../../utilities/models/TableCell';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -7,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class FlexRowComponent implements OnInit {
 
+  @Input() row: TableCell[];
   @Input() offset: number;
   @Input() cols: number = 1;
 

@@ -1,13 +1,17 @@
+@import "../../../../../styles.scss";
+
+
+
 .table-details {
   flex-direction: row-reverse;
 }
 
 .row-item {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: spacing(2);
+  padding-bottom: spacing(2);
 }
 
 .divider {
   height: 1px;
-  background-color: red;
+  background-color: color(default);
 }
