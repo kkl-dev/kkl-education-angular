@@ -33,7 +33,6 @@ export class FormContainerComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formService.buildForm(this.questions);
-    console.log(this.hasButton)
   }
 
   onSubmit() {
