@@ -132,13 +132,10 @@ export class CheckAvailabilityService {
   constructor() { }
 
   saveCheackAvailabilltyValues(newFormValues:NgForm){
-    console.log(newFormValues.form.value);
     this.checkAvailabilltyValues=newFormValues.form.value
   }
 
   getNewFacilitiesArray(date:string){
-console.log(date);
-console.log('req from db new arr');
 
 return this.facilitiesArray
   }

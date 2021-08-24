@@ -276,9 +276,7 @@ export class SleepingOptionsComponent implements OnInit {
       });
       newDate = new Date(date1.setDate(date1.getDate() + 1));
     }
-    console.log(newSleepingOptionsByDay);
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
-    console.log(this.sleepingOptionsByDay);
   }
 
   constructor() {}

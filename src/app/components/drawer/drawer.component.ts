@@ -59,7 +59,6 @@ export class DrawerComponent implements OnInit {
   ];
 
   newCommentHandler(newComment: { date: Date; time: string; comment: string }) {
-    console.log('newComment');
     const newCommentToAdd = { ...newComment, status: false };
     if (this.index > -1) {
       this.reminderArray.splice(this.index, 1, newCommentToAdd);
@@ -71,7 +70,6 @@ export class DrawerComponent implements OnInit {
   }
 
   editComment(index: number) {
-    console.log(new Date(this.reminderArray[index].date));
 
     this.drawerForm.form.patchValue({
       date: this.datePipe.transform(
