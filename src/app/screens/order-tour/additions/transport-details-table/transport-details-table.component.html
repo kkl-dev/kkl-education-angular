@@ -1,11 +1,20 @@
-<div fxLayout="row" dir="rtl">
-  <div fxFlex="20" class="columns">
-    <div fxLayout="column">
-      <div fxFlex="20">
-    <app-typography></app-typography>
-<app-typography></app-typography>
+<div fxLayout="row wrap" dir="rtl">
+  <div fxFlex="15" fxLayout="row wrap">
+    <div fxFlex="100" *ngFor="let column of columns" class="row-item">
+      <app-typography fxFlex="40" [bold]="600">
+        {{ column.label }}:
+      </app-typography>
+      <app-typography fxFlex="60"> {{ column?.value }} </app-typography>
+    </div>
+  </div>
+  <div fxFlex="85" fxLayout="row wrap" class="content">
+    <div fxFlex="25" *ngFor="let item of data" class="row-item">
+      <div fxFlex="100" fxLayout="row">
+        <app-typography fxFlex="40" [bold]="600">
+          {{ item.label }}
+        </app-typography>
+        <app-typography fxFlex="60"> {{ item?.value }} </app-typography>
       </div>
     </div>
-  </div> 
-  <div fxFlex="80" class="content">B</div>
+  </div>
 </div>

@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TypographyComponent implements OnInit {
   @Input() color: string;
-  @Input() size: string = '';
+  @Input() size: number | string;
   @Input() bold: number | string;
   @Input() variant: string;
 
@@ -26,8 +26,11 @@ export class TypographyComponent implements OnInit {
   private seFontSize() {
     if (this.size) {
       this.variant = '';
-    } else {
+    } else if (this.variant) {
       this.variant = this.variant || 'mat-title';
+    } else {
+      this.variant = '';
+      this.size = 16;
     }
   }
 
