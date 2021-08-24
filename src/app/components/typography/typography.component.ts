@@ -8,20 +8,30 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TypographyComponent implements OnInit {
   @Input() color: string;
   @Input() size: string = '';
-  @Input() bold: number;
+  @Input() bold: number | string;
   @Input() variant: string;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.color = this.color || 'text';
+    this.setColor();
+    this.seFontSize();
+    this.setFontWeight();
+  }
 
+  private setColor() {
+    this.color = this.color || 'text';
+  }
+
+  private seFontSize() {
     if (this.size) {
       this.variant = '';
     } else {
       this.variant = this.variant || 'mat-title';
     }
+  }
 
+  private setFontWeight() {
     this.bold = this.bold || 500;
   }
 }

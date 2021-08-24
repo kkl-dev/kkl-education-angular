@@ -11,6 +11,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   templateUrl: './transport.component.html',
   styleUrls: ['./transport.component.scss'],
 })
+
 export class TransportComponent implements OnInit {
   public deatails: QuestionBase<string>[] = [
     new QuestionTextbox({

@@ -14,20 +14,20 @@
       fxLayoutAlign="start"
     >
       <div>
-        <app-typography variant="mat-display-1">
+        <app-typography [size]="24">
           {{ tourTitle }}
         </app-typography>
       </div>
-      <div fxFlex="55" fxLayout="row" fxLayoutAlign="start center">
+      <div fxFlex="55" fxLayout="row" fxLayoutAlign="start end">
         <div fxFlex="3">
           <app-icon
             key="fiber_manual_record"
             type="mat"
             color="primary"
-            matScale="scale(0.5)"
+            matScale="scale(0.3)"
           ></app-icon>
         </div>
-        <div fxLayout="column" fxLayoutAlign="center end">
+        <div fxLayout="column" fxLayoutAlign="end center">
           <app-typography [size]="16">
             {{ id }}
           </app-typography>

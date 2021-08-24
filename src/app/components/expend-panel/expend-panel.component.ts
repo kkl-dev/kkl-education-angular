@@ -13,13 +13,13 @@ export interface PanelModel {
   styleUrls: ['./expend-panel.component.scss'],
 })
 export class ExpendPanelComponent implements OnInit {
-  constructor() {}
+
+  // prop for custom class
+  @Input() public variant: string;
 
   public panelOpenState = false;
 
-  @Input() subtitle: string;
-  @Input() content: string;
-  @Input() actins: string;
+  constructor() {}
 
   ngOnInit(): void {}
 }

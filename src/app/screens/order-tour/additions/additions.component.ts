@@ -70,13 +70,9 @@ export class AdditionsComponent implements OnInit {
       date: new Date(),
       locations: [
         { title: 'בית ספר תמיר - נס הרים' },
-        { title: 'נס הרים - בית שדה' },
       ],
     },
-    {
-      date: new Date(),
-      locations: [{ title: 'הר מירון - אילת' }, { title: 'תל אביב - חיפה' }],
-    },
+
   ];
 
   constructor(private additionsService: AdditionsService) {}
