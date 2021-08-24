@@ -67,6 +67,7 @@ import { TypographyComponent } from './components/typography/typography.componen
 import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
 import { TransportDetailsComponent } from './screens/order-tour/additions/transport-details/transport-details.component';
 import { TransportDetailsTableComponent } from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
+import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
 
 
 @NgModule({
@@ -134,7 +135,8 @@ import { TransportDetailsTableComponent } from './screens/order-tour/additions/t
     TypographyComponent,
     DashboardCardComponent,
     TransportDetailsComponent,
-    TransportDetailsTableComponent
+    TransportDetailsTableComponent,
+    FlexRowComponent
   ],
   imports: [
     BrowserModule,

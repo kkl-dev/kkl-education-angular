@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDividerModule} from '@angular/material/divider';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -48,7 +49,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatListModule,
     MatCardModule,
     MatExpansionModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDividerModule
 
   ],
   exports: [
@@ -76,7 +78,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatListModule,
     MatCardModule,
     MatExpansionModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDividerModule
   ],
 })
 export class MaterialModule {}

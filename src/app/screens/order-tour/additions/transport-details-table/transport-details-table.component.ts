@@ -4,8 +4,9 @@ export interface TableCell {
   key?: string;
   label: string;
   value?: string;
-  offset?: string;
-  span?: string;
+  offset?: number;
+  cols?: number;
+  divider?: boolean;
 }
 
 export interface HeaderRoW {
@@ -49,7 +50,7 @@ export class TransportDetailsTableComponent implements OnInit {
     },
   ];
 
-  public data: TableCell[] = [
+  private details = [
     {
       key: 'type',
       label: 'סוג',
@@ -62,10 +63,12 @@ export class TransportDetailsTableComponent implements OnInit {
       key: 'type',
       label: 'מספר הזמנת רכש',
     },
-    {
-      key: 'type',
-      label: 'סוג',
-    },
+  ];
+
+  public data = [
+    { row: this.details },
+    { row: this.details },
+    { row: this.details },
   ];
 
   constructor() {}

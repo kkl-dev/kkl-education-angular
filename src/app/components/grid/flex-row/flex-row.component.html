@@ -1,0 +1,18 @@
+<div [fxFlex]="offset ? offsetSpan : colsSpan">
+  <div fxFlex="100" fxLayout="row">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+    <!-- <div
+      [fxFlex]="item.offset ? '50' : '25'"
+      *ngFor="let item of data"
+      class="row-item"
+    >
+      <div fxFlex="100" fxLayout="row">
+        <app-typography fxFlex="40" [bold]="600">
+          {{ item.label }}
+        </app-typography>
+        <app-typography fxFlex="60"> {{ item?.value }} </app-typography>
+      </div>
+    </div> -->
