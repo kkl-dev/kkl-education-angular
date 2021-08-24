@@ -65,6 +65,7 @@ import { ExpendPanelComponent } from './components/expend-panel/expend-panel.com
 import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
 import { TypographyComponent } from './components/typography/typography.component';
 import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
+import { TransportDetailsComponent } from './screens/order-tour/additions/transport-details/transport-details.component';
 
 
 @NgModule({
@@ -131,6 +132,7 @@ import { DashboardCardComponent } from './components/dashboard-card/dashboard-ca
     TourPanelComponent,
     TypographyComponent,
     DashboardCardComponent,
+    TransportDetailsComponent
   ],
   imports: [
     BrowserModule,
