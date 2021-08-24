@@ -1,10 +1,10 @@
 <mat-expansion-panel
-  class="expend-panel mat-elevation-z0"
   color="accent"
+  [ngClass]="[variant, 'expend-panel', 'mat-elevation-z0']"
   (opened)="panelOpenState = true"
   (closed)="panelOpenState = false"
 >
-  <mat-expansion-panel-header>
+  <mat-expansion-panel-header [ngClass]="[variant]">
     <mat-panel-title>
       <ng-content select="[title]"></ng-content>
     </mat-panel-title>
@@ -15,11 +15,5 @@
 
   <div class="content">
     <ng-content select="[content]"></ng-content>
-    {{ content }}
   </div>
-
-  <mat-action-row>
-    <button mat-button color="warn">Previous</button>
-    <button mat-button color="primary">End</button>
-  </mat-action-row>
 </mat-expansion-panel>
