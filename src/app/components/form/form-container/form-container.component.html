@@ -1,7 +1,13 @@
 <div class="form">
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
     <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
+
+      <mat-grid-tile *ngIf="showButton" [colspan]="1">
+        <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+      </mat-grid-tile>
+
       <ng-container *ngFor="let question of questions">
+        <mat-grid-tile *ngIf="question.offset" [colspan]="question.offset"></mat-grid-tile>
         <mat-grid-tile
           *ngIf="!question?.isGroup"
           [colspan]="question.cols"
@@ -50,8 +56,8 @@
       </ng-container>
     </mat-grid-list>
 
-    <div class="form-row" *ngIf="showButton">
-      <!-- <ng-container *ngTemplateOutlet="slots?.button"></ng-container> -->
-    </div>
+    <!-- <div class="form-row" *ngIf="showButton">
+      <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+    </div> -->
   </form>
 </div>

@@ -15,6 +15,7 @@ export class QuestionBase<T> {
   controlType: string;
   cols: string | number;
   rows: string | number;
+  offset : number | string
   custom: boolean;
   validations: ValidatorFn[];
   isGroup: boolean;
@@ -36,6 +37,7 @@ export class QuestionBase<T> {
       controlType?: string;
       cols?: string | number;
       rows?: string | number;
+      offset? : number | string
       custom?: boolean;
       validations?: ValidatorFn[];
       isGroup?: boolean;
@@ -53,6 +55,7 @@ export class QuestionBase<T> {
     this.label = options.label || '';
     this.cols = options.cols?.toString() || '1';
     this.rows = options.rows?.toString() || '4';
+    this.offset = options.offset?.toString() || '';
     this.validations = options.validations || [];
     this.controlType = options.controlType || 'textbox';
     this.type = options.type || '';
