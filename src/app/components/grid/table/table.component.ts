@@ -8,18 +8,28 @@ import { TableCellModel } from 'src/app/utilities/models/TableCell';
 })
 export class TableComponent implements OnInit {
   @Input() columns: TableCellModel[] = [];
-  @Input() data: TableCellModel[][] = [];
+  @Input() row: TableCellModel[] = [];
+  @Input() table: TableCellModel[][] = [];
 
   @Input() slots: {
     button: ElementRef;
     custom: ElementRef;
   };
 
-  public cols : number
-  public colsSpan : string
-  public offsetSpan : string
+  public data: TableCellModel[][] = [];
+  public cols: number;
+  public colsSpan: string;
+  public offsetSpan: string;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.data.map((row) => {});
+  }
+
+  private formatData(data: TableCellModel[]) {
+    return data.map((item) => {
+      return TableCellModel.create(item);
+    });
+  }
 }

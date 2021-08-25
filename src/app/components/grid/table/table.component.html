@@ -10,7 +10,7 @@
     </div>
   </div>
   <div fxFlex="85" fxLayout="row wrap" class="content">
-    <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of data">
+    <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of table">
       <ng-container *ngFor="let item of row">
         <div
           [fxFlex]="item.offset ? '50' : '25'"
@@ -36,10 +36,6 @@
             <div fxFlex="60" *ngIf="item.type === 'custom'">
               <ng-container *ngTemplateOutlet="slots?.custom"></ng-container>
             </div>
-            <!--
-            <div fxFlex="60" *ngIf="item.type === 'button'">
-              <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
-            </div> -->
           </div>
         </div>
         <div

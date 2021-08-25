@@ -5,13 +5,13 @@
     </app-typography>
   </mat-card-header>
   <mat-card-content>
-    <app-transport-details-table></app-transport-details-table>
+    <app-table [columns]="detailsColumns" [table]="detailsTable"></app-table>
   </mat-card-content>
   <mat-card-actions>
     <app-table
       *ngIf="cancelMode"
       [columns]="columns"
-      [data]="data"
+      [table]="data"
       [slots]="{ button: tableButton, custom: input }"
     ></app-table>
 
