@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACb,MAAM,EAAE,IAAI;EACZ,WAAW,EAAE,EAAE;CAChB;;AAED,AAAA,wBAAwB,CAAC;EACvB,KAAK,EAAE,IAAI;CACZ;;AAED,AAAA,cAAc,CAAC;EACb,SAAS,EAAE,OAAO;EAClB,WAAW,EAAE,GAAG;EAChB,WAAW,EAAE,6BAA6B;CAC3C",
+    "sources": [
+        "navigation-grid.component.scss"
+    ],
+    "names": [],
+    "file": "navigation-grid.component.css"
+}
