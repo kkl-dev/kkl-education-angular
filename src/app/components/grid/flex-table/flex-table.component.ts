@@ -5,11 +5,14 @@ import { map } from 'rxjs/operators';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  selector: 'app-flex-table',
+  templateUrl: './flex-table.component.html',
+  styleUrls: ['./flex-table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class FlexTableComponent implements OnInit {
+
+  @Input() cols: number;
+
   @Input() columns: TableCellModel[] = [];
   @Input() row: TableCellModel[] = [];
   @Input() table: TableCellModel[][] = [];
@@ -21,7 +24,6 @@ export class TableComponent implements OnInit {
   };
 
   public data: TableCellModel[][] = [];
-  public cols: number;
   public colsSpan: string;
   public offsetSpan: string;
 

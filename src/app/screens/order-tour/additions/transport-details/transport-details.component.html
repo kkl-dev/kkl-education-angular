@@ -5,10 +5,10 @@
     </app-typography>
   </mat-card-header>
   <mat-card-content>
-    <app-table
+    <app-flex-table
       [data$]="data$"
       [slots]="{ button: tableButton, custom: input }"
-    ></app-table>
+    ></app-flex-table>
   </mat-card-content>
   <mat-card-actions>
     <div fxLayout="row" fxLayoutAlign="end center" *ngIf="!editMode">

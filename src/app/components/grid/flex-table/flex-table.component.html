@@ -1,8 +1,8 @@
 <div fxLayout="row wrap" dir="rtl">
   <div fxFlex="15" fxLayout="row wrap">
     <ng-container *ngFor="let column of columns">
-      <div fxFlex="100" class="row-item">
-        <app-typography  [bold]="600" underline="underline">
+      <div fxFlex="100" class="row-item" >
+        <app-typography [bold]="600" underline="underline">
           {{ column.label }}:
         </app-typography>
         <app-typography underline="underline">
@@ -14,14 +14,15 @@
   <div fxFlex="85" fxLayout="row wrap" class="content">
     <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of data">
       <ng-container *ngFor="let item of row">
-        <div [fxFlex]="item.offset ? '50' : '25'" class="row-item" *ngIf="item.type !== 'button'">
+        <div [fxFlex]="item.offset ? '50' : '25'" class="row-item"
+          *ngIf="item.type !== 'button'">
           <div fxFlex="100" fxLayout="row" fxLayoutAlign="start center">
-            <app-typography class="item-label" *ngIf="item.label"  [bold]="600">
+            <app-typography class="item-label" *ngIf="item.label" [bold]="600">
               {{ item.label }}:
             </app-typography>
 
             <app-typography *ngIf="item.type === 'text' || item.type === 'number'">
-               {{ item?.value }}
+              {{ item?.value }}
             </app-typography>
 
             <app-typography fxFlex="60" *ngIf="item.type === 'date'">
