@@ -1,9 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
+import { Component, OnInit } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
-import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 
