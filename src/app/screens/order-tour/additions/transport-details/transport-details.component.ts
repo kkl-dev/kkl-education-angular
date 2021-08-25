@@ -9,19 +9,12 @@ import { columns, details, summery, supplier } from 'src/mock_data/additions';
 })
 export class TransportDetailsComponent implements OnInit {
   public title: string = 'פרטים נוספים';
-  public cancelMode: boolean = true;
+  public cancelMode: boolean = false;
 
   public detailsColumns: TableCellModel[] = columns;
+  public detailsTable = [details, supplier, summery];
 
-  private details: TableCellModel[] = this.formatData(details);
-
-  private supplier: TableCellModel[] = this.formatData(supplier);
-
-  private summery: TableCellModel[] = this.formatData(summery);
-
-  public detailsTable = [this.details, this.supplier, this.summery];
-
-  public columns: TableCellModel[] = [
+  public cancelColumns: TableCellModel[] = [
     {
       key: 'cancel',
       label: 'ביטול הזמנה',
@@ -43,19 +36,19 @@ export class TransportDetailsComponent implements OnInit {
     },
   ];
 
-  public data: TableCellModel[][] = [this.row];
+  public cancelTable: TableCellModel[][] = [this.row];
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  private formatData(data: TableCellModel[]) {
-    return data.map((item) => {
-      return TableCellModel.create(item);
-    });
-  }
-
   public onClick() {
+
+    if(this.cancelMode) {
+      console.log('push')
+      this.detailsTable.push(summery)
+    }
+
     this.cancelMode = !this.cancelMode;
   }
 

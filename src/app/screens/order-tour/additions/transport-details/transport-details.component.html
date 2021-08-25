@@ -10,8 +10,8 @@
   <mat-card-actions>
     <app-table
       *ngIf="cancelMode"
-      [columns]="columns"
-      [table]="data"
+      [columns]="cancelColumns"
+      [table]="cancelTable"
       [slots]="{ button: tableButton, custom: input }"
     ></app-table>
 
@@ -23,7 +23,7 @@
 
 <ng-template #tableButton>
   <div class="button-container" fxLayout="row" fxLayoutAlign="start end">
-    <button mat-raised-button>שמירה</button>
+    <button mat-raised-button (click)="onClick()">שמירה</button>
   </div>
 </ng-template>
 

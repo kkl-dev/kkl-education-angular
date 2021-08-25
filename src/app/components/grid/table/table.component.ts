@@ -24,8 +24,11 @@ export class TableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.data.map((row) => {});
+    this.data = this.table.map((row) => {
+      return this.formatData(row)
+    });
   }
+
 
   private formatData(data: TableCellModel[]) {
     return data.map((item) => {

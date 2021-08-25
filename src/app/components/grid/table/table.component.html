@@ -10,7 +10,7 @@
     </div>
   </div>
   <div fxFlex="85" fxLayout="row wrap" class="content">
-    <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of table">
+    <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of data">
       <ng-container *ngFor="let item of row">
         <div
           [fxFlex]="item.offset ? '50' : '25'"
