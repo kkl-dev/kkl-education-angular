@@ -11,7 +11,13 @@
   padding-bottom: spacing(2);
 }
 
+.label-container {
+  border-bottom: 2px solid color(primary);
+}
+
 .divider {
   height: 1px;
+  margin-bottom: spacing(1);
+  margin-top: spacing(1);
   background-color: color(default);
 }

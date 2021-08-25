@@ -10,6 +10,12 @@ export class TypographyComponent implements OnInit {
   @Input() size: number | string;
   @Input() bold: number | string;
   @Input() variant: string;
+  @Input() underline: string;
+  @Input() classes: {
+    variant: string;
+    color: string;
+    underline: string;
+  };
 
   constructor() {}
 
@@ -17,6 +23,10 @@ export class TypographyComponent implements OnInit {
     this.setColor();
     this.seFontSize();
     this.setFontWeight();
+
+    this.underline = this.underline || ''
+
+
   }
 
   private setColor() {

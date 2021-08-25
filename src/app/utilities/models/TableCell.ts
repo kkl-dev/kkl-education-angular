@@ -1,23 +1,31 @@
-
-export class TableCell {
-
-  readonly col = 8.3333;
-
+export class TableCellModel {
+  // readonly col = 8.3333;
 
   constructor(
-    public label : string,
-    public value? : string,
-    public key? : string,
-    public span? : number,
-    public offset? : number,
+    public key: string,
+    public label: string,
+    public value?: string | Date | number,
+    public type?: string,
+    public offset?: number,
+    public cols?: number,
+    public divider?: boolean,
 
-    public offsetSpan? : number,
-    public colSpan? : number,
-  ){
-
-    this.span = this.span || 1
-    this.offsetSpan = this.offset || this.col
-    this.colSpan = this.span || this.col
+    public offsetSpan?: number,
+    public colSpan?: number
+  ) {
+    this.type = this.type || 'text';
+    this.divider = this.divider || false;
   }
 
+  static create(options: TableCellModel) {
+    return new TableCellModel(
+      options.key,
+      options.label,
+      options.value,
+      options.type,
+      options.offset,
+      options.colSpan,
+      options.divider
+    );
+  }
 }

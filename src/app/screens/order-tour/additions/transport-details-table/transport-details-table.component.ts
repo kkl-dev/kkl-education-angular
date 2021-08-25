@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TableCellModel } from 'src/app/utilities/models/TableCell';
+import { columns, details, summery, supplier } from 'src/mock_data/additions';
 
 export interface TableCell {
   key?: string;
@@ -31,118 +33,24 @@ export interface supplierRoW {
 export class TransportDetailsTableComponent implements OnInit {
   public col: number = 10;
 
-  private headerRow: HeaderRoW = {
-    additionType: 'היסעים',
-    status: 'חדש',
-    purchaseId: 'חדש',
-  };
+  public columns: TableCellModel[] = columns;
 
-  public columns: TableCell[] = [
-    {
-      key: 'tourId',
-      label: 'מספר טיול',
-      value: '213232',
-    },
-    {
-      label: 'ספק',
-    },
-    {
-      label: 'קליטת טיול',
-    },
-  ];
+  private details: TableCellModel[] = this.formatData(details);
 
-  private details: TableCell[] = [
-    {
-      key: 'type',
-      label: 'סוג',
-      value: 'היסעים',
-    },
-    {
-      key: 'status',
-      label: 'סטטוס',
-      value: 'חדש',
-    },
-    {
-      key: 'type',
-      label: 'מספר הזמנת רכש',
-      value: 'חדש',
-      divider : true
-    },
-  ];
+  private supplier: TableCellModel[] = this.formatData(supplier)
 
-  private suplier: TableCell[] = [
-    {
-      key: 'name',
-      label: 'שם הספק הנבחר',
-      value: 'יפעת הסעות בע"מ',
-    },
-    {
-      key: 'businessId',
-      label: 'ע.מורשה',
-      value: 5500,
-    },
-    {
-      key: 'financelId',
-      label: 'מ.ספק הפיננסית',
-      type: 'number',
-      value: 39203923,
-    },
-    {
-      key: 'address',
-      label: 'כתובת',
-      value: 'רחובות',
-    },
-    {
-      key: 'contact',
-      label: 'איש קשר',
-      value: 'שחר גל',
-    },
-    {
-      key: 'phone',
-      label: 'טלפון',
-      value: '04-43894389',
-    },
-    {
-      key: 'fax',
-      label: 'פקס',
-      value: '04-43894389',
-    },
-    {
-      key: 'email',
-      label: 'מייל',
-      value: 'dsds@ewew.com',
-    },
-    {
-      key: 'processId',
-      label: 'איש קשר',
-      value: 'שחר גל',
-    },
-    {
-      key: 'aproveContact',
-      label: 'השמנה אושרה ע"י',
-      value: '323237823',
-    },
-    {
-      key: 'aproveDate',
-      label: 'תאריך אישור',
-      type: 'date',
-      value: new Date(),
-    },
-    {
-      key: 'aproveContactId',
-      label: 'ת.ז מאשר',
-      value: '382938293',
-      divider : true
-    },
-  ]
+  private summery: TableCellModel[] = this.formatData(summery)
 
-  public data = [
-    this.details,
-    this.suplier,
-  ];
+  public data = [this.details, this.supplier, this.summery];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+  }
+
+  private formatData(data: TableCellModel[]) {
+    return data.map((item) => {
+      return TableCellModel.create(item);
+    });
   }
 }
