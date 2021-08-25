@@ -14,6 +14,7 @@ export interface FormTemplate {
 export interface QuestionGroup {
   key?: string;
   label?: string;
+  cols?: string | number;
   isGroup?: boolean;
   questions?: QuestionBase<string | Date | number>[];
   hasButton?: boolean;
@@ -76,9 +77,6 @@ export class FormService {
     return this.fb.group(this.setForm(this.formatForm(questions)));
   }
 
-  private handleForm(questions) {
-    return this.formatForm(questions);
-  }
 
   private ArrayToObject(arr: any[]) {
     return arr

@@ -1,0 +1,19 @@
+@import 'src/styles.scss';
+
+mat-card.details-container {
+background-color: #FBFBFB;
+border-radius: 5px;
+
+}
+::ng-deep mat-card-header.details-header   {
+  direction: rtl;
+
+  > div.mat-card-header-text {
+    margin: 0px !important;
+  }
+}
+
+
+mat-card-actions {
+  background-color: #F5F5F5;
+}

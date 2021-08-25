@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "./theme.scss";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
@@ -12,20 +13,23 @@ $text: #000000;
 $text-light: #A2A2A2;
 $success: #37c563;
 
-$colors: (
-  primary: $primary,
+$colors: (primary: $primary,
   primary-dark: $primary-dark,
   accent: $accent,
   default: $default,
   paper: $paper,
   text: $text,
   text-light: $text-light,
-  success : $success
-);
+  success : $success);
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
 }
+
+@function spacing($spacing) {
+  @return $spacing * 8px;
+}
+
 
 html,
 body {
@@ -38,8 +42,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "open sans hebrew", "Helvetica Neue", sans-serif !important;
-  src: url("assets/fonts/opanSansHebrew/OpenSansHebrew-Regular.ttf")
-    format("opentype");
+  src: url("assets/fonts/opanSansHebrew/OpenSansHebrew-Regular.ttf") format("opentype");
   box-sizing: border-box;
 }
 
@@ -55,7 +58,7 @@ mat-grid-tile {
 }
 
 mat-grid-tile {
-  &.text > figure.mat-figure {
+  &.text>figure.mat-figure {
     display: flex;
     flex-direction: column;
   }

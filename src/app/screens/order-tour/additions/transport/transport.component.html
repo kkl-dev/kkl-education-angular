@@ -4,12 +4,16 @@
       [slots]="{button : formButton}">
     </app-form-container>
   </div>
+  <div fxFlex="35" >
+    <app-transport-details></app-transport-details>
+  </div>
 </div>
 
 <ng-template #formButton>
   <div class="button-container">
     <button type="submit" mat-button>
-      <app-icon key="edit" type="mat"></app-icon>
+      הוספה
     </button>
   </div>
 </ng-template>
+
