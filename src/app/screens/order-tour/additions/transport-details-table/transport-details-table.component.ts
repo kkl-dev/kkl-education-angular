@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { columns, details, summery, supplier } from 'src/mock_data/additions';
 
@@ -42,6 +44,12 @@ export class TransportDetailsTableComponent implements OnInit {
   private summery: TableCellModel[] = this.formatData(summery)
 
   public data = [this.details, this.supplier, this.summery];
+
+  public cancelForm : QuestionBase<string>[] = [
+    new QuestionTextbox({
+      label : 'סיבת ביטול'
+    })
+  ]
 
   constructor() {}
 

@@ -2,7 +2,7 @@
   <div fxFlex="35" *ngFor="let form of transportForm">
     <app-form-container
       [questions]="form.questions"
-      [cols]="'8'"
+      [cols]="form.cols"
       [gutter]="'15'"
       [hasButton]="form.hasButton"
       [slots]="{ button: formButton }"
