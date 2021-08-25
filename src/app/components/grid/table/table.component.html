@@ -1,13 +1,15 @@
 <div fxLayout="row wrap" dir="rtl">
   <div fxFlex="15" fxLayout="row wrap">
-    <div fxFlex="100" *ngFor="let column of columns" class="row-item">
-      <app-typography fxFlex="40" [bold]="600" underline="underline">
-        {{ column.label }}:
-      </app-typography>
-      <app-typography underline="underline">
-        {{ column?.value }}
-      </app-typography>
-    </div>
+    <ng-container *ngFor="let column of columns">
+       <div fxFlex="100" class="row-item">
+        <app-typography fxFlex="40" [bold]="600" underline="underline">
+          {{ column.label }}:
+        </app-typography>
+        <app-typography underline="underline">
+          {{ column?.value }}
+        </app-typography>
+      </div>
+    </ng-container>
   </div>
   <div fxFlex="85" fxLayout="row wrap" class="content">
     <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of data">

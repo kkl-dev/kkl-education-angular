@@ -4,10 +4,9 @@ import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { columns, details, summery, supplier } from 'src/mock_data/additions';
 
 export interface TableData {
-columns : TableCellModel[],
-rows : TableCellModel[][],
+  columns?: TableCellModel[];
+  rows: TableCellModel[][];
 }
-
 
 @Component({
   selector: 'app-transport-details',
@@ -18,20 +17,23 @@ export class TransportDetailsComponent implements OnInit {
   public title: string = 'פרטים נוספים';
   public editMode: boolean = false;
 
-  public detailsColumns: TableCellModel[] = columns;
-  public detailsTable = [details, supplier, summery];
+  public columns: TableCellModel[] = columns;
+  public rows: TableCellModel[][] = [details, supplier, summery];
 
-  public detailsSubject = new BehaviorSubject<TableCellModel[][]>(
-    this.detailsTable
-  );
+  public detailsSubject = new BehaviorSubject<TableData>({
+    columns: this.columns,
+    rows: this.rows,
+  });
+
   public data$ = this.detailsSubject.asObservable();
 
-  public cancelColumns: TableCellModel[] = [
-    {
-      key: 'cancel',
-      label: 'ביטול הזמנה',
-    },
-  ];
+  public cancellation: string = '';
+
+  private cancelColumn: TableCellModel = {
+    key: 'cancel',
+    label: 'ביטול הזמנה',
+    offset: 1,
+  };
 
   private cancellationForm: TableCellModel[] = [
     {
@@ -48,52 +50,55 @@ export class TransportDetailsComponent implements OnInit {
     },
   ];
 
-  private cancellation: TableCellModel[] = [
+  private cancellationRow: TableCellModel[] = [
     {
       key: 'date',
       type: 'date',
       label: 'בוטל בתאריך',
-      value : new Date()
+      value: new Date(),
     },
     {
       key: 'concat',
       label: 'בוטל ע"י',
-      value : 'גל שרון'
+      value: 'גל שרון',
     },
     {
       key: 'permission',
       label: 'אישור ביטול ע"י',
-      value : 'קורנה'
+      value: 'קורנה',
     },
     {
       key: 'contactId',
       label: 'ת.ז.',
-      value : 4839849344
-    },
-    {
-      key: 'cancel',
-      label: 'סיבת ביטול',
-      value : 'קורנה',
-      offset: 3,
+      value: 4839849344,
     },
   ];
-
-  public cancelTable: TableCellModel[][] = [this.cancellationForm];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.openCancelForm()
+    this.openCancelForm();
   }
 
   public openCancelForm() {
-    this.detailsTable.push(this.cancellationForm);
-    this.detailsSubject.next(this.detailsTable);
+    this.rows.push(this.cancellationForm);
+    this.columns.push(this.cancelColumn);
+    this.detailsSubject.next({ columns: this.columns, rows: this.rows });
     this.editMode = true;
   }
 
   public updateCancelForm() {
-    this.detailsTable[(this.detailsTable.length - 1)] = this.cancellation;
-    this.detailsSubject.next(this.detailsTable);
+    
+    const cancellation : TableCellModel = {
+      key: 'cancel',
+      label: 'סיבת ביטול',
+      value: this.cancellation,
+      offset: 3,
+    };
+
+    this.cancellationRow.push(cancellation)
+
+    this.rows[this.rows.length - 1] = this.cancellationRow;
+    this.detailsSubject.next({ rows: this.rows });
   }
 }

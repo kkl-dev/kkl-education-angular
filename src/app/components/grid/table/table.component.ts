@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TableData } from 'src/app/screens/order-tour/additions/transport-details/transport-details.component';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 
 @Component({
@@ -12,7 +13,7 @@ export class TableComponent implements OnInit {
   @Input() columns: TableCellModel[] = [];
   @Input() row: TableCellModel[] = [];
   @Input() table: TableCellModel[][] = [];
-  @Input() data$: Observable<TableCellModel[][]>;
+  @Input() data$: Observable<TableData>;
 
   @Input() slots: {
     button: ElementRef;
@@ -33,12 +34,14 @@ export class TableComponent implements OnInit {
   private subscribeToData() {
     this.data$
       .pipe(
-        map((data: TableCellModel[][]) => {
-          return data.map((row) => this.formatData(row));
+        map((data: TableData) => {
+          data.rows = data.rows.map((row) => this.formatData(row));
+          return data
         })
       )
-      .subscribe((data) => {
-        this.data = data;
+      .subscribe((data: TableData) => {
+        this.data = data.rows;
+        this.columns = data.columns
       });
   }
 

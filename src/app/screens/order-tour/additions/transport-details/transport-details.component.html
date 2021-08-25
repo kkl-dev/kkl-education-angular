@@ -6,8 +6,6 @@
   </mat-card-header>
   <mat-card-content>
     <app-table
-      [columns]="detailsColumns"
-      [table]="detailsTable"
       [data$]="data$"
       [slots]="{ button: tableButton, custom: input }"
     ></app-table>
@@ -31,6 +29,8 @@
 
 <ng-template #input>
   <div class="input-container" fxLayout="row" fxLayoutAlign="start center">
-    <input />
+    <form #myForm="ngForm">
+      <input [(ngModel)]="cancellation" name="cancellation" type="text" >
+    </form>
   </div>
 </ng-template>
