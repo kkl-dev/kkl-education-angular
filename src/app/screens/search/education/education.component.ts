@@ -5,9 +5,9 @@ import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from '../../../api/v1/api/user.service';
+import { UserService } from '../../../api/api/user.service';
 import { TripService } from '../../../services/trip.service'
-import { AcommodationType, AvailableDate, FieldForestCenter, SearchAvailableDatesOptions } from 'src/app/api/v1';
+import { AcommodationType, AvailableDate, FieldForestCenter, SearchAvailableDatesOptions } from 'src/app/api';
 @Component({
   selector: 'app-education',
   templateUrl: './education.component.html',
@@ -77,8 +77,8 @@ export class EducationComponent implements OnInit {
     this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
     var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
     this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
-    this.SearchAvailableDatesOptionsRequestBody.acommodationType = this.AcommodationType;
-    this.SearchAvailableDatesOptionsRequestBody.SingleDay = this.checkedSingleDay;
+    // this.SearchAvailableDatesOptionsRequestBody.acommodationType = this.AcommodationType;
+    // this.SearchAvailableDatesOptionsRequestBody.SingleDay = this.checkedSingleDay;
     this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
       response => {
         console.log(response)

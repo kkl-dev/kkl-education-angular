@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
 import { UserDataService } from 'src/app/services/user-data.service';
-import { UserService } from '../../../api/v1/api/user.service';
+import { UserService } from '../../../api/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 
@@ -15,17 +15,21 @@ import { FakeService } from 'src/app/services/fake.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild('resultsForm') signupForm: NgForm | undefined;
+  //@ViewChild('forestCenter') forestCenter: ElementRef | undefined;
+  //@ViewChild('forestCenter', {static: true}) signupForm: NgForm | undefined;
   //@Input() categoryId: string;
   date: string | null = null;
 
   dateObj: { from: string; to: string } = { from: '', to: '' };
+  forestCenter: any | undefined;
+  forestCenterOptions: any | undefined;
   forestCenterId: number = 101;
   formOptions: any;
 
   freeSpacesArray1: FreeSpace[] = [];
 
-  constructor(public usersService: UserService, private userDataService: UserDataService, public tripService: TripService, public fakeApi: FakeService) {
+  constructor(public usersService: UserService, private userDataService: UserDataService, 
+    public tripService: TripService, public fakeApi: FakeService) {
     this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
@@ -43,23 +47,32 @@ export class HeaderComponent implements OnInit {
     };
 
   }
-  ngOnInit(): void {
-    console.log('userDataService:', this.userDataService);
-    console.log('tripService:', this.tripService);
-    //get forest center fake
-    this.fakeApi.getForestCenter().subscribe((forestCenter) => {
-      if (forestCenter) {
-        console.log('forestCenter', { forestCenter });
-        this.formOptions = forestCenter;
 
+  ngOnInit() {
+    this.tripService.forestCenter .subscribe(result => {
+      //this.forestCenter = result; // this set's the username to the default observable value
+      console.log('header --> forestCenter result:', result);    
+    });
+
+    // console.log('userDataService:', this.userDataService);
+    console.log('tripService:', this.tripService);
+    
+    //get forest center fake
+    this.fakeApi.getForestCenter().subscribe((forestCenters) => {
+      if (forestCenters) {
+        console.log('forestCenter', { forestCenters });
+        // this.formOptions = forestCenter;
+        this.forestCenterOptions = forestCenters;
         if (this.tripService.centerField) {
           this.forestCenterId = this.tripService.centerField.id;
-          this.forestCenterId = 1;
+          this.forestCenter = this.tripService.centerField;
+          //this.forestCenterId = 1;
           this.dateObj = this.tripService.dateObj;
         }
       }
       else {
         console.log('no data in forestCenter');
+        
       }
     },
       error => {
@@ -80,6 +93,15 @@ export class HeaderComponent implements OnInit {
 
     //  this.dateObj = this.tripService.dateObj;
     //  this.forestCenter = this.tripService.centerField;
+  }
+
+  updateForestCenter(id: any) {
+    console.log('header -- > update Forest Center id:', id);
+
+    let forest = this.forestCenterOptions.find((q: { id: any; }) => q.id === id);
+    console.log('new forest obj =>', forest);
+
+    this.tripService.changeForestCenter(forest);
   }
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
@@ -111,10 +133,12 @@ export class HeaderComponent implements OnInit {
   };
 
   public dateObjChanged(e: string) {
+    console.log('dateObjChanged:', e);
+
     if (e.includes('-')) {
       let tempDateArr = [];
       tempDateArr = e.split('-');
-      console.log(tempDateArr);
+      console.log('date with -',tempDateArr);
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
         this.dateObj.from = tempDateArr[0];
         this.dateObj.to = tempDateArr[1];
@@ -123,7 +147,7 @@ export class HeaderComponent implements OnInit {
         this.dateObj.to = tempDateArr[0];
       }
     } else {
-      console.log(e);
+      //console.log(e);
 
       this.dateObj.from = e;
       this.dateObj.to = '';
