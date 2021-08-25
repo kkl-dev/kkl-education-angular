@@ -74,10 +74,9 @@ export class TransportDetailsComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
-    this.openCancelForm();
   }
 
   public openCancelForm() {
@@ -88,8 +87,8 @@ export class TransportDetailsComponent implements OnInit {
   }
 
   public updateCancelForm() {
-    
-    const cancellation : TableCellModel = {
+
+    const cancellation: TableCellModel = {
       key: 'cancel',
       label: 'סיבת ביטול',
       value: this.cancellation,
@@ -99,6 +98,6 @@ export class TransportDetailsComponent implements OnInit {
     this.cancellationRow.push(cancellation)
 
     this.rows[this.rows.length - 1] = this.cancellationRow;
-    this.detailsSubject.next({ rows: this.rows });
+    this.detailsSubject.next({ columns: this.columns, rows: this.rows });
   }
 }
