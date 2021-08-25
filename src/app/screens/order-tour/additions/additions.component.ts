@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationCardModel } from 'src/app/models/nav-card-model';
+import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
 import { Subscription } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
 
@@ -70,13 +70,9 @@ export class AdditionsComponent implements OnInit {
       date: new Date(),
       locations: [
         { title: 'בית ספר תמיר - נס הרים' },
-        { title: 'נס הרים - בית שדה' },
       ],
     },
-    {
-      date: new Date(),
-      locations: [{ title: 'הר מירון - אילת' }, { title: 'תל אביב - חיפה' }],
-    },
+
   ];
 
   constructor(private additionsService: AdditionsService) {}

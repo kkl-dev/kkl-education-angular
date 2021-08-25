@@ -2,10 +2,17 @@
 
 mat-expansion-panel {
   margin-bottom: 15px;
-  border-bottom: 1px solid color(default);
-  border-radius: 0px;
+
+  &.tour {
+    border-bottom: 1px solid color(primary-dark);
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
 
   mat-expansion-panel-header {
     direction: rtl;
+    &.tour {
+      padding-right: 0px;
+    }
   }
 }

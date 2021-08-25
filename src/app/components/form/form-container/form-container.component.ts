@@ -19,21 +19,20 @@ export class FormContainerComponent implements OnInit {
   public form!: FormGroup;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
-  @Input() cols: string = '1';
+  @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() questions!: QuestionBase<string>[];
-  @Input() showButton: boolean = false;
+  @Input() hasButton: boolean = false;
   @Input() slots: {
     button?: ElementRef;
     group?: ElementRef;
   };
   @Input() customQuestionTemplates = {};
-  @Input() buttonText: string = '';
 
   constructor(private formService: FormService) {}
 
   ngOnInit() {
-    this.form = this.formService.buildGroup(this.questions);
+    this.form = this.formService.buildForm(this.questions);
   }
 
   onSubmit() {

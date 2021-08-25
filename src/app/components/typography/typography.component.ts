@@ -7,21 +7,44 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TypographyComponent implements OnInit {
   @Input() color: string;
-  @Input() size: string = '';
-  @Input() bold: number;
+  @Input() size: number | string;
+  @Input() bold: number | string;
   @Input() variant: string;
+  @Input() underline: string;
+  @Input() classes: {
+    variant: string;
+    color: string;
+    underline: string;
+  };
 
   constructor() {}
 
   ngOnInit(): void {
-    this.color = this.color || 'text';
+    this.setColor();
+    this.seFontSize();
+    this.setFontWeight();
 
+    this.underline = this.underline || ''
+
+
+  }
+
+  private setColor() {
+    this.color = this.color || 'text';
+  }
+
+  private seFontSize() {
     if (this.size) {
       this.variant = '';
-    } else {
+    } else if (this.variant) {
       this.variant = this.variant || 'mat-title';
+    } else {
+      this.variant = '';
+      this.size = 16;
     }
+  }
 
+  private setFontWeight() {
     this.bold = this.bold || 500;
   }
 }

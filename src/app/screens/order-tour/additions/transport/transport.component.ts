@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
@@ -11,8 +12,9 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   templateUrl: './transport.component.html',
   styleUrls: ['./transport.component.scss'],
 })
+
 export class TransportComponent implements OnInit {
-  public deatails: QuestionBase<string>[] = [
+  public details: QuestionBase<string>[] = [
     new QuestionTextbox({
       key: 'total',
       label: 'סה"כ',
@@ -85,26 +87,11 @@ export class TransportComponent implements OnInit {
   ];
   public gather: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
-      key: 'scatterAddress',
-      label: 'כתובת פיזור',
-      value: '',
-      validations: [Validators.required],
-      icon: 'place',
-    }),
-
-    new QuestionTextbox({
-      key: 'scatterLocation',
-      label: 'שם מקום פיזור',
-      value: '',
-      validations: [Validators.required],
-      icon: 'place',
-    }),
-
-    new QuestionTextbox({
       key: 'gatherHour',
       label: 'שעת פיזור',
       icon: 'schedule',
       type: 'time',
+      offset : 2,
       validations: [Validators.required],
       inputProps: {
         labelLength: 'extraWide',
@@ -130,7 +117,7 @@ export class TransportComponent implements OnInit {
 
     new QuestionTextbox({
       key: 'gatherLocation',
-      label: 'שם מקום איסוף',
+      label: 'מקום איסוף',
       value: '',
       icon: 'place',
       validations: [Validators.required],
@@ -154,20 +141,28 @@ export class TransportComponent implements OnInit {
         labelLength: 'extraWide',
       },
     }),
+  ];
+
+  private comments : QuestionBase<string>[] =  [
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות',
-      cols: 8,
-      rows: 4
+      cols: 6,
+      rows: 4,
+      offset : 1
     })
-  ];
 
-  public transportForm = [
+  ]
+
+  public transportForm  :QuestionGroup[]= [
     {
-      questions: this.deatails,
+      questions: this.details,
     },
     {
       questions: this.gather,
+    },
+    {
+      questions: this.comments,
       hasButton : true
     }
   ]
