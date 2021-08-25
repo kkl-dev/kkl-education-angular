@@ -1,22 +1,3 @@
-<!-- <mat-grid-list cols="1" rowHeight="15vh" [ngClass]="{ 'sleeping-width': activeStep === 1 }">
-  <app-drawer *ngIf="activeStep === 0"></app-drawer>
-  <mat-grid-tile>
-    <div class="stepper">
-      <app-working-steps [steps]="steps" (changeActiveStep)="changeActiveStep($event)" [activeStep]="activeStep">
-      </app-working-steps>
-    </div>
-  </mat-grid-tile>
-  <mat-grid-tile rowspan="4">
-    <div class="steps-container">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-grid-tile>
-  <mat-grid-tile class="bottom-navigation">
-    <app-bottom-navigation [currentPage]="0" previousUrl="prevPage" nextUrl="nextPage" [lastPage]="steps.length"
-      (changePage)="changeActiveStepBottomNavigation($event)"></app-bottom-navigation>
-  </mat-grid-tile>
-</mat-grid-list> -->
-
 <div [ngClass]="{ 'sleeping-width': activeStep === 1 }">
   <div
     class="content"
