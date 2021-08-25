@@ -9,6 +9,16 @@
 .row-item {
   padding-top: spacing(2);
   padding-bottom: spacing(2);
+  height: spacing(6) !important;
+}
+
+.cell-item {
+  height: spacing(6) !important;
+}
+
+.item-label {
+  padding-left: spacing(1);
+
 }
 
 .row-button {

@@ -1,7 +1,7 @@
+import { TableData } from './../../../screens/order-tour/additions/transport-details/transport-details.component';
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TableData } from 'src/app/screens/order-tour/additions/transport-details/transport-details.component';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 
 @Component({
