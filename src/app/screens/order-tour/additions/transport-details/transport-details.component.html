@@ -9,22 +9,26 @@
   </mat-card-content>
   <mat-card-actions>
     <app-table
+      *ngIf="cancelMode"
       [columns]="columns"
       [data]="data"
       [slots]="{ button: tableButton, custom: input }"
     ></app-table>
-    <!-- <button class="cancel-button" mat-raised-button>ביטול הזמנה</button> -->
+
+    <div fxLayout="row" fxLayoutAlign="end center" *ngIf="!cancelMode">
+      <button mat-raised-button (click)="onClick()">ביטול הזמנה</button>
+    </div>
   </mat-card-actions>
 </mat-card>
 
 <ng-template #tableButton>
-  <div class="button-container" fxLayout="row" fxLayoutAlign="start center">
-    <button class="cancel-button" mat-raised-button>ביטול הזמנה</button>
+  <div class="button-container" fxLayout="row" fxLayoutAlign="start end">
+    <button mat-raised-button>שמירה</button>
   </div>
 </ng-template>
 
 <ng-template #input>
   <div class="input-container" fxLayout="row" fxLayoutAlign="start center">
-    <input>
+    <input />
   </div>
 </ng-template>

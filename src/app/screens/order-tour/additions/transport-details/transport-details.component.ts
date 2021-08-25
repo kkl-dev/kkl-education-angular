@@ -7,8 +7,9 @@ import { TableCellModel } from 'src/app/utilities/models/TableCell';
   styleUrls: ['./transport-details.component.scss'],
 })
 export class TransportDetailsComponent implements OnInit {
+
   public title: string = 'פרטים נוספים';
-  public cancelMode: boolean = false;
+  public cancelMode: boolean = true;
 
   public columns: TableCellModel[] = [
     {
@@ -36,8 +37,11 @@ export class TransportDetailsComponent implements OnInit {
     this.row
   ];
 
-  public onCLick() {}
   constructor() {}
 
   ngOnInit(): void {}
+
+  public onClick() {
+    this.cancelMode = !this.cancelMode
+  }
 }
