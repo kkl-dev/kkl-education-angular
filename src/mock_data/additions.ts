@@ -5,17 +5,17 @@ export const columns: TableCellModel[] = [
     key: 'tourId',
     label: 'מספר טיול',
     value: '213232',
-    offset: '18',
+    offset: 1,
   },
   {
     key: 'supplier',
     label: 'ספק',
-    offset: '43',
+    offset: 3,
   },
   {
     key: 'tourDetails',
     label: 'קליטת טיול',
-    offset: '26',
+    offset: 2,
   },
 ];
 

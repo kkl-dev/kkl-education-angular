@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" dir="rtl">
+<!-- <div fxLayout="row wrap" dir="rtl">
   <div fxFlex="15" fxLayout="column">
     <ng-container *ngFor="let column of columns">
       <div [fxFlex]="column.offset" class="column">
@@ -43,4 +43,18 @@
       </ng-container>
     </div>
   </div>
-</div>
+</div> -->
+
+
+<mat-grid-list cols="5" rowHeight="5vh">
+  <mat-grid-tile colspan="4" *ngFor="let row of data" [rowspan]="((row.length / 4))">
+    <mat-grid-list cols="4" rowHeight="5vh">
+      <mat-grid-tile *ngFor="let item of row">
+        {{item.label}}
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-grid-tile>
+  <mat-grid-tile  *ngFor="let column of columns" [rowspan]="(column.offset)">
+    {{column.label}}
+  </mat-grid-tile>
+</mat-grid-list>
