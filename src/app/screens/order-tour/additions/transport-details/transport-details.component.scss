@@ -17,3 +17,10 @@ border-radius: 5px;
 mat-card-actions {
   background-color: #F5F5F5;
 }
+
+.cancel-button {
+  background-color: color(paper);
+  color: color(primary);
+  border: 1px solid #A7D2EF;;
+  box-shadow: 0px 6px 15px #A7D2EF;
+}
