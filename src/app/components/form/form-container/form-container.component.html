@@ -13,7 +13,7 @@
             [type]="question.type"
             [label]="question.label"
             [icon]="question.icon"
-            [options]="question.options"
+            [options]="question.inputProps?.options" 
             [controlType]="question.controlType"
             [labelLength]="question.inputProps?.labelLength"
           ></app-form-input>
@@ -52,6 +52,7 @@
 
     <div class="form-row" *ngIf="showButton">
       <!-- <ng-container *ngTemplateOutlet="slots?.button"></ng-container> -->
+      <ng-content select=[button]></ng-content>
     </div>
   </form>
 </div>

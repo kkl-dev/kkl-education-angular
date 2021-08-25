@@ -2,8 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
+import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 
 export interface formGroupGrid {
   title: string;
@@ -24,7 +27,7 @@ export class SleepingOptionsComponent implements OnInit {
       svgUrl: string;
       sleepingAreas: number;
       avialableSpaces: number;
-      type: string;
+      type: string; 
       singleUnit: string;
     }[];
   }[] = [
@@ -160,68 +163,13 @@ export class SleepingOptionsComponent implements OnInit {
     },
   ];
 
+  filledNightsArray:{sleepingPlace: string, nightsCount: string, saveFor: string, peopleCount: string, amount: string,comments:string}[]=[]
+
+
+
   formCols: number = 8;
-  questions: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'sleepingPlace',
-      type: 'select',
-      cols: '2',
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
-      },
-    }),
-    new QuestionSelect({
-      key: 'nightsCount',
-      type: 'select',
-      cols: '2',
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
-      },
-    }),
-    new QuestionSelect({
-      key: 'saveFor',
-      type: 'select',
-      cols: '2',
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
-      },
-    }),
-    new QuestionTextarea({
-      key: 'peopleCount',
-      label: 'שם הטיול',
-      value: '',
-      validations: [Validators.required],
-    }),
-    new QuestionTextarea({
-      key: 'amount',
-      label: 'שם הטיול',
-      value: '',
-      validations: [Validators.required],
-    }),
-    new QuestionTextarea({
-      key: 'comments',
-      label: 'הערות מנהליות',
-      cols: '6',
-      value: '',
-    }),
+  questions: QuestionBase<string | number>[] = [
+   
   ];
 
   changeDatesHandler(newDates: string) {
@@ -279,7 +227,14 @@ export class SleepingOptionsComponent implements OnInit {
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
   }
 
-  constructor() {}
+  constructor(private checkAvailabilityService:CheckAvailabilityService, private sleepingService:SleepingServiceService) {
+   this.questions=this.sleepingService.questions 
+  }
+
+  updateFilledNightsArray(e){
+    console.log(e);
+this.filledNightsArray.push(e) 
+  }
 
   ngOnInit(): void {}
 }

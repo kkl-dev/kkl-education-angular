@@ -1,9 +1,14 @@
 <div class="container" *ngIf="questions.length > 0">
-  <mat-grid-list cols="1" rowHeight="5vh">
+  <mat-grid-list cols="2" rowHeight="5vh">
     <mat-grid-tile class="text">
       <span>{{ title }}</span>
+      
     </mat-grid-tile>
-    <mat-grid-tile rowspan="10">
+    <mat-grid-tile class="text">
+      <span>{{ title }}</span>
+      
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="10">
       <app-form-container
         [cols]="formCols"
         [questions]="questions"

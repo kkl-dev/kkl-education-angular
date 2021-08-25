@@ -143,9 +143,34 @@ export class SquadAssembleComponent implements OnInit {
         new QuestionNumber({
           key: 'participants',
           label: 'נוער / מבוגרים',
-          cols: 2,
+          cols: 1,
           rows: 4,
         }),
+        new QuestionNumber({
+          key: 'chaprones',
+          label: 'מלווים',
+          cols: 1,
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'instructors',
+          label: 'מדריכים',
+          cols: 1,
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'drivers',
+          label: 'נהגים',
+          cols: 1,
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'medics',
+          label: 'מערים',
+          cols: 1,
+          rows: 4,
+        }),
+ 
  
   ];
   groupAssambleFormInputs: QuestionBase<string>[] = [
