@@ -33,7 +33,6 @@ export interface supplierRoW {
   styleUrls: ['./transport-details-table.component.scss'],
 })
 export class TransportDetailsTableComponent implements OnInit {
-  public col: number = 10;
 
   public columns: TableCellModel[] = columns;
 
@@ -45,11 +44,6 @@ export class TransportDetailsTableComponent implements OnInit {
 
   public data = [this.details, this.supplier, this.summery];
 
-  public cancelForm : QuestionBase<string>[] = [
-    new QuestionTextbox({
-      label : 'סיבת ביטול'
-    })
-  ]
 
   constructor() {}
 

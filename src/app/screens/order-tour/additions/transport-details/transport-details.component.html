@@ -1,16 +1,17 @@
-
-<mat-card
-[ngClass]="['details-container', 'mat-elevation-z0']"
->
+<mat-card [ngClass]="['details-container', 'mat-elevation-z0']">
   <mat-card-header class="details-header">
     <app-typography [bold]="600" [size]="18">
-      {{title}}
+      {{ title }}
     </app-typography>
   </mat-card-header>
   <mat-card-content>
     <app-transport-details-table></app-transport-details-table>
   </mat-card-content>
   <mat-card-actions>
-    <button class="cancel-button" mat-raised-button>ביטול הזמנה</button>
+    <div fxFlex="row">
+      <div>סיבת ביטול</div>
+      <div>ביטול הזמנה</div>
+      <button class="cancel-button" mat-raised-button>ביטול הזמנה</button>
+    </div>
   </mat-card-actions>
 </mat-card>
