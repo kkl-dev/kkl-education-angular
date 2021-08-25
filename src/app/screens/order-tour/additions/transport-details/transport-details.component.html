@@ -8,10 +8,23 @@
     <app-transport-details-table></app-transport-details-table>
   </mat-card-content>
   <mat-card-actions>
-    <div fxFlex="row">
-      <div>סיבת ביטול</div>
-      <div>ביטול הזמנה</div>
-      <button class="cancel-button" mat-raised-button>ביטול הזמנה</button>
-    </div>
+    <app-table
+      [columns]="columns"
+      [data]="data"
+      [slots]="{ button: tableButton, custom: input }"
+    ></app-table>
+    <!-- <button class="cancel-button" mat-raised-button>ביטול הזמנה</button> -->
   </mat-card-actions>
 </mat-card>
+
+<ng-template #tableButton>
+  <div class="button-container" fxLayout="row" fxLayoutAlign="start center">
+    <button class="cancel-button" mat-raised-button>ביטול הזמנה</button>
+  </div>
+</ng-template>
+
+<ng-template #input>
+  <div class="input-container" fxLayout="row" fxLayoutAlign="start center">
+    <input>
+  </div>
+</ng-template>
