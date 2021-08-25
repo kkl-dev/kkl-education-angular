@@ -28,9 +28,10 @@ export class EducationComponent implements OnInit {
       new Date(2022, 11, 17)
     );
 
-    this.options = {
+    this.options = { 
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
+ 
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
@@ -71,7 +72,8 @@ export class EducationComponent implements OnInit {
 
   options: CalendarOptions = {
     firstCalendarDay: 0,
-    format: 'LL/dd/yyyy',
+    format: 'LL/dd/yyyy',  
+
     closeOnSelected: true,
     minYear: 2019,
     maxYear: 2021,
@@ -82,7 +84,6 @@ export class EducationComponent implements OnInit {
     if (e.includes('-')) {
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
-      console.log(tempDateArr);
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
         this.dateObj.from = tempDateArr[0];
         this.dateObj.to = tempDateArr[1];
@@ -91,7 +92,6 @@ export class EducationComponent implements OnInit {
         this.dateObj.to = tempDateArr[0];
       }
     } else {
-      console.log(e);
 
       this.dateObj.from = e;
       this.dateObj.to = '';

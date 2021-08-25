@@ -50,18 +50,18 @@ export class HeaderComponent implements OnInit {
     format: 'LL/dd/yyyy',
     closeOnSelected: true,
     // minDate: addDays(new Date(), 5),
-    // maxDate: addDays(new Date(), 10),
+    // maxDate: addDays(new Date(), 10),  
     minYear: 2019,
     maxYear: 2021,
     freeSpacesArray: this.freeSpacesArray1,
   };
 
   public dateObjChanged(e: string) {
+    
     if (e && e.includes('-')) {
       this.emitNewDates.emit(e);
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
-      console.log(tempDateArr);
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
         this.dateObj.from = tempDateArr[0];
         this.dateObj.to = tempDateArr[1];
@@ -70,8 +70,6 @@ export class HeaderComponent implements OnInit {
         this.dateObj.to = tempDateArr[0];
       }
     } else {
-      console.log(e);
-
       this.dateObj.from = e;
       this.dateObj.to = '';
     }
@@ -93,6 +91,7 @@ export class HeaderComponent implements OnInit {
     this.dateObjChanged(
       this.checkAvailabillityService.checkAvailabilltyValues.calendarInput
     );
+  
     this.location =
       this.checkAvailabillityService.checkAvailabilltyValues.sleepingPlace;
     this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
@@ -102,8 +101,8 @@ export class HeaderComponent implements OnInit {
 
     this.options = {
       firstCalendarDay: 0,
-      format: 'LL/dd/yyyy',
-      closeOnSelected: true,
+      format: 'LL/dd/yyyy', 
+      closeOnSelected: true, 
       // minDate: addDays(new Date(), 5),
       // maxDate: addDays(new Date(), 10),
       minYear: getYear(new Date()) - 1,
