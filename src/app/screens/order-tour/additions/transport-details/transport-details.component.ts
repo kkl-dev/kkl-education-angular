@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { columns, details, summery, supplier } from 'src/mock_data/additions';
 
@@ -13,6 +14,9 @@ export class TransportDetailsComponent implements OnInit {
 
   public detailsColumns: TableCellModel[] = columns;
   public detailsTable = [details, supplier, summery];
+
+  public detailsSubject = new BehaviorSubject<TableCellModel[][]>(this.detailsTable);
+  public data$ = this.detailsSubject.asObservable()
 
   public cancelColumns: TableCellModel[] = [
     {
@@ -43,13 +47,13 @@ export class TransportDetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   public onClick() {
-
-    if(this.cancelMode) {
-      console.log('push')
-      this.detailsTable.push(summery)
+    if (this.cancelMode) {
+      console.log('push');
     }
 
-    this.cancelMode = !this.cancelMode;
+    this.detailsTable.push(summery);
+    this.detailsSubject.next(this.detailsTable)
+    // this.cancelMode = !this.cancelMode;
   }
 
   private updateCancelDetails() {
