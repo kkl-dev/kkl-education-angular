@@ -1,16 +1,36 @@
-
-<mat-card
-[ngClass]="['details-container', 'mat-elevation-z0']"
->
+<mat-card [ngClass]="['details-container', 'mat-elevation-z0']">
   <mat-card-header class="details-header">
     <app-typography [bold]="600" [size]="18">
-      {{title}}
+      {{ title }}
     </app-typography>
   </mat-card-header>
   <mat-card-content>
-    <app-transport-details-table></app-transport-details-table>
+    <app-table
+      [data$]="data$"
+      [slots]="{ button: tableButton, custom: input }"
+    ></app-table>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button color="primary">ביטול הזמנה</button>
+    <div fxLayout="row" fxLayoutAlign="end center" *ngIf="!editMode">
+      <button class="cancel-button" mat-raised-button (click)="openCancelForm()">
+        ביטול הזמנה
+      </button>
+    </div>
   </mat-card-actions>
 </mat-card>
+
+<ng-template #tableButton>
+  <div class="button-container" fxLayout="row" fxLayoutAlign="start end">
+    <button class="cancel-button" mat-raised-button (click)="updateCancelForm()">
+      בטל הזמנה
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #input>
+  <div class="input-container" fxLayout="row" fxLayoutAlign="start center">
+    <form #myForm="ngForm">
+      <input [(ngModel)]="cancellation" name="cancellation" type="text" >
+    </form>
+  </div>
+</ng-template>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { columns, details, summery, supplier } from 'src/mock_data/additions';
 
@@ -31,22 +33,24 @@ export interface supplierRoW {
   styleUrls: ['./transport-details-table.component.scss'],
 })
 export class TransportDetailsTableComponent implements OnInit {
-  public col: number = 10;
+
+  @Input() columnsData: TableCellModel[];
+  @Input() rowsData: TableCellModel[];
+  @Input() tableData: TableCellModel[][];
 
   public columns: TableCellModel[] = columns;
 
   private details: TableCellModel[] = this.formatData(details);
 
-  private supplier: TableCellModel[] = this.formatData(supplier)
+  private supplier: TableCellModel[] = this.formatData(supplier);
 
-  private summery: TableCellModel[] = this.formatData(summery)
+  private summery: TableCellModel[] = this.formatData(summery);
 
   public data = [this.details, this.supplier, this.summery];
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   private formatData(data: TableCellModel[]) {
     return data.map((item) => {

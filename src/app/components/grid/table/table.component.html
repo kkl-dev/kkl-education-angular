@@ -1,0 +1,57 @@
+<div fxLayout="row wrap" dir="rtl">
+  <div fxFlex="15" fxLayout="row wrap">
+    <ng-container *ngFor="let column of columns">
+       <div fxFlex="100" class="row-item">
+        <app-typography fxFlex="40" [bold]="600" underline="underline">
+          {{ column.label }}:
+        </app-typography>
+        <app-typography underline="underline">
+          {{ column?.value }}
+        </app-typography>
+      </div>
+    </ng-container>
+  </div>
+  <div fxFlex="85" fxLayout="row wrap" class="content">
+    <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of data">
+      <ng-container *ngFor="let item of row">
+        <div
+          [fxFlex]="item.offset ? '50' : '25'"
+          class="row-item"
+          *ngIf="item.type !== 'button'"
+        >
+          <div fxFlex="100" fxLayout="row" fxLayoutAlign="start center">
+            <app-typography *ngIf="item.label" fxFlex="40" [bold]="600">
+              {{ item.label }}:
+            </app-typography>
+
+            <app-typography
+              fxFlex="60"
+              *ngIf="item.type === 'text' || item.type === 'number'"
+            >
+              {{ item?.value }}
+            </app-typography>
+
+            <app-typography fxFlex="60" *ngIf="item.type === 'date'">
+              {{ item?.value | date: "M/d/yy" }}
+            </app-typography>
+
+            <div fxFlex="60" *ngIf="item.type === 'custom'">
+              <ng-container *ngTemplateOutlet="slots?.custom"></ng-container>
+            </div>
+          </div>
+        </div>
+        <div
+          [fxFlex]="item.offset ? '50' : '25'"
+          class="row-button"
+          *ngIf="item.type === 'button'"
+        >
+          <div fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
+            <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+          </div>
+        </div>
+
+        <div fxFlex="100" *ngIf="item?.divider" class="divider"></div>
+      </ng-container>
+    </div>
+  </div>
+</div>
