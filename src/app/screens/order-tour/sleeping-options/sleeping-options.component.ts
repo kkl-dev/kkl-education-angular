@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
-import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
@@ -27,7 +26,7 @@ export class SleepingOptionsComponent implements OnInit {
       svgUrl: string;
       sleepingAreas: number;
       avialableSpaces: number;
-      type: string; 
+      type: string;
       singleUnit: string;
     }[];
   }[] = [
@@ -169,7 +168,7 @@ export class SleepingOptionsComponent implements OnInit {
 
   formCols: number = 8;
   questions: QuestionBase<string | number>[] = [
-   
+
   ];
 
   changeDatesHandler(newDates: string) {
@@ -228,12 +227,12 @@ export class SleepingOptionsComponent implements OnInit {
   }
 
   constructor(private checkAvailabilityService:CheckAvailabilityService, private sleepingService:SleepingServiceService) {
-   this.questions=this.sleepingService.questions 
+   this.questions=this.sleepingService.questions
   }
 
   updateFilledNightsArray(e){
     console.log(e);
-this.filledNightsArray.push(e) 
+this.filledNightsArray.push(e)
   }
 
   ngOnInit(): void {}
