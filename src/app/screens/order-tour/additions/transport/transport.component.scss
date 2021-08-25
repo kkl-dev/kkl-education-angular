@@ -3,6 +3,8 @@ mat-grid-list , mat-grid-tile, app-form-container {
   height: 100%;
 }
 
-.container {
-  padding-left: 10%;
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
 }

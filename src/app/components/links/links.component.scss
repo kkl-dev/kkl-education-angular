@@ -6,7 +6,7 @@
   color: #ffffff;
   border-bottom-left-radius: 50px;
   border-top-left-radius: 50px;
-  background-color:$--green-color-bright;
+  background-color: color(success);
 }
 
 .chosen-education{
@@ -14,7 +14,7 @@
 }
 
 .chosen-forestry{
-  background-color:$--green-color-bright;
+  background-color: color(success);
 }
 
 .chosen * {
@@ -31,7 +31,7 @@
 color: #009eee !important;
 }
 .sign-out-forestry, .title-forestry, .headline-forestry{
-  color: $--green-color-bright !important;
+  color:  color(success) !important;
   }
 
 .links {
@@ -43,7 +43,7 @@ background: none !important;
     position: absolute;
     bottom: 15%;
     right: 25px;
-    color: $--green-color-bright;
+    color:  color(success);
     text-decoration: none;
   }
 
@@ -51,7 +51,7 @@ background: none !important;
 
   &-title{
     margin-right: 10px;
-    color: $--green-color-bright;
+    color:  color(success);
   }
   &__bottom-icon{
     position: absolute;
@@ -76,7 +76,7 @@ background: none !important;
 
 .list {
   &__headline {
-    // color: $--green-color-bright !important;
+    // color:  color(success) !important;
     margin-right: 10px;
   }
 }

@@ -1,31 +1,40 @@
-<mat-grid-list
-  cols="1"
-  rowHeight="15vh"
-  [ngClass]="{ 'sleeping-width': activePage === 1 }"
->
-  <app-drawer *ngIf="activePage === 0"></app-drawer>
-  <mat-grid-tile>
-    <div class="stepper">
-      <app-working-steps
-        [steps]="pages"
-        (changeActiveStep)="changeActivePage($event)"
-        [activeStep]="activePage"
-      >
-      </app-working-steps>
+<div [ngClass]="{ 'sleeping-width': activeStep === 1 }">
+  <div
+    class="content"
+    fxLayout="column"
+    fxLayoutAlign="space-around stretch"
+    fxLayout.xs="column"
+    fxFlexFill
+  >
+    <div fxFlex="10" fxLayoutAlign="center">
+      <div class="stepper">
+        <app-working-steps
+          [steps]="steps"
+          (changeActiveStep)="changeActiveStep($event)"
+          [activeStep]="activeStep"
+        >
+        </app-working-steps>
+      </div>
     </div>
-  </mat-grid-tile>
-  <mat-grid-tile rowspan="4">
-    <app-squad-assemble *ngIf="activePage === 0"></app-squad-assemble>
-    <app-sleeping-options *ngIf="activePage === 1"></app-sleeping-options>
-    <app-additions *ngIf="activePage === 3"></app-additions>
-  </mat-grid-tile>
-  <mat-grid-tile class="bottom-navigation">
-    <app-bottom-navigation
-      [currentPage]="0"
-      previousUrl="prevPage"
-      nextUrl="nextPage"
-      [lastPage]="pages.length"
-      (changePage)="changeActivePageBottomNavigation($event)"
-    ></app-bottom-navigation>
-  </mat-grid-tile>
-</mat-grid-list>
+    <div fxFlex="70">
+      <div class="steps-container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div
+      fxFlex="15"
+      fxFlex.xs="15"
+      class="bottom-navigation"
+      fxLayoutAlign="center"
+    >
+      <app-bottom-navigation
+        [currentPage]="0"
+        previousUrl="prevPage"
+        nextUrl="nextPage"
+        [lastPage]="steps.length"
+        (changePage)="changeActiveStepBottomNavigation($event)"
+        title="המשך"
+      ></app-bottom-navigation>
+    </div>
+  </div>
+</div>

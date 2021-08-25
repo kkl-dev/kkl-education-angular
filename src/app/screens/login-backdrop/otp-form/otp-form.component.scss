@@ -13,48 +13,47 @@
       font-weight: 300;
     }
   }
-&__form{
+  &__form {
+    &-inputs {
+      max-width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 5px;
+      margin-bottom: 40px;
 
-  &-inputs {
-    max-width: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 5px;
-    margin-bottom: 40px;
-    
-    &-input {
-      border: none;
-      outline: none;
-      width: 30px;
-      height: 60px;
-      background-color: #ffffff;
-      font-size: 30px;
-      text-align: center;
-    }
-    &-input::-webkit-outer-spin-button,
-    &-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
+      &-input {
+        border: none;
+        outline: none;
+        width: 30px;
+        height: 60px;
+        background-color: #ffffff;
+        font-size: 30px;
+        text-align: center;
+      }
+      &-input::-webkit-outer-spin-button,
+      &-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
     }
   }
-  }
-  &__btn{
+  &__btn {
     margin-top: 40px;
     text-decoration: none;
-    height:50px;
+    height: 50px;
     width: 70%;
     margin: 0 auto;
     color: #ffffff;
     border: none;
     font-size: 14px;
-    background-color: $--green-color-bright;
+    background-color: color(success);
     border-radius: 7px;
     z-index: 203;
     display: flex;
-    -webkit-box-shadow: 5px 5px 17px 2px rgba(0,196,102,0.3); 
-    box-shadow: 5px 5px 17px 2px rgba(0,196,102,0.3);
-    cursor: pointer !important; 
+    -webkit-box-shadow: 5px 5px 17px 2px rgba(0, 196, 102, 0.3);
+    box-shadow: 5px 5px 17px 2px rgba(0, 196, 102, 0.3);
+    cursor: pointer !important;
 
     &-text {
       margin: auto;
@@ -63,8 +62,8 @@
     }
   }
 }
-button:disabled{
-  background-color: #A2A2A2;
+button:disabled {
+  background-color: #a2a2a2;
   box-shadow: none;
 }
 
@@ -72,7 +71,6 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-
-a{
+a {
   text-decoration: none;
 }

@@ -1,94 +1,173 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { TextboxQuestion } from 'src/app/components/form/logic/question-textbox';
+import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 
 @Component({
   selector: 'app-transport',
   templateUrl: './transport.component.html',
-  styleUrls: ['./transport.component.scss']
+  styleUrls: ['./transport.component.scss'],
 })
+
 export class TransportComponent implements OnInit {
+  public details: QuestionBase<string>[] = [
+    new QuestionTextbox({
+      key: 'total',
+      label: 'סה"כ',
+      value: '',
+      validations: [Validators.required],
+    }),
+    new QuestionTextbox({
+      key: 'customeCost',
+      label: 'חיוב לקוח',
+      value: '',
+      validations: [Validators.required],
+    }),
+    new QuestionTextbox({
+      key: 'suplierCost',
+      label: 'חיוב ספק',
+      value: '',
+      validations: [Validators.required],
+    }),
+    new QuestionTextbox({
+      key: 'price',
+      label: 'מחיר',
+      value: '',
+      type: 'number',
+      validations: [Validators.required],
+    }),
 
-  transportForm: QuestionBase<string>[] = [
-
-    new TextboxQuestion({
+    new QuestionTextbox({
       key: 'participants',
       label: 'משתתפים',
       value: '',
-      order: 1,
-      validations: [Validators.required]
+      validations: [Validators.required],
     }),
-    new TextboxQuestion({
+
+    new QuestionTextbox({
       key: 'quentity',
       label: 'כמות',
       value: '',
-      order: 1,
-      validations: [Validators.required]
-    }),
-    new QuestionSelect({
-      key: 'suplier',
-      label: 'בחר ספק',
-      options: [
-        { key: 'solid', value: '12123' },
-        { key: 'great', value: '23' },
-        { key: 'good', value: '123' },
-        { key: 'unproven', value: '123123123' },
-      ],
-      type: 'select',
-      validations: [Validators.required]
+      validations: [Validators.required],
     }),
     new QuestionSelect({
       key: 'item',
       label: 'בחר פריט',
-      options: [
-        { key: 'solid', value: '12123' },
-        { key: 'great', value: '23' },
-        { key: 'good', value: '123' },
-        { key: 'unproven', value: '123123123' },
-      ],
       type: 'select',
-      validations: [Validators.required]
+      validations: [Validators.required],
+      inputProps: {
+        labelLength: 'extraWide',
+        options: [
+          { key: 'solid', value: '12123' },
+          { key: 'great', value: '23' },
+          { key: 'good', value: '123' },
+          { key: 'unproven', value: '123123123' },
+        ],
+      },
     }),
 
-    new TextboxQuestion({
-      key: 'total',
-      label: 'סה"כ',
-      value: '',
-      order: 1,
-      validations: [Validators.required]
+    new QuestionSelect({
+      key: 'suplier',
+      label: 'ספק',
+      type: 'select',
+      validations: [Validators.required],
+      inputProps: {
+        options: [
+          { key: 'solid', value: '12123' },
+          { key: 'great', value: '23' },
+          { key: 'good', value: '123' },
+          { key: 'unproven', value: '123123123' },
+        ],
+      },
     }),
-    new TextboxQuestion({
-      key: 'customeCost',
-      label: 'חיוב לקוח',
-      value: '',
-      order: 1,
-      validations: [Validators.required]
-    }),
-    new TextboxQuestion({
-      key: 'suplierCost',
-      label: 'חיוב ספק',
-      value: '',
-      order: 1,
-      validations: [Validators.required]
-    }),
-    new TextboxQuestion({
-      key: 'price',
-      label: 'מחיר',
-      value: '',
-      order: 1,
-      type: 'number',
-      validations: [Validators.required]
-    }),
-
-
-
   ];
+  public gather: QuestionBase<string | Date>[] = [
+    new QuestionTextbox({
+      key: 'gatherHour',
+      label: 'שעת פיזור',
+      icon: 'schedule',
+      type: 'time',
+      offset : 2,
+      validations: [Validators.required],
+      inputProps: {
+        labelLength: 'extraWide',
+      },
+    }),
+
+    new QuestionCalendar({
+      key: 'gatherDate',
+      label: 'תאריך פיזור',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'gatherAddress',
+      label: 'כתובת איסוף',
+      value: '',
+      validations: [Validators.required],
+      icon: 'place',
+      inputProps: {
+        labelLength: 'extraWide',
+      },
+    }),
+
+    new QuestionTextbox({
+      key: 'gatherLocation',
+      label: 'מקום איסוף',
+      value: '',
+      icon: 'place',
+      validations: [Validators.required],
+      inputProps: {
+        labelLength: 'extraWide',
+      },
+    }),
+    new QuestionTextbox({
+      key: 'gatherHour',
+      label: 'שעת איסוף',
+      icon: 'schedule',
+      type: 'time',
+      validations: [Validators.required],
+    }),
+
+    new QuestionCalendar({
+      key: 'gatherDate',
+      label: 'תאריך איסוף',
+      validations: [Validators.required],
+      inputProps: {
+        labelLength: 'extraWide',
+      },
+    }),
+  ];
+
+  private comments : QuestionBase<string>[] =  [
+    new QuestionTextarea({
+      key: 'comments',
+      label: 'הערות',
+      cols: 6,
+      rows: 4,
+      offset : 1
+    })
+
+  ]
+
+  public transportForm  :QuestionGroup[]= [
+    {
+      questions: this.details,
+    },
+    {
+      questions: this.gather,
+    },
+    {
+      questions: this.comments,
+      hasButton : true
+    }
+  ]
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

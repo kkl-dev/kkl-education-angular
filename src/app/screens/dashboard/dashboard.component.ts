@@ -1,42 +1,42 @@
-import { Component } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
+import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-
 export class DashboardComponent {
   public activeRoute: string = '';
-  public dashboardArray: {
-    svgUrl: string
-    name: string
-    url: string
-  }[] = [];
-  public prefix: string = '';
 
+  public topCards: NavigationCardModel[] = [
+    {
+      svgUrl: 'calendar',
+      title: 'בדיקת זמינות',
+      path: 'search',
+    },
+    {
+      svgUrl: 'button',
+      title: 'טיול חדש',
+      path: 'search',
+    },
+  ];
+  public bottomCards: NavigationCardModel[] = [
+    {
+      svgUrl: 'destination',
+      title: 'הטיולים שלי',
+      path: 'search',
+    },
+    {
+      svgUrl: 'report',
+      title: 'דוחות',
+      path: 'search',
+    },
+  ];
 
-  constructor(
-  ) {
-    this.prefix = 'education';
-    this.dashboardArray = [
-      {
-        svgUrl: 'destination',
-        name: 'הטיולים שלי',
-        url: 'search',
-      },
-      {
-        svgUrl: 'button',
-        name: 'טיול חדש',
-        url: 'search',
-      },
-      {
-        svgUrl: 'report',
-        name: 'דוחות',
-        url: 'search',
-      },
-    ]
-  }
+  public prefix: string = 'education';
+  @Input() public width: string = '150';
+  @Input() public height: string = '150';
 
+  constructor() {}
 }

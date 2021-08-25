@@ -24,11 +24,6 @@ mat-sidenav-content{
 
 }
 
-.forestry-education{
-  border-top:  $--green-color-bright solid 3px;
-
-}
-
 ::ng-deep .mat-drawer{
   background-color: rgba($color: #F5F5F5, $alpha: .5) !important;
   backdrop-filter: blur(15px) saturate(70%) contrast(70%) brightness(130%) opacity(1.1);

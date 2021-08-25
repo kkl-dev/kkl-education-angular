@@ -1,1 +1,27 @@
-<p>sleeping-options-form works!</p>
+<div class="sleeping-form">
+  <h3 class="sleeping-form">שם הטיול</h3>
+  <p class="sleeping-form">12121212</p>
+  <mat-form-field appearance="outline">
+      <mat-select
+      #select
+      [(ngModel)]="location"
+      name="location"
+      class="education__form-group-select"
+      >
+      <mat-option value="{{ option.value }}" *ngFor="let option of formOptions">
+          <span class="education__select-option-text">{{ option.text }}</span>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+          
+          <input matInput class="header__form-group-input" 
+          airbnb-calendar type="text" [(ngModel)]="date"
+          [options]="options"
+          (ngModelChange)="dateObjChanged($event)"
+          name="calendar-input" id="calendar-input" />
+    </mat-form-field>
+   
+</div>

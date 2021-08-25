@@ -1,0 +1,22 @@
+@import "../../../styles.scss";
+
+.item {
+  cursor: pointer;
+  margin: 0 20px;
+  padding: 20px;
+  background-color: rgba($color: #ffffff, $alpha: 0.82);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+.icon {
+  height: 100%;
+  transform: scale(2.5);
+}
+
+.text {
+  align-self: center;
+  font-weight: bold;
+  text-align: center;
+}

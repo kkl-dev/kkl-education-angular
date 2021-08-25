@@ -3,7 +3,12 @@
     <div class="header__form-group" disableOptionCentering="false">
       <label class="header__form-group-label">איפה ישנים</label>
       <mat-form-field>
-        <mat-select #select class="header__form-group-select">
+        <mat-select
+          [ngModelOptions]="{ standalone: true }"
+          #select
+          class="header__form-group-select"
+          [(ngModel)]="location"
+        >
           <mat-option
             value="{{ option.value }}"
             *ngFor="let option of formOptions"
@@ -48,11 +53,12 @@
         class="header__form-group-pseudo-input label-input"
         for="calendar-input"
       >
-      <span class="header__form-group-pseudo-input-value">
-        {{ dateObj.to }}</span
-      >
+        <span class="header__form-group-pseudo-input-value">
+          {{ dateObj.to }}</span
+        >
         <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
       </label>
     </div>
   </form>
 </div>
+<h1 class="headline">מרכז שדה - {{ location }}</h1>

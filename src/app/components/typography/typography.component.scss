@@ -1,0 +1,33 @@
+@import "../../../styles.scss";
+
+span.fontFamily {
+  font-family: "open sans hebrew", "Helvetica Neue", sans-serif !important;
+}
+
+span.text {
+  color: color(text);
+}
+
+span.text-light {
+  color: color(text-light);
+}
+
+span.primary {
+  color: color(primary);
+}
+
+span.accent {
+  color: color(accent);
+}
+
+span.warn {
+  color: color(warn);
+}
+
+span.bold {
+  font-weight: 600;
+}
+
+span.underline {
+  border-bottom: 2px solid color(primary);
+}

@@ -1,16 +1,20 @@
 <div class="dashboard">
-  <div class="dashboard__content">
-    <a routerLink="{{'/' + prefix + '/' + item.url }}" class="dashboard__content-item"
-      *ngFor="let item of dashboardArray; let i = index">
-      <div class="dashboard__content-item-icon">
-        <!-- <svg-icon [ngClass]="{
-            'education-svg': prefix === 'education'
-          }" src="{{ item.svgUrl }}">
-        </svg-icon> -->
-        <app-icon type="svg" [color]="'primary'" [key]="item.svgUrl"></app-icon>
-
+  <div  fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="30px">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div *ngFor="let item of topCards; let i = index">
+        <app-dashboard-card
+          [item]="item"
+          prefix="education"
+        ></app-dashboard-card>
       </div>
-      <div class="dashboard__content-item-text">{{ item.name }}</div>
-    </a>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div *ngFor="let item of bottomCards; let i = index">
+        <app-dashboard-card
+          [item]="item"
+          prefix="education"
+        ></app-dashboard-card>
+      </div>
+    </div>
   </div>
 </div>

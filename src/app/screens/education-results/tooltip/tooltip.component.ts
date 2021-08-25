@@ -49,12 +49,10 @@ export class TooltipComponent implements OnInit {
         user: 'none',
       });
     }
-    console.log(this.occupiedHoursArray);
   }
 
   calculateWidth(totalHours: number): string {
     const totalHoursPrecent = (totalHours / 24) * 100;
-    console.log(totalHoursPrecent);
 
     return `${totalHoursPrecent}%`;
   }

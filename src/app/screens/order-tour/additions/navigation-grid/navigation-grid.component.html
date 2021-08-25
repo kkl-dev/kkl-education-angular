@@ -1,21 +1,14 @@
 <div class="nav-container">
-  <mat-grid-list cols="1" rowHeight="6vh">
-    <mat-grid-tile></mat-grid-tile>
-    <mat-grid-tile>
-      <div class="nav-tab-title-container">
-        <span class="nav-tab-title">
-          {{ title }}
-        </span>
+  <div fxLayout="column" fxLayoutGap="40px">
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="80px">
+      <app-typography [bold]="600" [size]="24">
+        {{ title }}
+      </app-typography>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
+      <div class="nav-card" *ngFor="let item of cards">
+        <app-nav-card [item]="item"></app-nav-card>
       </div>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="8">
-      <mat-grid-list cols="8" rowHeight="20vh">
-        <div class="nav-grid">
-          <mat-grid-tile *ngFor="let item of navigationGrid">
-            <app-nav-card [item]="item"></app-nav-card>
-          </mat-grid-tile>
-        </div>
-      </mat-grid-list>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
 </div>

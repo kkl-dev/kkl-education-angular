@@ -1,0 +1,8 @@
+<div fxFlex="100" fxLayout="row">
+  <div *ngFor="let item of row" [fxFlex]="offset ? offsetSpan : colsSpan">
+    <div fxFlex="100" fxLayout="row">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
+

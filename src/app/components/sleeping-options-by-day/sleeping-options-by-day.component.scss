@@ -9,9 +9,35 @@
     &-current-day {
       &-next {
         margin-right: 5px;
+        &::before {
+          border-style: solid;
+          border-width: 0.25em 0.25em 0 0;
+          content: '';
+          display: inline-block;
+          height: 0.45em;
+          left: 0.15em;
+          position: relative;
+          top: 0.15em;
+          transform: rotate(-135deg);
+          vertical-align: top;
+          width: 0.45em;
+        }
       }
       &-previous {
         margin-left: 5px;
+        &::before {
+          border-style: solid;
+          border-width: 0.25em 0.25em 0 0;
+          content: '';
+          display: inline-block;
+          height: 0.45em;
+          left: 0.15em;
+          position: relative;
+          top: 0.15em;
+          transform: rotate(-315deg);
+          vertical-align: top;
+          width: 0.45em;
+        }
       }
       &-previous,
       &-next {
@@ -41,10 +67,12 @@
     margin-top: 10px;
     width: 80%;
     margin:0 auto;
+    margin-top: 10px;
     & span {
       border-top: 5px solid #dbdbdb;
       flex: 1;
       margin: 5px;
+      cursor: pointer;
     }
   }
 
@@ -73,10 +101,10 @@
         justify-content: center;
         width: 100%;
         display: flex;
+        justify-content: space-between;
         gap: 0px;
-        margin-right:10px;
         & > * { 
-          margin: 0 5px;
+          // margin: 0 5px;
           padding: 0;
         }
         &-svg {
@@ -115,6 +143,7 @@
 .flex {
   margin: 0 auto;
   display: flex;
+  grid-gap: 50px;
 
 }
 .disabled {

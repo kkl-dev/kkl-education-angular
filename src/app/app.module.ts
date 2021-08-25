@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+
 import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -60,7 +61,14 @@ import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-opti
 import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
-import { TableComponent } from './components/table/table.component';
+import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
+import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
+import { TypographyComponent } from './components/typography/typography.component';
+import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
+import { TransportDetailsComponent } from './screens/order-tour/additions/transport-details/transport-details.component';
+import { TransportDetailsTableComponent } from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
+import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
+
 
 @NgModule({
   declarations: [
@@ -93,7 +101,6 @@ import { TableComponent } from './components/table/table.component';
     ToursTableComponent,
     MyToursComponent,
     // form comps
-    // SquadAssembleComponent,
     FormContainerComponent,
     FormQuestionComponent,
 
@@ -119,11 +126,17 @@ import { TableComponent } from './components/table/table.component';
     IconComponent,
     SquadGroupComponent,
     InputRadioComponent,
+    ExpendPanelComponent,
     SleepingOptionsComponent,
     SleepingOptionsFormComponent,
     SleepingOptionsByDayComponent,
     SquadAssembleComponent,
-    TableComponent
+    TourPanelComponent,
+    TypographyComponent,
+    DashboardCardComponent,
+    TransportDetailsComponent,
+    TransportDetailsTableComponent,
+    FlexRowComponent
   ],
   imports: [
     BrowserModule,

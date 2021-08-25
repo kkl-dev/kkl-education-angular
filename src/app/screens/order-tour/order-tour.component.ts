@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { StepModel } from 'src/app/components/working-steps/working-steps.component';
 
 @Component({
   selector: 'app-order-tour',
@@ -6,42 +9,81 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order-tour.component.scss'],
 })
 export class OrderTourComponent implements OnInit {
-  public activePage: number =1 ;
+  public activeStep: number;
   public nextPage: string = 'education/search';
   public prevPage: string = 'education/results';
-  public pages: {
-    svgSrc: string;
-    text: string;
-  }[] = [
+
+  public currentRoute: string;
+  public sleepStatus: boolean;
+
+  public steps: StepModel[] = [
     {
-      svgSrc: 'assets/images/trees.svg',
+      svgUrl: 'groups',
       text: 'הרכב קבוצה',
+      path: 'squad-assemble',
+      iconType: 'mat',
     },
     {
-      svgSrc: 'assets/images/trees.svg',
+      svgUrl: 'bed',
       text: 'לינה',
+      path: 'sleeping',
     },
     {
-      svgSrc: 'assets/images/gardening-tools.svg',
+      svgUrl: 'playground',
       text: 'מתקנים ופעילות',
+      path: 'facilities',
     },
     {
-      svgSrc: 'assets/images/trees.svg',
+      svgUrl: 'list',
       text: 'תוספות',
+      path: 'additions',
     },
     {
-      svgSrc: 'assets/images/gardening-tools.svg',
+      svgUrl: 'add',
       text: 'סיכום',
+      path: 'summery',
     },
   ];
 
-  changeActivePage(newActivePage: number): void {
-    this.activePage = +newActivePage;
+  public changeActiveStep(newActiveStep: number): void {
+    this.activeStep = +newActiveStep;
   }
-  changeActivePageBottomNavigation(newActivePage: number): void {
-    this.activePage = +newActivePage;
+  public changeActiveStepBottomNavigation(newActiveStep: number): void {
+    this.activeStep = +newActiveStep;
   }
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getCurrentUrl();
+    this.subscribeToCurrentRoute();
+    this.setActiveStep();
+  }
+
+  private getCurrentUrl() {
+    this.formatUrl(this.router.url);
+  }
+
+  private subscribeToCurrentRoute() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.formatUrl(event.url);
+        this.handleStatus();
+      });
+  }
+
+  private formatUrl(url: string) {
+    const path = url.split('/');
+    this.currentRoute = path[3];
+  }
+
+  private handleStatus() {
+    this.sleepStatus = this.currentRoute === 'sleeping';
+  }
+
+  private setActiveStep() {
+    this.activeStep = this.steps.findIndex(
+      (step: StepModel) => this.currentRoute === step.path
+    );
+  }
 }

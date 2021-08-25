@@ -29,7 +29,7 @@
       z-index: 10;
       position: relative;
     }
-    
+
     &-icon {
       cursor: pointer;
       z-index: 10;
@@ -37,7 +37,7 @@
       background-image: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%);
       position: relative;
       margin: 0 auto;
-      width: 67px; 
+      width: 67px;
       height: 67px;
       background-color: rgba($color: #FEFEFE, $alpha: 1);
       border-radius: 100px;
@@ -68,15 +68,15 @@
   }
 }
 
-.chosen {
+.active {
   background-image: none;
-  background-color: $--green-color-bright;
+  background-color: color(primary);
   & * {
     fill: #ffffff;
   }
   &__text {
     // font-weight: bold;
-    border-bottom: 3px solid $--green-color-bright;
+    border-bottom: 3px solid color(primary);
     box-sizing: border-box;
     text-shadow: 0 0 0.01px black;
   }

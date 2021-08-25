@@ -1,4 +1,4 @@
-@import '../../../../styles.scss';
+@import "../../../../styles.scss";
 
 mat-grid-list,
 mat-grid-tile,
@@ -12,5 +12,18 @@ app-form-container {
 }
 
 .text {
-  color: color(primary)
+  color: color(primary);
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+div {
+  height: 100%;
+}
+
+app-form-input {
+  width: 100%
 }

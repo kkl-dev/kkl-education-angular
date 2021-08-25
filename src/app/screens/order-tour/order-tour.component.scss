@@ -40,7 +40,6 @@
   cursor: pointer;
   padding: 5px 30px;
   box-shadow: 0px 3px 10px 2px rgba($color: #000, $alpha: 0.2);
-
   font-size: 18px;
 
   &::before {
@@ -80,21 +79,18 @@
   background-color: color(primary) !important;
 
   &__text {
-    // font-weight: bold;
     border-bottom: 3px solid color(primary) !important;
     box-sizing: border-box;
     text-shadow: 0 0 0.01px black;
   }
 }
 
-mat-grid-list,
-mat-grid-tile,
-app-squad-assemble,
-app-working-steps,
-app-bottom-navigation,
-app-additions {
-  width: 100%;
+div {
   height: 100%;
+}
+
+app-working-steps {
+  width: 100%;
 }
 
 .stepper {
@@ -110,21 +106,29 @@ app-bottom-navigation {
 
 ::ng-deep mat-grid-tile.bottom-navigation {
   direction: rtl;
-
-  div {
-    width: 100%;
-    justify-content: center;
-  }
 }
 
-.sleeping-width {
+div.sleeping-width {
   width: 50%;
   margin-left: 50%;
 }
 
 app-sleeping-options {
   height: inherit;
-  border: 5px solid;
   box-sizing: border-box;
   width: 100%;
+}
+
+mat-grid-list.sleeping-width {
+  width: 50% !important;
+  margin-left: 50%;
+}
+
+div.steps-container {
+  padding-right: 5%;
+  padding-left: 5%;
+  overflow: visible scroll}
+
+.bottom-navigation {
+  direction: rtl;
 }

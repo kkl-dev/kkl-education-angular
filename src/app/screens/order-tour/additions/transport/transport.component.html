@@ -1,26 +1,19 @@
-<div class="container">
-
-  <mat-grid-list cols="1" rowHeight="30vh">
-    <mat-grid-tile>
-      <mat-grid-list cols="1" rowHeight="5vh">
-        <mat-grid-tile>
-          <span>הוספת נוסעים</span>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="5">
-          <app-form-container [questions]="transportForm" [cols]="'4'"></app-form-container>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-grid-list cols="1" rowHeight="5vh">
-        <mat-grid-tile>
-          <span>איסוף</span>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="5">
-          <app-form-container [questions]="transportForm" [cols]="'4'"></app-form-container>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </mat-grid-tile>
-  </mat-grid-list>
-
+<div fxLayout="column" fxFlexFill>
+  <div fxFlex="35" *ngFor="let form of transportForm">
+    <app-form-container [questions]="form.questions" [cols]="'8'" [gutter]="'15'" [hasButton]="form.hasButton"
+      [slots]="{button : formButton}">
+    </app-form-container>
+  </div>
+  <div fxFlex="35" >
+    <app-transport-details></app-transport-details>
+  </div>
 </div>
+
+<ng-template #formButton>
+  <div class="button-container">
+    <button type="submit" mat-button>
+      הוספה
+    </button>
+  </div>
+</ng-template>
+

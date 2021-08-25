@@ -23,7 +23,6 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  color: $--green-color-bright;
   height: 100%;
   width: 50px;
   z-index: 101;
@@ -34,9 +33,7 @@
     height: 40px;
     margin-bottom: 3px;
   }
-  .closed * {
-    // fill: $--green-color-bright !important;
-  }
+
 
   &__text {
     margin-bottom: auto;
@@ -77,6 +74,7 @@
       margin-right: -190px;
       background-color: sienna;
     }
+
     display: flex;
     position: relative;
 
@@ -86,7 +84,6 @@
       width: 75px;
       background-color: #ffffff;
       border: 1px solid #00000029;
-      // display: flex;
       -webkit-box-shadow: 0px 5px 0px 5px #ffffff;
       box-shadow: 0px 0px 0px 6px #ffffff;
 
@@ -95,18 +92,6 @@
         transform: scale(1.5);
       }
     }
-  }
-
-  #svg-fill {
-    margin: auto;
-    width: 37.5px;
-    height: 37.5px;
-  }
-  #svg-fill * {
-    transform: scale(2.5);
-    fill: #747474 !important;
-    width: 37.5px;
-    height: 37.5px;
   }
 
   &__item-badge {
@@ -170,20 +155,6 @@
   padding-left: 20px;
 }
 
-.badge-education {
-  & .mat-badge-content {
-    background-color: $--green-color-bright !important;
-    color: #ffffff;
-  }
-}
-
-.badge-forestry {
-  & .mat-badge-content {
-    background-color: color(primary) !important;
-    color: #ffffff;
-  }
-}
-
 .education-fill {
   color: #009eee;
   & * {
@@ -195,15 +166,6 @@
   border-bottom: #009eee solid 3px;
 }
 
-.forestry-fill {
-  color: #00c466;
-  & * {
-    fill: #00c466 !important;
-  }
-}
-.forestry-border {
-  border-bottom: $--green-color-bright solid 3px;
-}
 
  ::ng-deep .list__item-svg .a {
   fill: #00c466 !important;

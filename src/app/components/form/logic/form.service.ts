@@ -2,29 +2,46 @@ import { FormControl, FormBuilder } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
 
+export interface FormTemplate {
+  label?: string;
+  isGroup?: boolean;
+  cols?: string | number;
+  formCols?: string | number;
+  questions?: QuestionBase<string | Date | number>[];
+  questionsGroup?: QuestionGroup[];
+}
+
+export interface QuestionGroup {
+  key?: string;
+  label?: string;
+  cols?: string | number;
+  isGroup?: boolean;
+  questions?: QuestionBase<string | Date | number>[];
+  hasButton?: boolean;
+}
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormService {
-
-  constructor(
-    private fb: FormBuilder
-  ) { }
-
+  constructor(private fb: FormBuilder) {}
 
   private errorsMessage = {
-    'required': (key: string): string => `${key} is required`,
-    'pattern': (key: string): string => `${key} is not in  valid format`,
+    required: (key: string): string => `${key} is required`,
+    pattern: (key: string): string => `${key} is not in  valid format`,
     'string.empty': (key: string): string => `${key} is required`,
     'number.base': (key: string): string => `${key} must be a number`,
   };
 
-
-  private setGroup(formTemplate: QuestionBase<string>[]) {
-    return formTemplate.map((question) => question).reduce((acc, control) => {
-      const { key, value, isGroup, group, validations } = control;
-      return { ...acc, [key]: isGroup ? this.setGroup(group) : [value, validations] };
-    }, {});
+  private setGroup(questions: QuestionBase<string | Date | number>[]) {
+    return questions
+      .map((question) => question)
+      .reduce((acc, control) => {
+        const { key, value, isGroup, group, validations } = control;
+        return {
+          ...acc,
+          [key]: isGroup ? this.setGroup(group) : [value || '', validations],
+        };
+      }, {});
   }
 
   private formatForm(questions) {
@@ -33,27 +50,67 @@ export class FormService {
       return {
         key: key,
         isGroup,
-        template: isGroup ? this.setGroup(group) : [value, validations]
+        template: isGroup ? this.setGroup(group) : [value, validations],
       };
     });
   }
 
+  private setForms(formTemplate) {
+    return formTemplate;
+  }
+
   public setForm(formTemplate: any[]) {
-    return formTemplate.map((question) => question).reduce((acc, control) => {
-      const { key, isGroup, template } = control;
-      return { ...acc, [key]: isGroup ? this.fb.group(template) : this.fb.control(template[0], template[1]) };
-    }, {});
-
+    return formTemplate
+      .map((question) => question)
+      .reduce((acc, control) => {
+        const { key, isGroup, template } = control;
+        return {
+          ...acc,
+          [key]: isGroup
+            ? this.fb.group(template)
+            : this.fb.control(template[0], template[1]),
+        };
+      }, {});
   }
 
-  public buildGroup(quiestions: QuestionBase<string>[]) {
-    return this.fb.group(this.setForm(this.formatForm(quiestions)))
+  public buildForm(questions: QuestionBase<string | number | Date>[]) {
+    return this.fb.group(this.setForm(this.formatForm(questions)));
   }
 
+
+  private ArrayToObject(arr: any[]) {
+    return arr
+      .map((item) => item)
+      .reduce((acc, control) => {
+        return {
+          ...acc,
+          ...control,
+        };
+      }, {});
+  }
+
+  public setFormBuilder(formTemplate: FormTemplate) {
+    if (formTemplate.isGroup) {
+      const form = formTemplate.questionsGroup.map((group: QuestionGroup) => {
+        const { key, questions } = group;
+        return {
+          [key]: this.fb.group(this.setGroup(questions)),
+        };
+      });
+
+      console.log(form);
+      console.log(this.ArrayToObject(form));
+      console.log(this.fb.group(this.ArrayToObject(form)));
+
+      return '';
+    } else
+      return this.fb.group(
+        this.setForm(this.formatForm(formTemplate.questions))
+      );
+  }
 
   // handle input error messages
   public getErrorMessage(control: FormControl, placeHolder: string): string {
-
     if (control.hasError('required')) {
       return 'שדה חובה ';
     }
@@ -62,15 +119,10 @@ export class FormService {
       return 'ערך קצר מידי ';
     }
 
-
     if (control.hasError('pattern')) {
       return `invalid ${placeHolder} format`;
     }
 
-    return ''
-
+    return '';
   }
-
-
-
 }

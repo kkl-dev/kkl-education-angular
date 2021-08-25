@@ -1,9 +1,25 @@
-<mat-radio-group [formControl]="control" [name]="question.key" (change)="handleChange($event)">
-  <div>
-    {{question.label}}
-  </div>
-  <div class="radio-container">
-    <mat-radio-button color="primary" *ngFor="let option of question.options" [value]="option.value">{{option.key}}
-    </mat-radio-button>
+<mat-radio-group
+  [formControl]="control"
+  [name]="question.key"
+  (change)="handleChange($event)"
+>
+  <div
+    fxLayout="column"
+    fxLayoutGap="10px"
+    fxLayoutAlign="space-between center"
+  >
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <label>
+        {{ question.label }}
+      </label>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-radio-button
+        color="primary"
+        *ngFor="let option of question.inputProps.options"
+        [value]="option.value"
+        >{{ option.key }}
+      </mat-radio-button>
+    </div>
   </div>
 </mat-radio-group>
