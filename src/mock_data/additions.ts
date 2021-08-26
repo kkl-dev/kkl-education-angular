@@ -35,7 +35,7 @@ export const details: TableCellModel[] = [
     label: 'מספר הזמנת רכש',
     value: 'חדש',
   },
-].reverse();
+]
 
 export const supplier: TableCellModel[] = [
   {

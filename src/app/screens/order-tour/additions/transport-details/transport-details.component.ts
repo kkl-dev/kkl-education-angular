@@ -95,7 +95,6 @@ export class TransportDetailsComponent implements OnInit {
     };
 
     this.cancellationRow.push(cancellation)
-
     this.rows[this.rows.length - 1] = this.cancellationRow;
     this.detailsSubject.next({ columns: this.columns, rows: this.rows });
   }
