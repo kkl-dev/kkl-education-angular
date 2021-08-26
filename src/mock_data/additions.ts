@@ -5,14 +5,17 @@ export const columns: TableCellModel[] = [
     key: 'tourId',
     label: 'מספר טיול',
     value: '213232',
+    offset: 1,
   },
   {
     key: 'supplier',
     label: 'ספק',
+    offset: 3,
   },
   {
     key: 'tourDetails',
     label: 'קליטת טיול',
+    offset: 2,
   },
 ];
 
@@ -133,6 +136,8 @@ export const summery : TableCellModel[] = [
     key: 'comments',
     label: 'הערה',
     value: 'לברר פרטים סופיים לגבי כמות אוטובוסים',
+    divider: true,
   },
 
 ]
+
