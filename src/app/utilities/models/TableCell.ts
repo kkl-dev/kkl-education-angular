@@ -3,10 +3,10 @@ export class TableCellModel {
 
   constructor(
     public key: string,
-    public label: string,
+    public label?: string,
     public value?: string | Date | number,
     public type?: string,
-    public offset?: number,
+    public offset?: number | string,
     public cols?: number,
     public divider?: boolean,
 

@@ -67,8 +67,8 @@ import { TypographyComponent } from './components/typography/typography.componen
 import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
 import { FilledNightComponent } from './screens/order-tour/sleeping-options/filled-night/filled-night.component';
 import { TransportDetailsComponent } from './screens/order-tour/additions/transport-details/transport-details.component';
-import { TransportDetailsTableComponent } from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
 import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
+import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
 
 
 @NgModule({
@@ -132,14 +132,14 @@ import { FlexRowComponent } from './components/grid/flex-row/flex-row.component'
     SleepingOptionsFormComponent,
     SleepingOptionsByDayComponent,
     SquadAssembleComponent,
-    TourPanelComponent, 
+    TourPanelComponent,
     TypographyComponent,
     DashboardCardComponent,
-    
+
     FilledNightComponent,
     TransportDetailsComponent,
-    TransportDetailsTableComponent,
-    FlexRowComponent
+    FlexRowComponent,
+    FlexTableComponent
   ],
   imports: [
     BrowserModule,

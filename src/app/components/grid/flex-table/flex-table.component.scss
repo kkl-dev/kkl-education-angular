@@ -1,4 +1,4 @@
-@import "../../../../../styles.scss";
+@import "../../../../styles.scss";
 
 
 
@@ -8,6 +8,19 @@
 
 .row-item {
   padding-top: spacing(2);
+  padding-bottom: spacing(2);
+}
+
+.column {
+  padding-top: spacing(2);
+}
+
+.item-label {
+  padding-left: spacing(1);
+
+}
+
+.row-button {
   padding-bottom: spacing(2);
 }
 

@@ -1,12 +1,13 @@
-~<div class="form">
+<div class="form">
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
     <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
 
-      <mat-grid-tile *ngIf="hasButton" colspan="1">
+      <ng-container *ngFor="let question of questions">
+
+      <mat-grid-tile *ngIf="hasButton" colspan="1" [rowspan]="question.rows">
         <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
       </mat-grid-tile>
 
-      <ng-container *ngFor="let question of questions">
         <mat-grid-tile *ngIf="question.offset" [colspan]="question.offset"></mat-grid-tile>
         <mat-grid-tile
           *ngIf="!question?.isGroup"
