@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Subscription } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
+import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
+import { transportData } from 'src/mock_data/transport';
 
 export interface TourDayModel {
   date: Date;
@@ -72,13 +74,16 @@ export class AdditionsComponent implements OnInit {
     },
   ];
 
-  // public transport: TourPanelModel[];
+  public transport: TourPanelModel[];
 
   constructor(private additionsService: AdditionsService) {}
 
   ngOnInit(): void {
     this.subscribeToSubject();
     this.additionsService.setNavigationStatus(this.cards);
+    this.transport = transportData.map((item: TourPanelModel) => {
+      return TourPanelModel.create(item);
+    });
   }
 
   ngOnDestroy(): void {
@@ -90,6 +95,14 @@ export class AdditionsComponent implements OnInit {
       (item: NavigationCardModel) => {
         this.additionsService.setNanigationStatus(item, 'title');
       }
+    );
+  }
+
+  public onPanelAdd() {
+    this.transport.push(
+      new TourPanelModel(new Date(), [
+        { date: new Date(), pickup: 'הוסף מיקום', dropdown: 'הוסף מיקום' },
+      ])
     );
   }
 }

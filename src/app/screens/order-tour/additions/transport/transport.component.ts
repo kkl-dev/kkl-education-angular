@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import {
   FormTemplate,
@@ -9,6 +9,7 @@ import { QuestionCalendar } from 'src/app/components/form/logic/question-calenda
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { LocationModel } from 'src/app/utilities/models/TourPanelModel';
 
 @Component({
   selector: 'app-transport',
@@ -17,6 +18,8 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
 })
 
 export class TransportComponent implements OnInit {
+
+  @Input() location : LocationModel
   public form: FormGroup;
   public editMode: boolean = false;
 
