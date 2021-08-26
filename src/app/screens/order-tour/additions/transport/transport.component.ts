@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import {
   FormService,
+  FormTemplate,
   QuestionGroup,
 } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
@@ -17,7 +18,6 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   providers: [FormService],
 })
 export class TransportComponent implements OnInit {
-
   public form: FormGroup;
   public editMode: boolean = false;
 
@@ -157,28 +157,34 @@ export class TransportComponent implements OnInit {
     }),
   ];
 
-  public formTemplate: QuestionGroup[] = [
+  private questionGroups: QuestionGroup[] = [
     {
+      key: 'details',
       questions: this.details,
       cols: 8,
     },
     {
+      key: 'gather',
       questions: this.gather,
       cols: 6,
     },
     {
+      key: 'gather',
       questions: this.comments,
       hasButton: true,
       cols: 8,
     },
   ];
 
+  public formTemplate: FormTemplate = {
+    hasGroups: true,
+    questionsGroups: this.questionGroups,
+  };
+
   constructor(private formService: FormService) {}
 
   ngOnInit(): void {
-
     // this.form = this.formService.buildForm()
-
   }
 
   public onClick() {

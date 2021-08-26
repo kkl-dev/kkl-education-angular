@@ -7,21 +7,20 @@ import {
   ElementRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormService } from '../logic/form.service';
+import { FormService, FormTemplate, QuestionGroup } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
-
   public form!: FormGroup;
   @Output() formData: EventEmitter<any> = new EventEmitter();
   @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
 
-  @Input() formTemplate!: QuestionBase<string>[][];
+  @Input() formTemplate!: FormTemplate;
   @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() hasButton: boolean = false;
@@ -34,7 +33,8 @@ export class FormComponent implements OnInit {
   constructor(private formService: FormService) {}
 
   ngOnInit() {
-    console.log(this.formTemplate)
+    console.log(this.formTemplate);
+    this.formService.setFormGroup(this.formTemplate);
     this.subscribeToFormValues();
   }
 
@@ -45,7 +45,7 @@ export class FormComponent implements OnInit {
   private subscribeToFormValues() {
     this.form.valueChanges.subscribe((values) => {
       this.formData.emit(values);
-      this.valueChange.emit(this.form)
+      this.valueChange.emit(this.form);
     });
   }
 }

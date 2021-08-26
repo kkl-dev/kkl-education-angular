@@ -4,11 +4,11 @@ import { QuestionBase } from './question-base';
 
 export interface FormTemplate {
   label?: string;
-  isGroup?: boolean;
+  hasGroups?: boolean;
   cols?: string | number;
   formCols?: string | number;
   questions?: QuestionBase<string | Date | number>[];
-  questionsGroup?: QuestionGroup[];
+  questionsGroups?: QuestionGroup[];
 }
 
 export interface QuestionGroup {
@@ -59,7 +59,7 @@ export class FormService {
     return formTemplate;
   }
 
-  public setForm(formTemplate: any[]) {
+  private setForm(formTemplate: any[]) {
     return formTemplate
       .map((question) => question)
       .reduce((acc, control) => {
@@ -89,9 +89,9 @@ export class FormService {
       }, {});
   }
 
-  public setFormBuilder(formTemplate: FormTemplate) {
-    if (formTemplate.isGroup) {
-      const form = formTemplate.questionsGroup.map((group: QuestionGroup) => {
+  public setFormGroup(formTemplate: FormTemplate) {
+    if (formTemplate.hasGroups) {
+      const form = formTemplate.questionsGroups.map((group: QuestionGroup) => {
         const { key, questions } = group;
         return {
           [key]: this.fb.group(this.setGroup(questions)),
