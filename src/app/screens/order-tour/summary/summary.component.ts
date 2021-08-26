@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
@@ -8,15 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class SummaryComponent implements OnInit {
-  public iconSrc: string = 'assets/images/';
   public activateIndex: number[] = [];
-
+  public examplePrice: number = 1000;
   constructor() { }
 
   ngOnInit(): void {
   }
-
-  public toogleItems(index: number) {
+  // open / close table
+  public toggleItems(index: number) {
     if (this.activateIndex.includes(index)) {
       this.activateIndex = this.activateIndex.filter(item => item !== index);
     }
@@ -24,14 +22,27 @@ export class SummaryComponent implements OnInit {
       this.activateIndex.push(index);
     }
   }
+  // open / close all tables
+  public toggleAllItems() {
+    if (this.activateIndex.length !== this.tableBodyTitles.length) {
+      for (let i = 0; i < this.tableBodyTitles.length; i++) {
+        if(!this.activateIndex.includes(i)){
+          this.activateIndex.push(i);
+        }
+      }
+    } else {
+      this.activateIndex.length = 0;
+    }
+  }
+
   public mySwitch(i: number): any {
     switch (i) {
       case 0:
         return this.activity;
       case 1:
-        return 1;
+        return this.transportation;
       case 2:
-        return 2;
+        return this.economy;
     }
   }
   public activity: Array<object> = [
@@ -50,30 +61,22 @@ export class SummaryComponent implements OnInit {
   ];
   public transportation: Array<object> = [
     {
-      date: '15.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      date: '15.06.21', supplier: 'ספקים שונים', item: 'אוטובוס - יום מלא', comments: 'בית ספר תמיר - נס הרים',
+      amount: 2, supplierCharge: 0, customerBilling: 7818
     },
     {
-      date: '16.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
-    },
-    {
-      date: '17.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
+      date: '16.06.21', supplier: 'נס הרים', item: 'ניווט ביער -נס הרים', comments: 'לקוח מזמין',
       amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
     }
   ];
   public economy: Array<object> = [
     {
-      date: '15.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
+      date: '15.06.21', supplier: 'שבולת בע"מ', item: 'ארוח בוקר בהגשה', comments: '',
       amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
     },
     {
-      date: '16.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
-    },
-    {
-      date: '17.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      date: '16.06.21', supplier: 'שבולת בע"מ', item: '150', comments: 'לקוח מזמין',
+      amount: 150, price: 0, supplierCharge: 135, customerBilling: 1218
     }
   ];
   public tableBodyTitles: Array<object> = [
