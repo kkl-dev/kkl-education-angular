@@ -21,17 +21,14 @@ export class EducationComponent implements OnInit {
   routerLinkContinue = '/education/results'
   sleepingPlace: string = '';
   formOptions!: FieldForestCenter[];
+  AvailableDates!: AvailableDate[];
   AcommodationTypes!: AcommodationType[];
-  // newCeremony = {} as Ceremony;
   SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
-  AcommodationType: AcommodationType = { id: 20, name: 'בקתה' };
   constructor(public usersService: UserService, public tripService: TripService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
-      new Date(2022, 11, 17)
+      new Date(2021, 11, 17)
     );
-    //openapi-generator-cli generate -i ./files-1.0.yaml -g typescript-angular -o src/app/api
-    //new Date(2022, 11, 17)
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
@@ -77,45 +74,43 @@ export class EducationComponent implements OnInit {
     this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
     var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
     this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
-    // this.SearchAvailableDatesOptionsRequestBody.acommodationType = this.AcommodationType;
-    // this.SearchAvailableDatesOptionsRequestBody.SingleDay = this.checkedSingleDay;
     this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
       response => {
         console.log(response)
+        this.AvailableDates = response;
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
   dateFromClick() { document.getElementById('calendar-input')?.click(); }
-  // public formOptions = [
-  //   { id: 101, name: "ציפורי", iconPath: 'assets/images/select-1.jpg' },
-  //   { id: 102, name: 'לביא', iconPath: 'assets/images/select-2.jpg' },
-  //   { id: 103, name: 'נס הרים', iconPath: 'assets/images/select-3.jpg' },
-  //   { id: 104, name: 'יתיר', iconPath: 'assets/images/select-4.jpg' },
-  // ];
 
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
 
   freeSpacesArray: FreeSpace[] = [];
 
+
   freeSpacesArrayGenarator(start: Date, end: Date) {
-    const i = 0;
+    let i = 0;
     let freeSpacesArrayTemp: FreeSpace[] = [];
     while (start < end) {
       start = new Date(start.setDate(start.getDate() + 1));
       freeSpacesArrayTemp.push({
         date: start,
         freeSpace: {
-          cabins: Math.floor(Math.random() * 8),
-          tents: Math.floor(Math.random() * 8),
-          campgrounds: Math.floor(Math.random() * 8),
+          cabins: this.AvailableDates[i].availableBedsCabin!,
+          tents: this.AvailableDates[i].availableBedsTent!,
+          campgrounds: this.AvailableDates[i].availableBedsCamping!,
         },
       });
+      i++;
     }
     return freeSpacesArrayTemp;
   }
+  // cabins: Math.floor(Math.random() * 8),
+  // tents: Math.floor(Math.random() * 8),
+  // campgrounds: Math.floor(Math.random() * 8), 
 
   options: CalendarOptions = {
     firstCalendarDay: 0,
@@ -146,10 +141,17 @@ export class EducationComponent implements OnInit {
       this.dateObj.from = e;
       this.dateObj.to = '';
     }
+    this.AvailableDaysChecking();
     this.disableContinueBtn = false;
     this.tripService.dateObj = this.dateObj;
   }
 
+  AvailableDaysChecking() {
+    let index = this.freeSpacesArray.findIndex(start => start.date.getDate() === new Date(this.dateObj.from).getDate());
+    while (this.freeSpacesArray[index].date.getDate() !== new Date(this.dateObj.to).getDate()) {
+// if(this.freeSpacesArray[index].freeSpace)
+    }
+  }
   hideSelectPlaceholder(sel: MatSelect) {
     console.log('asdasd');
     sel.placeholder = '';
@@ -174,4 +176,9 @@ export class EducationComponent implements OnInit {
     var thisDate = today.toISOString().split('T')[0].split('-');
     return [thisDate[2], thisDate[1], thisDate[0]].join("-");
   }
+   getDaysArray(start:any, end:any) {
+    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
+    return arr;
+  };
+   listDays = this.getDaysArray(this.dateObj.from,this.dateObj.to);
 }
