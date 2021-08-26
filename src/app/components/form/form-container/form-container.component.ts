@@ -18,6 +18,7 @@ import { QuestionBase } from '../logic/question-base';
 export class FormContainerComponent implements OnInit {
   public form!: FormGroup;
   @Output() formData: EventEmitter<any> = new EventEmitter();
+  @Output() formGroup: EventEmitter<FormGroup> = new EventEmitter();
 
   @Input() cols: string;
   @Input() gutter: string = '3';
@@ -43,6 +44,7 @@ export class FormContainerComponent implements OnInit {
   private subscribeToFormValues() {
     this.form.valueChanges.subscribe((values) => {
       this.formData.emit(values);
+      this.formGroup.emit(this.form)
     });
   }
 }
