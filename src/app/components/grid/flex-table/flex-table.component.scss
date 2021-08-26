@@ -1,9 +1,13 @@
 @import "../../../../styles.scss";
 
 mat-grid-list,
-mat-grid-tile, app-typography {
+mat-grid-tile {
   height: 100%;
   width: 100%;
+}
+
+app-typography {
+  height: 100%;
 }
 
 .table-details {

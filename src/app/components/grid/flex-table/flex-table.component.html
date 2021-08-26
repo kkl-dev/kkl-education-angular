@@ -1,44 +1,49 @@
 <div fxLayout="row wrap" dir="rtl">
-
   <div fxFlex="15" fxLayout="column">
-    <mat-grid-list cols="1" rowHeight="5vh">
-      <mat-grid-tile *ngFor="let column of columns" [rowspan]="column.offset">
-        <app-typography [bold]="600" underline="underline">
-          {{ column.label }}:
-        </app-typography>
-        <app-typography underline="underline">
-          {{ column?.value }}
-        </app-typography>
+    <mat-grid-list cols="1" rowHeight="6vh">
+      <mat-grid-tile *ngFor="let column of columns" [rowspan]="column.rows">
+        <div fxFill fxLayout="row" fxLayoutAlign="start center">
+          <app-typography [bold]="600" underline="underline">
+            {{ column.label }}:
+          </app-typography>
+          <app-typography underline="underline">
+            {{ column?.value }}
+          </app-typography>
+        </div>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
 
   <div fxFlex="85" fxLayout="row wrap" class="content">
-
-    <mat-grid-list cols="4" rowHeight="5vh" *ngFor="let row of data">
+    <mat-grid-list cols="4" rowHeight="6vh" *ngFor="let row of data">
       <mat-grid-tile *ngFor="let item of row" [colspan]="item?.cols || 1">
-        <app-typography class="item-label" *ngIf="item.label" [bold]="600">
-          {{ item.label }}:
-        </app-typography>
+        <div fxFill fxLayout="row" fxLayoutAlign="start center">
+          <app-typography class="item-label" *ngIf="item.label" [bold]="600">
+            {{ item.label }}:
+          </app-typography>
 
-        <app-typography *ngIf="item.type === 'text' || item.type === 'number'">
-          {{ item?.value }}
-        </app-typography>
+          <app-typography
+            *ngIf="item.type === 'text' || item.type === 'number'"
+          >
+            {{ item?.value }}
+          </app-typography>
 
-        <app-typography fxFlex="60" *ngIf="item.type === 'date'">
-          {{ item?.value | date: "M/d/yy" }}
-        </app-typography>
+          <app-typography *ngIf="item.type === 'date'">
+            {{ item?.value | date: "M/d/yy" }}
+          </app-typography>
 
-        <ng-container *ngIf="item.type === 'custom'" >
-          <ng-container *ngTemplateOutlet="slots?.custom"></ng-container>
-        </ng-container>
-        <ng-container *ngIf="item.type === 'button'" >
-          <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
-        </ng-container>
+          <ng-container *ngIf="item.type === 'custom'">
+            <ng-container *ngTemplateOutlet="slots?.custom"></ng-container>
+          </ng-container>
+          <ng-container *ngIf="item.type === 'button'">
+            <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+          </ng-container>
+        </div>
       </mat-grid-tile>
-      <!-- <div colspan="4" *ngIf="true">
+
+      <!-- <mat-action-row colspan="4" *ngIf="true">
         <mat-divider></mat-divider>
-      </div> -->
+      </mat-action-row> -->
     </mat-grid-list>
   </div>
 </div>
