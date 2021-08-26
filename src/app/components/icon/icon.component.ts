@@ -21,9 +21,9 @@ export class IconComponent implements OnInit {
   @Input() public type: string;
   @Input() public key: string = '';
   @Input() public color: string;
-  @Input() public matScale: string;
   @Input() public scale: number | string;
 
+  public matScale: string;
   public default: boolean = true;
 
   constructor(private iconsService: IconsService) {}
