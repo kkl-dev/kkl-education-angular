@@ -3,7 +3,7 @@
     <app-sleeping-options-by-day [sleepingOptionsByDay]="sleepingOptionsByDay">
         <h4>זמינות לינה</h4>
     </app-sleeping-options-by-day>
-    <app-form-container [cols]="formCols" (emitFormValues)='updateFilledNightsArray($event)' [questions]="questions" [showButton]="true">
+    <app-form-container [cols]="formCols" (emitFormValues)='updateFilledNightsArray($event)' [questions]="questions" [hasButton]="true">
         <button button  >שלח</button>
     </app-form-container>
     <div class="sleeping-options__filled-nights">
@@ -11,3 +11,4 @@
     </div>
    
 </div>
+ 
