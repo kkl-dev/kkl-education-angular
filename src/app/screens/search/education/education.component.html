@@ -19,11 +19,11 @@
       </div>
       <div class="education__form-group">
         <label class="education__form-group-label">מתאריך</label>
-        <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg" (click)="dateFromClick()">
+        <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg">
         </svg-icon>
 
         <label class="header__form-group-pseudo-input label-input" for="calendar-input">
-          <input class="header__form-group-input" airbnb-calendar type="text" [(ngModel)]="date" [options]="options"
+          <input class="header__form-group-input" airbnb-calendar type="text" [options]="options"[(ngModel)]="date"
             (ngModelChange)="dateObjChanged($event)" name="calendar-input" id="calendar-input" [disabled]="disableDates" />
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.from }}</span>

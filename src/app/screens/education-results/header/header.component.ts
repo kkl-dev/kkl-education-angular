@@ -5,7 +5,7 @@ import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
 import { UserDataService } from 'src/app/services/user-data.service';
-import { UserService } from '../../../api/v1/api/user.service';
+import { UserService } from '../../../api/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 

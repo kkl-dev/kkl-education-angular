@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FieldForestCenter } from '../api/v1';
+import { FieldForestCenter } from '../api';
 
 @Injectable({
   providedIn: 'root'
