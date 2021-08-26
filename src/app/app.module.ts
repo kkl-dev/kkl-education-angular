@@ -69,6 +69,7 @@ import { FilledNightComponent } from './screens/order-tour/sleeping-options/fill
 import { TransportDetailsComponent } from './screens/order-tour/additions/transport-details/transport-details.component';
 import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
+import { FormComponent } from './components/form/form/form.component';
 
 
 @NgModule({
@@ -139,7 +140,8 @@ import { FlexTableComponent } from './components/grid/flex-table/flex-table.comp
     FilledNightComponent,
     TransportDetailsComponent,
     FlexRowComponent,
-    FlexTableComponent
+    FlexTableComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 <div fxLayout="column" fxFlexFill>
-  <div fxFlex="35" *ngFor="let form of transportForm">
+  <!-- <div fxFlex="35" *ngFor="let form of transportForm">
     <app-form-container
       #form
       [questions]="form.questions"
@@ -10,6 +10,9 @@
       (valueChange)="onValueChange($event)"
     >
     </app-form-container>
+  </div> -->
+  <div fxFlex="35" >
+    <app-form [formTemplate]="formTemplate"></app-form>
   </div>
   <div fxFlex="35">
     <app-transport-details></app-transport-details>

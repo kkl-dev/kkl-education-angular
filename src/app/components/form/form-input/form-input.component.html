@@ -2,7 +2,7 @@
   <div>
     <mat-form-field
       [color]="theme"
-      appearance="outline"
+      [appearance]="disabled ? 'fill' : 'outline'"
       [ngClass]="[labelLength || 'base']"
     >
       <mat-label>{{ label }}</mat-label>

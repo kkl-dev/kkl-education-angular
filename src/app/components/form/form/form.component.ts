@@ -11,18 +11,17 @@ import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
 @Component({
-  selector: 'app-form-container',
-  templateUrl: './form-container.component.html',
-  styleUrls: ['./form-container.component.scss'],
+  selector: 'app-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss']
 })
-export class FormContainerComponent implements OnInit {
+export class FormComponent implements OnInit {
 
   public form!: FormGroup;
   @Output() formData: EventEmitter<any> = new EventEmitter();
   @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
 
   @Input() formTemplate!: QuestionBase<string>[][];
-  @Input() questions!: QuestionBase<string>[];
   @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() hasButton: boolean = false;
@@ -35,7 +34,7 @@ export class FormContainerComponent implements OnInit {
   constructor(private formService: FormService) {}
 
   ngOnInit() {
-    this.form = this.formService.buildForm(this.questions);
+    console.log(this.formTemplate)
     this.subscribeToFormValues();
   }
 

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { QuestionGroup } from 'src/app/components/form/logic/form.service';
+import {
+  FormService,
+  QuestionGroup,
+} from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
@@ -11,8 +14,10 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   selector: 'app-transport',
   templateUrl: './transport.component.html',
   styleUrls: ['./transport.component.scss'],
+  providers: [FormService],
 })
 export class TransportComponent implements OnInit {
+
   public form: FormGroup;
   public editMode: boolean = false;
 
@@ -152,7 +157,7 @@ export class TransportComponent implements OnInit {
     }),
   ];
 
-  public transportForm: QuestionGroup[] = [
+  public formTemplate: QuestionGroup[] = [
     {
       questions: this.details,
       cols: 8,
@@ -168,23 +173,28 @@ export class TransportComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private formService: FormService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    // this.form = this.formService.buildForm()
+
+  }
 
   public onClick() {
     if (this.form) {
       this.editMode = !this.editMode;
+      this.form.disable();
     }
   }
 
-  public onEdit(event) {
+  public onEdit() {
     this.editMode = !this.editMode;
-    console.log(event);
+    this.form.enable();
   }
 
   public onValueChange(event) {
-    if (this.editMode) {
+    if (!this.editMode) {
       this.form = event;
     }
   }
