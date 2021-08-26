@@ -99,19 +99,18 @@ export class EducationComponent implements OnInit {
       freeSpacesArrayTemp.push({
         date: start,
         freeSpace: {
-          cabins: this.AvailableDates[i].availableBedsCabin!,
-          tents: this.AvailableDates[i].availableBedsTent!,
-          campgrounds: this.AvailableDates[i].availableBedsCamping!,
+          cabins: Math.floor(Math.random() * 8),
+          tents: Math.floor(Math.random() * 8),
+          campgrounds: Math.floor(Math.random() * 8),
         },
       });
       i++;
     }
     return freeSpacesArrayTemp;
   }
-  // cabins: Math.floor(Math.random() * 8),
-  // tents: Math.floor(Math.random() * 8),
-  // campgrounds: Math.floor(Math.random() * 8), 
-
+  // cabins: this.AvailableDates[i].availableBedsCabin!,
+  // tents: this.AvailableDates[i].availableBedsTent!,
+  // campgrounds: this.AvailableDates[i].availableBedsCamping!,
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
@@ -149,7 +148,7 @@ export class EducationComponent implements OnInit {
   AvailableDaysChecking() {
     let index = this.freeSpacesArray.findIndex(start => start.date.getDate() === new Date(this.dateObj.from).getDate());
     while (this.freeSpacesArray[index].date.getDate() !== new Date(this.dateObj.to).getDate()) {
-// if(this.freeSpacesArray[index].freeSpace)
+      // if(this.freeSpacesArray[index].freeSpace)
     }
   }
   hideSelectPlaceholder(sel: MatSelect) {
@@ -176,9 +175,9 @@ export class EducationComponent implements OnInit {
     var thisDate = today.toISOString().split('T')[0].split('-');
     return [thisDate[2], thisDate[1], thisDate[0]].join("-");
   }
-   getDaysArray(start:any, end:any) {
+  getDaysArray(start: any, end: any) {
     for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
     return arr;
   };
-   listDays = this.getDaysArray(this.dateObj.from,this.dateObj.to);
+  listDays = this.getDaysArray(this.dateObj.from, this.dateObj.to);
 }
