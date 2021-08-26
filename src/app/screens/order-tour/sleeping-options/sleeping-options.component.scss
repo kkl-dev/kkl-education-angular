@@ -15,3 +15,7 @@
   border: 3px solid #448ecd;
   padding: 10px 15px;
 }
+
+::ng-deep .airbnb-calendar-container{
+  left: 0 !important;
+}
