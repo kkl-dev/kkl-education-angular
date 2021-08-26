@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { UserService } from '../../api/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
+import { MapsComponent } from './maps/maps.component';
 
 @Component({
   selector: 'app-education-results',
@@ -10,12 +11,40 @@ import { TripService } from 'src/app/services/trip.service';
   styleUrls: ['./education-results.component.scss'],
 })
 export class EducationResultsComponent implements OnInit {
+  // @ViewChild('child') child!: MapsComponent;
   centerField: string = 'מרכז שדה - נס הרים';
+  forestCenter: any | undefined;
+  availabilityItemsArray: any = [];
+  dateObj: any;
 
-  constructor(public usersService: UserService, private route: ActivatedRoute, private userDataService: UserDataService, private tripService: TripService) { }
+  constructor(public usersService: UserService, private route: ActivatedRoute, private userDataService: UserDataService,
+    private tripService: TripService) {
 
-  ngOnInit(): void {
+  }
 
+  ngOnInit() {
+    this.tripService.forestCenter.subscribe(result => {
+      this.forestCenter = result; // this set's the username to the default observable value
+      console.log('parent -- > forestCenter from server BehaviorSubject:', this.forestCenter);
+      //this.changeForestCenter(result);
+    });
+
+    this.availabilityItemsArray = [
+      { date: '15.06.21', text: '1' },
+      { date: '16.06.21', text: '2' },
+      { date: '17.06.21', text: '3' }
+    ]
+
+    if (this.tripService.centerField) {
+      //this.forestCenterId = this.tripService.centerField.id;
+      //this.forestCenterId = 1;
+      this.dateObj = this.tripService.dateObj;
+
+      for (let key in this.dateObj) {
+        let value = this.dateObj[key];
+        // Use `key` and `value`
+    }
+    }
     // this.usersService.getLookupFieldForestCenters().subscribe(
     //   response => {
     //     console.log('response: ', response);
@@ -46,19 +75,51 @@ export class EducationResultsComponent implements OnInit {
     //   () => console.log('completed')     // complete
     // );
 
-    
-    console.log('userDataService:', this.userDataService);
+
+    // console.log('userDataService:', this.userDataService);
     console.log('tripService:', this.tripService);
+    
 
     //this.availabilityItemsArray = this.tripService.dateObj;
     //this.centerField = this.tripService.centerField
-  }
 
-  public availabilityItemsArray = [
-    { date: '15.06.21', text: 'זמינות יום 1' },
-    { date: '16.06.21', text: 'זמינות יום 2' },
-    { date: '17.06.21', text: 'זמינות יום 3' },
-  ];
+
+
+    console.log('getDifferenceInDays', this.getDifferenceInDays(this.date1, this.date2));
+console.log('getDifferenceInHours', this.getDifferenceInHours(this.date1, this.date2));
+console.log('getDifferenceInMinutes', this.getDifferenceInMinutes(this.date1, this.date2));
+console.log('getDifferenceInSeconds', this.getDifferenceInSeconds(this.date1, this.date2));
+
+  }
+ date1 = new Date('7/13/2010');
+date2 = new Date('12/15/2010');
+
+
+ getDifferenceInDays(date1:any, date2:any) {
+  const diffInMs = Math.abs(date2 - date1);
+  return diffInMs / (1000 * 60 * 60 * 24);
+}
+
+ getDifferenceInHours(date1:any, date2:any) {
+  const diffInMs = Math.abs(date2 - date1);
+  return diffInMs / (1000 * 60 * 60);
+}
+
+ getDifferenceInMinutes(date1:any, date2:any) {
+  const diffInMs = Math.abs(date2 - date1);
+  return diffInMs / (1000 * 60);
+}
+
+ getDifferenceInSeconds(date1:any, date2:any) {
+  const diffInMs = Math.abs(date2 - date1);
+  return diffInMs / 1000;
+}
+
+
+  // changeForestCenter(e: any, visible: any) {
+  //   console.log('show 1 ', visible);
+  //   this.child.changeForestCenter(visible);
+  // }
 
   public chosenDate: number = 0
 

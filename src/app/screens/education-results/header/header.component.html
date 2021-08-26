@@ -1,14 +1,21 @@
+<!-- <div> {{ forestCenter }} </div>
+<input [(ngModel)]="forestCenter" placeholder="enter forestCenter" />
+<button (click)="updateForestCenter()"></button> -->
+
+
 <div class="header">
   <form class="header__form">
     <div class="header__form-group" disableOptionCentering="false">
       <label class="header__form-group-label">איפה ישנים</label>
       <mat-form-field>
-        <mat-select class="header__form-group-select" [(ngModel)]="forestCenterId" name="forestCenterId">
+        <mat-select class="header__form-group-select" [(ngModel)]="forestCenterId" name="forestCenterId" 
+        (ngModelChange)="updateForestCenter($event)">
           <!-- <mat-option [value]="null">בחירת מרכז שדה</mat-option> -->
-          <mat-option *ngFor="let option of formOptions" value="{{ option.id }}" >
+          <!-- [ngValue]="option" -->
+          <!-- value="{{ forestCenterId }}" -->
+          <mat-option *ngFor="let option of forestCenterOptions" [value]="option.id">
             <span class="header__select-option">
               <span class="header__select-option-text">{{ option.name }}</span>
-              <!-- dont have src (iconPath) yet -->
               <img [src]="option.iconPath" class="header__select-option-svg" />
             </span>
           </mat-option>   

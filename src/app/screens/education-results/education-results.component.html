@@ -1,6 +1,8 @@
 <div class="education-results">
   <div class="education-results__left">
-    <app-maps place="מרכז שדה ציפורי" day="1"></app-maps>
+    <app-maps place="נס הרים" day="1"></app-maps>
+    <!-- <app-maps #child [(visible)]="var1" place="אילנות מערב" day="1"></app-maps> -->
+    <!-- <app-maps [place]="forestCenter" day="1"></app-maps> -->
   </div>
   <div class="education-results__right">
     <!-- search header component -->
@@ -18,7 +20,7 @@
             {{ item.date }}
           </div>
           <div class="education-results__right-availability-item-text">
-            {{ item.text }}
+            זמינות יום {{ item.text }}
           </div>
         </span>
       </div>
@@ -31,13 +33,8 @@
           <div class="education-results__right-sleep-areas-options-item"
             *ngFor="let item of sleepingOptionsArray; let i = index">
             <svg-icon class="education-results__right-sleep-areas-options-item-svg" src="{{ item.svgUrl }}"></svg-icon>
-            <p class="
-                education-results__right-sleep-areas-options-item-count
-                font-color-blue
-              ">
-              <span class="
-                  education-results__right-sleep-areas-options-item-count-number
-                ">
+            <p class="education-results__right-sleep-areas-options-item-count font-color-blue">
+              <span class="education-results__right-sleep-areas-options-item-count-number">
                 <span>{{ item.sleepingAreas }}</span></span>
               <span>{{ item.type }}</span>
             </p>
@@ -49,10 +46,7 @@
             </p>
             <p *ngIf="item.singleUnit !== 'לנים'" class="education-results__right-sleep-areas-options-item-count">
               <span class="
-                  education-results__right-sleep-areas-options-item-count-number
-                "><span>{{
-                  item.sleepingAreas * item.avialableSpaces
-                  }}</span></span>
+                  education-results__right-sleep-areas-options-item-count-number"><span>{{ item.sleepingAreas * item.avialableSpaces }}</span></span>
               <span>לנים</span>
             </p>
           </div>
