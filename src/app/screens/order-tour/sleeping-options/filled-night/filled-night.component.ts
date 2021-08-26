@@ -1,18 +1,37 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 
+export interface FilledNight {
+  sleepingPlace: string;
+  nightsCount: string;
+  saveFor: string;
+  peopleCount: string;
+  amount: string;
+  comments: string;
+}
 @Component({
   selector: 'app-filled-night',
   templateUrl: './filled-night.component.html',
-  styleUrls: ['./filled-night.component.scss']
+  styleUrls: ['./filled-night.component.scss'],
 })
 export class FilledNightComponent implements OnInit {
-@Input() filledNight!:{sleepingPlace: string, nightsCount: string, saveFor: string, peopleCount: string, amount: string,comments:string}
-  constructor() { 
-    console.log(this.filledNight);
-    
+  @Input() filledNight!: FilledNight;
+  @Input() index: number;
+  @Output() deleteFilledNight: EventEmitter<void> = new EventEmitter();
+  @Output() editFilledNight: EventEmitter<FilledNight> = new EventEmitter();
+
+  constructor(private sleepingService:SleepingServiceService) {
+  } 
+
+  emitDeleteFilledNight(): void {
+    this.deleteFilledNight.emit();
   }
 
-  ngOnInit(): void {
-  }
+  emitEditFilledNight(filledNight: FilledNight): void {
+    console.log(filledNight);
+     
+    this.editFilledNight.emit(filledNight);
+  } 
 
+  ngOnInit(): void {}
 }

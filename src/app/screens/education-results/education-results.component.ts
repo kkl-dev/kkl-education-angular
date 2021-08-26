@@ -181,6 +181,7 @@ export class EducationResultsComponent implements OnInit {
   }
 
   changeDatesHandler(newDates: string) { 
+    
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
@@ -250,6 +251,9 @@ export class EducationResultsComponent implements OnInit {
     this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(
       this.sleepingOptionsByDay[0].day
     );
+
+    console.log( this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
+    
     this.changeDatesHandler(
       this.checkAvailabillityService.checkAvailabilltyValues.calendarInput
     );

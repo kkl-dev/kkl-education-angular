@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, NgForm, Validators } from '@angular/forms';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
@@ -27,7 +27,7 @@ export class SleepingOptionsComponent implements OnInit {
       svgUrl: string;
       sleepingAreas: number;
       avialableSpaces: number;
-      type: string; 
+      type: string;
       singleUnit: string;
     }[];
   }[] = [
@@ -162,18 +162,35 @@ export class SleepingOptionsComponent implements OnInit {
       ],
     },
   ];
-
-  filledNightsArray:{sleepingPlace: string, nightsCount: string, saveFor: string, peopleCount: string, amount: string,comments:string}[]=[]
-
-
-
-  formCols: number = 8;
-  questions: QuestionBase<string | number>[] = [
-   
+  @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
+  public indexToPatch: number = -1;
+  filledNightsArray: {
+    sleepingPlace: string;
+    nightsCount: string;
+    saveFor: string;
+    peopleCount: string;
+    amount: string;
+    comments: string;
+  }[] = [
+    {
+      amount: '3',
+      comments: 'הערה חדשה',
+      nightsCount: 'לילה 1',
+      peopleCount: '3',
+      saveFor: 'מבוגרים',
+      sleepingPlace: 'גיחה',
+    },
   ];
+
+  formCols: number = 12;
+  questions: QuestionBase<string | number>[] = [];
 
   changeDatesHandler(newDates: string) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    console.log(newDates);
+
+    if (newDates && !newDates.includes('-')) return;
+
     const dates = newDates.split('-');
     let date1 = new Date(dates[0]);
     let date2 = new Date(dates[1]);
@@ -227,13 +244,34 @@ export class SleepingOptionsComponent implements OnInit {
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
   }
 
-  constructor(private checkAvailabilityService:CheckAvailabilityService, private sleepingService:SleepingServiceService) {
-   this.questions=this.sleepingService.questions 
+  constructor(
+    private checkAvailabilityService: CheckAvailabilityService,
+    private sleepingService: SleepingServiceService
+  ) {
+    this.questions = this.sleepingService.questions;
+    this.changeDatesHandler(
+      this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
+    ); 
   }
 
-  updateFilledNightsArray(e){
-    console.log(e);
-this.filledNightsArray.push(e) 
+  addFilledNight(form) {
+    if (this.indexToPatch > -1) {
+      this.filledNightsArray[this.indexToPatch] = form.value;
+    } else {
+      this.filledNightsArray.push(form.value);
+    }
+    console.log(this.filledNightsArray);
+    this.indexToPatch = -1;
+    this.filledNightsForm.form.reset();
+  }
+
+  deleteFilledNight(index: number) {
+    this.filledNightsArray.splice(index, 1);
+  }
+  editFilledNight(form, index) {
+    console.log(index);
+    this.filledNightsForm.form.patchValue(form);
+    this.indexToPatch = index;
   }
 
   ngOnInit(): void {}

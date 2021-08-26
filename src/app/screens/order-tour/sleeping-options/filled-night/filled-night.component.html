@@ -1,8 +1,10 @@
 <div class="filled-night">
-  <div>{{ filledNight.nightsCount }} לילה</div>
-  <div>{{ filledNight.amount }} {{ filledNight.sleepingPlace }}</div>
-  <div>{{ filledNight.peopleCount }} {{ filledNight.saveFor }}</div>
-  <div>{{ filledNight.comments }}</div>
-  <div><button>מחיקה</button> <button>עריכה</button></div>
+  <div class="filled-night__night-count">{{ filledNight.nightsCount }}</div>
+  <div class="filled-night__sleeping-place-amount">{{ filledNight.amount }} {{ filledNight.sleepingPlace }}</div>
+  <div class="filled-night__people-count">{{ filledNight.peopleCount }} {{ filledNight.saveFor }}</div>
+  <div class="filled-night__comments">הערה: {{ filledNight.comments }}</div>
+  <div>
+    <button class="filled-night__btn" (click)="emitDeleteFilledNight()">מחיקה</button>
+    <button class="filled-night__btn" (click)="emitEditFilledNight(filledNight)">עריכה</button>
+  </div>
 </div>
- 
