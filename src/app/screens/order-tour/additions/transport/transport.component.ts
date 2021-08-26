@@ -1,18 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { QuestionGroup } from 'src/app/components/form/logic/form.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
+import {
+  FormTemplate,
+  QuestionGroup,
+} from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { LocationModel } from 'src/app/utilities/models/TourPanelModel';
 
 @Component({
   selector: 'app-transport',
   templateUrl: './transport.component.html',
   styleUrls: ['./transport.component.scss'],
 })
+
 export class TransportComponent implements OnInit {
+
+  @Input() location : LocationModel
+  public form: FormGroup;
+  public editMode: boolean = false;
+
   public details: QuestionBase<string>[] = [
     new QuestionTextbox({
       key: 'total',
@@ -144,28 +154,55 @@ export class TransportComponent implements OnInit {
       key: 'comments',
       label: 'הערות',
       cols: 6,
-      rows: 4,
+      rows: 6,
       offset: 1,
     }),
   ];
 
-  public transportForm: QuestionGroup[] = [
+  private questionGroups: QuestionGroup[] = [
     {
+      key: 'details',
       questions: this.details,
       cols: 8,
     },
     {
+      key: 'gather',
       questions: this.gather,
       cols: 6,
     },
     {
+      key: 'comments',
       questions: this.comments,
       hasButton: true,
       cols: 8,
     },
   ];
 
+  public formTemplate: FormTemplate = {
+    hasGroups: true,
+    questionsGroups: this.questionGroups,
+  };
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
+
+  public onClick() {
+    if (this.form) {
+      this.editMode = !this.editMode;
+      this.form.disable();
+    }
+  }
+
+  public onEdit() {
+    this.editMode = !this.editMode;
+    this.form.enable();
+  }
+
+  public onValueChange(event) {
+    if (!this.editMode) {
+      this.form = event;
+    }
+  }
 }

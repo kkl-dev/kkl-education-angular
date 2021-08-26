@@ -1,4 +1,4 @@
-import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
+import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 

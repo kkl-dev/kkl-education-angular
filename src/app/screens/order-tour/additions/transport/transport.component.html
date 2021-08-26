@@ -1,13 +1,10 @@
 <div fxLayout="column" fxFlexFill>
-  <div fxFlex="35" *ngFor="let form of transportForm">
-    <app-form-container
-      [questions]="form.questions"
-      [cols]="form.cols"
-      [gutter]="'15'"
-      [hasButton]="form.hasButton"
+  <div fxFlex="35">
+    <app-form
+      [formTemplate]="formTemplate"
       [slots]="{ button: formButton }"
-    >
-    </app-form-container>
+      (valueChange)="onValueChange($event)"
+    ></app-form>
   </div>
   <div fxFlex="35">
     <app-transport-details></app-transport-details>
@@ -16,6 +13,23 @@
 
 <ng-template #formButton>
   <div class="button-container" fxLayout="column" fxLayoutAlign="end start">
-    <button type="submit" color="primary" mat-raised-button>שמור</button>
+    <button
+      *ngIf="!editMode"
+      type="submit"
+      color="primary"
+      (click)="onClick()"
+      mat-raised-button
+    >
+      שמור
+    </button>
+    <button
+      *ngIf="editMode"
+      type="submit"
+      class="edit-button"
+      (click)="onEdit()"
+      mat-icon-button
+    >
+      <app-icon scale="1" color="active" key="edit" type="mat"></app-icon>
+    </button>
   </div>
 </ng-template>

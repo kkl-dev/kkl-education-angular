@@ -7,12 +7,12 @@
   <div class="nav-grid" fxFlex="30">
     <app-navigation-grid [cards]="cards" [title]="title"></app-navigation-grid>
   </div>
+
   <div class="additions-content">
-    <div
-      class="tour-title-container"
-      fxLayout="row"
-      fxLayoutAlign="start"
-    >
+    <div class="button-container" fxLayout="row" fxLayoutAlign="start">
+      <button mat-raised-button color="primary">הוספה</button>
+    </div>
+    <div class="tour-title-container" fxLayout="row" fxLayoutAlign="start">
       <div>
         <app-typography [size]="24">
           {{ tourTitle }}
@@ -24,9 +24,10 @@
             key="fiber_manual_record"
             type="mat"
             color="primary"
-            matScale="scale(0.3)"
+            scale="0.3"
           ></app-icon>
         </div>
+        <!-- <span> &bull; </span> -->
         <div fxLayout="column" fxLayoutAlign="end center">
           <app-typography [size]="16">
             {{ id }}
@@ -34,8 +35,8 @@
         </div>
       </div>
     </div>
-    <div *ngFor="let tourDay of tour; index as i">
-      <app-tour-panel [tourDay]="tourDay" [i]="i + 1"></app-tour-panel>
+    <div *ngFor="let tour of transport; index as i">
+      <app-tour-panel [tour]="tour" [i]="i + 1"></app-tour-panel>
     </div>
   </div>
 </div>

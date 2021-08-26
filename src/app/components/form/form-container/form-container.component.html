@@ -1,14 +1,24 @@
 <div class="form">
-  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="form">
-    <mat-grid-list [cols]="cols || 1" rowHeight="2vh" [gutterSize]="gutter">
+  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+    <mat-grid-list
+      [cols]="group?.cols || cols || 1"
+      rowHeight="2vh"
+      [gutterSize]="gutter"
+    >
+      <ng-container *ngFor="let question of group?.questions || questions">
+        <mat-grid-tile
+          *ngIf="group?.hasButton || hasButton"
+          colspan="1"
+          [rowspan]="question.rows"
+        >
+          <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+        </mat-grid-tile>
 
-      <ng-container *ngFor="let question of questions">
+        <mat-grid-tile
+          *ngIf="question.offset"
+          [colspan]="question.offset"
+        ></mat-grid-tile>
 
-      <mat-grid-tile *ngIf="hasButton" colspan="1" [rowspan]="question.rows">
-        <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
-      </mat-grid-tile>
-
-        <mat-grid-tile *ngIf="question.offset" [colspan]="question.offset"></mat-grid-tile>
         <mat-grid-tile
           *ngIf="!question?.isGroup"
           [colspan]="question.cols"
@@ -16,7 +26,8 @@
         >
           <app-form-input
             *ngIf="!question.custom"
-            [control]="form.controls[question.key]"
+            [disabled]="formGroup.disabled"
+            [control]="formGroup.controls[question.key]"
             [type]="question.type"
             [label]="question.label"
             [icon]="question.icon"
@@ -26,7 +37,7 @@
           ></app-form-input>
 
           <app-input-radio
-            [control]="form.controls[question.key]"
+            [control]="formGroup.controls[question.key]"
             [question]="question"
             *ngIf="question.custom"
           >
@@ -55,11 +66,11 @@
           </mat-grid-tile>
         </ng-container>
       </ng-container>
-    </mat-grid-list> 
+    </mat-grid-list>
 
-    <div class="form-row" *ngIf="hasButton">
+    <div class="form-row" *ngIf=" hasBottomButton">
       <!-- <ng-container *ngTemplateOutlet="slots?.button"></ng-container> -->
-      <ng-content select=[button]></ng-content>
+      <ng-content select="[button]"></ng-content>
     </div>
   </form>
 </div>

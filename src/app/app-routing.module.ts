@@ -5,6 +5,7 @@ import { EducationResultsComponent } from './screens/education-results/education
 import { LoginBackdropComponent } from './screens/login-backdrop/login-backdrop.component';
 import { MyToursComponent } from './screens/my-tours/my-tours.component';
 import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
 import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
@@ -37,6 +38,10 @@ const routes: Routes = [
           {
             path: 'sleeping',
             component: SleepingOptionsComponent,
+          },
+          {
+            path: 'facilities',
+            component: FacilitiesComponent,
           },
           {
             path: 'additions',

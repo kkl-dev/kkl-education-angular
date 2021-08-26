@@ -11,7 +11,7 @@ import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 
-@Component({
+@Component({ 
   selector: 'app-education',
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.scss'],
@@ -28,10 +28,10 @@ export class EducationComponent implements OnInit {
       new Date(2022, 11, 17)
     );
 
-    this.options = { 
+    this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
- 
+
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
@@ -72,7 +72,7 @@ export class EducationComponent implements OnInit {
 
   options: CalendarOptions = {
     firstCalendarDay: 0,
-    format: 'LL/dd/yyyy',  
+    format: 'LL/dd/yyyy',
 
     closeOnSelected: true,
     minYear: 2019,

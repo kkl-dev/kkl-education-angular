@@ -1,20 +1,18 @@
 export class TableCellModel {
-  // readonly col = 8.3333;
 
   constructor(
     public key: string,
     public label?: string,
     public value?: string | Date | number,
     public type?: string,
-    public offset?: number | string,
+    public rows?: number | string,
     public cols?: number,
-    public divider?: boolean,
+    public custom?: boolean,
 
-    public offsetSpan?: number,
+    public rowsSpan?: number,
     public colSpan?: number
   ) {
     this.type = this.type || 'text';
-    this.divider = this.divider || false;
   }
 
   static create(options: TableCellModel) {
@@ -23,9 +21,30 @@ export class TableCellModel {
       options.label,
       options.value,
       options.type,
-      options.offset,
-      options.colSpan,
-      options.divider
+      options.rows,
+      options.cols,
     );
+  }
+}
+export class TableRowModel {
+
+  constructor(
+    public key: string,
+    public columns: TableCellModel[],
+    public label?: string,
+    public rows?: number | string,
+    public divider?: boolean
+  ) {
+    this.divider = this.divider || false;
+  }
+
+  static create(options: TableRowModel) {
+    return new TableRowModel(
+      options.key,
+      options.columns,
+      options.label,
+      options.rows,
+      options.divider,
+      );
   }
 }

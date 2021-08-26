@@ -1,14 +1,14 @@
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
 
 export interface FormTemplate {
   label?: string;
-  isGroup?: boolean;
+  hasGroups?: boolean;
   cols?: string | number;
   formCols?: string | number;
   questions?: QuestionBase<string | Date | number>[];
-  questionsGroup?: QuestionGroup[];
+  questionsGroups?: QuestionGroup[];
 }
 
 export interface QuestionGroup {
@@ -55,11 +55,7 @@ export class FormService {
     });
   }
 
-  private setForms(formTemplate) {
-    return formTemplate;
-  }
-
-  public setForm(formTemplate: any[]) {
+  private setForm(formTemplate: any[]) {
     return formTemplate
       .map((question) => question)
       .reduce((acc, control) => {
@@ -77,8 +73,7 @@ export class FormService {
     return this.fb.group(this.setForm(this.formatForm(questions)));
   }
 
-
-  private ArrayToObject(arr: any[]) {
+  private reduceArrayToObject(arr: any[]) {
     return arr
       .map((item) => item)
       .reduce((acc, control) => {
@@ -89,20 +84,15 @@ export class FormService {
       }, {});
   }
 
-  public setFormBuilder(formTemplate: FormTemplate) {
-    if (formTemplate.isGroup) {
-      const form = formTemplate.questionsGroup.map((group: QuestionGroup) => {
+  public setFormGroup(formTemplate: FormTemplate): FormGroup {
+    if (formTemplate.hasGroups) {
+      const form = formTemplate.questionsGroups.map((group: QuestionGroup) => {
         const { key, questions } = group;
         return {
           [key]: this.fb.group(this.setGroup(questions)),
         };
       });
-
-      console.log(form);
-      console.log(this.ArrayToObject(form));
-      console.log(this.fb.group(this.ArrayToObject(form)));
-
-      return '';
+      return this.fb.group(this.reduceArrayToObject(form));
     } else
       return this.fb.group(
         this.setForm(this.formatForm(formTemplate.questions))

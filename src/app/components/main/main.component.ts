@@ -4,7 +4,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
+import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 import { RouteService } from 'src/app/utilities/services/route.service';
 
 @Component({

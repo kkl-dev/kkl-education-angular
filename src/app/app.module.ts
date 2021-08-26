@@ -70,6 +70,8 @@ import { TransportDetailsComponent } from './screens/order-tour/additions/transp
 import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
 import { SummaryComponent } from './screens/order-tour/summary/summary.component';
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
+import { FormComponent } from './components/form/form/form.component';
+import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
 
 
 @NgModule({
@@ -142,7 +144,9 @@ import { FlexTableComponent } from './components/grid/flex-table/flex-table.comp
     FlexRowComponent,
     SummaryComponent,
     FlexRowComponent,
-    FlexTableComponent
+    FlexTableComponent,
+    FormComponent,
+    FacilitiesComponent
   ],
   imports: [
     BrowserModule,

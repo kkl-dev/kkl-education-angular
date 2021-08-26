@@ -1,0 +1,7 @@
+<ng-container *ngFor="let group of formTemplate.questionsGroups">
+  <app-form-container
+    [formGroup]="form.controls[group.key]"
+    [group]="group"
+    [slots]="slots"
+  ></app-form-container>
+</ng-container>
