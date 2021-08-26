@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
+import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 
 @Component({
   selector: 'app-dashboard',

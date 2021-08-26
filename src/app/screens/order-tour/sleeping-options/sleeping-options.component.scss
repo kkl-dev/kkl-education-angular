@@ -1,4 +1,21 @@
-.sleeping-options{
-    height: 100%;
-    width: 100% !important; 
+.sleeping-options {
+  height: 100%;
+  width: 100% !important;
+}
+
+::ng-deep .form {
+  overflow: visible !important;
+  height: fit-content !important;
+}
+
+.form-btn {
+  width: fit-content;
+  background-color: white;
+  color: #448ecd;
+  border: 3px solid #448ecd;
+  padding: 10px 15px;
+}
+
+::ng-deep .airbnb-calendar-container{
+  left: 0 !important;
 }

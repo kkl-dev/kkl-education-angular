@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { QuestionGroup } from 'src/app/components/form/logic/form.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
+import {
+  FormTemplate,
+  QuestionGroup,
+} from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { LocationModel } from 'src/app/utilities/models/TourPanelModel';
 
 @Component({
   selector: 'app-transport',
@@ -14,6 +18,11 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
 })
 
 export class TransportComponent implements OnInit {
+
+  @Input() location : LocationModel
+  public form: FormGroup;
+  public editMode: boolean = false;
+
   public details: QuestionBase<string>[] = [
     new QuestionTextbox({
       key: 'total',
@@ -91,7 +100,6 @@ export class TransportComponent implements OnInit {
       label: 'שעת פיזור',
       icon: 'schedule',
       type: 'time',
-      offset : 2,
       validations: [Validators.required],
       inputProps: {
         labelLength: 'extraWide',
@@ -125,6 +133,7 @@ export class TransportComponent implements OnInit {
         labelLength: 'extraWide',
       },
     }),
+
     new QuestionTextbox({
       key: 'gatherHour',
       label: 'שעת איסוף',
@@ -137,37 +146,63 @@ export class TransportComponent implements OnInit {
       key: 'gatherDate',
       label: 'תאריך איסוף',
       validations: [Validators.required],
-      inputProps: {
-        labelLength: 'extraWide',
-      },
     }),
   ];
 
-  private comments : QuestionBase<string>[] =  [
+  private comments: QuestionBase<string>[] = [
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות',
       cols: 6,
-      rows: 4,
-      offset : 1
-    })
+      rows: 6,
+      offset: 1,
+    }),
+  ];
 
-  ]
-
-  public transportForm  :QuestionGroup[]= [
+  private questionGroups: QuestionGroup[] = [
     {
+      key: 'details',
       questions: this.details,
+      cols: 8,
     },
     {
+      key: 'gather',
       questions: this.gather,
+      cols: 6,
     },
     {
+      key: 'comments',
       questions: this.comments,
-      hasButton : true
+      hasButton: true,
+      cols: 8,
+    },
+  ];
+
+  public formTemplate: FormTemplate = {
+    hasGroups: true,
+    questionsGroups: this.questionGroups,
+  };
+
+  constructor() {}
+
+  ngOnInit(): void {
+  }
+
+  public onClick() {
+    if (this.form) {
+      this.editMode = !this.editMode;
+      this.form.disable();
     }
-  ]
+  }
 
-  constructor() { }
+  public onEdit() {
+    this.editMode = !this.editMode;
+    this.form.enable();
+  }
 
-  ngOnInit(): void { }
+  public onValueChange(event) {
+    if (!this.editMode) {
+      this.form = event;
+    }
+  }
 }

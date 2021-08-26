@@ -10,7 +10,6 @@ export class SquadGroupComponent {
 
   @Input() public title!: string;
   @Input() public formCols!: string;
-  @Input() public showButton!: boolean;
   @Input() public questions!: QuestionBase<string>[];
 
   constructor() {}

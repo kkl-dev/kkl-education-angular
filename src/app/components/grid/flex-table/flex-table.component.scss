@@ -1,6 +1,14 @@
-@import "../../../../../styles.scss";
+@import "../../../../styles.scss";
 
+mat-grid-list,
+mat-grid-tile {
+  height: 100%;
+  width: 100%;
+}
 
+app-typography {
+  height: 100%;
+}
 
 .table-details {
   flex-direction: row-reverse;
@@ -8,6 +16,18 @@
 
 .row-item {
   padding-top: spacing(2);
+  padding-bottom: spacing(2);
+}
+
+.column {
+  padding-top: spacing(2);
+}
+
+.item-label {
+  padding-left: spacing(1);
+}
+
+.row-button {
   padding-bottom: spacing(2);
 }
 

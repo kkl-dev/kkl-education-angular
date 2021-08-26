@@ -65,9 +65,12 @@ import { ExpendPanelComponent } from './components/expend-panel/expend-panel.com
 import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
 import { TypographyComponent } from './components/typography/typography.component';
 import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
+import { FilledNightComponent } from './screens/order-tour/sleeping-options/filled-night/filled-night.component';
 import { TransportDetailsComponent } from './screens/order-tour/additions/transport-details/transport-details.component';
-import { TransportDetailsTableComponent } from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
 import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
+import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
+import { FormComponent } from './components/form/form/form.component';
+import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
 
 
 @NgModule({
@@ -134,9 +137,13 @@ import { FlexRowComponent } from './components/grid/flex-row/flex-row.component'
     TourPanelComponent,
     TypographyComponent,
     DashboardCardComponent,
+
+    FilledNightComponent,
     TransportDetailsComponent,
-    TransportDetailsTableComponent,
-    FlexRowComponent
+    FlexRowComponent,
+    FlexTableComponent,
+    FormComponent,
+    FacilitiesComponent
   ],
   imports: [
     BrowserModule,

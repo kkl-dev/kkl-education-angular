@@ -5,14 +5,17 @@ export const columns: TableCellModel[] = [
     key: 'tourId',
     label: 'מספר טיול',
     value: '213232',
+    rows: 1,
   },
   {
     key: 'supplier',
     label: 'ספק',
+    rows: 3,
   },
   {
     key: 'tourDetails',
     label: 'קליטת טיול',
+    rows: 2,
   },
 ];
 
@@ -31,9 +34,8 @@ export const details: TableCellModel[] = [
     key: 'type',
     label: 'מספר הזמנת רכש',
     value: 'חדש',
-    divider: true,
   },
-];
+]
 
 export const supplier: TableCellModel[] = [
   {
@@ -83,7 +85,7 @@ export const supplier: TableCellModel[] = [
   },
   {
     key: 'aproveContact',
-    label: 'השמנה אושרה ע"י',
+    label: 'הזמנה אושרה ע"י',
     value: '323237823',
   },
   {
@@ -96,7 +98,6 @@ export const supplier: TableCellModel[] = [
     key: 'aproveContactId',
     label: 'ת.ז מאשר',
     value: '382938293',
-    divider: true,
   },
 ];
 
@@ -133,6 +134,8 @@ export const summery : TableCellModel[] = [
     key: 'comments',
     label: 'הערה',
     value: 'לברר פרטים סופיים לגבי כמות אוטובוסים',
+    cols : 2,
   },
 
 ]
+

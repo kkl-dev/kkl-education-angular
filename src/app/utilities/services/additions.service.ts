@@ -1,6 +1,6 @@
+import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { NavigationCardModel } from '../models/nav-card-model';
 
 @Injectable({
   providedIn: 'root'

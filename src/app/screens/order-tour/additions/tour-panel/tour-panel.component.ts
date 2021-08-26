@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TourDayModel } from '../additions.component';
+import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
 
 @Component({
   selector: 'app-tour-panel',
@@ -9,8 +9,10 @@ import { TourDayModel } from '../additions.component';
 export class TourPanelComponent implements OnInit {
   constructor() {}
 
-  @Input() tourDay: TourDayModel;
+  @Input() tour: TourPanelModel;
   @Input() i: number;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.tour);
+  }
 }

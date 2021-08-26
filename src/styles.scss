@@ -50,11 +50,11 @@ body {
   background-color: color(primary);
 }
 
-::ng-deep mat-grid-list,
-mat-grid-tile {
-  text-align: right;
-  height: 100%;
-  width: 100%;
+:ng-deep mat-grid-list {
+  direction: rtl !important;
+  display: flex !important;
+  flex-direction: row-reverse !important;
+
 }
 
 mat-grid-tile {
@@ -64,17 +64,6 @@ mat-grid-tile {
   }
 }
 
-// ::ng-deep.mat-badge-content {
-//   width: auto;
-//   display: grid;
-//   min-width: 25px;
-//   text-align: center;
-//   align-items: center;
-//   padding: 5px 3px;
-//   top: -20px;
-//   right: -22px;
-
-// }
 
 ::ng-deep .icon .mat-badge-content {
   font-family: "Material Icons";

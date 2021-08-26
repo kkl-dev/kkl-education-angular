@@ -1,13 +1,18 @@
 <div class="container" *ngIf="questions.length > 0">
-  <mat-grid-list cols="1" rowHeight="5vh">
+  <mat-grid-list cols="2" rowHeight="5vh">
     <mat-grid-tile class="text">
       <span>{{ title }}</span>
+
     </mat-grid-tile>
-    <mat-grid-tile rowspan="10">
+    <mat-grid-tile class="text">
+      <span>{{ title }}</span>
+
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="10">
       <app-form-container
         [cols]="formCols"
         [questions]="questions"
-        [hasButton]="true"
+        [hasBottomButton]="true"
         [slots]="{ button: formButton, group: group }"
       >
       </app-form-container>
@@ -15,13 +20,6 @@
   </mat-grid-list>
 </div>
 
-<ng-template #formButton>
-  <div class="button-container">
-    <button type="submit" mat-button>
-      <app-icon key="edit" type="mat"></app-icon>
-    </button>
-  </div>
-</ng-template>
 
 <ng-template #group let-question="question" let-item="item" let-form="form">
 
@@ -35,5 +33,4 @@
     [labelLength]="question.inputProps?.labelLength"
   >
   </app-form-input>
-</ng-template>
-  
+</ng-template>  

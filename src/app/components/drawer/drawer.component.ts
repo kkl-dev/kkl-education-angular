@@ -59,7 +59,6 @@ export class DrawerComponent implements OnInit {
   ];
 
   newCommentHandler(newComment: { date: Date; time: string; comment: string }) {
-    console.log('newComment');
     const newCommentToAdd = { ...newComment, status: false };
     if (this.index > -1) {
       this.reminderArray.splice(this.index, 1, newCommentToAdd);
@@ -67,13 +66,12 @@ export class DrawerComponent implements OnInit {
     } else {
       this.reminderArray.push(newCommentToAdd);
     }
-    this.drawerForm.form.reset();
+    this.drawerForm.formGroup.reset();
   }
 
   editComment(index: number) {
-    console.log(new Date(this.reminderArray[index].date));
 
-    this.drawerForm.form.patchValue({
+    this.drawerForm.formGroup.patchValue({
       date: this.datePipe.transform(
         this.reminderArray[index].date,
         'yyyy-MM-dd'
@@ -102,7 +100,7 @@ export class DrawerComponent implements OnInit {
 
   deleteFormInputs(e: Event) {
     e.preventDefault();
-    this.drawerForm.form.reset();
+    this.drawerForm.formGroup.reset();
     this.isFormOpen = false;
   }
 
