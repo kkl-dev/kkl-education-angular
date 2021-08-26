@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-sleeping-options-by-day',
@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 })
 export class SleepingOptionsByDayComponent implements OnInit {
   currentDay: number = 0;
-  @Output() emitCurrentDay:EventEmitter<number>=new EventEmitter();
+  @Output() emitCurrentDay: EventEmitter<number> = new EventEmitter();
   @Input() sleepingOptionsByDay: {
     day: string;
     options: {
@@ -17,31 +17,26 @@ export class SleepingOptionsByDayComponent implements OnInit {
       type: string;
       singleUnit: string;
     }[];
-  }[]=[];
-  constructor() {
-    console.log('construtc');
-  }
+  }[] = [];
+  constructor() {}
 
   previousPage() {
     this.currentDay = this.currentDay - 1;
-this.    emitCurrentDayHandler()
+    this.emitCurrentDayHandler();
   }
   nextPage() {
     this.currentDay = this.currentDay + 1;
-    this.emitCurrentDayHandler()
+    this.emitCurrentDayHandler();
   }
 
-  setCurrentDay(index:number){
-this.currentDay=index
-this.emitCurrentDayHandler()
+  setCurrentDay(index: number) {
+    this.currentDay = index;
+    this.emitCurrentDayHandler();
   }
 
-  ngOnInit(): void {
-    console.log(this.sleepingOptionsByDay);
-  }
+  ngOnInit(): void {}
 
-
-  emitCurrentDayHandler(){
-    this.emitCurrentDay.emit(this.currentDay)
+  emitCurrentDayHandler() {
+    this.emitCurrentDay.emit(this.currentDay);
   }
 }

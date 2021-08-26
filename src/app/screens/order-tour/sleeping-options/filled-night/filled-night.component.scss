@@ -1,0 +1,19 @@
+.filled-night {
+    margin-top: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  direction: rtl;
+   background-color: #F6F6F6;
+  &__btn {
+    background-color: transparent;
+    cursor: pointer;
+    padding: 4px;
+    border: 0;
+    color: #37c56b;
+    border-bottom: 1px solid #37c56b;
+    &:first-of-type {
+      margin-left: 5px;
+    }
+  }
+}

@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, NgForm, Validators } from '@angular/forms';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
-import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
+import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 
 export interface formGroupGrid {
   title: string;
@@ -11,7 +11,7 @@ export interface formGroupGrid {
   formCols?: string;
   questions: QuestionBase<string | Date | number>[];
 }
-
+ 
 @Component({
   selector: 'app-sleeping-options',
   templateUrl: './sleeping-options.component.html',
@@ -159,73 +159,34 @@ export class SleepingOptionsComponent implements OnInit {
       ],
     },
   ];
-
-  formCols: number = 8;
-  questions: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'sleepingPlace',
-      type: 'select',
-      cols: '2',
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
-      },
-    }),
-    new QuestionSelect({
-      key: 'nightsCount',
-      type: 'select',
-      cols: '2',
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
-      },
-    }),
-    new QuestionSelect({
-      key: 'saveFor',
-      type: 'select',
-      cols: '2',
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
-      },
-    }),
-    new QuestionTextarea({
-      key: 'peopleCount',
-      label: 'שם הטיול',
-      value: '',
-      validations: [Validators.required],
-    }),
-    new QuestionTextarea({
-      key: 'amount',
-      label: 'שם הטיול',
-      value: '',
-      validations: [Validators.required],
-    }),
-    new QuestionTextarea({
-      key: 'comments',
-      label: 'הערות מנהליות',
-      cols: '6',
-      value: '',
-    }),
+  @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
+  public indexToPatch: number = -1;
+  filledNightsArray: {
+    sleepingPlace: string;
+    nightsCount: string;
+    saveFor: string;
+    peopleCount: string;
+    amount: string;
+    comments: string;
+  }[] = [
+    {
+      amount: '3',
+      comments: 'הערה חדשה',
+      nightsCount: 'לילה 1',
+      peopleCount: '3',
+      saveFor: 'מבוגרים',
+      sleepingPlace: 'גיחה',
+    },
   ];
+
+  formCols: number = 12;
+  questions: QuestionBase<string | number>[] = [];
 
   changeDatesHandler(newDates: string) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    if (newDates && !newDates.includes('-')) return;
+
     const dates = newDates.split('-');
     let date1 = new Date(dates[0]);
     let date2 = new Date(dates[1]);
@@ -276,12 +237,36 @@ export class SleepingOptionsComponent implements OnInit {
       });
       newDate = new Date(date1.setDate(date1.getDate() + 1));
     }
-    console.log(newSleepingOptionsByDay);
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
-    console.log(this.sleepingOptionsByDay);
   }
 
-  constructor() {}
+  constructor(
+    private checkAvailabilityService: CheckAvailabilityService,
+    private sleepingService: SleepingServiceService
+  ) {
+    this.questions = this.sleepingService.questions;
+    this.changeDatesHandler(
+      this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
+    ); 
+  }
+
+  addFilledNight(form) {
+    if (this.indexToPatch > -1) {
+      this.filledNightsArray[this.indexToPatch] = form.value;
+    } else {
+      this.filledNightsArray.push(form.value);
+    }
+    this.indexToPatch = -1;
+    this.filledNightsForm.form.reset();
+  }
+
+  deleteFilledNight(index: number) {
+    this.filledNightsArray.splice(index, 1);
+  }
+  editFilledNight(form, index) {
+    this.filledNightsForm.form.patchValue(form);
+    this.indexToPatch = index;
+  }
 
   ngOnInit(): void {}
 }

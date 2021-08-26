@@ -8,6 +8,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { getYear } from 'date-fns';
+import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 
 @Component({
   selector: 'app-sleeping-options-form',
@@ -15,32 +16,39 @@ import { getYear } from 'date-fns';
   styleUrls: ['./sleeping-options-form.component.scss'],
 })
 export class SleepingOptionsFormComponent implements OnInit {
-  @ViewChild('resultsForm') signupForm: NgForm | undefined;
+  @ViewChild('resultsForm') signupForm: NgForm;
   @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
   date: string = '';
   public formOptions: { imgSrc: string; text: string; value: string }[] = [
-    { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'נס הרים', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: '1' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: '1' },
+    { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: 'ציפורי' },
+    { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: 'לביא' },
+    { imgSrc: 'assets/images/userImage.jpg', text: 'נס הרים', value: 'נס הרים' },
+    { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: 'יתיק' },
+    { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: 'שוני' },
   ];
 
   freeSpacesArray: FreeSpace[] = [];
   location: string = '';
-  constructor() {
+ 
+  
+
+
+  constructor(private checkAvailabilityService:CheckAvailabilityService) {
+    this.location=this.checkAvailabilityService.checkAvailabilltyValues.sleepingPlace
+    this.date=this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
     );
 
-    this.options = {
-      firstCalendarDay: 0,
-      format: 'LL/dd/yyyy',
+    this.options = { 
+      firstCalendarDay: 0, 
+      format: 'LL/dd/yyyy', 
+
       closeOnSelected: true,
-      // minDate: addDays(new Date(), 5),
-      // maxDate: addDays(new Date(), 10),
-      minYear: getYear(new Date()) - 1,
+      minDate: new Date(),
+      maxDate: new Date(2022, 11, 17),
+      minYear: getYear(new Date()) - 1, 
       maxYear: getYear(new Date()) + 1,
       freeSpacesArray: this.freeSpacesArray,
     };
@@ -63,9 +71,10 @@ export class SleepingOptionsFormComponent implements OnInit {
     return freeSpacesArrayTemp;
   }
 
-  options: CalendarOptions = {
+  options: CalendarOptions = { 
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
+ 
     closeOnSelected: true,
     minYear: 2019,
     maxYear: 2021,

@@ -19,7 +19,7 @@
             [type]="question.type"
             [label]="question.label"
             [icon]="question.icon"
-            [options]="question.options"
+            [options]="question.inputProps?.options"
             [controlType]="question.controlType"
             [labelLength]="question.inputProps?.labelLength"
           ></app-form-input>
@@ -54,10 +54,11 @@
           </mat-grid-tile>
         </ng-container>
       </ng-container>
-    </mat-grid-list>
+    </mat-grid-list> 
 
-    <!-- <div class="form-row" *ngIf="showButton">
-      <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
-    </div> -->
+    <div class="form-row" *ngIf="hasButton">
+      <!-- <ng-container *ngTemplateOutlet="slots?.button"></ng-container> -->
+      <ng-content select=[button]></ng-content>
+    </div>
   </form>
 </div>

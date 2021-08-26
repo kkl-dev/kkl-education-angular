@@ -123,6 +123,56 @@ export class SquadAssembleComponent implements OnInit {
     }),
   ];
 
+  groupAssambleFormMixedInputs: QuestionBase<string | number>[] = [
+    new QuestionSelect({
+      key: 'age',
+      type: 'select',
+      cols: 2,
+      rows: 4,
+      label: 'קבוצת גיל',
+      inputProps: {
+        options: [
+          { key: '1', value: '1' },
+          { key: 'עוד לקוח', value: '10+' },
+          { key: 'לקוח מספר שלוש', value: '20+' },
+          { key: 'לקוח מספר ארבע', value: '30+' },
+        ],
+      },
+    }),
+  
+        new QuestionNumber({
+          key: 'participants',
+          label: 'נוער / מבוגרים',
+          cols: 1,
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'chaprones',
+          label: 'מלווים',
+          cols: 1,
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'instructors',
+          label: 'מדריכים',
+          cols: 1,
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'drivers',
+          label: 'נהגים',
+          cols: 1,
+          rows: 4,
+        }),
+        new QuestionNumber({
+          key: 'medics',
+          label: 'מערים',
+          cols: 1,
+          rows: 4,
+        }),
+ 
+ 
+  ];
   groupAssambleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
@@ -294,7 +344,7 @@ export class SquadAssembleComponent implements OnInit {
       formCols: '2',
       title: 'הרכב הקבוצה',
       cols: '2',
-      questions: this.groupAssambleFormInputs,
+      questions: this.groupAssambleFormMixedInputs,
     },
     {
       formCols: '1',
