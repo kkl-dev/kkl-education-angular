@@ -2,9 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm, Validators } from '@angular/forms';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
-import { QuestionNumber } from 'src/app/components/form/logic/question-number';
-import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 
@@ -162,6 +159,7 @@ export class SleepingOptionsComponent implements OnInit {
       ],
     },
   ];
+<<<<<<< HEAD
   @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
   public indexToPatch: number = -1;
   filledNightsArray: {
@@ -180,6 +178,16 @@ export class SleepingOptionsComponent implements OnInit {
       saveFor: 'מבוגרים',
       sleepingPlace: 'גיחה',
     },
+=======
+
+  filledNightsArray:{sleepingPlace: string, nightsCount: string, saveFor: string, peopleCount: string, amount: string,comments:string}[]=[]
+
+
+
+  formCols: number = 8;
+  questions: QuestionBase<string | number>[] = [
+
+>>>>>>> c474973adc3de49750c1d1bac508834087f2b5d2
   ];
 
   formCols: number = 12;
@@ -244,6 +252,7 @@ export class SleepingOptionsComponent implements OnInit {
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
   }
 
+<<<<<<< HEAD
   constructor(
     private checkAvailabilityService: CheckAvailabilityService,
     private sleepingService: SleepingServiceService
@@ -272,6 +281,15 @@ export class SleepingOptionsComponent implements OnInit {
     console.log(index);
     this.filledNightsForm.form.patchValue(form);
     this.indexToPatch = index;
+=======
+  constructor(private checkAvailabilityService:CheckAvailabilityService, private sleepingService:SleepingServiceService) {
+   this.questions=this.sleepingService.questions
+  }
+
+  updateFilledNightsArray(e){
+    console.log(e);
+this.filledNightsArray.push(e)
+>>>>>>> c474973adc3de49750c1d1bac508834087f2b5d2
   }
 
   ngOnInit(): void {}
