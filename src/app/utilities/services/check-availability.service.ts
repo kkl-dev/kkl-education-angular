@@ -10,14 +10,14 @@ export interface InfoCard {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CheckAvailabilityService {
-
-  checkAvailabilltyValues:{
-    sleepingPlace: string; calendarInput:string
-  }={sleepingPlace:'',calendarInput:''}
- 
+  checkAvailabilltyValues: {
+    sleepingPlace: string;
+    calendarInput: string;
+    //claendar input value for development in real app it will redirect to seatch page if calendar input wasnt set in the search page
+  } = { sleepingPlace: '', calendarInput: '09/08/2021-09/11/2021' };
 
   public facilitiesArray: InfoCard[] = [
     {
@@ -129,15 +129,13 @@ export class CheckAvailabilityService {
     },
   ];
 
-  constructor() { }
+  constructor() {}
 
-  saveCheackAvailabilltyValues(newFormValues:NgForm){
-    this.checkAvailabilltyValues=newFormValues.form.value
+  saveCheackAvailabilltyValues(newFormValues: NgForm) {
+    this.checkAvailabilltyValues = newFormValues.form.value;
   }
 
-  getNewFacilitiesArray(date:string){
-
-return this.facilitiesArray
+  getNewFacilitiesArray(date: string) {
+    return this.facilitiesArray;
   }
-
 }
