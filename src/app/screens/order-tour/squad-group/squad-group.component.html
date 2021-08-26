@@ -2,11 +2,11 @@
   <mat-grid-list cols="2" rowHeight="5vh">
     <mat-grid-tile class="text">
       <span>{{ title }}</span>
-      
+
     </mat-grid-tile>
     <mat-grid-tile class="text">
       <span>{{ title }}</span>
-      
+
     </mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="10">
       <app-form-container
@@ -19,14 +19,7 @@
     </mat-grid-tile>
   </mat-grid-list>
 </div>
-
-<ng-template #formButton>
-  <div class="button-container">
-    <button type="submit" mat-button>
-      <app-icon key="edit" type="mat"></app-icon>
-    </button>
-  </div>
-</ng-template>
+ 
 
 <ng-template #group let-question="question" let-item="item" let-form="form">
 
@@ -41,4 +34,3 @@
   >
   </app-form-input>
 </ng-template>
-  

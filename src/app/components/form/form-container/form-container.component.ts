@@ -16,9 +16,8 @@ import { QuestionBase } from '../logic/question-base';
   styleUrls: ['./form-container.component.scss'],
 })
 export class FormContainerComponent implements OnInit {
-
   @Input() formGroup!: FormGroup;
-  @Input() group!:QuestionGroup;
+  @Input() group!: QuestionGroup;
   @Input() questions!: QuestionBase<string>[];
 
   @Input() cols: string;
@@ -34,10 +33,10 @@ export class FormContainerComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSubmit() {
+    console.log(this.formGroup.value);
+    this.valueChange.emit(this.formGroup);
   }
-
 }
