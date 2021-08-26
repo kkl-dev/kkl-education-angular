@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TableComponent } from './components/table/table.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { EducationResultsComponent } from './screens/education-results/education-results.component';
 import { LoginBackdropComponent } from './screens/login-backdrop/login-backdrop.component';
