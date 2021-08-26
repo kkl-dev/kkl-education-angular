@@ -1,9 +1,16 @@
 <div class="form">
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formGroup">
-    <mat-grid-list [cols]="group.cols || 1" rowHeight="2vh" [gutterSize]="gutter">
-      <ng-container *ngFor="let question of group.questions">
-
-        <mat-grid-tile *ngIf="group.hasButton" colspan="1" [rowspan]="question.rows">
+    <mat-grid-list
+      [cols]="group?.cols || cols || 1"
+      rowHeight="2vh"
+      [gutterSize]="gutter"
+    >
+      <ng-container *ngFor="let question of group?.questions || questions">
+        <mat-grid-tile
+          *ngIf="group?.hasButton || hasButton"
+          colspan="1"
+          [rowspan]="question.rows"
+        >
           <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
         </mat-grid-tile>
 
@@ -61,7 +68,7 @@
       </ng-container>
     </mat-grid-list>
 
-    <div class="form-row" *ngIf="group.hasButton">
+    <div class="form-row" *ngIf="group?.hasButton || hasButton">
       <!-- <ng-container *ngTemplateOutlet="slots?.button"></ng-container> -->
       <ng-content select="[button]"></ng-content>
     </div>

@@ -42,7 +42,6 @@ export class IconComponent implements OnInit {
   }
 
   private setIconColor() {
-    console.log(this.color);
     if (this.color && this.color !== 'default') {
       this.default = false;
     } else {
