@@ -35,16 +35,9 @@ export class FormContainerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.group.hasButton)
-    console.log(this.slots)
   }
 
   onSubmit() {
   }
 
-  // private subscribeToFormValues() {
-  //   this.formGroup.valueChanges.subscribe((values) => {
-  //     this.formData.emit(values);
-  //   });
-  // }
 }
