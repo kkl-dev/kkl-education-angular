@@ -138,7 +138,7 @@ import { SummaryComponent } from './screens/order-tour/summary/summary.component
     TransportDetailsComponent,
     TransportDetailsTableComponent,
     FlexRowComponent,
-    SummaryComponent
+    SummaryComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,25 +1,53 @@
 .summary {
     margin-top: 50px;
 }
-.title {
+.header {
     display: flex;
     justify-content: space-between;
     direction: rtl;
 }
-.title > div:last-child {
+.header > div:last-child {
     display: flex;
 }
-.title > div {
+.header > div {
     * {
         margin: 20px;
         padding: 5px;
     }
 }
-table {
-    width: 100%;
-    direction: rtl;
+ // table css
+#border{
+    border-bottom: 1px solid #448ECD;
+    td{
+        padding-top: 40px;
+    }
+    td:first-child{
+    color: #448ECD;
+    text-align: right;
+    }
+    p{
+        margin: 0;
+        border-bottom: 2px solid;
+        display: inline;
+    }
 }
-thead {
-    background: #448ecd;
-    color: white;
-}
+ table{ 
+     text-align: center;
+     width: 100%;
+     direction: rtl;
+     color: white;
+     border-collapse: collapse;
+     svg {
+          fill: white;
+     }
+     thead{
+        background: #448ECD;
+     }
+     tbody{
+         color: #707070;
+         font-weight: 600;
+         svg path{
+             fill: #448ECD;
+         }
+     }
+ }

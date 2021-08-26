@@ -1,5 +1,5 @@
 <div class="summary">
-    <div class="title">
+    <div class="header">
         <div>
             <h1>סיכום הזמנה</h1>
         </div>
@@ -9,5 +9,42 @@
         </div>
     </div>
     <div class="main">
+        <table>
+            <thead>
+                <tr>
+                    <ng-container *ngFor='let item of tableTitles'>
+                        <th *ngIf='item.name'>{{item.name}}</th>
+                        <th *ngIf='item.icon'>
+                            <svg-icon [src]='iconSrc + item.icon'></svg-icon>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor='let item of tableBodyTitles;let i = index;'>
+                    <tr id="border">
+                        <td colspan='4'>
+                            <p>{{item.name}}</p>
+                        </td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.price | currency:'₪'}}</td>
+                        <td>{{item.supplierCharge | currency:'₪'}}</td>
+                        <td>{{item.customerBilling | currency:'₪'}}</td>
+                        <td (click)="toogleItems(i)">
+                            <svg-icon src='{{iconSrc}}down-arrow.svg'></svg-icon>
+                        </td>
+                    </tr> 
+                    <ng-container *ngFor='let e of mySwitch(i)'>
+                    <tr *ngIf="activateIndex.includes(i)">
+                            <td>15.06.21</td>
+                        <td>נס הרים</td>
+                        <td>אירוח בקתות למוסדות חינוך - אמצע שבוע</td>
+                        <td>לקוח מזמין</td>
+                    </tr>
+                </ng-container>
+                </ng-container>
+
+            </tbody>
+        </table>
     </div>
 </div>
