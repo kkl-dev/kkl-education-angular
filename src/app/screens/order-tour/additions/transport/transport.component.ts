@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import {
-  FormService,
   FormTemplate,
   QuestionGroup,
 } from 'src/app/components/form/logic/form.service';
@@ -15,8 +14,8 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   selector: 'app-transport',
   templateUrl: './transport.component.html',
   styleUrls: ['./transport.component.scss'],
-  providers: [FormService],
 })
+
 export class TransportComponent implements OnInit {
   public form: FormGroup;
   public editMode: boolean = false;
@@ -152,7 +151,7 @@ export class TransportComponent implements OnInit {
       key: 'comments',
       label: 'הערות',
       cols: 6,
-      rows: 4,
+      rows: 6,
       offset: 1,
     }),
   ];
@@ -169,7 +168,7 @@ export class TransportComponent implements OnInit {
       cols: 6,
     },
     {
-      key: 'gather',
+      key: 'comments',
       questions: this.comments,
       hasButton: true,
       cols: 8,
@@ -181,10 +180,9 @@ export class TransportComponent implements OnInit {
     questionsGroups: this.questionGroups,
   };
 
-  constructor(private formService: FormService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    // this.form = this.formService.buildForm()
   }
 
   public onClick() {

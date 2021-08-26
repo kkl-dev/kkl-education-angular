@@ -7,13 +7,13 @@ import {
   ElementRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormService, FormTemplate, QuestionGroup } from '../logic/form.service';
-import { QuestionBase } from '../logic/question-base';
+import { FormService, FormTemplate } from '../logic/form.service';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
+  providers: [FormService],
 })
 export class FormComponent implements OnInit {
   public form!: FormGroup;
@@ -33,8 +33,7 @@ export class FormComponent implements OnInit {
   constructor(private formService: FormService) {}
 
   ngOnInit() {
-    console.log(this.formTemplate);
-    this.formService.setFormGroup(this.formTemplate);
+    this.form = this.formService.setFormGroup(this.formTemplate);
     this.subscribeToFormValues();
   }
 

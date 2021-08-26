@@ -1,4 +1,4 @@
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
 
@@ -77,8 +77,7 @@ export class FormService {
     return this.fb.group(this.setForm(this.formatForm(questions)));
   }
 
-
-  private ArrayToObject(arr: any[]) {
+  private reduceArrayToObject(arr: any[]) {
     return arr
       .map((item) => item)
       .reduce((acc, control) => {
@@ -89,7 +88,7 @@ export class FormService {
       }, {});
   }
 
-  public setFormGroup(formTemplate: FormTemplate) {
+  public setFormGroup(formTemplate: FormTemplate): FormGroup {
     if (formTemplate.hasGroups) {
       const form = formTemplate.questionsGroups.map((group: QuestionGroup) => {
         const { key, questions } = group;
@@ -97,12 +96,7 @@ export class FormService {
           [key]: this.fb.group(this.setGroup(questions)),
         };
       });
-
-      console.log(form);
-      console.log(this.ArrayToObject(form));
-      console.log(this.fb.group(this.ArrayToObject(form)));
-
-      return '';
+      return this.fb.group(this.reduceArrayToObject(form));
     } else
       return this.fb.group(
         this.setForm(this.formatForm(formTemplate.questions))

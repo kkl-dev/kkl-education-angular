@@ -66,12 +66,12 @@ export class DrawerComponent implements OnInit {
     } else {
       this.reminderArray.push(newCommentToAdd);
     }
-    this.drawerForm.form.reset();
+    this.drawerForm.formGroup.reset();
   }
 
   editComment(index: number) {
 
-    this.drawerForm.form.patchValue({
+    this.drawerForm.formGroup.patchValue({
       date: this.datePipe.transform(
         this.reminderArray[index].date,
         'yyyy-MM-dd'
@@ -100,7 +100,7 @@ export class DrawerComponent implements OnInit {
 
   deleteFormInputs(e: Event) {
     e.preventDefault();
-    this.drawerForm.form.reset();
+    this.drawerForm.formGroup.reset();
     this.isFormOpen = false;
   }
 

@@ -7,7 +7,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormService } from '../logic/form.service';
+import { QuestionGroup } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
 @Component({
@@ -17,36 +17,34 @@ import { QuestionBase } from '../logic/question-base';
 })
 export class FormContainerComponent implements OnInit {
 
-  public form!: FormGroup;
-  @Output() formData: EventEmitter<any> = new EventEmitter();
-  @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
-
-  @Input() formTemplate!: QuestionBase<string>[][];
+  @Input() formGroup!: FormGroup;
+  @Input() group!:QuestionGroup;
   @Input() questions!: QuestionBase<string>[];
+
   @Input() cols: string;
-  @Input() gutter: string = '3';
+  @Input() gutter: string = '5';
   @Input() hasButton: boolean = false;
   @Input() slots: {
     button?: ElementRef;
     group?: ElementRef;
   };
-  @Input() customQuestionTemplates = {};
 
-  constructor(private formService: FormService) {}
+  @Output() formData: EventEmitter<any> = new EventEmitter();
+  @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
+
+  constructor() {}
 
   ngOnInit() {
-    this.form = this.formService.buildForm(this.questions);
-    this.subscribeToFormValues();
+    console.log(this.formGroup)
+    console.log(this.group)
   }
 
   onSubmit() {
-    this.formData.emit(this.form.value);
   }
 
-  private subscribeToFormValues() {
-    this.form.valueChanges.subscribe((values) => {
-      this.formData.emit(values);
-      this.valueChange.emit(this.form)
-    });
-  }
+  // private subscribeToFormValues() {
+  //   this.formGroup.valueChanges.subscribe((values) => {
+  //     this.formData.emit(values);
+  //   });
+  // }
 }
