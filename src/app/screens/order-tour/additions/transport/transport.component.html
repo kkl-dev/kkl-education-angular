@@ -11,8 +11,12 @@
     >
     </app-form-container>
   </div> -->
-  <div fxFlex="35" >
-    <app-form [formTemplate]="formTemplate"></app-form>
+  <div fxFlex="35">
+    <app-form
+      [formTemplate]="formTemplate"
+      [slots]="{ button: formButton }"
+      (valueChange)="onValueChange($event)"
+    ></app-form>
   </div>
   <div fxFlex="35">
     <app-transport-details></app-transport-details>

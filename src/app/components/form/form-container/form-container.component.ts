@@ -35,8 +35,8 @@ export class FormContainerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.formGroup)
-    console.log(this.group)
+    console.log(this.group.hasButton)
+    console.log(this.slots)
   }
 
   onSubmit() {
