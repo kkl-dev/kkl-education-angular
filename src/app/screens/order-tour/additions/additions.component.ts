@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
+import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Subscription } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
 
@@ -68,12 +68,11 @@ export class AdditionsComponent implements OnInit {
   public tour = [
     {
       date: new Date(),
-      locations: [
-        { title: 'בית ספר תמיר - נס הרים' },
-      ],
+      locations: [{ title: 'בית ספר תמיר - נס הרים' }],
     },
-
   ];
+
+  // public transport: TourPanelModel[];
 
   constructor(private additionsService: AdditionsService) {}
 
