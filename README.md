@@ -28,3 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
  ## to execute yaml
  openapi-generator-cli generate -i src/shivek-kkl-education-1.0.0-resolved.yaml -g typescript-angular -o src/app/api/v1
+
+ #yael
