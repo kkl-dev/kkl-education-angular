@@ -13,6 +13,8 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   styleUrls: ['./transport.component.scss'],
 })
 export class TransportComponent implements OnInit {
+  public editMode: boolean = false;
+
   public details: QuestionBase<string>[] = [
     new QuestionTextbox({
       key: 'total',
@@ -168,4 +170,8 @@ export class TransportComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  public onClick() {
+    this.editMode = !this.editMode;
+  }
 }

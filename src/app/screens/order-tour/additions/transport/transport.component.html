@@ -16,6 +16,23 @@
 
 <ng-template #formButton>
   <div class="button-container" fxLayout="column" fxLayoutAlign="end start">
-    <button type="submit" color="primary" mat-raised-button>שמור</button>
+    <button
+      *ngIf="!editMode"
+      type="submit"
+      color="primary"
+      (click)="onClick()"
+      mat-raised-button
+    >
+      שמור
+    </button>
+    <button
+      *ngIf="editMode"
+      type="submit"
+      color="primary"
+      (click)="onClick()"
+      mat-raised-button
+    >
+      <app-icon key="edit" type="mat"></app-icon>
+    </button>
   </div>
 </ng-template>
