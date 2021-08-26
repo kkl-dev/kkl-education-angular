@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { columns, details, summery, supplier } from 'src/mock_data/additions';
 
@@ -32,7 +32,6 @@ export class TransportDetailsComponent implements OnInit {
   private cancelColumn: TableCellModel = {
     key: 'cancel',
     label: 'ביטול הזמנה',
-    offset: 1,
   };
 
   private cancellationForm: TableCellModel[] = [
@@ -40,13 +39,13 @@ export class TransportDetailsComponent implements OnInit {
       key: 'cancel',
       label: 'סיבת ביטול',
       type: 'custom',
-      offset: 3,
+      cols: 2,
     },
     {
       key: 'button',
       type: 'button',
       label: '',
-      offset: 3,
+      cols: 2,
     },
   ];
 
@@ -92,11 +91,10 @@ export class TransportDetailsComponent implements OnInit {
       key: 'cancel',
       label: 'סיבת ביטול',
       value: this.cancellation,
-      offset: 3,
+      cols: 3,
     };
 
     this.cancellationRow.push(cancellation)
-
     this.rows[this.rows.length - 1] = this.cancellationRow;
     this.detailsSubject.next({ columns: this.columns, rows: this.rows });
   }

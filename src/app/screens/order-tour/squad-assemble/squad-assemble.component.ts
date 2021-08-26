@@ -139,7 +139,7 @@ export class SquadAssembleComponent implements OnInit {
         ],
       },
     }),
-  
+
         new QuestionNumber({
           key: 'participants',
           label: 'נוער / מבוגרים',
@@ -170,8 +170,8 @@ export class SquadAssembleComponent implements OnInit {
           cols: 1,
           rows: 4,
         }),
- 
- 
+
+
   ];
   groupAssambleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({

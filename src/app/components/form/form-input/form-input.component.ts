@@ -33,6 +33,7 @@ export class FormInputComponent implements OnInit {
   @Input() public icon!: string;
   @Input() public status!: string;
   @Input() public inputProps: {};
+  @Input() public disabled: boolean;
 
   @Input() public serverErrorMode!: boolean;
 
@@ -42,14 +43,11 @@ export class FormInputComponent implements OnInit {
 
   public OnChange!: (event: Event) => void;
   public onTouched!: () => void;
-  public disabled!: boolean;
 
   constructor(private formService: FormService) {}
 
   ngOnInit(): void {
     this.subscribeToControl();
-    if (this.controlType == "textarea") {
-    }
   }
 
   // ControlValueAccessor logic
