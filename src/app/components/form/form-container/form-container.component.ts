@@ -33,10 +33,16 @@ export class FormContainerComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formService.buildForm(this.questions);
+    this.subscribeToFormValues();
   }
 
   onSubmit() {
-    console.log(this.form.value);
     this.formData.emit(this.form.value);
+  }
+
+  private subscribeToFormValues() {
+    this.form.valueChanges.subscribe((values) => {
+      this.formData.emit(values);
+    });
   }
 }
