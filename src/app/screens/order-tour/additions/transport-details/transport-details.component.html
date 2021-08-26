@@ -11,8 +11,12 @@
     ></app-flex-table>
   </mat-card-content>
   <mat-card-actions>
-    <div fxLayout="row" fxLayoutAlign="end center" *ngIf="!editMode">
-      <button class="cancel-button" mat-raised-button (click)="openCancelForm()">
+    <div fxFill fxLayout="row" fxLayoutAlign="end center" *ngIf="!editMode">
+      <button
+        class="cancel-button"
+        mat-raised-button
+        (click)="openCancelForm()"
+      >
         ביטול הזמנה
       </button>
     </div>
@@ -21,7 +25,11 @@
 
 <ng-template #tableButton>
   <div class="button-container" fxLayout="row" fxLayoutAlign="start end">
-    <button class="cancel-button" mat-raised-button (click)="updateCancelForm()">
+    <button
+      class="cancel-button"
+      mat-raised-button
+      (click)="updateCancelForm()"
+    >
       בטל הזמנה
     </button>
   </div>
@@ -30,7 +38,7 @@
 <ng-template #input>
   <div class="input-container" fxLayout="row" fxLayoutAlign="start center">
     <form #myForm="ngForm">
-      <input [(ngModel)]="cancellation" name="cancellation" type="text" >
+      <input [(ngModel)]="cancellation" name="cancellation" type="text" />
     </form>
   </div>
 </ng-template>

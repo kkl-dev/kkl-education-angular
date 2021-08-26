@@ -1,26 +1,42 @@
-<!-- <div fxLayout="row wrap" dir="rtl">
+<div fxLayout="row wrap" dir="rtl">
   <div fxFlex="15" fxLayout="column">
-    <ng-container *ngFor="let column of columns">
-      <div [fxFlex]="column.offset" class="column">
+    <!-- <ng-container *ngFor="let column of columns"> -->
+    <!-- <div [fxFlex]="column.offset" class="column">
         <app-typography [bold]="600" underline="underline">
           {{ column.label }}:
         </app-typography>
         <app-typography underline="underline">
           {{ column?.value }}
         </app-typography>
-      </div>
-    </ng-container>
+      </div> -->
+    <mat-grid-list cols="1" rowHeight="5vh">
+      <mat-grid-tile *ngFor="let column of columns" [rowspan]="column.offset">
+        <app-typography [bold]="600" underline="underline">
+          {{ column.label }}:
+        </app-typography>
+        <app-typography underline="underline">
+          {{ column?.value }}
+        </app-typography>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <!-- </ng-container> -->
   </div>
   <div fxFlex="85" fxLayout="row wrap" class="content">
-    <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of data">
+    <!-- <div fxFlex="100" fxLayout="row wrap" *ngFor="let row of data">
       <ng-container *ngFor="let item of row">
-        <div [fxFlex]="item.offset ? '50' : '25'" class="row-item" *ngIf="item.type !== 'button'">
+        <div
+          [fxFlex]="item.offset ? '50' : '25'"
+          class="row-item"
+          *ngIf="item.type !== 'button'"
+        >
           <div fxFlex="100" fxLayout="row" fxLayoutAlign="start center">
             <app-typography class="item-label" *ngIf="item.label" [bold]="600">
               {{ item.label }}:
             </app-typography>
 
-            <app-typography *ngIf="item.type === 'text' || item.type === 'number'">
+            <app-typography
+              *ngIf="item.type === 'text' || item.type === 'number'"
+            >
               {{ item?.value }}
             </app-typography>
 
@@ -33,7 +49,11 @@
             </div>
           </div>
         </div>
-        <div [fxFlex]="item.offset ? '50' : '25'" class="row-button" *ngIf="item.type === 'button'">
+        <div
+          [fxFlex]="item.offset ? '50' : '25'"
+          class="row-button"
+          *ngIf="item.type === 'button'"
+        >
           <div fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
             <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
           </div>
@@ -41,20 +61,29 @@
 
         <div fxFlex="100" *ngIf="item?.divider" class="divider"></div>
       </ng-container>
-    </div>
-  </div>
-</div> -->
+    </div> -->
 
-
-<mat-grid-list cols="5" rowHeight="5vh">
-  <mat-grid-tile colspan="4" *ngFor="let row of data" [rowspan]="((row.length / 4))">
-    <mat-grid-list cols="4" rowHeight="5vh">
+    <mat-grid-list cols="4" rowHeight="5vh" *ngFor="let row of data">
       <mat-grid-tile *ngFor="let item of row">
-        {{item.label}}
+
+        <app-typography class="item-label" *ngIf="item.label" [bold]="600">
+          {{ item.label }}:
+        </app-typography>
+
+        <app-typography *ngIf="item.type === 'text' || item.type === 'number'">
+          {{ item?.value }}
+        </app-typography>
+
+        <app-typography fxFlex="60" *ngIf="item.type === 'date'">
+          {{ item?.value | date: "M/d/yy" }}
+        </app-typography>
+
       </mat-grid-tile>
+      <!-- <div colspan="4" *ngIf="true">
+        <mat-divider></mat-divider>
+      </div> -->
     </mat-grid-list>
-  </mat-grid-tile>
-  <mat-grid-tile  *ngFor="let column of columns" [rowspan]="(column.offset)">
-    {{column.label}}
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</div>
+
+

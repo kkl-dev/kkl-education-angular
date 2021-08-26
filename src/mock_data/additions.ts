@@ -36,7 +36,7 @@ export const details: TableCellModel[] = [
     value: 'חדש',
     divider: true,
   },
-];
+].reverse();
 
 export const supplier: TableCellModel[] = [
   {
@@ -86,7 +86,7 @@ export const supplier: TableCellModel[] = [
   },
   {
     key: 'aproveContact',
-    label: 'השמנה אושרה ע"י',
+    label: 'הזמנה אושרה ע"י',
     value: '323237823',
   },
   {
