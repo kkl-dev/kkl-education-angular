@@ -48,6 +48,34 @@ export class SummaryComponent implements OnInit {
       amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
     }
   ];
+  public transportation: Array<object> = [
+    {
+      date: '15.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+    },
+    {
+      date: '16.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+    },
+    {
+      date: '17.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+    }
+  ];
+  public economy: Array<object> = [
+    {
+      date: '15.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+    },
+    {
+      date: '16.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+    },
+    {
+      date: '17.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+    }
+  ];
   public tableBodyTitles: Array<object> = [
     { name: 'אירוח/פעילות', amount: 15, price: 2610, supplierCharge: 2040, customerBilling: 360 },
     { name: 'הסעים', amount: 8, price: 2610, supplierCharge: 2040, customerBilling: 360 },
