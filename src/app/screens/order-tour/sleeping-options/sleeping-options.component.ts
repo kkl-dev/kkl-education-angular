@@ -11,7 +11,7 @@ export interface formGroupGrid {
   formCols?: string;
   questions: QuestionBase<string | Date | number>[];
 }
-
+ 
 @Component({
   selector: 'app-sleeping-options',
   templateUrl: './sleeping-options.component.html',
@@ -159,7 +159,6 @@ export class SleepingOptionsComponent implements OnInit {
       ],
     },
   ];
-<<<<<<< HEAD
   @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
   public indexToPatch: number = -1;
   filledNightsArray: {
@@ -178,16 +177,6 @@ export class SleepingOptionsComponent implements OnInit {
       saveFor: 'מבוגרים',
       sleepingPlace: 'גיחה',
     },
-=======
-
-  filledNightsArray:{sleepingPlace: string, nightsCount: string, saveFor: string, peopleCount: string, amount: string,comments:string}[]=[]
-
-
-
-  formCols: number = 8;
-  questions: QuestionBase<string | number>[] = [
-
->>>>>>> c474973adc3de49750c1d1bac508834087f2b5d2
   ];
 
   formCols: number = 12;
@@ -195,7 +184,6 @@ export class SleepingOptionsComponent implements OnInit {
 
   changeDatesHandler(newDates: string) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    console.log(newDates);
 
     if (newDates && !newDates.includes('-')) return;
 
@@ -252,7 +240,6 @@ export class SleepingOptionsComponent implements OnInit {
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
   }
 
-<<<<<<< HEAD
   constructor(
     private checkAvailabilityService: CheckAvailabilityService,
     private sleepingService: SleepingServiceService
@@ -269,7 +256,6 @@ export class SleepingOptionsComponent implements OnInit {
     } else {
       this.filledNightsArray.push(form.value);
     }
-    console.log(this.filledNightsArray);
     this.indexToPatch = -1;
     this.filledNightsForm.form.reset();
   }
@@ -278,18 +264,8 @@ export class SleepingOptionsComponent implements OnInit {
     this.filledNightsArray.splice(index, 1);
   }
   editFilledNight(form, index) {
-    console.log(index);
     this.filledNightsForm.form.patchValue(form);
     this.indexToPatch = index;
-=======
-  constructor(private checkAvailabilityService:CheckAvailabilityService, private sleepingService:SleepingServiceService) {
-   this.questions=this.sleepingService.questions
-  }
-
-  updateFilledNightsArray(e){
-    console.log(e);
-this.filledNightsArray.push(e)
->>>>>>> c474973adc3de49750c1d1bac508834087f2b5d2
   }
 
   ngOnInit(): void {}

@@ -120,16 +120,17 @@ app-sleeping-options {
 }
 
 mat-grid-list.sleeping-width {
-  width: 50% !important;
+  width: 50% !important; 
   margin-left: 50%;
 }
 
 div.steps-container {
   padding-right: 5%;
-  padding-left: 5%;
-  overflow: visible scroll
+  padding-left: 5%; 
+  overflow: scroll visible ;
 }
 
 .bottom-navigation {
   direction: rtl;
 }
+ 
