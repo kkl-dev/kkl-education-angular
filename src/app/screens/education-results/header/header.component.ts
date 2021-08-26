@@ -68,6 +68,14 @@ export class HeaderComponent implements OnInit {
           this.forestCenter = this.tripService.centerField;
           //this.forestCenterId = 1;
           this.dateObj = this.tripService.dateObj;
+
+          let b = this.getDates(this.dateObj.from, this.dateObj.to);
+          console.log('b:', b);
+
+              
+    let a = this.getDaysArray(this.dateObj.from, this.dateObj.to);
+    console.log('a:', a);
+
         }
       }
       else {
@@ -95,6 +103,22 @@ export class HeaderComponent implements OnInit {
     //  this.forestCenter = this.tripService.centerField;
   }
 
+  addDays(days: any) {
+    var date = new Date(days);
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+  getDates(startDate: any, stopDate: any) {
+    var dateArray = new Array();
+    var currentDate = startDate;
+    while (currentDate <= stopDate) {
+        dateArray.push(new Date (currentDate));
+        currentDate = currentDate.this.addDays(1);
+    }
+    return dateArray;
+}
+
   updateForestCenter(id: any) {
     console.log('header -- > update Forest Center id:', id);
 
@@ -103,6 +127,15 @@ export class HeaderComponent implements OnInit {
 
     this.tripService.changeForestCenter(forest);
   }
+
+  getDaysArray(start: any, end: any) {
+    for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
+        arr.push(new Date(dt));
+    }
+    return arr;
+};
+
+
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;

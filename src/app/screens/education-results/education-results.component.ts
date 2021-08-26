@@ -78,7 +78,7 @@ export class EducationResultsComponent implements OnInit {
 
     // console.log('userDataService:', this.userDataService);
     console.log('tripService:', this.tripService);
-    
+
 
     //this.availabilityItemsArray = this.tripService.dateObj;
     //this.centerField = this.tripService.centerField
@@ -91,6 +91,9 @@ console.log('getDifferenceInMinutes', this.getDifferenceInMinutes(this.date1, th
 console.log('getDifferenceInSeconds', this.getDifferenceInSeconds(this.date1, this.date2));
 
   }
+
+
+
  date1 = new Date('7/13/2010');
 date2 = new Date('12/15/2010');
 
