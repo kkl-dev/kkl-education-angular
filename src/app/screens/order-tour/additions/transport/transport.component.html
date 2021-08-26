@@ -1,11 +1,13 @@
 <div fxLayout="column" fxFlexFill>
   <div fxFlex="35" *ngFor="let form of transportForm">
     <app-form-container
+      #form
       [questions]="form.questions"
       [cols]="form.cols"
       [gutter]="'15'"
       [hasButton]="form.hasButton"
       [slots]="{ button: formButton }"
+      (valueChange)="onValueChange($event)"
     >
     </app-form-container>
   </div>
@@ -29,7 +31,7 @@
       *ngIf="editMode"
       type="submit"
       class="edit-button"
-      (click)="onClick()"
+      (click)="onEdit()"
       mat-icon-button
     >
       <app-icon scale="1" color="active" key="edit" type="mat"></app-icon>

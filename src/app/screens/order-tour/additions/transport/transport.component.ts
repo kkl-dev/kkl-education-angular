@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
@@ -13,6 +13,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   styleUrls: ['./transport.component.scss'],
 })
 export class TransportComponent implements OnInit {
+  public form: FormGroup;
   public editMode: boolean = false;
 
   public details: QuestionBase<string>[] = [
@@ -172,6 +173,19 @@ export class TransportComponent implements OnInit {
   ngOnInit(): void {}
 
   public onClick() {
+    if (this.form) {
+      this.editMode = !this.editMode;
+    }
+  }
+
+  public onEdit(event) {
     this.editMode = !this.editMode;
+    console.log(event);
+  }
+
+  public onValueChange(event) {
+    if (this.editMode) {
+      this.form = event;
+    }
   }
 }
