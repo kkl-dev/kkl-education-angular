@@ -55,10 +55,6 @@ export class FormService {
     });
   }
 
-  private setForms(formTemplate) {
-    return formTemplate;
-  }
-
   private setForm(formTemplate: any[]) {
     return formTemplate
       .map((question) => question)
