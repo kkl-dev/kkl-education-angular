@@ -1,5 +1,6 @@
 .summary {
     margin-top: 50px;
+    font-family: Open Sans Hebrew;
 }
 .header {
     display: flex;
@@ -9,6 +10,7 @@
 .header > div:first-child > h1{
     font-size: 24px;
     font-weight: 600;
+    font-family: Open Sans Hebrew;
 }
 .header > div:last-child {
     display: flex;
@@ -60,6 +62,8 @@ table {
         fill: white;
     }
     thead {
+        position: sticky;
+        top: 0;
         background: #448ecd;
         th{
             padding: 5px;
@@ -70,6 +74,9 @@ table {
         font-weight: 600;
         svg path {
             fill: #448ecd;
+        }
+        svg:hover{
+            cursor: pointer;
         }
     }
 }
