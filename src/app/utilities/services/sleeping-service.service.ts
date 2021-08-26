@@ -5,23 +5,22 @@ import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { CheckAvailabilityService } from './check-availability.service';
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SleepingServiceService {
+  nightsArray: {}[] = [];
 
-  nightsArray:{}[]=[]
+  checkAvailabilltyValues: {
+    sleepingPlace: string;
+    calendarInput: string;
+  } = { sleepingPlace: '', calendarInput: '' };
 
-
-
-  checkAvailabilltyValues:{
-    sleepingPlace: string; calendarInput:string
-  }={sleepingPlace:'',calendarInput:''}
   questions: QuestionBase<string | number>[] = [
+
     new QuestionSelect({
       key: 'sleepingPlace',
-      label: ' סוג לינה',
+      label: ' סוג לינה', 
       type: 'select',
       cols: '2',
 
@@ -35,7 +34,7 @@ export class SleepingServiceService {
         ],
       },
     }),
-  
+
     new QuestionSelect({
       key: 'nightsCount',
       type: 'select',
@@ -68,12 +67,16 @@ export class SleepingServiceService {
       key: 'peopleCount',
       label: 'מספר לנים',
       value: 0,
+      cols: '2',
+
       validations: [Validators.required],
     }),
     new QuestionNumber({
       key: 'amount',
       label: 'כמות',
-      value: 0, 
+      cols: '2',
+
+      value: 0,
       validations: [Validators.required],
     }),
     new QuestionTextarea({
@@ -81,20 +84,26 @@ export class SleepingServiceService {
       label: 'הערות מנהליות',
       cols: '6',
       value: '',
-    }), 
+    }),
   ];
- 
-  constructor(private checkAvailabiltyService:CheckAvailabilityService) {
-    this.checkAvailabilltyValues= this.checkAvailabiltyService.checkAvailabilltyValues
-   }
 
+  constructor(private checkAvailabiltyService: CheckAvailabilityService) {
+    this.checkAvailabilltyValues =
+      this.checkAvailabiltyService.checkAvailabilltyValues;
+  }
 
+  updateQuestions(
+    questionValues: {
+    sleepingPlace: string;
+    nightsCount: string;
+    saveFor: string;
+    peopleCount: string;
+    amount: string;
+    comments: string;
+  }) {
 
-
-
-
-
-
-
-
+// this.questions.form.value=questionValues
+    console.log(questionValues);
+    
+  }
 }

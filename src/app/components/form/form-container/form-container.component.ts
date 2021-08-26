@@ -38,6 +38,6 @@ export class FormContainerComponent implements OnInit {
   onSubmit() {
     console.log(this.form.value);
     
-    this.emitFormValues.emit(this.form.value);
+    this.emitFormValues.emit(this.form);
   }
 }

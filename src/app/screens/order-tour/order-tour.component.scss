@@ -112,7 +112,7 @@ div.sleeping-width {
   width: 50%;
   margin-left: 50%;
 }
-
+  
 app-sleeping-options {
   height: inherit;
   box-sizing: border-box;
@@ -120,7 +120,7 @@ app-sleeping-options {
 }
 
 mat-grid-list.sleeping-width {
-  width: 50% !important;
+  width: 50% !important; 
   margin-left: 50%;
 }
 
@@ -133,3 +133,4 @@ div.steps-container {
 .bottom-navigation {
   direction: rtl;
 }
+ 
