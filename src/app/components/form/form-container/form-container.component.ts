@@ -25,6 +25,7 @@ export class FormContainerComponent implements OnInit {
   @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() hasButton: boolean = false;
+  @Input() hasBottomButton: boolean = false;
   @Input() slots: {
     button?: ElementRef;
     group?: ElementRef;
