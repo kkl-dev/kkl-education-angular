@@ -12,7 +12,6 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   templateUrl: './transport.component.html',
   styleUrls: ['./transport.component.scss'],
 })
-
 export class TransportComponent implements OnInit {
   public details: QuestionBase<string>[] = [
     new QuestionTextbox({
@@ -91,7 +90,6 @@ export class TransportComponent implements OnInit {
       label: 'שעת פיזור',
       icon: 'schedule',
       type: 'time',
-      offset : 2,
       validations: [Validators.required],
       inputProps: {
         labelLength: 'extraWide',
@@ -125,6 +123,7 @@ export class TransportComponent implements OnInit {
         labelLength: 'extraWide',
       },
     }),
+
     new QuestionTextbox({
       key: 'gatherHour',
       label: 'שעת איסוף',
@@ -137,37 +136,36 @@ export class TransportComponent implements OnInit {
       key: 'gatherDate',
       label: 'תאריך איסוף',
       validations: [Validators.required],
-      inputProps: {
-        labelLength: 'extraWide',
-      },
     }),
   ];
 
-  private comments : QuestionBase<string>[] =  [
+  private comments: QuestionBase<string>[] = [
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות',
       cols: 6,
       rows: 4,
-      offset : 1
-    })
+      offset: 1,
+    }),
+  ];
 
-  ]
-
-  public transportForm  :QuestionGroup[]= [
+  public transportForm: QuestionGroup[] = [
     {
       questions: this.details,
+      cols: 8,
     },
     {
       questions: this.gather,
+      cols: 6,
     },
     {
       questions: this.comments,
-      hasButton : true
-    }
-  ]
+      hasButton: true,
+      cols: 8,
+    },
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }
