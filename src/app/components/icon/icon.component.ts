@@ -12,7 +12,6 @@ export interface IconClasses {
   styleUrls: ['./icon.component.scss'],
 })
 export class IconComponent implements OnInit {
-  
   @Input() public size: number = 24;
   @Input() public width: number;
   @Input() public height: number;
@@ -23,6 +22,7 @@ export class IconComponent implements OnInit {
   @Input() public key: string = '';
   @Input() public color: string;
   @Input() public matScale: string;
+  @Input() public scale: number | string;
 
   public default: boolean = true;
 
@@ -52,6 +52,6 @@ export class IconComponent implements OnInit {
   private setIconSize() {
     this.width = this.size;
     this.height = this.size;
-    this.matScale = this.matScale || 'scale(1)';
+    this.matScale = this.scale ? `scale(${this.scale})` : 'scale(1)';
   }
 }

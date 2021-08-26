@@ -28,11 +28,12 @@
     <button
       *ngIf="editMode"
       type="submit"
+      class="edit-button"
       color="primary"
       (click)="onClick()"
       mat-raised-button
     >
-      <app-icon key="edit" type="mat"></app-icon>
+      <app-icon scale="1" color="active" key="edit" type="mat"></app-icon>
     </button>
   </div>
 </ng-template>
