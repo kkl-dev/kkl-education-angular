@@ -64,8 +64,7 @@
     </div> -->
 
     <mat-grid-list cols="4" rowHeight="5vh" *ngFor="let row of data">
-      <mat-grid-tile *ngFor="let item of row">
-
+      <mat-grid-tile *ngFor="let item of row" [colspan]="item?.cols || 1">
         <app-typography class="item-label" *ngIf="item.label" [bold]="600">
           {{ item.label }}:
         </app-typography>
@@ -78,6 +77,12 @@
           {{ item?.value | date: "M/d/yy" }}
         </app-typography>
 
+        <ng-container *ngIf="item.type === 'custom'" >
+          <ng-container *ngTemplateOutlet="slots?.custom"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="item.type === 'button'" >
+          <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+        </ng-container>
       </mat-grid-tile>
       <!-- <div colspan="4" *ngIf="true">
         <mat-divider></mat-divider>
@@ -85,5 +90,3 @@
     </mat-grid-list>
   </div>
 </div>
-
-
