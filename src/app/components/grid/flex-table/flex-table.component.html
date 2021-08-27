@@ -3,7 +3,7 @@
     <mat-grid-list cols="1" rowHeight="6vh">
       <mat-grid-tile *ngFor="let column of columns" [rowspan]="column.rows">
         <div fxFill fxLayout="row" fxLayoutAlign="start center">
-          <app-typography [bold]="600" underline="underline">
+          <app-typography  [bold]="600" underline="underline">
             {{ column.label }}:
           </app-typography>
           <app-typography underline="underline">
