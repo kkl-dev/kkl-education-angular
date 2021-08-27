@@ -9,7 +9,7 @@ import { QuestionCalendar } from 'src/app/components/form/logic/question-calenda
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { LocationModel } from 'src/app/utilities/models/TourPanelModel';
+import { LocationModel } from 'src/app/utilities/models/TourTransportlModel';
 
 @Component({
   selector: 'app-transport',

@@ -4,14 +4,14 @@ export interface LocationModel {
   dropdown: string;
 }
 
-export class TourPanelModel {
+export class TourTransportlModel {
   constructor(
     public id: number,
     public title: string,
     public date: Date,
     public locations: LocationModel[]) { }
 
-  static create(tour: TourPanelModel) {
-    return new TourPanelModel(tour.id, tour.title, tour.date, tour.locations);
+  static create(tour: TourTransportlModel) {
+    return new TourTransportlModel(tour.id, tour.title, tour.date, tour.locations);
   }
 }

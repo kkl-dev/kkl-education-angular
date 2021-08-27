@@ -1,6 +1,6 @@
-import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
+import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 
-export const tourTransport: TourPanelModel =
+export const tourTransport: TourTransportlModel =
 {
   id: 1,
   title: '',

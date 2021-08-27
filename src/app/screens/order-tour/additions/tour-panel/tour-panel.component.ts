@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
+import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 
 @Component({
   selector: 'app-tour-panel',
@@ -9,7 +9,7 @@ import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
 export class TourPanelComponent implements OnInit {
   constructor() {}
 
-  @Input() tour: TourPanelModel;
+  @Input() tour: TourTransportlModel;
   @Input() i: number;
 
   ngOnInit(): void {

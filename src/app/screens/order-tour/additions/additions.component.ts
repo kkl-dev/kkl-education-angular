@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Subscription, Observable } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
-import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
+import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 import { tourTransport } from 'src/mock_data/transport';
 
 export interface TourDayModel {
@@ -20,7 +20,7 @@ export class AdditionsComponent implements OnInit {
 
   public cards$: Observable<IconCardModel[]> = this.additionsService.navigationCards$;
 
-  public tour: TourPanelModel =
+  public tour: TourTransportlModel =
     {
       id: 839483,
       title: 'טיול שנתי שכבת ו בי"ס תמיר',
@@ -29,7 +29,7 @@ export class AdditionsComponent implements OnInit {
     }
     ;
 
-  public transport: TourPanelModel[];
+  public transport: TourTransportlModel[];
 
   constructor(private additionsService: AdditionsService) { }
 
@@ -43,7 +43,7 @@ export class AdditionsComponent implements OnInit {
 
   public onPanelAdd() {
     // this.transport.push(
-    //   new TourPanelModel(new Date(), [
+    //   new TourTransportlModel(new Date(), [
     //     { date: new Date(), pickup: 'הוסף מיקום', dropdown: 'הוסף מיקום' },
     //   ])
     // );

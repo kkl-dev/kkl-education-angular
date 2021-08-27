@@ -1,4 +1,4 @@
-import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
+import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Injectable } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
@@ -55,8 +55,8 @@ export class AdditionsService {
   private navigationCardsSubject = new Subject<IconCardModel[]>()
   public navigationCards$ = this.navigationCardsSubject.asObservable()
 
-  private tourPanalSubject = new BehaviorSubject<TourPanelModel[]>([])
-  public tourTransport$: Observable<TourPanelModel[]> = this.tourPanalSubject.asObservable();
+  private tourPanalSubject = new BehaviorSubject<TourTransportlModel[]>([])
+  public tourTransport$: Observable<TourTransportlModel[]> = this.tourPanalSubject.asObservable();
 
   constructor() { }
 
@@ -81,7 +81,7 @@ export class AdditionsService {
     this.navigationButtonSubject.next(item)
   }
 
-  public emitPanallData(tourTransport: TourPanelModel[]) {
+  public emitPanallData(tourTransport: TourTransportlModel[]) {
     this.tourPanalSubject.next(tourTransport)
   }
 }
