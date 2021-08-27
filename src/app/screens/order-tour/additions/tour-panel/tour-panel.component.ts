@@ -1,5 +1,5 @@
+import { SchedualeModel } from './../../../../utilities/models/ScheduleModel';
 import { Component, Input, OnInit } from '@angular/core';
-import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 
 @Component({
   selector: 'app-tour-panel',
@@ -7,9 +7,9 @@ import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlMode
   styleUrls: ['./tour-panel.component.scss'],
 })
 export class TourPanelComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
-  @Input() tour: TourTransportlModel;
+  @Input() schedule: SchedualeModel;
   @Input() i: number;
 
   ngOnInit(): void {

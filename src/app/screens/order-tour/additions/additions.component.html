@@ -5,7 +5,7 @@
 
   <div class="additions-content">
     <div class="button-container" fxLayout="row" fxLayoutAlign="start">
-      <button mat-raised-button color="primary">הוספה</button>
+      <button mat-raised-button color="primary" (click)="onAdd()" >הוספה</button>
     </div>
     <div class="tour-title-container" fxLayout="row" fxLayoutAlign="start">
       <div>
@@ -25,8 +25,8 @@
         </div>
       </div>
     </div>
-    <div *ngFor="let location of tour.locations; index as i">
-      <app-tour-panel [tour]="tour" [i]="i + 1"></app-tour-panel>
+    <div *ngFor="let schedule of schedule$ | async; index as i">
+      <app-tour-panel [schedule]="schedule" [i]="i + 1"></app-tour-panel>
     </div>
   </div>
 </div>

@@ -1,9 +1,11 @@
+import { SchedualeModel } from './../../../utilities/models/ScheduleModel';
 import { Component, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Observable } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
-import { LocationModel, TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
+import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 import { tourTransport } from 'src/mock_data/transport';
+import { LocationModel } from 'src/app/utilities/models/LocationModel';
 
 export interface TourDayModel {
   date: Date;
@@ -17,26 +19,30 @@ export interface TourDayModel {
 })
 export class AdditionsComponent implements OnInit {
 
-
-  public cards$: Observable<IconCardModel[]>
-
   public tour: TourTransportlModel
-
+  public cards$: Observable<IconCardModel[]>
+  public schedule$: Observable<SchedualeModel[]>;
   public locations$: Observable<LocationModel[]>;
 
   constructor(private additionsService: AdditionsService) { }
 
   ngOnInit(): void {
-    this.cards$ = this.additionsService.navigationCards$;
     this.tour = TourTransportlModel.create(tourTransport);
-    console.log(this.tour)
-    // this.additionsService.emitPanallData(this.transport)
+    this.cards$ = this.additionsService.navigationCards$;
+    this.additionsService.emitSchedule(this.tour.schedule)
+    this.schedule$ = this.additionsService.schedule$
+    this.locations$ = this.additionsService.locations$
   }
 
   ngOnDestroy(): void {
   }
 
 
-  public onPanelAdd() {
+  public onAdd() {
+    // console.log(1)
+    // console.log(this.tour.locations)
+    // this.tour.locations.push(new LocationModel())
+    // console.log(this.tour.locations)
+    // this.additionsService.emitLocations(this.tour.locations)
   }
 }

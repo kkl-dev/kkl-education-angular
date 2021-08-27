@@ -1,7 +1,8 @@
-import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Injectable } from '@angular/core';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { LocationModel } from '../models/LocationModel';
+import { SchedualeModel } from '../models/ScheduleModel';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +52,11 @@ export class AdditionsService {
   private navigationCardsSubject = new BehaviorSubject<IconCardModel[]>(this.navigationCrds)
   public navigationCards$ = this.navigationCardsSubject.asObservable()
 
-  private tourPanalSubject = new BehaviorSubject<TourTransportlModel[]>([])
-  public tourTransport$: Observable<TourTransportlModel[]> = this.tourPanalSubject.asObservable();
+  private locationsSubject = new BehaviorSubject<LocationModel[]>([])
+  public locations$: Observable<LocationModel[]> = this.locationsSubject.asObservable();
+
+  private scheduleSubject = new BehaviorSubject<SchedualeModel[]>([])
+  public schedule$: Observable<SchedualeModel[]> = this.scheduleSubject.asObservable();
 
   constructor() { }
 
@@ -73,7 +77,12 @@ export class AdditionsService {
     this.navigationCrds[indexToUnActive].isActive = false
   }
 
-  public emitPanallData(tourTransport: TourTransportlModel[]) {
-    this.tourPanalSubject.next(tourTransport)
+  public emitSchedule(schedule: SchedualeModel[]) {
+    this.scheduleSubject.next(schedule)
   }
+
+  public emitLocations(locations: LocationModel[]) {
+    this.locationsSubject.next(locations)
+  }
+
 }
