@@ -6,7 +6,7 @@
       </app-typography>
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
-      <div class="nav-card" *ngFor="let item of cards">
+      <div class="nav-card" *ngFor="let item of cards$ | async">
         <app-nav-card [item]="item"></app-nav-card>
       </div>
     </div>

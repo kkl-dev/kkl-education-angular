@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
 import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
 import { transportData } from 'src/mock_data/transport';
@@ -17,51 +17,9 @@ export interface TourDayModel {
 })
 export class AdditionsComponent implements OnInit {
 
-  private unsubscribe: Subscription =
-    this.additionsService.navButton$.subscribe();
+  // private unsubscribe: Subscription =
 
-  public cards: IconCardModel[] =
-    this.additionsService.getNavigationItems().length > 0
-      ? this.additionsService.getNavigationItems()
-      : [
-        {
-          title: 'הפעלה מוסיקלית',
-          isActive: false,
-          svgUrl: 'music',
-        },
-        {
-          title: 'הדרכה',
-          isActive: false,
-          svgUrl: 'guide',
-        },
-        {
-          title: 'אירוח',
-          isActive: false,
-          svgUrl: 'tent',
-        },
-        {
-          title: 'כלכלה',
-          isActive: false,
-          svgUrl: 'dinner',
-        },
-        {
-          title: 'אתרים',
-          isActive: false,
-          svgUrl: 'site',
-        },
-        {
-          title: 'אבטחה',
-          isActive: false,
-          svgUrl: 'shield',
-        },
-
-        {
-          title: 'היסעים',
-          isActive: true,
-          svgUrl: 'bus',
-          badgeValue: 3,
-        },
-      ];
+  public cards$: Observable<IconCardModel[]> = this.additionsService.navigationCards$;
 
   public title: string = 'תוספות';
   public tourTitle: string = 'טיול שנתי שכבת ו בי"ס תמיר';
@@ -81,7 +39,6 @@ export class AdditionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToSubject();
-    this.additionsService.setNavigationStatus(this.cards);
     this.transport = transportData.map((item: TourPanelModel) => {
       return TourPanelModel.create(item);
     });
@@ -90,11 +47,11 @@ export class AdditionsComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe.unsubscribe();
+    // this.unsubscribe.unsubscribe();
   }
 
   private subscribeToSubject() {
-    this.unsubscribe = this.additionsService.navButton$.subscribe(
+    this.additionsService.navButton$.subscribe(
       (item: IconCardModel) => {
         this.additionsService.setNanigationStatus(item, 'title');
       }

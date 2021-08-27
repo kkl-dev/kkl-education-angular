@@ -8,7 +8,7 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 })
 export class AdditionsService {
 
-  public additionsNavigatopnCards: IconCardModel[] = [
+  private navigationCrds: IconCardModel[] = [
     {
       title: 'הפעלה מוסיקלית',
       isActive: false,
@@ -49,24 +49,27 @@ export class AdditionsService {
   ];
 
 
-  private navigationItems: IconCardModel[] = []
   private navigationButtonSubject = new Subject<IconCardModel>()
   public navButton$: Observable<IconCardModel> = this.navigationButtonSubject.asObservable();
+
+  private navigationCardsSubject = new Subject<IconCardModel[]>()
+  public navigationCards$ = this.navigationCardsSubject.asObservable()
 
   private tourPanalSubject = new BehaviorSubject<TourPanelModel[]>([])
   public tourTransport$: Observable<TourPanelModel[]> = this.tourPanalSubject.asObservable();
 
   constructor() { }
 
-  public getNavigationItems(): IconCardModel[] {
-    return [...this.navigationItems]
+  public getNavigationCrds(): IconCardModel[] {
+    return [...this.navigationCrds]
   }
 
   public setNavigationStatus(items: IconCardModel[]) {
-    this.navigationItems = items
+    this.navigationCrds = items
   }
+
   public findItenIndex(key: string, value: any): number {
-    return this.navigationItems.findIndex((item) => item[key] === value)
+    return this.navigationCrds.findIndex((item) => item[key] === value)
   }
 
   public setNanigationStatus(item: IconCardModel, key: string) {
@@ -74,8 +77,8 @@ export class AdditionsService {
     const indexToUnActive = this.findItenIndex('isActive', true)
     const indexToActive = this.findItenIndex(key, item[key])
 
-    this.navigationItems[indexToActive].isActive = true
-    this.navigationItems[indexToUnActive].isActive = false
+    this.navigationCrds[indexToActive].isActive = true
+    this.navigationCrds[indexToUnActive].isActive = false
   }
 
   public emitItem(item: IconCardModel) {

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
@@ -9,8 +10,8 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 })
 export class NavigationGridComponent implements OnInit {
 
-  @Input() public title : string = "תוספות"
-  @Input() public cards : IconCardModel[] = []
+  @Input() public title: string = "תוספות"
+  @Input() public cards$: Observable<IconCardModel[]>;
 
   constructor() { }
 
