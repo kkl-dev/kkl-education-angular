@@ -5,6 +5,6 @@ export const tourTransport: TourTransportlModel =
   id: 1,
   title: '',
   date: new Date(),
-  locations: [{ date: new Date(), pickup: 'בית ספר תמיר', dropdown: 'נס הרים' }],
+  locations: [{ pickUpDate: new Date(), pickupLocation: 'בית ספר תמיר', dropdownLocation: 'נס הרים' }],
 }
 

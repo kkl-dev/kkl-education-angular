@@ -22,7 +22,6 @@ export class NavigationGridComponent implements OnInit {
   }
 
   public onCardClick(item: IconCardModel) {
-    console.log(item)
     this.additionsService.toggleCardStatus(item, 'title');
 
   }

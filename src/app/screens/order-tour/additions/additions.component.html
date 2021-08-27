@@ -1,11 +1,6 @@
-<div
-  fxLayout="column"
-  fxFlexFill
-  class="additions-container"
-  fxLayoutGap="80px"
->
+<div fxLayout="column" fxFlexFill class="additions-container" fxLayoutGap="80px">
   <div class="nav-grid" fxFlex="30">
-    <app-navigation-grid ></app-navigation-grid>
+    <app-navigation-grid></app-navigation-grid>
   </div>
 
   <div class="additions-content">
@@ -20,12 +15,7 @@
       </div>
       <div fxFlex="55" fxLayout="row" fxLayoutAlign="start end">
         <div fxFlex="3">
-          <app-icon
-            key="fiber_manual_record"
-            type="mat"
-            color="primary"
-            scale="0.3"
-          ></app-icon>
+          <app-icon key="fiber_manual_record" type="mat" color="primary" scale="0.3"></app-icon>
         </div>
         <!-- <span> &bull; </span> -->
         <div fxLayout="column" fxLayoutAlign="end center">
@@ -35,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div *ngFor="let tour of transport; index as i">
+    <div *ngFor="let location of tour.locations; index as i">
       <app-tour-panel [tour]="tour" [i]="i + 1"></app-tour-panel>
     </div>
   </div>

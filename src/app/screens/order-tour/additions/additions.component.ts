@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
-import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
+import { LocationModel, TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 import { tourTransport } from 'src/mock_data/transport';
 
 export interface TourDayModel {
@@ -18,23 +18,18 @@ export interface TourDayModel {
 export class AdditionsComponent implements OnInit {
 
 
-  public cards$: Observable<IconCardModel[]> = this.additionsService.navigationCards$;
+  public cards$: Observable<IconCardModel[]>
 
-  public tour: TourTransportlModel =
-    {
-      id: 839483,
-      title: 'טיול שנתי שכבת ו בי"ס תמיר',
-      date: new Date(),
-      locations: [{ date: new Date(), pickup: 'נס הרים', dropdown: 'בית ספר תמיר' }],
-    }
-    ;
+  public tour: TourTransportlModel
 
-  public transport: TourTransportlModel[];
+  public locations$: Observable<LocationModel[]>;
 
   constructor(private additionsService: AdditionsService) { }
 
   ngOnInit(): void {
-    this.additionsService.emitPanallData(this.transport)
+    this.cards$ = this.additionsService.navigationCards$;
+    this.tour = TourTransportlModel.create(tourTransport);
+    // this.additionsService.emitPanallData(this.transport)
   }
 
   ngOnDestroy(): void {
@@ -48,6 +43,6 @@ export class AdditionsComponent implements OnInit {
     //   ])
     // );
 
-    this.additionsService.emitPanallData(this.transport)
+    // this.additionsService.emitPanallData(this.transport)
   }
 }

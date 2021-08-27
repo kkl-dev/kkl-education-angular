@@ -48,11 +48,7 @@ export class AdditionsService {
     },
   ];
 
-
-  private navigationButtonSubject = new Subject<IconCardModel>()
-  public navButton$: Observable<IconCardModel> = this.navigationButtonSubject.asObservable();
-
-  private navigationCardsSubject = new Subject<IconCardModel[]>()
+  private navigationCardsSubject = new BehaviorSubject<IconCardModel[]>(this.navigationCrds)
   public navigationCards$ = this.navigationCardsSubject.asObservable()
 
   private tourPanalSubject = new BehaviorSubject<TourTransportlModel[]>([])
@@ -75,10 +71,6 @@ export class AdditionsService {
 
     this.navigationCrds[indexToActive].isActive = true
     this.navigationCrds[indexToUnActive].isActive = false
-  }
-
-  public emitItem(item: IconCardModel) {
-    this.navigationButtonSubject.next(item)
   }
 
   public emitPanallData(tourTransport: TourTransportlModel[]) {
