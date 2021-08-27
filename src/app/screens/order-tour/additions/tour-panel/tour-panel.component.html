@@ -21,9 +21,9 @@
               [bold]="600"
               [size]="12"
               fxFlex="6"
-              >{{ location.date | date: "HH:mm" }}</app-typography
+              >{{ location.pickUpDate | date: "HH:mm" }}</app-typography
             >
-            <app-typography [size]="18">{{ location.pickup }} - {{location.dropdown}}</app-typography>
+            <app-typography [size]="18">{{ location.pickupLocation }} - {{location.dropdownLocation }}</app-typography>
           </div>
 
           <div description></div>

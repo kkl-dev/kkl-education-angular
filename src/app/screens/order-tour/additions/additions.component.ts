@@ -38,12 +38,5 @@ export class AdditionsComponent implements OnInit {
 
 
   public onPanelAdd() {
-    // this.transport.push(
-    //   new TourTransportlModel(new Date(), [
-    //     { date: new Date(), pickup: 'הוסף מיקום', dropdown: 'הוסף מיקום' },
-    //   ])
-    // );
-
-    // this.additionsService.emitPanallData(this.transport)
   }
 }
