@@ -39,7 +39,7 @@ export class AdditionsComponent implements OnInit {
 
 
   public onAdd() {
-    // ? add schedule or locatrion //
+    // ? add schedule or locations //
     // console.log(1)
     // console.log(this.tour.locations)
     // this.tour.locations.push(new LocationModel())
