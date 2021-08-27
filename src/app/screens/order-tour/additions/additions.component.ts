@@ -29,6 +29,7 @@ export class AdditionsComponent implements OnInit {
   ngOnInit(): void {
     this.cards$ = this.additionsService.navigationCards$;
     this.tour = TourTransportlModel.create(tourTransport);
+    console.log(this.tour)
     // this.additionsService.emitPanallData(this.transport)
   }
 
