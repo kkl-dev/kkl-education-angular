@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Subscription } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
 import { TourPanelModel } from 'src/app/utilities/models/TourPanelModel';
@@ -16,51 +16,52 @@ export interface TourDayModel {
   styleUrls: ['./additions.component.scss'],
 })
 export class AdditionsComponent implements OnInit {
+
   private unsubscribe: Subscription =
     this.additionsService.navButton$.subscribe();
 
-  public cards: NavigationCardModel[] =
+  public cards: IconCardModel[] =
     this.additionsService.getNavigationItems().length > 0
       ? this.additionsService.getNavigationItems()
       : [
-          {
-            title: 'הפעלה מוסיקלית',
-            isActive: false,
-            svgUrl: 'music',
-          },
-          {
-            title: 'הדרכה',
-            isActive: false,
-            svgUrl: 'guide',
-          },
-          {
-            title: 'אירוח',
-            isActive: false,
-            svgUrl: 'tent',
-          },
-          {
-            title: 'כלכלה',
-            isActive: false,
-            svgUrl: 'dinner',
-          },
-          {
-            title: 'אתרים',
-            isActive: false,
-            svgUrl: 'site',
-          },
-          {
-            title: 'אבטחה',
-            isActive: false,
-            svgUrl: 'shield',
-          },
+        {
+          title: 'הפעלה מוסיקלית',
+          isActive: false,
+          svgUrl: 'music',
+        },
+        {
+          title: 'הדרכה',
+          isActive: false,
+          svgUrl: 'guide',
+        },
+        {
+          title: 'אירוח',
+          isActive: false,
+          svgUrl: 'tent',
+        },
+        {
+          title: 'כלכלה',
+          isActive: false,
+          svgUrl: 'dinner',
+        },
+        {
+          title: 'אתרים',
+          isActive: false,
+          svgUrl: 'site',
+        },
+        {
+          title: 'אבטחה',
+          isActive: false,
+          svgUrl: 'shield',
+        },
 
-          {
-            title: 'היסעים',
-            isActive: true,
-            svgUrl: 'bus',
-            badgeValue: 3,
-          },
-        ];
+        {
+          title: 'היסעים',
+          isActive: true,
+          svgUrl: 'bus',
+          badgeValue: 3,
+        },
+      ];
 
   public title: string = 'תוספות';
   public tourTitle: string = 'טיול שנתי שכבת ו בי"ס תמיר';
@@ -76,7 +77,7 @@ export class AdditionsComponent implements OnInit {
 
   public transport: TourPanelModel[];
 
-  constructor(private additionsService: AdditionsService) {}
+  constructor(private additionsService: AdditionsService) { }
 
   ngOnInit(): void {
     this.subscribeToSubject();
@@ -84,6 +85,8 @@ export class AdditionsComponent implements OnInit {
     this.transport = transportData.map((item: TourPanelModel) => {
       return TourPanelModel.create(item);
     });
+
+    this.additionsService.emitPanallData(this.transport)
   }
 
   ngOnDestroy(): void {
@@ -92,7 +95,7 @@ export class AdditionsComponent implements OnInit {
 
   private subscribeToSubject() {
     this.unsubscribe = this.additionsService.navButton$.subscribe(
-      (item: NavigationCardModel) => {
+      (item: IconCardModel) => {
         this.additionsService.setNanigationStatus(item, 'title');
       }
     );
@@ -104,5 +107,7 @@ export class AdditionsComponent implements OnInit {
         { date: new Date(), pickup: 'הוסף מיקום', dropdown: 'הוסף מיקום' },
       ])
     );
+
+    this.additionsService.emitPanallData(this.transport)
   }
 }

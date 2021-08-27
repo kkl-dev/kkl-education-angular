@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 export class NavigationGridComponent implements OnInit {
 
   @Input() public title : string = "תוספות"
-  @Input() public cards : NavigationCardModel[] = []
+  @Input() public cards : IconCardModel[] = []
 
   constructor() { }
 

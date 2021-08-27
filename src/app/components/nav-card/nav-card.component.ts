@@ -1,6 +1,6 @@
 import { AdditionsService } from '../../utilities/services/additions.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
 @Component({
   selector: 'app-nav-card',
@@ -9,9 +9,9 @@ import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 })
 export class NavCardComponent implements OnInit {
 
-  @Input() public item: NavigationCardModel = {  }
-  @Input() public width: NavigationCardModel = {  }
-  @Input() public height: NavigationCardModel = {  }
+  @Input() public item: IconCardModel = {  }
+  @Input() public width: IconCardModel = {  }
+  @Input() public height: IconCardModel = {  }
 
   constructor(
     private additionsService: AdditionsService
