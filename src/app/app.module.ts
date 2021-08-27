@@ -146,7 +146,8 @@ import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.
     FlexRowComponent,
     FlexTableComponent,
     FormComponent,
-    FacilitiesComponent
+    FacilitiesComponent,
+
   ],
   imports: [
     BrowserModule,
