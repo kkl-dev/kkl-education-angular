@@ -7,7 +7,7 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
       <div class="nav-card" *ngFor="let item of cards$ | async">
-        <app-nav-card [item]="item"></app-nav-card>
+        <app-nav-card (onClick)="onCardClick($event)" [item]="item"></app-nav-card>
       </div>
     </div>
   </div>

@@ -64,15 +64,11 @@ export class AdditionsService {
     return [...this.navigationCrds]
   }
 
-  public setNavigationStatus(items: IconCardModel[]) {
-    this.navigationCrds = items
-  }
-
-  public findItenIndex(key: string, value: any): number {
+  private findItenIndex(key: string, value: any): number {
     return this.navigationCrds.findIndex((item) => item[key] === value)
   }
 
-  public setNanigationStatus(item: IconCardModel, key: string) {
+  public toggleCardStatus(item: IconCardModel, key: string) {
 
     const indexToUnActive = this.findItenIndex('isActive', true)
     const indexToActive = this.findItenIndex(key, item[key])

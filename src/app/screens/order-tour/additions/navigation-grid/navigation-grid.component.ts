@@ -1,3 +1,4 @@
+import { AdditionsService } from './../../../../utilities/services/additions.service';
 import { Observable } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
@@ -10,12 +11,20 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 })
 export class NavigationGridComponent implements OnInit {
 
-  @Input() public title: string = "תוספות"
-  @Input() public cards$: Observable<IconCardModel[]>;
+  public title: string = "תוספות"
+  public cards$: Observable<IconCardModel[]> = this.additionsService.navigationCards$
 
-  constructor() { }
+  constructor(
+    private additionsService: AdditionsService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  public onCardClick(item: IconCardModel) {
+    console.log(item)
+    this.additionsService.toggleCardStatus(item, 'title');
+
   }
 
 }

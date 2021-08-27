@@ -5,9 +5,13 @@ export interface LocationModel {
 }
 
 export class TourPanelModel {
-  constructor(public date: Date, public locations: LocationModel[]) {}
+  constructor(
+    public id: number,
+    public title: string,
+    public date: Date,
+    public locations: LocationModel[]) { }
 
-  static create(options: TourPanelModel) {
-    return new TourPanelModel(options.date, options.locations);
+  static create(tour: TourPanelModel) {
+    return new TourPanelModel(tour.id, tour.title, tour.date, tour.locations);
   }
 }

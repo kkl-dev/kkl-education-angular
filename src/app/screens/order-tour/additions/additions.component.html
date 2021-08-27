@@ -5,7 +5,7 @@
   fxLayoutGap="80px"
 >
   <div class="nav-grid" fxFlex="30">
-    <app-navigation-grid [cards$]="cards$" [title]="title"></app-navigation-grid>
+    <app-navigation-grid ></app-navigation-grid>
   </div>
 
   <div class="additions-content">
@@ -15,7 +15,7 @@
     <div class="tour-title-container" fxLayout="row" fxLayoutAlign="start">
       <div>
         <app-typography [size]="24">
-          {{ tourTitle }}
+          {{ tour.title }}
         </app-typography>
       </div>
       <div fxFlex="55" fxLayout="row" fxLayoutAlign="start end">
@@ -30,7 +30,7 @@
         <!-- <span> &bull; </span> -->
         <div fxLayout="column" fxLayoutAlign="end center">
           <app-typography [size]="16">
-            {{ id }}
+            {{ tour.id }}
           </app-typography>
         </div>
       </div>
