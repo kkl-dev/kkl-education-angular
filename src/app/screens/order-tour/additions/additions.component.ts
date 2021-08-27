@@ -42,8 +42,8 @@ export class AdditionsComponent implements OnInit {
     // ? add schedule or locations //
     // console.log(1)
     // console.log(this.tour.locations)
-    // this.tour.locations.push(new LocationModel())
+    this.tour.schedule.push(new SchedualeModel())
     // console.log(this.tour.locations)
-    // this.additionsService.emitLocations(this.tour.locations)
+    this.additionsService.emitSchedule(this.tour.schedule)
   }
 }

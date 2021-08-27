@@ -6,6 +6,7 @@ export class SchedualeModel {
     public date?: Date,
     public locations?: LocationModel[]
   ) {
-
+    this.date = this.date || new Date(),
+    this.locations = this.locations || [new LocationModel()]
   }
 }
