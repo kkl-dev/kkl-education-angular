@@ -1,11 +1,11 @@
-import { SchedualeModel } from './../../../utilities/models/ScheduleModel';
 import { Component, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Observable } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
-import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
 import { tourTransport } from 'src/mock_data/transport';
-import { LocationModel } from 'src/app/utilities/models/LocationModel';
+import { LocationModel } from 'src/app/screens/order-tour/additions/models/LocationModel';
+import { TourTransportlModel } from './models/TourTransportlModel';
+import { SchedualeModel } from './models/ScheduleModel';
 
 export interface TourDayModel {
   date: Date;

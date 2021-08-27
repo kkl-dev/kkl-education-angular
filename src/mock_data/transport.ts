@@ -1,6 +1,6 @@
-import { LocationModel } from 'src/app/utilities/models/LocationModel';
-import { SchedualeModel } from 'src/app/utilities/models/ScheduleModel';
-import { TourTransportlModel } from 'src/app/utilities/models/TourTransportlModel';
+import { LocationModel } from 'src/app/screens/order-tour/additions/models/LocationModel';
+import { SchedualeModel } from 'src/app/screens/order-tour/additions/models/ScheduleModel';
+import { TourTransportlModel } from 'src/app/screens/order-tour/additions/models/TourTransportlModel';
 
 export const tourTransport: TourTransportlModel =
 {
