@@ -10,7 +10,6 @@ import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../api/api/user.service';
 import { TripService } from '../../../services/trip.service'
 import { AcommodationType, AvailableDate, FieldForestCenter, SearchAvailableDatesOptions } from 'src/app/api';
