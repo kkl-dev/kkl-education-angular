@@ -1,11 +1,15 @@
-<div class="bottom-navigation">
-  <div class="bottom-navigation__back">
+<mat-toolbar>
+  <div class="back-button-container">
     <button
-      class="bottom-navigation__back-link"
+      class="back-bottom mat-elevation-z1"
+      mat-icon-button
       (click)="previousPageHandler()"
     >
       <app-icon type="mat" key="chevron_right"></app-icon>
     </button>
+  </div>
+  <div class="logo-contianer">
+    <app-icon size="200" type="svg" key="bottom-logo"></app-icon>
   </div>
   <div class="button-container">
     <button mat-raised-button color="primary" (click)="nextPageHandler()">
@@ -18,11 +22,9 @@
           {{ title }}
         </div>
         <div>
-          <app-icon color="" type="mat" key="chevron_left"></app-icon>
+          <app-icon color="active" type="mat" key="chevron_left"></app-icon>
         </div>
       </div>
     </button>
   </div>
-</div>
-
-<!-- class="bottom-navigation__forward" -->
+</mat-toolbar>

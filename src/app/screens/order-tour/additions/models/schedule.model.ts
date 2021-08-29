@@ -1,6 +1,6 @@
-import { LocationModel } from "./LocationModel";
-
-export class SchedualeModel {
+import { LocationModel } from "./location.model";
+ 
+export class ScheduleModel {
 
   constructor(
     public date?: Date,
