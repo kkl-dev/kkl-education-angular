@@ -11,6 +11,7 @@ import { QuestionTextarea } from 'src/app/components/form/logic/question-textare
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
+import { TransportService } from '../../services/transport.service';
 
 @Component({
   selector: 'app-transport',
@@ -25,173 +26,16 @@ export class TransportComponent implements OnInit {
 
   public columns: TableCellModel[];
 
-  public details: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'supplier',
-      label: 'ספק',
-      type: 'select',
-      validations: [Validators.required],
-      inputProps: {
-        options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
-        ],
-      },
-    }),
-    new QuestionSelect({
-      key: 'item',
-      label: 'בחר פריט',
-      type: 'select',
-      validations: [Validators.required],
-      inputProps: {
-        labelLength: 'extraWide',
-        options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
-        ],
-      },
-    }),
-
-    new QuestionTextbox({
-      key: 'quantity',
-      label: 'כמות',
-      value: '',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'participants',
-      label: 'משתתפים',
-      value: '',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'price',
-      label: 'מחיר',
-      value: '',
-      type: 'number',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'supplierCost',
-      label: 'חיוב ספק',
-      value: '',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'customerCost',
-      label: 'חיוב לקוח',
-      value: '',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'total',
-      label: 'סה"כ',
-      value: '',
-      validations: [Validators.required],
-    }),
-  ].reverse();
-  
-  public locations: QuestionBase<string | Date>[] = [
-    new QuestionTextbox({
-      key: 'pickUpHour',
-      label: 'שעת פיזור',
-      icon: 'schedule',
-      type: 'time',
-      validations: [Validators.required],
-      inputProps: {
-        labelLength: 'extraWide',
-      },
-    }),
-
-    new QuestionCalendar({
-      key: 'pickUpDate',
-      label: 'תאריך פיזור',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'pickUpAddress',
-      label: 'כתובת איסוף',
-      value: '',
-      validations: [Validators.required],
-      icon: 'place',
-      inputProps: {
-        labelLength: 'extraWide',
-      },
-    }),
-
-    new QuestionTextbox({
-      key: 'pickUpLocation',
-      label: 'מקום איסוף',
-      value: '',
-      icon: 'place',
-      validations: [Validators.required],
-      inputProps: {
-        labelLength: 'extraWide',
-      },
-    }),
-
-    new QuestionTextbox({
-      key: 'dropDownHour',
-      label: 'שעת איסוף',
-      icon: 'schedule',
-      type: 'time',
-      validations: [Validators.required],
-    }),
-
-    new QuestionCalendar({
-      key: 'dropDownDate',
-      label: 'תאריך איסוף',
-      validations: [Validators.required],
-    }),
-  ];
-
-  private comments: QuestionBase<string>[] = [
-    new QuestionTextarea({
-      key: 'comments',
-      label: 'הערות',
-      cols: 6,
-      rows: 6,
-      offset: 1,
-    }),
-  ];
-
-  private questionGroups: QuestionGroup[] = [
-    {
-      key: 'details',
-      questions: this.details,
-      cols: 8,
-    },
-    {
-      key: 'pickUp',
-      questions: this.locations,
-      cols: 6,
-    },
-    {
-      key: 'comments',
-      questions: this.comments,
-      hasButton: true,
-      cols: 8,
-    },
-  ];
-
   public formTemplate: FormTemplate = {
     hasGroups: true,
-    questionsGroups: this.questionGroups,
+    // questionsGroups: this.questionGroups,
   };
 
-  constructor() {}
+  constructor(private TransportService: TransportService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formTemplate.questionsGroups = this.TransportService.questionGroups
+  }
 
   public onSave() {
     if (this.form) {

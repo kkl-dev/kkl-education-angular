@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+
 export class TransportDetailsModel {
   constructor(
     public supplier: string,
@@ -46,6 +48,9 @@ export class TransportLocationsModel {
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class TransportModel {
   constructor(
     public id: number,
