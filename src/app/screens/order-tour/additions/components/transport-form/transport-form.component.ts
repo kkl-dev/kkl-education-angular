@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
-  FormTemplate,
+  FormTemplate, QuestionGroup,
 } from 'src/app/components/form/logic/form.service';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { TransportModel } from '../../models/transport-model';
+import { TourService } from '../../services/tour.service';
 import { TransportService } from '../../services/transport.service';
 
 
@@ -16,11 +18,11 @@ import { TransportService } from '../../services/transport.service';
 })
 export class TransportFormComponent implements OnInit {
 
-  @Input() location: LocationModel;
+  @Input() public location: LocationModel;
+  @Input() public transport: TransportModel;
+  @Input() public editMode: boolean;
 
   public form: FormGroup;
-  public editMode: boolean = false;
-
   public columns: TableCellModel[];
 
   public formTemplate: FormTemplate = {
@@ -30,10 +32,14 @@ export class TransportFormComponent implements OnInit {
 
   constructor(
     private transportService: TransportService,
-    private transport : TransportModel
     ) {}
 
   ngOnInit(): void {
+
+    if(this.editMode) {
+      this.transportService.setFormValues(this.transport)
+    }
+
     this.formTemplate.questionsGroups = this.transportService.questionGroups
   }
 
@@ -43,7 +49,7 @@ export class TransportFormComponent implements OnInit {
       this.form.disable();
     }
 
-    console.log(this.transport)
+    this.transport = TransportModel.create(this.form.value)
 
     // find if object already in a schedule
   }

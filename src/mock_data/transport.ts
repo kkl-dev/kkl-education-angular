@@ -1,7 +1,7 @@
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
 import { TourModel } from 'src/app/screens/order-tour/additions/models/tour.model';
-import { TransportModel } from 'src/app/screens/order-tour/additions/models/transport-model';
+import { TransportDetailsModel, TransportLocationsModel, TransportModel } from 'src/app/screens/order-tour/additions/models/transport-model';
 
 export const tourTransport: TourModel = {
   id: 3849383,
@@ -12,7 +12,7 @@ export const tourTransport: TourModel = {
       1,
       new Date(),
       [new LocationModel(new Date(), new Date(), 'נס-הרים', 'בי"ס תמיר')],
-      new TransportModel()
+      new TransportModel(new TransportDetailsModel(), new TransportLocationsModel(), "הערה")
     ),
   ],
 };

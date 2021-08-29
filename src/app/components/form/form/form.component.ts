@@ -24,6 +24,7 @@ export class FormComponent implements OnInit {
   @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() hasButton: boolean = false;
+  @Input() editMode: boolean = false;
   @Input() slots: {
     button?: ElementRef;
     group?: ElementRef;
@@ -46,4 +47,6 @@ export class FormComponent implements OnInit {
       this.valueChange.emit(this.form);
     });
   }
+
+  private setFormValue() {}
 }
