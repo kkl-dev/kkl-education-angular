@@ -1,19 +1,27 @@
 <div class="education-results">
-  <div class="education-results__left"></div>
+  <div class="education-results__left">
+    <app-maps place="נס הרים" day="1"></app-maps>
+    <!-- <app-maps #child [(visible)]="var1" place="אילנות מערב" day="1"></app-maps> -->
+    <!-- <app-maps [place]="forestCenter" day="1"></app-maps> -->
+  </div>
   <div class="education-results__right">
     <!-- search header component -->
     <app-header (emitNewDates)="changeDatesHandler($event)"></app-header>
 
-    <app-sleeping-options-by-day
+ 
+    <!-- avialable dates -->
+
+    <div class="education-results__right-content">
+      <h2 class="education-results__right-header">{{ centerField }}</h2>
+
+      <app-sleeping-options-by-day
       (emitCurrentDay)="currentDayHandler($event)"
       [sleepingOptionsByDay]="sleepingOptionsByDay"
     >
       <h4
       class="education-results__right-sleeping-options-headline">זמינות לינה</h4>
     </app-sleeping-options-by-day>
-    <!-- avialable dates -->
 
-    <div class="education-results__right-content">
       <!-- avialable facilities  -->
       <div class="education-results__right-facilities">
         <h4 class="education-results__right-facilities-headline">מתקנים</h4>

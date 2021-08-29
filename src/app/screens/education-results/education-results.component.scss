@@ -35,6 +35,96 @@
     }
 
     //available dates section
+    &-availability {
+      direction: rtl;
+      display: flex;
+      padding: 0 100px;
+      margin-bottom: 40px;
+
+      cursor: pointer;
+
+      &-item {
+        display: flex;
+        margin: 0 ;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #dcdcdc;
+      }
+      & > * {
+        flex: 1;
+      }
+      &-item-text{
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: 10px;
+      }
+
+      &-item-date {
+        margin-right: auto;
+        font-size: 18px;
+      }
+    }
+
+    //sleeping areas section
+    &-sleep-areas {
+      padding: 0 100px;
+      direction: rtl;
+      text-align: right;
+
+      &-headline {
+        font-size: 17px;
+        margin-bottom: 20px;
+      }
+
+      &-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        text-align: center;
+        border-bottom: 1px solid rgba($color: #f9f9f9, $alpha: 1);
+        padding-bottom: 40px;
+
+        &-item {
+          display: flex;
+          text-align: center;
+          align-self: center;
+          gap: 10px;
+          & > * {
+            margin: 0;
+            padding: 0;
+          }
+          &-svg {
+            & * {
+              width: 32.5px;
+              height: 37.5px;
+              margin-left: 5px;
+              // fill: #676767 !important;
+            }
+          }
+          &-count {
+          margin-right: 10px;
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            // margin-left: 5px !important;
+            border-radius: 5px;
+
+            &-number{
+              width: 35px;
+              height: 35px;
+              margin: auto 0;
+              background-color: #f6f6f6;
+display: flex;
+              & > * {
+                margin: auto;
+              }
+            }
+          }
+        }
+      }
+    }
 
     //facilities section
     &-facilities {
@@ -42,7 +132,7 @@
       direction: rtl;
       text-align: right;
       margin-top: 20px;
-      
+
       &-headline {
         padding: 0 !important;
         width: 85%;
@@ -87,9 +177,9 @@
               position: relative;
               margin: 0 auto;
               border: 1px solid #ffffff;
-              width: 76px;
-              height: 76px;
-              display: flex;
+              max-width: 76px;
+              max-height: 76px;
+              display: flex; 
               background: rgb(238, 238, 238);
               background: linear-gradient(
                 0deg,
@@ -134,7 +224,7 @@
       &-container {
         text-align: left;
         width: 80%;
-        margin: 0 auto; 
+        margin: 0 auto;
         padding: 30px 0;
       }
     }
@@ -152,7 +242,7 @@ app-tooltip {
 }
 .font-color-blue {
   color: #66a3d6;
-} 
+}
 
 ::ng-deep .flex {
   width: 80%;

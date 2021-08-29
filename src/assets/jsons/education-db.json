@@ -1,0 +1,74 @@
+{
+    "forestCenter": [
+        {
+            "id": 101,
+            "name": "נס הרים",
+            "iconPath": "assets/images/select-4.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        },
+        {
+            "id": 102,
+            "name": "מרכז שדה ציפורי",
+            "iconPath": "assets/images/select-3.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        },
+        {
+            "id": 103,
+            "name": "מרכז שדה שוני",
+            "iconPath": "assets/images/select-2.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        },
+        {
+            "id": 104,
+            "name": "מרכז שדה יתיר",
+            "iconPath": "assets/images/select-1.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        },
+        {
+            "id": 105,
+            "name": "מרכז שדה לביא",
+            "iconPath": "assets/images/select-4.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        }
+    ]
+}
