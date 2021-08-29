@@ -1,0 +1,272 @@
+{
+	"biktot": {
+		"bikta": {
+            "nesharimday1":[{
+				"uid": "149",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "150",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "151",
+				"school": "בני ציון",
+				"gender": "boysAndGirls"
+			}
+		],
+		"nesharimday2": [{
+				"uid": "175",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "176",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "178",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			},
+			{
+				"uid": "179",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			}
+		],
+		"nesharimday3": [{
+				"uid": "170",
+				"school": "בית ספר סתם",
+				"gender": "boys"
+			},
+			{
+				"uid": "171",
+				"school": "בית ספר סתם",
+				"gender": "girls"
+			}
+		],
+		"ziporiday1": [{
+				"uid": "913",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "914",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "915",
+				"school": "בני ציון",
+				"gender": "boysAndGirls"
+			}
+		],
+		"ziporiday2": [{
+			"uid": "605",
+			"school": "אורט",
+			"gender": "boys"
+		}],
+		"ziporiday3": [{
+				"uid": "890",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "894",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "927",
+				"school": "בני ציון",
+				"gender": "boysAndGirls"
+			}
+		],
+		"yatirday1": [{
+				"uid": "885",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "897",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "898",
+				"school": "בני ציון",
+				"gender": "boysAndGirls"
+			}
+		],
+		"yatirday2": [{
+				"uid": "118",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "119",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "122",
+				"school": "בני ציון",
+				"gender": "boysAndGirls"
+			}
+		],
+		"yatirday3": [{
+				"uid": "119",
+				"school": "בית ספר סתם",
+				"gender": "boys"
+			},
+			{
+				"uid": "123",
+				"school": "בית ספר סתם",
+				"gender": "girls"
+			}
+		],
+		"ilanotday1": [{
+				"uid": "121",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "122",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "118",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			},
+			{
+				"uid": "119",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			}
+		],
+		"ilanotday2": [{
+			"uid": "791",
+			"school": "אורט",
+			"gender": "girls"
+		}],
+		"ilanotday3": [{
+			"uid": "792",
+			"school": "אורט",
+			"gender": "boysAndGirls"
+		}],
+		"betieshelday1": [{
+			"uid": "428",
+			"school": "אורט",
+			"gender": "boys"
+		}],
+		"betieshelday2": [{
+			"uid": "430",
+			"school": "אורט",
+			"gender": "girls"
+		}],
+		"betieshelday3": [{
+				"uid": "1206",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "1224",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "1231",
+				"school": "בני ציון",
+				"gender": "boysAndGirls"
+			}
+		],
+		"laviday1": [{
+				"uid": "1210",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "1223",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "1202",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			},
+			{
+				"uid": "1204",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			}
+		],
+		"laviday2": [{
+				"uid": "1214",
+				"school": "בית ספר סתם",
+				"gender": "boys"
+			},
+			{
+				"uid": "1229",
+				"school": "בית ספר סתם",
+				"gender": "girls"
+			}
+		],
+		"laviday3": [{
+				"uid": "873",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "872",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "865",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			},
+			{
+				"uid": "670",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			}
+		],
+		"shuniday1": [{
+				"uid": "874",
+				"school": "אורט",
+				"gender": "boys"
+			},
+			{
+				"uid": "871",
+				"school": "אורט",
+				"gender": "girls"
+			},
+			{
+				"uid": "862",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			},
+			{
+				"uid": "873",
+				"school": "מקיף משהו",
+				"gender": "boysAndGirls"
+			}
+		],
+		"shuniday2": [{
+			"uid": "870",
+			"school": "אורט",
+			"gender": "boysAndGirls"
+		}]
+        }
+
+	}
+
+}
