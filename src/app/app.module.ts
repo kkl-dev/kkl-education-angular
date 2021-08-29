@@ -72,6 +72,7 @@ import { SummaryComponent } from './screens/order-tour/summary/summary.component
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
 import { FormComponent } from './components/form/form/form.component';
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
+import { RootComponent } from './screens/order-tour/root/root.component';
 
 
 @NgModule({
@@ -147,6 +148,7 @@ import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.
     FlexTableComponent,
     FormComponent,
     FacilitiesComponent,
+    RootComponent,
 
   ],
   imports: [

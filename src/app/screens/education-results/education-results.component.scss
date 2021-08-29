@@ -4,6 +4,7 @@
   z-index: 100;
   box-sizing: border-box;
   display: flex;
+  overflow-y: scroll;
 
   &__left {
     width: 50%;
@@ -42,7 +43,7 @@
       direction: rtl;
       text-align: right;
       margin-top: 20px;
-      
+
       &-headline {
         padding: 0 !important;
         width: 85%;
@@ -134,7 +135,7 @@
       &-container {
         text-align: left;
         width: 80%;
-        margin: 0 auto; 
+        margin: 0 auto;
         padding: 30px 0;
       }
     }
@@ -152,7 +153,7 @@ app-tooltip {
 }
 .font-color-blue {
   color: #66a3d6;
-} 
+}
 
 ::ng-deep .flex {
   width: 80%;
