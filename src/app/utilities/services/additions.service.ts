@@ -2,7 +2,7 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LocationModel } from '../../screens/order-tour/additions/models/location.model';
-import { SchedualeModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
+import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,8 +55,8 @@ export class AdditionsService {
   private locationsSubject = new BehaviorSubject<LocationModel[]>([])
   public locations$: Observable<LocationModel[]> = this.locationsSubject.asObservable();
 
-  private scheduleSubject = new BehaviorSubject<SchedualeModel[]>([])
-  public schedule$: Observable<SchedualeModel[]> = this.scheduleSubject.asObservable();
+  private scheduleSubject = new BehaviorSubject<ScheduleModel[]>([])
+  public schedule$: Observable<ScheduleModel[]> = this.scheduleSubject.asObservable();
 
   constructor() { }
 
@@ -77,7 +77,7 @@ export class AdditionsService {
     this.navigationCrds[indexToUnActive].isActive = false
   }
 
-  public emitSchedule(schedule: SchedualeModel[]) {
+  public emitSchedule(schedule: ScheduleModel[]) {
     this.scheduleSubject.next(schedule)
   }
 

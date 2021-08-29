@@ -1,5 +1,5 @@
 import { LocationModel } from "./location.model";
-
+ 
 export class ScheduleModel {
 
   constructor(

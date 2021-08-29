@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SchedualeModel } from '../models/schedule.model';
+import { ScheduleModel } from '../models/schedule.model';
 
 @Component({
   selector: 'app-tour-panel',
@@ -9,7 +9,7 @@ import { SchedualeModel } from '../models/schedule.model';
 export class TourPanelComponent implements OnInit {
   constructor() { }
 
-  @Input() schedule: SchedualeModel;
+  @Input() schedule: ScheduleModel;
   @Input() i: number;
 
   ngOnInit(): void {

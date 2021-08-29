@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
 import { tourTransport } from 'src/mock_data/transport';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
-import { TourTransportlModel } from './models/tour-transport.model';
-import { SchedualeModel } from './models/schedule.model';
+import { TourTransportModel } from './models/tour-transport.model';
+import { ScheduleModel } from './models/schedule.model';
 
 export interface TourDayModel {
   date: Date;
@@ -19,15 +19,15 @@ export interface TourDayModel {
 })
 export class AdditionsComponent implements OnInit {
 
-  public tour: TourTransportlModel
+  public tour: TourTransportModel
   public cards$: Observable<IconCardModel[]>
-  public schedule$: Observable<SchedualeModel[]>;
+  public schedule$: Observable<ScheduleModel[]>;
   public locations$: Observable<LocationModel[]>;
 
   constructor(private additionsService: AdditionsService) { }
 
   ngOnInit(): void {
-    this.tour = TourTransportlModel.create(tourTransport);
+    this.tour = TourTransportModel.create(tourTransport);
     this.cards$ = this.additionsService.navigationCards$;
     this.additionsService.emitSchedule(this.tour.schedule)
     this.schedule$ = this.additionsService.schedule$
@@ -42,7 +42,7 @@ export class AdditionsComponent implements OnInit {
     // ? add schedule or locations //
     // console.log(1)
     // console.log(this.tour.locations)
-    this.tour.schedule.push(new SchedualeModel())
+    this.tour.schedule.push(new ScheduleModel())
     // console.log(this.tour.locations)
     this.additionsService.emitSchedule(this.tour.schedule)
   }
