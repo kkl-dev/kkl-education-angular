@@ -1,11 +1,11 @@
 
 <div class="order-tour" [ngClass]="{ 'sleeping-width': activeStep === 1 }">
   <app-drawer *ngIf="activeStep === 0"></app-drawer>
-<div > 
+<div >
   <div
   class="content"
   fxLayout="column"
-  fxLayoutAlign="space-around stretch"
+  fxLayoutAlign="stretch"
   fxLayout.xs="column"
   fxFlexFill
   >
@@ -24,11 +24,9 @@
         <router-outlet></router-outlet>
       </div>
     </div>
-    <div 
+    <div
       fxFlex="15"
       fxFlex.xs="15"
-      class="bottom-navigation"
-      fxLayoutAlign="center"
     >
       <app-bottom-navigation
         [currentPage]="0"
