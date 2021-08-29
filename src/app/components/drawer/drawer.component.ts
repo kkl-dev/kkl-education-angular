@@ -20,12 +20,14 @@ export class DrawerComponent implements OnInit {
   reminderForm: QuestionBase<string | Date>[] = [
     new QuestionCalendar({
       key: 'date',
+      type:'date',
       label: 'תאריך',
       value: new Date(),
     }),
-
+    
     new QuestionTextbox({
       key: 'time',
+      type:'time',
       label: 'שעה',
       value: '',
     }),
@@ -59,9 +61,11 @@ export class DrawerComponent implements OnInit {
   ];
 
   newCommentHandler(newComment: { date: Date; time: string; comment: string }) {
-    const newCommentToAdd = { ...newComment, status: false };
+    console.log(this.drawerForm.formGroup.value);
+    
+    const newCommentToAdd = { ...this.drawerForm.formGroup.value, status: false };
     if (this.index > -1) {
-      this.reminderArray.splice(this.index, 1, newCommentToAdd);
+      this.reminderArray.splice(this.index, 1, newCommentToAdd); 
       this.index = -1;
     } else {
       this.reminderArray.push(newCommentToAdd);
