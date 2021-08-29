@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { columns, details, summery, supplier } from 'src/mock_data/additions';
@@ -14,10 +14,12 @@ export interface TableData {
   styleUrls: ['./transport-details.component.scss'],
 })
 export class TransportDetailsComponent implements OnInit {
+
+  @Input() columns: TableCellModel[] = [];
+
+
   public title: string = 'פרטים נוספים';
   public editMode: boolean = false;
-
-  public columns: TableCellModel[] = columns;
   public rows: TableCellModel[][] = [details, supplier, summery];
 
   public detailsSubject = new BehaviorSubject<TableData>({

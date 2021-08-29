@@ -1,12 +1,12 @@
-import { LocationModel } from "./LocationModel";
+import { LocationModel } from "./location.model";
 
-export class SchedualeModel {
+export class ScheduleModel {
 
   constructor(
+    public id?: number,
     public date?: Date,
     public locations?: LocationModel[]
   ) {
-    this.date = this.date || new Date(),
     this.locations = this.locations || [new LocationModel()]
   }
 }

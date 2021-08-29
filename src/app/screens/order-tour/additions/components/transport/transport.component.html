@@ -7,7 +7,10 @@
     ></app-form>
   </div>
   <div fxFlex="35">
-    <app-transport-details></app-transport-details>
+    <app-transport-details
+      *ngIf="columns"
+      [columns]="columns"
+    ></app-transport-details>
   </div>
 </div>
 
@@ -17,7 +20,7 @@
       *ngIf="!editMode"
       type="submit"
       color="primary"
-      (click)="onClick()"
+      (click)="onSave()"
       mat-raised-button
     >
       שמור

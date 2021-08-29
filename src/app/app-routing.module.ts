@@ -4,7 +4,7 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { EducationResultsComponent } from './screens/education-results/education-results.component';
 import { LoginBackdropComponent } from './screens/login-backdrop/login-backdrop.component';
 import { MyToursComponent } from './screens/my-tours/my-tours.component';
-import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
 import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';

@@ -1,68 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
-import {
-  FormTemplate,
-  QuestionGroup,
-} from 'src/app/components/form/logic/form.service';
+import { Injectable } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { LocationModel } from 'src/app/screens/order-tour/additions/models/LocationModel';
 
-@Component({
-  selector: 'app-transport',
-  templateUrl: './transport.component.html',
-  styleUrls: ['./transport.component.scss'],
+@Injectable({
+  providedIn: 'root',
 })
-
-export class TransportComponent implements OnInit {
-
-  @Input() location : LocationModel;
-
-  public form: FormGroup;
-  public editMode: boolean = false;
-
-  public details: QuestionBase<string>[] = [
-    new QuestionTextbox({
-      key: 'total',
-      label: 'סה"כ',
-      value: '',
+export class TransportService {
+  private details: QuestionBase<string>[] = [
+    new QuestionSelect({
+      key: 'supplier',
+      label: 'ספק',
+      type: 'select',
       validations: [Validators.required],
-    }),
-    new QuestionTextbox({
-      key: 'customeCost',
-      label: 'חיוב לקוח',
-      value: '',
-      validations: [Validators.required],
-    }),
-    new QuestionTextbox({
-      key: 'suplierCost',
-      label: 'חיוב ספק',
-      value: '',
-      validations: [Validators.required],
-    }),
-    new QuestionTextbox({
-      key: 'price',
-      label: 'מחיר',
-      value: '',
-      type: 'number',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'participants',
-      label: 'משתתפים',
-      value: '',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'quentity',
-      label: 'כמות',
-      value: '',
-      validations: [Validators.required],
+      inputProps: {
+        options: [
+          { key: 'solid', value: '12123' },
+          { key: 'great', value: '23' },
+          { key: 'good', value: '123' },
+          { key: 'unproven', value: '123123123' },
+        ],
+      },
     }),
     new QuestionSelect({
       key: 'item',
@@ -80,24 +42,53 @@ export class TransportComponent implements OnInit {
       },
     }),
 
-    new QuestionSelect({
-      key: 'suplier',
-      label: 'ספק',
-      type: 'select',
-      validations: [Validators.required],
-      inputProps: {
-        options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
-        ],
-      },
-    }),
-  ];
-  public gather: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
-      key: 'gatherHour',
+      key: 'quantity',
+      label: 'כמות',
+      value: '',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'participants',
+      label: 'משתתפים',
+      value: '',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'price',
+      label: 'מחיר',
+      value: '',
+      type: 'number',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'supplierCost',
+      label: 'חיוב ספק',
+      value: '',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'customerCost',
+      label: 'חיוב לקוח',
+      value: '',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'total',
+      label: 'סה"כ',
+      value: '',
+      validations: [Validators.required],
+    }),
+  ].reverse();
+
+  private locations: QuestionBase<string | Date>[] = [
+    new QuestionTextbox({
+      key: 'pickUpHour',
       label: 'שעת פיזור',
       icon: 'schedule',
       type: 'time',
@@ -108,13 +99,13 @@ export class TransportComponent implements OnInit {
     }),
 
     new QuestionCalendar({
-      key: 'gatherDate',
+      key: 'pickUpDate',
       label: 'תאריך פיזור',
       validations: [Validators.required],
     }),
 
     new QuestionTextbox({
-      key: 'gatherAddress',
+      key: 'pickUpAddress',
       label: 'כתובת איסוף',
       value: '',
       validations: [Validators.required],
@@ -125,7 +116,7 @@ export class TransportComponent implements OnInit {
     }),
 
     new QuestionTextbox({
-      key: 'gatherLocation',
+      key: 'pickUpLocation',
       label: 'מקום איסוף',
       value: '',
       icon: 'place',
@@ -136,7 +127,7 @@ export class TransportComponent implements OnInit {
     }),
 
     new QuestionTextbox({
-      key: 'gatherHour',
+      key: 'dropDownHour',
       label: 'שעת איסוף',
       icon: 'schedule',
       type: 'time',
@@ -144,7 +135,7 @@ export class TransportComponent implements OnInit {
     }),
 
     new QuestionCalendar({
-      key: 'gatherDate',
+      key: 'dropDownDate',
       label: 'תאריך איסוף',
       validations: [Validators.required],
     }),
@@ -160,15 +151,15 @@ export class TransportComponent implements OnInit {
     }),
   ];
 
-  private questionGroups: QuestionGroup[] = [
+  public questionGroups: QuestionGroup[] = [
     {
       key: 'details',
       questions: this.details,
       cols: 8,
     },
     {
-      key: 'gather',
-      questions: this.gather,
+      key: 'pickUp',
+      questions: this.locations,
       cols: 6,
     },
     {
@@ -179,31 +170,5 @@ export class TransportComponent implements OnInit {
     },
   ];
 
-  public formTemplate: FormTemplate = {
-    hasGroups: true,
-    questionsGroups: this.questionGroups,
-  };
-
   constructor() {}
-
-  ngOnInit(): void {
-  }
-
-  public onClick() {
-    if (this.form) {
-      this.editMode = !this.editMode;
-      this.form.disable();
-    }
-  }
-
-  public onEdit() {
-    this.editMode = !this.editMode;
-    this.form.enable();
-  }
-
-  public onValueChange(event) {
-    if (!this.editMode) {
-      this.form = event;
-    }
-  }
 }

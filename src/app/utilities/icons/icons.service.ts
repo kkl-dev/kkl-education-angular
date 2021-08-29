@@ -24,6 +24,7 @@ import {
   PLAYGROUND_ICON,
   LIST_ICON,
   CALENDER_ICON,
+  BOTTOM_LOGO,
 } from './icons.list';
 
 export interface IconItem {
@@ -137,6 +138,10 @@ export class IconsService {
     {
       key: 'calendar',
       svgUrl: CALENDER_ICON,
+    },
+    {
+      key: 'bottom-logo',
+      svgUrl: BOTTOM_LOGO,
     },
   ];
 
