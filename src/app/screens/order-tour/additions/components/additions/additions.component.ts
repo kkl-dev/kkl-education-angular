@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Observable } from 'rxjs';
-import { AdditionsService } from '../../../utilities/services/additions.service';
+import { ScheduleModel } from '../../models/schedule.model';
+import { AdditionsService } from '../../services/additions.service';
+import { TourTransportModel } from '../../models/tour-transport.model';
+
 import { tourTransport } from 'src/mock_data/transport';
-import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
-import { TourTransportModel } from './models/tour-transport.model';
-import { ScheduleModel } from './models/schedule.model';
 
 export interface TourDayModel {
   date: Date;
@@ -29,9 +29,8 @@ export class AdditionsComponent implements OnInit {
     this.cards$ = this.additionsService.navigationCards$;
     this.additionsService.emitSchedule(this.tour.schedule)
     this.schedule$ = this.additionsService.schedule$
-  }
 
-  ngOnDestroy(): void {
+    this.onAdd()
   }
 
 

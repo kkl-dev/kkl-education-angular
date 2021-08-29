@@ -17,57 +17,28 @@ import { TableCellModel } from 'src/app/utilities/models/TableCell';
   templateUrl: './transport.component.html',
   styleUrls: ['./transport.component.scss'],
 })
-
 export class TransportComponent implements OnInit {
-
-  @Input() location : LocationModel;
+  @Input() location: LocationModel;
 
   public form: FormGroup;
   public editMode: boolean = false;
 
-
   public columns: TableCellModel[];
 
-
   public details: QuestionBase<string>[] = [
-    new QuestionTextbox({
-      key: 'total',
-      label: 'סה"כ',
-      value: '',
+    new QuestionSelect({
+      key: 'supplier',
+      label: 'ספק',
+      type: 'select',
       validations: [Validators.required],
-    }),
-    new QuestionTextbox({
-      key: 'customeCost',
-      label: 'חיוב לקוח',
-      value: '',
-      validations: [Validators.required],
-    }),
-    new QuestionTextbox({
-      key: 'suplierCost',
-      label: 'חיוב ספק',
-      value: '',
-      validations: [Validators.required],
-    }),
-    new QuestionTextbox({
-      key: 'price',
-      label: 'מחיר',
-      value: '',
-      type: 'number',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'participants',
-      label: 'משתתפים',
-      value: '',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'quentity',
-      label: 'כמות',
-      value: '',
-      validations: [Validators.required],
+      inputProps: {
+        options: [
+          { key: 'solid', value: '12123' },
+          { key: 'great', value: '23' },
+          { key: 'good', value: '123' },
+          { key: 'unproven', value: '123123123' },
+        ],
+      },
     }),
     new QuestionSelect({
       key: 'item',
@@ -85,24 +56,53 @@ export class TransportComponent implements OnInit {
       },
     }),
 
-    new QuestionSelect({
-      key: 'suplier',
-      label: 'ספק',
-      type: 'select',
-      validations: [Validators.required],
-      inputProps: {
-        options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
-        ],
-      },
-    }),
-  ];
-  public gather: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
-      key: 'gatherHour',
+      key: 'quantity',
+      label: 'כמות',
+      value: '',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'participants',
+      label: 'משתתפים',
+      value: '',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'price',
+      label: 'מחיר',
+      value: '',
+      type: 'number',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'supplierCost',
+      label: 'חיוב ספק',
+      value: '',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'customerCost',
+      label: 'חיוב לקוח',
+      value: '',
+      validations: [Validators.required],
+    }),
+
+    new QuestionTextbox({
+      key: 'total',
+      label: 'סה"כ',
+      value: '',
+      validations: [Validators.required],
+    }),
+  ].reverse();
+  
+  public locations: QuestionBase<string | Date>[] = [
+    new QuestionTextbox({
+      key: 'pickUpHour',
       label: 'שעת פיזור',
       icon: 'schedule',
       type: 'time',
@@ -113,13 +113,13 @@ export class TransportComponent implements OnInit {
     }),
 
     new QuestionCalendar({
-      key: 'gatherDate',
+      key: 'pickUpDate',
       label: 'תאריך פיזור',
       validations: [Validators.required],
     }),
 
     new QuestionTextbox({
-      key: 'gatherAddress',
+      key: 'pickUpAddress',
       label: 'כתובת איסוף',
       value: '',
       validations: [Validators.required],
@@ -130,7 +130,7 @@ export class TransportComponent implements OnInit {
     }),
 
     new QuestionTextbox({
-      key: 'gatherLocation',
+      key: 'pickUpLocation',
       label: 'מקום איסוף',
       value: '',
       icon: 'place',
@@ -141,7 +141,7 @@ export class TransportComponent implements OnInit {
     }),
 
     new QuestionTextbox({
-      key: 'gatherHour',
+      key: 'dropDownHour',
       label: 'שעת איסוף',
       icon: 'schedule',
       type: 'time',
@@ -149,7 +149,7 @@ export class TransportComponent implements OnInit {
     }),
 
     new QuestionCalendar({
-      key: 'gatherDate',
+      key: 'dropDownDate',
       label: 'תאריך איסוף',
       validations: [Validators.required],
     }),
@@ -172,8 +172,8 @@ export class TransportComponent implements OnInit {
       cols: 8,
     },
     {
-      key: 'gather',
-      questions: this.gather,
+      key: 'pickUp',
+      questions: this.locations,
       cols: 6,
     },
     {
@@ -191,8 +191,7 @@ export class TransportComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public onSave() {
     if (this.form) {
@@ -200,9 +199,7 @@ export class TransportComponent implements OnInit {
       this.form.disable();
     }
 
-
-
-
+    // find if object already in a schedule
   }
 
   public onEdit() {

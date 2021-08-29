@@ -1,4 +1,4 @@
-import { AdditionsService } from './../../../../utilities/services/additions.service';
+import { AdditionsService } from '../../services/additions.service';
 import { Observable } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';

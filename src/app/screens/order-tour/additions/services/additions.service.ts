@@ -1,7 +1,7 @@
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { LocationModel } from '../../screens/order-tour/additions/models/location.model';
+import { LocationModel } from '../models/location.model';
 import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
 
 @Injectable({
@@ -64,14 +64,14 @@ export class AdditionsService {
     return [...this.navigationCrds]
   }
 
-  private findItenIndex(key: string, value: any): number {
+  private findItemIndex(key: string, value: any): number {
     return this.navigationCrds.findIndex((item) => item[key] === value)
   }
 
   public toggleCardStatus(item: IconCardModel, key: string) {
 
-    const indexToUnActive = this.findItenIndex('isActive', true)
-    const indexToActive = this.findItenIndex(key, item[key])
+    const indexToUnActive = this.findItemIndex('isActive', true)
+    const indexToActive = this.findItemIndex(key, item[key])
 
     this.navigationCrds[indexToActive].isActive = true
     this.navigationCrds[indexToUnActive].isActive = false
