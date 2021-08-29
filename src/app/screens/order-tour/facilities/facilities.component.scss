@@ -1,0 +1,32 @@
+@import "../../../../styles.scss";
+
+.facilities {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    .header {
+        display: flex;
+        flex-direction: row-reverse;
+        background: #f3f3f3;
+    }
+    .arrows {
+        background: color(primary);
+        .mat-icon {
+            color: white;
+        }
+        .mat-icon:hover {
+            cursor: pointer;
+        }
+    }
+    * {
+        margin: 10px;
+    }
+}
+.content-1 {
+    justify-content: center;
+}
+.content-1,
+.content-2 {
+    display: flex;
+    flex: 1;
+}
