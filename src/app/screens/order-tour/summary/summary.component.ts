@@ -47,35 +47,35 @@ export class SummaryComponent implements OnInit {
   public activity: Array<object> = [
     {
       date: '15.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: true
     },
     {
       date: '16.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: true
     },
     {
       date: '17.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: true
     }
   ];
   public transportation: Array<object> = [
     {
       date: '15.06.21', supplier: 'ספקים שונים', item: 'אוטובוס - יום מלא', comments: 'בית ספר תמיר - נס הרים',
-      amount: 2, supplierCharge: 0, customerBilling: 7818
+      amount: 2, supplierCharge: 0, customerBilling: 7818, customerOrder: false
     },
     {
       date: '16.06.21', supplier: 'נס הרים', item: 'ניווט ביער -נס הרים', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: false
     }
   ];
   public economy: Array<object> = [
     {
       date: '15.06.21', supplier: 'שבולת בע"מ', item: 'ארוח בוקר בהגשה', comments: '',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: false
     },
     {
       date: '16.06.21', supplier: 'שבולת בע"מ', item: '150', comments: 'לקוח מזמין',
-      amount: 150, price: 0, supplierCharge: 135, customerBilling: 1218
+      amount: 150, price: 0, supplierCharge: 135, customerBilling: 1218, customerOrder: false
     }
   ];
   public tableBodyTitles: Array<object> = [
@@ -84,15 +84,15 @@ export class SummaryComponent implements OnInit {
     { name: 'כלכלה', amount: 3, price: 2610, supplierCharge: 2040, customerBilling: 360 }
   ];
   public tableTitles: Array<object> = [
-    { name: 'תאריך' ,colspan : 1},
-    { name: 'ספק' ,colspan : 1},
-    { name: 'פריט' ,colspan : 3},
-    { name: 'הערות' ,colspan : 1},
-    { name: 'כמות' ,colspan : 1},
-    { name: 'מחיר' ,colspan : 1},
-    { name: 'חיוב ספק' ,colspan : 1},
-    { name: 'חיוב לקוח' ,colspan : 1},
-    { icon: 'delete.svg' ,colspan : 1},
+    { name: 'תאריך' },
+    { name: 'ספק' },
+    { name: 'פריט', width: '250px' },
+    { name: 'הערות' },
+    { name: 'כמות' },
+    { name: 'מחיר' },
+    { name: 'חיוב ספק' },
+    { name: 'חיוב לקוח' },
+    { icon: 'delete.svg' },
   ];
 }
 
