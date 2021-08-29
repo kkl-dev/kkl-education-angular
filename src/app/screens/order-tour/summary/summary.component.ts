@@ -17,8 +17,7 @@ export class SummaryComponent implements OnInit {
   public toggleItems(index: number) {
     if (this.activateIndex.includes(index)) {
       this.activateIndex = this.activateIndex.filter(item => item !== index);
-    }
-    else {
+    } else {
       this.activateIndex.push(index);
     }
   }
@@ -26,7 +25,7 @@ export class SummaryComponent implements OnInit {
   public toggleAllItems() {
     if (this.activateIndex.length !== this.tableBodyTitles.length) {
       for (let i = 0; i < this.tableBodyTitles.length; i++) {
-        if(!this.activateIndex.includes(i)){
+        if (!this.activateIndex.includes(i)) {
           this.activateIndex.push(i);
         }
       }
@@ -35,8 +34,8 @@ export class SummaryComponent implements OnInit {
     }
   }
 
-  public mySwitch(i: number): any {
-    switch (i) {
+  public mySwitch(n: number): any {
+    switch (n) {
       case 0:
         return this.activity;
       case 1:
@@ -48,35 +47,35 @@ export class SummaryComponent implements OnInit {
   public activity: Array<object> = [
     {
       date: '15.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: true
     },
     {
       date: '16.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: true
     },
     {
       date: '17.06.21', supplier: 'נס הרים', item: 'אירוח בקיתות למוסדות חינוך - אמצע שבוע', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: true
     }
   ];
   public transportation: Array<object> = [
     {
       date: '15.06.21', supplier: 'ספקים שונים', item: 'אוטובוס - יום מלא', comments: 'בית ספר תמיר - נס הרים',
-      amount: 2, supplierCharge: 0, customerBilling: 7818
+      amount: 2, supplierCharge: 0, customerBilling: 7818, customerOrder: false
     },
     {
       date: '16.06.21', supplier: 'נס הרים', item: 'ניווט ביער -נס הרים', comments: 'לקוח מזמין',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: false
     }
   ];
   public economy: Array<object> = [
     {
       date: '15.06.21', supplier: 'שבולת בע"מ', item: 'ארוח בוקר בהגשה', comments: '',
-      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120
+      amount: 15, price: 870, supplierCharge: 680, customerBilling: 120, customerOrder: false
     },
     {
       date: '16.06.21', supplier: 'שבולת בע"מ', item: '150', comments: 'לקוח מזמין',
-      amount: 150, price: 0, supplierCharge: 135, customerBilling: 1218
+      amount: 150, price: 0, supplierCharge: 135, customerBilling: 1218, customerOrder: false
     }
   ];
   public tableBodyTitles: Array<object> = [
@@ -87,7 +86,7 @@ export class SummaryComponent implements OnInit {
   public tableTitles: Array<object> = [
     { name: 'תאריך' },
     { name: 'ספק' },
-    { name: 'פריט' },
+    { name: 'פריט', width: '250px' },
     { name: 'הערות' },
     { name: 'כמות' },
     { name: 'מחיר' },
