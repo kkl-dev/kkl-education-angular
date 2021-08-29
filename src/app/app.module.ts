@@ -45,6 +45,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
 import { EducationComponent } from './screens/search/education/education.component';
+import { MapsComponent } from './screens/education-results/maps/maps.component';
+import { ApiModule } from './api/api.module'
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
@@ -139,7 +141,8 @@ import { FlexTableComponent } from './components/grid/flex-table/flex-table.comp
     FilledNightComponent,
     TransportDetailsComponent,
     FlexRowComponent,
-    FlexTableComponent
+    FlexTableComponent,
+    MapsComponent
   ],
   imports: [
     BrowserModule,
@@ -153,6 +156,7 @@ import { FlexTableComponent } from './components/grid/flex-table/flex-table.comp
     FormsModule,
     ReactiveFormsModule,
     AirbnbCalendarModule,
+    ApiModule
   ],
   providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, DatePipe],
   bootstrap: [AppComponent],
