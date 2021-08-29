@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ScheduleModel } from '../../models/schedule.model';
+import { TransportModel } from '../../models/transport-model';
 
 @Component({
   selector: 'app-tour-panel',
