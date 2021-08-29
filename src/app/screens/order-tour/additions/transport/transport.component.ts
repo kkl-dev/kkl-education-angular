@@ -10,6 +10,7 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
+import { TableCellModel } from 'src/app/utilities/models/TableCell';
 
 @Component({
   selector: 'app-transport',
@@ -23,6 +24,10 @@ export class TransportComponent implements OnInit {
 
   public form: FormGroup;
   public editMode: boolean = false;
+
+
+  public columns: TableCellModel[];
+
 
   public details: QuestionBase<string>[] = [
     new QuestionTextbox({
@@ -189,11 +194,15 @@ export class TransportComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onClick() {
+  public onSave() {
     if (this.form) {
       this.editMode = !this.editMode;
       this.form.disable();
     }
+
+
+
+
   }
 
   public onEdit() {
