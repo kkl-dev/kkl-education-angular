@@ -17,8 +17,7 @@ export class SummaryComponent implements OnInit {
   public toggleItems(index: number) {
     if (this.activateIndex.includes(index)) {
       this.activateIndex = this.activateIndex.filter(item => item !== index);
-    }
-    else {
+    } else {
       this.activateIndex.push(index);
     }
   }
@@ -26,7 +25,7 @@ export class SummaryComponent implements OnInit {
   public toggleAllItems() {
     if (this.activateIndex.length !== this.tableBodyTitles.length) {
       for (let i = 0; i < this.tableBodyTitles.length; i++) {
-        if(!this.activateIndex.includes(i)){
+        if (!this.activateIndex.includes(i)) {
           this.activateIndex.push(i);
         }
       }
@@ -35,8 +34,8 @@ export class SummaryComponent implements OnInit {
     }
   }
 
-  public mySwitch(i: number): any {
-    switch (i) {
+  public mySwitch(n: number): any {
+    switch (n) {
       case 0:
         return this.activity;
       case 1:
@@ -85,15 +84,15 @@ export class SummaryComponent implements OnInit {
     { name: 'כלכלה', amount: 3, price: 2610, supplierCharge: 2040, customerBilling: 360 }
   ];
   public tableTitles: Array<object> = [
-    { name: 'תאריך' },
-    { name: 'ספק' },
-    { name: 'פריט' },
-    { name: 'הערות' },
-    { name: 'כמות' },
-    { name: 'מחיר' },
-    { name: 'חיוב ספק' },
-    { name: 'חיוב לקוח' },
-    { icon: 'delete.svg' },
+    { name: 'תאריך' ,colspan : 1},
+    { name: 'ספק' ,colspan : 1},
+    { name: 'פריט' ,colspan : 3},
+    { name: 'הערות' ,colspan : 1},
+    { name: 'כמות' ,colspan : 1},
+    { name: 'מחיר' ,colspan : 1},
+    { name: 'חיוב ספק' ,colspan : 1},
+    { name: 'חיוב לקוח' ,colspan : 1},
+    { icon: 'delete.svg' ,colspan : 1},
   ];
 }
 
