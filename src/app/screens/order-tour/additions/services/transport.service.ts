@@ -88,7 +88,7 @@ export class TransportService {
 
   public locations: QuestionBase<string | Date>[] = [
     new QuestionSelect({
-      key: 'dropDownDate',
+      key: 'pickUpDate',
       icon: 'date_range',
       label: 'תאריך איסוף',
       type: 'select',
@@ -104,7 +104,7 @@ export class TransportService {
     }),
 
     new QuestionTextbox({
-      key: 'dropDownHour',
+      key: 'pickUpHour',
       label: 'שעת איסוף',
       icon: 'schedule',
       type: 'time',
@@ -134,7 +134,7 @@ export class TransportService {
     }),
 
     new QuestionSelect({
-      key: 'pickUpDate',
+      key: 'dropDownDate',
       label: 'תאריך פיזור',
       icon: 'date_range',
       validations: [Validators.required],
@@ -150,7 +150,7 @@ export class TransportService {
     }),
 
     new QuestionTextbox({
-      key: 'pickUpHour',
+      key: 'dropDownHour',
       label: 'שעת פיזור',
       icon: 'schedule',
       type: 'time',

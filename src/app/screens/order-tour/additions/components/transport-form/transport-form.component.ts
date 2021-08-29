@@ -41,7 +41,7 @@ export class TransportFormComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.editMode && this.form) {
-      this.form.disable();
+      // this.form.disable();
     }
   }
 
@@ -53,11 +53,12 @@ export class TransportFormComponent implements OnInit, AfterViewInit {
 
     this.transport = TransportModel.create(this.form.value);
 
+    console.log(this.transport)
+
     // find if object already in a schedule
   }
 
   public onEdit() {
-    console.log(this.form);
     this.editMode = false;
     this.form.enable();
   }

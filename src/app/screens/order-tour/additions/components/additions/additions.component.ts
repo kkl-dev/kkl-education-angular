@@ -6,7 +6,6 @@ import { AdditionsService } from '../../services/additions.service';
 import { TourModel } from '../../models/tour.model';
 
 import { tourTransport } from 'src/mock_data/transport';
-import { TransportModel } from '../../models/transport-model';
 import { TourService } from '../../services/tour.service';
 
 export interface TourDayModel {
@@ -38,7 +37,6 @@ export class AdditionsComponent implements OnInit {
     this.tour = this.tourService.getTour();
 
     this.cards$ = this.additionsService.navigationCards$;
-    
     this.additionsService.emitSchedule(this.tour.schedule);
     this.schedule$ = this.additionsService.schedule$;
 
