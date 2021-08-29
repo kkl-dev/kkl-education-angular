@@ -1,4 +1,4 @@
-export interface NavigationCardModel {
+export interface IconCardModel {
   title? : string,
   path? : string,
   svgUrl? : string,

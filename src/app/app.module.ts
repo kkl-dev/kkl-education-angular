@@ -68,6 +68,7 @@ import { DashboardCardComponent } from './components/dashboard-card/dashboard-ca
 import { FilledNightComponent } from './screens/order-tour/sleeping-options/filled-night/filled-night.component';
 import { TransportDetailsComponent } from './screens/order-tour/additions/transport-details/transport-details.component';
 import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
+import { SummaryComponent } from './screens/order-tour/summary/summary.component';
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
 import { FormComponent } from './components/form/form/form.component';
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
@@ -141,9 +142,12 @@ import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.
     FilledNightComponent,
     TransportDetailsComponent,
     FlexRowComponent,
+    SummaryComponent,
+    FlexRowComponent,
     FlexTableComponent,
     FormComponent,
-    FacilitiesComponent
+    FacilitiesComponent,
+
   ],
   imports: [
     BrowserModule,

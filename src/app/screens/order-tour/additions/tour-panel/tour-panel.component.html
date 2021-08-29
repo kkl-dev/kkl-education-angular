@@ -1,14 +1,14 @@
 <div class="tour-container">
   <div class="tour-header">
     <app-typography [size]="18" [bold]="600" color="primary">
-      יום {{ i }} : {{ tour.date | date: "M/d/yy" }}
+      יום {{ i }} : {{ schedule.date | date: "M/d/yy" }}
     </app-typography>
   </div>
   <div class="tour-days">
     <mat-accordion [displayMode]="'gutter'">
       <ng-container>
         <app-expend-panel
-          *ngFor="let location of tour.locations"
+          *ngFor="let location of schedule.locations"
           class="small"
           matBadge="!"
           matBadgeSize="small"
@@ -21,9 +21,9 @@
               [bold]="600"
               [size]="12"
               fxFlex="6"
-              >{{ location.date | date: "HH:mm" }}</app-typography
+              >{{ location.pickUpDate | date: "HH:mm" }}</app-typography
             >
-            <app-typography [size]="18">{{ location.pickup }} - {{location.dropdown}}</app-typography>
+            <app-typography [size]="18">{{ location.pickupLocation }} - {{location.dropdownLocation }}</app-typography>
           </div>
 
           <div description></div>

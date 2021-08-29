@@ -9,6 +9,7 @@ import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
 import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
+import { SummaryComponent } from './screens/order-tour/summary/summary.component';
 import { SearchComponent } from './screens/search/search.component';
 
 const routes: Routes = [
@@ -45,6 +46,10 @@ const routes: Routes = [
           {
             path: 'additions',
             component: AdditionsComponent,
+          },
+          {
+            path: 'summary',
+            component: SummaryComponent
           },
         ],
       },
