@@ -92,6 +92,14 @@ export class TransportService {
       icon: 'date_range',
       label: 'תאריך איסוף',
       validations: [Validators.required],
+      inputProps: {
+        options: [
+          { key: 'יום 1', value: '1' },
+          { key: 'יום 2', value: '2' },
+          { key: 'יום 3', value: '3' },
+          { key: 'יום 4', value: '4' },
+        ],
+      },
     }),
 
     new QuestionTextbox({
@@ -129,6 +137,14 @@ export class TransportService {
       label: 'תאריך פיזור',
       icon: 'date_range',
       validations: [Validators.required],
+      inputProps: {
+        options: [
+          { key: 'יום 1', value: '1' },
+          { key: 'יום 2', value: '2' },
+          { key: 'יום 3', value: '3' },
+          { key: 'יום 4', value: '4' },
+        ],
+      },
     }),
 
     new QuestionTextbox({

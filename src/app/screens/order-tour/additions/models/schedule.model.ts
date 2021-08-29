@@ -10,5 +10,6 @@ export class ScheduleModel {
     public transport? : TransportModel
   ) {
     this.locations = this.locations || [new LocationModel()]
+    this.transport = this.transport || new TransportModel()
   }
 }

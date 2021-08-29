@@ -19,29 +19,7 @@
         הוספה
       </button>
     </div>
-    <div class="tour-title-container" fxLayout="row" fxLayoutAlign="start">
-      <div>
-        <app-typography [size]="24">
-          {{ tour.title }}
-        </app-typography>
-      </div>
-      <div fxFlex="55" fxLayout="row" fxLayoutAlign="start end">
-        <div fxFlex="3">
-          <app-icon
-            key="fiber_manual_record"
-            type="mat"
-            color="primary"
-            scale="0.3"
-          ></app-icon>
-        </div>
-        <!-- <span> &bull; </span> -->
-        <div fxLayout="column" fxLayoutAlign="end center">
-          <app-typography [size]="16">
-            {{ tour.id }}
-          </app-typography>
-        </div>
-      </div>
-    </div>
+    <app-tour-title [value]="tour.title" [id]="tour.id"></app-tour-title>
     <div *ngIf="addSchedule">
       <app-tour-panel [schedule]="schedule"></app-tour-panel>
     </div>

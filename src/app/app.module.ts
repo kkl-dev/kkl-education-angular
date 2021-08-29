@@ -76,6 +76,7 @@ import { TourPanelComponent } from './screens/order-tour/additions/components/to
 import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
 import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
 import { TransportModel } from './screens/order-tour/additions/models/transport-model';
+import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.component';
 
 @NgModule({
   declarations: [
@@ -153,6 +154,7 @@ import { TransportModel } from './screens/order-tour/additions/models/transport-
     FacilitiesComponent,
     FlexTableComponent,
     MapsComponent,
+    TourTitleComponent,
   ],
   imports: [
     BrowserModule,
