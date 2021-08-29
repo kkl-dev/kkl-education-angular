@@ -40,14 +40,10 @@
       ></textarea>
 
       <!-- icons -->
-      <!-- <mat-icon matPrefix>{{
-        controlType === "select" ? "keyboard_arrow_down" : icon
-      }}</mat-icon> -->
-
       <app-icon
         matPrefix
         [color]="disabled ? 'warn' : 'primary'"
-        [key]="controlType === 'select' ? 'keyboard_arrow_down' : icon"
+        [key]="controlType === 'select' ? icon|| 'keyboard_arrow_down' : icon"
         type="mat"
       ></app-icon>
 

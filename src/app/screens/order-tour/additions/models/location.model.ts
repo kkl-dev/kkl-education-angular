@@ -2,6 +2,7 @@ export class LocationModel {
 
   constructor(
     public pickUpDate?: Date,
+    public pickUpHour?: Date,
     public pickupLocation?: string,
     public dropdownLocation?: string
   ) {
