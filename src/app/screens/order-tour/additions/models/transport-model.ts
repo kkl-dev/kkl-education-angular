@@ -60,17 +60,13 @@ export class TransportLocationsModel {
 })
 export class TransportModel {
   constructor(
-    public id?: string,
     public details?: TransportDetailsModel,
     public locations?: TransportLocationsModel,
     public comments?: string
-  ) {
-    this.id = uuid.v4();
-  }
+  ) {}
 
   static create(transport: TransportModel) {
     return new TransportModel(
-      transport.id,
       TransportDetailsModel.create(transport.details),
       TransportLocationsModel.create(transport.locations),
       transport.comments
