@@ -3,9 +3,9 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Observable } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
 import { tourTransport } from 'src/mock_data/transport';
-import { LocationModel } from 'src/app/screens/order-tour/additions/models/LocationModel';
-import { TourTransportlModel } from './models/TourTransportlModel';
-import { SchedualeModel } from './models/ScheduleModel';
+import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
+import { TourTransportlModel } from './models/tour-transport.model';
+import { SchedualeModel } from './models/schedule.model';
 
 export interface TourDayModel {
   date: Date;

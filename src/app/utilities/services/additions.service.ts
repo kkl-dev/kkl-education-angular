@@ -1,8 +1,8 @@
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { LocationModel } from '../../screens/order-tour/additions/models/LocationModel';
-import { SchedualeModel } from 'src/app/screens/order-tour/additions/models/ScheduleModel';
+import { LocationModel } from '../../screens/order-tour/additions/models/location.model';
+import { SchedualeModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
 
 @Injectable({
   providedIn: 'root'
