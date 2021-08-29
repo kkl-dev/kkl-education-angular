@@ -7,15 +7,32 @@
     .header {
         display: flex;
         flex-direction: row-reverse;
+        align-items: center;
         background: #f3f3f3;
-    }
-    .arrows {
-        background: color(primary);
-        .mat-icon {
-            color: white;
+        p {
+            background: #ffffff;
+            padding: 10px;
         }
-        .mat-icon:hover {
-            cursor: pointer;
+        .arrows {
+            background: color(primary);
+            .mat-icon {
+                color: white;
+            }
+            .mat-icon:hover {
+                cursor: pointer;
+            }
+        }
+        select {
+            background: color(primary);
+            color: white;
+            direction: rtl;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+        option {
+            border: 1px solid #e5e5e5;
+            padding: 10px;
         }
     }
     * {
@@ -29,4 +46,15 @@
 .content-2 {
     display: flex;
     flex: 1;
+}
+.square {
+    height: 12px;
+    width: 12px;
+    display: inline-block;
+}
+
+.description {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
 }
