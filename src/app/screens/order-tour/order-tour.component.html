@@ -36,7 +36,7 @@
         nextUrl="nextPage"
         [lastPage]="steps.length"
         (changePage)="changeActiveStepBottomNavigation($event)"
-        title="המשך"
+        [title]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"
       ></app-bottom-navigation>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
 
   @Input() public prefix: string = '';
   @Input() public showStatus: boolean = true;
-  @Input() public status: NavigationCardModel[] = [];
+  @Input() public status: IconCardModel[] = [];
 
   public isOpen: boolean = true;
 

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +9,7 @@ import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 export class DashboardComponent {
   public activeRoute: string = '';
 
-  public topCards: NavigationCardModel[] = [
+  public topCards: IconCardModel[] = [
     {
       svgUrl: 'calendar',
       title: 'בדיקת זמינות',
@@ -21,7 +21,7 @@ export class DashboardComponent {
       path: 'search',
     },
   ];
-  public bottomCards: NavigationCardModel[] = [
+  public bottomCards: IconCardModel[] = [
     {
       svgUrl: 'destination',
       title: 'הטיולים שלי',

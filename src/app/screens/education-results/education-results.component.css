@@ -1,6 +1,11 @@
 .education-results {
   position: relative;
+  height: calc(100% - 90px);
   z-index: 100;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -13,104 +18,32 @@
 
 .education-results__right {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   width: 50%;
   text-align: center;
   background-color: white;
 }
 
-.education-results__right-header {
-  margin-bottom: 40px;
-  color: #66a3d6;
-}
-
-.education-results__right-availability {
-  direction: rtl;
-  display: flex;
-  padding: 0 100px;
-  margin-bottom: 40px;
-}
-
-.education-results__right-availability-item {
-  display: flex;
-  margin: 0;
-  padding-bottom: 10px;
-  border-bottom: 3px solid #dcdcdc;
-}
-
-.education-results__right-availability > * {
-  flex: 1;
-}
-
-.education-results__right-availability-item-text {
-  font-size: 16px;
-  margin-left: auto;
-  margin-right: 10px;
-}
-
-.education-results__right-availability-item-date {
-  margin-right: auto;
-  font-size: 18px;
-}
-
-.education-results__right-sleep-areas {
-  padding: 0 100px;
-  direction: rtl;
+.education-results__right-sleeping-options-headline {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 17px;
+  font-weight: bold;
   text-align: right;
 }
 
-.education-results__right-sleep-areas-headline {
-  font-size: 17px;
-  margin-bottom: 20px;
-}
-
-.education-results__right-sleep-areas-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  text-align: center;
-  border-bottom: 1px solid #f9f9f9;
-  padding-bottom: 40px;
-}
-
-.education-results__right-sleep-areas-options-item {
-  display: flex;
-  text-align: center;
-  align-self: center;
-  gap: 10px;
-}
-
-.education-results__right-sleep-areas-options-item > * {
-  margin: 0;
-  padding: 0;
-}
-
-.education-results__right-sleep-areas-options-item-svg * {
-  width: 32.5px;
-  height: 37.5px;
-  margin-left: 5px;
-}
-
-.education-results__right-sleep-areas-options-item-count {
-  margin-right: 10px;
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-}
-
-.education-results__right-sleep-areas-options-item-count-number {
-  width: 35px;
-  height: 35px;
-  margin: auto 0;
-  background-color: #f6f6f6;
-  display: flex;
-}
-
-.education-results__right-sleep-areas-options-item-count-number > * {
-  margin: auto;
+.education-results__right-header {
+  margin-bottom: 40px;
+  color: #66a3d6;
 }
 
 .education-results__right-facilities {
@@ -121,12 +54,20 @@
 }
 
 .education-results__right-facilities-headline {
+  padding: 0 !important;
+  width: 85%;
   font-size: 17px;
-  margin-right: 80px;
+  margin: 0 auto;
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 20px;
 }
 
 .education-results__right-facilities-items {
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   row-gap: 35px;
   padding-bottom: 60px;
@@ -135,7 +76,9 @@
 
 .education-results__right-facilities-items-item {
   text-align: center;
-  flex: 1 0 25%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 25%;
+          flex: 1 0 25%;
   margin: 0 !important;
 }
 
@@ -157,8 +100,11 @@
   border: 1px solid #ffffff;
   width: 76px;
   height: 76px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   background: #eeeeee;
+  background: -webkit-gradient(linear, left bottom, left top, from(#eeeeee), to(#fefefe));
   background: linear-gradient(0deg, #eeeeee 0%, #fefefe 100%);
   -webkit-box-shadow: 0px 0px 1px 2px #e5e5e5;
   box-shadow: 0px 0px 1px 2px #e5e5e5;
@@ -198,7 +144,8 @@
   font-size: 18px;
   border-radius: 4px;
   border: none;
-  box-shadow: 0px 0px 12px 1px #448ecd;
+  -webkit-box-shadow: 0px 0px 12px 1px #448ecd;
+          box-shadow: 0px 0px 12px 1px #448ecd;
 }
 
 .education-results__right-button-container {
@@ -222,3 +169,11 @@ app-tooltip {
 .font-color-blue {
   color: #66a3d6;
 }
+
+::ng-deep .flex {
+  width: 80%;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+}
+/*# sourceMappingURL=education-results.component.css.map */
