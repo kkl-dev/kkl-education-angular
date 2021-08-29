@@ -1,26 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import {
   FormTemplate,
-  QuestionGroup,
 } from 'src/app/components/form/logic/form.service';
-import { QuestionBase } from 'src/app/components/form/logic/question-base';
-import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
-import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
-import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { TransportModel } from '../../models/transport-model';
 import { TransportService } from '../../services/transport.service';
 
+
 @Component({
-  selector: 'app-transport',
-  templateUrl: './transport.component.html',
-  styleUrls: ['./transport.component.scss'],
+  selector: 'app-transport-form',
+  templateUrl: './transport-form.component.html',
+  styleUrls: ['./transport-form.component.scss']
 })
-export class TransportComponent implements OnInit {
-  
+export class TransportFormComponent implements OnInit {
+
   @Input() location: LocationModel;
 
   public form: FormGroup;

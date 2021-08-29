@@ -71,12 +71,13 @@ import { SummaryComponent } from './screens/order-tour/summary/summary.component
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
 import { FormComponent } from './components/form/form/form.component';
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
-import { TransportComponent } from './screens/order-tour/additions/components/transport/transport.component';
-import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
+
 import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
-import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
-import { TransportModel } from './screens/order-tour/additions/models/transport-model';
+import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
 import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.component';
+import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
+import { TransportFormComponent } from './screens/order-tour/additions/components/transport-form/transport-form.component';
+import { TransportModel } from './screens/order-tour/additions/models/transport-model';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.c
     LinksComponent,
     UserInfoComponent,
     NumberToTimePipe,
+
     // LOGIN COMPS
     LoginComponent,
     LoginBackdropComponent,
@@ -127,10 +129,13 @@ import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.c
     FormInputComponent,
     SquadGroupComponent,
 
+
+    // ADDITIONS COMPONENTS
     AdditionsComponent,
-    TransportComponent,
     TourPanelComponent,
     TransportDetailsComponent,
+    TourTitleComponent,
+    TransportFormComponent,
 
     DrawerComponent,
     InfoCardComponent,
@@ -147,14 +152,13 @@ import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.c
     DashboardCardComponent,
 
     FilledNightComponent,
-    FlexRowComponent,
     SummaryComponent,
     FlexRowComponent,
     FormComponent,
     FacilitiesComponent,
     FlexTableComponent,
     MapsComponent,
-    TourTitleComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -188,5 +188,9 @@ export class TransportService {
     },
   ];
 
+  private findItemIndex(arr : any, key: string, value: any): number {
+    return arr.findIndex((item) => item[key] === value)
+  }
+
   constructor() {}
 }
