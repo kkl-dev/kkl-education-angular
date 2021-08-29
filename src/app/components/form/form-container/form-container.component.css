@@ -1,0 +1,36 @@
+.form-container {
+  width: inherit;
+  padding: 10px 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0px;
+}
+
+.form {
+  height: 100%;
+  width: 100%;
+}
+
+.form .form-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+}
+
+app-form-input {
+  width: 100%;
+}
+
+app-input-radio {
+  width: 70%;
+  height: 70%;
+}
+/*# sourceMappingURL=form-container.component.css.map */

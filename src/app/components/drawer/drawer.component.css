@@ -1,0 +1,244 @@
+.drawer {
+  position: absolute;
+  top: 0;
+  right: 0%;
+  width: 18%;
+  background-color: #ffffff;
+  z-index: 100;
+  height: 100%;
+  padding: 0 20px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.drawer__form-container {
+  height: 0px;
+  overflow: hidden;
+}
+
+.drawer__open-form-btn {
+  background-color: #448ecd;
+  color: #ffffff;
+  border: 0;
+  -webkit-box-shadow: 0px 3px 15px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 3px 15px 2px rgba(0, 0, 0, 0.2);
+  padding: 10px 18px;
+  border-radius: 5px;
+  margin-bottom: 25px;
+}
+
+.drawer__headline {
+  padding-right: 20px;
+  padding-top: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.drawer-toggle {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-shadow: 0px 3px 15px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 3px 15px 2px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 15px;
+  left: -30px;
+  padding: 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 100px;
+  display: flex;
+  background-color: #ffffff;
+}
+
+.drawer-toggle__close {
+  background-color: black;
+  position: absolute;
+  top: -10px;
+  left: -18px;
+  height: 22px;
+  width: 22px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 100px;
+  color: #ffffff;
+  -webkit-transform: translate(50%, 50%) rotate(0);
+          transform: translate(50%, 50%) rotate(0);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.drawer-toggle__close span {
+  margin: auto;
+}
+
+.drawer-toggle span {
+  margin-bottom: auto;
+}
+
+.drawer-toggle app-icon {
+  margin-top: auto;
+}
+
+.reminder {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  direction: rtl;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.reminder:hover .reminder__controllers {
+  visibility: visible;
+}
+
+.reminder__content {
+  padding-left: 10px;
+}
+
+.reminder__content-toggle-done {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-left: 5px;
+  font-size: 10px;
+}
+
+.reminder__content-toggle-done span {
+  border-radius: 100px;
+  border: 1px solid #eeeeee;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  line-height: 10px;
+  padding: 0 7px;
+  font-size: 10px;
+}
+
+.reminder__content-msg {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 16px;
+}
+
+.reminder__controllers {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  visibility: hidden;
+}
+
+.reminder__controllers-delete {
+  height: 15px;
+  width: 15px;
+  border-radius: 50px;
+  background-color: red;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.reminder__controllers-delete * {
+  height: 15px;
+  margin: auto;
+  font-size: 10px;
+  color: #ffffff;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transform: translateY(-25%);
+          transform: translateY(-25%);
+  font-weight: bold;
+}
+
+.reminder__controllers-svg {
+  height: 15px;
+  width: 15px;
+  -webkit-transform: scale(0.4);
+          transform: scale(0.4);
+  margin-left: 6px;
+}
+
+.reminder__controllers:hover {
+  visibility: visible;
+}
+
+.clear-form {
+  border: 2px solid #448ecd;
+  background-color: #ffffff;
+  color: #448ecd;
+  padding: 5px 15px;
+  z-index: 1000;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 3px 15px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 3px 15px 2px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep .btn-row {
+  grid-column: span 12;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+::ng-deep .btn {
+  margin-right: 30px;
+  background-color: #448ecd;
+  border: 0;
+  width: 60px;
+  padding: 5px 15px;
+  color: #ffffff;
+  height: 40px;
+  -webkit-box-shadow: 0px 3px 15px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 3px 15px 2px rgba(0, 0, 0, 0.2);
+}
+
+.closed {
+  right: -20% !important;
+}
+
+.closed-toggle {
+  left: -70px !important;
+}
+
+.closed-toggle-btn {
+  left: -18px !important;
+  -webkit-transform: translate(50%, 50%);
+          transform: translate(50%, 50%);
+  background-color: #37c56b;
+}
+
+.closed-toggle-btn span {
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+}
+
+.open-form {
+  height: -webkit-fit-content !important;
+  height: -moz-fit-content !important;
+  height: fit-content !important;
+  overflow: visible;
+}
+
+.marked-done {
+  background-color: #37c56b !important;
+}
+/*# sourceMappingURL=drawer.component.css.map */

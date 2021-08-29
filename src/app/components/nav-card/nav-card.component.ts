@@ -1,6 +1,5 @@
-import { AdditionsService } from '../../utilities/services/additions.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
 @Component({
   selector: 'app-nav-card',
@@ -9,12 +8,11 @@ import { NavigationCardModel } from 'src/app/utilities/models/IconCardModel';
 })
 export class NavCardComponent implements OnInit {
 
-  @Input() public item: NavigationCardModel = {  }
-  @Input() public width: NavigationCardModel = {  }
-  @Input() public height: NavigationCardModel = {  }
+  @Output() onClick: EventEmitter<IconCardModel> = new EventEmitter();
+
+  @Input() public item: IconCardModel;
 
   constructor(
-    private additionsService: AdditionsService
   ) { }
 
   ngOnInit(): void {
@@ -22,7 +20,7 @@ export class NavCardComponent implements OnInit {
 
   public onCardClick(): void {
     if (!this.item.isActive) {
-      this.additionsService.emitItem(this.item);
+      this.onClick.emit(this.item);
     }
   }
 

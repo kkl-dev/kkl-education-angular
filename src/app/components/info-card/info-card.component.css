@@ -1,6 +1,8 @@
 .education-results {
   position: relative;
   z-index: 100;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -25,12 +27,16 @@
 
 .education-results__right-availability {
   direction: rtl;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding: 0 100px;
   margin-bottom: 40px;
 }
 
 .education-results__right-availability-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin: 0;
   padding-bottom: 10px;
@@ -38,7 +44,9 @@
 }
 
 .education-results__right-availability > * {
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .education-results__right-availability-item-text {
@@ -64,19 +72,29 @@
 }
 
 .education-results__right-sleep-areas-options {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   text-align: center;
   border-bottom: 1px solid #f9f9f9;
   padding-bottom: 40px;
 }
 
 .education-results__right-sleep-areas-options-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   text-align: center;
-  align-self: center;
+  -ms-flex-item-align: center;
+      align-self: center;
   gap: 10px;
 }
 
@@ -93,11 +111,21 @@
 
 .education-results__right-sleep-areas-options-item-count {
   margin-right: 10px;
-  align-self: center;
+  -ms-flex-item-align: center;
+      align-self: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-radius: 5px;
 }
 
@@ -106,6 +134,8 @@
   height: 35px;
   margin: auto 0;
   background-color: #f6f6f6;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -126,7 +156,10 @@
 }
 
 .education-results__right-facilities-items {
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   row-gap: 35px;
   padding-bottom: 60px;
@@ -135,7 +168,9 @@
 
 .education-results__right-facilities-items-item {
   text-align: center;
-  flex: 1 0 25%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 25%;
+          flex: 1 0 25%;
   margin: 0 !important;
 }
 
@@ -157,8 +192,11 @@
   border: 1px solid #ffffff;
   width: 76px;
   height: 76px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   background: #eeeeee;
+  background: -webkit-gradient(linear, left bottom, left top, from(#eeeeee), to(#fefefe));
   background: linear-gradient(0deg, #eeeeee 0%, #fefefe 100%);
   -webkit-box-shadow: 0px 0px 1px 2px #e5e5e5;
   box-shadow: 0px 0px 1px 2px #e5e5e5;
@@ -194,7 +232,8 @@
   font-size: 18px;
   border-radius: 4px;
   border: none;
-  box-shadow: 0px  0px 12px 1px #448ecd;
+  -webkit-box-shadow: 0px  0px 12px 1px #448ecd;
+          box-shadow: 0px  0px 12px 1px #448ecd;
 }
 
 .education-results__right-button-container {
@@ -218,3 +257,4 @@ app-tooltip {
 .font-color-blue {
   color: #66a3d6;
 }
+/*# sourceMappingURL=info-card.component.css.map */

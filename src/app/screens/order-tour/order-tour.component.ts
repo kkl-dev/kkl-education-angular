@@ -41,7 +41,7 @@ export class OrderTourComponent implements OnInit {
     {
       svgUrl: 'add',
       text: 'סיכום',
-      path: 'summery',
+      path: 'summary',
     },
   ];
 

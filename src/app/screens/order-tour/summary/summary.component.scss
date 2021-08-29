@@ -1,0 +1,100 @@
+.summary {
+    margin-top: 50px;
+    font-family: Open Sans Hebrew;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    direction: rtl;
+}
+.header > div:first-child > h1{
+    font-size: 24px;
+    font-weight: 600;
+    font-family: Open Sans Hebrew;
+}
+.header > div:last-child {
+    display: flex;
+}
+.header > div {
+    * {
+        margin: 20px;
+        padding: 5px;
+    }
+}
+.header-menu {
+    text-decoration: underline;
+    color: #707070;
+    font-weight: 600;
+}
+.header-menu > p:hover {
+    cursor: pointer;
+}
+// table css
+#border {
+    border-bottom: 1px solid #448ecd;
+    td {
+        padding-top: 40px;
+    }
+    td:first-child {
+        color: #448ecd;
+        text-align: right;
+    }
+    p {
+        margin: 0;
+        border-bottom: 2px solid;
+        display: inline;
+    }
+}
+.toggle-table {
+    font-weight: 500;
+    border-bottom: 1px solid rgb(112, 112, 112, 0.15);
+    td {
+        padding: 10px;
+    }
+}
+table {
+    text-align: center;
+    width: 100%;
+    direction: rtl;
+    color: white;
+    border-collapse: collapse;
+    svg {
+        fill: white;
+    }
+    thead {
+        position: sticky;
+        top: 0;
+        background: #448ecd;
+        th{
+            padding: 5px;
+        }
+    }
+    tbody {
+        color: #707070;
+        font-weight: 600;
+        svg path {
+            fill: #448ecd;
+        }
+        svg:hover{
+            cursor: pointer;
+        }
+    }
+}
+.order-summary{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 20px;
+    margin: 10px;
+    color: #707070;
+    span{
+        margin: 40px;
+    }
+    div{
+        display: flex;
+    }
+    div:last-child{
+        font-weight: 600;
+    }
+}
