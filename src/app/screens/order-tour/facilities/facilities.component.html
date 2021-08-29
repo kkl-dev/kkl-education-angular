@@ -20,6 +20,12 @@
                 <div class="square" [ngStyle]="{background: '#d220ba'}"></div>
                 <p>תוספות בתשלום</p>
             </div>
+            <div class="timeline">
+                <div class="item" *ngFor='let item of timesArray'>
+                    <p>{{item}}</p>
+                    <hr>
+                </div>
+            </div>
         </div>
     </div>
     <div class="content-2"></div>
