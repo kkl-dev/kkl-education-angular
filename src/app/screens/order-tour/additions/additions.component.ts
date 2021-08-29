@@ -3,9 +3,8 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Observable } from 'rxjs';
 import { AdditionsService } from '../../../utilities/services/additions.service';
 import { tourTransport } from 'src/mock_data/transport';
-import { LocationModel } from 'src/app/screens/order-tour/additions/models/LocationModel';
 import { TourTransportlModel } from './models/TourTransportlModel';
-import { SchedualeModel } from './models/ScheduleModel';
+import { ScheduleModel } from './models/ScheduleModel';
 
 export interface TourDayModel {
   date: Date;
@@ -21,8 +20,7 @@ export class AdditionsComponent implements OnInit {
 
   public tour: TourTransportlModel
   public cards$: Observable<IconCardModel[]>
-  public schedule$: Observable<SchedualeModel[]>;
-  public locations$: Observable<LocationModel[]>;
+  public schedule$: Observable<ScheduleModel[]>;
 
   constructor(private additionsService: AdditionsService) { }
 
@@ -31,7 +29,6 @@ export class AdditionsComponent implements OnInit {
     this.cards$ = this.additionsService.navigationCards$;
     this.additionsService.emitSchedule(this.tour.schedule)
     this.schedule$ = this.additionsService.schedule$
-    this.locations$ = this.additionsService.locations$
   }
 
   ngOnDestroy(): void {
@@ -39,11 +36,7 @@ export class AdditionsComponent implements OnInit {
 
 
   public onAdd() {
-    // ? add schedule or locations //
-    // console.log(1)
-    // console.log(this.tour.locations)
-    this.tour.schedule.push(new SchedualeModel())
-    // console.log(this.tour.locations)
+    this.tour.schedule.unshift(new ScheduleModel())
     this.additionsService.emitSchedule(this.tour.schedule)
   }
 }
