@@ -65,9 +65,6 @@ table {
         position: sticky;
         top: 0;
         background: #448ecd;
-        th{
-            padding: 5px;
-        }
     }
     tbody {
         color: #707070;
@@ -83,11 +80,11 @@ table {
 .order-summary{
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    align-content: flex-start;
     padding: 20px;
     margin: 10px;
     color: #707070;
+    margin-left: 45px;
+    align-items: flex-start;
     span{
         margin: 40px;
     }
