@@ -12,7 +12,7 @@ export const tourTransport: TourModel = {
       1,
       new Date(),
       [new LocationModel(new Date(), new Date(), 'נס-הרים', 'בי"ס תמיר')],
-      new TransportModel(new TransportDetailsModel(), new TransportLocationsModel(), "הערה")
+      new TransportModel(new TransportDetailsModel("שמעון", "ddd", 1), new TransportLocationsModel(), "הערה")
     ),
   ],
 };

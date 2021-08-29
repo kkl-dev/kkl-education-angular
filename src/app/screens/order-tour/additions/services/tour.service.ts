@@ -22,8 +22,6 @@ export class TourService {
     const item = this.tour.schedule.find(
       (schedule: ScheduleModel) => schedule.id === value
     );
-
-    console.log(item);
   }
 
   private findItemIndex(key: string, value: any): number {

@@ -24,7 +24,7 @@ export class FormComponent implements OnInit {
   @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() hasButton: boolean = false;
-  @Input() editMode: boolean = false;
+  @Input() editMode: boolean ;
   @Input() slots: {
     button?: ElementRef;
     group?: ElementRef;
@@ -35,6 +35,8 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formService.setFormGroup(this.formTemplate);
+    this.valueChange.emit(this.form);
+    console.log(1)
     this.subscribeToFormValues();
   }
 

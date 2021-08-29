@@ -11,7 +11,6 @@ import { TransportModel } from '../models/transport-model';
   providedIn: 'root',
 })
 export class TransportService {
-
   public details: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'supplier',
@@ -169,6 +168,7 @@ export class TransportService {
       cols: 6,
       rows: 6,
       offset: 1,
+      value: '',
     }),
   ];
 
@@ -195,22 +195,22 @@ export class TransportService {
     return arr.findIndex((item) => item[key] === value);
   }
 
-  public setInitialValues(questions : QuestionBase<string| number | Date>[], data : any) {
-
-    console.log(questions)
-    console.log(data)
-
-    questions.map((control : QuestionBase<string| number | Date>) => {
-
-      console.log(data[control.key])
-      control.value = data[control.key]
-    })
+  public setInitialValues(
+    questions: QuestionBase<string | number | Date>[],
+    data: any
+  ) {
+    questions.map((control: QuestionBase<string | number | Date>) => {
+      control.value = data[control.key];
+      if (control.key === 'comments') {
+        control.value = data;
+      }
+    });
   }
 
-  public setFormValues(data : TransportModel) {
-    this.questionGroups.map((group : QuestionGroup) => {
-      this.setInitialValues(group.questions, data[group.key])
-    })
+  public setFormValues(data: TransportModel) {
+    this.questionGroups.map((group: QuestionGroup) => {
+      this.setInitialValues(group.questions, data[group.key]);
+    });
   }
 
   constructor() {}
