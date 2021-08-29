@@ -76,6 +76,7 @@ import { FormComponent } from './components/form/form/form.component';
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
 import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
 import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
+import { SimpleCardComponent } from './components/simple-card/simple-card.component';
 
 
 @NgModule({
@@ -153,7 +154,8 @@ import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
     FlexTableComponent,
     MapsComponent,
     TimelineCardComponent,
-    SvgIconComponent
+    SvgIconComponent,
+    SimpleCardComponent
   ],
   imports: [
     BrowserModule,
