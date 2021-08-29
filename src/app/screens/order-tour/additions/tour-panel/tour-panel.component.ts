@@ -13,6 +13,5 @@ export class TourPanelComponent implements OnInit {
   @Input() i: number;
 
   ngOnInit(): void {
-    console.log(this.tour);
   }
 }
