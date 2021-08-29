@@ -87,32 +87,19 @@ export class TransportService {
   ].reverse();
 
   private locations: QuestionBase<string | Date>[] = [
+    new QuestionSelect({
+      key: 'dropDownDate',
+      icon: 'date_range',
+      label: 'תאריך איסוף',
+      validations: [Validators.required],
+    }),
+
     new QuestionTextbox({
-      key: 'pickUpHour',
-      label: 'שעת פיזור',
+      key: 'dropDownHour',
+      label: 'שעת איסוף',
       icon: 'schedule',
       type: 'time',
       validations: [Validators.required],
-      inputProps: {
-        labelLength: 'extraWide',
-      },
-    }),
-
-    new QuestionCalendar({
-      key: 'pickUpDate',
-      label: 'תאריך פיזור',
-      validations: [Validators.required],
-    }),
-
-    new QuestionTextbox({
-      key: 'pickUpAddress',
-      label: 'כתובת איסוף',
-      value: '',
-      validations: [Validators.required],
-      icon: 'place',
-      inputProps: {
-        labelLength: 'extraWide',
-      },
     }),
 
     new QuestionTextbox({
@@ -127,19 +114,34 @@ export class TransportService {
     }),
 
     new QuestionTextbox({
-      key: 'dropDownHour',
-      label: 'שעת איסוף',
-      icon: 'schedule',
-      type: 'time',
+      key: 'pickUpAddress',
+      label: 'כתובת איסוף',
+      value: '',
+      validations: [Validators.required],
+      icon: 'place',
+      inputProps: {
+        labelLength: 'extraWide',
+      },
+    }),
+
+    new QuestionSelect({
+      key: 'pickUpDate',
+      label: 'תאריך פיזור',
+      icon: 'date_range',
       validations: [Validators.required],
     }),
 
-    new QuestionCalendar({
-      key: 'dropDownDate',
-      label: 'תאריך איסוף',
+    new QuestionTextbox({
+      key: 'pickUpHour',
+      label: 'שעת פיזור',
+      icon: 'schedule',
+      type: 'time',
       validations: [Validators.required],
+      inputProps: {
+        labelLength: 'extraWide',
+      },
     }),
-  ];
+  ].reverse();
 
   private comments: QuestionBase<string>[] = [
     new QuestionTextarea({

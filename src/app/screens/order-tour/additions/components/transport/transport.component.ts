@@ -20,6 +20,7 @@ import { TransportService } from '../../services/transport.service';
   styleUrls: ['./transport.component.scss'],
 })
 export class TransportComponent implements OnInit {
+  
   @Input() location: LocationModel;
 
   public form: FormGroup;
