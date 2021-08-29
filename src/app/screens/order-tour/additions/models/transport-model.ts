@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root',
+})
+
 export class TransportDetailsModel {
   constructor(
     public supplier: string,
@@ -12,7 +16,7 @@ export class TransportDetailsModel {
     public total: number
   ) {}
 
-  static create(transportDetails: TransportDetailsModel) {
+    static create(transportDetails: TransportDetailsModel) {
     return new TransportDetailsModel(
       transportDetails.supplier,
       transportDetails.item,
@@ -25,6 +29,10 @@ export class TransportDetailsModel {
     );
   }
 }
+
+@Injectable({
+  providedIn: 'root',
+})
 
 export class TransportLocationsModel {
   constructor(
@@ -48,15 +56,17 @@ export class TransportLocationsModel {
   }
 }
 
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class TransportModel {
   constructor(
-    public id: number,
-    public details: TransportDetailsModel,
-    public locations: TransportLocationsModel,
-    public comments: string
+    public id?: number,
+    public details?: TransportDetailsModel,
+    public locations?: TransportLocationsModel,
+    public comments?: string
   ) {}
 
   static create(transport: TransportModel) {

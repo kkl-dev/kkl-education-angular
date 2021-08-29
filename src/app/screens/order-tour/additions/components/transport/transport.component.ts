@@ -11,6 +11,7 @@ import { QuestionTextarea } from 'src/app/components/form/logic/question-textare
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
+import { TransportModel } from '../../models/transport-model';
 import { TransportService } from '../../services/transport.service';
 
 @Component({
@@ -28,13 +29,16 @@ export class TransportComponent implements OnInit {
 
   public formTemplate: FormTemplate = {
     hasGroups: true,
-    // questionsGroups: this.questionGroups,
+    questionsGroups: []
   };
 
-  constructor(private TransportService: TransportService) {}
+  constructor(
+    private transportService: TransportService,
+    private transport : TransportModel
+    ) {}
 
   ngOnInit(): void {
-    this.formTemplate.questionsGroups = this.TransportService.questionGroups
+    this.formTemplate.questionsGroups = this.transportService.questionGroups
   }
 
   public onSave() {
@@ -42,6 +46,8 @@ export class TransportComponent implements OnInit {
       this.editMode = !this.editMode;
       this.form.disable();
     }
+
+    console.log(this.transport)
 
     // find if object already in a schedule
   }

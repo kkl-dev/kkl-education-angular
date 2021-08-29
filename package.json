@@ -36,6 +36,7 @@
     "sass": "^1.37.5",
     "svg-icon": "^0.8.2",
     "tslib": "^2.2.0",
+    "uuidv4": "^6.2.12",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

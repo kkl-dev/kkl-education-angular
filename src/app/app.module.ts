@@ -46,7 +46,7 @@ import { BottomNavigationComponent } from './components/bottom-navigation/bottom
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
 import { EducationComponent } from './screens/search/education/education.component';
 import { MapsComponent } from './screens/education-results/maps/maps.component';
-import { ApiModule } from './api/api.module'
+import { ApiModule } from './api/api.module';
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
@@ -75,7 +75,7 @@ import { TransportComponent } from './screens/order-tour/additions/components/tr
 import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
 import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
 import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
-
+import { TransportModel } from './screens/order-tour/additions/models/transport-model';
 
 @NgModule({
   declarations: [
@@ -152,7 +152,7 @@ import { TransportDetailsComponent } from './screens/order-tour/additions/compon
     FormComponent,
     FacilitiesComponent,
     FlexTableComponent,
-    MapsComponent
+    MapsComponent,
   ],
   imports: [
     BrowserModule,
@@ -166,9 +166,13 @@ import { TransportDetailsComponent } from './screens/order-tour/additions/compon
     FormsModule,
     ReactiveFormsModule,
     AirbnbCalendarModule,
-    ApiModule
+    ApiModule,
   ],
-  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, DatePipe],
+  providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: TransportModel, useValue: new TransportModel() },
+    DatePipe,
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
