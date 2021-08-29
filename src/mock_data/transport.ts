@@ -1,7 +1,7 @@
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
 import { TourTransportModel } from 'src/app/screens/order-tour/additions/models/tour-transport.model';
-
+ 
 export const tourTransport: TourTransportModel =
 {
   id: 3849383,
