@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
   FormTemplate,
@@ -8,51 +8,54 @@ import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { TransportModel } from '../../models/transport-model';
 import { TransportService } from '../../services/transport.service';
 
-
 @Component({
   selector: 'app-transport-form',
   templateUrl: './transport-form.component.html',
-  styleUrls: ['./transport-form.component.scss']
+  styleUrls: ['./transport-form.component.scss'],
 })
-export class TransportFormComponent implements OnInit {
-
-  @Input() location: LocationModel;
+export class TransportFormComponent implements OnInit, AfterViewInit {
+  @Input() public location: LocationModel;
+  @Input() public transport: TransportModel;
+  @Input() public editMode: boolean;
 
   public form: FormGroup;
-  public editMode: boolean = false;
-
   public columns: TableCellModel[];
 
   public formTemplate: FormTemplate = {
     hasGroups: true,
-    questionsGroups: []
+    questionsGroups: [],
   };
 
-  constructor(
-    private transportService: TransportService,
-    private transport : TransportModel
-    ) {}
+  constructor(private transportService: TransportService) {}
 
   ngOnInit(): void {
-    this.formTemplate.questionsGroups = this.transportService.questionGroups
+    if (this.editMode) {
+      this.transportService.setFormValues(this.transport);
+    }
+
+    this.formTemplate.questionsGroups = this.transportService.questionGroups;
   }
 
-  public onSave() {
+  ngAfterViewInit(): void {
+    if (this.editMode && this.form) {
+      // this.form.disable();
+    }
+  }
+
+  public onSave(): void {
     if (this.form) {
-      this.editMode = !this.editMode;
+      this.editMode = true;
       this.form.disable();
     }
     // find if object already in a schedule
   }
 
   public onEdit() {
-    this.editMode = !this.editMode;
+    this.editMode = false;
     this.form.enable();
   }
 
   public onValueChange(event) {
-    if (!this.editMode) {
-      this.form = event;
-    }
+    this.form = event;
   }
 }

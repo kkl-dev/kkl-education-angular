@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
-import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { TransportModel } from '../models/transport-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransportService {
-  private details: QuestionBase<string>[] = [
+  public details: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'supplier',
       label: 'ספק',
@@ -86,11 +86,12 @@ export class TransportService {
     }),
   ].reverse();
 
-  private locations: QuestionBase<string | Date>[] = [
+  public locations: QuestionBase<string | Date>[] = [
     new QuestionSelect({
-      key: 'dropDownDate',
+      key: 'pickUpDate',
       icon: 'date_range',
       label: 'תאריך איסוף',
+      type: 'select',
       validations: [Validators.required],
       inputProps: {
         options: [
@@ -103,7 +104,7 @@ export class TransportService {
     }),
 
     new QuestionTextbox({
-      key: 'dropDownHour',
+      key: 'pickUpHour',
       label: 'שעת איסוף',
       icon: 'schedule',
       type: 'time',
@@ -133,10 +134,11 @@ export class TransportService {
     }),
 
     new QuestionSelect({
-      key: 'pickUpDate',
+      key: 'dropDownDate',
       label: 'תאריך פיזור',
       icon: 'date_range',
       validations: [Validators.required],
+      type: 'select',
       inputProps: {
         options: [
           { key: 'יום 1', value: '1' },
@@ -148,7 +150,7 @@ export class TransportService {
     }),
 
     new QuestionTextbox({
-      key: 'pickUpHour',
+      key: 'dropDownHour',
       label: 'שעת פיזור',
       icon: 'schedule',
       type: 'time',
@@ -159,13 +161,14 @@ export class TransportService {
     }),
   ].reverse();
 
-  private comments: QuestionBase<string>[] = [
+  public comments: QuestionBase<string>[] = [
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות',
       cols: 6,
       rows: 6,
       offset: 1,
+      value: '',
     }),
   ];
 
@@ -176,7 +179,7 @@ export class TransportService {
       cols: 8,
     },
     {
-      key: 'pickUp',
+      key: 'locations',
       questions: this.locations,
       cols: 6,
     },
@@ -188,8 +191,26 @@ export class TransportService {
     },
   ];
 
-  private findItemIndex(arr : any, key: string, value: any): number {
-    return arr.findIndex((item) => item[key] === value)
+  private findItemIndex(arr: any, key: string, value: any): number {
+    return arr.findIndex((item) => item[key] === value);
+  }
+
+  public setInitialValues(
+    questions: QuestionBase<string | number | Date>[],
+    data: any
+  ) {
+    questions.map((control: QuestionBase<string | number | Date>) => {
+      control.value = data[control.key];
+      if (control.key === 'comments') {
+        control.value = data;
+      }
+    });
+  }
+
+  public setFormValues(data: TransportModel) {
+    this.questionGroups.map((group: QuestionGroup) => {
+      this.setInitialValues(group.questions, data[group.key]);
+    });
   }
 
   constructor() {}
