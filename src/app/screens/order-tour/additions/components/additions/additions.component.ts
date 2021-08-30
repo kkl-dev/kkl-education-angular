@@ -32,7 +32,7 @@ export class AdditionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+ 
     this.tourService.setTour(TourModel.create(tourTransport));
     this.tour = this.tourService.getTour();
 
@@ -42,7 +42,7 @@ export class AdditionsComponent implements OnInit {
 
     this.onAdd();
   }
- 
+
   public onAdd() {
     this.schedule = new ScheduleModel();
     this.addSchedule = true;
