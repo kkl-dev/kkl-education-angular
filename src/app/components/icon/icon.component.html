@@ -1,7 +1,7 @@
 <div class="icon-container">
   <mat-icon
     [ngClass]="[color]"
-    [ngStyle]="{ 'width.px': width, 'height.px': height , 'background' : backgroundColor }"
+    [ngStyle]="{ 'width.px': width, 'height.px': height ,'transform': matScale , 'background' : backgroundColor }"
     *ngIf="type === 'svg'"
     [svgIcon]="key"
   >

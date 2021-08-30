@@ -29,11 +29,12 @@ export class SleepingOptionsFormComponent implements OnInit {
 
   freeSpacesArray: FreeSpace[] = [];
   location: string = '';
- 
-  
+
+
 
 
   constructor(private checkAvailabilityService:CheckAvailabilityService) {
+    
     this.location=this.checkAvailabilityService.checkAvailabilltyValues.sleepingPlace
     this.date=this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
@@ -41,14 +42,14 @@ export class SleepingOptionsFormComponent implements OnInit {
       new Date(2022, 11, 17)
     );
 
-    this.options = { 
-      firstCalendarDay: 0, 
-      format: 'LL/dd/yyyy', 
+    this.options = {
+      firstCalendarDay: 0,
+      format: 'LL/dd/yyyy',
 
       closeOnSelected: true,
       minDate: new Date(),
       maxDate: new Date(2022, 11, 17),
-      minYear: getYear(new Date()) - 1, 
+      minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
       freeSpacesArray: this.freeSpacesArray,
     };
@@ -71,10 +72,10 @@ export class SleepingOptionsFormComponent implements OnInit {
     return freeSpacesArrayTemp;
   }
 
-  options: CalendarOptions = { 
+  options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
- 
+
     closeOnSelected: true,
     minYear: 2019,
     maxYear: 2021,
@@ -83,7 +84,7 @@ export class SleepingOptionsFormComponent implements OnInit {
 
   public dateObjChanged(e: string) {
     if (e.includes('-')) this.emitNewDates.emit(e);
-    
+
   }
 
   ngOnInit(): void {}

@@ -19,7 +19,7 @@ export const V_SIGN = `<svg xmlns="http://www.w3.org/2000/svg"
  <path class="c" d="M 8.5 16.25 C 4.226640224456787 16.25 0.75 12.77336025238037 0.75 8.5 C 0.75 6.115330219268799 1.804280042648315 3.984380006790161 3.798870086669922 2.337510108947754 C 4.990379810333252 1.342460036277771 6.746600151062012 0.75 8.5 0.75 C 12.77336025238037 0.75 16.25 4.226640224456787 16.25 8.5 C 16.25 12.77336025238037 12.77336025238037 16.25 8.5 16.25 Z"/><path class="d" d="M 8.5 1.5 C 6.916910171508789 1.5 5.340410232543945 2.027279853820801 4.28285026550293 2.910479545593262 L 4.276379585266113 2.915849685668945 C 2.460060119628906 4.415530204772949 1.5 6.346500396728516 1.5 8.5 C 1.5 12.35980987548828 4.640190124511719 15.5 8.5 15.5 C 12.35980987548828 15.5 15.5 12.35980987548828 15.5 8.5 C 15.5 4.640190124511719 12.35980987548828 1.5 8.5 1.5 M 8.5 0 C 13.19441986083984 0 17 3.805580139160156 17 8.5 C 17 13.19441986083984 13.19441986083984 17 8.5 17 C 3.805580139160156 17 0 13.19441986083984 0 8.5 C 0 5.866430282592773 1.197699546813965 3.512599945068359 3.32135009765625 1.759169578552246 C 4.549599647521973 0.7334194183349609 6.439149856567383 0 8.5 0 Z"/></g><g transform="translate(0.631 0.581)"><path class="b" d="M18.933,9.965v.706a7.72,7.72,0,0,1-5.708,7.357,8.116,8.116,0,0,1-8.942-3.183A7.456,7.456,0,0,1,4.911,5.68a8.171,8.171,0,0,1,9.3-2.024" transform="translate(-3 -2.991)"/><path class="b" d="M23.856,6,15.89,13.974l-2.39-2.39"
  transform="translate(-7.923 -4.402)"/></g></g></svg>`;
 
-export const BOYS_GIRLS_ICON = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+export const GENDER_ICON = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 width="47" height="47" viewBox="0 0 47 47"><defs>
 <style>.gender{fill:"none";opacity:0.74;}.b{filter:url(#a);}</style><filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/><feGaussianBlur stdDeviation="3" result="b"/>
 <feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/>
@@ -228,5 +228,21 @@ export const BOTTOM_LOGO = `
  <stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#448ecd"/>
  </linearGradient></defs><path class="bottom-tree" d="M813.255,106.665V96.41H785.183l16.449-16.428-4.123-8.908-7.52,7.541V57.4L778.348,45.759V90.237l-23.264,7.541H715.391l19.847-19.846h30.12V66.972H745.512l28.05-28.05-9.571-8.908L744.828,49.177v-26l-9.59-9.592V63.534l-17.8,17.8v-34.2L705.82,58.769V91.6l-12.327,12.305V49.861L728.4,14.954H714.024l-20.53,20.53v-26H681.189v26l-20.53-20.53H646.282l34.907,34.907v54.049L668.862,91.6V58.769L657.241,47.126v34.2l-17.8-17.8V13.587l-9.592,9.592v26L610.712,30.015l-9.592,8.908,28.05,28.05H609.344V77.931h30.1L659.29,97.777H619.6l-23.264-7.541V45.759L584.691,57.4V78.615l-7.519-7.541-4.1,8.908L589.5,96.41H561.428v10.255Z"
  transform="translate(-561.428 -9.485)"/>
+ </svg>
+ `;
+
+export const GROUP_ICON = `
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="47" height="47" viewBox="0 0 47 47"><defs>
+ <style>.a{fill:#fff;opacity:0.74;}.b{fill:#009eee;}.c{fill:#d220ba;}.d{filter:url(#a);}</style>
+ <filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/>
+ <feGaussianBlur stdDeviation="3" result="b"/><feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/><feComposite in="SourceGraphic"/>
+ </filter></defs><g transform="translate(-19 -821.175)"><g class="d" transform="matrix(1, 0, 0, 1, 19, 821.18)">
+ <rect class="a" width="29" height="29" rx="5" transform="translate(9 6)"/></g><g transform="translate(35.331 834.183)">
+ <rect class="b" width="4" height="4" transform="translate(-0.331 0.993)"/><rect class="c" width="4" height="4" transform="translate(4.669 0.993)"/>
+ <rect class="c" width="4" height="4" transform="translate(9.669 0.993)"/><rect class="b" width="4" height="4" transform="translate(-0.331 5.993)"/>
+ <rect class="c" width="4" height="4" transform="translate(4.669 5.993)"/><rect class="c" width="4" height="4" transform="translate(9.669 5.993)"/>
+ <rect class="b" width="4" height="4" transform="translate(-0.331 10.993)"/><rect class="b" width="4" height="4" transform="translate(4.669 10.993)"/>
+ <rect class="c" width="4" height="4" transform="translate(9.669 10.993)"/></g></g>
  </svg>
  `;

@@ -1,0 +1,12 @@
+<div class="header" fxLayout="row" fxFill fxLayoutAlign="space-between center">
+  <div fxFlex="50">
+    <app-typography color="primary">
+      {{ text }}
+    </app-typography>
+  </div>
+  <div fxFlex="50" fxLayoutAlign="end">
+    <ng-container *ngIf="custom">
+      <ng-container *ngTemplateOutlet="slots[custom]"></ng-container>
+    </ng-container>
+  </div>
+</div>
