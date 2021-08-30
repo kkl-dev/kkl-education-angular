@@ -49,7 +49,5 @@ export class WizardComponent implements OnInit {
     ]
   }
 
-
-
   ngOnInit(): void { }
 }
