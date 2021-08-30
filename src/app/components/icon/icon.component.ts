@@ -41,7 +41,6 @@ export class IconComponent implements OnInit {
 
   private setIconColor() {
     this.color = this.isActive ? 'active' : this.color ||  'default';
-    console.log(this.color)
   }
 
   private setIconSize() {
