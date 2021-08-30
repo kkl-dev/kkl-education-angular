@@ -8,9 +8,14 @@
   align-self: center;
   align-items: center;
   align-content: center;
-
+  .white{
+    color: white;
+  }
   .primary {
     color: color(primary);
+  }
+  .accent-icon {
+    color: #FC1F9D;
   }
   .accent {
     color: color(accent);
@@ -20,6 +25,9 @@
   }
   .default {
     color: color(default);
+  }
+  .success {
+    color: color(success);
   }
 
   .active {

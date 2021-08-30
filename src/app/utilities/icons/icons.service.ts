@@ -25,6 +25,7 @@ import {
   LIST_ICON,
   CALENDER_ICON,
   BOTTOM_LOGO,
+  OPEN_PLUS,
 } from './icons.list';
 
 export interface IconItem {
@@ -39,9 +40,13 @@ export class IconsService {
   constructor(
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   public iconList: IconItem[] = [
+    {
+      key: 'open-plus',
+      svgUrl: OPEN_PLUS
+    },
     {
       key: 'like',
       svgUrl: THUMBUP_ICON,

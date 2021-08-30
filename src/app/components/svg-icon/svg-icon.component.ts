@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-svg-icon',
@@ -6,9 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./svg-icon.component.scss']
 })
 export class SvgIconComponent implements OnInit {
-  @Input() svgUrl: string;
-  @Input() imgUrl: string;
-  @Input() color: string;
+  @Input() firstIcon: string;
+  @Input() secondIcon: string;
+  @Input() SelectedColor: string;
+  @Input() badgeColor: string;
+  @Input() badgeBackgroundColor: string;
+  
   constructor() { }
 
   ngOnInit(): void {

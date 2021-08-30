@@ -8,7 +8,10 @@ export const THUMBUP_ICON =
   `1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/>
   </svg>
 `;
-
+export const OPEN_PLUS = `<svg xmlns="http://www.w3.org/2000/svg" width="8.667" height="8.667" viewBox="0 0 8.667 8.667">
+<path id="Icon_open-plus" data-name="Icon open-plus" d="M3.25,0V3.25H0V5.417H3.25v3.25H5.417V5.417h3.25V3.25H5.417V0Z"/>
+</svg>
+`
 export const V_SIGN = `<svg xmlns="http://www.w3.org/2000/svg"
  width="17.956" height="17.331" viewBox="0 0 17.956 17.331">
  <defs><style>.v-sign{fill:"none";opacity:0;}.b{fill:none;stroke:#6dc066;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}.c,.d{stroke:none;}.d{fill:#dfdfdf;}</style></defs><g transform="translate(0.332 0.331)">

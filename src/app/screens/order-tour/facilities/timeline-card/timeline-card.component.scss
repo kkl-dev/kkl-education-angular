@@ -1,0 +1,15 @@
+.timeline{
+    display: flex;
+    background: #ECF8EE;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 300px;
+    width: 100%;
+    border-radius: 5px;
+}
+.left-icons{
+    padding: 15px;
+}
+.one-element{
+ justify-content: flex-end;   
+}

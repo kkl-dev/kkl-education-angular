@@ -1,9 +1,11 @@
-<div class="timeline">
-    <div>
-        <app-svg-icon svgUrl='assets/images/bus-station.svg' color='#FC1F9D'></app-svg-icon>
+<div class="timeline" [ngClass]="!firstIconLeft ? 'one-element' : null"
+    [ngStyle]="{'border-right': '9px solid ' + color}">
+    <div class="left-icons" *ngIf='firstIconLeft'>
+        <app-svg-icon [firstIcon]='firstIconLeft' [secondIcon]='secondIconLeft' SelectedColor='accent-icon'
+            badgeColor='white' badgeBackgroundColor='#FC1F9D'></app-svg-icon>
     </div>
     <div>
-        <app-simple-card title='ארוחת צהריים' startTime='12:00' color='#37C56B'
-     endTime='13:00' icon='assets/images/finish-flag-1.svg'></app-simple-card>
+        <app-simple-card title='ארוחת צהריים' startTime='12:00' [color]='color' endTime='13:00' [icon]='iconRightSrc'>
+        </app-simple-card>
     </div>
 </div>

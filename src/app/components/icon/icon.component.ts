@@ -20,11 +20,12 @@ export class IconComponent implements OnInit {
   @Input() public type: string;
   @Input() public key: string = '';
   @Input() public color: string;
+  @Input() public backgroundColor: string;
   @Input() public scale: number | string;
 
   public matScale: string;
 
-  constructor(private iconsService: IconsService) {}
+  constructor(private iconsService: IconsService) { }
 
   ngOnInit(): void {
     this.setIcon();
@@ -40,8 +41,7 @@ export class IconComponent implements OnInit {
   }
 
   private setIconColor() {
-    this.color = this.isActive ? 'active' : this.color ||  'default';
-    console.log(this.color)
+    this.color = this.isActive ? 'active' : this.color || 'default';
   }
 
   private setIconSize() {
