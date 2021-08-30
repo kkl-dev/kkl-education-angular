@@ -7,6 +7,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { FormService, QuestionGroup } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -18,14 +19,16 @@ import { QuestionBase } from '../logic/question-base';
 export class FormContainerComponent implements OnInit {
   public form: FormGroup;
 
-  @Input() formGroup!: FormGroup;
-  @Input() group!: QuestionGroup;
-  @Input() questions!: QuestionBase<string>[];
+  @Input() formGroup: FormGroup;
+  @Input() group: QuestionGroup;
+  @Input() questions: QuestionBase<string | number | Date>[];
+  @Input() $questions: Observable<QuestionBase<string | number | Date>[]>;
 
   @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() hasButton: boolean = false;
   @Input() hasBottomButton: boolean = false;
+
   @Input() slots: {
     button?: ElementRef;
     group?: ElementRef;
@@ -37,6 +40,11 @@ export class FormContainerComponent implements OnInit {
   constructor(private formService: FormService) {}
 
   ngOnInit() {
+    this.initFormGroup();
+    this.subscribeToQuestions();
+  }
+
+  private initFormGroup() {
     if (!this.formGroup && this.questions.length > 0) {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
@@ -45,7 +53,16 @@ export class FormContainerComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.valueChange.emit(this.formGroup);
+  }
+
+  private subscribeToQuestions() {
+    this.$questions.subscribe((questions) => {
+      this.questions = questions
+      this.formGroup = this.formService.setFormGroup({
+        questions: this.questions,
+      });
+    });
   }
 }
