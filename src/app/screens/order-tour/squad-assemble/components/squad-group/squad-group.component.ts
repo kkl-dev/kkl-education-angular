@@ -37,14 +37,15 @@ export class SquadGroupComponent {
 
     this.$questions.next(
       this.mixed
-      ? this.squadAssembleService.groupAssembleFormMixedInputs
-      : this.squadAssembleService.groupAssembleFormInputs
-      );
-    }
+        ? this.squadAssembleService.groupAssembleFormMixedInputs
+        : this.squadAssembleService.groupAssembleFormInputs
+    );
+  }
 
-    public onAddClient() {
+  // TODO - connect between client select to client contact data + disable mode style
 
-      this.client = !this.client;
+  public onAddClient() {
+    this.client = !this.client;
 
     const header: FormHeader = {
       text: 'איש קשר',
@@ -52,11 +53,9 @@ export class SquadGroupComponent {
     };
 
     this.client
-      ? this.squadAssembleService.customerFormInputs[2].header = header
-      : this.squadAssembleService.customerFormInputs[2].header = null
+      ? (this.squadAssembleService.customerFormInputs[2].header = header)
+      : (this.squadAssembleService.customerFormInputs[2].header = null);
 
-    this.$questions.next(
-      this.squadAssembleService.customerFormInputs
-      );
+    this.$questions.next(this.squadAssembleService.customerFormInputs);
   }
 }

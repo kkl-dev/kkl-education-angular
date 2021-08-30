@@ -16,12 +16,14 @@
 
 
       <mat-form-field appearance="outline">
-          
-          <input matInput class="header__form-group-input" 
+
+          <input matInput class="header__form-group-input"
           airbnb-calendar type="text" [(ngModel)]="date"
           [options]="options"
           (ngModelChange)="dateObjChanged($event)"
           name="calendar-input" id="calendar-input" />
+
+          
     </mat-form-field>
-   
+
 </div>

@@ -339,24 +339,4 @@ export class SquadAssembleService {
     }),
   ];
 
-  public squadForm: QuestionGroup[] = [
-    {
-      label: 'מועד ושם הטיול',
-      questions: this.timeAndNameFormInputs,
-    },
-    {
-      label: 'לקוח',
-      questions: this.customerFormInputs,
-    },
-    {
-      label: 'הרכב הקבוצה',
-      cols: '2',
-      questions: this.groupAssembleFormInputs,
-    },
-    {
-      cols: '1',
-      label: 'פרטי הטיול',
-      questions: this.tourDetailsFormInputs,
-    },
-  ].reverse();
 }
