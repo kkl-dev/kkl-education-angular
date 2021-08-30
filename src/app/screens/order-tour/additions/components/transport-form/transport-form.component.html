@@ -4,6 +4,7 @@
       [formTemplate]="formTemplate"
       [slots]="{ button: formButton }"
       (valueChange)="onValueChange($event)"
+      [editMode]="editMode"
     ></app-form>
   </div>
   <div fxFlex="35">
@@ -32,7 +33,7 @@
       (click)="onEdit()"
       mat-icon-button
     >
-      <app-icon scale="1" color="active" key="edit" type="mat"></app-icon>
+      <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
     </button>
   </div>
 </ng-template>

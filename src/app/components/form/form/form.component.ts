@@ -24,7 +24,7 @@ export class FormComponent implements OnInit {
   @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() hasButton: boolean = false;
-  @Input() editMode: boolean ;
+  @Input() editMode: boolean;
   @Input() slots: {
     button?: ElementRef;
     group?: ElementRef;
@@ -37,6 +37,10 @@ export class FormComponent implements OnInit {
     this.form = this.formService.setFormGroup(this.formTemplate);
     this.valueChange.emit(this.form);
     this.subscribeToFormValues();
+
+    if (this.editMode) {
+      this.form.disable();
+    }
   }
 
   onSubmit() {
@@ -48,5 +52,4 @@ export class FormComponent implements OnInit {
       this.valueChange.emit(this.form);
     });
   }
-
 }

@@ -42,7 +42,7 @@ export class AdditionsComponent implements OnInit {
 
     this.onAdd();
   }
-
+ 
   public onAdd() {
     this.schedule = new ScheduleModel();
     this.addSchedule = true;
