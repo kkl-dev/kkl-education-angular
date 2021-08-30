@@ -9,8 +9,8 @@ export class FormHeaderComponent implements OnInit {
 
 
   @Input() text : string
-  @Input() custom : any
-  @Input() slot : ElementRef
+  @Input() custom : string
+  @Input() slots : {}
 
   constructor() { }
 

@@ -4,6 +4,7 @@
       <app-form-header
         [text]="header.text"
         [custom]="header.custom"
+        [slots]="{ button: button }"
       ></app-form-header>
     </mat-grid-tile>
 
@@ -12,12 +13,20 @@
         [cols]="cols"
         [questions]="questions"
         [hasBottomButton]="true"
-        [slots]="{ button: formButton, group: group }"
+        [slots]="{group: group }"
       >
       </app-form-container>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+
+<ng-template #button>
+  <div class="button-container mat-elevation-z1">
+    <button mat-icon-button class="header-button" disableRipple="true" (click)="onClick()">
+      <app-icon type="svg" key="group" scale="2"></app-icon>
+    </button>
+  </div>
+</ng-template>
 
 <ng-template
   #group

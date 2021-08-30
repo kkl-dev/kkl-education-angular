@@ -22,6 +22,9 @@ export class SquadGroupComponent {
 
   ngOnInit() {
     this.questions = this.questions || [];
-    console.log(this.cols)
+  }
+
+  public onClick() {
+    console.log('working')
   }
 }

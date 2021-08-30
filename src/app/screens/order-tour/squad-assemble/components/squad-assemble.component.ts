@@ -21,26 +21,24 @@ export class SquadAssembleComponent implements OnInit {
   ngOnInit(): void {
     this.squadForm = [
       {
-        header: { text: 'מועד שם טיול', custom : '' },
-        group: { questions : this.squadAssembleService.timeAndNameFormInputs},
-      }
-
-
-
-      // {
-      //   label: 'לקוח',
-      //   questions: this.squadAssembleService.customerFormInputs,
-      // },
-      // {
-      //   label: 'הרכב הקבוצה',
-      //   cols: '2',
-      //   questions: this.squadAssembleService.groupAssembleFormInputs,
-      // },
-      // {
-      //   cols: '1',
-      //   label: 'פרטי הטיול',
-      //   questions: this.squadAssembleService.tourDetailsFormInputs,
-      // },
+        header: { text: 'מועד ושם הטיול', custom: '' },
+        group: { questions: this.squadAssembleService.timeAndNameFormInputs },
+      },
+      {
+        header: { text: 'לקוח', custom: '' },
+        group: { questions: this.squadAssembleService.customerFormInputs },
+      },
+      {
+        header: { text: 'הרכב הקבוצה', custom: 'button' },
+        group: {
+          questions: this.squadAssembleService.groupAssembleFormInputs,
+          cols: '2',
+        },
+      },
+      {
+        header: { text: 'פרטי הטיול', custom: '' },
+        group: { questions: this.squadAssembleService.tourDetailsFormInputs },
+      },
     ].reverse();
   }
 }

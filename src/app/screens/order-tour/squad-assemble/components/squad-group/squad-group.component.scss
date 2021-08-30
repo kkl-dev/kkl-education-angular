@@ -13,16 +13,11 @@ app-form-header {
   padding-top: 5%;
 }
 
-
 .button-container {
+  border-radius: 5px;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
-div {
-  height: 100%;
-}
-
-app-form-input {
-  width: 100%
-}
