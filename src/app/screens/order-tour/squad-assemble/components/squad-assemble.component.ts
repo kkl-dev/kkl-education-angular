@@ -31,7 +31,7 @@ export class SquadAssembleComponent implements OnInit {
       {
         header: { text: 'הרכב הקבוצה', custom: 'button' },
         group: {
-          questions: this.squadAssembleService.groupAssembleFormInputs,
+          questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: '2',
         },
       },

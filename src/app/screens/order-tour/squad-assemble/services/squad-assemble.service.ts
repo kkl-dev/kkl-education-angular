@@ -134,20 +134,14 @@ export class SquadAssembleService {
     }),
 
     new QuestionNumber({
-      key: 'participants',
-      label: 'נוער / מבוגרים',
-      cols: 1,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'chaprones',
+      key: 'chaperones',
       label: 'מלווים',
       cols: 1,
       rows: 4,
     }),
     new QuestionNumber({
-      key: 'instructors',
-      label: 'מדריכים',
+      key: 'participants',
+      label: 'נוער / מבוגרים',
       cols: 1,
       rows: 4,
     }),
@@ -158,10 +152,17 @@ export class SquadAssembleService {
       rows: 4,
     }),
     new QuestionNumber({
+      key: 'instructors',
+      label: 'מדריכים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
       key: 'medics',
       label: 'חובשים',
       cols: 1,
       rows: 4,
+      offset: 1,
     }),
   ];
 
@@ -204,7 +205,7 @@ export class SquadAssembleService {
     }),
 
     new QuestionBase({
-      key: 'escorts',
+      key: 'chaperones',
       cols: 2,
       isGroup: true,
       label: 'מלווים',
@@ -225,7 +226,7 @@ export class SquadAssembleService {
     }),
 
     new QuestionBase({
-      key: 'guides',
+      key: 'instructors',
       isGroup: true,
       cols: '2',
       label: 'מדריכים',
