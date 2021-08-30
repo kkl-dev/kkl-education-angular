@@ -42,9 +42,6 @@ export class TransportFormComponent implements OnInit {
       this.editMode = !this.editMode;
       this.form.disable();
     }
-
-    console.log(this.transport)
-
     // find if object already in a schedule
   }
 

@@ -1,13 +1,13 @@
 <div class="icon-container">
   <mat-icon
-    [ngClass]="{ color }"
+    [ngClass]="[color]"
     [ngStyle]="{ 'width.px': width, 'height.px': height }"
     *ngIf="type === 'svg'"
     [svgIcon]="key"
   >
   </mat-icon>
   <mat-icon
-    [ngClass]="{ color }"
+    [ngClass]="[color]"
     [ngStyle]="{ transform: matScale }"
     *ngIf="type === 'mat'"
     >{{ key }}</mat-icon
