@@ -21,11 +21,11 @@
 </div>
 
 
-<ng-template #group let-question="question" let-item="item" let-form="form">
+<ng-template #group let-question="question" let-item="item" let-formGroup="formGroup">
 
   <app-form-input
     [groupLabel]="item.key === 'girls' ? question.label : 'g'"
-    [control]="form.controls[question.key].controls[item.key]"
+    [control]="formGroup.controls[question.key].controls[item.key]"
     [label]="item.label"
     [split]="cols > question.cols"
     [theme]="item.key === 'girls' && 'accent'"
@@ -33,4 +33,4 @@
     [labelLength]="question.inputProps?.labelLength"
   >
   </app-form-input>
-</ng-template>  
+</ng-template>

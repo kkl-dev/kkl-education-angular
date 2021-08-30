@@ -3,8 +3,8 @@
     <mat-grid-tile *ngFor="let squad of squadForm">
       <app-squad-group
         [formCols]="squad.formCols"
-        [title]="squad.title"
-        [questions]="squad.questions"
+        [title]="squad.label"
+        [questions]="squad?.questions || []"
       >
       </app-squad-group>
     </mat-grid-tile>

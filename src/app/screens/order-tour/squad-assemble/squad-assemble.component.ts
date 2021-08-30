@@ -8,13 +8,7 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
-
-export interface formGroupGrid {
-  title: string;
-  cols?: string;
-  formCols?: string;
-  questions: QuestionBase<string | Date | number>[];
-}
+import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 
 @Component({
   selector: 'app-squad-assemble',
@@ -140,40 +134,38 @@ export class SquadAssembleComponent implements OnInit {
       },
     }),
 
-        new QuestionNumber({
-          key: 'participants',
-          label: 'נוער / מבוגרים',
-          cols: 1,
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'chaprones',
-          label: 'מלווים',
-          cols: 1,
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'instructors',
-          label: 'מדריכים',
-          cols: 1,
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'drivers',
-          label: 'נהגים',
-          cols: 1,
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'medics',
-          label: 'מערים',
-          cols: 1,
-          rows: 4,
-        }),
-
-
+    new QuestionNumber({
+      key: 'participants',
+      label: 'נוער / מבוגרים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'chaprones',
+      label: 'מלווים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'instructors',
+      label: 'מדריכים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'drivers',
+      label: 'נהגים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'medics',
+      label: 'מערים',
+      cols: 1,
+      rows: 4,
+    }),
   ];
-  groupAssambleFormInputs: QuestionBase<string>[] = [
+  groupSAssembleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
       type: 'select',
@@ -210,6 +202,7 @@ export class SquadAssembleComponent implements OnInit {
         }),
       ],
     }),
+
     new QuestionBase({
       key: 'escorts',
       cols: 2,
@@ -230,6 +223,7 @@ export class SquadAssembleComponent implements OnInit {
         }),
       ],
     }),
+
     new QuestionBase({
       key: 'guides',
       isGroup: true,
@@ -250,6 +244,7 @@ export class SquadAssembleComponent implements OnInit {
         }),
       ],
     }),
+
     new QuestionBase({
       key: 'medics',
       isGroup: true,
@@ -334,31 +329,14 @@ export class SquadAssembleComponent implements OnInit {
     }),
   ];
 
-  public squadForm: formGroupGrid[] = [
-    {
-      formCols: '1',
-      title: 'פרטי הטיול',
-      questions: this.tourDetailsFormInputs,
-    },
+  public squadForm: QuestionGroup[] = [
     {
       formCols: '2',
-      title: 'הרכב הקבוצה',
+      label: 'הרכב הקבוצה',
       cols: '2',
-      questions: this.groupAssambleFormMixedInputs,
+      questions: this.groupSAssembleFormInputs,
     },
-    {
-      formCols: '1',
-      cols: '2',
-      title: 'לקוח',
-      questions: this.customerFormInputs,
-    },
-    {
-      formCols: '1',
-      title: 'מועד ושם הטיול',
-      cols: '2',
-      questions: this.timeAndNameFormInputs,
-    },
-  ];
+  ].reverse();
 
   @ViewChild('tourDetailsFormCustomQuestionRef', { static: true })
   tourDetailsRef!: FormContainerComponent;

@@ -15,6 +15,7 @@ export interface QuestionGroup {
   key?: string;
   label?: string;
   cols?: string | number;
+  formCols?: string | number;
   isGroup?: boolean;
   questions?: QuestionBase<string | Date | number>[];
   hasButton?: boolean;
@@ -85,6 +86,7 @@ export class FormService {
   }
 
   public setFormGroup(formTemplate: FormTemplate): FormGroup {
+
     if (formTemplate.hasGroups) {
       const form = formTemplate.questionsGroups.map((group: QuestionGroup) => {
         const { key, questions } = group;
