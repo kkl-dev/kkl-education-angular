@@ -86,37 +86,6 @@ export class EducationResultsComponent implements OnInit {
     //this.availabilityItemsArray = this.tripService.dateObj;
     //this.centerField = this.tripService.centerField
 
-
-    console.log('getDifferenceInDays', this.getDifferenceInDays(this.date1, this.date2));
-    console.log('getDifferenceInHours', this.getDifferenceInHours(this.date1, this.date2));
-    console.log('getDifferenceInMinutes', this.getDifferenceInMinutes(this.date1, this.date2));
-    console.log('getDifferenceInSeconds', this.getDifferenceInSeconds(this.date1, this.date2));
-
-  }
-
-
-  date1 = new Date('7/13/2010');
-  date2 = new Date('12/15/2010');
-
-
-  getDifferenceInDays(date1: any, date2: any) {
-    const diffInMs = Math.abs(date2 - date1);
-    return diffInMs / (1000 * 60 * 60 * 24);
-  }
-
-  getDifferenceInHours(date1: any, date2: any) {
-    const diffInMs = Math.abs(date2 - date1);
-    return diffInMs / (1000 * 60 * 60);
-  }
-
-  getDifferenceInMinutes(date1: any, date2: any) {
-    const diffInMs = Math.abs(date2 - date1);
-    return diffInMs / (1000 * 60);
-  }
-
-  getDifferenceInSeconds(date1: any, date2: any) {
-    const diffInMs = Math.abs(date2 - date1);
-    return diffInMs / 1000;
   }
 
   public sleepingOptionsArray = [
