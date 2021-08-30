@@ -1,10 +1,10 @@
 <div class="assemble-container">
   <mat-grid-list cols="4" rowHeight="70vh" gutterSize="5">
-    <mat-grid-tile *ngFor="let squad of squadForm">
+    <mat-grid-tile *ngFor="let squad of squads">
       <app-squad-group
-        [cols]="squad.group.cols"
+        [cols]="squad.cols"
         [header]="squad.header"
-        [questions]="squad.group.questions || []"
+        [questions]="squad.questions || []"
       >
       </app-squad-group>
     </mat-grid-tile>

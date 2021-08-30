@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
@@ -90,8 +90,11 @@ export class SquadAssembleService {
 
     new QuestionBase({
       key: 'contact',
-      label: 'איש קשר',
-      rows: 4,
+      header : {
+        text : 'איש קשר',
+        custom : 'button'
+      },
+      rows: 3,
       isGroup: true,
       group: [
         new QuestionTextbox({

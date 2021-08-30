@@ -1,6 +1,7 @@
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
+import { QuestionGroup } from './question-group';
 
 export interface FormTemplate {
   label?: string;
@@ -10,14 +11,15 @@ export interface FormTemplate {
   questionsGroups?: QuestionGroup[];
 }
 
-export interface QuestionGroup {
-  key?: string;
-  label?: string;
-  cols?: string | number;
-  isGroup?: boolean;
-  questions?: QuestionBase<string | Date | number>[];
-  hasButton?: boolean;
-}
+// export interface QuestionGroup {
+//   key?: string;
+//   label?: string;
+//   header? : FormHeader,
+//   cols?: string | number;
+//   isGroup?: boolean;
+//   questions?: QuestionBase<string | Date | number>[];
+//   hasButton?: boolean;
+// }
 @Injectable({
   providedIn: 'root',
 })
@@ -31,7 +33,9 @@ export class FormService {
     'number.base': (key: string): string => `${key} must be a number`,
   };
 
-  private setGroup(questions: QuestionBase<string | Date | number>[]) {
+  private setGroup(
+    questions: QuestionBase<string | Date | number | QuestionGroup>[]
+  ) {
     return questions
       .map((question) => question)
       .reduce((acc, control) => {
@@ -43,7 +47,9 @@ export class FormService {
       }, {});
   }
 
-  private formatForm(questions) {
+  private formatForm(
+    questions: QuestionBase<string | Date | number | QuestionGroup>[]
+  ) {
     return questions.map((question) => {
       const { key, value, isGroup, group, validations } = question;
       return {
@@ -84,7 +90,6 @@ export class FormService {
   }
 
   public setFormGroup(formTemplate: FormTemplate): FormGroup {
-
     if (formTemplate.hasGroups) {
       const form = formTemplate.questionsGroups.map((group: QuestionGroup) => {
         const { key, questions } = group;

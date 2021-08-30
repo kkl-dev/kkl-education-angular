@@ -45,8 +45,16 @@
         </mat-grid-tile>
 
         <ng-container *ngIf="question?.isGroup">
-          <mat-grid-tile [colspan]="question.cols || 1">
-            <app-form-header [text]="question.label"></app-form-header>
+          <mat-grid-tile
+            *ngIf="question?.header"
+            [colspan]="question.cols || 1"
+            [rowspan]="question.rows || 1"
+          >
+            <app-form-header
+              [text]="question.label || question.header.text"
+              [custom]="question?.header.custom"
+              [slots]="{button}"
+            ></app-form-header>
           </mat-grid-tile>
           <mat-grid-tile
             *ngFor="let item of question.group"
@@ -74,11 +82,11 @@
   </form>
 </div>
 
-<ng-template #editButton>
+<ng-template #button>
   <div class="button-container">
     <button
       type="submit"
-      class="edit-button"
+      class="edit-button mat-elevation-z1"
       (click)="onEdit()"
       mat-icon-button
     >

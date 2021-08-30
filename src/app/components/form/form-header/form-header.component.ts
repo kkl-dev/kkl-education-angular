@@ -15,6 +15,9 @@ export class FormHeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    console.log(this.custom)
+    console.log(this.slots)
   }
 
 }

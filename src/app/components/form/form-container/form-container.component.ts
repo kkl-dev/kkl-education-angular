@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { FormService, QuestionGroup } from '../logic/form.service';
+import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
+import { QuestionGroup } from '../logic/question-group';
 
 @Component({
   selector: 'app-form-container',
@@ -48,7 +49,6 @@ export class FormContainerComponent implements OnInit {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
-      console.log(this.formGroup)
       this.valueChange.emit(this.formGroup);
     }
   }

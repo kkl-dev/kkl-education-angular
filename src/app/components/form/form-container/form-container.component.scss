@@ -22,3 +22,12 @@ app-input-radio {
   width: 70%;
   height: 70%;
 }
+
+button.edit-button {
+  height: 40px !important;
+  width: 40px !important;
+
+  &.mat-icon-button {
+    border-radius: 20% !important;
+  }
+}
