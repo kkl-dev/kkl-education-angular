@@ -37,7 +37,7 @@ export class FormContainerComponent implements OnInit {
   constructor(private formService: FormService) {}
 
   ngOnInit() {
-    if (!this.formGroup) {
+    if (!this.formGroup && this.questions.length > 0) {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });

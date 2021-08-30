@@ -39,7 +39,7 @@
           <app-input-radio
             [control]="formGroup.controls[question.key]"
             [question]="question"
-            *ngIf="question.custom"
+            *ngIf="question.controlType === 'radio'"
           >
           </app-input-radio>
         </mat-grid-tile>
@@ -58,7 +58,7 @@
             slots.group;
             context: {
               question,
-              form,
+              formGroup,
               item
             }
             "
@@ -69,7 +69,6 @@
     </mat-grid-list>
 
     <div class="form-row" *ngIf=" hasBottomButton">
-      <!-- <ng-container *ngTemplateOutlet="slots?.button"></ng-container> -->
       <ng-content select="[button]"></ng-content>
     </div>
   </form>

@@ -1,28 +1,21 @@
+import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
+import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 
-export interface formGroupGrid {
-  title: string;
-  cols?: string;
-  formCols?: string;
-  questions: QuestionBase<string | Date | number>[];
-}
-
-@Component({
-  selector: 'app-squad-assemble',
-  templateUrl: './squad-assemble.component.html',
-  styleUrls: ['./squad-assemble.component.scss'],
+@Injectable({
+  providedIn: 'root',
 })
-export class SquadAssembleComponent implements OnInit {
-  timeAndNameFormInputs: QuestionBase<string | Date>[] = [
+export class SquadAssembleService {
+  constructor() {}
+
+  public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tourName',
       label: 'שם הטיול',
@@ -66,7 +59,7 @@ export class SquadAssembleComponent implements OnInit {
     }),
   ];
 
-  customerFormInputs: QuestionBase<string>[] = [
+  public customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'customerName',
       type: 'select',
@@ -123,7 +116,7 @@ export class SquadAssembleComponent implements OnInit {
     }),
   ];
 
-  groupAssambleFormMixedInputs: QuestionBase<string | number>[] = [
+  public groupAssembleFormMixedInputs: QuestionBase<string | number>[] = [
     new QuestionSelect({
       key: 'age',
       type: 'select',
@@ -140,40 +133,39 @@ export class SquadAssembleComponent implements OnInit {
       },
     }),
 
-        new QuestionNumber({
-          key: 'participants',
-          label: 'נוער / מבוגרים',
-          cols: 1,
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'chaprones',
-          label: 'מלווים',
-          cols: 1,
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'instructors',
-          label: 'מדריכים',
-          cols: 1,
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'drivers',
-          label: 'נהגים',
-          cols: 1,
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'medics',
-          label: 'מערים',
-          cols: 1,
-          rows: 4,
-        }),
-
-
+    new QuestionNumber({
+      key: 'participants',
+      label: 'נוער / מבוגרים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'chaprones',
+      label: 'מלווים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'instructors',
+      label: 'מדריכים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'drivers',
+      label: 'נהגים',
+      cols: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'medics',
+      label: 'חובשים',
+      cols: 1,
+      rows: 4,
+    }),
   ];
-  groupAssambleFormInputs: QuestionBase<string>[] = [
+
+  public groupAssembleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
       type: 'select',
@@ -210,6 +202,7 @@ export class SquadAssembleComponent implements OnInit {
         }),
       ],
     }),
+
     new QuestionBase({
       key: 'escorts',
       cols: 2,
@@ -230,6 +223,7 @@ export class SquadAssembleComponent implements OnInit {
         }),
       ],
     }),
+
     new QuestionBase({
       key: 'guides',
       isGroup: true,
@@ -250,6 +244,7 @@ export class SquadAssembleComponent implements OnInit {
         }),
       ],
     }),
+
     new QuestionBase({
       key: 'medics',
       isGroup: true,
@@ -260,17 +255,19 @@ export class SquadAssembleComponent implements OnInit {
           key: 'boys',
           label: 'בנים',
           type: 'number',
+          rows: 4,
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
           type: 'number',
+          rows: 4,
         }),
       ],
     }),
   ];
 
-  tourDetailsFormInputs: QuestionBase<string>[] = [
+  public tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'characteristic',
       label: 'מאפיין',
@@ -334,36 +331,24 @@ export class SquadAssembleComponent implements OnInit {
     }),
   ];
 
-  public squadForm: formGroupGrid[] = [
+  public squadForm: QuestionGroup[] = [
     {
-      formCols: '1',
-      title: 'פרטי הטיול',
-      questions: this.tourDetailsFormInputs,
+      label: 'מועד ושם הטיול',
+      questions: this.timeAndNameFormInputs,
     },
     {
-      formCols: '2',
-      title: 'הרכב הקבוצה',
-      cols: '2',
-      questions: this.groupAssambleFormMixedInputs,
-    },
-    {
-      formCols: '1',
-      cols: '2',
-      title: 'לקוח',
+      label: 'לקוח',
       questions: this.customerFormInputs,
     },
     {
-      formCols: '1',
-      title: 'מועד ושם הטיול',
+      label: 'הרכב הקבוצה',
       cols: '2',
-      questions: this.timeAndNameFormInputs,
+      questions: this.groupAssembleFormInputs,
     },
-  ];
-
-  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true })
-  tourDetailsRef!: FormContainerComponent;
-
-  constructor() {}
-
-  ngOnInit(): void {}
+    {
+      cols: '1',
+      label: 'פרטי הטיול',
+      questions: this.tourDetailsFormInputs,
+    },
+  ].reverse();
 }
