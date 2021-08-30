@@ -20,7 +20,7 @@
                 <div class="square" [ngStyle]="{background: '#d220ba'}"></div>
                 <p>תוספות בתשלום</p>
             </div>
-            <div class="timeline">
+            <!-- <div class="timeline">
                 <ng-container *ngFor='let time of timesArray'>
                     <div class="time">
                         <p>{{time}}</p>
@@ -34,11 +34,28 @@
                         </ng-container>
                     </div>
                 </ng-container>
-            </div>
+            </div> -->
+            <!-- Test with table -->
+            <table>
+                <tr *ngFor='let time of timesArray'>
+                    <td>{{time}}</td>
+                    <td [ngStyle]="{width:'100%'}">
+                        <p>Test</p>
+                        <hr>
+                    </td>
+                    <ng-container *ngFor='let item of timeLineArray'>
+                    <td rowspan="1">
+                        <div *ngIf="time === item.startTime">
+                            <app-timeline-card [item]='item'></app-timeline-card>
+                        </div>
+                    </td>
+                </ng-container>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="content-2">
-  
+
     </div>
 
 </div>
