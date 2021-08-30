@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../api/api/user.service';
 import { TripService } from '../../../services/trip.service'
 import { AcommodationType, AvailableDate, FieldForestCenter, SearchAvailableDatesOptions } from 'src/app/api';
+import { FakeService } from 'src/app/services/fake.service';
 
 @Component({
   selector: 'app-education',
@@ -34,7 +35,8 @@ export class EducationComponent implements OnInit {
   AcommodationTypes!: AcommodationType[];
   SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
 
-  constructor(public usersService: UserService, public tripService: TripService, private checkAvailabilltyService: CheckAvailabilityService) {
+  constructor(public usersService: UserService, public tripService: TripService, 
+    private checkAvailabilltyService: CheckAvailabilityService, public fakeApi: FakeService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2021, 11, 17)
@@ -54,15 +56,30 @@ export class EducationComponent implements OnInit {
     this.getLookupFieldForestCenters();
     this.getLookupAcommodationType();
   }
+
   getLookupFieldForestCenters() {
-    this.usersService.getLookupFieldForestCenters().subscribe(
-      response => {
-        this.formOptions = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
+        //get forest center fake
+        this.fakeApi.getForestCenter().subscribe((forestCenters: any) => {
+          if (forestCenters) {
+            console.log('forest Centers', { forestCenters });
+            this.formOptions = forestCenters;
+          } else {
+            console.log('no data in forest center');    
+          }
+        },
+          error => {
+            console.log({ error })
+          });
+    //yak del to get an array
+    // this.usersService.getLookupFieldForestCenters().subscribe(
+    //   response => {
+    //     this.formOptions = response;
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
   }
+
   getLookupAcommodationType() {
     this.usersService.getLookupAcommodationType().subscribe(
       response => {
@@ -72,11 +89,13 @@ export class EducationComponent implements OnInit {
       () => console.log('completed')     // complete
     )
   }
+
   selectChange(event: any) {
     this.tripService.centerField = this.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
     this.getAvailableDates();
     this.disableDates = false;
   }
+
   getAvailableDates() {
     //request body to get available dates
     this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
