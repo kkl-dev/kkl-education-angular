@@ -21,18 +21,29 @@
                 <p>תוספות בתשלום</p>
             </div>
             <div class="timeline">
-                <div class="item" *ngFor='let item of timesArray'>
-                    <p>{{item}}</p>
-                    <hr>
-                </div>
+                <!-- <ng-container *ngFor='let item of timesArray'>
+                    <div class="item">
+                        <p>{{item}}</p>
+                        <hr>
+                    </div>
+                    <div class="timeline-cards" *ngIf="item === '12:00'">
+                        <app-timeline-card color='#37C56B' secondIconLeft='bus'
+                            iconRightSrc='assets/images/finish-flag-1.svg'></app-timeline-card>
+                            <app-timeline-card color='#37C56B' secondIconLeft='bus'
+                            iconRightSrc='assets/images/finish-flag-1.svg'></app-timeline-card>
+                            
+                    </div>
+                    <div class="timeline-cards" *ngIf="item === '13:00'">
+                        <app-timeline-card color='#448ECD' iconSrc='assets/images/kitchen.svg'></app-timeline-card>
+                    </div>
+                </ng-container> -->
             </div>
         </div>
     </div>
     <div class="content-2">
-        <app-timeline-card color='#37C56B' firstIconLeft='open-plus' secondIconLeft='bus'
-        iconRightSrc='assets/images/finish-flag-1.svg'></app-timeline-card>
-        <app-timeline-card color='#448ECD'
-        iconRightSrc='assets/images/kitchen.svg'></app-timeline-card>
+        <div *ngFor='let item of timeLineArray'>
+            <app-timeline-card [item]='item'></app-timeline-card>
+        </div>
     </div>
- 
+
 </div>

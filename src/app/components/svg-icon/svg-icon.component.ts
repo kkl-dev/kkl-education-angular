@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { icon } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-svg-icon',
@@ -10,8 +9,8 @@ export class SvgIconComponent implements OnInit {
   @Input() firstIcon: string;
   @Input() secondIcon: string;
   @Input() SelectedColor: string;
-  @Input() badgeColor: string;
-  @Input() badgeBackgroundColor: string;
+  @Input() badgeColor: string = 'white';
+  @Input() badgeBackgroundColor: string = '#FC1F9D';
   
   constructor() { }
 
