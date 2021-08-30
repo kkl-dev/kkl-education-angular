@@ -1,22 +1,21 @@
+import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
+import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { QuestionNumber } from 'src/app/components/form/logic/question-number';
-import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 
-@Component({
-  selector: 'app-squad-assemble',
-  templateUrl: './squad-assemble.component.html',
-  styleUrls: ['./squad-assemble.component.scss'],
+@Injectable({
+  providedIn: 'root',
 })
-export class SquadAssembleComponent implements OnInit {
-  timeAndNameFormInputs: QuestionBase<string | Date>[] = [
+export class SquadAssembleService {
+  constructor() {}
+
+  private timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tourName',
       label: 'שם הטיול',
@@ -60,7 +59,7 @@ export class SquadAssembleComponent implements OnInit {
     }),
   ];
 
-  customerFormInputs: QuestionBase<string>[] = [
+  private customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'customerName',
       type: 'select',
@@ -117,7 +116,7 @@ export class SquadAssembleComponent implements OnInit {
     }),
   ];
 
-  groupAssambleFormMixedInputs: QuestionBase<string | number>[] = [
+  private groupAssembleFormMixedInputs: QuestionBase<string | number>[] = [
     new QuestionSelect({
       key: 'age',
       type: 'select',
@@ -160,12 +159,13 @@ export class SquadAssembleComponent implements OnInit {
     }),
     new QuestionNumber({
       key: 'medics',
-      label: 'מערים',
+      label: 'חובשים',
       cols: 1,
       rows: 4,
     }),
   ];
-  groupSAssembleFormInputs: QuestionBase<string>[] = [
+
+  private groupAssembleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
       type: 'select',
@@ -255,17 +255,19 @@ export class SquadAssembleComponent implements OnInit {
           key: 'boys',
           label: 'בנים',
           type: 'number',
+          rows: 4,
         }),
         new QuestionNumber({
           key: 'girls',
           label: 'בנות',
           type: 'number',
+          rows: 4,
         }),
       ],
     }),
   ];
 
-  tourDetailsFormInputs: QuestionBase<string>[] = [
+  private tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'characteristic',
       label: 'מאפיין',
@@ -331,17 +333,22 @@ export class SquadAssembleComponent implements OnInit {
 
   public squadForm: QuestionGroup[] = [
     {
-      formCols: '2',
+      label: 'מועד ושם הטיול',
+      questions: this.timeAndNameFormInputs,
+    },
+    {
+      label: 'לקוח',
+      questions: this.customerFormInputs,
+    },
+    {
       label: 'הרכב הקבוצה',
       cols: '2',
-      questions: this.groupSAssembleFormInputs,
+      questions: this.groupAssembleFormInputs,
+    },
+    {
+      cols: '1',
+      label: 'פרטי הטיול',
+      questions: this.tourDetailsFormInputs,
     },
   ].reverse();
-
-  @ViewChild('tourDetailsFormCustomQuestionRef', { static: true })
-  tourDetailsRef!: FormContainerComponent;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

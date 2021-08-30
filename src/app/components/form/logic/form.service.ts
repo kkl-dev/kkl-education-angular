@@ -6,7 +6,6 @@ export interface FormTemplate {
   label?: string;
   hasGroups?: boolean;
   cols?: string | number;
-  formCols?: string | number;
   questions?: QuestionBase<string | Date | number>[];
   questionsGroups?: QuestionGroup[];
 }
@@ -15,7 +14,6 @@ export interface QuestionGroup {
   key?: string;
   label?: string;
   cols?: string | number;
-  formCols?: string | number;
   isGroup?: boolean;
   questions?: QuestionBase<string | Date | number>[];
   hasButton?: boolean;

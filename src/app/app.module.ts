@@ -31,7 +31,7 @@ import { HeaderComponent } from './screens/education-results/header/header.compo
 import { TooltipComponent } from './screens/education-results/tooltip/tooltip.component';
 import { MyToursComponent } from './screens/my-tours/my-tours.component';
 import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
-import { SquadGroupComponent } from './screens/order-tour/squad-group/squad-group.component';
+import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
@@ -46,7 +46,9 @@ import { BottomNavigationComponent } from './components/bottom-navigation/bottom
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
 import { EducationComponent } from './screens/search/education/education.component';
 import { MapsComponent } from './screens/education-results/maps/maps.component';
+
 import { ApiModule } from './api/api.module';
+
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
@@ -59,8 +61,6 @@ import { InputRadioComponent } from './components/form/input-radio/input-radio.c
 import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
 import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
 import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
-import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
-import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
 
 import { TypographyComponent } from './components/typography/typography.component';
@@ -78,6 +78,9 @@ import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.c
 import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
 import { TransportFormComponent } from './screens/order-tour/additions/components/transport-form/transport-form.component';
 import { TransportModel } from './screens/order-tour/additions/models/transport-model';
+import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
+
+import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 
 @NgModule({
   declarations: [

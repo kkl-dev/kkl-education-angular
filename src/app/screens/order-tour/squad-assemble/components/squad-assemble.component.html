@@ -1,8 +1,8 @@
 <div class="assemble-container">
-  <mat-grid-list cols="4" rowHeight="60vh" gutterSize="5">
+  <mat-grid-list cols="4" rowHeight="70vh" gutterSize="5">
     <mat-grid-tile *ngFor="let squad of squadForm">
       <app-squad-group
-        [formCols]="squad.formCols"
+        [cols]="squad.cols"
         [title]="squad.label"
         [questions]="squad?.questions || []"
       >
