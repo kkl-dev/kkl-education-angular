@@ -1,12 +1,10 @@
 <div class="container" *ngIf="questions.length > 0">
   <mat-grid-list cols="2" rowHeight="5vh">
     <mat-grid-tile class="text">
-      <span>{{ title }}</span>
-
+      <span *ngIf="header?.custom">{{ header.text }}</span>
     </mat-grid-tile>
     <mat-grid-tile class="text">
-      <span>{{ title }}</span>
-
+      <span>{{ header.text }}</span>
     </mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="10">
       <app-form-container
@@ -20,9 +18,12 @@
   </mat-grid-list>
 </div>
 
-
-<ng-template #group let-question="question" let-item="item" let-formGroup="formGroup">
-
+<ng-template
+  #group
+  let-question="question"
+  let-item="item"
+  let-formGroup="formGroup"
+>
   <app-form-input
     [groupLabel]="item.key === 'girls' ? question.label : 'g'"
     [control]="formGroup.controls[question.key].controls[item.key]"

@@ -2,11 +2,15 @@
   <mat-grid-list cols="4" rowHeight="70vh" gutterSize="5">
     <mat-grid-tile *ngFor="let squad of squadForm">
       <app-squad-group
-        [cols]="squad.cols"
-        [title]="squad.label"
-        [questions]="squad?.questions || []"
+        [cols]="squad.group.cols"
+        [header]="squad.header"
+        [questions]="squad.group.questions || []"
       >
       </app-squad-group>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+
+<ng-template>
+
+</ng-template>

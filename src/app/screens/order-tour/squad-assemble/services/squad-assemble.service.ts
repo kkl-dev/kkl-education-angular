@@ -15,7 +15,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
 export class SquadAssembleService {
   constructor() {}
 
-  private timeAndNameFormInputs: QuestionBase<string | Date>[] = [
+  public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tourName',
       label: 'שם הטיול',
@@ -59,7 +59,7 @@ export class SquadAssembleService {
     }),
   ];
 
-  private customerFormInputs: QuestionBase<string>[] = [
+  public customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'customerName',
       type: 'select',
@@ -116,7 +116,7 @@ export class SquadAssembleService {
     }),
   ];
 
-  private groupAssembleFormMixedInputs: QuestionBase<string | number>[] = [
+  public groupAssembleFormMixedInputs: QuestionBase<string | number>[] = [
     new QuestionSelect({
       key: 'age',
       type: 'select',
@@ -165,7 +165,7 @@ export class SquadAssembleService {
     }),
   ];
 
-  private groupAssembleFormInputs: QuestionBase<string>[] = [
+  public groupAssembleFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'age',
       type: 'select',
@@ -267,7 +267,7 @@ export class SquadAssembleService {
     }),
   ];
 
-  private tourDetailsFormInputs: QuestionBase<string>[] = [
+  public tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'characteristic',
       label: 'מאפיין',
