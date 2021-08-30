@@ -1,11 +1,12 @@
-<div class="timeline" [ngClass]="!firstIconLeft ? 'one-element' : null"
-    [ngStyle]="{'border-right': '9px solid ' + color}">
-    <div class="left-icons" *ngIf='firstIconLeft'>
-        <app-svg-icon [firstIcon]='firstIconLeft' [secondIcon]='secondIconLeft' SelectedColor='accent-icon'
-            badgeColor='white' badgeBackgroundColor='#FC1F9D'></app-svg-icon>
+<div class="timeline" [ngClass]="!item.secondIcon ? 'one-element' : null"
+    [ngStyle]="{'border-right': '9px solid ' + item.color}">
+    <div class="left-icons" *ngIf='item.secondIcon'>
+        <app-svg-icon [firstIcon]="item.firstIcon ? item.firstIcon : 'open-plus'" [secondIcon]='item.secondIcon'
+            SelectedColor='accent-icon'></app-svg-icon>
     </div>
     <div>
-        <app-simple-card title='ארוחת צהריים' startTime='12:00' [color]='color' endTime='13:00' [icon]='iconRightSrc'>
+        <app-simple-card [title]='item.title' [startTime]='item.startTime' [color]='item.color' [endTime]='item.endTime'
+            [icon]='item.iconSrc'>
         </app-simple-card>
     </div>
 </div>

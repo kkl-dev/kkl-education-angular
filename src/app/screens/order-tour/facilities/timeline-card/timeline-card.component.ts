@@ -6,11 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./timeline-card.component.scss']
 })
 export class TimelineCardComponent implements OnInit {
-  @Input() color: string;
-  @Input() firstIconLeft: string;
-  @Input() secondIconLeft: string;
-  @Input() iconRightSrc: string;
-
+  @Input() item: any;
   constructor() { }
 
   ngOnInit(): void {
