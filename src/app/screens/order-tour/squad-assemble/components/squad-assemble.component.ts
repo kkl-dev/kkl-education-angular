@@ -25,11 +25,11 @@ export class SquadAssembleComponent implements OnInit {
         group: { questions: this.squadAssembleService.timeAndNameFormInputs },
       },
       {
-        header: { text: 'לקוח', custom: '' },
+        header: { text: 'לקוח', custom: 'client' },
         group: { questions: this.squadAssembleService.customerFormInputs },
       },
       {
-        header: { text: 'הרכב הקבוצה', custom: 'button' },
+        header: { text: 'הרכב הקבוצה', custom: 'gender' },
         group: {
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: '2',

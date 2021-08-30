@@ -31,7 +31,7 @@ export class SquadGroupComponent {
   }
 
   // method to change squad assemble form
-  public onClick() {
+  public onGenderChange() {
     this.mixed = !this.mixed;
 
     this.$questions.next(
@@ -39,5 +39,9 @@ export class SquadGroupComponent {
         ? this.squadAssembleService.groupAssembleFormMixedInputs
         : this.squadAssembleService.groupAssembleFormInputs
     );
+  }
+
+  public onAddClient() {
+    console.log('change client')
   }
 }
