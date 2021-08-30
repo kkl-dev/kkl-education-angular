@@ -2,7 +2,9 @@
 
 mat-grid-list,
 mat-grid-tile,
-app-form-container {
+app-form-container,
+app-form-input,
+app-form-header {
   height: 100%;
   width: 100%;
 }
@@ -11,9 +13,6 @@ app-form-container {
   padding-top: 5%;
 }
 
-.text {
-  color: color(primary);
-}
 
 .button-container {
   display: flex;

@@ -1,12 +1,13 @@
 <div class="container" *ngIf="questions.length > 0">
-  <mat-grid-list cols="2" rowHeight="5vh">
-    <mat-grid-tile class="text">
-      <span *ngIf="header?.custom">{{ header.text }}</span>
+  <mat-grid-list cols="1" rowHeight="5vh">
+    <mat-grid-tile>
+      <app-form-header
+        [text]="header.text"
+        [custom]="header.custom"
+      ></app-form-header>
     </mat-grid-tile>
-    <mat-grid-tile class="text">
-      <span>{{ header.text }}</span>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="2" rowspan="10">
+
+    <mat-grid-tile rowspan="10">
       <app-form-container
         [cols]="cols"
         [questions]="questions"

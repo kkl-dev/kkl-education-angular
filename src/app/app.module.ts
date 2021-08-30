@@ -81,6 +81,7 @@ import { TransportModel } from './screens/order-tour/additions/models/transport-
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
 
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
+import { FormHeaderComponent } from './components/form/form-header/form-header.component';
 
 @NgModule({
   declarations: [
@@ -161,6 +162,7 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     FacilitiesComponent,
     FlexTableComponent,
     MapsComponent,
+    FormHeaderComponent,
 
   ],
   imports: [
