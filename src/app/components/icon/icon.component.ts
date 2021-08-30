@@ -42,11 +42,7 @@ export class IconComponent implements OnInit {
   }
 
   private setIconColor() {
-    if (this.color && this.color !== 'default') {
-      this.default = false;
-    } else {
-      this.default = !this.isActive;
-    }
+   this.color = this.color || 'default'
   }
 
   private setIconSize() {
