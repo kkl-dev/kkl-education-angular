@@ -45,8 +45,16 @@
         </mat-grid-tile>
 
         <ng-container *ngIf="question?.isGroup">
-          <mat-grid-tile colspan="2">
-            {{ question.label | titlecase }}
+          <mat-grid-tile
+            *ngIf="question?.header"
+            [colspan]="question.cols || 1"
+            [rowspan]="question.rows || 1"
+          >
+            <app-form-header
+              [text]="question.label || question.header.text"
+              [custom]="question?.header.custom"
+              [slots]="{button}"
+            ></app-form-header>
           </mat-grid-tile>
           <mat-grid-tile
             *ngFor="let item of question.group"
@@ -68,8 +76,22 @@
       </ng-container>
     </mat-grid-list>
 
-    <div class="form-row" *ngIf=" hasBottomButton">
+    <div class="form-row" *ngIf="hasBottomButton">
       <ng-content select="[button]"></ng-content>
     </div>
   </form>
 </div>
+
+<ng-template #button>
+  <div class="button-container">
+    <button
+      type="submit"
+      class="edit-button mat-elevation-z1"
+      disableRipple="true"
+      (click)="onEdit()"
+      mat-icon-button
+    >
+      <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
+    </button>
+  </div>
+</ng-template>

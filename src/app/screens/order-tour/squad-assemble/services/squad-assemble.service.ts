@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
@@ -61,7 +61,7 @@ export class SquadAssembleService {
 
   public customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
-      key: 'customerName',
+      key: 'customer',
       type: 'select',
       label: 'מי הלקוח',
       inputProps: {
@@ -88,31 +88,38 @@ export class SquadAssembleService {
       },
     }),
 
-    new QuestionTextbox({
-      key: 'teamRepresentative',
-      label: 'נציג הקבוצה',
-      inputProps: {
-        labelLength: 'medium',
-      },
-    }),
+    new QuestionBase({
+      key: 'contact',
+      rows: 3,
+      isGroup: true,
+      group: [
+        new QuestionTextbox({
+          key: 'fullName',
+          label: 'איש קשר',
+          inputProps: {
+            labelLength: 'medium',
+          },
+        }),
 
-    new QuestionTextbox({
-      key: 'phone',
-      label: 'נייד איש קשר',
-      type: 'text',
-      validations: [Validators.required],
-      inputProps: {
-        labelLength: 'medium',
-      },
-    }),
-    new QuestionTextbox({
-      key: 'email',
-      label: 'מייל',
-      type: 'text',
-      validations: [Validators.required],
-      inputProps: {
-        labelLength: 'small',
-      },
+        new QuestionTextbox({
+          key: 'phone',
+          label: 'נייד איש קשר',
+          type: 'text',
+          validations: [Validators.required],
+          inputProps: {
+            labelLength: 'medium',
+          },
+        }),
+        new QuestionTextbox({
+          key: 'email',
+          label: 'מייל',
+          type: 'text',
+          validations: [Validators.required],
+          inputProps: {
+            labelLength: 'small',
+          },
+        }),
+      ],
     }),
   ];
 
@@ -332,24 +339,4 @@ export class SquadAssembleService {
     }),
   ];
 
-  public squadForm: QuestionGroup[] = [
-    {
-      label: 'מועד ושם הטיול',
-      questions: this.timeAndNameFormInputs,
-    },
-    {
-      label: 'לקוח',
-      questions: this.customerFormInputs,
-    },
-    {
-      label: 'הרכב הקבוצה',
-      cols: '2',
-      questions: this.groupAssembleFormInputs,
-    },
-    {
-      cols: '1',
-      label: 'פרטי הטיול',
-      questions: this.tourDetailsFormInputs,
-    },
-  ].reverse();
 }

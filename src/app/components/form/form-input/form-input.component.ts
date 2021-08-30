@@ -1,5 +1,6 @@
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -24,7 +25,7 @@ export class FormInputComponent implements OnInit {
   @Input() public type!: string;
   @Input() public label!: string;
   @Input() public hint!: string;
-  @Input() public controlType!: string;
+  @Input() public controlType: string;
   @Input() public options!: [];
 
   @Input() public labelLength: string;

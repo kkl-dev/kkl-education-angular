@@ -85,6 +85,7 @@ import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/comp
 
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 import { FormHeaderComponent } from './components/form/form-header/form-header.component';
+import { InputDateComponent } from './components/form/input-date/input-date.component';
 
 @NgModule({
   declarations: [
@@ -168,7 +169,8 @@ import { FormHeaderComponent } from './components/form/form-header/form-header.c
     FormHeaderComponent,
     TimelineCardComponent,
     SvgIconComponent,
-    SimpleCardComponent
+    SimpleCardComponent,
+    InputDateComponent
 
   ],
   imports: [

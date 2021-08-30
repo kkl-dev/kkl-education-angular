@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { QuestionGroup } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
@@ -196,10 +196,10 @@ export class TransportService {
   }
 
   public setInitialValues(
-    questions: QuestionBase<string | number | Date>[],
+    questions: QuestionBase<string | number | Date | QuestionGroup>[],
     data: any
   ) {
-    questions.map((control: QuestionBase<string | number | Date>) => {
+    questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
       control.value = data[control.key];
       if (control.key === 'comments') {
         control.value = data;
