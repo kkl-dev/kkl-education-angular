@@ -21,6 +21,7 @@ export class SquadGroupComponent {
   @Input() public questions: QuestionBase<string | number | Date>[];
 
   private mixed: boolean = true;
+  private client: boolean = false;
 
   @Input() slots: {};
 
@@ -36,12 +37,26 @@ export class SquadGroupComponent {
 
     this.$questions.next(
       this.mixed
-        ? this.squadAssembleService.groupAssembleFormMixedInputs
-        : this.squadAssembleService.groupAssembleFormInputs
-    );
-  }
+      ? this.squadAssembleService.groupAssembleFormMixedInputs
+      : this.squadAssembleService.groupAssembleFormInputs
+      );
+    }
 
-  public onAddClient() {
-    console.log('change client')
+    public onAddClient() {
+
+      this.client = !this.client;
+
+    const header: FormHeader = {
+      text: 'איש קשר',
+      custom: 'button',
+    };
+
+    this.client
+      ? this.squadAssembleService.customerFormInputs[2].header = header
+      : this.squadAssembleService.customerFormInputs[2].header = null
+
+    this.$questions.next(
+      this.squadAssembleService.customerFormInputs
+      );
   }
 }

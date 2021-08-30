@@ -59,10 +59,14 @@ export class FormContainerComponent implements OnInit {
 
   private subscribeToQuestions() {
     this.$questions.subscribe((questions) => {
-      this.questions = questions
+      this.questions = questions;
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
     });
+  }
+
+  public onEdit() {
+    this.form.enable();
   }
 }

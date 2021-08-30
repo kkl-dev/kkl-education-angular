@@ -90,10 +90,6 @@ export class SquadAssembleService {
 
     new QuestionBase({
       key: 'contact',
-      header : {
-        text : 'איש קשר',
-        custom : 'button'
-      },
       rows: 3,
       isGroup: true,
       group: [
