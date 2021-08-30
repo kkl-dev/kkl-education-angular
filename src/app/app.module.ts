@@ -46,13 +46,11 @@ import { BottomNavigationComponent } from './components/bottom-navigation/bottom
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
 import { EducationComponent } from './screens/search/education/education.component';
 import { MapsComponent } from './screens/education-results/maps/maps.component';
-import { ApiModule } from './api/api.module'
+import { ApiModule } from './api/api.module';
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
-import { TransportComponent } from './screens/order-tour/additions/transport/transport.component';
-import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
-import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { NavigationGridComponent } from './screens/order-tour/additions/components/navigation-grid/navigation-grid.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
 import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { NavCardComponent } from './components/nav-card/nav-card.component';
@@ -64,11 +62,10 @@ import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/squad-assemble.component';
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
-import { TourPanelComponent } from './screens/order-tour/additions/tour-panel/tour-panel.component';
+
 import { TypographyComponent } from './components/typography/typography.component';
 import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
 import { FilledNightComponent } from './screens/order-tour/sleeping-options/filled-night/filled-night.component';
-import { TransportDetailsComponent } from './screens/order-tour/additions/transport-details/transport-details.component';
 import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
 import { SummaryComponent } from './screens/order-tour/summary/summary.component';
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
@@ -78,6 +75,12 @@ import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-
 import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
 import { SimpleCardComponent } from './components/simple-card/simple-card.component';
 
+import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
+import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
+import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.component';
+import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
+import { TransportFormComponent } from './screens/order-tour/additions/components/transport-form/transport-form.component';
+import { TransportModel } from './screens/order-tour/additions/models/transport-model';
 
 @NgModule({
   declarations: [
@@ -89,6 +92,7 @@ import { SimpleCardComponent } from './components/simple-card/simple-card.compon
     LinksComponent,
     UserInfoComponent,
     NumberToTimePipe,
+
     // LOGIN COMPS
     LoginComponent,
     LoginBackdropComponent,
@@ -121,14 +125,21 @@ import { SimpleCardComponent } from './components/simple-card/simple-card.compon
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    AdditionsComponent,
     NavigationGridComponent,
     NavCardComponent,
     NumberInputComponent,
     IconComponent,
     FormInputComponent,
     SquadGroupComponent,
-    TransportComponent,
+
+
+    // ADDITIONS COMPONENTS
+    AdditionsComponent,
+    TourPanelComponent,
+    TransportDetailsComponent,
+    TourTitleComponent,
+    TransportFormComponent,
+
     DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
@@ -140,13 +151,10 @@ import { SimpleCardComponent } from './components/simple-card/simple-card.compon
     SleepingOptionsFormComponent,
     SleepingOptionsByDayComponent,
     SquadAssembleComponent,
-    TourPanelComponent,
     TypographyComponent,
     DashboardCardComponent,
 
     FilledNightComponent,
-    TransportDetailsComponent,
-    FlexRowComponent,
     SummaryComponent,
     FlexRowComponent,
     FormComponent,
@@ -156,6 +164,7 @@ import { SimpleCardComponent } from './components/simple-card/simple-card.compon
     TimelineCardComponent,
     SvgIconComponent,
     SimpleCardComponent
+
   ],
   imports: [
     BrowserModule,
@@ -169,9 +178,13 @@ import { SimpleCardComponent } from './components/simple-card/simple-card.compon
     FormsModule,
     ReactiveFormsModule,
     AirbnbCalendarModule,
-    ApiModule
+    ApiModule,
   ],
-  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }, DatePipe],
+  providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: TransportModel, useValue: new TransportModel() },
+    DatePipe,
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

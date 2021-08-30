@@ -6,10 +6,10 @@
   >
     <div
       class="working-steps__step-icon"
-      [ngClass]="{ active: activeStep == i }"
+      [ngClass]="{ active: activeStep === i }"
     >
       <app-icon
-        [isActive]="activeStep == i"
+        [isActive]="activeStep === i"
         [type]="step.iconType || 'svg'"
         [key]="step.svgUrl"
       ></app-icon>

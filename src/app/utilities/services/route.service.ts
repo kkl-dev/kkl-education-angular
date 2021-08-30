@@ -7,7 +7,6 @@ import { filter, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class RouteService {
-  private currentPath: string;
 
   constructor(private router: Router) {}
 

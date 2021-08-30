@@ -28,7 +28,6 @@ export class EducationResultsComponent implements OnInit {
   ngOnInit() {
     this.tripService.forestCenter.subscribe(result => {
       this.forestCenter = result; // this set's the username to the default observable value
-      console.log('parent -- > forestCenter from server BehaviorSubject:', this.forestCenter);
       //this.changeForestCenter(result);
     });
 
@@ -50,47 +49,32 @@ export class EducationResultsComponent implements OnInit {
     }
     // this.usersService.getLookupFieldForestCenters().subscribe(
     //   response => {
-    //     console.log('response: ', response);
     //   },
-    //   error => console.log('error:', error),       // error
-    //   () => console.log('completed')     // complete
     // );
 
     // this.usersService.getLookupFieldForestCenters().subscribe((data: any) => {
     //   //  this.spinner.hide();
     //     if (data) {
-    //       console.log('getLookupFieldForestCenters: ', data);
     //     }
     //     else {
-    //       console.log('no data in getLookupFieldForestCenters');
     //     }
     //   },
     //     error => {
     //   //    this.spinner.hide();
-    //       console.log({ error })
     //     });
 
     // this.usersService.getLookupFieldForestCenters().subscribe(
     //   response => {
-    //     console.log('response:', response);
     //   },
-    //   error => console.log('error:', error),       // error
-    //   () => console.log('completed')     // complete
     // );
 
 
-    // console.log('userDataService:', this.userDataService);
-    console.log('tripService:', this.tripService);
 
 
     //this.availabilityItemsArray = this.tripService.dateObj;
     //this.centerField = this.tripService.centerField
 
 
-    console.log('getDifferenceInDays', this.getDifferenceInDays(this.date1, this.date2));
-    console.log('getDifferenceInHours', this.getDifferenceInHours(this.date1, this.date2));
-    console.log('getDifferenceInMinutes', this.getDifferenceInMinutes(this.date1, this.date2));
-    console.log('getDifferenceInSeconds', this.getDifferenceInSeconds(this.date1, this.date2));
 
   }
 
@@ -145,7 +129,6 @@ export class EducationResultsComponent implements OnInit {
   ];
 
   // changeForestCenter(e: any, visible: any) {
-  //   console.log('show 1 ', visible);
   //   this.child.changeForestCenter(visible);
   // }
 
@@ -322,7 +305,6 @@ export class EducationResultsComponent implements OnInit {
       date1.getMonth(),
       date1.getDate(),
     );
-    console.log(date2);
     const utc2 = Date.UTC(
       date2.getFullYear(),
       date2.getMonth(),
@@ -383,7 +365,6 @@ export class EducationResultsComponent implements OnInit {
       this.sleepingOptionsByDay[0].day
     );
 
-    console.log(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
 
     this.changeDatesHandler(
       this.checkAvailabillityService.checkAvailabilltyValues.calendarInput
