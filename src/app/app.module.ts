@@ -71,6 +71,9 @@ import { SummaryComponent } from './screens/order-tour/summary/summary.component
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
 import { FormComponent } from './components/form/form/form.component';
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
+import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
+import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
+import { SimpleCardComponent } from './components/simple-card/simple-card.component';
 
 import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
 import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
@@ -163,6 +166,9 @@ import { FormHeaderComponent } from './components/form/form-header/form-header.c
     FlexTableComponent,
     MapsComponent,
     FormHeaderComponent,
+    TimelineCardComponent,
+    SvgIconComponent,
+    SimpleCardComponent
 
   ],
   imports: [
