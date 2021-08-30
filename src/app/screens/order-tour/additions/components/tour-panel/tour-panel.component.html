@@ -36,7 +36,7 @@
           </div>
 
           <div description></div>
-          <app-transport-form [location]="location" content></app-transport-form>
+          <app-transport-form [transport]="schedule.transport" [location]="location" [editMode]="editMode" content></app-transport-form>
         </app-expend-panel>
       </ng-container>
     </mat-accordion>

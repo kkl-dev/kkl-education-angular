@@ -10,9 +10,11 @@ import { TransportModel } from '../../models/transport-model';
 export class TourPanelComponent implements OnInit {
   constructor() { }
 
+  @Input() editMode: boolean;
   @Input() schedule: ScheduleModel;
   @Input() i: number;
 
   ngOnInit(): void {
+
   }
 }
