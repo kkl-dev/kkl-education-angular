@@ -45,8 +45,8 @@
         </mat-grid-tile>
 
         <ng-container *ngIf="question?.isGroup">
-          <mat-grid-tile colspan="2">
-            {{ question.label | titlecase }}
+          <mat-grid-tile [colspan]="question.cols || 1">
+            <app-form-header [text]="question.label"></app-form-header>
           </mat-grid-tile>
           <mat-grid-tile
             *ngFor="let item of question.group"
@@ -68,8 +68,21 @@
       </ng-container>
     </mat-grid-list>
 
-    <div class="form-row" *ngIf=" hasBottomButton">
+    <div class="form-row" *ngIf="hasBottomButton">
       <ng-content select="[button]"></ng-content>
     </div>
   </form>
 </div>
+
+<ng-template #editButton>
+  <div class="button-container">
+    <button
+      type="submit"
+      class="edit-button"
+      (click)="onEdit()"
+      mat-icon-button
+    >
+      <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
+    </button>
+  </div>
+</ng-template>

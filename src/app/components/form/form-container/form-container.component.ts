@@ -34,7 +34,6 @@ export class FormContainerComponent implements OnInit {
     group?: ElementRef;
   };
 
-  @Output() formData: EventEmitter<any> = new EventEmitter();
   @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
 
   constructor(private formService: FormService) {}
@@ -49,6 +48,7 @@ export class FormContainerComponent implements OnInit {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
+      console.log(this.formGroup)
       this.valueChange.emit(this.formGroup);
     }
   }

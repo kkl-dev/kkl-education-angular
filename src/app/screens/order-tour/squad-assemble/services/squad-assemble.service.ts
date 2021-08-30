@@ -61,7 +61,7 @@ export class SquadAssembleService {
 
   public customerFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
-      key: 'customerName',
+      key: 'customer',
       type: 'select',
       label: 'מי הלקוח',
       inputProps: {
@@ -88,31 +88,39 @@ export class SquadAssembleService {
       },
     }),
 
-    new QuestionTextbox({
-      key: 'teamRepresentative',
-      label: 'נציג הקבוצה',
-      inputProps: {
-        labelLength: 'medium',
-      },
-    }),
+    new QuestionBase({
+      key: 'contact',
+      label: 'איש קשר',
+      rows: 4,
+      isGroup: true,
+      group: [
+        new QuestionTextbox({
+          key: 'fullName',
+          label: 'איש קשר',
+          inputProps: {
+            labelLength: 'medium',
+          },
+        }),
 
-    new QuestionTextbox({
-      key: 'phone',
-      label: 'נייד איש קשר',
-      type: 'text',
-      validations: [Validators.required],
-      inputProps: {
-        labelLength: 'medium',
-      },
-    }),
-    new QuestionTextbox({
-      key: 'email',
-      label: 'מייל',
-      type: 'text',
-      validations: [Validators.required],
-      inputProps: {
-        labelLength: 'small',
-      },
+        new QuestionTextbox({
+          key: 'phone',
+          label: 'נייד איש קשר',
+          type: 'text',
+          validations: [Validators.required],
+          inputProps: {
+            labelLength: 'medium',
+          },
+        }),
+        new QuestionTextbox({
+          key: 'email',
+          label: 'מייל',
+          type: 'text',
+          validations: [Validators.required],
+          inputProps: {
+            labelLength: 'small',
+          },
+        }),
+      ],
     }),
   ];
 
