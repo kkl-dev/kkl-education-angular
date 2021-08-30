@@ -88,7 +88,7 @@
     overflow: auto;
     height: 80%;
     direction: rtl;
-    .item {
+    .time {
         display: flex;
         align-items: center;
         padding: 20px;
@@ -111,5 +111,10 @@
 .timeline-cards {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-evenly; 
+    justify-content: center;
+    width: 50%;
+    flex: 1;
+}
+.items{
+    display: flex;
 }

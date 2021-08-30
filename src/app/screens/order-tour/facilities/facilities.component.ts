@@ -24,7 +24,15 @@ export class FacilitiesComponent implements OnInit {
   public timeLineArray: Array<object> = [
     {
       title: 'ארוחת צהריים', startTime: '12:00', endTime: '13:00',
-      iconSrc: 'assets/images/roast-chicken.svg', secondIcon: 'bus', color: this.colors.green
-    }
+      iconSrc: 'assets/images/roast-chicken.svg', color: this.colors.green
+    },
+    {
+      title: 'מטבח שדה', startTime: '12:00', endTime: '13:00',
+      iconSrc: 'assets/images/kitchen.svg', color: this.colors.blue
+    },
+    {
+      title: 'התייצבות', startTime: '10:00', endTime: '11:00',
+      iconSrc: 'assets/images/finish-flag-1.svg', color: this.colors.green ,secondIcon:'bus'
+    },
   ]
 }
