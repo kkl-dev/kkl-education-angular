@@ -1,8 +1,6 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import {
-  FormTemplate,
-} from 'src/app/components/form/logic/form.service';
+import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { TransportModel } from '../../models/transport-model';
@@ -13,7 +11,7 @@ import { TransportService } from '../../services/transport.service';
   templateUrl: './transport-form.component.html',
   styleUrls: ['./transport-form.component.scss'],
 })
-export class TransportFormComponent implements OnInit, AfterViewInit {
+export class TransportFormComponent implements OnInit {
   @Input() public location: LocationModel;
   @Input() public transport: TransportModel;
   @Input() public editMode: boolean;
@@ -34,12 +32,6 @@ export class TransportFormComponent implements OnInit, AfterViewInit {
     }
 
     this.formTemplate.questionsGroups = this.transportService.questionGroups;
-  }
-
-  ngAfterViewInit(): void {
-    if (this.editMode && this.form) {
-      // this.form.disable();
-    }
   }
 
   public onSave(): void {
