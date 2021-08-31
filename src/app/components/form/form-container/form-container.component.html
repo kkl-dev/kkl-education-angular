@@ -9,7 +9,7 @@
         <mat-grid-tile
           *ngIf="group?.hasButton || hasButton"
           colspan="1"
-          [rowspan]="question.rows"
+          [rowspan]="question.rows || 5"
         >
           <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
         </mat-grid-tile>

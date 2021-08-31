@@ -22,40 +22,40 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #8dc5f5;
         }
-    }
-    .header {
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        background: #f3f3f3;
-        justify-content: space-between;
-        p {
-            background: #ffffff;
-            padding: 10px;
-        }
-        .arrows {
-            background: color(primary);
-            .mat-icon {
+        .header {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            background: #f3f3f3;
+            justify-content: space-between;
+            p {
+                background: #ffffff;
+                padding: 10px;
+            }
+            .arrows {
+                background: color(primary);
+                .mat-icon {
+                    color: white;
+                }
+                .mat-icon:hover {
+                    cursor: pointer;
+                }
+            }
+            select {
+                background: color(primary);
                 color: white;
+                direction: rtl;
+                padding: 10px;
+                border: none;
+                border-radius: 4px;
             }
-            .mat-icon:hover {
-                cursor: pointer;
+            option {
+                border: 1px solid #e5e5e5;
+                padding: 10px;
             }
-        }
-        select {
-            background: color(primary);
-            color: white;
-            direction: rtl;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-        }
-        option {
-            border: 1px solid #e5e5e5;
-            padding: 10px;
-        }
-        * {
-            margin: 10px;
+            * {
+                margin: 10px;
+            }
         }
     }
 }
@@ -120,13 +120,26 @@
 }
 
 .content-2 {
-    justify-content: center;
+    display: block;
+    .header {
+        width: 90%;
+    }
+    .titles {
+        border-bottom: 1px solid #daeaf5;
+        p {
+            border-bottom: 1px solid #448ecd;
+            display: inline-block;
+            margin: 0;
+            font-size: 16px;
+        }
+    }
     .title {
         height: 40px;
         display: flex;
-        width: 100%;
-        justify-content: space-around;
+        width: 90%;
+        justify-content: space-between;
         flex-direction: row-reverse;
+        margin: 0 auto;
         p {
             font-size: 24px;
             font-weight: 600;
@@ -142,5 +155,9 @@
             font-size: 18px;
             font-weight: 400;
         }
+    }
+    .forms {
+        width: 100%;
+        padding: 20px;
     }
 }

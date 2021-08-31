@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 
 @Component({
   selector: 'app-facilities',
@@ -32,7 +36,33 @@ export class FacilitiesComponent implements OnInit {
     },
     {
       title: 'התייצבות', startTime: '10:00', endTime: '11:00',
-      iconSrc: 'assets/images/finish-flag-1.svg', color: this.colors.green ,secondIcon:'bus'
+      iconSrc: 'assets/images/finish-flag-1.svg', color: this.colors.green, secondIcon: 'bus'
     },
+  ];
+  public formArray: QuestionBase<string | number>[] = [
+    new QuestionSelect({
+      key: 'durationOfActivity',
+      label: 'משך פעילות',
+      validations: [Validators.required],
+      inputProps: { options: [{ key: '', value: '' }] }
+    }),
+    new QuestionSelect({
+      key: 'area',
+      label: 'אזור',
+      validations: [Validators.required],
+      inputProps: { options: [{ key: '', value: '' }] }
+    }),
+    new QuestionSelect({
+      key: 'typeOfActivity',
+      label: 'סוג פעילות',
+      validations: [Validators.required],
+      inputProps: { options: [{ key: '', value: '' }] }
+    }),
+    new QuestionTextbox({
+      key: 'search',
+      label: 'חפש פעילות',
+      value: '',
+      validations: [Validators.required]
+    }),
   ];
 }
