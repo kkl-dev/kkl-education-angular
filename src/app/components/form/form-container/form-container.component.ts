@@ -31,7 +31,7 @@ export class FormContainerComponent implements OnInit {
   @Input() hasBottomButton: boolean = false;
 
   @Input() slots: {
-    button?: ElementRef;
+    topButton?: ElementRef;
     group?: ElementRef;
   };
 

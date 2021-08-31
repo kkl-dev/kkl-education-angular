@@ -15,7 +15,7 @@ export interface FormHeader {
 })
 export class SquadGroupComponent {
 
-  public tourId: string = '0000000';
+  public tripId: string = '0000000';
 
   @Input() public cols: string | number;
   @Input() public header: FormHeader;
@@ -24,8 +24,6 @@ export class SquadGroupComponent {
   private $questions = new Subject<QuestionBase<string | number | Date>[]>();
   private mixed: boolean = true;
   private client: boolean = false;
-
-  @Input() slots: {};
 
   constructor(private squadAssembleService: SquadAssembleService) {}
 

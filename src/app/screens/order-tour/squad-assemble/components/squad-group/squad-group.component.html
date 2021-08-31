@@ -4,7 +4,7 @@
       <app-form-header
         [text]="header.text"
         [custom]="header.custom"
-        [slots]="{ gender, client }"
+        [slots]="{ gender, client, tourId }"
       ></app-form-header>
     </mat-grid-tile>
 
@@ -38,8 +38,8 @@
   </app-typography>
 </ng-template>
 
-<ng-template #tourDate>
-  <app-typography> קוד טיול : {{ tourId }} </app-typography>
+<ng-template #tourId>
+  <app-typography> קוד טיול : {{ tripId }} </app-typography>
 </ng-template>
 
 <ng-template
