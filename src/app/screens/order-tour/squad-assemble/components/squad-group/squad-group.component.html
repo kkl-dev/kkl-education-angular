@@ -22,24 +22,20 @@
 </div>
 
 <ng-template #gender>
-  <div class="button-container mat-elevation-z1">
-    <button
-      mat-icon-button
-      class="header-button"
-      disableRipple="true"
-      (click)="onGenderChange()"
-    >
-      <app-icon type="svg" key="group" scale="2"></app-icon>
-    </button>
-  </div>
+  <button
+    mat-icon-button
+    class="gender-button mat-elevation-z1"
+    disableRipple="true"
+    (click)="onGenderChange()"
+  >
+    <app-icon type="svg" key="group" scale="2"></app-icon>
+  </button>
 </ng-template>
 
 <ng-template #client>
-  <div class="client-container">
-    <app-typography color="primary" (click)="onAddClient()">
-      לקוח חדש
-    </app-typography>
-  </div>
+  <app-typography class="client-text" color="primary" (click)="onAddClient()">
+    לקוח חדש
+  </app-typography>
 </ng-template>
 
 <ng-template
