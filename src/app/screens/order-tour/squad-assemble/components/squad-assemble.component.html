@@ -3,9 +3,10 @@
     <mat-grid-tile *ngFor="let squad of squads; let i = index">
       <div class="form-container">
         <app-squad-group
-          [cols]="squad.cols"
-          [header]="squad.header"
-          [questions]="squad.questions || []"
+          [cols]="squad.form.cols"
+          [header]="squad.form.header"
+          [questions]="squad.form.questions || []"
+          [hasBottom]="squad.hasBottom"
         >
         </app-squad-group>
       </div>
