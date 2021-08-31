@@ -66,7 +66,7 @@ export class QuestionBase<T> {
     this.offset = options.offset?.toString() || '';
     this.validations = options.validations || [];
     this.custom = options.custom || false;
-    this.fullWidth = options.fullWidth || true;
+    this.fullWidth = options.fullWidth || false;
     this.isGroup = options.isGroup;
     this.group = options.group;
     this.inputProps = options.inputProps;

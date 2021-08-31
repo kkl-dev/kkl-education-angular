@@ -85,7 +85,8 @@ export class SquadAssembleService {
       key: 'payerName',
       label: 'לקוח משלם',
       type: 'select',
-      cols: 3,
+      // cols: 3,
+      fullWidth : true,
       inputProps: {
         options: [
           { key: 'שם נוסף', value: 'שם נוסף' },
@@ -99,13 +100,13 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'contact',
       rows: 3,
-      cols: 3,
+      cols: 1,
       isGroup: true,
       group: [
         new QuestionTextbox({
           key: 'fullName',
           label: 'איש קשר',
-          cols: 3,
+          fullWidth : true,
           inputProps: {
             labelLength: 'medium',
           },
@@ -115,8 +116,7 @@ export class SquadAssembleService {
           key: 'phone',
           label: 'נייד איש קשר',
           type: 'text',
-          cols: 3,
-
+          fullWidth : true,
           validations: [Validators.required],
           inputProps: {
             labelLength: 'medium',
@@ -126,7 +126,7 @@ export class SquadAssembleService {
           key: 'email',
           label: 'מייל',
           type: 'text',
-          cols: 3,
+          fullWidth : true,
           validations: [Validators.required],
           inputProps: {
             labelLength: 'small',
