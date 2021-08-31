@@ -52,6 +52,7 @@ export class FormContainerComponent implements OnInit {
       });
       this.valueChange.emit(this.formGroup);
     }
+    console.log(this.slots)
   }
 
   public onSubmit() {

@@ -1,0 +1,18 @@
+<mat-grid-list cols="1" rowHeight="2vh">
+
+  <mat-grid-tile *ngIf="group?.header" [colspan]="group.cols || 1" [rowspan]="group.rows || 1">
+    <app-form-header [text]="group.label || group.header.text" [custom]="group?.header.custom" [slots]="{button}">
+    </app-form-header>
+  </mat-grid-tile>
+
+  <mat-grid-tile *ngFor="let question of group.questions" [colspan]="question.cols" [rowspan]="question.rows">
+    <ng-container *ngTemplateOutlet="slot;
+    context: {
+      formGroup,
+      group,
+      question
+    }
+    "></ng-container>
+  </mat-grid-tile>
+
+</mat-grid-list>

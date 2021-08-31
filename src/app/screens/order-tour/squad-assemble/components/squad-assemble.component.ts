@@ -16,7 +16,7 @@ interface SquadGroup {
 export class SquadAssembleComponent implements OnInit {
   public squads: SquadGroup[];
 
-  constructor(private squadAssembleService: SquadAssembleService) {}
+  constructor(private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
     this.squads = [
@@ -38,7 +38,7 @@ export class SquadAssembleComponent implements OnInit {
         group: {
           header: { text: 'הרכב הקבוצה', custom: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormInputs,
-          gutter : 30,
+          gutter: 30,
           cols: '3',
         },
         hasBottom: true,

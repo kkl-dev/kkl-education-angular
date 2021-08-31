@@ -20,22 +20,27 @@
           </app-input-radio>
         </mat-grid-tile>
 
-        <ng-container *ngIf="question?.isGroup">
-          <mat-grid-tile *ngIf="question?.header" [colspan]="question.cols || 1" [rowspan]="question.rows || 1">
-            <app-form-header [text]="question.label || question.header.text" [custom]="question?.header.custom"
+        <mat-grid-tile rowspan="10" *ngIf="question?.isGroup">
+          <app-form-group [group]="question.group" [formGroup]="formGroup" [slot]="slots.groupInputs"></app-form-group>
+        </mat-grid-tile>
+
+        <!-- <ng-container *ngIf="question?.isGroup">
+          <mat-grid-tile *ngIf="group?.header" [colspan]="group.cols || 1" [rowspan]="group.rows || 1">
+            <app-form-header [text]="group.label || group.header.text" [custom]="group?.header.custom"
               [slots]="{button}"></app-form-header>
           </mat-grid-tile>
-          <mat-grid-tile *ngFor="let item of question.group" [colspan]="item.cols" [rowspan]="item.rows">
+          <mat-grid-tile *ngFor="let question of group.questions" [colspan]="question.cols" [rowspan]="question.rows">
             <ng-container *ngTemplateOutlet="
             slots.groupInputs;
             context: {
-              question,
               formGroup,
-              item
+              group,
+              question
             }
             "></ng-container>
           </mat-grid-tile>
-        </ng-container>
+
+        </ng-container> -->
       </ng-container>
     </mat-grid-list>
 

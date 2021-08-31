@@ -1,5 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
 import { FormHeader } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
+import { QuestionGroup } from './question-group';
 
 export interface SelectOption {
   key: string;
@@ -22,7 +23,7 @@ export class QuestionBase<T> {
   fullWidth: boolean;
   validations: ValidatorFn[];
   isGroup: boolean;
-  group?: any;
+  group?: QuestionGroup;
   inputProps: {
     options?: SelectOption[];
     labelLength?: string;
@@ -46,7 +47,7 @@ export class QuestionBase<T> {
       fullWidth?: boolean;
       validations?: ValidatorFn[];
       isGroup?: boolean;
-      group?: QuestionBase<string | Date | number>[];
+      group?: QuestionGroup;
       inputProps?: {
         options?: SelectOption[];
         labelLength?: string;

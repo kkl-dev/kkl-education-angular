@@ -71,8 +71,8 @@ export class SquadGroupComponent {
     };
 
     this.client
-      ? (this.squadAssembleService.customerFormInputs[2].header = header)
-      : (this.squadAssembleService.customerFormInputs[2].header = null);
+      ? (this.squadAssembleService.customerFormInputs[2].group.header = header)
+      : (this.squadAssembleService.customerFormInputs[2].group.header = null);
 
     this.$questions.next(this.squadAssembleService.customerFormInputs);
   }

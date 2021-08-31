@@ -42,7 +42,7 @@ export class FormService {
         const { key, value, isGroup, group, validations } = control;
         return {
           ...acc,
-          [key]: isGroup ? this.setGroup(group) : [value || '', validations],
+          [key]: isGroup ? this.setGroup(group.questions) : [value || '', validations],
         };
       }, {});
   }
@@ -55,7 +55,7 @@ export class FormService {
       return {
         key: key,
         isGroup,
-        template: isGroup ? this.setGroup(group) : [value, validations],
+        template: isGroup ? this.setGroup(group.questions) : [value, validations],
       };
     });
   }
