@@ -18,12 +18,16 @@ import {
   MUSIC_ICON,
   BELL_ICON,
   EDIT_ICON,
-  BOYS_GIRLS_ICON,
+  GENDER_ICON,
   V_SIGN,
   ADD_ICON,
   PLAYGROUND_ICON,
   LIST_ICON,
   CALENDER_ICON,
+  BOTTOM_LOGO,
+  OPEN_PLUS,
+  GROUP_ICON,
+  RESTAURANT_ICON,
 } from './icons.list';
 
 export interface IconItem {
@@ -38,9 +42,13 @@ export class IconsService {
   constructor(
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   public iconList: IconItem[] = [
+    {
+      key: 'open-plus',
+      svgUrl: OPEN_PLUS
+    },
     {
       key: 'like',
       svgUrl: THUMBUP_ICON,
@@ -62,8 +70,8 @@ export class IconsService {
       svgUrl: EDIT_ICON,
     },
     {
-      key: 'boysGirls',
-      svgUrl: BOYS_GIRLS_ICON,
+      key: 'gender',
+      svgUrl: GENDER_ICON,
     },
     {
       key: 'button',
@@ -85,6 +93,10 @@ export class IconsService {
     {
       key: 'shield',
       svgUrl: SHIELD_ICON,
+    },
+    {
+      key:'restaurant',
+      svgUrl: RESTAURANT_ICON
     },
     {
       key: 'bus',
@@ -137,6 +149,14 @@ export class IconsService {
     {
       key: 'calendar',
       svgUrl: CALENDER_ICON,
+    },
+    {
+      key: 'bottom-logo',
+      svgUrl: BOTTOM_LOGO,
+    },
+    {
+      key: 'group',
+      svgUrl: GROUP_ICON,
     },
   ];
 

@@ -1,0 +1,32 @@
+@import "../../.././../../../styles.scss";
+
+mat-grid-list,
+mat-grid-tile,
+app-form-container,
+app-form-input,
+app-form-header {
+  height: 100%;
+  width: 100%;
+}
+
+
+button.gender-button {
+  height: 40px !important;
+  width: 40px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: spacing(1);
+  margin-bottom: spacing(1);
+
+  &.mat-icon-button {
+    border-radius: 20% !important;
+  }
+}
+
+.client-text {
+  cursor: pointer;
+}
+
+

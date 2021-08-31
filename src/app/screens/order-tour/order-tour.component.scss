@@ -1,14 +1,8 @@
 @import "../../../styles.scss";
 
 .order-tour {
-  // width: 100%;
-  // height: calc(100% - 90px);
-  // display: flex;
-  // flex-direction: column;
-  // background-color: white;
-  // justify-content: flex-end;
-  // direction: rtl !important;
   position: relative;
+  background-color: color(paper);
 
   &__steps {
     justify-self: stretch;
@@ -29,41 +23,10 @@
   padding: 0 !important;
 }
 
-::ng-deep .chevron {
-  border-color: color(primary) !important;
-}
-
-::ng-deep .bottom-navigation__forward {
-  background-color: color(primary);
-  color: #fff;
-  border: 0;
-  cursor: pointer;
-  padding: 5px 30px;
-  box-shadow: 0px 3px 10px 2px rgba($color: #000, $alpha: 0.2);
-  font-size: 18px;
-
-  &::before {
-    border-style: solid;
-    border-color: #37c56b;
-    border-width: 0.25em 0.25em 0 0;
-    display: inline-block;
-    height: 0.45em;
-    transform: rotate(45deg);
-    margin: auto;
-    width: 0.45em;
-  }
-}
-
 ::ng-deep div.working-steps__backstroke {
   width: 90% !important;
   top: calc(50% - 10px) !important;
   background-color: #e8e8e8 !important;
-}
-
-::ng-deep .bottom-navigation {
-  box-sizing: border-box;
-  margin: 10px 30px;
-  align-self: stretch;
 }
 
 ::ng-deep .working-steps__step-icon {
@@ -101,18 +64,21 @@ app-working-steps {
 }
 
 app-bottom-navigation {
-  width: 90%;
+  width: 100%;
+  direction: rtl;
+  background-color: color(paper);
 }
 
-::ng-deep mat-grid-tile.bottom-navigation {
-  direction: rtl;
+::ng-deep .bottom-navigation {
+  box-sizing: border-box;
+  align-self: stretch;
 }
 
 div.sleeping-width {
   width: 50%;
   margin-left: 50%;
 }
-  
+
 app-sleeping-options {
   height: inherit;
   box-sizing: border-box;
@@ -120,17 +86,17 @@ app-sleeping-options {
 }
 
 mat-grid-list.sleeping-width {
-  width: 50% !important; 
+  width: 50% !important;
   margin-left: 50%;
 }
 
 div.steps-container {
   padding-right: 5%;
   padding-left: 5%;
-  overflow: visible scroll;
+  background-color: color(paper);
+  overflow: auto;
 }
 
 .bottom-navigation {
   direction: rtl;
 }
- 

@@ -1,5 +1,9 @@
 <div class="education-results">
-  <div class="education-results__left"></div>
+  <div class="education-results__left">
+    <app-maps place="נס הרים" day="1"></app-maps>
+    <!-- <app-maps #child [(visible)]="var1" place="אילנות מערב" day="1"></app-maps> -->
+    <!-- <app-maps [place]="forestCenter" day="1"></app-maps> -->
+  </div>
   <div class="education-results__right">
     <!-- search header component -->
     <app-header (emitNewDates)="changeDatesHandler($event)"></app-header>

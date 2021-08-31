@@ -5,11 +5,11 @@
   <div
   class="content"
   fxLayout="column"
-  fxLayoutAlign="space-around stretch"
+  fxLayoutAlign="stretch"
   fxLayout.xs="column"
   fxFlexFill
   >
-  <div fxFlex="10" fxLayoutAlign="center">
+  <div fxFlex="14" fxLayoutAlign="center">
     <div class="stepper">
       <app-working-steps
       [steps]="steps"
@@ -19,7 +19,7 @@
         </app-working-steps>
       </div>
     </div>
-    <div fxFlex="70">
+    <div fxFlex="65">
       <div class="steps-container">
         <ng-content></ng-content>
       </div>
@@ -27,8 +27,6 @@
     <div
       fxFlex="15"
       fxFlex.xs="15"
-      class="bottom-navigation"
-      fxLayoutAlign="center"
     >
       <app-bottom-navigation
         [currentPage]="0"

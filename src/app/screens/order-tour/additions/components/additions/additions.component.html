@@ -1,0 +1,30 @@
+<div
+  fxLayout="column"
+  fxFlexFill
+  class="additions-container"
+  fxLayoutGap="80px"
+>
+  <div class="nav-grid" fxFlex="30">
+    <app-navigation-grid></app-navigation-grid>
+  </div>
+
+  <div class="additions-content">
+    <div class="button-container" fxLayout="row" fxLayoutAlign="start">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onAdd()"
+        [disabled]="addSchedule"
+      >
+        הוספה
+      </button>
+    </div>
+    <app-tour-title [value]="tour.title" [id]="tour.id"></app-tour-title>
+    <div *ngIf="addSchedule">
+      <app-tour-panel [editMode]="false" [schedule]="schedule"></app-tour-panel>
+    </div>
+    <div *ngFor="let schedule of schedule$ | async; index as i">
+      <app-tour-panel [editMode]="true" [schedule]="schedule" [i]="i + 1"></app-tour-panel>
+    </div>
+  </div>
+</div>

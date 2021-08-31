@@ -1,3 +1,5 @@
+@import "../../../styles.scss";
+
 .icon-container {
   height: 100%;
   display: flex;
@@ -6,13 +8,34 @@
   align-self: center;
   align-items: center;
   align-content: center;
+  .white{
+    color: white;
+  }
+  .primary {
+    color: color(primary);
+  }
+  .accent-icon {
+    color: #FC1F9D;
+  }
+  .accent {
+    color: color(accent);
+  }
+  .danger {
+    color: color(danger);
+  }
 
   .default {
-    color: #bababa;
+    color: color(default);
+  }
+  .success {
+    color: color(success);
+  }
+
+  .disable {
+    color: color(disable);
   }
 
   .active {
-    color: #fff !important;
+    color: color(paper) !important;
   }
 }
-

@@ -1,5 +1,6 @@
 import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -24,7 +25,7 @@ export class FormInputComponent implements OnInit {
   @Input() public type!: string;
   @Input() public label!: string;
   @Input() public hint!: string;
-  @Input() public controlType!: string;
+  @Input() public controlType: string;
   @Input() public options!: [];
 
   @Input() public labelLength: string;
@@ -36,6 +37,8 @@ export class FormInputComponent implements OnInit {
   @Input() public disabled: boolean;
 
   @Input() public serverErrorMode!: boolean;
+
+  public color: string;
 
   public value!: any;
   public error!: string;
@@ -69,11 +72,28 @@ export class FormInputComponent implements OnInit {
   }
 
   public handleChange(value: any) {
+    console.log(value)
     this.value = value;
+    this.validate()
   }
 
   // subscription section
-  private subscribeToControl() {}
+  private subscribeToControl() {
+    if (this.control.disabled) {
+      this.color = 'disable';
+    }
+
+    this.control.valueChanges.subscribe((value) => {
+      if (this.control.disabled) {
+        this.color = 'disable';
+      } else if (this.control.errors) {
+        console.log(this.control.errors)
+        this.color = 'danger';
+      } else {
+        this.color = '';
+      }
+    });
+  }
 
   // LOGIC SECTION
 
@@ -81,9 +101,18 @@ export class FormInputComponent implements OnInit {
   public validate() {
     this.error = this.formService.getErrorMessage(this.control, this.label);
 
+    console.log(this.control)
+    console.log(this.error)
+
     this.control.valueChanges.subscribe(() => {
       this.error = this.formService.getErrorMessage(this.control, this.label);
     });
+
+    // if (this.error) {
+    //   this.color = 'danger';
+    // } else {
+    //   this.color = '';
+    // }
   }
 
   // end of logic section

@@ -1,7 +1,8 @@
 @import "../../../../styles.scss";
 
 mat-grid-list,
-mat-grid-tile {
+mat-grid-tile,
+app-flex-cell {
   height: 100%;
   width: 100%;
 }
