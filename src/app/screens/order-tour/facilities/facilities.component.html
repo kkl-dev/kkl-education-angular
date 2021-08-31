@@ -61,5 +61,15 @@
                 </app-info-card>
             </div>
         </div>
+        <div class="cards">
+            <div class="titles">
+                <p>פעילויות קבועות</p>
+            </div>
+            <div class="info-card" id="activities">
+                <app-info-card class="facilities-items-item" *ngFor="let item of facilitiesArray; let i = index"
+                    [item]="item">
+                </app-info-card>
+            </div>
+        </div>
     </div>
 </div>

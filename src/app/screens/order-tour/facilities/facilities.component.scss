@@ -180,5 +180,11 @@ app-tooltip {
 .info-card {
     display: flex;
     position: relative;
-    left: 50px;
+    left: 40px;
+}
+
+#activities{
+    ::ng-deep svg *{
+        fill: #37c56b!important;
+    }
 }
