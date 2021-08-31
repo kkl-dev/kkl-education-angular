@@ -2,6 +2,7 @@
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formGroup">
     <mat-grid-list [cols]="group?.cols || cols || 1" rowHeight="2vh" [gutterSize]="gutter">
       <ng-container *ngFor="let question of group?.questions || questions">
+
         <mat-grid-tile *ngIf="group?.hasButton || hasButton" colspan="1" [rowspan]="question.rows || 5">
           <ng-container *ngTemplateOutlet="slots?.topButton"></ng-container>
         </mat-grid-tile>
@@ -20,27 +21,10 @@
           </app-input-radio>
         </mat-grid-tile>
 
-        <mat-grid-tile rowspan="10" *ngIf="question?.isGroup">
+        <mat-grid-tile *ngIf="question?.isGroup" [colspan]="question.cols || cols || 1" [rowspan]="question.rows || 15">
           <app-form-group [group]="question.group" [formGroup]="formGroup" [slot]="slots.groupInputs"></app-form-group>
         </mat-grid-tile>
 
-        <!-- <ng-container *ngIf="question?.isGroup">
-          <mat-grid-tile *ngIf="group?.header" [colspan]="group.cols || 1" [rowspan]="group.rows || 1">
-            <app-form-header [text]="group.label || group.header.text" [custom]="group?.header.custom"
-              [slots]="{button}"></app-form-header>
-          </mat-grid-tile>
-          <mat-grid-tile *ngFor="let question of group.questions" [colspan]="question.cols" [rowspan]="question.rows">
-            <ng-container *ngTemplateOutlet="
-            slots.groupInputs;
-            context: {
-              formGroup,
-              group,
-              question
-            }
-            "></ng-container>
-          </mat-grid-tile>
-
-        </ng-container> -->
       </ng-container>
     </mat-grid-list>
 
@@ -49,9 +33,3 @@
     </div>
   </form>
 </div>
-
-<ng-template #button>
-  <button type="submit" disableRipple="true" (click)="onEdit()" mat-icon-button class="edit-button mat-elevation-z1">
-    <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
-  </button>
-</ng-template>

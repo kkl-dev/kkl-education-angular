@@ -90,9 +90,11 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'contact',
       isGroup: true,
+      cols: 1,
+      rows: 12,
       group: {
         key: 'contact',
-        cols: 3,
+        cols: 1,
         rows: 3,
         questions: [
           new QuestionTextbox({
@@ -197,18 +199,18 @@ export class SquadAssembleService {
     }),
     new QuestionBase({
       key: 'participants',
-      label: 'נוער / מבוגרים',
-      fullWidth: true,
+      cols: 3,
       rows: 4,
       isGroup: true,
       group: {
         key: 'participants',
+        header: { text: 'נוער / מבוגרים' },
+        cols: 2,
         questions: [
           new QuestionNumber({
             key: 'boys',
             label: 'בנים',
             type: 'number',
-            offset: 1,
             rows: 4,
           }),
           new QuestionNumber({
@@ -216,7 +218,6 @@ export class SquadAssembleService {
             label: 'בנות',
             type: 'number',
             rows: 4,
-            offset: 1
           }),
         ]
       },
@@ -224,11 +225,13 @@ export class SquadAssembleService {
 
     new QuestionBase({
       key: 'chaperones',
-      cols: 2,
+      cols: 3,
+      rows: 4,
       isGroup: true,
-      label: 'מלווים',
       group: {
         key: 'chaperones',
+        header: { text: 'מלווים' },
+        cols: 2,
         questions: [
           new QuestionNumber({
             key: 'boys',
@@ -249,10 +252,12 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'instructors',
       isGroup: true,
-      cols: '2',
-      label: 'מדריכים',
+      cols: 3,
+      rows: 4,
       group: {
         key: 'instructors',
+        header: { text: 'מדריכים' },
+        cols: 2,
         questions: [
           new QuestionNumber({
             key: 'boys',
@@ -273,10 +278,12 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'medics',
       isGroup: true,
-      cols: '2',
-      label: 'חובשים',
+      cols: 3,
+      rows: 4,
       group: {
         key: 'medics',
+        header: { text: 'חובשים' },
+        cols: 2,
         questions: [
           new QuestionNumber({
             key: 'boys',

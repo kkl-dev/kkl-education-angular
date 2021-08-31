@@ -19,7 +19,7 @@ export class FormGroupComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.slot)
+    console.log(this.group.gutter)
   }
 
 }
