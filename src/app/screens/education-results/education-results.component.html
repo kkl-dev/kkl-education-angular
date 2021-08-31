@@ -8,29 +8,19 @@
     <!-- search header component -->
     <app-header (emitNewDates)="changeDatesHandler($event)"></app-header>
 
- 
+    <app-sleeping-options-by-day (emitCurrentDay)="currentDayHandler($event)"
+      [sleepingOptionsByDay]="sleepingOptionsByDay">
+      <h4 class="education-results__right-sleeping-options-headline">זמינות לינה</h4>
+    </app-sleeping-options-by-day>
     <!-- avialable dates -->
 
     <div class="education-results__right-content">
-      <h2 class="education-results__right-header">{{ centerField }}</h2>
-
-      <app-sleeping-options-by-day
-      (emitCurrentDay)="currentDayHandler($event)"
-      [sleepingOptionsByDay]="sleepingOptionsByDay"
-    >
-      <h4
-      class="education-results__right-sleeping-options-headline">זמינות לינה</h4>
-    </app-sleeping-options-by-day>
-
       <!-- avialable facilities  -->
       <div class="education-results__right-facilities">
         <h4 class="education-results__right-facilities-headline">מתקנים</h4>
         <div class="education-results__right-facilities-items">
-          <app-info-card
-            class="education-results__right-facilities-items-item"
-            *ngFor="let item of facilitiesArray; let i = index"
-            [item]="item"
-          >
+          <app-info-card class="education-results__right-facilities-items-item"
+            *ngFor="let item of facilitiesArray; let i = index" [item]="item">
             <app-tooltip class="app-tooltip" [hours]="item.availability">
             </app-tooltip>
           </app-info-card>
