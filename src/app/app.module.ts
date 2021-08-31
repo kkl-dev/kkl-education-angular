@@ -18,6 +18,8 @@ import { GlobalErrorHandler } from './utilities/interceptors/error';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { ApiModule } from './api/api.module';
+
 import { LoginComponent } from './screens/login-backdrop/login/login.component';
 import { LoginBackdropComponent } from './screens/login-backdrop/login-backdrop.component';
 import { LoginFormComponent } from './screens/login-backdrop/login-form/login-form.component';
@@ -31,7 +33,6 @@ import { HeaderComponent } from './screens/education-results/header/header.compo
 import { TooltipComponent } from './screens/education-results/tooltip/tooltip.component';
 import { MyToursComponent } from './screens/my-tours/my-tours.component';
 import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
-import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
@@ -47,7 +48,6 @@ import { WorkingStepsComponent } from './components/working-steps/working-steps.
 import { EducationComponent } from './screens/search/education/education.component';
 import { MapsComponent } from './screens/education-results/maps/maps.component';
 
-import { ApiModule } from './api/api.module';
 
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
@@ -71,9 +71,9 @@ import { SummaryComponent } from './screens/order-tour/summary/summary.component
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
 import { FormComponent } from './components/form/form/form.component';
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
-import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
-import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
-import { SimpleCardComponent } from './components/simple-card/simple-card.component';
+// import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
+// import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
+// import { SimpleCardComponent } from './components/simple-card/simple-card.component';
 
 import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
 import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
@@ -84,9 +84,9 @@ import { TransportModel } from './screens/order-tour/additions/models/transport-
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
 
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
-import { FormHeaderComponent } from './components/form/form-header/form-header.component';
-import { InputDateComponent } from './components/form/input-date/input-date.component';
 import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.component';
+import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
+import { FormHeaderComponent } from './components/form/form-header/form-header.component';
 
 @NgModule({
   declarations: [
@@ -141,10 +141,10 @@ import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.compone
 
     // ADDITIONS COMPONENTS
     AdditionsComponent,
-    TourPanelComponent,
     TransportDetailsComponent,
     TourTitleComponent,
     TransportFormComponent,
+    TourPanelComponent,
 
     DrawerComponent,
     InfoCardComponent,
@@ -156,7 +156,7 @@ import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.compone
     SleepingOptionsComponent,
     SleepingOptionsFormComponent,
     SleepingOptionsByDayComponent,
-    SquadAssembleComponent,
+    // SquadAssembleComponent,
     TypographyComponent,
     DashboardCardComponent,
 
@@ -168,10 +168,9 @@ import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.compone
     FlexTableComponent,
     MapsComponent,
     FormHeaderComponent,
-    TimelineCardComponent,
-    SvgIconComponent,
-    SimpleCardComponent,
-    InputDateComponent,
+    // TimelineCardComponent,
+    // SvgIconComponent,
+    // SimpleCardComponent,
     FlexCellComponent
 
   ],

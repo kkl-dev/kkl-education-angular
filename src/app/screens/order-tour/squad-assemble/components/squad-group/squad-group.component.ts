@@ -23,7 +23,7 @@ export class SquadGroupComponent {
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;
 
-  public bottomData: { label: string; value: string }[];
+  public bottomData: any[];
 
   private $questions = new Subject<QuestionBase<string | number | Date>[]>();
   private mixed: boolean = true;
@@ -36,6 +36,10 @@ export class SquadGroupComponent {
 
     if (this.hasBottom) {
       this.bottomData = [
+        {
+          label: 'מס משתתפים',
+          value: '120',
+        },
         {
           label: 'מס משתתפים',
           value: '120',
