@@ -17,7 +17,7 @@ export class SquadAssembleComponent implements OnInit {
 
     this.squads = [
       {
-        header: { text: 'מועד ושם הטיול', custom: '' },
+        header: { text: 'מועד ושם הטיול', custom: 'tourId' },
         questions: this.squadAssembleService.timeAndNameFormInputs,
       },
       {
