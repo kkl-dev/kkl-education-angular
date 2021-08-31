@@ -29,7 +29,6 @@ export class SquadGroupComponent {
 
   constructor(
     private squadAssembleService: SquadAssembleService,
-    private formService: FormService
   ) {}
 
   ngOnInit() {
@@ -42,13 +41,14 @@ export class SquadGroupComponent {
 
     this.$questions.next(
       this.mixed
-        ? this.squadAssembleService.groupAssembleFormMixedInputs
-        : this.squadAssembleService.groupAssembleFormInputs
-    );
-  }
+      ? this.squadAssembleService.groupAssembleFormMixedInputs
+      : this.squadAssembleService.groupAssembleFormInputs
+      );
+    }
 
-  // TODO - connect between client select to client contact data + disable mode style
+    // TODO - connect between client select to client contact data + disable mode style
 
+    // method to add new client form
   public onAddClient() {
     this.client = !this.client;
 
