@@ -1,56 +1,25 @@
-.assemble-tour {
-  display: flex;
-  margin: 0 auto;
-  box-sizing: border-box;
-
-  &__form:not(:last-child) {
-    border-left: 1px solid #e8e8e8;
-    margin-left: 35px;
-  }
-
-  &__form {
-    box-sizing: border-box;
-    flex: 1;
-    margin: 0 10px;
-
-    & * {
-      width: 80%;
-    }
-
-    &-headline {
-      width: fit-content !important;
-      position: relative;
-      margin: 0 !important;
-      margin-bottom: 0 !important;
-      border-bottom: 3px solid #448ecd;
-      padding-left: 10px;
-      margin-bottom: -3px !important;
-      &-svg {
-        position: absolute;
-        top: 0;
-        left: -80px;
-      }
-      &-container {
-        position: relative;
-        margin-bottom: 16px;
-        border-bottom: 3px solid #dbdbdb;
-        width: 60% !important;
-      }
-    }
-  }
-}
-
-app-form-container {
-  width: 60% !important;
-}
+@import "../../../../../styles.scss";
 
 mat-grid-list,
 mat-grid-tile,
-app-squad-group {
+app-form-container,
+app-squad-group,
+.assemble-container {
   height: 100%;
   width: 100%;
 }
 
 .assemble-container {
-  width: 100%;
+  padding-left: spacing(3);
+  padding-right: spacing(3);
+}
+
+.form-container {
+  width: 80%;
+}
+
+.divider {
+  height: 100%;
+  width: 50px;
+  border-right : 1px solid color(default);
 }

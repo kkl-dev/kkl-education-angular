@@ -20,14 +20,19 @@
   .accent {
     color: color(accent);
   }
-  .warn {
-    color: color(warn);
+  .danger {
+    color: color(danger);
   }
+
   .default {
     color: color(default);
   }
   .success {
     color: color(success);
+  }
+
+  .disable {
+    color: color(disable);
   }
 
   .active {

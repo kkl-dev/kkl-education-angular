@@ -38,6 +38,8 @@ export class FormInputComponent implements OnInit {
 
   @Input() public serverErrorMode!: boolean;
 
+  public color: string;
+
   public value!: any;
   public error!: string;
   public serverError!: string;
@@ -70,11 +72,28 @@ export class FormInputComponent implements OnInit {
   }
 
   public handleChange(value: any) {
+    console.log(value)
     this.value = value;
+    this.validate()
   }
 
   // subscription section
-  private subscribeToControl() {}
+  private subscribeToControl() {
+    if (this.control.disabled) {
+      this.color = 'disable';
+    }
+
+    this.control.valueChanges.subscribe((value) => {
+      if (this.control.disabled) {
+        this.color = 'disable';
+      } else if (this.control.errors) {
+        console.log(this.control.errors)
+        this.color = 'danger';
+      } else {
+        this.color = '';
+      }
+    });
+  }
 
   // LOGIC SECTION
 
@@ -82,9 +101,18 @@ export class FormInputComponent implements OnInit {
   public validate() {
     this.error = this.formService.getErrorMessage(this.control, this.label);
 
+    console.log(this.control)
+    console.log(this.error)
+
     this.control.valueChanges.subscribe(() => {
       this.error = this.formService.getErrorMessage(this.control, this.label);
     });
+
+    // if (this.error) {
+    //   this.color = 'danger';
+    // } else {
+    //   this.color = '';
+    // }
   }
 
   // end of logic section

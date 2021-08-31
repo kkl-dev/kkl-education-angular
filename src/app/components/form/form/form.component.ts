@@ -35,6 +35,8 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formService.setFormGroup(this.formTemplate);
+
+
     this.valueChange.emit(this.form);
     this.subscribeToFormValues();
 

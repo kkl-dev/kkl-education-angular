@@ -9,19 +9,24 @@ app-form-header {
   width: 100%;
 }
 
-.container {
-  padding-top: 5%;
-}
 
-.button-container {
-  border-radius: 5px;
+button.gender-button {
+  height: 40px !important;
+  width: 40px !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
+  align-items: center;
+  padding-top: spacing(1);
+  margin-bottom: spacing(1);
+
+  &.mat-icon-button {
+    border-radius: 20% !important;
+  }
 }
 
-.client-container {
+.client-text {
   cursor: pointer;
 }
+
 

@@ -28,6 +28,7 @@ export class SleepingServiceService {
       inputProps: {
         // labelLength: 'extraWide',
         options: [
+          // { key: 'חדרים', value: 'חדרים' },
           { key: 'בקתות', value: 'בקתות' },
           { key: 'גיחה', value: 'גיחה' },
           { key: 'אוהלים', value: 'אוהלים' },

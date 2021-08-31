@@ -31,8 +31,8 @@ export class FormContainerComponent implements OnInit {
   @Input() hasBottomButton: boolean = false;
 
   @Input() slots: {
-    button?: ElementRef;
-    gup?: ElementRef;
+    topButton?: ElementRef;
+    group?: ElementRef;
   };
 
   @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
@@ -42,6 +42,7 @@ export class FormContainerComponent implements OnInit {
   ngOnInit() {
     this.initFormGroup();
     this.subscribeToQuestions();
+    this.formService.formGroup = this.formGroup;
   }
 
   private initFormGroup() {
