@@ -6,10 +6,12 @@
       [ngClass]="[labelLength || 'base']"
     >
       <mat-label>{{ label }}</mat-label>
+
       <input
         *ngIf="
           controlType !== 'select' &&
-          controlType !== 'textarea'
+          controlType !== 'textarea' &&
+          controlType !== 'calendar'
         "
         matInput
         [type]="type"
@@ -21,6 +23,17 @@
         (focusout)="validate()"
         #input
         [placeholder]="label"
+      />
+
+      <input
+        #dateInput
+        *ngIf="controlType === 'calendar'"
+        matInput
+        type="text"
+        airbnb-calendar
+        control="control"
+        autocomplete="none"
+        [(ngModel)]="control.value"
       />
 
       <mat-select

@@ -21,10 +21,10 @@ export class FormInputComponent implements OnInit {
 
   @Input() public question!: QuestionBase<string | number | Date>;
 
-  @Input() public control!: FormControl;
-  @Input() public type!: string;
-  @Input() public label!: string;
-  @Input() public hint!: string;
+  @Input() public control: FormControl;
+  @Input() public type: string;
+  @Input() public label: string;
+  @Input() public hint: string;
   @Input() public controlType: string;
   @Input() public options!: [];
 
@@ -32,7 +32,6 @@ export class FormInputComponent implements OnInit {
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
-  @Input() public status!: string;
   @Input() public inputProps: {};
   @Input() public disabled: boolean;
 
@@ -49,6 +48,7 @@ export class FormInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToControl();
+    console.log(this.control.value)
   }
 
   // ControlValueAccessor logic

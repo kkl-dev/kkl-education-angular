@@ -20,20 +20,20 @@ export class SquadAssembleComponent implements OnInit {
         header: { text: 'מועד ושם הטיול', custom: '' },
         questions: this.squadAssembleService.timeAndNameFormInputs,
       },
-      {
-        header: { text: 'לקוח', custom: 'client' },
-        questions: this.squadAssembleService.customerFormInputs,
-      },
-      {
-        header: { text: 'הרכב הקבוצה', custom: 'gender' },
-        questions: this.squadAssembleService.groupAssembleFormMixedInputs,
-        cols: '2',
-      },
+      // {
+      //   header: { text: 'לקוח', custom: 'client' },
+      //   questions: this.squadAssembleService.customerFormInputs,
+      // },
+      // {
+      //   header: { text: 'הרכב הקבוצה', custom: 'gender' },
+      //   questions: this.squadAssembleService.groupAssembleFormMixedInputs,
+      //   cols: '2',
+      // },
 
-      {
-        header: { text: 'פרטי הטיול', custom: '' },
-        questions: this.squadAssembleService.tourDetailsFormInputs,
-      },
+      // {
+      //   header: { text: 'פרטי הטיול', custom: '' },
+      //   questions: this.squadAssembleService.tourDetailsFormInputs,
+      // },
     ].reverse();
   }
 }
