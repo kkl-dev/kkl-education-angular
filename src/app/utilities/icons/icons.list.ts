@@ -19,14 +19,6 @@ export const V_SIGN = `<svg xmlns="http://www.w3.org/2000/svg"
  <path class="c" d="M 8.5 16.25 C 4.226640224456787 16.25 0.75 12.77336025238037 0.75 8.5 C 0.75 6.115330219268799 1.804280042648315 3.984380006790161 3.798870086669922 2.337510108947754 C 4.990379810333252 1.342460036277771 6.746600151062012 0.75 8.5 0.75 C 12.77336025238037 0.75 16.25 4.226640224456787 16.25 8.5 C 16.25 12.77336025238037 12.77336025238037 16.25 8.5 16.25 Z"/><path class="d" d="M 8.5 1.5 C 6.916910171508789 1.5 5.340410232543945 2.027279853820801 4.28285026550293 2.910479545593262 L 4.276379585266113 2.915849685668945 C 2.460060119628906 4.415530204772949 1.5 6.346500396728516 1.5 8.5 C 1.5 12.35980987548828 4.640190124511719 15.5 8.5 15.5 C 12.35980987548828 15.5 15.5 12.35980987548828 15.5 8.5 C 15.5 4.640190124511719 12.35980987548828 1.5 8.5 1.5 M 8.5 0 C 13.19441986083984 0 17 3.805580139160156 17 8.5 C 17 13.19441986083984 13.19441986083984 17 8.5 17 C 3.805580139160156 17 0 13.19441986083984 0 8.5 C 0 5.866430282592773 1.197699546813965 3.512599945068359 3.32135009765625 1.759169578552246 C 4.549599647521973 0.7334194183349609 6.439149856567383 0 8.5 0 Z"/></g><g transform="translate(0.631 0.581)"><path class="b" d="M18.933,9.965v.706a7.72,7.72,0,0,1-5.708,7.357,8.116,8.116,0,0,1-8.942-3.183A7.456,7.456,0,0,1,4.911,5.68a8.171,8.171,0,0,1,9.3-2.024" transform="translate(-3 -2.991)"/><path class="b" d="M23.856,6,15.89,13.974l-2.39-2.39"
  transform="translate(-7.923 -4.402)"/></g></g></svg>`;
 
-export const GENDER_ICON = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-width="47" height="47" viewBox="0 0 47 47"><defs>
-<style>.gender{fill:"none";opacity:0.74;}.b{filter:url(#a);}</style><filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/><feGaussianBlur stdDeviation="3" result="b"/>
-<feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/>
-<feComposite in="SourceGraphic"/></filter></defs>
-<g class="b" transform="matrix(1, 0, 0, 1, 0, 0)">
-<rect class="gender" width="29" height="29" rx="5" transform="translate(9 6)"/></g></svg>`;
-
 export const EDIT_ICON = `<svg xmlns="http://www.w3.org/2000/svg"
  width="12.228" height="12.228"
  viewBox="0 0 12.228 12.228"><defs><style>.edit{fill:"none";}</style></defs><path class="edit"
@@ -231,28 +223,28 @@ export const BOTTOM_LOGO = `
  </svg>
  `;
 
-export const GROUP_ICON = `
+export const GENDER_ICON = `
  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
  width="47" height="47" viewBox="0 0 47 47"><defs>
  <style>
- .a-group{fill:#fff;opacity:0.74;}
- .b-group{fill:#009eee;}
- .c-group{fill:#d220ba;}
- .d-group{filter:url(#a);}
+ .a-gender{fill:#fff;opacity:0.74;}
+ .b-gender{fill:#009eee;}
+ .c-gender{fill:#d220ba;}
+ .d-gender{filter:url(#a);}
  </style>
  <filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/>
  <feGaussianBlur stdDeviation="3" result="b"/><feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/><feComposite in="SourceGraphic"/>
- </filter></defs><g transform="translate(-19 -821.175)"><g class="d-group" transform="matrix(1, 0, 0, 1, 19, 821.18)">
- <rect class="a-group" width="29" height="29" rx="5" transform="translate(9 6)"/></g><g transform="translate(35.331 834.183)">
- <rect class="b-group" width="4" height="4" transform="translate(-0.331 0.993)"/><rect class="c" width="4" height="4" transform="translate(4.669 0.993)"/>
- <rect class="c-group" width="4" height="4" transform="translate(9.669 0.993)"/><rect class="b-group" width="4" height="4" transform="translate(-0.331 5.993)"/>
- <rect class="c-group" width="4" height="4" transform="translate(4.669 5.993)"/><rect class="c-group" width="4" height="4" transform="translate(9.669 5.993)"/>
- <rect class="b-group" width="4" height="4" transform="translate(-0.331 10.993)"/><rect class="b-group" width="4" height="4" transform="translate(4.669 10.993)"/>
- <rect class="c-group" width="4" height="4" transform="translate(9.669 10.993)"/></g></g>
+ </filter></defs><g transform="translate(-19 -821.175)"><g class="d-gender" transform="matrix(1, 0, 0, 1, 19, 821.18)">
+ <rect class="a-gender" width="29" height="29" rx="5" transform="translate(9 6)"/></g><g transform="translate(35.331 834.183)">
+ <rect class="b-gender" width="4" height="4" transform="translate(-0.331 0.993)"/><rect class="c" width="4" height="4" transform="translate(4.669 0.993)"/>
+ <rect class="c-gender" width="4" height="4" transform="translate(9.669 0.993)"/><rect class="b-gender" width="4" height="4" transform="translate(-0.331 5.993)"/>
+ <rect class="c-gender" width="4" height="4" transform="translate(4.669 5.993)"/><rect class="c-gender" width="4" height="4" transform="translate(9.669 5.993)"/>
+ <rect class="b-gender" width="4" height="4" transform="translate(-0.331 10.993)"/><rect class="b-gender" width="4" height="4" transform="translate(4.669 10.993)"/>
+ <rect class="c-gender" width="4" height="4" transform="translate(9.669 10.993)"/></g></g>
  </svg>
  `;
 
-export const USER_ICON = `
+export const GROUP_ICON = `
 <svg xmlns="http://www.w3.org/2000/svg" width="40.377" height="26.333" viewBox="0 0 40.377 26.333">
 <g id="user" transform="translate(0 -85.333)">
   <g id="Group_950" data-name="Group 950" transform="translate(14.044 85.333)">
