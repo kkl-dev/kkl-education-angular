@@ -8,7 +8,7 @@
 
       <mat-select color="primary" [formControl]="control" *ngIf="controlType === 'select'"
         (change)="handleChange($event.value)">
-        <mat-option>{{ label | titlecase }}</mat-option>
+        <mat-option>{{ label }}</mat-option>
         <mat-option *ngFor="let option of options" [value]="option.value">
           {{ option.key }}
         </mat-option>
