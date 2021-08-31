@@ -61,35 +61,31 @@ export class MapsComponent implements OnInit {
   ngOnInit() {
     this.loadWebMap();
     if (this.tripService.centerField) {
-      this.place = this.tripService.centerField.name;   
+      this.place = this.tripService.centerField.name;
       this.onChangeForestCenter();
     }
     else {
       this.tripService.forestCenter.subscribe(result => {
-        console.log('maps -->  forestCenter result:', result);
         try {
-          this.place = result.name;        
+          this.place = result.name;
           this.onChangeForestCenter();
 
         } catch (error) {
-          console.log('maps -->  forestCenter result:', result);
 
         }
       });
     }
-    
-    
+
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('changes', changes);
     // if (changes) {
     //   this.changeForestCenter(changes);
     // }
   }
 
   // changeForestCenter(visible: any) {
-  //   console.log('show', visible);
   //   this.visibleChange.emit(visible);
   // }
 
@@ -111,7 +107,7 @@ export class MapsComponent implements OnInit {
     queryTask.executeForExtent(queryextnet).then((response) => {
       this.queryTask_executeForExtent(response)
     });
-    // query for data 
+    // query for data
     let query = this.layer.createQuery();
     query.where = filterex;
     query.outFields = ["SiteName", "Purpose", "UID"];
@@ -129,7 +125,7 @@ export class MapsComponent implements OnInit {
     this.day = 1;
 
     if ((this.place == "נס הרים") && (this.day == 1)) {
-      this.place = "מרכז שדה נס הרים";      
+      this.place = "מרכז שדה נס הרים";
       rawservicedata = this.nesharimday1; };
     if ((this.place == "מרכז שדה ציפורי") && (this.day == 1)) { rawservicedata = this.ziporiday1; };
     if ((this.place == "אילנות מערב") && (this.day == 1)) { rawservicedata = this.ilanotday1 };
@@ -161,7 +157,7 @@ export class MapsComponent implements OnInit {
         y: buldingfeature.geometry.y
       });
 
-      // check with kkl huts data from services to see vacancy 
+      // check with kkl huts data from services to see vacancy
       if (this.fullhuts.includes(buldingfeature.attributes.UID)) {
         // add attribute to graphic layer
         // Create a symbol for drawing the point
@@ -207,7 +203,7 @@ export class MapsComponent implements OnInit {
     };
   }
 
-  // fake data to dev this will be a response to a requset from kkl huts services 
+  // fake data to dev this will be a response to a requset from kkl huts services
   nesharimday1 = { "biktot": { "bikta": [{ "uid": "149", "school": "אורט", "gender": "boys" }, { "uid": "150", "school": "אורט", "gender": "girls" }, { "uid": "151", "school": "בני ציון", "gender": "boysAndGirls" }] } };
   nesharimday2 = { "biktot": { "bikta": [{ "uid": "170", "school": "בית ספר סתם", "gender": "boys" }, { "uid": "171", "school": "בית ספר סתם", "gender": "girls" }] } };
   nesharimday3 = { "biktot": { "bikta": [{ "uid": "175", "school": "אורט", "gender": "boys" }, { "uid": "176", "school": "אורט", "gender": "girls" }, { "uid": "178", "school": "מקיף משהו", "gender": "boysAndGirls" }, { "uid": "179", "school": "מקיף משהו", "gender": "boysAndGirls" }] } };

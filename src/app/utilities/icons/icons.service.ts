@@ -18,13 +18,14 @@ import {
   MUSIC_ICON,
   BELL_ICON,
   EDIT_ICON,
-  BOYS_GIRLS_ICON,
+  GENDER_ICON,
   V_SIGN,
   ADD_ICON,
   PLAYGROUND_ICON,
   LIST_ICON,
   CALENDER_ICON,
   BOTTOM_LOGO,
+  GROUP_ICON,
 } from './icons.list';
 
 export interface IconItem {
@@ -63,8 +64,8 @@ export class IconsService {
       svgUrl: EDIT_ICON,
     },
     {
-      key: 'boysGirls',
-      svgUrl: BOYS_GIRLS_ICON,
+      key: 'gender',
+      svgUrl: GENDER_ICON,
     },
     {
       key: 'button',
@@ -142,6 +143,10 @@ export class IconsService {
     {
       key: 'bottom-logo',
       svgUrl: BOTTOM_LOGO,
+    },
+    {
+      key: 'group',
+      svgUrl: GROUP_ICON,
     },
   ];
 

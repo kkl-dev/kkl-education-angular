@@ -7,7 +7,10 @@
     >
       <mat-label>{{ label }}</mat-label>
       <input
-        *ngIf="controlType !== 'select' && controlType !== 'textarea'"
+        *ngIf="
+          controlType !== 'select' &&
+          controlType !== 'textarea'
+        "
         matInput
         [type]="type"
         [formControl]="control"
@@ -40,14 +43,10 @@
       ></textarea>
 
       <!-- icons -->
-      <!-- <mat-icon matPrefix>{{
-        controlType === "select" ? "keyboard_arrow_down" : icon
-      }}</mat-icon> -->
-
       <app-icon
         matPrefix
-        [color]="disabled ? 'warn' : 'primary'"
-        [key]="controlType === 'select' ? 'keyboard_arrow_down' : icon"
+        [color]="disabled ? 'default' : 'primary'"
+        [key]="controlType === 'select' ? icon || 'keyboard_arrow_down' : icon"
         type="mat"
       ></app-icon>
 

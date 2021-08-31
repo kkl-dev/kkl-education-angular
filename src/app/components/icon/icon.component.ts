@@ -15,7 +15,6 @@ export class IconComponent implements OnInit {
   @Input() public size: number = 24;
   @Input() public width: number;
   @Input() public height: number;
-
   @Input() public isActive: boolean;
 
   @Input() public type: string;
@@ -24,7 +23,6 @@ export class IconComponent implements OnInit {
   @Input() public scale: number | string;
 
   public matScale: string;
-  public default: boolean = true;
 
   constructor(private iconsService: IconsService) {}
 
@@ -42,11 +40,7 @@ export class IconComponent implements OnInit {
   }
 
   private setIconColor() {
-    if (this.color && this.color !== 'default') {
-      this.default = false;
-    } else {
-      this.default = !this.isActive;
-    }
+    this.color = this.isActive ? 'active' : this.color ||  'default';
   }
 
   private setIconSize() {

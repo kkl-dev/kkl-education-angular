@@ -1,0 +1,61 @@
+<div class="container" *ngIf="questions.length > 0">
+  <mat-grid-list cols="1" rowHeight="5vh">
+    <mat-grid-tile>
+      <app-form-header
+        [text]="header.text"
+        [custom]="header.custom"
+        [slots]="{ gender, client }"
+      ></app-form-header>
+    </mat-grid-tile>
+
+    <mat-grid-tile rowspan="10">
+      <app-form-container
+        [cols]="cols"
+        [questions]="questions"
+        [$questions]="$questions"
+        [hasBottomButton]="true"
+        [slots]="{ group: group }"
+      >
+      </app-form-container>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<ng-template #gender>
+  <div class="button-container mat-elevation-z1">
+    <button
+      mat-icon-button
+      class="header-button"
+      disableRipple="true"
+      (click)="onGenderChange()"
+    >
+      <app-icon type="svg" key="group" scale="2"></app-icon>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #client>
+  <div class="client-container">
+    <app-typography color="primary" (click)="onAddClient()">
+      לקוח חדש
+    </app-typography>
+  </div>
+</ng-template>
+
+<ng-template
+  #group
+  let-question="question"
+  let-item="item"
+  let-formGroup="formGroup"
+>
+  <app-form-input
+    [groupLabel]="item.key === 'girls' ? question.label : 'g'"
+    [control]="formGroup.controls[question.key].controls[item.key]"
+    [label]="item.label"
+    [split]="cols > question.cols"
+    [theme]="item.key === 'girls' && 'accent'"
+    [type]="item.controlType"
+    [labelLength]="question.inputProps?.labelLength"
+  >
+  </app-form-input>
+</ng-template>
