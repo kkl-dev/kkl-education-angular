@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { InfoCard } from '../../education-results/education-results.component';
 
 @Component({
   selector: 'app-facilities',
@@ -25,6 +26,7 @@ export class FacilitiesComponent implements OnInit {
     }
   }
   public colors = { green: '#37C56B', blue: '#448ECD' }
+  // arrays
   public timeLineArray: Array<object> = [
     {
       title: 'ארוחת צהריים', startTime: '12:00', endTime: '13:00',
@@ -65,4 +67,65 @@ export class FacilitiesComponent implements OnInit {
       validations: [Validators.required]
     }),
   ];
+  public facilitiesArray: InfoCard[] = [
+    {
+      svgUrl: 'assets/images/museum.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'אורנים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/classroom.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 20 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'רתמים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/football.svg',
+      headline: 'מגרש ספורט',
+      subHeadline: '',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'נחלאות',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/leafs.svg',
+      headline: 'סיור במשתלה',
+      availability: [],
+    },
+    {
+      svgUrl: 'assets/images/student-hat.svg',
+      headline: 'מרכז למידה',
+      subHeadline: 'עד 40 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
+  
+  ];
+
 }

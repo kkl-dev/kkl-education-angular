@@ -49,8 +49,17 @@
                 </app-form-container>
             </div>
         </div>
-        <div class="titles">
-            <p>מתקני מרכז שדה</p>
+        <div class="cards">
+            <div class="titles">
+                <p>מתקני מרכז שדה</p>
+            </div>
+            <div class="info-card">
+                <app-info-card class="facilities-items-item" *ngFor="let item of facilitiesArray; let i = index"
+                    [item]="item">
+                    <app-tooltip class="app-tooltip" [hours]="item.availability">
+                    </app-tooltip>
+                </app-info-card>
+            </div>
         </div>
     </div>
 </div>

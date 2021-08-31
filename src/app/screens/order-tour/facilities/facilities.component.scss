@@ -61,6 +61,7 @@
 }
 .content-1 {
     justify-content: center;
+    margin-right: 20px;
 }
 .content-1,
 .content-2 {
@@ -121,13 +122,16 @@
 
 .content-2 {
     display: block;
+    border-left: 1px solid #d1d1d1;
     .header {
         width: 90%;
     }
     .titles {
+        width: 90%;
+        float: right;
         border-bottom: 1px solid #daeaf5;
         p {
-            border-bottom: 1px solid #448ecd;
+            border-bottom: 2px solid #448ecd;
             display: inline-block;
             margin: 0;
             font-size: 16px;
@@ -136,10 +140,11 @@
     .title {
         height: 40px;
         display: flex;
-        width: 90%;
         justify-content: space-between;
         flex-direction: row-reverse;
         margin: 0 auto;
+        position: relative;
+        left: 90px;
         p {
             font-size: 24px;
             font-weight: 600;
@@ -159,5 +164,21 @@
     .forms {
         width: 100%;
         padding: 20px;
+        margin-left: 70px;
     }
+}
+app-info-card {
+    text-align: center;
+    margin: 50px;
+}
+app-tooltip {
+    display: none;
+}
+::ng-deep :hover > .app-tooltip {
+    display: block;
+}
+.info-card {
+    display: flex;
+    position: relative;
+    left: 50px;
 }
