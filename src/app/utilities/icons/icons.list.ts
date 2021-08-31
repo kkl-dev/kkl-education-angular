@@ -8,7 +8,10 @@ export const THUMBUP_ICON =
   `1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/>
   </svg>
 `;
-
+export const OPEN_PLUS = `<svg xmlns="http://www.w3.org/2000/svg" width="8.667" height="8.667" viewBox="0 0 8.667 8.667">
+<path id="Icon_open-plus" data-name="Icon open-plus" d="M3.25,0V3.25H0V5.417H3.25v3.25H5.417V5.417h3.25V3.25H5.417V0Z"/>
+</svg>
+`
 export const V_SIGN = `<svg xmlns="http://www.w3.org/2000/svg"
  width="17.956" height="17.331" viewBox="0 0 17.956 17.331">
  <defs><style>.v-sign{fill:"none";opacity:0;}.b{fill:none;stroke:#6dc066;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}.c,.d{stroke:none;}.d{fill:#dfdfdf;}</style></defs><g transform="translate(0.332 0.331)">
@@ -243,3 +246,8 @@ export const GROUP_ICON = `
  <rect class="c" width="4" height="4" transform="translate(9.669 10.993)"/></g></g>
  </svg>
  `;
+
+export const RESTAURANT_ICON = `
+ <svg xmlns="http://www.w3.org/2000/svg" width="27.93" height="31.033" viewBox="0 0 27.93 31.033">
+  <path id="Icon_material-restaurant" data-name="Icon material-restaurant" d="M16.913,13.861h-3.1V3h-3.1V13.861H7.6V3H4.5V13.861a6.185,6.185,0,0,0,5.819,6.16V34.033H14.2V20.021a6.185,6.185,0,0,0,5.819-6.16V3h-3.1Zm7.758-4.655V21.62H28.55V34.033H32.43V3C28.147,3,24.671,6.476,24.671,9.207Z" transform="translate(-4.5 -3)" fill="#37c56b"/>
+</svg>`

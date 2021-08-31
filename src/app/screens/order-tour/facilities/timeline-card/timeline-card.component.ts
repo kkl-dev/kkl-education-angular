@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-timeline-card',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./timeline-card.component.scss']
 })
 export class TimelineCardComponent implements OnInit {
-
+  @Input() item: any;
   constructor() { }
 
   ngOnInit(): void {
