@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
-import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
