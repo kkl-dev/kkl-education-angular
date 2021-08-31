@@ -23,16 +23,25 @@ export class SquadGroupComponent {
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;
 
+  public bottomData: { label: string; value: string }[];
+
   private $questions = new Subject<QuestionBase<string | number | Date>[]>();
   private mixed: boolean = true;
   private client: boolean = false;
 
-  constructor(
-    private squadAssembleService: SquadAssembleService,
-  ) {}
+  constructor(private squadAssembleService: SquadAssembleService) {}
 
   ngOnInit() {
     this.questions = this.questions || [];
+
+    if (this.hasBottom) {
+      this.bottomData = [
+        {
+          label: 'מס משתתפים',
+          value: '120',
+        },
+      ];
+    }
   }
 
   // method to change squad assemble form
@@ -41,14 +50,14 @@ export class SquadGroupComponent {
 
     this.$questions.next(
       this.mixed
-      ? this.squadAssembleService.groupAssembleFormMixedInputs
-      : this.squadAssembleService.groupAssembleFormInputs
-      );
-    }
+        ? this.squadAssembleService.groupAssembleFormMixedInputs
+        : this.squadAssembleService.groupAssembleFormInputs
+    );
+  }
 
-    // TODO - connect between client select to client contact data + disable mode style
+  // TODO - connect between client select to client contact data + disable mode style
 
-    // method to add new client form
+  // method to add new client form
   public onAddClient() {
     this.client = !this.client;
 

@@ -20,7 +20,12 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <ng *ngIf="hasBottom">dkslkdls</ng>
+      <ng-container *ngIf="hasBottom">
+        <div fxLayout="row" fxLayoutAlign="center stretch">
+          <div fxFlex="50%">1</div>
+          <div fxFlex="50%">2</div>
+        </div>
+      </ng-container>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

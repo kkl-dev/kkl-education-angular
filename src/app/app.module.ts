@@ -86,6 +86,7 @@ import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/comp
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 import { FormHeaderComponent } from './components/form/form-header/form-header.component';
 import { InputDateComponent } from './components/form/input-date/input-date.component';
+import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.component';
 
 @NgModule({
   declarations: [
@@ -170,7 +171,8 @@ import { InputDateComponent } from './components/form/input-date/input-date.comp
     TimelineCardComponent,
     SvgIconComponent,
     SimpleCardComponent,
-    InputDateComponent
+    InputDateComponent,
+    FlexCellComponent
 
   ],
   imports: [

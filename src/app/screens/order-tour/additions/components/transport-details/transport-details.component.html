@@ -5,11 +5,14 @@
     </app-typography>
   </mat-card-header>
   <mat-card-content>
+
     <app-flex-table
       [data$]="data$"
       [slots]="{ button: tableButton, custom: input }"
     ></app-flex-table>
+    
   </mat-card-content>
+
   <mat-card-actions>
     <div fxFill fxLayout="row" fxLayoutAlign="end center" *ngIf="!editMode">
       <button
