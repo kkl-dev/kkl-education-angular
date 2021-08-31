@@ -31,7 +31,7 @@ export class FormContainerComponent implements OnInit {
   @Input() hasBottomButton: boolean = false;
 
   @Input() slots: {
-    button?: ElementRef;
+    topButton?: ElementRef;
     group?: ElementRef;
   };
 
@@ -42,6 +42,7 @@ export class FormContainerComponent implements OnInit {
   ngOnInit() {
     this.initFormGroup();
     this.subscribeToQuestions();
+    this.formService.formGroup = this.formGroup;
   }
 
   private initFormGroup() {

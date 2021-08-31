@@ -15,11 +15,16 @@
   .accent {
     color: color(accent);
   }
-  .warn {
-    color: color(warn);
+  .danger {
+    color: color(danger);
   }
+
   .default {
     color: color(default);
+  }
+
+  .disable {
+    color: color(disable);
   }
 
   .active {

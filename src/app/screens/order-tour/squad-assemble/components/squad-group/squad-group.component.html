@@ -4,7 +4,7 @@
       <app-form-header
         [text]="header.text"
         [custom]="header.custom"
-        [slots]="{ gender, client }"
+        [slots]="{ gender, client, tourId }"
       ></app-form-header>
     </mat-grid-tile>
 
@@ -18,28 +18,39 @@
       >
       </app-form-container>
     </mat-grid-tile>
+
+    <mat-grid-tile>
+      <ng-container *ngIf="hasBottom">
+        <div fxLayout="row" fxLayoutAlign="center stretch">
+          <div fxFlex="50%">1</div>
+          <div fxFlex="50%">2</div>
+        </div>
+      </ng-container>
+    </mat-grid-tile>
   </mat-grid-list>
 </div>
 
+<!-- template components -->
+
 <ng-template #gender>
-  <div class="button-container mat-elevation-z1">
-    <button
-      mat-icon-button
-      class="header-button"
-      disableRipple="true"
-      (click)="onGenderChange()"
-    >
-      <app-icon type="svg" key="group" scale="2"></app-icon>
-    </button>
-  </div>
+  <button
+    mat-icon-button
+    class="gender-button mat-elevation-z1"
+    disableRipple="true"
+    (click)="onGenderChange()"
+  >
+    <app-icon type="svg" key="group" scale="2"></app-icon>
+  </button>
 </ng-template>
 
 <ng-template #client>
-  <div class="client-container">
-    <app-typography color="primary" (click)="onAddClient()">
-      לקוח חדש
-    </app-typography>
-  </div>
+  <app-typography class="client-text" color="primary" (click)="onAddClient()">
+    לקוח חדש
+  </app-typography>
+</ng-template>
+
+<ng-template #tourId>
+  <app-typography> קוד טיול : {{ tripId }} </app-typography>
 </ng-template>
 
 <ng-template

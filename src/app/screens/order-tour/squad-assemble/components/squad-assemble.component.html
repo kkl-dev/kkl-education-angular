@@ -1,16 +1,19 @@
 <div class="assemble-container">
-  <mat-grid-list cols="4" rowHeight="70vh" gutterSize="5">
-    <mat-grid-tile *ngFor="let squad of squads">
-      <app-squad-group
-        [cols]="squad.cols"
-        [header]="squad.header"
-        [questions]="squad.questions || []"
-      >
-      </app-squad-group>
+  <mat-grid-list cols="4" rowHeight="62vh">
+    <mat-grid-tile *ngFor="let squad of squads; let i = index">
+      <div class="form-container">
+        <app-squad-group
+          [cols]="squad.form.cols"
+          [header]="squad.form.header"
+          [questions]="squad.form.questions || []"
+          [hasBottom]="squad.hasBottom"
+        >
+        </app-squad-group>
+      </div>
+      <div *ngIf="i !== squads.length - 1" class="divider">
+      </div>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
 
-<ng-template>
-
-</ng-template>
+<ng-template> </ng-template>

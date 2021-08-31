@@ -3,7 +3,7 @@
     <mat-grid-list cols="1" rowHeight="6vh">
       <mat-grid-tile *ngFor="let column of columns" [rowspan]="column.rows">
         <div fxFill fxLayout="row" fxLayoutAlign="start center">
-          <app-typography  [bold]="600" underline="underline">
+          <app-typography [bold]="600" underline="underline">
             {{ column.label }}:
           </app-typography>
           <app-typography underline="underline">
@@ -18,7 +18,7 @@
     <mat-grid-list cols="4" rowHeight="6vh" *ngFor="let row of data">
       <mat-grid-tile *ngFor="let item of row" [colspan]="item?.cols || 1">
         <div fxFill fxLayout="row" fxLayoutAlign="start center">
-          <app-typography class="item-label" *ngIf="item.label" [bold]="600">
+          <!-- <app-typography class="item-label" *ngIf="item.label" [bold]="600">
             {{ item.label }}:
           </app-typography>
 
@@ -30,7 +30,13 @@
 
           <app-typography *ngIf="item.type === 'date'">
             {{ item?.value | date: "M/d/yy" }}
-          </app-typography>
+          </app-typography> -->
+
+          <app-flex-cell
+          [label]="item.label"
+          [type]="item.type"
+          [value]="item.value"
+          ></app-flex-cell>
 
           <ng-container *ngIf="item.type === 'custom'">
             <ng-container *ngTemplateOutlet="slots?.custom"></ng-container>
@@ -40,10 +46,6 @@
           </ng-container>
         </div>
       </mat-grid-tile>
-
-      <!-- <mat-action-row colspan="4" *ngIf="true">
-        <mat-divider></mat-divider>
-      </mat-action-row> -->
     </mat-grid-list>
   </div>
 </div>

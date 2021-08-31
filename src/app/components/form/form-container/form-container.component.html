@@ -11,7 +11,7 @@
           colspan="1"
           [rowspan]="question.rows"
         >
-          <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+          <ng-container *ngTemplateOutlet="slots?.topButton"></ng-container>
         </mat-grid-tile>
 
         <mat-grid-tile
@@ -83,15 +83,13 @@
 </div>
 
 <ng-template #button>
-  <div class="button-container">
-    <button
-      type="submit"
-      class="edit-button mat-elevation-z1"
-      disableRipple="true"
-      (click)="onEdit()"
-      mat-icon-button
-    >
-      <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
-    </button>
-  </div>
+  <button
+    type="submit"
+    disableRipple="true"
+    (click)="onEdit()"
+    mat-icon-button
+    class="edit-button mat-elevation-z1"
+  >
+    <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
+  </button>
 </ng-template>

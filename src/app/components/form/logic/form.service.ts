@@ -11,20 +11,20 @@ export interface FormTemplate {
   questionsGroups?: QuestionGroup[];
 }
 
-// export interface QuestionGroup {
-//   key?: string;
-//   label?: string;
-//   header? : FormHeader,
-//   cols?: string | number;
-//   isGroup?: boolean;
-//   questions?: QuestionBase<string | Date | number>[];
-//   hasButton?: boolean;
-// }
 @Injectable({
   providedIn: 'root',
 })
 export class FormService {
-  constructor(private fb: FormBuilder) {}
+  public id: number;
+  public formGroup: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.id = this.setId();
+  }
+
+  private setId(): number {
+    return Math.random() * 10000;
+  }
 
   private errorsMessage = {
     required: (key: string): string => `${key} is required`,
