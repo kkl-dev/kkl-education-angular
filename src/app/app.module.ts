@@ -15,20 +15,21 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
 
+import { ApiModule } from './api';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { ApiModule } from './api/api.module';
 
 import { LoginComponent } from './screens/login-backdrop/login/login.component';
 import { LoginBackdropComponent } from './screens/login-backdrop/login-backdrop.component';
 import { LoginFormComponent } from './screens/login-backdrop/login-form/login-form.component';
-import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { OtpFormComponent } from './screens/login-backdrop/otp-form/otp-form.component';
 import { LoginProcessComponent } from './screens/login-backdrop/login-process/login-process.component';
+
+import { EducationResultsComponent } from './screens/education-results/education-results.component';
+import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { SearchComponent } from './screens/search/search.component';
 import { DatePickerComponent } from './screens/search/education/date-picker/date-picker.component';
-import { EducationResultsComponent } from './screens/education-results/education-results.component';
 import { HeaderComponent } from './screens/education-results/header/header.component';
 import { TooltipComponent } from './screens/education-results/tooltip/tooltip.component';
 import { MyToursComponent } from './screens/my-tours/my-tours.component';
@@ -38,7 +39,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { LinksComponent } from './components/links/links.component';
 import { MainComponent } from './components/main/main.component';
+
 import { FormContainerComponent } from './components/form/form-container/form-container.component';
+import { FormQuestionComponent } from './components/form/form-question/form-question.component';
+import { FormInputComponent } from './components/form/form-input/form-input.component';
+import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
+
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { OrderTourComponent } from './screens/order-tour/order-tour.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -48,16 +54,12 @@ import { WorkingStepsComponent } from './components/working-steps/working-steps.
 import { EducationComponent } from './screens/search/education/education.component';
 import { MapsComponent } from './screens/education-results/maps/maps.component';
 
-
 import { InfoCardComponent } from './components/info-card/info-card.component';
-import { NumberInputComponent } from './components/number-input/number-input.component';
+import { NumberInputComponent } from './components/form/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
-import { NavigationGridComponent } from './screens/order-tour/additions/components/navigation-grid/navigation-grid.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
-import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { NavCardComponent } from './components/nav-card/nav-card.component';
-import { FormInputComponent } from './components/form/form-input/form-input.component';
-import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
+
 import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
 import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
 import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
@@ -71,32 +73,32 @@ import { SummaryComponent } from './screens/order-tour/summary/summary.component
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
 import { FormComponent } from './components/form/form/form.component';
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
-// import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
-// import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
-// import { SimpleCardComponent } from './components/simple-card/simple-card.component';
-
-import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
-import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
-import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.component';
-import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
-import { TransportFormComponent } from './screens/order-tour/additions/components/transport-form/transport-form.component';
-import { TransportModel } from './screens/order-tour/additions/models/transport-model';
-import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
+import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
+import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
+import { SimpleCardComponent } from './components/simple-card/simple-card.component';
 
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.component';
-import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 import { FormHeaderComponent } from './components/form/form-header/form-header.component';
+import { NavigationGridComponent } from './screens/order-tour/additions/components/navigation-grid/navigation-grid.component';
+
+import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
+import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
+import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.component';
+import { TransportFormComponent } from './screens/order-tour/additions/components/transport-form/transport-form.component';
+import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
+import { TransportModel } from './screens/order-tour/additions/models/transport-model';
+
+import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
+import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     DashboardComponent,
-    NavbarComponent,
-    WizardComponent,
-    LinksComponent,
-    UserInfoComponent,
+
+    // PIPES
     NumberToTimePipe,
 
     // LOGIN COMPS
@@ -106,73 +108,82 @@ import { FormHeaderComponent } from './components/form/form-header/form-header.c
     OtpFormComponent,
     LoginProcessComponent,
 
-    SearchComponent,
-    DatePickerComponent,
+    //TOUR COMPS
+    ToursTableComponent,
+    MyToursComponent,
+    OrderTourComponent,
 
-    // EDUCTIOM COMPS
+    // EDUCATION COMPS
     EducationComponent,
     EducationResultsComponent,
 
+    // FORM COMPS
+    FormContainerComponent,
+    FormQuestionComponent,
+    FormQuestionComponent,
+    FormInputComponent,
+    FormInputComponent,
+    FormComponent,
+    FormHeaderComponent,
+    InputRadioComponent,
+    NumberInputComponent,
+
+    // KKL DESIGN
+    NavbarComponent,
+    WizardComponent,
+    LinksComponent,
+    UserInfoComponent,
+    SearchComponent,
+    DatePickerComponent,
     HeaderComponent,
     TooltipComponent,
     PaginationComponent,
-
-    ToursTableComponent,
-    MyToursComponent,
-    // form comps
-    FormContainerComponent,
-    FormQuestionComponent,
-
-    OrderTourComponent,
-    FormQuestionComponent,
-    FormInputComponent,
-
     NavigationComponent,
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    NavigationGridComponent,
     NavCardComponent,
+    DrawerComponent,
+    InfoCardComponent,
     NumberInputComponent,
     IconComponent,
-    FormInputComponent,
+    ExpendPanelComponent,
+    TypographyComponent,
+    DashboardCardComponent,
+    SvgIconComponent,
+    SimpleCardComponent,
+
+    // SQUAD ASSEMBLE COMPONENTS
+    SquadAssembleComponent,
     SquadGroupComponent,
 
+    // SLEEPINGS COMPS
+    SleepingOptionsComponent,
+    SleepingOptionsFormComponent,
+    SleepingOptionsByDayComponent,
+    FilledNightComponent,
+
+    // FACILITIES COMPS
+    FacilitiesComponent,
+    TimelineCardComponent,
 
     // ADDITIONS COMPONENTS
     AdditionsComponent,
     TransportDetailsComponent,
     TourTitleComponent,
     TransportFormComponent,
+    NavigationGridComponent,
     TourPanelComponent,
 
-    DrawerComponent,
-    InfoCardComponent,
-    NumberInputComponent,
-    IconComponent,
-    SquadGroupComponent,
-    InputRadioComponent,
-    ExpendPanelComponent,
-    SleepingOptionsComponent,
-    SleepingOptionsFormComponent,
-    SleepingOptionsByDayComponent,
-    // SquadAssembleComponent,
-    TypographyComponent,
-    DashboardCardComponent,
-
-    FilledNightComponent,
+    // SUMMERY COMPS
     SummaryComponent,
-    FlexRowComponent,
-    FormComponent,
-    FacilitiesComponent,
-    FlexTableComponent,
-    MapsComponent,
-    FormHeaderComponent,
-    // TimelineCardComponent,
-    // SvgIconComponent,
-    // SimpleCardComponent,
-    FlexCellComponent
 
+    // FLEX GRID COMPS
+    FlexRowComponent,
+    FlexTableComponent,
+    FlexCellComponent,
+
+    MapsComponent,
   ],
   imports: [
     BrowserModule,
