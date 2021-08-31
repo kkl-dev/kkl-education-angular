@@ -12,7 +12,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   providedIn: 'root',
 })
 export class SquadAssembleService {
-  constructor() {}
+  constructor() { }
 
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
@@ -126,7 +126,7 @@ export class SquadAssembleService {
     new QuestionSelect({
       key: 'age',
       type: 'select',
-      cols: 2,
+      fullWidth: true,
       rows: 4,
       label: 'קבוצת גיל',
       inputProps: {
@@ -148,6 +148,7 @@ export class SquadAssembleService {
     new QuestionNumber({
       key: 'participants',
       label: 'נוער / מבוגרים',
+      offset: 1,
       cols: 1,
       rows: 4,
     }),
@@ -160,6 +161,7 @@ export class SquadAssembleService {
     new QuestionNumber({
       key: 'instructors',
       label: 'מדריכים',
+      offset: 1,
       cols: 1,
       rows: 4,
     }),
@@ -168,7 +170,7 @@ export class SquadAssembleService {
       label: 'חובשים',
       cols: 1,
       rows: 4,
-      offset: 1,
+      offset: 2,
     }),
   ];
 
@@ -176,7 +178,7 @@ export class SquadAssembleService {
     new QuestionSelect({
       key: 'age',
       type: 'select',
-      cols: 2,
+      fullWidth: true,
       rows: 4,
       label: 'קבוצת גיל',
       inputProps: {
@@ -191,7 +193,7 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'participants',
       label: 'נוער / מבוגרים',
-      cols: 2,
+      fullWidth : true,
       rows: 4,
       isGroup: true,
       group: [
@@ -206,6 +208,8 @@ export class SquadAssembleService {
           label: 'בנות',
           type: 'number',
           rows: 4,
+          offset: 1,
+
         }),
       ],
     }),

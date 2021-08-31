@@ -1,37 +1,21 @@
 <div class="container" *ngIf="questions.length > 0">
   <mat-grid-list cols="1" rowHeight="5vh">
     <mat-grid-tile>
-      <app-form-header
-        [text]="header.text"
-        [custom]="header.custom"
-        [slots]="{ gender, client, tourId }"
-      ></app-form-header>
+      <app-form-header [text]="group.header.text" [custom]="group.header.custom" [slots]="{ gender, client, tourId }">
+      </app-form-header>
     </mat-grid-tile>
 
     <mat-grid-tile rowspan="10">
-      <app-form-container
-        [cols]="cols"
-        [questions]="questions"
-        [$questions]="$questions"
-        [hasBottomButton]="true"
-        [slots]="{ group: group }"
-      >
+      <app-form-container [cols]="group.cols" [questions]="questions" [$questions]="$questions" [hasBottomButton]="true"
+        [slots]="{ groupInputs }">
       </app-form-container>
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <mat-grid-list
-        *ngIf="hasBottom"
-        [cols]="bottomData.length"
-        rowHeight="5vh"
-      >
+      <mat-grid-list *ngIf="hasBottom" [cols]="bottomData.length" rowHeight="5vh">
         <mat-grid-tile *ngFor="let item of bottomData">
           <div fxFill fxLayout="row" fxLayoutAlign="start center" dir="rtl">
-            <app-flex-cell
-              [value]="item.value"
-              [label]="item.label"
-              type="text"
-            ></app-flex-cell>
+            <app-flex-cell [value]="item.value" [label]="item.label" type="text"></app-flex-cell>
           </div>
         </mat-grid-tile>
       </mat-grid-list>
@@ -42,12 +26,7 @@
 <!-- template components -->
 
 <ng-template #gender>
-  <button
-    mat-icon-button
-    class="gender-button mat-elevation-z1"
-    disableRipple="true"
-    (click)="onGenderChange()"
-  >
+  <button mat-icon-button class="gender-button mat-elevation-z1" disableRipple="true" (click)="onGenderChange()">
     <app-icon type="svg" key="gender" scale="2"></app-icon>
   </button>
 </ng-template>
@@ -62,20 +41,10 @@
   <app-typography> קוד טיול : {{ tripId }} </app-typography>
 </ng-template>
 
-<ng-template
-  #group
-  let-question="question"
-  let-item="item"
-  let-formGroup="formGroup"
->
-  <app-form-input
-    [groupLabel]="item.key === 'girls' ? question.label : 'g'"
-    [control]="formGroup.controls[question.key].controls[item.key]"
-    [label]="item.label"
-    [split]="cols > question.cols"
-    [theme]="item.key === 'girls' && 'accent'"
-    [type]="item.controlType"
-    [labelLength]="question.inputProps?.labelLength"
-  >
+<ng-template #groupInputs let-question="question" let-item="item" let-formGroup="formGroup">
+  <app-form-input class="group-input" [groupLabel]="item.key === 'girls' ? question.label : 'g'"
+    [control]="formGroup.controls[question.key].controls[item.key]" [label]="item.label" [split]="cols > question.cols"
+    [theme]="item.key === 'girls' && 'accent'" [type]="item.controlType"
+    [labelLength]="question.inputProps?.labelLength">
   </app-form-input>
 </ng-template>

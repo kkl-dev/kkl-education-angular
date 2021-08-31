@@ -1,76 +1,39 @@
 <div class="form">
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formGroup">
-    <mat-grid-list
-      [cols]="group?.cols || cols || 1"
-      rowHeight="2vh"
-      [gutterSize]="gutter"
-    >
+    <mat-grid-list [cols]="group?.cols || cols || 1" rowHeight="2vh" [gutterSize]="gutter">
       <ng-container *ngFor="let question of group?.questions || questions">
-        <mat-grid-tile
-          *ngIf="group?.hasButton || hasButton"
-          colspan="1"
-          [rowspan]="question.rows || 5"
-        >
+        <mat-grid-tile *ngIf="group?.hasButton || hasButton" colspan="1" [rowspan]="question.rows || 5">
           <ng-container *ngTemplateOutlet="slots?.topButton"></ng-container>
         </mat-grid-tile>
 
-        <mat-grid-tile
-          *ngIf="question.offset"
-          [colspan]="question.offset"
-        ></mat-grid-tile>
+        <mat-grid-tile *ngIf="question.offset" [rowspan]="question.rows" [colspan]="question.offset"></mat-grid-tile>
 
-        <mat-grid-tile
-          *ngIf="!question?.isGroup"
-          [colspan]="question.cols"
-          [rowspan]="question.rows || 4"
-        >
-          <app-form-input
-            *ngIf="!question.custom"
-            [disabled]="formGroup.disabled"
-            [control]="formGroup.controls[question.key]"
-            [type]="question.type"
-            [label]="question.label"
-            [icon]="question.icon"
-            [options]="question.inputProps?.options"
-            [controlType]="question.controlType"
-            [labelLength]="question.inputProps?.labelLength"
-          ></app-form-input>
+        <mat-grid-tile *ngIf="!question?.isGroup" [colspan]="question.fullWidth ? cols : question.cols"
+          [rowspan]="question.rows || 4">
+          <app-form-input *ngIf="!question.custom" [disabled]="formGroup.disabled"
+            [control]="formGroup.controls[question.key]" [type]="question.type" [label]="question.label"
+            [icon]="question.icon" [options]="question.inputProps?.options" [controlType]="question.controlType"
+            [labelLength]="question.inputProps?.labelLength"></app-form-input>
 
-          <app-input-radio
-            [control]="formGroup.controls[question.key]"
-            [question]="question"
-            *ngIf="question.controlType === 'radio'"
-          >
+          <app-input-radio [control]="formGroup.controls[question.key]" [question]="question"
+            *ngIf="question.controlType === 'radio'">
           </app-input-radio>
         </mat-grid-tile>
 
         <ng-container *ngIf="question?.isGroup">
-          <mat-grid-tile
-            *ngIf="question?.header"
-            [colspan]="question.cols || 1"
-            [rowspan]="question.rows || 1"
-          >
-            <app-form-header
-              [text]="question.label || question.header.text"
-              [custom]="question?.header.custom"
-              [slots]="{button}"
-            ></app-form-header>
+          <mat-grid-tile *ngIf="question?.header" [colspan]="question.cols || 1" [rowspan]="question.rows || 1">
+            <app-form-header [text]="question.label || question.header.text" [custom]="question?.header.custom"
+              [slots]="{button}"></app-form-header>
           </mat-grid-tile>
-          <mat-grid-tile
-            *ngFor="let item of question.group"
-            [colspan]="item.cols"
-            [rowspan]="item.rows"
-          >
-            <ng-container
-              *ngTemplateOutlet="
-            slots.group;
+          <mat-grid-tile *ngFor="let item of question.group" [colspan]="item.cols" [rowspan]="item.rows">
+            <ng-container *ngTemplateOutlet="
+            slots.groupInputs;
             context: {
               question,
               formGroup,
               item
             }
-            "
-            ></ng-container>
+            "></ng-container>
           </mat-grid-tile>
         </ng-container>
       </ng-container>
@@ -83,13 +46,7 @@
 </div>
 
 <ng-template #button>
-  <button
-    type="submit"
-    disableRipple="true"
-    (click)="onEdit()"
-    mat-icon-button
-    class="edit-button mat-elevation-z1"
-  >
+  <button type="submit" disableRipple="true" (click)="onEdit()" mat-icon-button class="edit-button mat-elevation-z1">
     <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
   </button>
 </ng-template>

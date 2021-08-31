@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 export interface FormHeader {
@@ -18,8 +19,7 @@ export interface FormHeader {
 export class SquadGroupComponent {
   public tripId: string = '0000000';
 
-  @Input() public cols: string | number;
-  @Input() public header: FormHeader;
+  @Input() public group: QuestionGroup;
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;
 
@@ -32,7 +32,7 @@ export class SquadGroupComponent {
   constructor(private squadAssembleService: SquadAssembleService) {}
 
   ngOnInit() {
-    this.questions = this.questions || [];
+    this.questions = this.group.questions || [];
 
     if (this.hasBottom) {
       this.bottomData = [

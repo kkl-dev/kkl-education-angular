@@ -3,7 +3,7 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../services/squad-assemble.service';
 
 interface SquadGroup {
-  form: QuestionGroup;
+  group: QuestionGroup;
   hasBottom?: boolean;
   bottomText?: string;
 }
@@ -21,7 +21,7 @@ export class SquadAssembleComponent implements OnInit {
   ngOnInit(): void {
     this.squads = [
       {
-        form: {
+        group: {
           header: { text: 'מועד ושם הטיול', custom: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
@@ -29,21 +29,22 @@ export class SquadAssembleComponent implements OnInit {
 
       },
       {
-        form: {
+        group: {
           header: { text: 'לקוח', custom: 'client' },
           questions: this.squadAssembleService.customerFormInputs,
         },
       },
       {
-        form: {
+        group: {
           header: { text: 'הרכב הקבוצה', custom: 'gender' },
-          questions: this.squadAssembleService.groupAssembleFormMixedInputs,
-          cols: '2',
+          questions: this.squadAssembleService.groupAssembleFormInputs,
+          gutter : 30,
+          cols: '3',
         },
         hasBottom: true,
       },
       {
-        form: {
+        group: {
           header: { text: 'פרטי הטיול', custom: '' },
           questions: this.squadAssembleService.tourDetailsFormInputs,
         },
