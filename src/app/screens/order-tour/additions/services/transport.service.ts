@@ -181,7 +181,6 @@ export class TransportService {
       key: 'locations',
       questions: this.locations,
       cols: 6,
-      hasButton : true
     },
   ];
 
@@ -192,9 +191,6 @@ export class TransportService {
     questions.map(
       (control: QuestionBase<string | number | Date | QuestionGroup>) => {
         control.value = data[control.key];
-        if (control.key === 'comments') {
-          control.value = data;
-        }
       }
     );
   }
@@ -205,5 +201,5 @@ export class TransportService {
     });
   }
 
-  constructor() {}
+  constructor() { }
 }
