@@ -1,6 +1,7 @@
 .form,
 app-form-input,
-app-form-header {
+app-form-header,
+app-input-radio {
   width: 100%;
 }
 
@@ -15,11 +16,6 @@ app-form-header {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-}
-
-app-input-radio {
-  width: 70%;
-  height: 70%;
 }
 
 button.edit-button {
