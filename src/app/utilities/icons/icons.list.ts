@@ -246,3 +246,8 @@ export const GROUP_ICON = `
  <rect class="c" width="4" height="4" transform="translate(9.669 10.993)"/></g></g>
  </svg>
  `;
+
+export const RESTAURANT_ICON = `
+ <svg xmlns="http://www.w3.org/2000/svg" width="27.93" height="31.033" viewBox="0 0 27.93 31.033">
+  <path id="Icon_material-restaurant" data-name="Icon material-restaurant" d="M16.913,13.861h-3.1V3h-3.1V13.861H7.6V3H4.5V13.861a6.185,6.185,0,0,0,5.819,6.16V34.033H14.2V20.021a6.185,6.185,0,0,0,5.819-6.16V3h-3.1Zm7.758-4.655V21.62H28.55V34.033H32.43V3C28.147,3,24.671,6.476,24.671,9.207Z" transform="translate(-4.5 -3)" fill="#37c56b"/>
+</svg>`

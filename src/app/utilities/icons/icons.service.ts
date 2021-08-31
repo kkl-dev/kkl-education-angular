@@ -27,6 +27,7 @@ import {
   BOTTOM_LOGO,
   OPEN_PLUS,
   GROUP_ICON,
+  RESTAURANT_ICON,
 } from './icons.list';
 
 export interface IconItem {
@@ -92,6 +93,10 @@ export class IconsService {
     {
       key: 'shield',
       svgUrl: SHIELD_ICON,
+    },
+    {
+      key:'restaurant',
+      svgUrl: RESTAURANT_ICON
     },
     {
       key: 'bus',
