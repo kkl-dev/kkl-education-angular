@@ -234,16 +234,21 @@ export const BOTTOM_LOGO = `
 export const GROUP_ICON = `
  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
  width="47" height="47" viewBox="0 0 47 47"><defs>
- <style>.a{fill:#fff;opacity:0.74;}.b{fill:#009eee;}.c{fill:#d220ba;}.d{filter:url(#a);}</style>
+ <style>
+ .a-group{fill:#fff;opacity:0.74;}
+ .b-group{fill:#009eee;}
+ .c-group{fill:#d220ba;}
+ .d-group{filter:url(#a);}
+ </style>
  <filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/>
  <feGaussianBlur stdDeviation="3" result="b"/><feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/><feComposite in="SourceGraphic"/>
- </filter></defs><g transform="translate(-19 -821.175)"><g class="d" transform="matrix(1, 0, 0, 1, 19, 821.18)">
- <rect class="a" width="29" height="29" rx="5" transform="translate(9 6)"/></g><g transform="translate(35.331 834.183)">
- <rect class="b" width="4" height="4" transform="translate(-0.331 0.993)"/><rect class="c" width="4" height="4" transform="translate(4.669 0.993)"/>
- <rect class="c" width="4" height="4" transform="translate(9.669 0.993)"/><rect class="b" width="4" height="4" transform="translate(-0.331 5.993)"/>
- <rect class="c" width="4" height="4" transform="translate(4.669 5.993)"/><rect class="c" width="4" height="4" transform="translate(9.669 5.993)"/>
- <rect class="b" width="4" height="4" transform="translate(-0.331 10.993)"/><rect class="b" width="4" height="4" transform="translate(4.669 10.993)"/>
- <rect class="c" width="4" height="4" transform="translate(9.669 10.993)"/></g></g>
+ </filter></defs><g transform="translate(-19 -821.175)"><g class="d-group" transform="matrix(1, 0, 0, 1, 19, 821.18)">
+ <rect class="a-group" width="29" height="29" rx="5" transform="translate(9 6)"/></g><g transform="translate(35.331 834.183)">
+ <rect class="b-group" width="4" height="4" transform="translate(-0.331 0.993)"/><rect class="c" width="4" height="4" transform="translate(4.669 0.993)"/>
+ <rect class="c-group" width="4" height="4" transform="translate(9.669 0.993)"/><rect class="b-group" width="4" height="4" transform="translate(-0.331 5.993)"/>
+ <rect class="c-group" width="4" height="4" transform="translate(4.669 5.993)"/><rect class="c-group" width="4" height="4" transform="translate(9.669 5.993)"/>
+ <rect class="b-group" width="4" height="4" transform="translate(-0.331 10.993)"/><rect class="b-group" width="4" height="4" transform="translate(4.669 10.993)"/>
+ <rect class="c-group" width="4" height="4" transform="translate(9.669 10.993)"/></g></g>
  </svg>
  `;
 
