@@ -5,7 +5,7 @@
     display: flex;
     justify-content: space-evenly;
     .card {
-        width: 100%;
+        width: 95%;
         height: 600px;
         background: #fffffff4 0% 0% no-repeat padding-box;
         box-shadow: 0px 7px 22px #5b5b5b29;
@@ -138,7 +138,6 @@
         }
     }
     .title {
-        height: 40px;
         display: flex;
         justify-content: space-between;
         flex-direction: row-reverse;
@@ -156,7 +155,7 @@
             border: none;
             width: 210px;
             height: 44px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 18px;
             font-weight: 400;
         }
@@ -187,4 +186,10 @@ app-tooltip {
     ::ng-deep svg *{
         fill: #37c56b!important;
     }
+}
+.full-list{
+    display: flex;
+    margin-left: 95px;
+    color: #707070;
+    text-decoration: underline;
 }

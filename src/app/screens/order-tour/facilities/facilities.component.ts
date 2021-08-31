@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
@@ -113,9 +114,9 @@ export class FacilitiesComponent implements OnInit {
       availability: [],
     },
     {
-      svgUrl: 'assets/images/student-hat.svg',
-      headline: 'מרכז למידה',
-      subHeadline: 'עד 40 משתתפים',
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
       availability: [
         {
           startingHour: 14,
@@ -125,7 +126,30 @@ export class FacilitiesComponent implements OnInit {
         },
       ],
     },
-  
   ];
-
+  public activitiesArray: InfoCard[] = [
+    {
+      svgUrl: 'assets/images/fruits.svg',
+      headline: 'ארוחת ערב',
+    },
+    {
+      svgUrl: 'assets/images/roast-chicken.svg',
+      headline: 'ארוחת צהריים',
+    },
+    {
+      svgUrl: 'assets/images/restaurant.svg',
+      headline: 'ארוחת בוקר',
+    },
+    {
+      svgUrl: 'assets/images/alarm.svg',
+      headline: 'השכמה',
+    },
+    {
+      svgUrl: 'assets/images/bus-with-flag.svg',
+      headline: 'התייצבות',
+    },
+  ];
+  public upComingActivitiesArray: ActivitiesCardInterface[] = [
+    { img: "assets/images/img-1.png", title: "ניווט יערני במחנה", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 1.5 }
+  ];
 }
