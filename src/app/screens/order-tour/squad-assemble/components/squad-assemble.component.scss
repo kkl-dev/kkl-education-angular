@@ -13,3 +13,13 @@ app-squad-group,
   padding-left: spacing(3);
   padding-right: spacing(3);
 }
+
+.form-container {
+  width: 80%;
+}
+
+.divider {
+  height: 100%;
+  width: 50px;
+  border-right : 1px solid color(default);
+}
