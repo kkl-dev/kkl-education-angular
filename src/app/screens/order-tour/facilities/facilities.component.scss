@@ -115,6 +115,32 @@
     width: 50%;
     flex: 1;
 }
-.items{
+.items {
     display: flex;
+}
+
+.content-2 {
+    justify-content: center;
+    .title {
+        height: 40px;
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        flex-direction: row-reverse;
+        p {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        button {
+            background: #37c56b;
+            box-shadow: 0px 3px 8px #37c56b;
+            color: white;
+            border: none;
+            width: 210px;
+            height: 44px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 400;
+        }
+    }
 }
