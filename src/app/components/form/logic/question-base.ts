@@ -19,6 +19,7 @@ export class QuestionBase<T> {
   rows: string | number;
   offset : number | string
   custom: boolean;
+  fullWidth: boolean;
   validations: ValidatorFn[];
   isGroup: boolean;
   group?: any;
@@ -42,6 +43,7 @@ export class QuestionBase<T> {
       rows?: string | number;
       offset? : number | string
       custom?: boolean;
+      fullWidth?: boolean;
       validations?: ValidatorFn[];
       isGroup?: boolean;
       group?: QuestionBase<string | Date | number>[];
@@ -64,6 +66,7 @@ export class QuestionBase<T> {
     this.offset = options.offset?.toString() || '';
     this.validations = options.validations || [];
     this.custom = options.custom || false;
+    this.fullWidth = options.fullWidth || true;
     this.isGroup = options.isGroup;
     this.group = options.group;
     this.inputProps = options.inputProps;

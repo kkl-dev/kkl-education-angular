@@ -59,10 +59,18 @@ export class SquadAssembleService {
   ];
 
   public customerFormInputs: QuestionBase<string>[] = [
+    new QuestionTextbox({
+      key: 'clientName',
+      label: 'הקלד לקוח רצוי',
+      cols: 2,
+      value: '',
+      validations: [Validators.required],
+    }),
+
     new QuestionSelect({
-      key: 'customer',
+      key: 'clientPool',
       type: 'select',
-      label: 'מי הלקוח',
+      label: 'הכול',
       inputProps: {
         options: [
           { key: 'שם נוסף', value: 'שם נוסף' },
@@ -77,6 +85,7 @@ export class SquadAssembleService {
       key: 'payerName',
       label: 'לקוח משלם',
       type: 'select',
+      cols: 3,
       inputProps: {
         options: [
           { key: 'שם נוסף', value: 'שם נוסף' },
@@ -90,11 +99,13 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'contact',
       rows: 3,
+      cols: 3,
       isGroup: true,
       group: [
         new QuestionTextbox({
           key: 'fullName',
           label: 'איש קשר',
+          cols: 3,
           inputProps: {
             labelLength: 'medium',
           },
@@ -104,6 +115,8 @@ export class SquadAssembleService {
           key: 'phone',
           label: 'נייד איש קשר',
           type: 'text',
+          cols: 3,
+
           validations: [Validators.required],
           inputProps: {
             labelLength: 'medium',
@@ -113,6 +126,7 @@ export class SquadAssembleService {
           key: 'email',
           label: 'מייל',
           type: 'text',
+          cols: 3,
           validations: [Validators.required],
           inputProps: {
             labelLength: 'small',
@@ -337,5 +351,4 @@ export class SquadAssembleService {
       rows: 6,
     }),
   ];
-
 }

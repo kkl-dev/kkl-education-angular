@@ -22,6 +22,7 @@ export class SquadAssembleComponent implements OnInit {
     this.squads = [
       {
         form: {
+          key : 'date',
           header: { text: 'מועד ושם הטיול', custom: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
@@ -30,12 +31,15 @@ export class SquadAssembleComponent implements OnInit {
       },
       {
         form: {
+          key : 'client',
           header: { text: 'לקוח', custom: 'client' },
           questions: this.squadAssembleService.customerFormInputs,
+          cols: '3',
         },
       },
       {
         form: {
+          key : 'group',
           header: { text: 'הרכב הקבוצה', custom: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: '2',
@@ -44,6 +48,7 @@ export class SquadAssembleComponent implements OnInit {
       },
       {
         form: {
+          key : 'details',
           header: { text: 'פרטי הטיול', custom: '' },
           questions: this.squadAssembleService.tourDetailsFormInputs,
         },

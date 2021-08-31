@@ -2,6 +2,7 @@ import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
 import { QuestionGroup } from './question-group';
+import { Observable, Subject } from 'rxjs';
 
 export interface FormTemplate {
   label?: string;
@@ -15,6 +16,9 @@ export interface FormTemplate {
   providedIn: 'root',
 })
 export class FormService {
+
+  public onChangeSelect = new Subject<boolean>();
+
   public id: number;
   public formGroup: FormGroup;
 

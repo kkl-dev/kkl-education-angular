@@ -20,12 +20,13 @@ export class SquadGroupComponent {
   public tripId: string = '0000000';
 
   @Input() public cols: string | number;
+  @Input() public key: string;
   @Input() public header: FormHeader;
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;
 
   // array to hold data for bottom form text
-  public bottomData: FlexCell[];
+  public bottomData: FlexCell[] = [];
 
   // subject to handle update of questions form
   private $questions = new Subject<QuestionBase<string | number | Date>[]>();
@@ -34,19 +35,14 @@ export class SquadGroupComponent {
   private mixed: boolean = true;
   private client: boolean = false;
 
-  constructor(private squadAssembleService: SquadAssembleService) {}
+  constructor(
+    private squadAssembleService: SquadAssembleService,
+    private formService: FormService
+  ) {}
 
   ngOnInit() {
     this.questions = this.questions || [];
-
-    if (this.hasBottom) {
-      this.bottomData = [
-        {
-          label: 'מס משתתפים',
-          value: '120',
-        },
-      ];
-    }
+    this.subscribeToOnSelectChange();
   }
 
   // method to change squad assemble form
@@ -59,8 +55,6 @@ export class SquadGroupComponent {
         : this.squadAssembleService.groupAssembleFormInputs
     );
   }
-
-  // TODO - connect between client select to client contact data + disable mode style
 
   // method to add new client form
   public onAddClient() {
@@ -76,5 +70,18 @@ export class SquadGroupComponent {
       : (this.squadAssembleService.customerFormInputs[2].header = null);
 
     this.$questions.next(this.squadAssembleService.customerFormInputs);
+  }
+
+  // TODO - connect between client select to client contact data + disable mode style
+  private subscribeToOnSelectChange() {
+    this.formService.onChangeSelect.subscribe((value) => {
+
+      console.log(this.key)
+      if (this.key === 'client') {
+        this.onAddClient()
+        console.log(this.formService.formGroup.controls.contact)
+        this.formService.formGroup.controls.contact.disable();
+      }
+    });
   }
 }

@@ -24,9 +24,10 @@
         color="primary"
         [formControl]="control"
         *ngIf="controlType === 'select'"
-        (change)="handleChange($event.value)"
+        (selectionChange)="onSelectChange()"
+        (openedChange)="validate()"
       >
-        <mat-option>{{ label | titlecase }}</mat-option>
+        <mat-option>{{ label }}</mat-option>
         <mat-option *ngFor="let option of options" [value]="option.value">
           {{ option.key }}
         </mat-option>
@@ -50,7 +51,6 @@
 
       <!-- shred input error -->
       <mat-error *ngIf="control.errors">{{ error }}</mat-error>
-
     </mat-form-field>
 
     <div></div>
