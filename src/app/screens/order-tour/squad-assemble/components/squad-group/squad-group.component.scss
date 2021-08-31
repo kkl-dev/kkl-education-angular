@@ -9,7 +9,6 @@ app-form-header {
   width: 100%;
 }
 
-
 button.gender-button {
   height: 40px !important;
   width: 40px !important;
@@ -29,4 +28,8 @@ button.gender-button {
   cursor: pointer;
 }
 
+.divider {
+  display: flex;
+  justify-content: center;
+}
 

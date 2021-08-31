@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { FlexCell } from 'src/app/components/grid/flex-cell/flex-cell.component';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 export interface FormHeader {
@@ -23,9 +24,13 @@ export class SquadGroupComponent {
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;
 
-  public bottomData: any[];
+  // array to hold data for bottom form text
+  public bottomData: FlexCell[];
 
+  // subject to handle update of questions form
   private $questions = new Subject<QuestionBase<string | number | Date>[]>();
+
+  //
   private mixed: boolean = true;
   private client: boolean = false;
 
@@ -36,10 +41,6 @@ export class SquadGroupComponent {
 
     if (this.hasBottom) {
       this.bottomData = [
-        {
-          label: 'מס משתתפים',
-          value: '120',
-        },
         {
           label: 'מס משתתפים',
           value: '120',
