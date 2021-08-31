@@ -18,19 +18,6 @@
     <mat-grid-list cols="4" rowHeight="6vh" *ngFor="let row of data">
       <mat-grid-tile *ngFor="let item of row" [colspan]="item?.cols || 1">
         <div fxFill fxLayout="row" fxLayoutAlign="start center">
-          <!-- <app-typography class="item-label" *ngIf="item.label" [bold]="600">
-            {{ item.label }}:
-          </app-typography>
-
-          <app-typography
-            *ngIf="item.type === 'text' || item.type === 'number'"
-          >
-            {{ item?.value }}
-          </app-typography>
-
-          <app-typography *ngIf="item.type === 'date'">
-            {{ item?.value | date: "M/d/yy" }}
-          </app-typography> -->
 
           <app-flex-cell
           [label]="item.label"

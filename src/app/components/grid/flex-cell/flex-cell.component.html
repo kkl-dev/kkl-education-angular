@@ -1,20 +1,18 @@
 <div fxFill fxLayout="row" fxLayoutAlign="start center">
-  <app-typography class="item-label" *ngIf="label" [bold]="600">
+  <app-typography class="label-text" *ngIf="label" [bold]="600">
     {{ label }}:
   </app-typography>
 
   <ng-container [ngSwitch]="type">
-
-    <app-typography *ngSwitchCase="'text'">
-      {{ value }}
-    </app-typography>
-
-    <app-typography *ngSwitchCase="'number'">
-      {{ value }}
-    </app-typography>
-
+    
     <app-typography *ngSwitchCase="'date'">
       {{ value | date: "M/d/yy" }}
     </app-typography>
+
+    <app-typography *ngSwitchDefault>
+      {{ value }}
+    </app-typography>
+
+    <div *ngIf="divider" [vertical]="true">|</div>
   </ng-container>
 </div>

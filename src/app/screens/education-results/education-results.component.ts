@@ -28,7 +28,6 @@ export class EducationResultsComponent implements OnInit {
   ngOnInit() {
     this.tripService.forestCenter.subscribe(result => {
       this.forestCenter = result; // this set's the username to the default observable value
-      //this.changeForestCenter(result);
     });
 
     this.availabilityItemsArray = [
@@ -38,42 +37,13 @@ export class EducationResultsComponent implements OnInit {
     ]
 
     if (this.tripService.centerField) {
-      //this.forestCenterId = this.tripService.centerField.id;
-      //this.forestCenterId = 1;
+
       this.dateObj = this.tripService.dateObj;
 
       for (let key in this.dateObj) {
         let value = this.dateObj[key];
-        // Use `key` and `value`
       }
     }
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //   },
-    // );
-
-    // this.usersService.getLookupFieldForestCenters().subscribe((data: any) => {
-    //   //  this.spinner.hide();
-    //     if (data) {
-    //     }
-    //     else {
-    //     }
-    //   },
-    //     error => {
-    //   //    this.spinner.hide();
-    //     });
-
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //   },
-    // );
-
-
-
-
-    //this.availabilityItemsArray = this.tripService.dateObj;
-    //this.centerField = this.tripService.centerField
-
 
 
   }
