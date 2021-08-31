@@ -200,4 +200,5 @@ export class HeaderComponent implements OnInit {
       this.dateObj.to = '';
     }
   }
+  
 }

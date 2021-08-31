@@ -277,7 +277,6 @@ export class EducationResultsComponent implements OnInit {
   }
 
   changeDatesHandler(newDates: string) {
-
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
@@ -285,13 +284,14 @@ export class EducationResultsComponent implements OnInit {
 
     let date1 = new Date(dates[0]);
     let date2 = new Date(dates[1]);
+    console.log('date 1', date1);
+    console.log('date 2', date2);
 
     const utc1 = Date.UTC(
       date1.getFullYear(),
       date1.getMonth(),
       date1.getDate(),
     );
-    console.log(date2);
     const utc2 = Date.UTC(
       date2.getFullYear(),
       date2.getMonth(),
