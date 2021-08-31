@@ -247,6 +247,43 @@ export const GROUP_ICON = `
  </svg>
  `;
 
+export const USER_ICON = `
+<svg xmlns="http://www.w3.org/2000/svg" width="40.377" height="26.333" viewBox="0 0 40.377 26.333">
+<g id="user" transform="translate(0 -85.333)">
+  <g id="Group_950" data-name="Group 950" transform="translate(14.044 85.333)">
+    <g id="Group_949" data-name="Group 949" transform="translate(0 0)">
+      <path id="Path_694" data-name="Path 694" d="M176.81,85.333a6.144,6.144,0,1,0,6.144,6.144A6.151,6.151,0,0,0,176.81,85.333Zm0,10.533a4.389,4.389,0,1,1,4.389-4.389A4.395,4.395,0,0,1,176.81,95.866Z" transform="translate(-170.666 -85.333)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_952" data-name="Group 952" transform="translate(28.088 92.355)">
+    <g id="Group_951" data-name="Group 951" transform="translate(0 0)">
+      <path id="Path_695" data-name="Path 695" d="M345.723,170.667a4.389,4.389,0,1,0,4.389,4.389A4.395,4.395,0,0,0,345.723,170.667Zm0,7.022a2.633,2.633,0,1,1,2.633-2.633A2.636,2.636,0,0,1,345.723,177.689Z" transform="translate(-341.334 -170.667)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_954" data-name="Group 954" transform="translate(3.636 92.355)">
+    <g id="Group_953" data-name="Group 953" transform="translate(0 0)">
+      <path id="Path_696" data-name="Path 696" d="M48.571,170.667a4.389,4.389,0,1,0,4.389,4.389A4.394,4.394,0,0,0,48.571,170.667Zm0,7.022a2.633,2.633,0,1,1,2.633-2.633A2.636,2.636,0,0,1,48.571,177.689Z" transform="translate(-44.182 -170.667)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_956" data-name="Group 956" transform="translate(8.778 99.377)">
+    <g id="Group_955" data-name="Group 955" transform="translate(0 0)">
+      <path id="Path_697" data-name="Path 697" d="M118.077,256a11.424,11.424,0,0,0-11.411,11.411.878.878,0,1,0,1.756,0,9.655,9.655,0,0,1,19.311,0,.878.878,0,1,0,1.756,0A11.424,11.424,0,0,0,118.077,256Z" transform="translate(-106.666 -256)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_958" data-name="Group 958" transform="translate(27.963 102.888)">
+    <g id="Group_957" data-name="Group 957">
+      <path id="Path_698" data-name="Path 698" d="M344.327,298.667a7.9,7.9,0,0,0-4.092,1.141.878.878,0,1,0,.911,1.5,6.145,6.145,0,0,1,9.325,5.258.878.878,0,1,0,1.756,0A7.91,7.91,0,0,0,344.327,298.667Z" transform="translate(-339.813 -298.667)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_960" data-name="Group 960" transform="translate(0 102.888)">
+    <g id="Group_959" data-name="Group 959">
+      <path id="Path_699" data-name="Path 699" d="M11.99,299.806A7.9,7.9,0,0,0,0,306.567a.878.878,0,1,0,1.756,0,6.146,6.146,0,0,1,9.324-5.26.878.878,0,1,0,.911-1.5Z" transform="translate(0 -298.667)" fill="#fff"/>
+    </g>
+  </g>
+</g>
+</svg>
+ `;
+
 export const RESTAURANT_ICON = `
  <svg xmlns="http://www.w3.org/2000/svg" width="27.93" height="31.033" viewBox="0 0 27.93 31.033">
   <path id="Icon_material-restaurant" data-name="Icon material-restaurant" d="M16.913,13.861h-3.1V3h-3.1V13.861H7.6V3H4.5V13.861a6.185,6.185,0,0,0,5.819,6.16V34.033H14.2V20.021a6.185,6.185,0,0,0,5.819-6.16V3h-3.1Zm7.758-4.655V21.62H28.55V34.033H32.43V3C28.147,3,24.671,6.476,24.671,9.207Z" transform="translate(-4.5 -3)" fill="#37c56b"/>

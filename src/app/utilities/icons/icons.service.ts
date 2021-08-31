@@ -28,6 +28,7 @@ import {
   OPEN_PLUS,
   GROUP_ICON,
   RESTAURANT_ICON,
+  USER_ICON,
 } from './icons.list';
 
 export interface IconItem {
@@ -157,6 +158,10 @@ export class IconsService {
     {
       key: 'group',
       svgUrl: GROUP_ICON,
+    },
+    {
+      key: 'user',
+      svgUrl: USER_ICON,
     },
   ];
 
