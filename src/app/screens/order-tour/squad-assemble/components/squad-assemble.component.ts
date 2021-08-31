@@ -34,20 +34,20 @@ export class SquadAssembleComponent implements OnInit {
           questions: this.squadAssembleService.customerFormInputs,
         },
       },
-      // {
-      //   form: {
-      //     header: { text: 'הרכב הקבוצה', custom: 'gender' },
-      //     questions: this.squadAssembleService.groupAssembleFormMixedInputs,
-      //     cols: '2',
-      //   },
-      //   hasBottom: true,
-      // },
-      // {
-      //   form: {
-      //     header: { text: 'פרטי הטיול', custom: '' },
-      //     questions: this.squadAssembleService.tourDetailsFormInputs,
-      //   },
-      // },
+      {
+        form: {
+          header: { text: 'הרכב הקבוצה', custom: 'gender' },
+          questions: this.squadAssembleService.groupAssembleFormMixedInputs,
+          cols: '2',
+        },
+        hasBottom: true,
+      },
+      {
+        form: {
+          header: { text: 'פרטי הטיול', custom: '' },
+          questions: this.squadAssembleService.tourDetailsFormInputs,
+        },
+      },
     ].reverse();
   }
 }

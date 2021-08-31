@@ -42,9 +42,7 @@ export class FormContainerComponent implements OnInit {
   ngOnInit() {
     this.initFormGroup();
     this.subscribeToQuestions();
-    console.log(this.formService.id)
-
-
+    this.formService.formGroup = this.formGroup;
   }
 
   private initFormGroup() {

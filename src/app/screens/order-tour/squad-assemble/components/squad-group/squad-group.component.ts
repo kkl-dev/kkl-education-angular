@@ -34,7 +34,6 @@ export class SquadGroupComponent {
 
   ngOnInit() {
     this.questions = this.questions || [];
-    console.log(this.formService.id)
   }
 
   // method to change squad assemble form
