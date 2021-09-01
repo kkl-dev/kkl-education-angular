@@ -1,13 +1,22 @@
 <div class="container" *ngIf="questions.length > 0">
   <mat-grid-list cols="1" rowHeight="5vh">
-    <mat-grid-tile>
-      <app-form-header [text]="group.header.text" [custom]="group.header.custom" [slots]="{ gender, client, tourId }">
+    <mat-grid-tile rowspan="1">
+      <app-form-header
+        [text]="group.header.text"
+        [custom]="group.header.custom"
+        [slots]="{ gender, client, tourId }"
+      >
       </app-form-header>
     </mat-grid-tile>
 
-    <mat-grid-tile rowspan="10">
-      <app-form-container [cols]="group.cols" [questions]="questions" [$questions]="$questions" [hasBottomButton]="true"
-        [slots]="{ groupInputs }">
+    <mat-grid-tile rowspan="11">
+      <app-form-container
+        [cols]="group.cols"
+        [questions]="questions"
+        [$questions]="$questions"
+        [hasBottomButton]="true"
+        [slots]="{ groupInputs }"
+      >
       </app-form-container>
     </mat-grid-tile>
 
@@ -21,15 +30,17 @@
           <div
             fxFill
             fxLayout="row"
-            fxLayoutAlign="space-evenly center"
+            fxLayoutAlign="start center"
             dir="rtl"
           >
-            <app-flex-cell
-              fxFlex="50"
-              [value]="item.value"
-              [label]="item.label"
-              [divider]="true"
-            ></app-flex-cell>
+            <div fxFlex="50">
+              <app-typography size="14" class="label-text" [bold]="500">
+                {{ item.label }}:
+              </app-typography>
+              <app-typography [bold]="600" size="14">
+                {{ item.value }}
+              </app-typography>
+            </div>
             <div class="divider" fxFlex="20" *ngIf="i !== 0">|</div>
           </div>
         </mat-grid-tile>
@@ -41,7 +52,12 @@
 <!-- template components -->
 
 <ng-template #gender>
-  <button mat-icon-button class="gender-button mat-elevation-z1" disableRipple="true" (click)="onGenderChange()">
+  <button
+    mat-icon-button
+    class="gender-button mat-elevation-z1"
+    disableRipple="true"
+    (click)="onGenderChange()"
+  >
     <app-icon type="svg" key="gender" scale="2"></app-icon>
   </button>
 </ng-template>
@@ -56,10 +72,21 @@
   <app-typography> קוד טיול : {{ tripId }} </app-typography>
 </ng-template>
 
-<ng-template #groupInputs let-group="group" let-question="question" let-formGroup="formGroup">
-  <app-form-input class="group-input" [groupLabel]="question.key === 'girls' ? question.label : 'g'"
-    [control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label" [split]="cols > question.cols"
-    [theme]="question.key === 'girls' && 'accent'" [type]="question.controlType"
-    [labelLength]="question.inputProps?.labelLength">
+<ng-template
+  #groupInputs
+  let-group="group"
+  let-question="question"
+  let-formGroup="formGroup"
+>
+  <app-form-input
+    class="group-input"
+    [groupLabel]="question.key === 'girls' ? question.label : 'g'"
+    [control]="formGroup.controls[group.key].controls[question.key]"
+    [label]="question.label"
+    [split]="cols > question.cols"
+    [theme]="question.key === 'girls' && 'accent'"
+    [type]="question.controlType"
+    [labelLength]="question.inputProps?.labelLength"
+  >
   </app-form-input>
 </ng-template>

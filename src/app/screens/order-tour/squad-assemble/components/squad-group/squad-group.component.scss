@@ -4,7 +4,8 @@ mat-grid-list,
 mat-grid-tile,
 app-form-container,
 app-form-input,
-app-form-header {
+app-form-header,
+app-typography {
   height: 100%;
   width: 100%;
 }
@@ -27,6 +28,11 @@ button.gender-button {
 .client-text {
   cursor: pointer;
 }
+
+.label-text {
+  padding-left: spacing(1);
+}
+
 
 .divider {
   display: flex;

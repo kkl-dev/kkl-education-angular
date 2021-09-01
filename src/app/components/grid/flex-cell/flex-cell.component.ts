@@ -4,7 +4,10 @@ export interface FlexCell {
   label: string;
   value: string;
   type?: string;
-  divider?: boolean;
+  size?: number;
+  bold?: string;
+  isBold?: boolean;
+  classes?: string[];
 }
 
 @Component({
@@ -15,12 +18,17 @@ export interface FlexCell {
 export class FlexCellComponent implements OnInit {
   @Input() label: string;
   @Input() type: string;
+  @Input() isBold?: boolean;
   @Input() value: string;
-  @Input() divider: boolean;
+  @Input() size: number;
 
-  constructor() {
+  public bold: number;
+
+  constructor() {}
+
+  ngOnInit(): void {
     this.type = this.type || 'text';
+    this.size = this.size || 14;
+    this.bold = this.isBold ? 600 : 500;
   }
-
-  ngOnInit(): void {}
 }
