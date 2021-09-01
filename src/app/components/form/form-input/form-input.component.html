@@ -2,9 +2,35 @@
   <div>
     <mat-form-field [color]="theme" [appearance]="disabled ? 'fill' : 'outline'" [ngClass]="[labelLength || 'base']">
       <mat-label>{{ label }}</mat-label>
-      <input *ngIf="controlType !== 'select' && controlType !== 'textarea'" matInput [type]="type"
-        [formControl]="control" control="control" autocomplete="off" (input)="handleChange($event.target.value)"
-        [name]="type" (focusout)="validate()" #input [placeholder]="label" />
+
+      <input
+        *ngIf="
+          controlType !== 'select' &&
+          controlType !== 'textarea' &&
+          controlType !== 'calendar'
+        "
+        matInput
+        [type]="type"
+        [formControl]="control"
+        control="control"
+        autocomplete="off"
+        (input)="handleChange($event.target.value)"
+        [name]="type"
+        (focusout)="validate()"
+        #input
+        [placeholder]="label"
+      />
+
+      <input
+        #dateInput
+        *ngIf="controlType === 'calendar'"
+        matInput
+        type="text"
+        airbnb-calendar
+        control="control"
+        autocomplete="none"
+        [(ngModel)]="control.value"
+      />
 
       <mat-select
         color="primary"
