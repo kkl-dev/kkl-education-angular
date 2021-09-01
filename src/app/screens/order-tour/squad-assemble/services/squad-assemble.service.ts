@@ -213,7 +213,7 @@ export class SquadAssembleService {
       key: 'age',
       type: 'select',
       fullWidth: true,
-      rows: 4,
+      rows: 3,
       label: 'קבוצת גיל',
       inputProps: {
         options: [
@@ -227,7 +227,7 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'participants',
       cols: 3,
-      rows: 4,
+      rows: 5,
       isGroup: true,
       group: {
         key: 'participants',
@@ -240,7 +240,7 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'chaperones',
       cols: 3,
-      rows: 4,
+      rows: 5,
       isGroup: true,
       group: {
         key: 'chaperones',
@@ -254,7 +254,7 @@ export class SquadAssembleService {
       key: 'instructors',
       isGroup: true,
       cols: 3,
-      rows: 4,
+      rows: 5,
       group: {
         key: 'instructors',
         header: { text: 'מדריכים' },
@@ -267,7 +267,7 @@ export class SquadAssembleService {
       key: 'medics',
       isGroup: true,
       cols: 3,
-      rows: 4,
+      rows: 5,
       group: {
         key: 'medics',
         header: { text: 'חובשים' },
