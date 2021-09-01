@@ -80,6 +80,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       .subscribe((event: any) => {
         this.formatUrl(event.url);
         this.handleStatus();
+        this.setActiveStep()
       });
   }
 
@@ -96,7 +97,6 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.activeStep = this.steps.findIndex(
       (step: IconCardModel) => this.currentRoute === step.path
     );
-    console.log(this.activeStep);
     this.$activeStep.next(this.activeStep);
   }
 }
