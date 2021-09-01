@@ -43,6 +43,8 @@ export class FormContainerComponent implements OnInit {
     this.initFormGroup();
     this.subscribeToQuestions();
     this.formService.formGroup = this.formGroup;
+
+    console.log(this.group)
   }
 
   private initFormGroup() {
