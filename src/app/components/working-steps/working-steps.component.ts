@@ -31,18 +31,18 @@ export class WorkingStepsComponent implements OnInit, AfterViewInit {
     this.subscribeToActiveStep();
   }
 
-  setActiveStep(number: number) {
-    this.changeActiveStep.emit(number);
-  }
-
   public onStepClick({ path, index }) {
     this.setActiveStep(index);
     this.router.navigateByUrl(`/education/order-tour/${path}`);
   }
+  
+  setActiveStep(number: number) {
+    this.changeActiveStep.emit(number);
+  }
+
 
   private subscribeToActiveStep() {
     this.$activeStep.subscribe((value) => {
-      console.log(value);
       this.activeStep = value;
     });
   }
