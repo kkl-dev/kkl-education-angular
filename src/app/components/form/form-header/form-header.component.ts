@@ -10,6 +10,7 @@ export class FormHeaderComponent implements OnInit {
 
   @Input() text : string
   @Input() custom : string
+  @Input() classes : string[]
   @Input() slots : {}
 
   constructor() { }

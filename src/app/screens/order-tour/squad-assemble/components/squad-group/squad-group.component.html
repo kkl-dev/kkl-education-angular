@@ -27,12 +27,7 @@
         rowHeight="5vh"
       >
         <mat-grid-tile *ngFor="let item of bottomData; let i = index">
-          <div
-            fxFill
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            dir="rtl"
-          >
+          <div fxFill fxLayout="row" fxLayoutAlign="start center" dir="rtl">
             <div fxFlex="50">
               <app-typography size="14" class="label-text" [bold]="500">
                 {{ item.label }}:
@@ -63,13 +58,18 @@
 </ng-template>
 
 <ng-template #client>
-  <app-typography class="client-text" color="primary" (click)="onAddClient()">
+  <app-typography
+    fxLayoutAlign="end"
+    class="client-text"
+    color="primary"
+    (click)="onAddClient()"
+  >
     לקוח חדש
   </app-typography>
 </ng-template>
 
 <ng-template #tourId>
-  <app-typography> קוד טיול : {{ tripId }} </app-typography>
+  <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
 </ng-template>
 
 <ng-template
