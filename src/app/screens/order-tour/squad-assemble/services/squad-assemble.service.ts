@@ -219,7 +219,7 @@ export class SquadAssembleService {
     }),
     new QuestionBase({
       key: 'participants',
-      cols: 3,
+      fullWidth: true,
       rows: 5,
       isGroup: true,
       group: {
@@ -232,7 +232,7 @@ export class SquadAssembleService {
 
     new QuestionBase({
       key: 'chaperones',
-      cols: 3,
+      fullWidth: true,
       rows: 5,
       isGroup: true,
       group: {
@@ -246,7 +246,7 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'instructors',
       isGroup: true,
-      cols: 3,
+      fullWidth: true,
       rows: 5,
       group: {
         key: 'instructors',
@@ -259,7 +259,7 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'medics',
       isGroup: true,
-      cols: 3,
+      fullWidth: true,
       rows: 5,
       group: {
         key: 'medics',
