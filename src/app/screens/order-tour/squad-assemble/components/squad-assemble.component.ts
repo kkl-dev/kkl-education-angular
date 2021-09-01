@@ -22,7 +22,7 @@ export class SquadAssembleComponent implements OnInit {
     this.squads = [
       {
         group: {
-          key : 'dates',
+          key : 'date',
           header: { text: 'מועד ושם הטיול', custom: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
