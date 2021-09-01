@@ -35,7 +35,7 @@ export class FormInputComponent implements OnInit {
   @Input() public controlType: string;
   @Input() public options!: [];
 
-  @Input() public labelLength: string;
+  @Input() public labelSize: number;
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
@@ -45,6 +45,7 @@ export class FormInputComponent implements OnInit {
   @Input() public serverErrorMode!: boolean;
 
   public color: string;
+  public labelLength: string;
 
   public value!: any;
   public error!: string;
@@ -57,6 +58,9 @@ export class FormInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToControl();
+
+    this.labelLength = `size-${this.labelSize || 1}`
+
   }
 
   public writeValue(value: any): void {

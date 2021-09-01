@@ -50,7 +50,7 @@ export class QuestionBase<T> {
       group?: QuestionGroup;
       inputProps?: {
         options?: SelectOption[];
-        labelLength?: string;
+        labelSize?: string;
       };
     } = {}
   ) {

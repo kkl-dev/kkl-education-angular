@@ -12,8 +12,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   providedIn: 'root',
 })
 export class SquadAssembleService {
-
-  private genderArray : QuestionNumber[] = [
+  private genderArray: QuestionNumber[] = [
     new QuestionNumber({
       key: 'boys',
       label: 'בנים',
@@ -40,6 +39,9 @@ export class SquadAssembleService {
       value: '',
       rows: 4,
       validations: [Validators.required],
+      inputProps: {
+        labelSize: 's2',
+      },
     }),
 
     new QuestionSelect({
@@ -53,8 +55,8 @@ export class SquadAssembleService {
           { key: 'good', value: '123' },
           { key: 'unproven', value: '123123123' },
         ],
+        labelSize: 's3',
       },
-      icon: 'keyboard_arrow_down',
       validations: [Validators.required],
     }),
 
@@ -65,7 +67,7 @@ export class SquadAssembleService {
       rows: 4,
       validations: [Validators.required],
       inputProps: {
-        labelLength: 'medium',
+        labelSize: 's3',
       },
     }),
   ];
@@ -77,6 +79,9 @@ export class SquadAssembleService {
       cols: 2,
       value: '',
       validations: [Validators.required],
+      inputProps: {
+        labelSize: 's8',
+      },
     }),
 
     new QuestionSelect({
@@ -84,6 +89,7 @@ export class SquadAssembleService {
       type: 'select',
       label: 'הכול',
       inputProps: {
+        labelSize: 's1',
         options: [
           { key: 'שם נוסף', value: 'שם נוסף' },
           { key: 'עוד לקוח', value: 'עוד לקוח' },
@@ -99,6 +105,7 @@ export class SquadAssembleService {
       type: 'select',
       fullWidth: true,
       inputProps: {
+        labelSize: 's3',
         options: [
           { key: 'שם נוסף', value: 'שם נוסף' },
           { key: 'עוד לקוח', value: 'עוד לקוח' },
@@ -122,7 +129,7 @@ export class SquadAssembleService {
             key: 'fullName',
             label: 'איש קשר',
             inputProps: {
-              labelLength: 'medium',
+              labelSize: 's1',
             },
           }),
 
@@ -132,7 +139,7 @@ export class SquadAssembleService {
             type: 'text',
             validations: [Validators.required],
             inputProps: {
-              labelLength: 'medium',
+              labelSize: 's3',
             },
           }),
           new QuestionTextbox({
@@ -141,7 +148,7 @@ export class SquadAssembleService {
             type: 'text',
             validations: [Validators.required],
             inputProps: {
-              labelLength: 'small',
+              labelSize: 's1',
             },
           }),
         ],
@@ -178,6 +185,9 @@ export class SquadAssembleService {
       offset: 1,
       cols: 2,
       rows: 4,
+      inputProps: {
+        labelSize: 'xl4',
+      },
     }),
     new QuestionNumber({
       key: 'drivers',
@@ -226,7 +236,7 @@ export class SquadAssembleService {
         key: 'participants',
         header: { text: 'נוער / מבוגרים' },
         cols: 5,
-        questions: this.genderArray
+        questions: this.genderArray,
       },
     }),
 
@@ -239,7 +249,7 @@ export class SquadAssembleService {
         key: 'chaperones',
         header: { text: 'מלווים' },
         cols: 5,
-        questions: this.genderArray
+        questions: this.genderArray,
       },
     }),
 
@@ -252,7 +262,7 @@ export class SquadAssembleService {
         key: 'instructors',
         header: { text: 'מדריכים' },
         cols: 5,
-        questions: this.genderArray
+        questions: this.genderArray,
       },
     }),
 
@@ -265,7 +275,7 @@ export class SquadAssembleService {
         key: 'medics',
         header: { text: 'חובשים' },
         cols: 5,
-        questions: this.genderArray
+        questions: this.genderArray,
       },
     }),
   ];
@@ -276,7 +286,7 @@ export class SquadAssembleService {
       label: 'מאפיין',
       type: 'select',
       inputProps: {
-        labelLength: 'small',
+        labelSize: 's4',
         options: [
           { key: 'פרומלי', value: 'פרומלי' },
           { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
@@ -291,7 +301,7 @@ export class SquadAssembleService {
       label: 'סוג הפעילות',
       type: 'select',
       inputProps: {
-        labelLength: 'medium',
+        labelSize: 's4',
         options: [
           { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
           { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
