@@ -1,0 +1,14 @@
+<div class="nav-container">
+  <div fxLayout="column" fxLayoutGap="40px">
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="80px">
+      <app-typography [bold]="600" [size]="24">
+        {{ title }}
+      </app-typography>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
+      <div class="nav-card" *ngFor="let item of cards$ | async">
+        <app-nav-card (onClick)="onCardClick($event)" [item]="item"></app-nav-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,28 +1,23 @@
+.form,
+app-form-input,
+app-form-header,
+app-input-radio,
+app-form-group {
+  width: 100%;
+  height: 100%;
+}
+
 .form-container {
   width: inherit;
-  padding: 10px 0;
   box-sizing: border-box;
   padding: 0px;
 }
 
-.form {
-  height: 100%;
-  width: 100%;
-
-  .form-row {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-  }
-
+.form-row {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 
-app-form-input {
-  width: 100%
-}
 
-app-input-radio {
-  width: 70%;
-  height: 70%;
-}

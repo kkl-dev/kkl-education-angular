@@ -1,0 +1,46 @@
+.login {
+  height: calc(100%);
+  width: 100vw;
+  background-image: url("../../../../assets//images/login-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  background-position: top;
+  direction: rtl;
+}
+
+.login__content {
+  width: 45%;
+  height: 100%;
+  z-index: 10;
+}
+
+.login__content:before {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%) contrast(30%) brightness(180%);
+          backdrop-filter: blur(10px) saturate(150%) contrast(30%) brightness(180%);
+  content: "";
+  height: 100%;
+  width: 45%;
+  top: 50%;
+  right: 0%;
+  -webkit-transform: translate(0%, -50%);
+          transform: translate(0%, -50%);
+  position: absolute;
+}
+
+.login__content-icon, .login__content-icon > * {
+  z-index: 110;
+  position: absolute;
+  top: 7%;
+  right: calc( 22.5% + 30px);
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+}
+
+.login__content-icon svg-icon > * {
+  min-height: 86px;
+  width: 100px;
+}
+/*# sourceMappingURL=login.component.css.map */

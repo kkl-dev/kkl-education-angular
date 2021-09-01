@@ -1,0 +1,29 @@
+<mat-grid-list [cols]="group.cols || 1" [gutterSize]="group.gutter || 1" rowHeight="2vh">
+
+  <mat-grid-tile *ngIf="group.header" [colspan]="group.cols || 1" [rowspan]="group.rows || 1">
+    <app-form-header [text]="group.header.text" [custom]="group.header?.custom" [slots]="{button}">
+    </app-form-header>
+  </mat-grid-tile>
+
+  <ng-container *ngFor="let question of group.questions">
+
+    <mat-grid-tile [colspan]="question.cols" [rowspan]="question.rows">
+      <ng-container *ngTemplateOutlet="slot;
+    context: {
+      formGroup,
+      group,
+      question
+    }
+    "></ng-container>
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngIf="question.offset" [rowspan]="question.rows" [colspan]="question.offset"></mat-grid-tile>
+  </ng-container>
+
+</mat-grid-list>
+
+<ng-template #button>
+  <button type="submit" disableRipple="true" (click)="onEdit()" mat-icon-button class="edit-button mat-elevation-z1">
+    <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
+  </button>
+</ng-template>

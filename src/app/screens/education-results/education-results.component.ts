@@ -10,7 +10,7 @@ export interface InfoCard {
   svgUrl: string;
   headline: string;
   subHeadline?: string;
-  availability: TooltipDataModel[];
+  availability?: TooltipDataModel[];
 }
 
 @Component({
@@ -28,8 +28,6 @@ export class EducationResultsComponent implements OnInit {
   ngOnInit() {
     this.tripService.forestCenter.subscribe(result => {
       this.forestCenter = result; // this set's the username to the default observable value
-      console.log('parent -- > forestCenter from server BehaviorSubject:', this.forestCenter);
-      //this.changeForestCenter(result);
     });
 
     this.availabilityItemsArray = [
@@ -39,58 +37,14 @@ export class EducationResultsComponent implements OnInit {
     ]
 
     if (this.tripService.centerField) {
-      //this.forestCenterId = this.tripService.centerField.id;
-      //this.forestCenterId = 1;
+
       this.dateObj = this.tripService.dateObj;
 
       for (let key in this.dateObj) {
         let value = this.dateObj[key];
-        // Use `key` and `value`
       }
     }
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //     console.log('response: ', response);
-    //   },
-    //   error => console.log('error:', error),       // error
-    //   () => console.log('completed')     // complete
-    // );
 
-    // this.usersService.getLookupFieldForestCenters().subscribe((data: any) => {
-    //   //  this.spinner.hide();
-    //     if (data) {
-    //       console.log('getLookupFieldForestCenters: ', data);
-    //     }
-    //     else {
-    //       console.log('no data in getLookupFieldForestCenters');
-    //     }
-    //   },
-    //     error => {
-    //   //    this.spinner.hide();
-    //       console.log({ error })
-    //     });
-
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //     console.log('response:', response);
-    //   },
-    //   error => console.log('error:', error),       // error
-    //   () => console.log('completed')     // complete
-    // );
-
-
-    // console.log('userDataService:', this.userDataService);
-    console.log('tripService:', this.tripService);
-
-
-    //this.availabilityItemsArray = this.tripService.dateObj;
-    //this.centerField = this.tripService.centerField
-
-
-    console.log('getDifferenceInDays', this.getDifferenceInDays(this.date1, this.date2));
-    console.log('getDifferenceInHours', this.getDifferenceInHours(this.date1, this.date2));
-    console.log('getDifferenceInMinutes', this.getDifferenceInMinutes(this.date1, this.date2));
-    console.log('getDifferenceInSeconds', this.getDifferenceInSeconds(this.date1, this.date2));
 
   }
 
@@ -145,7 +99,6 @@ export class EducationResultsComponent implements OnInit {
   ];
 
   // changeForestCenter(e: any, visible: any) {
-  //   console.log('show 1 ', visible);
   //   this.child.changeForestCenter(visible);
   // }
 
@@ -322,7 +275,6 @@ export class EducationResultsComponent implements OnInit {
       date1.getMonth(),
       date1.getDate(),
     );
-    console.log(date2);
     const utc2 = Date.UTC(
       date2.getFullYear(),
       date2.getMonth(),
@@ -383,7 +335,6 @@ export class EducationResultsComponent implements OnInit {
       this.sleepingOptionsByDay[0].day
     );
 
-    console.log(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
 
     this.changeDatesHandler(
       this.checkAvailabillityService.checkAvailabilltyValues.calendarInput

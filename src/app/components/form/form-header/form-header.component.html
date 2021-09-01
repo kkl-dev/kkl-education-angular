@@ -1,0 +1,15 @@
+<div
+  class="header"
+  fxLayout="row"
+  class="header"
+  fxLayoutAlign="space-between end"
+>
+  <div fxFlex="100">
+    <app-typography underline="underline" color="primary" bold="bold">
+      {{ text }}
+    </app-typography>
+  </div>
+  <div fxFlex="50" fxLayoutAlign="end">
+    <ng-container *ngTemplateOutlet="slots[custom]"></ng-container>
+  </div>
+</div>
