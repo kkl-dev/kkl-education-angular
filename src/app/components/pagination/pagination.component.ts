@@ -19,21 +19,19 @@ export class PaginationComponent implements OnInit,OnChanges {
     this.currentPage =1;
     this.newPage.emit(this.currentPage);
 
-    console.log(this.currentPage);
     this.pagesCount = Math.floor(+this.pagesCount + 0.99999);
 
     this.pageNumberArray = new Array(this.pagesCount)
-    console.log(this.pageNumberArray.map((item, index) => {
+    // console.log(this.pageNumberArray.map((item, index) => {
 
-      index >= this.pagesCount
-        ? (this.pagesToShow = this.pagesToShow.slice(0, index))
-        : (this.pagesToShow[index] = +this.currentPage + index);
-    }));
+    //   index >= this.pagesCount
+    //     ? (this.pagesToShow = this.pagesToShow.slice(0, index))
+    //     : (this.pagesToShow[index] = +this.currentPage + index);
+    // }));
     
   }
 
   ngOnInit(): void {
-    console.log('d');
     
     this.pagesCount = Math.floor(+this.pagesCount + 0.99999);
 
@@ -96,7 +94,6 @@ export class PaginationComponent implements OnInit,OnChanges {
       if (startingPosition + index > endingPosition) {
         this.pagesToShow[index] = -1;
         this.pagesToShow = this.pagesToShow.filter((number) => number > 0);
-        console.log(this.pagesToShow);
       } else {
         this.pagesToShow[index] = startingPosition + index;
       }
@@ -104,8 +101,6 @@ export class PaginationComponent implements OnInit,OnChanges {
   }
 
   public proceed() {
-    console.log('f');
-    
     this.newPage.emit(this.currentPage);
   }
 }
