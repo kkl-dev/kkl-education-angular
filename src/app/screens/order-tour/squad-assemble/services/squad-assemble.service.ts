@@ -59,21 +59,14 @@ export class SquadAssembleService {
     }),
 
     new QuestionCalendar({
-      key: 'startDate',
-      label: 'תאריך התחלה',
+      key: 'dates',
+      label: 'תאריכי לינה',
       value: new Date(),
       rows: 4,
       validations: [Validators.required],
       inputProps: {
         labelLength: 'medium',
       },
-    }),
-    new QuestionCalendar({
-      key: 'endDate',
-      label: 'תאריך סיום',
-      rows: 4,
-      value: new Date(),
-      validations: [Validators.required],
     }),
   ];
 
