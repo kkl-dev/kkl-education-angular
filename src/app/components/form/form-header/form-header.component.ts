@@ -8,14 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class FormHeaderComponent implements OnInit {
   @Input() text: string;
   @Input() custom: string;
-  @Input() title: string;
+  @Input() title: boolean;
   @Input() classes: {};
   @Input() slots: {};
 
   constructor() {}
 
   ngOnInit(): void {
-    this.title = this.title || '';
-    console.log(this.classes);
+    this.title = this.title || false;
   }
 }
