@@ -28,7 +28,6 @@ export class FlexCellComponent implements OnInit {
 
   ngOnInit(): void {
     this.type = this.type || 'text';
-    this.size = this.size || 14;
     this.bold = this.isBold ? 600 : 500;
   }
 }
