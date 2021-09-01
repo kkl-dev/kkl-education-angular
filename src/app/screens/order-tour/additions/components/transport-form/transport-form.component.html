@@ -2,7 +2,7 @@
   <div fxFlex="35">
     <app-form
       [formTemplate]="formTemplate"
-      [slots]="{ button: formButton }"
+      [slots]="{ topButton: formButton }"
       (valueChange)="onValueChange($event)"
       [editMode]="editMode"
     ></app-form>

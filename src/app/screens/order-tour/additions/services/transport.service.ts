@@ -87,15 +87,6 @@ export class TransportService {
   ].reverse();
 
   public locations: QuestionBase<string | Date>[] = [
-    new QuestionTextarea({
-      key: 'comments',
-      label: 'הערות',
-      cols: 4,
-      rows: 6,
-      offset: 2,
-      value: '',
-    }),
-
     new QuestionSelect({
       key: 'pickUpDate',
       icon: 'date_range',
@@ -168,8 +159,19 @@ export class TransportService {
         labelLength: 'extraWide',
       },
     }),
+
   ].reverse();
 
+  public comments: QuestionBase<string>[] = [
+    new QuestionTextarea({
+      key: 'comments',
+      label: 'הערות',
+      cols: 6,
+      rows: 6,
+      offset: 1,
+      value: '',
+    }),
+  ];
 
   public questionGroups: QuestionGroup[] = [
     {
@@ -181,22 +183,29 @@ export class TransportService {
       key: 'locations',
       questions: this.locations,
       cols: 6,
-      hasButton : true
+    },
+    {
+      key: 'comments',
+      questions: this.comments,
+      hasButton: true,
+      cols: 8,
     },
   ];
+
+  private findItemIndex(arr: any, key: string, value: any): number {
+    return arr.findIndex((item) => item[key] === value);
+  }
 
   public setInitialValues(
     questions: QuestionBase<string | number | Date | QuestionGroup>[],
     data: any
   ) {
-    questions.map(
-      (control: QuestionBase<string | number | Date | QuestionGroup>) => {
-        control.value = data[control.key];
-        if (control.key === 'comments') {
-          control.value = data;
-        }
+    questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
+      control.value = data[control.key];
+      if (control.key === 'comments') {
+        control.value = data;
       }
-    );
+    });
   }
 
   public setFormValues(data: TransportModel) {
@@ -205,5 +214,5 @@ export class TransportService {
     });
   }
 
-  constructor() {}
+  constructor() { }
 }

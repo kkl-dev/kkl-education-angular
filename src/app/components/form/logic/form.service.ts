@@ -2,6 +2,7 @@ import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
 import { QuestionGroup } from './question-group';
+import { Observable, Subject } from 'rxjs';
 
 export interface FormTemplate {
   label?: string;
@@ -15,6 +16,9 @@ export interface FormTemplate {
   providedIn: 'root',
 })
 export class FormService {
+
+  public onChangeSelect = new Subject<boolean>();
+
   public id: number;
   public formGroup: FormGroup;
 
@@ -42,7 +46,7 @@ export class FormService {
         const { key, value, isGroup, group, validations } = control;
         return {
           ...acc,
-          [key]: isGroup ? this.setGroup(group) : [value || '', validations],
+          [key]: isGroup ? this.setGroup(group.questions) : [value || '', validations],
         };
       }, {});
   }
@@ -55,7 +59,7 @@ export class FormService {
       return {
         key: key,
         isGroup,
-        template: isGroup ? this.setGroup(group) : [value, validations],
+        template: isGroup ? this.setGroup(group.questions) : [value, validations],
       };
     });
   }

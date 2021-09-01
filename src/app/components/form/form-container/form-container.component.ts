@@ -32,7 +32,7 @@ export class FormContainerComponent implements OnInit {
 
   @Input() slots: {
     topButton?: ElementRef;
-    group?: ElementRef;
+    groupInputs?: ElementRef;
   };
 
   @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
@@ -59,12 +59,14 @@ export class FormContainerComponent implements OnInit {
   }
 
   private subscribeToQuestions() {
-    this.$questions.subscribe((questions) => {
-      this.questions = questions;
-      this.formGroup = this.formService.setFormGroup({
-        questions: this.questions,
+    if (this.$questions) {
+      this.$questions.subscribe((questions) => {
+        this.questions = questions;
+        this.formGroup = this.formService.setFormGroup({
+          questions: this.questions,
+        });
       });
-    });
+    }
   }
 
   public onEdit() {

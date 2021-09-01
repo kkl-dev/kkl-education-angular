@@ -1,4 +1,11 @@
-import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  forwardRef,
+  Input,
+  ViewChild,
+  Output,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { FormService } from '../logic/form.service';
@@ -53,8 +60,6 @@ export class FormInputComponent implements OnInit {
     this.subscribeToControl();
   }
 
-  // ControlValueAccessor logic
-
   public writeValue(value: any): void {
     this.value = value ? value : '';
   }
@@ -72,9 +77,7 @@ export class FormInputComponent implements OnInit {
   }
 
   public handleChange(value: any) {
-    console.log(value)
     this.value = value;
-    this.validate()
   }
 
   // subscription section
@@ -87,7 +90,6 @@ export class FormInputComponent implements OnInit {
       if (this.control.disabled) {
         this.color = 'disable';
       } else if (this.control.errors) {
-        console.log(this.control.errors)
         this.color = 'danger';
       } else {
         this.color = '';
@@ -95,25 +97,18 @@ export class FormInputComponent implements OnInit {
     });
   }
 
+  public onSelectChange() {
+    console.log(1);
+    this.formService.onChangeSelect.next(true);
+  }
+
   // LOGIC SECTION
 
   // method to handle validation messages
   public validate() {
     this.error = this.formService.getErrorMessage(this.control, this.label);
-
-    console.log(this.control)
-    console.log(this.error)
-
     this.control.valueChanges.subscribe(() => {
       this.error = this.formService.getErrorMessage(this.control, this.label);
     });
-
-    // if (this.error) {
-    //   this.color = 'danger';
-    // } else {
-    //   this.color = '';
-    // }
   }
-
-  // end of logic section
 }

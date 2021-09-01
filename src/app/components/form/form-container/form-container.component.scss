@@ -1,7 +1,10 @@
 .form,
 app-form-input,
-app-form-header {
+app-form-header,
+app-input-radio,
+app-form-group {
   width: 100%;
+  height: 100%;
 }
 
 .form-container {
@@ -17,15 +20,4 @@ app-form-header {
   text-align: center;
 }
 
-app-input-radio {
-  width: 70%;
-  height: 70%;
-}
 
-button.edit-button {
-  transform: translateY(-8px);
-
-  &.mat-icon-button {
-    border-radius: 20% !important;
-  }
-}

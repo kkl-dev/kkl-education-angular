@@ -1,56 +1,34 @@
 <div class="input-container">
   <div>
-    <mat-form-field
-      [color]="theme"
-      [appearance]="disabled ? 'fill' : 'outline'"
-      [ngClass]="[labelLength || 'base']"
-    >
+    <mat-form-field [color]="theme" [appearance]="disabled ? 'fill' : 'outline'" [ngClass]="[labelLength || 'base']">
       <mat-label>{{ label }}</mat-label>
-      <input
-        *ngIf="controlType !== 'select' && controlType !== 'textarea'"
-        matInput
-        [type]="type"
-        [formControl]="control"
-        control="control"
-        autocomplete="off"
-        (input)="handleChange($event.target.value)"
-        [name]="type"
-        (focusout)="validate()"
-        #input
-        [placeholder]="label"
-      />
+      <input *ngIf="controlType !== 'select' && controlType !== 'textarea'" matInput [type]="type"
+        [formControl]="control" control="control" autocomplete="off" (input)="handleChange($event.target.value)"
+        [name]="type" (focusout)="validate()" #input [placeholder]="label" />
 
       <mat-select
         color="primary"
         [formControl]="control"
         *ngIf="controlType === 'select'"
-        (change)="handleChange($event.value)"
+        (selectionChange)="onSelectChange()"
+        (openedChange)="validate()"
       >
-        <mat-option>{{ label | titlecase }}</mat-option>
+        <mat-option>{{ label }}</mat-option>
         <mat-option *ngFor="let option of options" [value]="option.value">
           {{ option.key }}
         </mat-option>
       </mat-select>
 
-      <textarea
-        matInput
-        *ngIf="controlType === 'textarea'"
-        rows="4"
-        [formControl]="control"
-        (focusout)="validate()"
-      ></textarea>
+      <textarea matInput *ngIf="controlType === 'textarea'" rows="4" [formControl]="control"
+        (focusout)="validate()"></textarea>
 
       <!-- icons -->
-      <app-icon
-        matPrefix
-        [color]="color || 'primary'"
+      <app-icon matPrefix [color]="color || 'primary'"
         [key]="controlType === 'select' ? icon || 'keyboard_arrow_down' : icon"
-        type="mat"
-      ></app-icon>
+        [type]="controlType === 'calendar' ? 'svg' : 'mat'"></app-icon>
 
       <!-- shred input error -->
       <mat-error *ngIf="control.errors">{{ error }}</mat-error>
-
     </mat-form-field>
 
     <div></div>

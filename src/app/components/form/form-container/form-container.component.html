@@ -16,12 +16,13 @@
 
         <mat-grid-tile
           *ngIf="question.offset"
+          [rowspan]="question.rows"
           [colspan]="question.offset"
         ></mat-grid-tile>
 
         <mat-grid-tile
           *ngIf="!question?.isGroup"
-          [colspan]="question.cols"
+          [colspan]="question.fullWidth ? cols : question.cols"
           [rowspan]="question.rows || 4"
         >
           <app-form-input
@@ -44,35 +45,17 @@
           </app-input-radio>
         </mat-grid-tile>
 
-        <ng-container *ngIf="question?.isGroup">
-          <mat-grid-tile
-            *ngIf="question?.header"
-            [colspan]="question.cols || 1"
-            [rowspan]="question.rows || 1"
-          >
-            <app-form-header
-              [text]="question.label || question.header.text"
-              [custom]="question?.header.custom"
-              [slots]="{button}"
-            ></app-form-header>
-          </mat-grid-tile>
-          <mat-grid-tile
-            *ngFor="let item of question.group"
-            [colspan]="item.cols"
-            [rowspan]="item.rows"
-          >
-            <ng-container
-              *ngTemplateOutlet="
-            slots.group;
-            context: {
-              question,
-              formGroup,
-              item
-            }
-            "
-            ></ng-container>
-          </mat-grid-tile>
-        </ng-container>
+        <mat-grid-tile
+          *ngIf="question?.isGroup"
+          [colspan]="question.fullWidth ? cols : question.cols || 1"
+          [rowspan]="question.rows || 15"
+        >
+          <app-form-group
+            [group]="question.group"
+            [formGroup]="formGroup"
+            [slot]="slots.groupInputs"
+          ></app-form-group>
+        </mat-grid-tile>
       </ng-container>
     </mat-grid-list>
 
@@ -81,15 +64,3 @@
     </div>
   </form>
 </div>
-
-<ng-template #button>
-  <button
-    type="submit"
-    disableRipple="true"
-    (click)="onEdit()"
-    mat-icon-button
-    class="edit-button mat-elevation-z1"
-  >
-    <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
-  </button>
-</ng-template>
