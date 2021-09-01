@@ -30,24 +30,33 @@ mat-icon {
   width: 100% !important;
 }
 
-::ng-deep .small .mat-form-field-outline-gap {
+::ng-deep .size-1 .mat-form-field-outline-gap {
   width: 10% !important;
 }
 
-::ng-deep .base .mat-form-field-outline-gap {
+::ng-deep .size-2 .mat-form-field-outline-gap {
   width: 15% !important;
 }
 
-::ng-deep .medium .mat-form-field-outline-gap {
+::ng-deep .size-3 .mat-form-field-outline-gap {
   width: 20% !important;
 }
 
-::ng-deep .wide .mat-form-field-outline-gap {
+::ng-deep .size-4 .mat-form-field-outline-gap {
   width: 25% !important;
 }
-
-::ng-deep .extraWide .mat-form-field-outline-gap {
+::ng-deep .size-5 .mat-form-field-outline-gap {
+  width: 30% !important;
+}
+::ng-deep .size-6 .mat-form-field-outline-gap {
+  width: 35% !important;
+}
+::ng-deep .size-7 .mat-form-field-outline-gap {
   width: 40% !important;
+}
+
+::ng-deep .size-8 .mat-form-field-outline-gap {
+  width: 45% !important;
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator {

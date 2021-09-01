@@ -57,7 +57,6 @@ export class FormInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToControl();
-    console.log(this.control.value)
   }
 
   public writeValue(value: any): void {
@@ -98,7 +97,6 @@ export class FormInputComponent implements OnInit {
   }
 
   public onSelectChange() {
-    console.log(1);
     this.formService.onChangeSelect.next(true);
   }
 
