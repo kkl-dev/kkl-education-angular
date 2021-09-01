@@ -12,7 +12,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   providedIn: 'root',
 })
 export class SquadAssembleService {
-  constructor() { }
+  constructor() {}
 
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
@@ -85,8 +85,7 @@ export class SquadAssembleService {
       key: 'payerName',
       label: 'לקוח משלם',
       type: 'select',
-      // cols: 3,
-      fullWidth : true,
+      fullWidth: true,
       inputProps: {
         options: [
           { key: 'שם נוסף', value: 'שם נוסף' },
@@ -100,8 +99,8 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'contact',
       isGroup: true,
-      cols: 1,
-      rows: 12,
+      fullWidth : true,
+      rows: 15,
       group: {
         key: 'contact',
         cols: 1,
@@ -133,9 +132,8 @@ export class SquadAssembleService {
               labelLength: 'small',
             },
           }),
-        ]
-      }
-      ,
+        ],
+      },
     }),
   ];
 
@@ -229,7 +227,7 @@ export class SquadAssembleService {
             type: 'number',
             rows: 4,
           }),
-        ]
+        ],
       },
     }),
 
@@ -256,7 +254,7 @@ export class SquadAssembleService {
             rows: 4,
           }),
         ],
-      }
+      },
     }),
 
     new QuestionBase({
@@ -282,7 +280,7 @@ export class SquadAssembleService {
             rows: 4,
           }),
         ],
-      }
+      },
     }),
 
     new QuestionBase({
@@ -308,7 +306,7 @@ export class SquadAssembleService {
             rows: 4,
           }),
         ],
-      }
+      },
     }),
   ];
 

@@ -18,8 +18,6 @@ export class FormGroupComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
-    console.log(this.group.gutter)
   }
 
 }

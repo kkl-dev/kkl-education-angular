@@ -77,9 +77,11 @@ export class SquadGroupComponent {
       custom: 'button',
     };
 
+    console.log(this.squadAssembleService.customerFormInputs)
+
     this.client
-      ? (this.squadAssembleService.customerFormInputs[2].group.header = header)
-      : (this.squadAssembleService.customerFormInputs[2].group.header = null);
+      ? (this.squadAssembleService.customerFormInputs[3].group.header = header)
+      : (this.squadAssembleService.customerFormInputs[3].group.header = null);
 
     this.$questions.next(this.squadAssembleService.customerFormInputs);
   }
@@ -88,7 +90,7 @@ export class SquadGroupComponent {
   private subscribeToOnSelectChange() {
     this.formService.onChangeSelect.subscribe((value) => {
 
-      console.log(this.group.key)
+      console.log(this.group)
       if (this.group.key === 'client') {
         this.onAddClient()
         console.log(this.formService.formGroup.controls.contact)
