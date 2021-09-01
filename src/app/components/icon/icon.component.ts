@@ -12,6 +12,7 @@ export interface IconClasses {
   styleUrls: ['./icon.component.scss'],
 })
 export class IconComponent implements OnInit {
+
   @Input() public size: number = 24;
   @Input() public width: number;
   @Input() public height: number;
@@ -41,6 +42,8 @@ export class IconComponent implements OnInit {
   }
 
   private setIconColor() {
+    console.log(this.key)
+    console.log(this.isActive)
     this.color = this.isActive ? 'active' : this.color || 'default';
   }
 

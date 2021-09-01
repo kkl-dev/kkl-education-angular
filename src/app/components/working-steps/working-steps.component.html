@@ -8,6 +8,8 @@
       class="working-steps__step-icon"
       [ngClass]="{ active: activeStep === i }"
     >
+    {{activeStep}}
+    {{i}}
       <app-icon
         [isActive]="activeStep === i"
         type="svg"

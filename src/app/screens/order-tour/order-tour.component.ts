@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { StepModel } from 'src/app/components/working-steps/working-steps.component';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
 @Component({
   selector: 'app-order-tour',
@@ -16,36 +16,41 @@ export class OrderTourComponent implements OnInit {
   public currentRoute: string;
   public sleepStatus: boolean;
 
-  public steps: StepModel[] = [
+  public steps: IconCardModel[] = [
     {
       svgUrl: 'group',
-      text: 'הרכב קבוצה',
+      label: 'הרכב קבוצה',
       path: 'squad-assemble',
+      isActive: true,
     },
     {
       svgUrl: 'bed',
-      text: 'לינה',
+      label: 'לינה',
       path: 'sleeping',
+      isActive: true,
     },
     {
       svgUrl: 'playground',
-      text: 'מתקנים ופעילות',
+      label: 'מתקנים ופעילות',
       path: 'facilities',
+      isActive: true,
     },
     {
       svgUrl: 'list',
-      text: 'תוספות',
+      label: 'תוספות',
       path: 'additions',
+      isActive: true,
     },
     {
       svgUrl: 'add',
-      text: 'סיכום',
+      label: 'סיכום',
       path: 'summary',
+      isActive: true,
     },
   ];
 
   public changeActiveStep(newActiveStep: number): void {
-    this.activeStep = +newActiveStep;
+    this.activeStep = newActiveStep;
   }
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
     this.activeStep = +newActiveStep;
@@ -82,7 +87,7 @@ export class OrderTourComponent implements OnInit {
 
   private setActiveStep() {
     this.activeStep = this.steps.findIndex(
-      (step: StepModel) => this.currentRoute === step.path
+      (step: IconCardModel) => this.currentRoute === step.path
     );
   }
 }

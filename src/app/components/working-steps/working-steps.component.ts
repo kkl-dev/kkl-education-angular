@@ -1,12 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
-export interface StepModel {
-  svgUrl: string;
-  text: string;
-  path: string;
-  size?: number;
-}
 
 @Component({
   selector: 'app-working-steps',
@@ -14,17 +9,18 @@ export interface StepModel {
   styleUrls: ['./working-steps.component.scss'],
 })
 export class WorkingStepsComponent implements OnInit {
-  @Input() activeStep: number = 0;
-  @Input() steps: StepModel[];
+  @Input() activeStep: number;
+  @Input() steps: IconCardModel[];
 
   @Output() changeActiveStep = new EventEmitter<number>();
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   setActiveStep(number: number) {
-    this.changeActiveStep.emit(+number);
+    this.changeActiveStep.emit(number);
   }
 
   public onStepClick({ path, index }) {
