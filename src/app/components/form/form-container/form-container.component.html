@@ -34,7 +34,7 @@
             [icon]="question.icon"
             [options]="question.inputProps?.options"
             [controlType]="question.controlType"
-            [labelLength]="question.inputProps?.labelLength"
+            [labelSize]="question.inputProps?.labelSize"
           ></app-form-input>
 
           <app-input-radio
@@ -48,7 +48,7 @@
         <mat-grid-tile
           *ngIf="question?.isGroup"
           [colspan]="question.fullWidth ? cols : question.cols || 1"
-          [rowspan]="question.rows || 15"
+          [rowspan]="question.rows || 20"
         >
           <app-form-group
             [group]="question.group"

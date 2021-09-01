@@ -11,38 +11,38 @@ export class AdditionsService {
 
   private navigationCrds: IconCardModel[] = [
     {
-      title: 'הפעלה מוסיקלית',
+      label: 'הפעלה מוסיקלית',
       isActive: false,
       svgUrl: 'music',
     },
     {
-      title: 'הדרכה',
+      label: 'הדרכה',
       isActive: false,
       svgUrl: 'guide',
     },
     {
-      title: 'אירוח',
+      label: 'אירוח',
       isActive: false,
       svgUrl: 'tent',
     },
     {
-      title: 'כלכלה',
+      label: 'כלכלה',
       isActive: false,
       svgUrl: 'dinner',
     },
     {
-      title: 'אתרים',
+      label: 'אתרים',
       isActive: false,
       svgUrl: 'site',
     },
     {
-      title: 'אבטחה',
+      label: 'אבטחה',
       isActive: false,
       svgUrl: 'shield',
     },
 
     {
-      title: 'היסעים',
+      label: 'היסעים',
       isActive: true,
       svgUrl: 'bus',
       badgeValue: 3,

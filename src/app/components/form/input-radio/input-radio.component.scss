@@ -10,6 +10,6 @@ div {
   direction: rtl;
 }
 
-span.mat-radio-label-content {
-  padding-right: spacing(10) !important;
+::ng-deep span.mat-radio-label-content {
+  padding-right: spacing(2) !important;
 }
