@@ -1,3 +1,4 @@
+import { RootComponent } from './screens/order-tour/root/root.component';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,6 +21,9 @@ import { ApiModule } from './api';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { MainComponent } from './components/main/main.component';
+import { DashboardComponent } from './screens/dashboard/dashboard.component';
+
 import { LoginComponent } from './screens/login-backdrop/login/login.component';
 import { LoginBackdropComponent } from './screens/login-backdrop/login-backdrop.component';
 import { LoginFormComponent } from './screens/login-backdrop/login-form/login-form.component';
@@ -27,60 +31,65 @@ import { OtpFormComponent } from './screens/login-backdrop/otp-form/otp-form.com
 import { LoginProcessComponent } from './screens/login-backdrop/login-process/login-process.component';
 
 import { EducationResultsComponent } from './screens/education-results/education-results.component';
-import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { SearchComponent } from './screens/search/search.component';
 import { DatePickerComponent } from './screens/search/education/date-picker/date-picker.component';
 import { HeaderComponent } from './screens/education-results/header/header.component';
 import { TooltipComponent } from './screens/education-results/tooltip/tooltip.component';
-import { MyToursComponent } from './screens/my-tours/my-tours.component';
-import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
-
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
+import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
+import { MapsComponent } from './screens/education-results/maps/maps.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+
+import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
+import { MyToursComponent } from './screens/my-tours/my-tours.component';
+import { EducationComponent } from './screens/search/education/education.component';
+import { OrderTourComponent } from './screens/order-tour/order-tour.component';
+
 import { LinksComponent } from './components/links/links.component';
-import { MainComponent } from './components/main/main.component';
 
 import { FormContainerComponent } from './components/form/form-container/form-container.component';
 import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
 import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
 
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { OrderTourComponent } from './screens/order-tour/order-tour.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { SpinnerComponent } from './components/spinner/spinner.component';
-import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
-import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
-import { EducationComponent } from './screens/search/education/education.component';
-import { MapsComponent } from './screens/education-results/maps/maps.component';
 
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/form/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
 import { NavCardComponent } from './components/nav-card/nav-card.component';
-
-import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
-import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
-import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
 
 import { TypographyComponent } from './components/typography/typography.component';
 import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
-import { FilledNightComponent } from './screens/order-tour/sleeping-options/filled-night/filled-night.component';
+
 import { FlexRowComponent } from './components/grid/flex-row/flex-row.component';
-import { SummaryComponent } from './screens/order-tour/summary/summary.component';
 import { FlexTableComponent } from './components/grid/flex-table/flex-table.component';
+
 import { FormComponent } from './components/form/form/form.component';
-import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
-import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
+import { FormHeaderComponent } from './components/form/form-header/form-header.component';
+
 import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
 import { SimpleCardComponent } from './components/simple-card/simple-card.component';
-
-import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
-import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.component';
-import { FormHeaderComponent } from './components/form/form-header/form-header.component';
 import { NavigationGridComponent } from './screens/order-tour/additions/components/navigation-grid/navigation-grid.component';
+
+import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.component';
+
+import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
+import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
+
+import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
+import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
+import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
+import { FilledNightComponent } from './screens/order-tour/sleeping-options/filled-night/filled-night.component';
+
+import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
+
+import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
 
 import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
 import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
@@ -89,8 +98,10 @@ import { TransportFormComponent } from './screens/order-tour/additions/component
 import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
 import { TransportModel } from './screens/order-tour/additions/models/transport-model';
 
-import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
-import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
+
+import { SummaryComponent } from './screens/order-tour/summary/summary.component';
+
+import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 
 @NgModule({
   declarations: [
@@ -152,6 +163,9 @@ import { SquadGroupComponent } from './screens/order-tour/squad-assemble/compone
     DashboardCardComponent,
     SvgIconComponent,
     SimpleCardComponent,
+
+    // ORDER TOUR ROOT COMP
+    RootComponent,
 
     // SQUAD ASSEMBLE COMPONENTS
     SquadAssembleComponent,

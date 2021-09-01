@@ -1,3 +1,4 @@
+import { RootComponent } from './screens/order-tour/root/root.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
@@ -15,8 +16,6 @@ import { SearchComponent } from './screens/search/search.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginBackdropComponent },
-  { path: ':type', component: DashboardComponent },
-  { path: ':type/search', component: SearchComponent },
   {
     path: 'education',
     children: [
@@ -27,35 +26,37 @@ const routes: Routes = [
       {
         path: 'my-tours',
         component: MyToursComponent,
+      }
+    ]
+  },
+  {
+    path: 'education/order-tour',
+    component: RootComponent,
+    children: [
+      {
+        path: 'squad-assemble',
+        component: SquadAssembleComponent,
       },
       {
-        path: 'order-tour',
-        component: OrderTourComponent,
-        children: [
-          {
-            path: 'squad-assemble',
-            component: SquadAssembleComponent,
-          },
-          {
-            path: 'sleeping',
-            component: SleepingOptionsComponent,
-          },
-          {
-            path: 'facilities',
-            component: FacilitiesComponent,
-          },
-          {
-            path: 'additions',
-            component: AdditionsComponent,
-          },
-          {
-            path: 'summary',
-            component: SummaryComponent
-          },
-        ],
+        path: 'sleeping',
+        component: SleepingOptionsComponent,
+      },
+      {
+        path: 'facilities',
+        component: FacilitiesComponent,
+      },
+      {
+        path: 'additions',
+        component: AdditionsComponent,
+      },
+      {
+        path: 'summary',
+        component: SummaryComponent
       },
     ],
   },
+  { path: ':type', component: DashboardComponent },
+  { path: ':type/search', component: SearchComponent },
   { path: '**', component: LoginBackdropComponent, pathMatch: 'full' },
 ];
 
@@ -63,4 +64,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

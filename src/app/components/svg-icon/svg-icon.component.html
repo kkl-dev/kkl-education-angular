@@ -1,4 +1,5 @@
 <div>
-    <mat-icon [ngStyle]="{color: color ? color : 'white'}">add_circle</mat-icon>
-    <svg-icon [src]='svgUrl' [svgStyle]="{fill: 'red'}"></svg-icon>
+    <app-icon type="svg" [color]='badgeColor' [key]="firstIcon" id="first-icon"
+        [backgroundColor]='badgeBackgroundColor'></app-icon>
+    <app-icon type="svg" [color]='SelectedColor' [key]="secondIcon" id="second-icon"></app-icon>
 </div>

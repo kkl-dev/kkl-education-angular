@@ -10,7 +10,7 @@ export interface InfoCard {
   svgUrl: string;
   headline: string;
   subHeadline?: string;
-  availability: TooltipDataModel[];
+  availability?: TooltipDataModel[];
 }
 
 @Component({

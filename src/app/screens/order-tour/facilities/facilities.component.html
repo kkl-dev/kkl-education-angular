@@ -21,13 +21,63 @@
                 <p>תוספות בתשלום</p>
             </div>
             <div class="timeline">
-                <div class="item" *ngFor='let item of timesArray'>
-                    <p>{{item}}</p>
-                    <hr>
-                </div>
+                <ng-container *ngFor='let time of timesArray'>
+                    <div class="time">
+                        <p>{{time}}</p>
+                        <hr>
+                    </div>
+                    <div class="items">
+                        <ng-container *ngFor='let item of timeLineArray'>
+                            <div class="timeline-cards" *ngIf="time === item.startTime">
+                                <app-timeline-card [item]='item'></app-timeline-card>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
             </div>
+
         </div>
     </div>
-    <div class="content-2"></div>
-    <app-timeline-card></app-timeline-card>
+    <div class="content-2">
+        <div class="header">
+            <div class="title">
+                <p>הוספת פעילות ללו"ז</p>
+                <button>הוספת פעילות חדשה +</button>
+            </div>
+            <div class="forms">
+                <app-form-container [questions]='formArray' [cols]='4'>
+                </app-form-container>
+            </div>
+        </div>
+        <div class="cards">
+            <div class="titles">
+                <p>מתקני מרכז שדה</p>
+            </div>
+            <div class="info-card">
+                <app-info-card class="facilities-items-item" *ngFor="let item of facilitiesArray; let i = index"
+                    [item]="item">
+                    <app-tooltip class="app-tooltip" [hours]="item.availability">
+                    </app-tooltip>
+                </app-info-card>
+            </div>
+            <p class="full-list">לרשימה המלאה</p>
+        </div>
+        <div class="cards">
+            <div class="titles">
+                <p>פעילויות קבועות</p>
+            </div>
+            <div class="info-card" id="activities">
+                <app-info-card class="facilities-items-item" *ngFor="let item of activitiesArray; let i = index"
+                    [item]="item">
+                </app-info-card>
+            </div>
+            <p class="full-list">לרשימה המלאה</p>
+        </div>
+        <div class="cards">
+            <div class="titles">
+                <p>פעילויות קרובות</p>
+            </div>
+            <app-activities-card *ngFor="let card of upComingActivitiesArray" [obj]='card'></app-activities-card>
+        </div>
+    </div>
 </div>

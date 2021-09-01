@@ -6,9 +6,12 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./svg-icon.component.scss']
 })
 export class SvgIconComponent implements OnInit {
-  @Input() svgUrl: string;
-  @Input() imgUrl: string;
-  @Input() color: string;
+  @Input() firstIcon: string;
+  @Input() secondIcon: string;
+  @Input() SelectedColor: string;
+  @Input() badgeColor: string = 'white';
+  @Input() badgeBackgroundColor: string = '#FC1F9D';
+  
   constructor() { }
 
   ngOnInit(): void {
