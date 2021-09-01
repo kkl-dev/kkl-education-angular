@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
@@ -8,8 +9,11 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
   templateUrl: './order-tour.component.html',
   styleUrls: ['./order-tour.component.scss'],
 })
-export class OrderTourComponent implements OnInit {
+export class OrderTourComponent implements OnInit, AfterViewInit {
   public activeStep: number;
+
+  public $activeStep = new Subject<number>();
+
   public nextPage: string = 'education/search';
   public prevPage: string = 'education/results';
 
@@ -21,31 +25,31 @@ export class OrderTourComponent implements OnInit {
       svgUrl: 'group',
       label: 'הרכב קבוצה',
       path: 'squad-assemble',
-      isActive: true,
+      isActive: false,
     },
     {
       svgUrl: 'bed',
       label: 'לינה',
       path: 'sleeping',
-      isActive: true,
+      isActive: false,
     },
     {
       svgUrl: 'playground',
       label: 'מתקנים ופעילות',
       path: 'facilities',
-      isActive: true,
+      isActive: false,
     },
     {
       svgUrl: 'list',
       label: 'תוספות',
       path: 'additions',
-      isActive: true,
+      isActive: false,
     },
     {
       svgUrl: 'add',
       label: 'סיכום',
       path: 'summary',
-      isActive: true,
+      isActive: false,
     },
   ];
 
@@ -60,6 +64,9 @@ export class OrderTourComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUrl();
     this.subscribeToCurrentRoute();
+  }
+
+  ngAfterViewInit() {
     this.setActiveStep();
   }
 
@@ -89,5 +96,7 @@ export class OrderTourComponent implements OnInit {
     this.activeStep = this.steps.findIndex(
       (step: IconCardModel) => this.currentRoute === step.path
     );
+    console.log(this.activeStep);
+    this.$activeStep.next(this.activeStep);
   }
 }
