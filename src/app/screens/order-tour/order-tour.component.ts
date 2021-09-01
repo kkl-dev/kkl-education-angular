@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
@@ -8,8 +9,11 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
   templateUrl: './order-tour.component.html',
   styleUrls: ['./order-tour.component.scss'],
 })
-export class OrderTourComponent implements OnInit {
+export class OrderTourComponent implements OnInit, AfterViewInit {
   public activeStep: number;
+
+  public $activeStep = new Subject<number>();
+
   public nextPage: string = 'education/search';
   public prevPage: string = 'education/results';
 
@@ -21,47 +25,55 @@ export class OrderTourComponent implements OnInit {
       svgUrl: 'group',
       label: 'הרכב קבוצה',
       path: 'squad-assemble',
-      isActive: true,
+      isActive: false,
     },
     {
       svgUrl: 'bed',
       label: 'לינה',
       path: 'sleeping',
-      isActive: true,
+      isActive: false,
     },
     {
       svgUrl: 'playground',
       label: 'מתקנים ופעילות',
       path: 'facilities',
-      isActive: true,
+      isActive: false,
     },
     {
       svgUrl: 'list',
       label: 'תוספות',
       path: 'additions',
-      isActive: true,
+      isActive: false,
     },
     {
       svgUrl: 'add',
       label: 'סיכום',
       path: 'summary',
-      isActive: true,
+      isActive: false,
     },
   ];
 
-  public changeActiveStep(newActiveStep: number): void {
-    this.activeStep = newActiveStep;
-  }
-  public changeActiveStepBottomNavigation(newActiveStep: number): void {
-    this.activeStep = +newActiveStep;
-  }
   constructor(private router: Router) {}
+
 
   ngOnInit(): void {
     this.getCurrentUrl();
     this.subscribeToCurrentRoute();
+  }
+
+  ngAfterViewInit() {
     this.setActiveStep();
   }
+
+  public changeActiveStep(newActiveStep: number): void {
+    this.activeStep = newActiveStep;
+    this.router.navigateByUrl(`/education/order-tour/${this.findStepPath()}`);
+  }
+
+  public changeActiveStepBottomNavigation(newActiveStep: number): void {
+    this.activeStep = +newActiveStep;
+  }
+
 
   private getCurrentUrl() {
     this.formatUrl(this.router.url);
@@ -73,6 +85,7 @@ export class OrderTourComponent implements OnInit {
       .subscribe((event: any) => {
         this.formatUrl(event.url);
         this.handleStatus();
+        this.setActiveStep()
       });
   }
 
@@ -89,5 +102,10 @@ export class OrderTourComponent implements OnInit {
     this.activeStep = this.steps.findIndex(
       (step: IconCardModel) => this.currentRoute === step.path
     );
+    this.$activeStep.next(this.activeStep);
+  }
+
+  private findStepPath() : string {
+    return this.steps[this.activeStep].path
   }
 }
