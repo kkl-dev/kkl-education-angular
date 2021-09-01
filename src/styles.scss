@@ -3,24 +3,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
 
-
 $primary: #448ecd;
-$primary-dark: #0572BA;
+$primary-dark: #0572ba;
 $accent: #d220ba;
 $default: #bababa;
+$disable: #747474;
 $paper: #fff;
 $text: #000000;
-$text-light: #A2A2A2;
+$text-light: #a2a2a2;
 $success: #37c563;
+$danger: #D83020;
 
-$colors: (primary: $primary,
+$colors: (
+  primary: $primary,
   primary-dark: $primary-dark,
   accent: $accent,
   default: $default,
+  disable: $disable,
   paper: $paper,
   text: $text,
   text-light: $text-light,
-  success : $success);
+  success: $success,
+  danger: $danger,
+);
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
@@ -29,7 +34,6 @@ $colors: (primary: $primary,
 @function spacing($spacing) {
   @return $spacing * 8px;
 }
-
 
 html,
 body {
@@ -42,7 +46,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: "open sans hebrew", "Helvetica Neue", sans-serif !important;
-  src: url("assets/fonts/opanSansHebrew/OpenSansHebrew-Regular.ttf") format("opentype");
+  src: url("assets/fonts/opanSansHebrew/OpenSansHebrew-Regular.ttf")
+    format("opentype");
   box-sizing: border-box;
 }
 
@@ -54,22 +59,18 @@ body {
   direction: rtl !important;
   display: flex !important;
   flex-direction: row-reverse !important;
-
 }
 
 mat-grid-tile {
-  &.text>figure.mat-figure {
+  &.text > figure.mat-figure {
     display: flex;
     flex-direction: column;
   }
 }
 
-
 ::ng-deep .icon .mat-badge-content {
   font-family: "Material Icons";
 }
-
-
 
 ::ng-deep mat-card-actions,
 mat-card-subtitle,

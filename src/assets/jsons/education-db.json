@@ -25,6 +25,22 @@
                 "totalUnits": 40,
                 "img": "..href",
                 "nameEng": "something"
+            },
+            {
+                "id": 21,
+                "name": "צימר",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            },
+            {
+                "id": 22,
+                "name": "חדרים",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
             }],
             "linkSite": "http://"
         },
@@ -67,8 +83,48 @@
                 "totalUnits": 40,
                 "img": "..href",
                 "nameEng": "something"
-            }],
+            },
+            {
+                "id": 21,
+                "name": "חדרים",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }
+        ],
             "linkSite": "http://"
         }
+    ],
+    "availableDates": [
+        {
+            "date": "01-09-2021",
+            "availableBedsTent": 20,
+            "availableBedsCabin": 10,
+            "availableBedsCamping": 10,
+            "availableBedsRoom": 10
+          },
+          {
+            "date": "02-09-2021",
+            "availableBedsTent": 10,
+            "availableBedsCabin": 4,
+            "availableBedsCamping": 8,
+            "availableBedsRoom": 9
+          },
+          {
+            "date": "03-09-2021",
+            "availableBedsTent": 5,
+            "availableBedsCabin": 20,
+            "availableBedsCamping": 40,
+            "availableBedsRoom": 19
+          },
+          {
+            "date": "04-09-2021",
+            "availableBedsTent": 50,
+            "availableBedsCabin": 60,
+            "availableBedsCamping": 25,
+            "availableBedsRoom": 30
+          }
     ]
+
 }

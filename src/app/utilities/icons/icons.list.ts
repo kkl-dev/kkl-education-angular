@@ -8,20 +8,16 @@ export const THUMBUP_ICON =
   `1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/>
   </svg>
 `;
-
+export const OPEN_PLUS = `<svg xmlns="http://www.w3.org/2000/svg" width="8.667" height="8.667" viewBox="0 0 8.667 8.667">
+<path id="Icon_open-plus" data-name="Icon open-plus" d="M3.25,0V3.25H0V5.417H3.25v3.25H5.417V5.417h3.25V3.25H5.417V0Z"/>
+</svg>
+`
 export const V_SIGN = `<svg xmlns="http://www.w3.org/2000/svg"
  width="17.956" height="17.331" viewBox="0 0 17.956 17.331">
  <defs><style>.v-sign{fill:"none";opacity:0;}.b{fill:none;stroke:#6dc066;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}.c,.d{stroke:none;}.d{fill:#dfdfdf;}</style></defs><g transform="translate(0.332 0.331)">
  <g class="v-sign">
  <path class="c" d="M 8.5 16.25 C 4.226640224456787 16.25 0.75 12.77336025238037 0.75 8.5 C 0.75 6.115330219268799 1.804280042648315 3.984380006790161 3.798870086669922 2.337510108947754 C 4.990379810333252 1.342460036277771 6.746600151062012 0.75 8.5 0.75 C 12.77336025238037 0.75 16.25 4.226640224456787 16.25 8.5 C 16.25 12.77336025238037 12.77336025238037 16.25 8.5 16.25 Z"/><path class="d" d="M 8.5 1.5 C 6.916910171508789 1.5 5.340410232543945 2.027279853820801 4.28285026550293 2.910479545593262 L 4.276379585266113 2.915849685668945 C 2.460060119628906 4.415530204772949 1.5 6.346500396728516 1.5 8.5 C 1.5 12.35980987548828 4.640190124511719 15.5 8.5 15.5 C 12.35980987548828 15.5 15.5 12.35980987548828 15.5 8.5 C 15.5 4.640190124511719 12.35980987548828 1.5 8.5 1.5 M 8.5 0 C 13.19441986083984 0 17 3.805580139160156 17 8.5 C 17 13.19441986083984 13.19441986083984 17 8.5 17 C 3.805580139160156 17 0 13.19441986083984 0 8.5 C 0 5.866430282592773 1.197699546813965 3.512599945068359 3.32135009765625 1.759169578552246 C 4.549599647521973 0.7334194183349609 6.439149856567383 0 8.5 0 Z"/></g><g transform="translate(0.631 0.581)"><path class="b" d="M18.933,9.965v.706a7.72,7.72,0,0,1-5.708,7.357,8.116,8.116,0,0,1-8.942-3.183A7.456,7.456,0,0,1,4.911,5.68a8.171,8.171,0,0,1,9.3-2.024" transform="translate(-3 -2.991)"/><path class="b" d="M23.856,6,15.89,13.974l-2.39-2.39"
  transform="translate(-7.923 -4.402)"/></g></g></svg>`;
-
-export const BOYS_GIRLS_ICON = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="47" height="47" viewBox="0 0 47 47"><defs>
-<style>.gender{fill:"none";opacity:0.74;}.b{filter:url(#a);}</style><filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/><feGaussianBlur stdDeviation="3" result="b"/>
-<feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/>
-<feComposite in="SourceGraphic"/></filter></defs>
-<g class="b" transform="matrix(1, 0, 0, 1, 0, 0)">
-<rect class="gender" width="29" height="29" rx="5" transform="translate(9 6)"/></g></svg>`;
 
 export const EDIT_ICON = `<svg xmlns="http://www.w3.org/2000/svg"
  width="12.228" height="12.228"
@@ -216,3 +212,76 @@ viewBox="0 0 45 55.625"><defs>
 <style>.tree-logo{fill:#008f63;}.b,.d{fill:#e85625;}.c{fill:#1b9bdc;}.d{stroke:#6f1500;stroke-width:0.2px;}.e{fill:#6f1500;}.f{fill:#2b1b28;}.g{fill:#1a231e;}.h,.j{fill:#0b6f55;font-size:5px;}.h{font-family:LucidaGrande-Bold, Lucida Grande;font-weight:700;}.i,.j{font-family:OpenSans-Semibold, Open Sans;font-weight:600;}.k,.m{stroke:none;}.l{fill:none;}.m{fill:#2b1b28;}</style></defs><g transform="translate(-1760 -16.375)"><path class="tree-logo" d="M-5572.5-231.625l-3.1,6.83-1.288,2.837-10.363,22.833h28.75Z" transform="translate(7355.25 248)"/><path class="b" d="M-5578.25-192.687h10.625v-6.437h-10.625" transform="translate(7355.25 248)"/><path class="c" d="M-5580.781-189.8a4.331,4.331,0,0,1,3.266-3.172c-.218.035,10.212,0,10.212,0a5.055,5.055,0,0,1,2.835,3.172Z" transform="translate(7354.781 248.156)"/><path class="b" d="M-5585.437-211.5l12.5,4.5a5.384,5.384,0,0,1-4.375,3.125c-3.135.188-8.094-4.031-8.375-4.922A6.477,6.477,0,0,1-5585.437-211.5Z" transform="translate(7356.354 247.869)"/><path class="c" d="M-5567.2-221.222s3.75-1.062,5.875,4.25c-.84,1.064-3.375,1.75-3.375,1.75Z" transform="translate(7354.516 248.222)"/><path class="b" d="M-5573.812-211.931-5586-205.869a6.6,6.6,0,0,0,4.605,1.994c3.135.188,7.777-3.984,8.375-4.922S-5573.812-211.931-5573.812-211.931Z" transform="translate(7366.87 242.869)"/><path class="c" d="M-5583-215.094c-.051,0,.754-.082.4,0a4.033,4.033,0,0,0-2.834,3.4c-.031,0,2.438.834,2.438.834l1.568-3.531A2.344,2.344,0,0,0-5583-215.094Z" transform="translate(7356.354 248.098)"/><path class="b" d="M-5583.687-216.9s1.359,4.512,6.984,3.832,4.945-7.973,4.945-7.973l-.556-1.607-5.625-2.225Z" transform="translate(7356.149 248)"/><g class="d" transform="translate(1775.438 31)"><circle class="k" cx="1.5" cy="1.5" r="1.5"/><circle class="l" cx="1.5" cy="1.5" r="1.4"/></g><g class="d" transform="translate(1780.87 27.563)"><circle class="k" cx="1.5" cy="1.5" r="1.5"/><circle class="l" cx="1.5" cy="1.5" r="1.4"/></g><path class="e" d="M-5577.228-215.945c1.84,1.334,3.363.841,3.227-1.184a.28.28,0,0,0,.175.02s.275,1.664-1.053,2.062a2.866,2.866,0,0,1-2.517-.753S-5577.211-215.957-5577.228-215.945Z" transform="translate(7295.079 -819.314) rotate(-11)"/><g class="f" transform="translate(-5592.482 -606.884) rotate(3)"><path class="k" d="M 7392.79052734375 254.2174987792969 C 7392.2705078125 254.2174987792969 7391.79150390625 253.9266357421875 7391.55029296875 253.4706573486328 L 7393.52783203125 251.6287841796875 C 7393.93798828125 251.8837127685547 7394.18994140625 252.3330078125 7394.18994140625 252.8180694580078 C 7394.18994140625 253.5897216796875 7393.56201171875 254.2174987792969 7392.79052734375 254.2174987792969 Z"/><path class="m" d="M 7392.79052734375 254.1175079345703 C 7393.5068359375 254.1175079345703 7394.08984375 253.5345764160156 7394.08984375 252.8180694580078 C 7394.08984375 252.3931732177734 7393.8818359375 251.9978332519531 7393.53857421875 251.7556610107422 L 7391.67626953125 253.4900512695312 C 7391.91015625 253.8752899169922 7392.33349609375 254.1175079345703 7392.79052734375 254.1175079345703 M 7392.79052734375 254.3175048828125 C 7392.2080078125 254.3175048828125 7391.6728515625 253.976318359375 7391.427734375 253.4482879638672 L 7393.51416015625 251.5048675537109 C 7393.9931640625 251.7696533203125 7394.2900390625 252.2728881835938 7394.2900390625 252.8180694580078 C 7394.2900390625 253.6448669433594 7393.6171875 254.3175048828125 7392.79052734375 254.3175048828125 Z"/></g><g class="f" transform="translate(-5524.492 -1122.833) rotate(7)"><path class="k" d="M 7392.79052734375 254.2174987792969 C 7392.2705078125 254.2174987792969 7391.79150390625 253.9266357421875 7391.55029296875 253.4706573486328 L 7393.52783203125 251.6287841796875 C 7393.93798828125 251.8837127685547 7394.18994140625 252.3330078125 7394.18994140625 252.8180694580078 C 7394.18994140625 253.5897216796875 7393.56201171875 254.2174987792969 7392.79052734375 254.2174987792969 Z"/><path class="m" d="M 7392.79052734375 254.1175079345703 C 7393.5068359375 254.1175079345703 7394.08984375 253.5345764160156 7394.08984375 252.8180694580078 C 7394.08984375 252.3931732177734 7393.8818359375 251.9978332519531 7393.53857421875 251.7556610107422 L 7391.67626953125 253.4900512695312 C 7391.91015625 253.8752899169922 7392.33349609375 254.1175079345703 7392.79052734375 254.1175079345703 M 7392.79052734375 254.3175048828125 C 7392.2080078125 254.3175048828125 7391.6728515625 253.976318359375 7391.427734375 253.4482879638672 L 7393.51416015625 251.5048675537109 C 7393.9931640625 251.7696533203125 7394.2900390625 252.2728881835938 7394.2900390625 252.8180694580078 C 7394.2900390625 253.6448669433594 7393.6171875 254.3175048828125 7392.79052734375 254.3175048828125 Z"/></g><path class="g" d="M-5583.417-216.98l11.245-5.739s.6-.142.6.279a1.1,1.1,0,0,1-.469,1.047c-1.437.8-2.062.375-2.641.875s-2.411,2.531-2.411,2.531c-.433.188.083-.151,0-.734s-1.344,1.987-3.479,2.438S-5583.417-216.98-5583.417-216.98Z" transform="translate(7355.573 247.721)"/><path class="c" d="M-5584.587-217.1c1.313,1.063,6.938-2.875,6.938-2.875a62.717,62.717,0,0,1,6.125-3.125c-3.469-4.844-7.381-5.933-7.381-5.933a5.044,5.044,0,0,0-4.75,1.094C-5585.906-225.969-5584.587-219.661-5584.587-217.1Z" transform="translate(7355.962 247.973)"/><text class="h" transform="translate(1771 65)"><tspan x="0" y="0">ונוער</tspan><tspan class="i" y="0"> </tspan><tspan y="0">חינוך</tspan></text><text class="j" transform="translate(1760 71)"><tspan x="0" y="0">Youth &amp; Education</tspan></text></g>
 </svg>
 `;
+export const BOTTOM_LOGO = `
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="251.827" height="97.18" viewBox="0 0 251.827 97.18">
+ <defs><style>.bottom-tree{opacity:0.2;fill:#448ecd;}
+ </style><linearGradient id="a" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+ <stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#448ecd"/>
+ </linearGradient></defs><path class="bottom-tree" d="M813.255,106.665V96.41H785.183l16.449-16.428-4.123-8.908-7.52,7.541V57.4L778.348,45.759V90.237l-23.264,7.541H715.391l19.847-19.846h30.12V66.972H745.512l28.05-28.05-9.571-8.908L744.828,49.177v-26l-9.59-9.592V63.534l-17.8,17.8v-34.2L705.82,58.769V91.6l-12.327,12.305V49.861L728.4,14.954H714.024l-20.53,20.53v-26H681.189v26l-20.53-20.53H646.282l34.907,34.907v54.049L668.862,91.6V58.769L657.241,47.126v34.2l-17.8-17.8V13.587l-9.592,9.592v26L610.712,30.015l-9.592,8.908,28.05,28.05H609.344V77.931h30.1L659.29,97.777H619.6l-23.264-7.541V45.759L584.691,57.4V78.615l-7.519-7.541-4.1,8.908L589.5,96.41H561.428v10.255Z"
+ transform="translate(-561.428 -9.485)"/>
+ </svg>
+ `;
+
+export const GENDER_ICON = `
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="47" height="47" viewBox="0 0 47 47"><defs>
+ <style>
+ .a-gender{fill:#fff;opacity:0.74;}
+ .b-gender{fill:#009eee;}
+ .c-gender{fill:#d220ba;}
+ .d-gender{filter:url(#a);}
+ </style>
+ <filter id="a" x="0" y="0" width="47" height="47" filterUnits="userSpaceOnUse"><feOffset dy="3" input="SourceAlpha"/>
+ <feGaussianBlur stdDeviation="3" result="b"/><feFlood flood-opacity="0.161"/><feComposite operator="in" in2="b"/><feComposite in="SourceGraphic"/>
+ </filter></defs><g transform="translate(-19 -821.175)"><g class="d-gender" transform="matrix(1, 0, 0, 1, 19, 821.18)">
+ <rect class="a-gender" width="29" height="29" rx="5" transform="translate(9 6)"/></g><g transform="translate(35.331 834.183)">
+ <rect class="b-gender" width="4" height="4" transform="translate(-0.331 0.993)"/><rect class="c" width="4" height="4" transform="translate(4.669 0.993)"/>
+ <rect class="c-gender" width="4" height="4" transform="translate(9.669 0.993)"/><rect class="b-gender" width="4" height="4" transform="translate(-0.331 5.993)"/>
+ <rect class="c-gender" width="4" height="4" transform="translate(4.669 5.993)"/><rect class="c-gender" width="4" height="4" transform="translate(9.669 5.993)"/>
+ <rect class="b-gender" width="4" height="4" transform="translate(-0.331 10.993)"/><rect class="b-gender" width="4" height="4" transform="translate(4.669 10.993)"/>
+ <rect class="c-gender" width="4" height="4" transform="translate(9.669 10.993)"/></g></g>
+ </svg>
+ `;
+
+export const GROUP_ICON = `
+<svg xmlns="http://www.w3.org/2000/svg" width="40.377" height="26.333" viewBox="0 0 40.377 26.333">
+<g id="user" transform="translate(0 -85.333)">
+  <g id="Group_950" data-name="Group 950" transform="translate(14.044 85.333)">
+    <g id="Group_949" data-name="Group 949" transform="translate(0 0)">
+      <path id="Path_694" data-name="Path 694" d="M176.81,85.333a6.144,6.144,0,1,0,6.144,6.144A6.151,6.151,0,0,0,176.81,85.333Zm0,10.533a4.389,4.389,0,1,1,4.389-4.389A4.395,4.395,0,0,1,176.81,95.866Z" transform="translate(-170.666 -85.333)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_952" data-name="Group 952" transform="translate(28.088 92.355)">
+    <g id="Group_951" data-name="Group 951" transform="translate(0 0)">
+      <path id="Path_695" data-name="Path 695" d="M345.723,170.667a4.389,4.389,0,1,0,4.389,4.389A4.395,4.395,0,0,0,345.723,170.667Zm0,7.022a2.633,2.633,0,1,1,2.633-2.633A2.636,2.636,0,0,1,345.723,177.689Z" transform="translate(-341.334 -170.667)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_954" data-name="Group 954" transform="translate(3.636 92.355)">
+    <g id="Group_953" data-name="Group 953" transform="translate(0 0)">
+      <path id="Path_696" data-name="Path 696" d="M48.571,170.667a4.389,4.389,0,1,0,4.389,4.389A4.394,4.394,0,0,0,48.571,170.667Zm0,7.022a2.633,2.633,0,1,1,2.633-2.633A2.636,2.636,0,0,1,48.571,177.689Z" transform="translate(-44.182 -170.667)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_956" data-name="Group 956" transform="translate(8.778 99.377)">
+    <g id="Group_955" data-name="Group 955" transform="translate(0 0)">
+      <path id="Path_697" data-name="Path 697" d="M118.077,256a11.424,11.424,0,0,0-11.411,11.411.878.878,0,1,0,1.756,0,9.655,9.655,0,0,1,19.311,0,.878.878,0,1,0,1.756,0A11.424,11.424,0,0,0,118.077,256Z" transform="translate(-106.666 -256)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_958" data-name="Group 958" transform="translate(27.963 102.888)">
+    <g id="Group_957" data-name="Group 957">
+      <path id="Path_698" data-name="Path 698" d="M344.327,298.667a7.9,7.9,0,0,0-4.092,1.141.878.878,0,1,0,.911,1.5,6.145,6.145,0,0,1,9.325,5.258.878.878,0,1,0,1.756,0A7.91,7.91,0,0,0,344.327,298.667Z" transform="translate(-339.813 -298.667)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_960" data-name="Group 960" transform="translate(0 102.888)">
+    <g id="Group_959" data-name="Group 959">
+      <path id="Path_699" data-name="Path 699" d="M11.99,299.806A7.9,7.9,0,0,0,0,306.567a.878.878,0,1,0,1.756,0,6.146,6.146,0,0,1,9.324-5.26.878.878,0,1,0,.911-1.5Z" transform="translate(0 -298.667)" fill="#fff"/>
+    </g>
+  </g>
+</g>
+</svg>
+ `;
+
+export const RESTAURANT_ICON = `
+ <svg xmlns="http://www.w3.org/2000/svg" width="27.93" height="31.033" viewBox="0 0 27.93 31.033">
+  <path id="Icon_material-restaurant" data-name="Icon material-restaurant" d="M16.913,13.861h-3.1V3h-3.1V13.861H7.6V3H4.5V13.861a6.185,6.185,0,0,0,5.819,6.16V34.033H14.2V20.021a6.185,6.185,0,0,0,5.819-6.16V3h-3.1Zm7.758-4.655V21.62H28.55V34.033H32.43V3C28.147,3,24.671,6.476,24.671,9.207Z" transform="translate(-4.5 -3)" fill="#37c56b"/>
+</svg>`

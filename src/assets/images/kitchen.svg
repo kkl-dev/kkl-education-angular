@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="38.464" height="38.482" viewBox="0 0 38.464 38.482">
+  <g id="kitchen" transform="translate(-0.12)">
+    <g id="Group_1154" data-name="Group 1154" transform="translate(0.12)">
+      <g id="Group_1153" data-name="Group 1153">
+        <path id="Path_825" data-name="Path 825" d="M.12,400.147H15.971v-9.09H.12Zm3.467-6.736H12.58v2.254H3.587Z" transform="translate(-0.12 -361.665)" fill="#448ecd"/>
+        <path id="Path_826" data-name="Path 826" d="M.12,251.067H15.971v-8.94H.12Zm3.467-6.542H12.58v2.254H3.587Z" transform="translate(-0.12 -223.929)" fill="#448ecd"/>
+        <path id="Path_827" data-name="Path 827" d="M241.007,262.411h20.359V242.127H241.007Zm13.523-17.886h2.254v2.309H254.53Zm-4.508,0h2.254v2.309h-2.254Zm-4.507,0h2.254v2.309h-2.254Zm0,4.326h11.269V257.9H245.515Z" transform="translate(-222.902 -223.929)" fill="#448ecd"/>
+        <path id="Path_828" data-name="Path 828" d="M254.53,5.2V0h-6.761V5.2l-6.761,4.507v3.984h20.359V9.7Z" transform="translate(-222.902)" fill="#448ecd"/>
+      </g>
+    </g>
+  </g>
+</svg>
