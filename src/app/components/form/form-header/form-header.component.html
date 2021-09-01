@@ -1,11 +1,15 @@
 <div
-  class="header"
+  [ngClass]="['header', title]"
   fxLayout="row"
   fxLayoutAlign="space-between end"
   fxFill
 >
   <div fxFlex="100">
-    <app-typography underline="underline" color="primary" bold="bold">
+    <app-typography
+      [underline]="title ? 'underline' : ''"
+      [color]="title ? 'primary' : ''"
+      bold="bold"
+    >
       {{ text }}
     </app-typography>
   </div>
