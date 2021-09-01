@@ -193,3 +193,11 @@ app-tooltip {
     color: #707070;
     text-decoration: underline;
 }
+.card-container{
+    display: grid;
+    grid-template-columns: auto auto auto ;
+    grid-gap: 30px;
+    padding: 40px;
+    position: relative;
+    left: 40px;
+}

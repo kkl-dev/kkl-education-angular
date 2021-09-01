@@ -102,6 +102,7 @@ import { TransportModel } from './screens/order-tour/additions/models/transport-
 import { SummaryComponent } from './screens/order-tour/summary/summary.component';
 
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
+import { ActivitiesCardComponent } from './components/activities-card/activities-card.component';
 
 @NgModule({
   declarations: [
@@ -164,7 +165,7 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     DashboardCardComponent,
     SvgIconComponent,
     SimpleCardComponent,
-
+    ActivitiesCardComponent,
     // ORDER TOUR ROOT COMP
     RootComponent,
 
