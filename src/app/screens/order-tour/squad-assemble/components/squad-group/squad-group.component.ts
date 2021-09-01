@@ -77,8 +77,6 @@ export class SquadGroupComponent {
       custom: 'button',
     };
 
-    console.log(this.squadAssembleService.customerFormInputs)
-
     this.client
       ? (this.squadAssembleService.customerFormInputs[3].group.header = header)
       : (this.squadAssembleService.customerFormInputs[3].group.header = null);
@@ -90,7 +88,6 @@ export class SquadGroupComponent {
   private subscribeToOnSelectChange() {
     this.formService.onChangeSelect.subscribe((value) => {
 
-      console.log(this.group)
       if (this.group.key === 'client') {
         this.onAddClient()
         console.log(this.formService.formGroup.controls.contact)
