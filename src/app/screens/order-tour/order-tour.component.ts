@@ -18,10 +18,9 @@ export class OrderTourComponent implements OnInit {
 
   public steps: StepModel[] = [
     {
-      svgUrl: 'groups',
+      svgUrl: 'group',
       text: 'הרכב קבוצה',
       path: 'squad-assemble',
-      iconType: 'mat',
     },
     {
       svgUrl: 'bed',

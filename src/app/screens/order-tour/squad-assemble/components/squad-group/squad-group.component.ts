@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { FlexCell } from 'src/app/components/grid/flex-cell/flex-cell.component';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 export interface FormHeader {
@@ -19,9 +20,7 @@ export interface FormHeader {
 export class SquadGroupComponent {
   public tripId: string = '0000000';
 
-  @Input() public cols: string | number;
-  @Input() public key: string;
-  @Input() public header: FormHeader;
+  @Input() public group: QuestionGroup;
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;
 
@@ -41,8 +40,21 @@ export class SquadGroupComponent {
   ) {}
 
   ngOnInit() {
-    this.questions = this.questions || [];
     this.subscribeToOnSelectChange();
+    this.questions = this.group.questions || [];
+
+    if (this.hasBottom) {
+      this.bottomData = [
+        {
+          label: 'מס משתתפים',
+          value: '120',
+        },
+        {
+          label: 'מס משתתפים',
+          value: '120',
+        },
+      ];
+    }
   }
 
   // method to change squad assemble form
@@ -66,8 +78,8 @@ export class SquadGroupComponent {
     };
 
     this.client
-      ? (this.squadAssembleService.customerFormInputs[2].header = header)
-      : (this.squadAssembleService.customerFormInputs[2].header = null);
+      ? (this.squadAssembleService.customerFormInputs[2].group.header = header)
+      : (this.squadAssembleService.customerFormInputs[2].group.header = null);
 
     this.$questions.next(this.squadAssembleService.customerFormInputs);
   }
@@ -76,8 +88,8 @@ export class SquadGroupComponent {
   private subscribeToOnSelectChange() {
     this.formService.onChangeSelect.subscribe((value) => {
 
-      console.log(this.key)
-      if (this.key === 'client') {
+      console.log(this.group.key)
+      if (this.group.key === 'client') {
         this.onAddClient()
         console.log(this.formService.formGroup.controls.contact)
         this.formService.formGroup.controls.contact.disable();

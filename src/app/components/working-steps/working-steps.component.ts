@@ -5,7 +5,7 @@ export interface StepModel {
   svgUrl: string;
   text: string;
   path: string;
-  iconType? : string;
+  size?: number;
 }
 
 @Component({

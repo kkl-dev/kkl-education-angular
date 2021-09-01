@@ -32,7 +32,7 @@ export class FormContainerComponent implements OnInit {
 
   @Input() slots: {
     topButton?: ElementRef;
-    group?: ElementRef;
+    groupInputs?: ElementRef;
   };
 
   @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();

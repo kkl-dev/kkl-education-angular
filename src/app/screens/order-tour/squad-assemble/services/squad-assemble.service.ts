@@ -12,7 +12,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   providedIn: 'root',
 })
 export class SquadAssembleService {
-  constructor() {}
+  constructor() { }
 
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
@@ -99,40 +99,43 @@ export class SquadAssembleService {
 
     new QuestionBase({
       key: 'contact',
-      rows: 3,
-      cols: 1,
       isGroup: true,
-      group: [
-        new QuestionTextbox({
-          key: 'fullName',
-          label: 'איש קשר',
-          fullWidth : true,
-          inputProps: {
-            labelLength: 'medium',
-          },
-        }),
+      cols: 1,
+      rows: 12,
+      group: {
+        key: 'contact',
+        cols: 1,
+        rows: 3,
+        questions: [
+          new QuestionTextbox({
+            key: 'fullName',
+            label: 'איש קשר',
+            inputProps: {
+              labelLength: 'medium',
+            },
+          }),
 
-        new QuestionTextbox({
-          key: 'phone',
-          label: 'נייד איש קשר',
-          type: 'text',
-          fullWidth : true,
-          validations: [Validators.required],
-          inputProps: {
-            labelLength: 'medium',
-          },
-        }),
-        new QuestionTextbox({
-          key: 'email',
-          label: 'מייל',
-          type: 'text',
-          fullWidth : true,
-          validations: [Validators.required],
-          inputProps: {
-            labelLength: 'small',
-          },
-        }),
-      ],
+          new QuestionTextbox({
+            key: 'phone',
+            label: 'נייד איש קשר',
+            type: 'text',
+            validations: [Validators.required],
+            inputProps: {
+              labelLength: 'medium',
+            },
+          }),
+          new QuestionTextbox({
+            key: 'email',
+            label: 'מייל',
+            type: 'text',
+            validations: [Validators.required],
+            inputProps: {
+              labelLength: 'small',
+            },
+          }),
+        ]
+      }
+      ,
     }),
   ];
 
@@ -140,7 +143,7 @@ export class SquadAssembleService {
     new QuestionSelect({
       key: 'age',
       type: 'select',
-      cols: 2,
+      fullWidth: true,
       rows: 4,
       label: 'קבוצת גיל',
       inputProps: {
@@ -162,6 +165,7 @@ export class SquadAssembleService {
     new QuestionNumber({
       key: 'participants',
       label: 'נוער / מבוגרים',
+      offset: 1,
       cols: 1,
       rows: 4,
     }),
@@ -174,6 +178,7 @@ export class SquadAssembleService {
     new QuestionNumber({
       key: 'instructors',
       label: 'מדריכים',
+      offset: 1,
       cols: 1,
       rows: 4,
     }),
@@ -182,7 +187,7 @@ export class SquadAssembleService {
       label: 'חובשים',
       cols: 1,
       rows: 4,
-      offset: 1,
+      offset: 2,
     }),
   ];
 
@@ -190,7 +195,7 @@ export class SquadAssembleService {
     new QuestionSelect({
       key: 'age',
       type: 'select',
-      cols: 2,
+      fullWidth: true,
       rows: 4,
       label: 'קבוצת גיל',
       inputProps: {
@@ -204,87 +209,106 @@ export class SquadAssembleService {
     }),
     new QuestionBase({
       key: 'participants',
-      label: 'נוער / מבוגרים',
-      cols: 2,
+      cols: 3,
       rows: 4,
       isGroup: true,
-      group: [
-        new QuestionNumber({
-          key: 'boys',
-          label: 'בנים',
-          type: 'number',
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'girls',
-          label: 'בנות',
-          type: 'number',
-          rows: 4,
-        }),
-      ],
+      group: {
+        key: 'participants',
+        header: { text: 'נוער / מבוגרים' },
+        cols: 2,
+        questions: [
+          new QuestionNumber({
+            key: 'boys',
+            label: 'בנים',
+            type: 'number',
+            rows: 4,
+          }),
+          new QuestionNumber({
+            key: 'girls',
+            label: 'בנות',
+            type: 'number',
+            rows: 4,
+          }),
+        ]
+      },
     }),
 
     new QuestionBase({
       key: 'chaperones',
-      cols: 2,
+      cols: 3,
+      rows: 4,
       isGroup: true,
-      label: 'מלווים',
-      group: [
-        new QuestionNumber({
-          key: 'boys',
-          label: 'בנים',
-          type: 'number',
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'girls',
-          label: 'בנות',
-          type: 'number',
-          rows: 4,
-        }),
-      ],
+      group: {
+        key: 'chaperones',
+        header: { text: 'מלווים' },
+        cols: 2,
+        questions: [
+          new QuestionNumber({
+            key: 'boys',
+            label: 'בנים',
+            type: 'number',
+            rows: 4,
+          }),
+          new QuestionNumber({
+            key: 'girls',
+            label: 'בנות',
+            type: 'number',
+            rows: 4,
+          }),
+        ],
+      }
     }),
 
     new QuestionBase({
       key: 'instructors',
       isGroup: true,
-      cols: '2',
-      label: 'מדריכים',
-      group: [
-        new QuestionNumber({
-          key: 'boys',
-          label: 'בנים',
-          type: 'number',
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'girls',
-          label: 'בנות',
-          type: 'number',
-          rows: 4,
-        }),
-      ],
+      cols: 3,
+      rows: 4,
+      group: {
+        key: 'instructors',
+        header: { text: 'מדריכים' },
+        cols: 2,
+        questions: [
+          new QuestionNumber({
+            key: 'boys',
+            label: 'בנים',
+            type: 'number',
+            rows: 4,
+          }),
+          new QuestionNumber({
+            key: 'girls',
+            label: 'בנות',
+            type: 'number',
+            rows: 4,
+          }),
+        ],
+      }
     }),
 
     new QuestionBase({
       key: 'medics',
       isGroup: true,
-      cols: '2',
-      label: 'חובשים',
-      group: [
-        new QuestionNumber({
-          key: 'boys',
-          label: 'בנים',
-          type: 'number',
-          rows: 4,
-        }),
-        new QuestionNumber({
-          key: 'girls',
-          label: 'בנות',
-          type: 'number',
-          rows: 4,
-        }),
-      ],
+      cols: 3,
+      rows: 4,
+      group: {
+        key: 'medics',
+        header: { text: 'חובשים' },
+        cols: 2,
+        questions: [
+          new QuestionNumber({
+            key: 'boys',
+            label: 'בנים',
+            type: 'number',
+            rows: 4,
+          }),
+          new QuestionNumber({
+            key: 'girls',
+            label: 'בנות',
+            type: 'number',
+            rows: 4,
+          }),
+        ],
+      }
     }),
   ];
 

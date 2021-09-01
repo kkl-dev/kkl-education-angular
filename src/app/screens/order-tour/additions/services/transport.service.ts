@@ -214,5 +214,5 @@ export class TransportService {
     });
   }
 
-  constructor() {}
+  constructor() { }
 }

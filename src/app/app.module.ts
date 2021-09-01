@@ -55,7 +55,7 @@ import { FormContainerComponent } from './components/form/form-container/form-co
 import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
 import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
-
+import { FormGroupComponent } from './components/form/form-group/form-group.component';
 
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/form/number-input/number-input.component';
@@ -138,6 +138,7 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     FormHeaderComponent,
     InputRadioComponent,
     NumberInputComponent,
+    FormGroupComponent,
 
     // KKL DESIGN
     NavbarComponent,

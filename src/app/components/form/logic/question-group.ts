@@ -8,6 +8,7 @@ export class QuestionGroup {
     public header?: FormHeader,
     public cols?: string | number,
     public rows?: string | number,
+    public gutter?: string | number,
     public isGroup?: boolean,
     public questions?: any[],
     public hasButton?: boolean
@@ -20,6 +21,7 @@ export class QuestionGroup {
       group.header,
       group.cols,
       group.rows,
+      group.gutter,
       group.isGroup,
       group.questions,
       group.hasButton
