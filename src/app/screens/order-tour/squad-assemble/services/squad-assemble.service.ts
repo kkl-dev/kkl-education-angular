@@ -12,6 +12,25 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   providedIn: 'root',
 })
 export class SquadAssembleService {
+
+  private genderArray : QuestionNumber[] = [
+    new QuestionNumber({
+      key: 'boys',
+      label: 'בנים',
+      type: 'number',
+      cols: 2,
+      offset: 1,
+      rows: 4,
+    }),
+    new QuestionNumber({
+      key: 'girls',
+      label: 'בנות',
+      type: 'number',
+      cols: 2,
+      rows: 4,
+    }),
+  ];
+
   constructor() {}
 
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
@@ -99,7 +118,7 @@ export class SquadAssembleService {
     new QuestionBase({
       key: 'contact',
       isGroup: true,
-      fullWidth : true,
+      fullWidth: true,
       rows: 15,
       group: {
         key: 'contact',
@@ -213,21 +232,8 @@ export class SquadAssembleService {
       group: {
         key: 'participants',
         header: { text: 'נוער / מבוגרים' },
-        cols: 2,
-        questions: [
-          new QuestionNumber({
-            key: 'boys',
-            label: 'בנים',
-            type: 'number',
-            rows: 4,
-          }),
-          new QuestionNumber({
-            key: 'girls',
-            label: 'בנות',
-            type: 'number',
-            rows: 4,
-          }),
-        ],
+        cols: 5,
+        questions: this.genderArray
       },
     }),
 
@@ -239,21 +245,8 @@ export class SquadAssembleService {
       group: {
         key: 'chaperones',
         header: { text: 'מלווים' },
-        cols: 2,
-        questions: [
-          new QuestionNumber({
-            key: 'boys',
-            label: 'בנים',
-            type: 'number',
-            rows: 4,
-          }),
-          new QuestionNumber({
-            key: 'girls',
-            label: 'בנות',
-            type: 'number',
-            rows: 4,
-          }),
-        ],
+        cols: 5,
+        questions: this.genderArray
       },
     }),
 
@@ -265,21 +258,8 @@ export class SquadAssembleService {
       group: {
         key: 'instructors',
         header: { text: 'מדריכים' },
-        cols: 2,
-        questions: [
-          new QuestionNumber({
-            key: 'boys',
-            label: 'בנים',
-            type: 'number',
-            rows: 4,
-          }),
-          new QuestionNumber({
-            key: 'girls',
-            label: 'בנות',
-            type: 'number',
-            rows: 4,
-          }),
-        ],
+        cols: 5,
+        questions: this.genderArray
       },
     }),
 
@@ -291,21 +271,8 @@ export class SquadAssembleService {
       group: {
         key: 'medics',
         header: { text: 'חובשים' },
-        cols: 2,
-        questions: [
-          new QuestionNumber({
-            key: 'boys',
-            label: 'בנים',
-            type: 'number',
-            rows: 4,
-          }),
-          new QuestionNumber({
-            key: 'girls',
-            label: 'בנות',
-            type: 'number',
-            rows: 4,
-          }),
-        ],
+        cols: 5,
+        questions: this.genderArray
       },
     }),
   ];
