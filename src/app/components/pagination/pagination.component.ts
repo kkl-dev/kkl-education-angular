@@ -16,8 +16,7 @@ export class PaginationComponent implements OnInit,OnChanges {
   constructor() {}
 
   ngOnChanges():void{
-    console.log(this.pagesCount);
-    this.currentPage =1
+    this.currentPage =1;
     this.newPage.emit(this.currentPage);
 
     console.log(this.currentPage);
