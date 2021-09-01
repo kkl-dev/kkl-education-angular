@@ -61,7 +61,7 @@ export class SquadAssembleService {
     new QuestionCalendar({
       key: 'dates',
       label: 'תאריכי לינה',
-      value: new Date(),
+      value: null,
       rows: 4,
       validations: [Validators.required],
       inputProps: {
@@ -169,35 +169,35 @@ export class SquadAssembleService {
     new QuestionNumber({
       key: 'chaperones',
       label: 'מלווים',
-      cols: 1,
+      cols: 2,
       rows: 4,
     }),
     new QuestionNumber({
       key: 'participants',
       label: 'נוער / מבוגרים',
       offset: 1,
-      cols: 1,
+      cols: 2,
       rows: 4,
     }),
     new QuestionNumber({
       key: 'drivers',
       label: 'נהגים',
-      cols: 1,
+      cols: 2,
       rows: 4,
     }),
     new QuestionNumber({
       key: 'instructors',
       label: 'מדריכים',
       offset: 1,
-      cols: 1,
+      cols: 2,
       rows: 4,
     }),
     new QuestionNumber({
       key: 'medics',
       label: 'חובשים',
-      cols: 1,
+      cols: 2,
       rows: 4,
-      offset: 2,
+      offset: 3,
     }),
   ];
 

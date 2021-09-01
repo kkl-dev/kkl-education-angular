@@ -41,9 +41,8 @@ export class SquadAssembleComponent implements OnInit {
         group: {
           key : 'squad',
           header: { text: 'הרכב הקבוצה', custom: 'gender' },
-          questions: this.squadAssembleService.groupAssembleFormInputs,
-          gutter: 30,
-          cols: '3',
+          questions: this.squadAssembleService.groupAssembleFormMixedInputs,
+          cols: '5',
         },
         hasBottom: true,
       },

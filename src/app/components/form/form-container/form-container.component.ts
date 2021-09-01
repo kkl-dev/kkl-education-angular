@@ -42,6 +42,7 @@ export class FormContainerComponent implements OnInit {
   ngOnInit() {
     this.initFormGroup();
     this.subscribeToQuestions();
+    this.subscribeToFormValues();
     this.formService.formGroup = this.formGroup;
   }
 
@@ -67,6 +68,12 @@ export class FormContainerComponent implements OnInit {
         });
       });
     }
+  }
+
+  private subscribeToFormValues() {
+    this.formGroup.valueChanges.subscribe(() => {
+      this.valueChange.emit(this.formGroup);
+    });
   }
 
   public onEdit() {
