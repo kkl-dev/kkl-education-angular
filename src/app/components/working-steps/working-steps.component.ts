@@ -6,7 +6,6 @@ import {
   Input,
   AfterViewInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
@@ -23,7 +22,7 @@ export class WorkingStepsComponent implements OnInit, AfterViewInit {
 
   public activeStep: number;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
@@ -33,9 +32,8 @@ export class WorkingStepsComponent implements OnInit, AfterViewInit {
 
   public onStepClick({ path, index }) {
     this.setActiveStep(index);
-    this.router.navigateByUrl(`/education/order-tour/${path}`);
   }
-  
+
   setActiveStep(number: number) {
     this.changeActiveStep.emit(number);
   }

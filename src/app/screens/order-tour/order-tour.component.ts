@@ -53,13 +53,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  public changeActiveStep(newActiveStep: number): void {
-    this.activeStep = newActiveStep;
-  }
-  public changeActiveStepBottomNavigation(newActiveStep: number): void {
-    this.activeStep = +newActiveStep;
-  }
   constructor(private router: Router) {}
+
 
   ngOnInit(): void {
     this.getCurrentUrl();
@@ -69,6 +64,16 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.setActiveStep();
   }
+
+  public changeActiveStep(newActiveStep: number): void {
+    this.activeStep = newActiveStep;
+    this.router.navigateByUrl(`/education/order-tour/${this.findStepPath()}`);
+  }
+
+  public changeActiveStepBottomNavigation(newActiveStep: number): void {
+    this.activeStep = +newActiveStep;
+  }
+
 
   private getCurrentUrl() {
     this.formatUrl(this.router.url);
@@ -98,5 +103,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       (step: IconCardModel) => this.currentRoute === step.path
     );
     this.$activeStep.next(this.activeStep);
+  }
+
+  private findStepPath() : string {
+    return this.steps[this.activeStep].path
   }
 }
