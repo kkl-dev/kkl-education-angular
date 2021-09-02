@@ -14,11 +14,12 @@ export class IconCardComponent implements OnInit {
   @Input() public stepper: string;
   @Input() public size: number;
 
+  public shape: boolean;
   public width: number;
   public height: number;
   public classes: {};
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.setVariant();
@@ -43,13 +44,15 @@ export class IconCardComponent implements OnInit {
     this.height = this.size;
   }
 
-  private seActive() {}
+  private seActive() { }
 
   private setClasses() {
     this.classes = {
       [this.variant]: true,
       stepper: true,
-      active: this.step.isActive,
     };
+
+    this.shape = this.variant === 'circle'
+
   }
 }
