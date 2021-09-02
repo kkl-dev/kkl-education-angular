@@ -1,15 +1,42 @@
-<div class="nav-container">
-  <div class="svg-container" (click)="onCardClick()" [matBadge]="item.badgeValue" matBadgeColor="accent"
-    matBadgeSize="medium">
-    <mat-card [ngClass]="{ 'nav-container': true, active: item.isActive }">
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div
+    class="svg-container"
+    (click)="onCardClick()"
+    [matBadge]="item.badgeValue"
+    matBadgeColor="accent"
+    matBadgeSize="medium"
+    fxFill
+  >
+    <mat-card
+      [ngClass]="{
+        'nav-container': true,
+        active: item.isActive,
+        variant: true,
+        step: true
+      }"
+    >
       <mat-card-content>
-        <div class="icon-container">
-          <app-icon [color]="item.isActive ? 'active' : 'default'" type="svg" [key]="item.svgUrl || 'like'"></app-icon>
+        <div
+          class="icon-container"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+        >
+          <app-icon
+            [color]="item.isActive ? 'active' : 'default'"
+            type="svg"
+            [key]="item.svgUrl"
+            scale="1.5"
+          ></app-icon>
         </div>
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="title-container">
+  <div
+    class="title-container"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxFlex="30"
+  >
     <app-typography [bold]="600" [size]="11">
       {{ item.label }}
     </app-typography>
