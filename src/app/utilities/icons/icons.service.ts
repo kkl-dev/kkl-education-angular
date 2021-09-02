@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Injectable } from '@angular/core';
@@ -28,6 +29,7 @@ import {
   OPEN_PLUS,
   GROUP_ICON,
   RESTAURANT_ICON,
+  LOGO_ICON,
 } from './icons.list';
 
 export interface IconItem {
@@ -95,7 +97,7 @@ export class IconsService {
       svgUrl: SHIELD_ICON,
     },
     {
-      key:'restaurant',
+      key: 'restaurant',
       svgUrl: RESTAURANT_ICON
     },
     {
@@ -157,6 +159,10 @@ export class IconsService {
     {
       key: 'group',
       svgUrl: GROUP_ICON,
+    },
+    {
+      key: 'logo',
+      svgUrl: LOGO_ICON,
     },
   ];
 

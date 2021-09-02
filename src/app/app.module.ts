@@ -5,6 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
+
 import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -102,6 +108,14 @@ import { TransportModel } from './screens/order-tour/additions/models/transport-
 import { SummaryComponent } from './screens/order-tour/summary/summary.component';
 
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
+import { ActivitiesCardComponent } from './components/activities-card/activities-card.component';
+
+
+
+FullCalendarModule.registerPlugins([ 
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -164,7 +178,7 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     DashboardCardComponent,
     SvgIconComponent,
     SimpleCardComponent,
-
+    ActivitiesCardComponent,
     // ORDER TOUR ROOT COMP
     RootComponent,
 
@@ -199,8 +213,10 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     FlexCellComponent,
 
     MapsComponent,
+      CalendarComponent,
   ],
   imports: [
+    FullCalendarModule ,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

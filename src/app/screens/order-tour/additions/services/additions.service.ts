@@ -11,43 +11,42 @@ export class AdditionsService {
 
   private navigationCrds: IconCardModel[] = [
     {
-      title: 'הפעלה מוסיקלית',
-      isActive: false,
-      svgUrl: 'music',
-    },
-    {
-      title: 'הדרכה',
-      isActive: false,
-      svgUrl: 'guide',
-    },
-    {
-      title: 'אירוח',
-      isActive: false,
-      svgUrl: 'tent',
-    },
-    {
-      title: 'כלכלה',
-      isActive: false,
-      svgUrl: 'dinner',
-    },
-    {
-      title: 'אתרים',
-      isActive: false,
-      svgUrl: 'site',
-    },
-    {
-      title: 'אבטחה',
-      isActive: false,
-      svgUrl: 'shield',
-    },
-
-    {
-      title: 'היסעים',
+      label: 'היסעים',
       isActive: true,
       svgUrl: 'bus',
       badgeValue: 3,
     },
-  ];
+    {
+      label: 'אבטחה',
+      isActive: false,
+      svgUrl: 'shield',
+    },
+    {
+      label: 'אתרים',
+      isActive: false,
+      svgUrl: 'site',
+    },
+    {
+      label: 'כלכלה',
+      isActive: false,
+      svgUrl: 'dinner',
+    },
+    {
+      label: 'אירוח',
+      isActive: false,
+      svgUrl: 'tent',
+    },
+    {
+      label: 'הדרכה',
+      isActive: false,
+      svgUrl: 'guide',
+    },
+    {
+      label: 'הפעלה מוסיקלית',
+      isActive: false,
+      svgUrl: 'music',
+    },
+  ].reverse();
 
   private navigationCardsSubject = new BehaviorSubject<IconCardModel[]>(this.navigationCrds)
   public navigationCards$ = this.navigationCardsSubject.asObservable()
@@ -60,11 +59,7 @@ export class AdditionsService {
 
   constructor() { }
 
-  public getNavigationCrds(): IconCardModel[] {
-    return [...this.navigationCrds]
-  }
-
-  private findItemIndex(key: string, value: any): number {
+   private findItemIndex(key: string, value: any): number {
     return this.navigationCrds.findIndex((item) => item[key] === value)
   }
 
@@ -73,8 +68,16 @@ export class AdditionsService {
     const indexToUnActive = this.findItemIndex('isActive', true)
     const indexToActive = this.findItemIndex(key, item[key])
 
-    this.navigationCrds[indexToActive].isActive = true
     this.navigationCrds[indexToUnActive].isActive = false
+    this.navigationCrds[indexToActive].isActive = true
+
+    this.emitCards()
+
+
+  }
+
+  public emitCards() {
+    this.navigationCardsSubject.next(this.navigationCrds)
   }
 
   public emitSchedule(schedule: ScheduleModel[]) {

@@ -1,5 +1,5 @@
 export interface IconCardModel {
-  title? : string,
+  label? : string,
   path? : string,
   svgUrl? : string,
   isActive ?  : boolean

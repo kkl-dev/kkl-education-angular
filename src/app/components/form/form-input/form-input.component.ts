@@ -28,24 +28,24 @@ export class FormInputComponent implements OnInit {
 
   @Input() public question!: QuestionBase<string | number | Date>;
 
-  @Input() public control!: FormControl;
-  @Input() public type!: string;
-  @Input() public label!: string;
-  @Input() public hint!: string;
+  @Input() public control: FormControl;
+  @Input() public type: string;
+  @Input() public label: string;
+  @Input() public hint: string;
   @Input() public controlType: string;
   @Input() public options!: [];
 
-  @Input() public labelLength: string;
+  @Input() public labelSize: number;
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
-  @Input() public status!: string;
   @Input() public inputProps: {};
   @Input() public disabled: boolean;
 
   @Input() public serverErrorMode!: boolean;
 
   public color: string;
+  public labelLength: string;
 
   public value!: any;
   public error!: string;
@@ -58,6 +58,9 @@ export class FormInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToControl();
+
+    this.labelLength = `size-${this.labelSize || 1}`
+
   }
 
   public writeValue(value: any): void {
@@ -98,7 +101,6 @@ export class FormInputComponent implements OnInit {
   }
 
   public onSelectChange() {
-    console.log(1);
     this.formService.onChangeSelect.next(true);
   }
 

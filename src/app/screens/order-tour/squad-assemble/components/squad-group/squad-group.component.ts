@@ -44,16 +44,31 @@ export class SquadGroupComponent {
     this.questions = this.group.questions || [];
 
     if (this.hasBottom) {
+      this.setSelectDataDemo()
+    }
+  }
+
+  private setSelectDataDemo() {
+    if (this.group.key === 'date') {
+      this.bottomData = [
+        {
+          label: 'מס לילות',
+          value: '2',
+        },
+        {
+          label: 'מס ימים',
+          value: '3',
+        },
+      ].reverse();
+    }
+
+    if (this.group.key === 'squad') {
       this.bottomData = [
         {
           label: 'מס משתתפים',
           value: '120',
         },
-        {
-          label: 'מס משתתפים',
-          value: '120',
-        },
-      ];
+         ];
     }
   }
 
@@ -77,8 +92,6 @@ export class SquadGroupComponent {
       custom: 'button',
     };
 
-    console.log(this.squadAssembleService.customerFormInputs)
-
     this.client
       ? (this.squadAssembleService.customerFormInputs[3].group.header = header)
       : (this.squadAssembleService.customerFormInputs[3].group.header = null);
@@ -89,11 +102,9 @@ export class SquadGroupComponent {
   // TODO - connect between client select to client contact data + disable mode style
   private subscribeToOnSelectChange() {
     this.formService.onChangeSelect.subscribe((value) => {
-
-      console.log(this.group)
       if (this.group.key === 'client') {
-        this.onAddClient()
-        console.log(this.formService.formGroup.controls.contact)
+        this.onAddClient();
+        console.log(this.formService.formGroup.controls.contact);
         this.formService.formGroup.controls.contact.disable();
       }
     });

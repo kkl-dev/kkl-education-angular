@@ -13,8 +13,9 @@ import { InfoCard } from '../../education-results/education-results.component';
 })
 
 export class FacilitiesComponent implements OnInit {
-  public timesArray: Array<string | number> = [];
 
+  public timesArray: Array<string | number> = [];
+  public hiddenElements: any = { facilities: false, activities: false };
   constructor() { }
 
   ngOnInit(): void {
@@ -126,6 +127,111 @@ export class FacilitiesComponent implements OnInit {
         },
       ],
     },
+    // --- length 5 ---
+    {
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
+    {
+      svgUrl: 'assets/images/stage.svg',
+      headline: 'תאטרון',
+      subHeadline: 'עד 320 משתתפים',
+      availability: [
+        {
+          startingHour: 14,
+          endingHour: 15.25,
+          totalTime: 1.25,
+          user: 'ירושלים',
+        },
+      ],
+    },
   ];
   public activitiesArray: InfoCard[] = [
     {
@@ -148,8 +254,21 @@ export class FacilitiesComponent implements OnInit {
       svgUrl: 'assets/images/bus-with-flag.svg',
       headline: 'התייצבות',
     },
+    {
+      svgUrl: 'assets/images/fruits.svg',
+      headline: 'ארוחת ערב',
+    },
+    {
+      svgUrl: 'assets/images/alarm.svg',
+      headline: 'השכמה',
+    },
   ];
   public upComingActivitiesArray: ActivitiesCardInterface[] = [
-    { img: "assets/images/img-1.png", title: "ניווט יערני במחנה", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 1.5 }
+    { img: "assets/images/img-1.png", title: "ניווט יערני במחנה", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 1.5 },
+    { img: "assets/images/img-2.png", title: "סולמות וחבלים בין העצים", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 3 },
+    { img: "assets/images/img-3.png", title: "יום עיון והשתלמות", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 5 },
+    { img: "assets/images/img-1.png", title: "ניווט יערני במחנה", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 1.5 },
+    { img: "assets/images/img-2.png", title: "סולמות וחבלים בין העצים", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 3 },
+    { img: "assets/images/img-3.png", title: "יום עיון והשתלמות", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 5 },
   ];
 }
