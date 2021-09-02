@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
+import { StepModel } from 'src/app/utilities/models/step.model';
 
 @Component({
   selector: 'app-icon-card',
@@ -7,9 +7,9 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
   styleUrls: ['./icon-card.component.scss'],
 })
 export class IconCardComponent implements OnInit {
-  @Output() onClick: EventEmitter<IconCardModel> = new EventEmitter();
+  @Output() onClick: EventEmitter<StepModel> = new EventEmitter();
 
-  @Input() public step: IconCardModel;
+  @Input() public step: StepModel;
   @Input() public variant: string;
   @Input() public stepper: string;
   @Input() public size: number;

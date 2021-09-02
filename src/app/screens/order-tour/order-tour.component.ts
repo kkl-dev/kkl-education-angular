@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
+import { StepModel } from 'src/app/utilities/models/step.model';
 
 @Component({
   selector: 'app-order-tour',
@@ -20,7 +20,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   public currentRoute: string;
   public sleepStatus: boolean;
 
-  public steps: IconCardModel[] = [
+  public steps: StepModel[] = [
     {
       svgUrl: 'group',
       label: 'הרכב קבוצה',
@@ -100,7 +100,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   private setActiveStep() {
     this.activeStep = this.steps.findIndex(
-      (step: IconCardModel) => this.currentRoute === step.path
+      (step: StepModel) => this.currentRoute === step.path
     );
     this.$activeStep.next(this.activeStep);
   }

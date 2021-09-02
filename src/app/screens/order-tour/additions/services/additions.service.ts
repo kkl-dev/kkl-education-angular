@@ -1,4 +1,4 @@
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
+import { StepModel } from 'src/app/utilities/models/step.model';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LocationModel } from '../models/location.model';
@@ -9,7 +9,7 @@ import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/sched
 })
 export class AdditionsService {
 
-  private navigationCrds: IconCardModel[] = [
+  private steps: StepModel[] = [
     {
       label: 'היסעים',
       isActive: true,
@@ -48,8 +48,8 @@ export class AdditionsService {
     },
   ].reverse();
 
-  private navigationCardsSubject = new BehaviorSubject<IconCardModel[]>(this.navigationCrds)
-  public navigationCards$ = this.navigationCardsSubject.asObservable()
+  private stepsSubject = new BehaviorSubject<StepModel[]>(this.steps)
+  public steps$ = this.stepsSubject.asObservable()
 
   private locationsSubject = new BehaviorSubject<LocationModel[]>([])
   public locations$: Observable<LocationModel[]> = this.locationsSubject.asObservable();
@@ -60,16 +60,16 @@ export class AdditionsService {
   constructor() { }
 
    private findItemIndex(key: string, value: any): number {
-    return this.navigationCrds.findIndex((item) => item[key] === value)
+    return this.steps.findIndex((item) => item[key] === value)
   }
 
-  public toggleCardStatus(item: IconCardModel, key: string) {
+  public toggleCardStatus(item: StepModel, key: string) {
 
     const indexToUnActive = this.findItemIndex('isActive', true)
     const indexToActive = this.findItemIndex(key, item[key])
 
-    this.navigationCrds[indexToUnActive].isActive = false
-    this.navigationCrds[indexToActive].isActive = true
+    this.steps[indexToUnActive].isActive = false
+    this.steps[indexToActive].isActive = true
 
     this.emitCards()
 
@@ -77,7 +77,7 @@ export class AdditionsService {
   }
 
   public emitCards() {
-    this.navigationCardsSubject.next(this.navigationCrds)
+    this.stepsSubject.next(this.steps)
   }
 
   public emitSchedule(schedule: ScheduleModel[]) {

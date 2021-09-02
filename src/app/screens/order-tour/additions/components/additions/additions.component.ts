@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 import { Observable } from 'rxjs';
 import { ScheduleModel } from '../../models/schedule.model';
 import { AdditionsService } from '../../services/additions.service';
@@ -20,7 +19,6 @@ export interface TourDayModel {
 })
 export class AdditionsComponent implements OnInit {
   public tour: TourModel;
-  public cards$: Observable<IconCardModel[]>;
   public schedule$: Observable<ScheduleModel[]>;
 
   public schedule: ScheduleModel;
@@ -32,11 +30,10 @@ export class AdditionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
- 
+
     this.tourService.setTour(TourModel.create(tourTransport));
     this.tour = this.tourService.getTour();
 
-    this.cards$ = this.additionsService.navigationCards$;
     this.additionsService.emitSchedule(this.tour.schedule);
     this.schedule$ = this.additionsService.schedule$;
 

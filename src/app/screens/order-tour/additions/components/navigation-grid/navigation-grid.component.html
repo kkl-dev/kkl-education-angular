@@ -6,7 +6,7 @@
       </app-typography>
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
-      <div class="step-card" *ngFor="let step of cards$ | async;">
+      <div class="step-card" *ngFor="let step of steps$ | async;">
         <app-icon-card (onClick)="onCardClick($event)" [step]="step"></app-icon-card>
       </div>
     </div>

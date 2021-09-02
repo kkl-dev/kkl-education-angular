@@ -1,4 +1,4 @@
-export interface IconCardModel {
+export interface StepModel {
   label? : string,
   path? : string,
   svgUrl? : string,

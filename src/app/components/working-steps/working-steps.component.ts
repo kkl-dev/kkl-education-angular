@@ -7,7 +7,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
+import { StepModel } from 'src/app/utilities/models/step.model';
 
 @Component({
   selector: 'app-working-steps',
@@ -16,7 +16,7 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 })
 export class WorkingStepsComponent implements OnInit, AfterViewInit {
   @Input() $activeStep: Observable<number>;
-  @Input() steps: IconCardModel[];
+  @Input() steps: StepModel[];
 
   @Output() changeActiveStep = new EventEmitter<number>();
 
