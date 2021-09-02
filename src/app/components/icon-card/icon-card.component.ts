@@ -11,11 +11,17 @@ export class IconCardComponent implements OnInit {
 
   @Input() public item: IconCardModel;
   @Input() public variant: string;
+  @Input() public size: number;
+
+   public width: number;
+   public height: number;
+
 
   constructor() {}
 
   ngOnInit(): void {
     this.setVariant();
+    this.setSize()
   }
 
   public onCardClick(): void {
@@ -26,5 +32,10 @@ export class IconCardComponent implements OnInit {
 
   private setVariant() {
     this.variant = this.variant || 'square';
+  }
+
+  private setSize() {
+    this.width = this.size;
+    this.height = this.size;
   }
 }
