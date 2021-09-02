@@ -12,6 +12,7 @@ export interface IconClasses {
   styleUrls: ['./icon.component.scss'],
 })
 export class IconComponent implements OnInit {
+
   @Input() public size: number = 24;
   @Input() public width: number;
   @Input() public height: number;

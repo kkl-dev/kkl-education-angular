@@ -12,24 +12,24 @@ export class DashboardComponent {
   public topCards: IconCardModel[] = [
     {
       svgUrl: 'calendar',
-      title: 'בדיקת זמינות',
+      label: 'בדיקת זמינות',
       path: 'search',
     },
     {
       svgUrl: 'button',
-      title: 'טיול חדש',
+      label: 'טיול חדש',
       path: 'search',
     },
   ];
   public bottomCards: IconCardModel[] = [
     {
       svgUrl: 'destination',
-      title: 'הטיולים שלי',
+      label: 'הטיולים שלי',
       path: 'search',
     },
     {
       svgUrl: 'report',
-      title: 'דוחות',
+      label: 'דוחות',
       path: 'search',
     },
   ];

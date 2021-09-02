@@ -21,17 +21,17 @@ export class MainComponent implements OnInit {
 
   public status: IconCardModel[] = [
     {
-      title: 'בתהליך',
+      label: 'בתהליך',
       svgUrl: 'reload',
       badgeValue: 3,
     },
     {
-      title: 'מחכה לאישור',
+      label: 'מחכה לאישור',
       svgUrl: 'report',
       badgeValue: 1,
     },
     {
-      title: 'סגור',
+      label: 'סגור',
       svgUrl: 'flag',
       badgeValue: 20,
     },

@@ -21,3 +21,7 @@ app-form-group {
 }
 
 
+::ng-deep airbnb-calendar {
+  position:  fixed !important;
+  overflow: visible !important;
+}

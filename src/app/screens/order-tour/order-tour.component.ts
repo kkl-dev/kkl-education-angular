@@ -1,62 +1,79 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { StepModel } from 'src/app/components/working-steps/working-steps.component';
+import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
 @Component({
   selector: 'app-order-tour',
   templateUrl: './order-tour.component.html',
   styleUrls: ['./order-tour.component.scss'],
 })
-export class OrderTourComponent implements OnInit {
+export class OrderTourComponent implements OnInit, AfterViewInit {
   public activeStep: number;
+
+  public $activeStep = new Subject<number>();
+
   public nextPage: string = 'education/search';
   public prevPage: string = 'education/results';
 
   public currentRoute: string;
   public sleepStatus: boolean;
 
-  public steps: StepModel[] = [
+  public steps: IconCardModel[] = [
     {
       svgUrl: 'group',
-      text: 'הרכב קבוצה',
+      label: 'הרכב קבוצה',
       path: 'squad-assemble',
+      isActive: false,
     },
     {
       svgUrl: 'bed',
-      text: 'לינה',
+      label: 'לינה',
       path: 'sleeping',
+      isActive: false,
     },
     {
       svgUrl: 'playground',
-      text: 'מתקנים ופעילות',
+      label: 'מתקנים ופעילות',
       path: 'facilities',
+      isActive: false,
     },
     {
       svgUrl: 'list',
-      text: 'תוספות',
+      label: 'תוספות',
       path: 'additions',
+      isActive: false,
     },
     {
       svgUrl: 'add',
-      text: 'סיכום',
+      label: 'סיכום',
       path: 'summary',
+      isActive: false,
     },
   ];
 
-  public changeActiveStep(newActiveStep: number): void {
-    this.activeStep = +newActiveStep;
-  }
-  public changeActiveStepBottomNavigation(newActiveStep: number): void {
-    this.activeStep = +newActiveStep;
-  }
   constructor(private router: Router) {}
+
 
   ngOnInit(): void {
     this.getCurrentUrl();
     this.subscribeToCurrentRoute();
+  }
+
+  ngAfterViewInit() {
     this.setActiveStep();
   }
+
+  public changeActiveStep(newActiveStep: number): void {
+    this.activeStep = newActiveStep;
+    this.router.navigateByUrl(`/education/order-tour/${this.findStepPath()}`);
+  }
+
+  public changeActiveStepBottomNavigation(newActiveStep: number): void {
+    this.activeStep = +newActiveStep;
+  }
+
 
   private getCurrentUrl() {
     this.formatUrl(this.router.url);
@@ -68,6 +85,7 @@ export class OrderTourComponent implements OnInit {
       .subscribe((event: any) => {
         this.formatUrl(event.url);
         this.handleStatus();
+        this.setActiveStep()
       });
   }
 
@@ -82,7 +100,12 @@ export class OrderTourComponent implements OnInit {
 
   private setActiveStep() {
     this.activeStep = this.steps.findIndex(
-      (step: StepModel) => this.currentRoute === step.path
+      (step: IconCardModel) => this.currentRoute === step.path
     );
+    this.$activeStep.next(this.activeStep);
+  }
+
+  private findStepPath() : string {
+    return this.steps[this.activeStep].path
   }
 }

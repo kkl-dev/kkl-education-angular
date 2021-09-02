@@ -1,6 +1,6 @@
 <mat-grid-list [cols]="group.cols || 1" [gutterSize]="group.gutter || 1" rowHeight="2vh">
 
-  <mat-grid-tile *ngIf="group.header" [colspan]="group.cols || 1" [rowspan]="group.rows || 1">
+  <mat-grid-tile *ngIf="group.header" [colspan]="group.cols || 1" [rowspan]="group.rows || 2">
     <app-form-header [text]="group.header.text" [custom]="group.header?.custom" [slots]="{button}">
     </app-form-header>
   </mat-grid-tile>

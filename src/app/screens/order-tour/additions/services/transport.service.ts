@@ -32,7 +32,7 @@ export class TransportService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        labelLength: 'extraWide',
+        labelSize: 's5',
         options: [
           { key: 'solid', value: '12123' },
           { key: 'great', value: '23' },
@@ -118,7 +118,7 @@ export class TransportService {
       icon: 'place',
       validations: [Validators.required],
       inputProps: {
-        labelLength: 'extraWide',
+        labelSize: 's5',
       },
     }),
 
@@ -129,7 +129,7 @@ export class TransportService {
       validations: [Validators.required],
       icon: 'place',
       inputProps: {
-        labelLength: 'extraWide',
+        labelSize: 's5',
       },
     }),
 
@@ -156,7 +156,7 @@ export class TransportService {
       type: 'time',
       validations: [Validators.required],
       inputProps: {
-        labelLength: 'extraWide',
+        labelSize: 's5',
       },
     }),
 

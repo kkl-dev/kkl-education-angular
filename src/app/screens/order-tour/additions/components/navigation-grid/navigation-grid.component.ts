@@ -12,17 +12,18 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 export class NavigationGridComponent implements OnInit {
 
   public title: string = "תוספות"
-  public cards$: Observable<IconCardModel[]> = this.additionsService.navigationCards$
+  public cards$: Observable<IconCardModel[]>
 
   constructor(
     private additionsService: AdditionsService
-  ) { }
+    ) { }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
+    this.cards$ = this.additionsService.navigationCards$
   }
 
   public onCardClick(item: IconCardModel) {
-    this.additionsService.toggleCardStatus(item, 'title');
+    this.additionsService.toggleCardStatus(item, 'label');
 
   }
 

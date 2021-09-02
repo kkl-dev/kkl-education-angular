@@ -4,6 +4,10 @@
   height: 100%;
   width: 100%;
   background-color: color(paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
 
   mat-toolbar {
     justify-content: space-between;
