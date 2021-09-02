@@ -7,7 +7,8 @@ import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-
+import { UserService } from 'src/app/open-api/api/user.service';
+import { AgeGroup } from 'src/app/open-api/model/ageGroup';
 @Injectable({
   providedIn: 'root',
 })
@@ -30,8 +31,18 @@ export class SquadAssembleService {
     }),
   ];
 
-  constructor() {}
-
+  constructor(private userService: UserService) { }
+  ageGroup: AgeGroup[];
+  ngOnInit() {
+    this.userService.getAgeGroup().subscribe(
+      response => {
+        console.log('response',response)
+        this.ageGroup = response;
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tourName',

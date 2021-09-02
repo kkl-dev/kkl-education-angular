@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CheckAvailabilityService} from 'src/app/utilities/services/check-availability.service';
 import {TooltipDataModel} from './tooltip/tooltip.component';
 import {UserDataService} from 'src/app/services/user-data.service';
-import {UserService} from '../../api/api/user.service';
+import {UserService} from 'src/app/open-api/api/user.service';
 import {TripService} from 'src/app/services/trip.service';
 
 export interface InfoCard {
@@ -326,7 +326,7 @@ export class EducationResultsComponent implements OnInit {
   constructor(
     private router: Router,
     private checkAvailabillityService: CheckAvailabilityService,
-    public usersService: UserService,
+    private usersService: UserService,
     private route: ActivatedRoute,
     private userDataService: UserDataService,
     private tripService: TripService

@@ -13,7 +13,7 @@ import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
-import { UserService } from 'src/app/api';
+import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 

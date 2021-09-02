@@ -10,9 +10,9 @@ import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
-import { UserService } from '../../../api/api/user.service';
+import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from '../../../services/trip.service'
-import { AcommodationType, AvailableDate, FieldForestCenter, SearchAvailableDatesOptions } from 'src/app/api';
+import { AcommodationTypeByFieldCenter, AvailableAccomodationDate , FieldForestCenter} from 'src/app/open-api/model/models';
 import { FakeService } from 'src/app/services/fake.service';
 
 @Component({
@@ -30,9 +30,9 @@ export class EducationComponent implements OnInit {
   checkedSingleDay = false;
   routerLinkContinue = '/education/results'
   formOptions!: FieldForestCenter[];
-  AvailableDates!: AvailableDate[];
-  AcommodationTypes!: AcommodationType[];
-  SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
+  AvailableDates!: AvailableAccomodationDate[];
+  AcommodationTypes!: AcommodationTypeByFieldCenter[];
+  //SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
 
   constructor(public usersService: UserService, public tripService: TripService, 
     private checkAvailabilltyService: CheckAvailabilityService, public fakeApi: FakeService) {
@@ -81,7 +81,7 @@ export class EducationComponent implements OnInit {
   }
 
   getLookupAcommodationType() {
-    this.usersService.getLookupAcommodationType().subscribe(
+    this.usersService.getLookupAcommodationType(1).subscribe(
       response => {
         this.AcommodationTypes = response;
       },
@@ -98,18 +98,18 @@ export class EducationComponent implements OnInit {
 
   getAvailableDates() {
     //request body to get available dates
-    this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
-    this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
-    var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
-    this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
-    this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
-      response => {
-        console.log(response)
-        this.AvailableDates = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
+    // this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
+    // this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
+    // var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
+    // this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
+    // this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
+    //   response => {
+    //     console.log(response)
+    //     this.AvailableDates = response;
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
   }
 
   date: string | null = null;

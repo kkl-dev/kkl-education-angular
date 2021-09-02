@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FieldForestCenter } from '../api/';
+import { FieldForestCenter } from 'src/app/open-api/model/fieldForestCenter';
 import { BehaviorSubject } from 'rxjs';
 
 
