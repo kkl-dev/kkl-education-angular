@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { EventInput } from '@fullcalendar/angular';
 import '../calendar/calendar.component.scss';
 
@@ -19,7 +18,8 @@ export const INITIAL_EVENTS: EventInput[] = [
     end: TODAY_STR + 'T14:30:00',
     backgroundColor: ' #ECF8EE',
     textColor: 'black',
-    editable: true
+    editable: true,
+    className:'border-activities'
   },
   {
     id: createEventId(),
@@ -28,7 +28,7 @@ export const INITIAL_EVENTS: EventInput[] = [
     end: TODAY_STR + 'T14:30:00',
     backgroundColor: '#F0F6FE',
     textColor: 'black',
-    className: 'border',
+    className: 'border-facilities',
   }
 ];
 

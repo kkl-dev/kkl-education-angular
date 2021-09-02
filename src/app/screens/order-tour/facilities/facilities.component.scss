@@ -1,5 +1,14 @@
 @import "../../../../styles.scss";
 
+::ng-deep .border-activities{
+    border-right: 9px solid #37C56B!important;
+    border-radius: 0px 4px 4px 0px!important;
+  }
+  ::ng-deep .border-facilities{
+    border-right: 9px solid #448ECD!important;
+    border-radius: 0px 4px 4px 0px!important;
+  }
+
 .facilities {
     margin-top: 50px;
     display: flex;

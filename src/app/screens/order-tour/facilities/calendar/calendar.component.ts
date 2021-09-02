@@ -11,6 +11,8 @@ import { INITIAL_EVENTS } from './event-utils';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  
+
   calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin],
     initialView: 'timeGridDay',
