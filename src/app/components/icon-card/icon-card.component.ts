@@ -11,17 +11,19 @@ export class IconCardComponent implements OnInit {
 
   @Input() public step: IconCardModel;
   @Input() public variant: string;
+  @Input() public stepper: string;
   @Input() public size: number;
 
-   public width: number;
-   public height: number;
-
+  public width: number;
+  public height: number;
+  public classes: {};
 
   constructor() {}
 
   ngOnInit(): void {
     this.setVariant();
-    this.setSize()
+    this.setSize();
+    this.setClasses();
   }
 
   public onCardClick(): void {
@@ -31,11 +33,23 @@ export class IconCardComponent implements OnInit {
   }
 
   private setVariant() {
+    console.log(this.variant);
     this.variant = this.variant || 'square';
+    console.log(this.variant);
   }
 
   private setSize() {
     this.width = this.size;
     this.height = this.size;
+  }
+
+  private seActive() {}
+
+  private setClasses() {
+    this.classes = {
+      [this.variant]: true,
+      stepper: true,
+      active: this.step.isActive,
+    };
   }
 }
