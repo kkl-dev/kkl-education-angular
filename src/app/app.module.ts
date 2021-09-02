@@ -102,6 +102,7 @@ import { TransportModel } from './screens/order-tour/additions/models/transport-
 import { SummaryComponent } from './screens/order-tour/summary/summary.component';
 
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
+import { IconCardComponent } from './components/icon-card/icon-card.component';
 
 @NgModule({
   declarations: [
@@ -199,6 +200,7 @@ import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
     FlexCellComponent,
 
     MapsComponent,
+      IconCardComponent,
   ],
   imports: [
     BrowserModule,
