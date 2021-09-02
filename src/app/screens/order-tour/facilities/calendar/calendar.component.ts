@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
-import { Calendar } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { formatDate } from '@fullcalendar/angular';
 import { INITIAL_EVENTS } from './event-utils';
 
  @Component({
@@ -11,7 +9,7 @@ import { INITIAL_EVENTS } from './event-utils';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  
+
 
   calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin],
@@ -37,7 +35,7 @@ export class CalendarComponent implements OnInit {
     },
     initialEvents: INITIAL_EVENTS
   }
-  
+
 constructor() { }
 
 ngOnInit(): void {

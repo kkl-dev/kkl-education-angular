@@ -5,11 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-
+// FULL CALENDER PLUGIN
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
 
 import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
@@ -109,13 +108,14 @@ import { SummaryComponent } from './screens/order-tour/summary/summary.component
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 import { ActivitiesCardComponent } from './components/activities-card/activities-card.component';
 
+import { IconCardComponent } from './components/icon-card/icon-card.component';
+import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
 
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
 ]);
-import { IconCardComponent } from './components/icon-card/icon-card.component';
 
 @NgModule({
   declarations: [
@@ -212,8 +212,8 @@ import { IconCardComponent } from './components/icon-card/icon-card.component';
     FlexCellComponent,
 
     MapsComponent,
-    // CalendarComponent,
     IconCardComponent,
+    CalendarComponent
   ],
   imports: [
     FullCalendarModule,
