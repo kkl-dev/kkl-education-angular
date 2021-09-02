@@ -2,7 +2,7 @@
   <div
     class="svg-container"
     (click)="onCardClick()"
-    [matBadge]="item.badgeValue"
+    [matBadge]="step.badgeValue"
     matBadgeColor="accent"
     matBadgeSize="medium"
     fxFill
@@ -10,7 +10,7 @@
     <mat-card
       [ngClass]="{
         'nav-container': true,
-        active: item.isActive,
+        active: step.isActive,
         variant: true,
         step: true
       }"
@@ -22,9 +22,9 @@
           fxLayoutAlign="center center"
         >
           <app-icon
-            [color]="item.isActive ? 'active' : 'default'"
+            [color]="step.isActive ? 'active' : 'default'"
             type="svg"
-            [key]="item.svgUrl"
+            [key]="step.svgUrl"
             scale="1.5"
           ></app-icon>
         </div>
@@ -38,7 +38,7 @@
     fxFlex="30"
   >
     <app-typography [bold]="600" [size]="11">
-      {{ item.label }}
+      {{ step.label }}
     </app-typography>
   </div>
 </div>

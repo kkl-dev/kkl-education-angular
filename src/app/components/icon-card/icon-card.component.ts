@@ -9,7 +9,7 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 export class IconCardComponent implements OnInit {
   @Output() onClick: EventEmitter<IconCardModel> = new EventEmitter();
 
-  @Input() public item: IconCardModel;
+  @Input() public step: IconCardModel;
   @Input() public variant: string;
   @Input() public size: number;
 
@@ -25,8 +25,8 @@ export class IconCardComponent implements OnInit {
   }
 
   public onCardClick(): void {
-    if (!this.item.isActive) {
-      this.onClick.emit(this.item);
+    if (!this.step.isActive) {
+      this.onClick.emit(this.step);
     }
   }
 
