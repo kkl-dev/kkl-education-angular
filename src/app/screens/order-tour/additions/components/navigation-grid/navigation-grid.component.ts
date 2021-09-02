@@ -1,3 +1,4 @@
+import { StepperService } from './../../../../../utilities/services/stepper.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { AdditionsService } from '../../services/additions.service';
@@ -15,17 +16,18 @@ export class NavigationGridComponent implements OnInit {
   public steps$: Observable<StepModel[]>;
 
   constructor(
-    private additionsService: AdditionsService
+    private additionsService: AdditionsService,
   ) { }
 
   ngOnInit(): void {
-    this.steps$ = this.additionsService.steps$;
 
+    this.additionsService.setSteps()
+    this.additionsService.emitSteps()
+    this.steps$ = this.additionsService.getSteps()
   }
 
   public onCardClick(step: StepModel) {
-
-    this.additionsService.toggleCardStatus(step, 'label');
+    this.additionsService.updateStepStatus(step, 'label')
 
   }
 

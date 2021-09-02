@@ -22,7 +22,6 @@ export class IconCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.setVariant();
     this.setSize();
     this.setClasses();
   }
@@ -33,25 +32,12 @@ export class IconCardComponent implements OnInit {
     }
   }
 
-  private setVariant() {
-    console.log(this.variant);
-    this.variant = this.variant || 'square';
-    console.log(this.variant);
-  }
-
   private setSize() {
     this.width = this.size;
     this.height = this.size;
   }
 
-  private seActive() { }
-
   private setClasses() {
-    this.classes = {
-      [this.variant]: true,
-      stepper: true,
-    };
-
     this.shape = this.variant === 'circle'
 
   }

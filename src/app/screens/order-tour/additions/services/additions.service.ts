@@ -1,3 +1,4 @@
+import { StepperService } from './../../../../utilities/services/stepper.service';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -9,7 +10,7 @@ import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/sched
 })
 export class AdditionsService {
 
-  private steps: StepModel[] = [
+  public steps: StepModel[] = [
     {
       label: 'היסעים',
       isActive: true,
@@ -48,36 +49,30 @@ export class AdditionsService {
     },
   ].reverse();
 
-  private stepsSubject = new BehaviorSubject<StepModel[]>(this.steps)
-  public steps$ = this.stepsSubject.asObservable()
-
   private locationsSubject = new BehaviorSubject<LocationModel[]>([])
   public locations$: Observable<LocationModel[]> = this.locationsSubject.asObservable();
 
   private scheduleSubject = new BehaviorSubject<ScheduleModel[]>([])
   public schedule$: Observable<ScheduleModel[]> = this.scheduleSubject.asObservable();
 
-  constructor() { }
+  constructor(
+    private stepperService: StepperService
+  ) { }
 
-   private findItemIndex(key: string, value: any): number {
-    return this.steps.findIndex((item) => item[key] === value)
+  public getSteps(): Observable<StepModel[]> {
+    return this.stepperService.getStepsObservale()
   }
 
-  public toggleCardStatus(item: StepModel, key: string) {
-
-    const indexToUnActive = this.findItemIndex('isActive', true)
-    const indexToActive = this.findItemIndex(key, item[key])
-
-    this.steps[indexToUnActive].isActive = false
-    this.steps[indexToActive].isActive = true
-
-    this.emitCards()
-
-
+  public setSteps() {
+    this.stepperService.setSteps(this.steps)
   }
 
-  public emitCards() {
-    this.stepsSubject.next(this.steps)
+  public emitSteps() {
+    this.stepperService.emitSteps()
+  }
+
+  public updateStepStatus(step: StepModel, key: string) {
+    this.stepperService.updateStepStatus(step, key)
   }
 
   public emitSchedule(schedule: ScheduleModel[]) {
