@@ -61,7 +61,6 @@ import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/form/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
-import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
 
 import { TypographyComponent } from './components/typography/typography.component';
@@ -155,7 +154,6 @@ import { IconCardComponent } from './components/icon-card/icon-card.component';
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    NavCardComponent,
     DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
