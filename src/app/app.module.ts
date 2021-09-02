@@ -67,7 +67,6 @@ import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/form/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
-import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
 
 import { TypographyComponent } from './components/typography/typography.component';
@@ -112,10 +111,11 @@ import { ActivitiesCardComponent } from './components/activities-card/activities
 
 
 
-FullCalendarModule.registerPlugins([ 
+FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
 ]);
+import { IconCardComponent } from './components/icon-card/icon-card.component';
 
 @NgModule({
   declarations: [
@@ -168,7 +168,6 @@ FullCalendarModule.registerPlugins([
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    NavCardComponent,
     DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
@@ -213,10 +212,11 @@ FullCalendarModule.registerPlugins([
     FlexCellComponent,
 
     MapsComponent,
-      CalendarComponent,
+    // CalendarComponent,
+    IconCardComponent,
   ],
   imports: [
-    FullCalendarModule ,
+    FullCalendarModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -237,4 +237,4 @@ FullCalendarModule.registerPlugins([
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

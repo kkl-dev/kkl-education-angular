@@ -25,7 +25,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       svgUrl: 'group',
       label: 'הרכב קבוצה',
       path: 'squad-assemble',
-      isActive: false,
+      isActive: true,
     },
     {
       svgUrl: 'bed',
