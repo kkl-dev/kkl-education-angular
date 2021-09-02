@@ -1,5 +1,5 @@
 <div class="working-steps" id="working-steps">
-  <div class="working-steps__step" *ngFor="let step of steps; let i = index"
+  <div class="step" *ngFor="let step of steps; let i = index"
     (click)="onStepClick({ path: step.path, index: i })">
     <!-- <div class="working-steps__step-icon" [ngClass]="{ active: activeStep === i }">
       <app-icon [color]="activeStep === i ? 'active' : 'default'" type="svg" [key]="step.svgUrl" [size]="35"></app-icon>
