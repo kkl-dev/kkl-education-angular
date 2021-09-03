@@ -1,6 +1,8 @@
+import { StepperService } from './../../utilities/services/stepper.service';
+import { OrderTourService } from './../../utilities/services/order-tour.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 
@@ -8,6 +10,7 @@ import { StepModel } from 'src/app/utilities/models/step.model';
   selector: 'app-order-tour',
   templateUrl: './order-tour.component.html',
   styleUrls: ['./order-tour.component.scss'],
+  providers: [StepperService]
 })
 export class OrderTourComponent implements OnInit, AfterViewInit {
   public activeStep: number;
@@ -20,54 +23,39 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   public currentRoute: string;
   public sleepStatus: boolean;
 
-  public steps: StepModel[] = [
-    {
-      svgUrl: 'group',
-      label: 'הרכב קבוצה',
-      path: 'squad-assemble',
-      isActive: true,
-    },
-    {
-      svgUrl: 'bed',
-      label: 'לינה',
-      path: 'sleeping',
-      isActive: false,
-    },
-    {
-      svgUrl: 'playground',
-      label: 'מתקנים ופעילות',
-      path: 'facilities',
-      isActive: false,
-    },
-    {
-      svgUrl: 'list',
-      label: 'תוספות',
-      path: 'additions',
-      isActive: false,
-    },
-    {
-      svgUrl: 'add',
-      label: 'סיכום',
-      path: 'summary',
-      isActive: false,
-    },
-  ];
+  public steps: StepModel[];
+  public steps$: Observable<StepModel[]>;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private orderTourService: OrderTourService
+  ) { }
 
 
   ngOnInit(): void {
     this.getCurrentUrl();
     this.subscribeToCurrentRoute();
+    this.setOrderTourSteps()
   }
 
   ngAfterViewInit() {
     this.setActiveStep();
   }
 
+  private setOrderTourSteps() {
+    this.orderTourService.setOrderTourSteps()
+    this.steps$ = this.orderTourService.getStepsObservable()
+    this.steps = this.orderTourService.getSteps()
+  }
+
   public changeActiveStep(newActiveStep: number): void {
     this.activeStep = newActiveStep;
-    this.router.navigateByUrl(`/education/order-tour/${this.findStepPath()}`);
+  }
+
+  public onChangeStep(step: StepModel) {
+    console.log(step)
+    this.router.navigateByUrl(`/education/order-tour/${step.path}`);
+    this.orderTourService.updateStepStatus(step, 'label')
   }
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
@@ -105,7 +93,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.$activeStep.next(this.activeStep);
   }
 
-  private findStepPath() : string {
-    return this.steps[this.activeStep].path
-  }
+  // private findStepPath(): string {
+  //   return this.steps[this.activeStep].path
+  // }
 }

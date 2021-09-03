@@ -1,15 +1,7 @@
 <div class="working-steps" id="working-steps">
-  <div class="step" *ngFor="let step of steps; let i = index"
-    (click)="onStepClick({ path: step.path, index: i })">
-    <!-- <div class="working-steps__step-icon" [ngClass]="{ active: activeStep === i }">
-      <app-icon [color]="activeStep === i ? 'active' : 'default'" type="svg" [key]="step.svgUrl" [size]="35"></app-icon>
-    </div> -->
-
-    <app-icon-card [step]="step" variant="circle"></app-icon-card>
-
-    <!-- <div class="working-steps__step-text" [ngClass]="{ chosen__text: activeStep == i }">
-      {{ step.label }}
-    </div> -->
+  <div class="step" *ngFor="let step of steps$| async; let i = index"
+    (click)="onStepClick(i)">
+    <app-icon-card [step]="step" variant="circle"  (onClick)="onCardClick($event)"></app-icon-card>
   </div>
   <div class="working-steps__backstroke"></div>
 </div>

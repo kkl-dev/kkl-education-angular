@@ -1,3 +1,6 @@
+import { OrderTourService } from './../../utilities/services/order-tour.service';
+import { StepperService } from './../../utilities/services/stepper.service';
+import { StepModel } from './../../utilities/models/step.model';
 import {
   Component,
   OnInit,
@@ -7,7 +10,6 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { StepModel } from 'src/app/utilities/models/step.model';
 
 @Component({
   selector: 'app-working-steps',
@@ -17,27 +19,30 @@ import { StepModel } from 'src/app/utilities/models/step.model';
 export class WorkingStepsComponent implements OnInit, AfterViewInit {
   @Input() $activeStep: Observable<number>;
   @Input() steps: StepModel[];
+  @Input() steps$: Observable<StepModel[]>;
 
   @Output() changeActiveStep = new EventEmitter<number>();
+  @Output() changStep = new EventEmitter<StepModel>();
 
   public activeStep: number;
 
-  constructor() {}
+  constructor(
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit() {
     this.subscribeToActiveStep();
   }
 
-  public onStepClick({ path, index }) {
-    this.setActiveStep(index);
+  public onStepClick(index: number) {
+    this.changeActiveStep.emit(index);
   }
 
-  setActiveStep(number: number) {
-    this.changeActiveStep.emit(number);
-  }
+  public onCardClick(step: StepModel) {
 
+  }
 
   private subscribeToActiveStep() {
     this.$activeStep.subscribe((value) => {
