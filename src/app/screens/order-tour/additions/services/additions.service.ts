@@ -1,4 +1,5 @@
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
+import { StepperService } from './../../../../utilities/services/stepper.service';
+import { StepModel } from 'src/app/utilities/models/step.model';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LocationModel } from '../models/location.model';
@@ -9,7 +10,7 @@ import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/sched
 })
 export class AdditionsService {
 
-  private navigationCrds: IconCardModel[] = [
+  private steps: StepModel[] = [
     {
       label: 'היסעים',
       isActive: true,
@@ -46,10 +47,7 @@ export class AdditionsService {
       isActive: false,
       svgUrl: 'music',
     },
-  ].reverse();
-
-  private navigationCardsSubject = new BehaviorSubject<IconCardModel[]>(this.navigationCrds)
-  public navigationCards$ = this.navigationCardsSubject.asObservable()
+  ];
 
   private locationsSubject = new BehaviorSubject<LocationModel[]>([])
   public locations$: Observable<LocationModel[]> = this.locationsSubject.asObservable();
@@ -57,27 +55,16 @@ export class AdditionsService {
   private scheduleSubject = new BehaviorSubject<ScheduleModel[]>([])
   public schedule$: Observable<ScheduleModel[]> = this.scheduleSubject.asObservable();
 
-  constructor() { }
+  constructor(
+    private stepperService: StepperService
+  ) { }
 
-   private findItemIndex(key: string, value: any): number {
-    return this.navigationCrds.findIndex((item) => item[key] === value)
+  public getSteps(): StepModel[] {
+    return [... this.steps]
   }
 
-  public toggleCardStatus(item: IconCardModel, key: string) {
-
-    const indexToUnActive = this.findItemIndex('isActive', true)
-    const indexToActive = this.findItemIndex(key, item[key])
-
-    this.navigationCrds[indexToUnActive].isActive = false
-    this.navigationCrds[indexToActive].isActive = true
-
-    this.emitCards()
-
-
-  }
-
-  public emitCards() {
-    this.navigationCardsSubject.next(this.navigationCrds)
+  public updateStepStatus(step: StepModel, key: string) {
+    this.steps = this.stepperService.updateStepStatus(this.steps, step, key)
   }
 
   public emitSchedule(schedule: ScheduleModel[]) {

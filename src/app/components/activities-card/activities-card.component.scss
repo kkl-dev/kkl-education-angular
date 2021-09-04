@@ -1,3 +1,5 @@
+@import "../../../styles.scss";
+
 .activities-card {
     display: inline-block;
     box-shadow: 0px 3px 6px #00000029;
@@ -14,7 +16,7 @@
         width: 46px;
         height: 22px;
         box-shadow: 0px 6px 15px #a7d2ef;
-        background: #448ecd;
+        background: color(primary);
         border: none;
         font-size: 12px;
         color: white;

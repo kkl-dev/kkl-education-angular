@@ -1,15 +1,7 @@
 <div class="icon-container">
-  <mat-icon
-    [ngClass]="[color]"
+  <mat-icon [ngClass]="[color]"
     [ngStyle]="{ 'width.px': width, 'height.px': height ,'transform': matScale , 'background' : backgroundColor }"
-    *ngIf="type === 'svg'"
-    [svgIcon]="key"
-  >
+    *ngIf="type === 'svg'" [svgIcon]="key">
   </mat-icon>
-  <mat-icon
-    [ngClass]="[color]"
-    [ngStyle]="{ transform: matScale }"
-    *ngIf="type === 'mat'"
-    >{{ key }}</mat-icon
-  >
+  <mat-icon [ngClass]="[color]" [ngStyle]="{ transform: matScale }" *ngIf="type === 'mat'">{{ key }}</mat-icon>
 </div>

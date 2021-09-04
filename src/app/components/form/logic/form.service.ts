@@ -39,7 +39,7 @@ export class FormService {
 
   private setGroup(
     questions: QuestionBase<string | Date | number | QuestionGroup>[]
-  ) {
+  ): { [x: string]: any } {
     return questions
       .map((question) => question)
       .reduce((acc, control) => {
@@ -76,10 +76,6 @@ export class FormService {
             : this.fb.control(template[0], template[1]),
         };
       }, {});
-  }
-
-  public buildForm(questions: QuestionBase<string | number | Date>[]) {
-    return this.fb.group(this.setForm(this.formatForm(questions)));
   }
 
   private reduceArrayToObject(arr: any[]) {

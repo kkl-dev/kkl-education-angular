@@ -5,11 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-
+// FULL CALENDER PLUGIN
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
 
 import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
@@ -67,7 +66,6 @@ import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/form/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
-import { NavCardComponent } from './components/nav-card/nav-card.component';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
 
 import { TypographyComponent } from './components/typography/typography.component';
@@ -110,9 +108,13 @@ import { SummaryComponent } from './screens/order-tour/summary/summary.component
 import { NumberToTimePipe } from './utilities/pipes/numberToTime.pipe';
 import { ActivitiesCardComponent } from './components/activities-card/activities-card.component';
 
+import { IconCardComponent } from './components/icon-card/icon-card.component';
+import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
+import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
+import { SizeDirective } from './utilities/directivs/size.directive';
 
 
-FullCalendarModule.registerPlugins([ 
+FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
 ]);
@@ -168,7 +170,6 @@ FullCalendarModule.registerPlugins([
     SpinnerComponent,
     BottomNavigationComponent,
     WorkingStepsComponent,
-    NavCardComponent,
     DrawerComponent,
     InfoCardComponent,
     NumberInputComponent,
@@ -213,10 +214,13 @@ FullCalendarModule.registerPlugins([
     FlexCellComponent,
 
     MapsComponent,
-      CalendarComponent,
+    IconCardComponent,
+    CalendarComponent,
+    ActiveStateDirective,
+    SizeDirective
   ],
   imports: [
-    FullCalendarModule ,
+    FullCalendarModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -237,4 +241,4 @@ FullCalendarModule.registerPlugins([
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
