@@ -22,7 +22,7 @@ export class NavigationGridComponent implements OnInit {
     this.steps = this.additionsService.getSteps()
   }
 
-  public onCardClick(step: StepModel) {
+  public onChangeStep(step: StepModel) {
     this.additionsService.updateStepStatus(step, 'label')
     this.steps = this.additionsService.getSteps()
   }

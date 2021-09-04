@@ -47,7 +47,7 @@ export class AdditionsService {
       isActive: false,
       svgUrl: 'music',
     },
-  ].reverse();
+  ];
 
   private locationsSubject = new BehaviorSubject<LocationModel[]>([])
   public locations$: Observable<LocationModel[]> = this.locationsSubject.asObservable();

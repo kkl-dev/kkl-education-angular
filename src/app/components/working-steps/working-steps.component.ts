@@ -41,7 +41,7 @@ export class WorkingStepsComponent implements OnInit {
 
   private setStype() {
     this.size = this.size || 80
-    this.divider = this.divider || true
+    this.divider = this.divider
     this.variant = this.variant || 'circle'
   }
 }
