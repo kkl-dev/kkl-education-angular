@@ -10,7 +10,7 @@ import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/sched
 })
 export class AdditionsService {
 
-  public steps: StepModel[] = [
+  private steps: StepModel[] = [
     {
       label: 'היסעים',
       isActive: true,
@@ -59,20 +59,12 @@ export class AdditionsService {
     private stepperService: StepperService
   ) { }
 
-  public getSteps(): Observable<StepModel[]> {
-    return this.stepperService.getStepsObservale()
-  }
-
-  public setSteps() {
-    this.stepperService.setSteps(this.steps)
-  }
-
-  public emitSteps() {
-    this.stepperService.emitSteps()
+  public getSteps(): StepModel[] {
+    return [... this.steps]
   }
 
   public updateStepStatus(step: StepModel, key: string) {
-    this.stepperService.updateStepStatus(step, key)
+    this.steps = this.stepperService.updateStepStatus(this.steps, step, key)
   }
 
   public emitSchedule(schedule: ScheduleModel[]) {

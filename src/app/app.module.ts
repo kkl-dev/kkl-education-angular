@@ -110,6 +110,8 @@ import { ActivitiesCardComponent } from './components/activities-card/activities
 
 import { IconCardComponent } from './components/icon-card/icon-card.component';
 import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
+import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
+import { SizeDirective } from './utilities/directivs/size.directive';
 
 
 FullCalendarModule.registerPlugins([
@@ -213,7 +215,9 @@ FullCalendarModule.registerPlugins([
 
     MapsComponent,
     IconCardComponent,
-    CalendarComponent
+    CalendarComponent,
+    ActiveStateDirective,
+    SizeDirective
   ],
   imports: [
     FullCalendarModule,

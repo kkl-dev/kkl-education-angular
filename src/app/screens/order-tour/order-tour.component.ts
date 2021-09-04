@@ -43,8 +43,6 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   }
 
   private setOrderTourSteps() {
-    this.orderTourService.setOrderTourSteps()
-    this.steps$ = this.orderTourService.getStepsObservable()
     this.steps = this.orderTourService.getSteps()
   }
 
@@ -53,9 +51,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   }
 
   public onChangeStep(step: StepModel) {
-    console.log(step)
     this.router.navigateByUrl(`/education/order-tour/${step.path}`);
     this.orderTourService.updateStepStatus(step, 'label')
+    this.steps = this.orderTourService.getSteps()
   }
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {

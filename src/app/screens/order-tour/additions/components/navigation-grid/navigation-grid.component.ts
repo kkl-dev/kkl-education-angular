@@ -1,7 +1,5 @@
-import { StepperService } from './../../../../../utilities/services/stepper.service';
-import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { AdditionsService } from '../../services/additions.service';
+import { AdditionsService } from './../../services/additions.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { StepModel } from 'src/app/utilities/models/step.model';
 
 
@@ -12,23 +10,21 @@ import { StepModel } from 'src/app/utilities/models/step.model';
 })
 export class NavigationGridComponent implements OnInit {
 
+  @Input() public steps: StepModel[];
+
   public title: string = "תוספות"
-  public steps$: Observable<StepModel[]>;
 
   constructor(
-    private additionsService: AdditionsService,
+    private additionsService: AdditionsService
   ) { }
 
   ngOnInit(): void {
-
-    this.additionsService.setSteps()
-    this.additionsService.emitSteps()
-    this.steps$ = this.additionsService.getSteps()
+    this.steps = this.additionsService.getSteps()
   }
 
   public onCardClick(step: StepModel) {
     this.additionsService.updateStepStatus(step, 'label')
-
+    this.steps = this.additionsService.getSteps()
   }
 
 }

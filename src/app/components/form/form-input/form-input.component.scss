@@ -1,11 +1,10 @@
 @import "../../../../styles.scss";
 
 mat-form-field {
-  text-align: right !important;
   width: 100%;
 }
 
-::ng-deep .cdk-overlay-pane {
+::ng-deep .cdk-overlay-panel {
   transform: translateX(-15%) !important;
   margin-top: 2%;
 }
@@ -22,76 +21,10 @@ mat-form-field {
   opacity: 0 !important;
 }
 
-mat-icon {
-  color: color(primary);
-}
-
 ::ng-deep.mat-form-field-outline-start {
   width: 100% !important;
 }
 
-::ng-deep .size-s1.mat-form-field-outline-gap {
-  width: 15% !important;
-}
-
-::ng-deep .size-s2 .mat-form-field-outline-gap {
-  width: 20% !important;
-}
-
-::ng-deep .size-s3 .mat-form-field-outline-gap {
-  width: 25% !important;
-}
-
-::ng-deep .size-s4 .mat-form-field-outline-gap {
-  width: 30% !important;
-}
-
-::ng-deep .size-m1 .mat-form-field-outline-gap {
-  width: 35% !important;
-}
-
-::ng-deep .size-m2 .mat-form-field-outline-gap {
-  width: 40% !important;
-}
-
-::ng-deep .size-m3 .mat-form-field-outline-gap {
-  width: 45% !important;
-}
-
-::ng-deep .size-m4 .mat-form-field-outline-gap {
-  width: 50% !important;
-}
-
-::ng-deep .size-l1 .mat-form-field-outline-gap {
-  width: 55% !important;
-}
-::ng-deep .size-l2 .mat-form-field-outline-gap {
-  width: 60% !important;
-}
-
-::ng-deep .size-l3 .mat-form-field-outline-gap {
-  width: 65% !important;
-}
-::ng-deep .size-l4 .mat-form-field-outline-gap {
-  width: 70% !important;
-}
-
-
-::ng-deep .size-xl1 .mat-form-field-outline-gap {
-  width: 75% !important;
-}
-
-::ng-deep .size-xl2 .mat-form-field-outline-gap {
-  width: 80% !important;
-}
-
-::ng-deep .size-xl3 .mat-form-field-outline-gap {
-  width: 85% !important;
-}
-
-::ng-deep .size-xl4 .mat-form-field-outline-gap {
-  width: 90% !important;
-}
 
 input[type="time"]::-webkit-calendar-picker-indicator {
   background: none;
@@ -99,5 +32,3 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 input[type="date"]::-webkit-calendar-picker-indicator {
   background: none;
 }
-
-// background-color: #F8F6F6;

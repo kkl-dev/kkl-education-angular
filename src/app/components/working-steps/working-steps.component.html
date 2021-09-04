@@ -1,7 +1,10 @@
-<div class="working-steps" id="working-steps">
-  <div class="step" *ngFor="let step of steps$| async; let i = index"
-    (click)="onStepClick(i)">
-    <app-icon-card [step]="step" variant="circle"  (onClick)="onCardClick($event)"></app-icon-card>
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div *ngFor="let step of steps; let i = index" fxLayout="row" >
+    <div class="step" [appSize] [size]="80"  (click)="onStepClick(i)">
+      <app-icon-card [step]="step" variant="circle" (onClick)="onCardClick(step)"></app-icon-card>
+    </div>
+    <div class="backstroke" >
+      <div class="working-steps__backstroke" *ngIf="i !== (steps.length -1)"></div>
+    </div>
   </div>
-  <div class="working-steps__backstroke"></div>
 </div>

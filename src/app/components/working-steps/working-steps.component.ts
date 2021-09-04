@@ -17,9 +17,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./working-steps.component.scss'],
 })
 export class WorkingStepsComponent implements OnInit, AfterViewInit {
+
+  public size : number = 80;
+
   @Input() $activeStep: Observable<number>;
   @Input() steps: StepModel[];
-  @Input() steps$: Observable<StepModel[]>;
 
   @Output() changeActiveStep = new EventEmitter<number>();
   @Output() changStep = new EventEmitter<StepModel>();
@@ -41,7 +43,7 @@ export class WorkingStepsComponent implements OnInit, AfterViewInit {
   }
 
   public onCardClick(step: StepModel) {
-
+    this.changStep.emit(step)
   }
 
   private subscribeToActiveStep() {

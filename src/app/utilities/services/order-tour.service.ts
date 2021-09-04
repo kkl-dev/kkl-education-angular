@@ -47,27 +47,12 @@ export class OrderTourService {
   ) { }
 
   public getSteps(): StepModel[] {
-    return { ...this.steps }
+    return [... this.steps]
   }
 
-  public getStepsObservable(): Observable<StepModel[]> {
-    return this.stepperService.getStepsObservale()
-  }
-
-  private setSteps() {
-    this.stepperService.setSteps(this.steps)
-  }
-
-  private emitSteps() {
-    this.stepperService.emitSteps()
-  }
-
-  public setOrderTourSteps() {
-    this.setSteps()
-    this.emitSteps()
-  }
 
   public updateStepStatus(step: StepModel, key: string) {
-    this.stepperService.updateStepStatus(step, key)
+    this.steps = this.stepperService.updateStepStatus(this.steps, step, key)
+
   }
 }

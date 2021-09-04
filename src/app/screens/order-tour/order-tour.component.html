@@ -12,9 +12,9 @@
   <div fxFlex="15" fxLayoutAlign="center">
     <div class="stepper">
       <app-working-steps
-      [steps$]="steps$"
+      [steps]="steps"
       (changeActiveStep)="changeActiveStep($event)"
-      (changeStep)="onChangeStep($event)"
+      (changStep)="onChangeStep($event)"
       [$activeStep]="$activeStep"
       >
         </app-working-steps>

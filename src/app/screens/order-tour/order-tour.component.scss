@@ -5,8 +5,8 @@
   background-color: color(paper);
 
   &__steps {
-    justify-self: stretch;
-    width: 60%;
+    // justify-self: stretch;
+    // width: 60%;
     padding: 0px 20%;
     margin-bottom: 30px;
     background: linear-gradient(0deg, #ffffff 0%, rgba(#d8d8d8, 0.5) 100%);
@@ -18,25 +18,25 @@
   }
 }
 
-::ng-deep div#working-steps {
-  border-bottom: 0;
-  padding: 0 !important;
-}
+// ::ng-deep div#working-steps {
+//   border-bottom: 0;
+//   padding: 0 !important;
+// }
 
-::ng-deep div.working-steps__backstroke {
-  width: 90% !important;
-  top: calc(50% - 10px) !important;
-  background-color: #e8e8e8 !important;
-}
+// ::ng-deep div.working-steps__backstroke {
+//   // width: 90% !important;
+//   top: calc(50% - 10px) !important;
+//   background-color: #e8e8e8 !important;
+// }
 
-::ng-deep .working-steps__step-icon {
-  margin-bottom: 0 !important;
-  margin-top: 10px !important;
-}
+// ::ng-deep .working-steps__step-icon {
+//   margin-bottom: 0 !important;
+//   margin-top: 10px !important;
+// }
 
-::ng-deep .working-steps__step-text {
-  padding-top: 10px !important;
-}
+// ::ng-deep .working-steps__step-text {
+//   padding-top: 10px !important;
+// }
 
 ::ng-deep .chosen {
   background-color: color(primary) !important;
@@ -57,7 +57,7 @@ app-working-steps {
 }
 
 .stepper {
-  width: 60%;
+  // width: 60%;
   direction: rtl;
   display: flex;
   justify-content: space-between;
