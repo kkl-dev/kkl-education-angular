@@ -57,10 +57,10 @@ app-working-steps {
 }
 
 .stepper {
-  // width: 60%;
   direction: rtl;
-  display: flex;
-  justify-content: space-between;
+  // display: flex;
+  // justify-content: space-between;
+  background: transparent linear-gradient(0deg, #FFFFFF 0%, #F3F3F3 100%) 0% 0% no-repeat padding-box;
 }
 
 app-bottom-navigation {
