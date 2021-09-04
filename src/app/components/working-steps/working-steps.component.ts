@@ -1,5 +1,3 @@
-import { OrderTourService } from './../../utilities/services/order-tour.service';
-import { StepperService } from './../../utilities/services/stepper.service';
 import { StepModel } from './../../utilities/models/step.model';
 import {
   Component,
@@ -16,26 +14,19 @@ import { Observable } from 'rxjs';
   templateUrl: './working-steps.component.html',
   styleUrls: ['./working-steps.component.scss'],
 })
-export class WorkingStepsComponent implements OnInit, AfterViewInit {
+export class WorkingStepsComponent implements OnInit {
 
-  public size : number = 80;
-
-  @Input() $activeStep: Observable<number>;
+  @Input() size: number;
+  @Input() iconSize: number;
   @Input() steps: StepModel[];
 
   @Output() changeActiveStep = new EventEmitter<number>();
   @Output() changStep = new EventEmitter<StepModel>();
 
-  public activeStep: number;
-
-  constructor(
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit() {
-    this.subscribeToActiveStep();
+    this.setSize()
   }
 
   public onStepClick(index: number) {
@@ -46,9 +37,8 @@ export class WorkingStepsComponent implements OnInit, AfterViewInit {
     this.changStep.emit(step)
   }
 
-  private subscribeToActiveStep() {
-    this.$activeStep.subscribe((value) => {
-      this.activeStep = value;
-    });
+
+  private setSize() {
+    this.size = this.size || 60
   }
 }

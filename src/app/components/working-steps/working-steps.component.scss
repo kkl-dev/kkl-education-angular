@@ -7,6 +7,7 @@
   position: relative;
   border-bottom: 2px solid #ececec;
 
+
   &__backstroke {
     height: 8px;
     background-color: rgba($color: #ececec, $alpha: 0.8);
@@ -16,14 +17,9 @@
 }
 
 
-.step {
-  // width: 160px;
-  // height: 80px;
-}
-
-.backstroke {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-}
+  .backstroke-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }

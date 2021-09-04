@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="center center">
   <div *ngFor="let step of steps; let i = index" fxLayout="row" >
-    <div class="step" [appSize] [size]="80"  (click)="onStepClick(i)">
+    <div  [appSize] [size]="size"  (click)="onStepClick(i)">
       <app-icon-card [step]="step" variant="circle" (onClick)="onCardClick(step)"></app-icon-card>
     </div>
-    <div class="backstroke" >
+    <div class="backstroke-container" >
       <div class="working-steps__backstroke" *ngIf="i !== (steps.length -1)"></div>
     </div>
   </div>
