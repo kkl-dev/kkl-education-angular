@@ -16,9 +16,11 @@ import { Observable } from 'rxjs';
 })
 export class WorkingStepsComponent implements OnInit {
 
+  @Input() steps: StepModel[];
+  @Input() variant: string;
   @Input() size: number;
   @Input() iconSize: number;
-  @Input() steps: StepModel[];
+  @Input() divider: boolean;
 
   @Output() changeActiveStep = new EventEmitter<number>();
   @Output() changStep = new EventEmitter<StepModel>();
@@ -26,7 +28,7 @@ export class WorkingStepsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.setSize()
+    this.setStype()
   }
 
   public onStepClick(index: number) {
@@ -37,8 +39,9 @@ export class WorkingStepsComponent implements OnInit {
     this.changStep.emit(step)
   }
 
-
-  private setSize() {
-    this.size = this.size || 60
+  private setStype() {
+    this.size = this.size || 80
+    this.divider = this.divider || true
+    this.variant = this.variant || 'circle'
   }
 }

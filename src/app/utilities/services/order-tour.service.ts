@@ -29,13 +29,13 @@ export class OrderTourService {
       isActive: false,
     },
     {
-      svgUrl: 'list',
       label: 'תוספות',
       path: 'additions',
+      svgUrl: 'add',
       isActive: false,
     },
     {
-      svgUrl: 'add',
+      svgUrl: 'list',
       label: 'סיכום',
       path: 'summary',
       isActive: false,
