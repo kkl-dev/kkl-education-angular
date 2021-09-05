@@ -20,6 +20,9 @@
           <input matInput class="header__form-group-input"
           airbnb-calendar type="text" [(ngModel)]="date"
           [options]="options"
+          (newDate)='newDateRecived($event)'
+          (sleepingPlace)='newSleepingPlaceRecived($event)'
+          (prevDate)='prevDateRecived($event)'
           (ngModelChange)="dateObjChanged($event)"
           name="calendar-input" id="calendar-input" />
 
