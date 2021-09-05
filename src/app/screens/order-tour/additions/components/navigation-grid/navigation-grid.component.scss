@@ -1,0 +1,27 @@
+@import "../../../../../../styles.scss";
+
+.nav-container {
+  height: 100%;
+  width: 100%;
+  padding-top: 3%;
+}
+
+.nav-tab-title-container {
+  width: 100%;
+}
+
+.nav-tab-title {
+  font-size: x-large;
+  font-weight: 600;
+  font-family: "open sans hebrew" !important;
+}
+
+div.step-card {
+  width: spacing(11);
+  height: spacing(11);
+}
+
+app-icon-card {
+  width: 100%;
+  height: 100%;
+}

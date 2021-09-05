@@ -7,8 +7,10 @@ import {
   ElementRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormService, QuestionGroup } from '../logic/form.service';
+import { Observable } from 'rxjs';
+import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
+import { QuestionGroup } from '../logic/question-group';
 
 @Component({
   selector: 'app-form-container',
@@ -18,33 +20,63 @@ import { QuestionBase } from '../logic/question-base';
 export class FormContainerComponent implements OnInit {
   public form: FormGroup;
 
-  @Input() formGroup!: FormGroup;
-  @Input() group!: QuestionGroup;
-  @Input() questions!: QuestionBase<string>[];
+  @Input() formGroup: FormGroup;
+  @Input() group: QuestionGroup;
+  @Input() questions: QuestionBase<string | number | Date>[];
+  @Input() $questions: Observable<QuestionBase<string | number | Date>[]>;
 
   @Input() cols: string;
   @Input() gutter: string = '3';
   @Input() hasButton: boolean = false;
   @Input() hasBottomButton: boolean = false;
+
   @Input() slots: {
-    button?: ElementRef;
-    group?: ElementRef;
+    topButton?: ElementRef;
+    groupInputs?: ElementRef;
   };
 
-  @Output() formData: EventEmitter<any> = new EventEmitter();
   @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
 
   constructor(private formService: FormService) {}
 
   ngOnInit() {
-    if (!this.formGroup) {
+    this.initFormGroup();
+    this.subscribeToQuestions();
+    this.subscribeToFormValues();
+    this.formService.formGroup = this.formGroup;
+  }
+
+  private initFormGroup() {
+    if (!this.formGroup && this.questions.length > 0) {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
+      });
+      this.valueChange.emit(this.formGroup);
+    }
+  }
+
+  public onSubmit() {
+    this.valueChange.emit(this.formGroup);
+  }
+
+  private subscribeToQuestions() {
+    if (this.$questions) {
+      this.$questions.subscribe((questions) => {
+        this.questions = questions;
+        this.formGroup = this.formService.setFormGroup({
+          questions: this.questions,
+        });
       });
     }
   }
 
-  onSubmit() {
-    this.valueChange.emit(this.formGroup);
+  private subscribeToFormValues() {
+    this.formGroup.valueChanges.subscribe(() => {
+      this.valueChange.emit(this.formGroup);
+    });
+  }
+
+  public onEdit() {
+    this.form.enable();
   }
 }

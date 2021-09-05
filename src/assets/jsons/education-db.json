@@ -1,0 +1,130 @@
+{
+    "forestCenter": [
+        {
+            "id": 101,
+            "name": "נס הרים",
+            "iconPath": "assets/images/select-4.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        },
+        {
+            "id": 102,
+            "name": "מרכז שדה ציפורי",
+            "iconPath": "assets/images/select-3.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            },
+            {
+                "id": 21,
+                "name": "צימר",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            },
+            {
+                "id": 22,
+                "name": "חדרים",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        },
+        {
+            "id": 103,
+            "name": "מרכז שדה שוני",
+            "iconPath": "assets/images/select-2.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        },
+        {
+            "id": 104,
+            "name": "מרכז שדה יתיר",
+            "iconPath": "assets/images/select-1.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }],
+            "linkSite": "http://"
+        },
+        {
+            "id": 105,
+            "name": "מרכז שדה לביא",
+            "iconPath": "assets/images/select-4.jpg",
+            "acommodationList": [{
+                "id": 20,
+                "name": "בקתה",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            },
+            {
+                "id": 21,
+                "name": "חדרים",
+                "maxOccupancy": 40,
+                "totalUnits": 40,
+                "img": "..href",
+                "nameEng": "something"
+            }
+        ],
+            "linkSite": "http://"
+        }
+    ],
+    "availableDates": [
+        {
+            "date": "01-09-2021",
+            "availableBedsTent": 20,
+            "availableBedsCabin": 10,
+            "availableBedsCamping": 10,
+            "availableBedsRoom": 10
+          },
+          {
+            "date": "02-09-2021",
+            "availableBedsTent": 10,
+            "availableBedsCabin": 4,
+            "availableBedsCamping": 8,
+            "availableBedsRoom": 9
+          },
+          {
+            "date": "03-09-2021",
+            "availableBedsTent": 5,
+            "availableBedsCabin": 20,
+            "availableBedsCamping": 40,
+            "availableBedsRoom": 19
+          },
+          {
+            "date": "04-09-2021",
+            "availableBedsTent": 50,
+            "availableBedsCabin": 60,
+            "availableBedsCamping": 25,
+            "availableBedsRoom": 30
+          }
+    ]
+
+}

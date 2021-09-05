@@ -27,8 +27,13 @@
       cols="2"
       [questions]="reminderForm"
       (emitFormValues)="newCommentHandler($event)"
+      [hasBottomButton]="true"
     >
-      <button class="clear-form" (click)="deleteFormInputs($event)">מחק</button>
+    <div button>
+ 
+      <button  class="clear-form" (click)="newCommentHandler($event)">הוסף</button>
+      <button  class="clear-form" (click)="deleteFormInputs($event)">מחק</button>
+    </div>
     </app-form-container>
   </div>
 

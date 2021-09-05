@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
+import { StepModel } from 'src/app/utilities/models/step.model';
 
 @Component({
   selector: 'app-dashboard-card',
@@ -8,7 +8,7 @@ import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 })
 export class DashboardCardComponent implements OnInit {
 
-  @Input() public item: IconCardModel;
+  @Input() public item: StepModel;
   @Input() public prefix: string = '';
   @Input() public width: string = '150';
   @Input() public height: string = '150';

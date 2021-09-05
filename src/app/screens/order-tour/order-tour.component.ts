@@ -1,75 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { StepperService } from './../../utilities/services/stepper.service';
+import { OrderTourService } from './../../utilities/services/order-tour.service';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { StepModel } from 'src/app/components/working-steps/working-steps.component';
+import { StepModel } from 'src/app/utilities/models/step.model';
 
 @Component({
   selector: 'app-order-tour',
   templateUrl: './order-tour.component.html',
   styleUrls: ['./order-tour.component.scss'],
+  providers: [StepperService]
 })
-export class OrderTourComponent implements OnInit {
+export class OrderTourComponent implements OnInit, AfterViewInit {
+
   public activeStep: number;
+
+  public $activeStep = new Subject<number>();
+
   public nextPage: string = 'education/search';
   public prevPage: string = 'education/results';
 
   public currentRoute: string;
   public sleepStatus: boolean;
 
-  public steps: StepModel[] = [
-    {
-      svgUrl: 'groups',
-      text: 'הרכב קבוצה',
-      path: 'squad-assemble',
-      iconType: 'mat',
-    },
-    {
-      svgUrl: 'bed',
-      text: 'לינה',
-      path: 'sleeping',
-    },
-    {
-      svgUrl: 'playground',
-      text: 'מתקנים ופעילות',
-      path: 'facilities',
-    },
-    {
-      svgUrl: 'list',
-      text: 'תוספות',
-      path: 'additions',
-    },
-    {
-      svgUrl: 'add',
-      text: 'סיכום',
-      path: 'summary',
-    },
-  ];
+  public steps: StepModel[];
+  public currentStep: StepModel;
 
-  public changeActiveStep(newActiveStep: number): void {
-    this.activeStep = +newActiveStep;
-  }
-  public changeActiveStepBottomNavigation(newActiveStep: number): void {
-    this.activeStep = +newActiveStep;
-  }
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private orderTourService: OrderTourService
+  ) { }
+
 
   ngOnInit(): void {
+    this.setOrderTourSteps()
     this.getCurrentUrl();
     this.subscribeToCurrentRoute();
-    this.setActiveStep();
+    this.getActiveStep();
+    this.setActiveStep()
   }
 
-  private getCurrentUrl() {
-    this.formatUrl(this.router.url);
+  ngAfterViewInit() {
   }
 
+  // SUBSCRIBE SECTION
   private subscribeToCurrentRoute() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.formatUrl(event.url);
-        this.handleStatus();
+        this.handleSleepStatus();
+        this.getActiveStep()
+        this.setActiveStep()
       });
+  }
+
+  // method to set initiel steps array
+  private setOrderTourSteps() {
+    this.steps = this.orderTourService.getSteps()
+  }
+
+  // step logic
+  private updateStepsStatus(step: StepModel) {
+    this.orderTourService.updateStepStatus(step, 'label')
+    this.steps = this.orderTourService.getSteps()
+  }
+
+  private handleSleepStatus() {
+    this.sleepStatus = this.currentRoute === 'sleeping';
+  }
+
+  private getActiveStep() {
+    this.currentStep = this.steps.find(
+      (step: StepModel) => this.currentRoute === step.path
+    );
+  }
+
+  private setActiveStep() {
+    this.updateStepsStatus(this.currentStep)
+  }
+
+
+  // route url logic
+  private getCurrentUrl() {
+    this.formatUrl(this.router.url);
   }
 
   private formatUrl(url: string) {
@@ -77,13 +92,19 @@ export class OrderTourComponent implements OnInit {
     this.currentRoute = path[3];
   }
 
-  private handleStatus() {
-    this.sleepStatus = this.currentRoute === 'sleeping';
+
+  // LISTEN TO OUTPUE EVENTS
+  public changeActiveStep(newActiveStep: number): void {
+    this.activeStep = newActiveStep;
   }
 
-  private setActiveStep() {
-    this.activeStep = this.steps.findIndex(
-      (step: StepModel) => this.currentRoute === step.path
-    );
+  public onChangeStep(step: StepModel) {
+    this.router.navigateByUrl(`/education/order-tour/${step.path}`);
+    this.updateStepsStatus(step)
   }
+
+  public changeActiveStepBottomNavigation(newActiveStep: number): void {
+    this.activeStep = +newActiveStep;
+  }
+
 }

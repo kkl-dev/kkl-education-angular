@@ -1,5 +1,13 @@
-import { Component, OnInit, forwardRef, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  forwardRef,
+  Input,
+  ViewChild,
+  Output,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -20,22 +28,24 @@ export class FormInputComponent implements OnInit {
 
   @Input() public question!: QuestionBase<string | number | Date>;
 
-  @Input() public control!: FormControl;
-  @Input() public type!: string;
-  @Input() public label!: string;
-  @Input() public hint!: string;
-  @Input() public controlType!: string;
+  @Input() public control: FormControl;
+  @Input() public type: string;
+  @Input() public label: string;
+  @Input() public hint: string;
+  @Input() public controlType: string;
   @Input() public options!: [];
 
-  @Input() public labelLength: string;
+  @Input() public labelSize: number;
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
-  @Input() public status!: string;
   @Input() public inputProps: {};
   @Input() public disabled: boolean;
 
   @Input() public serverErrorMode!: boolean;
+
+  public color: string;
+  public labelLength: string;
 
   public value!: any;
   public error!: string;
@@ -48,9 +58,10 @@ export class FormInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToControl();
-  }
 
-  // ControlValueAccessor logic
+    this.labelLength = `size-${this.labelSize || 1}`
+
+  }
 
   public writeValue(value: any): void {
     this.value = value ? value : '';
@@ -73,18 +84,33 @@ export class FormInputComponent implements OnInit {
   }
 
   // subscription section
-  private subscribeToControl() {}
+  private subscribeToControl() {
+    if (this.control.disabled) {
+      this.color = 'disable';
+    }
+
+    this.control.valueChanges.subscribe((value) => {
+      if (this.control.disabled) {
+        this.color = 'disable';
+      } else if (this.control.errors) {
+        this.color = 'danger';
+      } else {
+        this.color = '';
+      }
+    });
+  }
+
+  public onSelectChange() {
+    this.formService.onChangeSelect.next(true);
+  }
 
   // LOGIC SECTION
 
   // method to handle validation messages
   public validate() {
     this.error = this.formService.getErrorMessage(this.control, this.label);
-
     this.control.valueChanges.subscribe(() => {
       this.error = this.formService.getErrorMessage(this.control, this.label);
     });
   }
-
-  // end of logic section
 }

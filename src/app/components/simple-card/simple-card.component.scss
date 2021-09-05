@@ -1,0 +1,12 @@
+.simple-card{ 
+    display: flex;
+    direction: rtl;
+    *{
+        margin: 5px;
+    }
+}
+
+#title{
+    font-weight: 600;
+    color: #000000;
+}
