@@ -7,11 +7,46 @@ import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SquadAssembleService {
+  freeSpacesArray: FreeSpace[] = [];
+
+  
+  freeSpacesArrayGenarator(start: Date, end: Date) {
+    let i = 0;
+    let freeSpacesArrayTemp: FreeSpace[] = [];
+    while (start < end) {
+      start = new Date(start.setDate(start.getDate() + 1));
+      freeSpacesArrayTemp.push({
+        date: start,
+        freeSpace: [
+          ['בקתה', Math.floor(Math.random() * 8).toString()],
+          ['אוהל', Math.floor(Math.random() * 8).toString()],
+          ['קאמפ', Math.floor(Math.random() * 8).toString()], 
+          ['חדר', Math.floor(Math.random() * 8).toString()]
+        ]
+      });
+      i++;
+    }
+    return freeSpacesArrayTemp;
+  }
+  // cabins: this.AvailableDates[i].availableBedsCabin!,
+  // tents: this.AvailableDates[i].availableBedsTent!,
+  // campgrounds: this.AvailableDates[i].availableBedsCamping!,
+  options: CalendarOptions = {
+    firstCalendarDay: 0,
+    format: 'LL/dd/yyyy',
+
+    closeOnSelected: true,
+    minYear: 2019,
+    maxYear: 2021,
+    freeSpacesArray: this.freeSpacesArray,
+  };
+
   private genderArray: QuestionNumber[] = [
     new QuestionNumber({
       key: 'boys',
@@ -30,7 +65,12 @@ export class SquadAssembleService {
     }),
   ];
 
-  constructor() {}
+  constructor() {
+    this.freeSpacesArray = this.freeSpacesArrayGenarator(
+      new Date(),
+      new Date(2021, 11, 17)
+    );
+  }
 
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
