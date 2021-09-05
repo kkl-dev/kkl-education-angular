@@ -220,7 +220,6 @@ FullCalendarModule.registerPlugins([
     SizeDirective
   ],
   imports: [
-    FullCalendarModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -233,6 +232,7 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     AirbnbCalendarModule,
     ApiModule,
+    FullCalendarModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
