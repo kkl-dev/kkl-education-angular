@@ -7,12 +7,14 @@ import { StepModel } from 'src/app/utilities/models/step.model';
   styleUrls: ['./icon-card.component.scss'],
 })
 export class IconCardComponent implements OnInit {
-  @Output() onClick: EventEmitter<StepModel> = new EventEmitter();
+
 
   @Input() public step: StepModel;
   @Input() public variant: string;
   @Input() public stepper: string;
   @Input() public size: number;
+
+  @Output() onClick: EventEmitter<StepModel> = new EventEmitter();
 
   public shape: boolean;
   public width: number;
