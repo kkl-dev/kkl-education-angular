@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
+import { TripService } from 'src/app/services/trip.service';
 import { SquadAssembleService } from '../services/squad-assemble.service';
 
 interface SquadGroup {
@@ -16,9 +17,10 @@ interface SquadGroup {
 export class SquadAssembleComponent implements OnInit {
   public squads: SquadGroup[];
 
-  constructor(private squadAssembleService: SquadAssembleService) { }
+  constructor(private squadAssembleService: SquadAssembleService,private tripService: TripService) { }
 
   ngOnInit(): void {
+    this.tripService.getLookUp();
     this.squads = [
       {
         group: {

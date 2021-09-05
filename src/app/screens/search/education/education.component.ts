@@ -189,6 +189,7 @@ export class EducationComponent implements OnInit {
     if (this.signupForm != undefined) {
       this.emitFormValues.emit(this.signupForm);
       this.checkAvailabilltyService.saveCheackAvailabilltyValues(this.signupForm)
+      this.tripService.getLookUp();
     }
   }
   singleDayTrip() { if (this.checkedSingleDay) { this.routerLinkContinue = '/education/my-tours' } }

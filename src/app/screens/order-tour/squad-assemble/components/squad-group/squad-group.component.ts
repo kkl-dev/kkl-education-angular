@@ -18,8 +18,8 @@ export interface FormHeader {
   providers: [FormService],
 })
 export class SquadGroupComponent {
-  public tripId: string = '0000000';
 
+  
   @Input() public group: QuestionGroup;
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;

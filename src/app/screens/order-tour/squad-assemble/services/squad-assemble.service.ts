@@ -7,8 +7,7 @@ import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { UserService } from 'src/app/open-api/api/user.service';
-import { AgeGroup } from 'src/app/open-api/model/ageGroup';
+import { TripService } from 'src/app/services/trip.service'
 @Injectable({
   providedIn: 'root',
 })
@@ -31,18 +30,8 @@ export class SquadAssembleService {
     }),
   ];
 
-  constructor(private userService: UserService) { }
-  ageGroup: AgeGroup[];
-  ngOnInit() {
-    this.userService.getAgeGroup().subscribe(
-      response => {
-        console.log('response',response)
-        this.ageGroup = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  constructor(private tripService: TripService) { }
+
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tourName',
@@ -60,17 +49,18 @@ export class SquadAssembleService {
       type: 'select',
       label: 'מרכז שדה',
       inputProps: {
-        options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
-        ],
+        options: this.tripService.fieldForestCenters,
         labelSize: 's3',
       },
       validations: [Validators.required],
     }),
-
+    // 
+    // [
+    //   { key: 'solid', value: '12123' },
+    //   { key: 'great', value: '23' },
+    //   { key: 'good', value: '123' },
+    //   { key: 'unproven', value: '123123123' },
+    // ]
     new QuestionCalendar({
       key: 'dates',
       label: 'תאריכי לינה',
@@ -175,15 +165,16 @@ export class SquadAssembleService {
       rows: 4,
       label: 'קבוצת גיל',
       inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
+        options: this.tripService.ageGroup,
       },
     }),
-
+    // this.tripService.ageGroup
+    // [
+    //   { key: '1', value: '1' },
+    //   { key: 'עוד לקוח', value: '10+' },
+    //   { key: 'לקוח מספר שלוש', value: '20+' },
+    //   { key: 'לקוח מספר ארבע', value: '30+' },
+    // ],
     new QuestionNumber({
       key: 'chaperones',
       label: 'מלווים',
