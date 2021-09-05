@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-sleeping-options-by-day',
@@ -18,7 +19,14 @@ export class SleepingOptionsByDayComponent implements OnInit {
       singleUnit: string;
     }[];
   }[] = [];
-  constructor() {}
+  constructor(public tripService: TripService) {}
+
+  ngOnInit() {
+    this.tripService.forestCenter.subscribe(forestCenter => {
+      //this.forestCenter = result; // this set's the username to the default observable value
+      console.log('header --> forestCenter result:', forestCenter);
+    });
+  }
 
   previousPage() {
     this.currentDay = this.currentDay - 1;
@@ -33,8 +41,6 @@ export class SleepingOptionsByDayComponent implements OnInit {
     this.currentDay = index;
     this.emitCurrentDayHandler();
   }
-
-  ngOnInit(): void {}
 
   emitCurrentDayHandler() {
     this.emitCurrentDay.emit(this.currentDay);

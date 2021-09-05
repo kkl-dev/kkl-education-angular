@@ -11,7 +11,7 @@ import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
 import { UserDataService } from 'src/app/services/user-data.service';
-import { UserService } from '../../../api/api/user.service';
+import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
@@ -32,6 +32,8 @@ export class HeaderComponent implements OnInit {
 
   dateObj: { from: string; to: string } = { from: '', to: '' };
   forestCenter: any | undefined;
+  tripDates: any | undefined;
+
   forestCenterOptions: any | undefined;
   forestCenterId: number = 101;
   formOptions: any;
@@ -47,15 +49,13 @@ export class HeaderComponent implements OnInit {
       new Date(2022, 11, 17)
     );
 
-    this.dateObjChanged(
-      this.checkAvailabillityService.checkAvailabilltyValues.calendarInput
-    );
+    // this.dateObjChanged(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
+    this.dateObjChanged(this.tripService.sleepingDatesValues.calendarInput);
 
-    this.location = this.checkAvailabillityService.checkAvailabilltyValues.sleepingPlace;
-    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
-      new Date(),
-      new Date(2022, 11, 17)
-    );
+    //this.location = this.checkAvailabillityService.checkAvailabilltyValues.sleepingPlace;
+    this.location = this.tripService.sleepingDatesValues.forestCenter;
+
+    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
 
     this.options = {
       firstCalendarDay: 0,
@@ -70,9 +70,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tripService.forestCenter.subscribe(result => {
+    this.tripService.forestCenter.subscribe(forestCenter => {
       //this.forestCenter = result; // this set's the username to the default observable value
-      console.log('header --> forestCenter result:', result);
+      console.log('header --> forestCenter result:', forestCenter);
+      this.forestCenter = forestCenter;
     });
 
     // console.log('userDataService:', this.userDataService);
@@ -83,7 +84,11 @@ export class HeaderComponent implements OnInit {
       if (forestCenters) {
         console.log('forestCenter', { forestCenters });
         // this.formOptions = forestCenter;
+
         this.forestCenterOptions = forestCenters;
+
+        // //save the forestCenters in server for acommodationList 
+        // this.tripService.forestCenters = forestCenters;
         if (this.tripService.centerField) {
           this.forestCenterId = this.tripService.centerField.id;
           this.forestCenter = this.tripService.centerField;
@@ -138,12 +143,15 @@ export class HeaderComponent implements OnInit {
   }
 
   updateForestCenter(id: any) {
-    console.log('header -- > update Forest Center id:', id);
+    this.forestCenter = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
+    console.log('forestCenter obj =>', this.forestCenter);
+    this.tripService.updateForestCenter(this.forestCenter);
+  }
 
-    let forest = this.forestCenterOptions.find((q: { id: any; }) => q.id === id);
-    console.log('new forest obj =>', forest);
-
-    this.tripService.changeForestCenter(forest);
+  updateTripDates(id: any) {
+    this.tripDates = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
+    console.log('new forestCenter obj =>', this.forestCenter);
+    this.tripService.updateDatesObject(this.forestCenter);
   }
 
   getDaysArray(start: any, end: any) {

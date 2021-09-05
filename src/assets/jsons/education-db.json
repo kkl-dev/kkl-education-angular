@@ -1,5 +1,5 @@
 {
-    "forestCenter": [
+    "forestCenters": [
         {
             "id": 101,
             "name": "נס הרים",
@@ -96,39 +96,339 @@
             "linkSite": "http://"
         }
     ],
-    "availableDates": [
+    "AvailableAccommodationDates": [
         {
             "id": 1,
-            "date": "01-09-2021",
+            "date": "2021-09-01T00:00:00",
             "availableBedsTent": 20,
             "availableBedsCabin": 10,
-            "availableBedsCamping": 10,
-            "availableBedsRoom": 10
+            "availableBedsCamping": 100,
+            "availableBedsRoom": 3
           },
           {
             "id": 2,
-            "date": "02-09-2021",
+            "date": "2021-09-02T00:00:00",
             "availableBedsTent": 10,
             "availableBedsCabin": 4,
-            "availableBedsCamping": 8,
-            "availableBedsRoom": 9
+            "availableBedsCamping": 80,
+            "availableBedsRoom": 2
           },
           {
             "id": 3,
-            "date": "03-09-2021",
+            "date": "2021-09-03T00:00:00",
             "availableBedsTent": 5,
-            "availableBedsCabin": 20,
+            "availableBedsCabin": 2,
             "availableBedsCamping": 40,
-            "availableBedsRoom": 19
+            "availableBedsRoom": 5
           },
           {
             "id": 4,
-            "date": "04-09-2021",
-            "availableBedsTent": 50,
-            "availableBedsCabin": 60,
-            "availableBedsCamping": 25,
-            "availableBedsRoom": 30
+            "date": "2021-09-04T00:00:00",
+            "availableBedsTent": 4,
+            "availableBedsCabin": 5,
+            "availableBedsCamping": 200,
+            "availableBedsRoom": 7
           }
-    ]
+    ],
+    "AvailableFacilityDates": [{
+        "today": "2021-01-01T00:00:00",
+        "facilitiesList": [{
+            "id": 1380,
+            "name": "יום ירוק במרכז השדה",
+            "occupiedHours": [{
+                "fromHour": "09:00",
+                "tillHour": "10:00",
+                "customer": {
+                    "id": 50,
+                    "name": "סמינר הקיבוצים"
+                }
+            }]
+        }, {
+            "id": 1814,
+            "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
+            "occupiedHours": [{
+                    "fromHour": "09:00",
+                    "tillHour": "10:00",
+                    "customer": {
+                        "id": 50,
+                        "name": "סמינר הקיבוצים"
+                    }
+                },
+                {
+                    "fromHour": "12:00",
+                    "tillHour": "13:00",
+                    "customer": {
+                        "id": 50,
+                        "name": "סמינר הקיבוצים"
+                    }
+                }
+            ]
+        }, {
+            "id": 1819,
+            "name": "מגרש ספורט",
+            "occupiedHours": []
+        }, {
+            "id": 1429,
+            "name": "נס הרים -  בישול עצמי בגיחה קטנה ",
+            "occupiedHours": {
+                "fromHour": "09:00",
+                "tillHour": "10:00",
+                "customer": {
+                    "id": 50,
+                    "name": "סמינר הקיבוצים"
+                }
+            }
+        }, {
+            "id": 1368,
+            "name": "נס הרים-בישול עצמי בשטח מול כיתות הלימוד",
+            "occupiedHours": []
+        }, {
+            "id": 1359,
+            "name": "פעילות במיתחם הגיחה ללא לינה (לביא/ציפורי/נס הרים)",
+            "occupiedHours": []
+        }, {
+            "id": 381,
+            "name": "ציוד אור קולי (ברקו+מחשב+מסך)",
+            "occupiedHours": []
+        }, {
+            "id": 1831,
+            "name": "כיתה רגילה (25 משתתפים) ל 3 שעות",
+            "occupiedHours": {
+                "fromHour": "09:00",
+                "tillHour": "10:00",
+                "customer": {
+                    "id": 50,
+                    "name": "סמינר הקיבוצים"
+                }
+            }
+        }, {
+            "id": 1827,
+            "name": "כיתה רגילה (25 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }, {
+            "id": 1830,
+            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1826,
+            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }, {
+            "id": 1840,
+            "name": "אולם כנסים נס הרים",
+            "occupiedHours": {
+                "fromHour": "09:00",
+                "tillHour": "10:00",
+                "customer": {
+                    "id": 50,
+                    "name": "סמינר הקיבוצים"
+                }
+            }
+        }, {
+            "id": 398,
+            "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
+            "occupiedHours": []
+        }, {
+            "id": 1829,
+            "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1828,
+            "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }]
+    }, {
+        "today": "2021-01-02T00:00:00",
+        "facilitiesList": [{
+            "id": 1380,
+            "name": "יום ירוק במרכז השדה",
+            "occupiedHours": []
+        }, {
+            "id": 1814,
+            "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
+            "occupiedHours": []
+        }, {
+            "id": 1819,
+            "name": "מגרש ספורט",
+            "occupiedHours": []
+        }, {
+            "id": 1429,
+            "name": "נס הרים -  בישול עצמי בגיחה קטנה ",
+            "occupiedHours": []
+        }, {
+            "id": 1368,
+            "name": "נס הרים-בישול עצמי בשטח מול כיתות הלימוד",
+            "occupiedHours": []
+        }, {
+            "id": 1359,
+            "name": "פעילות במיתחם הגיחה ללא לינה (לביא/ציפורי/נס הרים)",
+            "occupiedHours": []
+        }, {
+            "id": 381,
+            "name": "ציוד אור קולי (ברקו+מחשב+מסך)",
+            "occupiedHours": []
+        }, {
+            "id": 1831,
+            "name": "כיתה רגילה (25 משתתפים) ל 3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1827,
+            "name": "כיתה רגילה (25 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }, {
+            "id": 1830,
+            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1826,
+            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }, {
+            "id": 1840,
+            "name": "אולם כנסים נס הרים",
+            "occupiedHours": []
+        }, {
+            "id": 398,
+            "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
+            "occupiedHours": []
+        }, {
+            "id": 1829,
+            "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1828,
+            "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }]
+    }, {
+        "today": "2021-01-03T00:00:00",
+        "facilitiesList": [{
+            "id": 1380,
+            "name": "יום ירוק במרכז השדה",
+            "occupiedHours": []
+        }, {
+            "id": 1814,
+            "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
+            "occupiedHours": []
+        }, {
+            "id": 1819,
+            "name": "מגרש ספורט",
+            "occupiedHours": []
+        }, {
+            "id": 1429,
+            "name": "נס הרים -  בישול עצמי בגיחה קטנה ",
+            "occupiedHours": []
+        }, {
+            "id": 1368,
+            "name": "נס הרים-בישול עצמי בשטח מול כיתות הלימוד",
+            "occupiedHours": []
+        }, {
+            "id": 1359,
+            "name": "פעילות במיתחם הגיחה ללא לינה (לביא/ציפורי/נס הרים)",
+            "occupiedHours": []
+        }, {
+            "id": 381,
+            "name": "ציוד אור קולי (ברקו+מחשב+מסך)",
+            "occupiedHours": []
+        }, {
+            "id": 1831,
+            "name": "כיתה רגילה (25 משתתפים) ל 3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1827,
+            "name": "כיתה רגילה (25 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }, {
+            "id": 1830,
+            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1826,
+            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }, {
+            "id": 1840,
+            "name": "אולם כנסים נס הרים",
+            "occupiedHours": []
+        }, {
+            "id": 398,
+            "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
+            "occupiedHours": []
+        }, {
+            "id": 1829,
+            "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1828,
+            "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }]
+    }, {
+        "today": "2021-01-04T00:00:00",
+        "facilitiesList": [{
+            "id": 1380,
+            "name": "יום ירוק במרכז השדה",
+            "occupiedHours": []
+        }, {
+            "id": 1814,
+            "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
+            "occupiedHours": []
+        }, {
+            "id": 1819,
+            "name": "מגרש ספורט",
+            "occupiedHours": []
+        }, {
+            "id": 1429,
+            "name": "נס הרים -  בישול עצמי בגיחה קטנה ",
+            "occupiedHours": []
+        }, {
+            "id": 1368,
+            "name": "נס הרים-בישול עצמי בשטח מול כיתות הלימוד",
+            "occupiedHours": []
+        }, {
+            "id": 1359,
+            "name": "פעילות במיתחם הגיחה ללא לינה (לביא/ציפורי/נס הרים)",
+            "occupiedHours": []
+        }, {
+            "id": 381,
+            "name": "ציוד אור קולי (ברקו+מחשב+מסך)",
+            "occupiedHours": []
+        }, {
+            "id": 1831,
+            "name": "כיתה רגילה (25 משתתפים) ל 3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1827,
+            "name": "כיתה רגילה (25 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }, {
+            "id": 1830,
+            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1826,
+            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }, {
+            "id": 1840,
+            "name": "אולם כנסים נס הרים",
+            "occupiedHours": []
+        }, {
+            "id": 398,
+            "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
+            "occupiedHours": []
+        }, {
+            "id": 1829,
+            "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
+            "occupiedHours": []
+        }, {
+            "id": 1828,
+            "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
+            "occupiedHours": []
+        }]
+    }]
 
 }
+
+
+ 

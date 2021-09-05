@@ -1,31 +1,25 @@
 <div class="tooltip">
 
-    <span class="tooltip__header">תפוסת מתקן:</span>
-    <div class="tooltip__occupied-hours">
-      <div class="tooltip__occupied-hours-hour" *ngIf='hours.length===0'> טרם שורינו מקומות </div>
-      <div class="tooltip__occupied-hours-hour" *ngFor="let item of hours">
-        <span class="tooltip__occupied-hours-hour-start">{{
-          item.startingHour | numberToTimePipe
-        }}</span>
-        <span class="tooltip__occupied-hours-hour-end">
-         <span> -</span> {{ item.endingHour | numberToTimePipe}}</span 
-        >
-        <span class="tooltip__occupied-hours-hour-user">נתפס ע"י {{ item.user }} </span>
-      </div>
+  <span class="tooltip__header">תפוסת מתקן:</span>
+  <div class="tooltip__occupied-hours">
+    <div class="tooltip__occupied-hours-hour" *ngIf='hours.length===0'> טרם שורינו מקומות </div>
+    <div class="tooltip__occupied-hours-hour" *ngFor="let item of hours">
+      <span class="tooltip__occupied-hours-hour-start">{{item.startingHour | numberToTimePipe}}</span>
+      <span class="tooltip__occupied-hours-hour-end">
+        <span> -</span> {{ item.endingHour | numberToTimePipe}}</span>
+      <span class="tooltip__occupied-hours-hour-user">נתפס ע"י {{ item.user }} </span>
     </div>
+  </div>
 
-    <div class="tooltip__occupied-hours-bar"  >
-        <span class="tooltip__occupied-hours-bar-slot" *ngFor="let item of occupiedHoursArray"
-        [ngClass]="{'background-green':item.user =='none',
+  <div class="tooltip__occupied-hours-bar">
+    <span class="tooltip__occupied-hours-bar-slot" *ngFor="let item of occupiedHoursArray" [ngClass]="{'background-green':item.user =='none',
       'background-grey':(item.user !=='none' && item.user !== username), 
-      'background-blue':(item.user === username) }"
-      [ngStyle]="{'width': calculateWidth(item.totalHours) }"></span>
-    </div>
+      'background-blue':(item.user === username) }" [ngStyle]="{'width': calculateWidth(item.totalHours) }"></span>
+  </div>
 
-    <div class="tooltip__bar-color-type">
-      <span class="tooltip_bar-color-type-item green">פנוי</span>
-      <span class="tooltip_bar-color-type-item grey">תפוס</span>
-      <!-- <span class="tooltip_bar-color-type-item blue" >שוריין עבורי</span> -->
-    </div> 
+  <div class="tooltip__bar-color-type">
+    <span class="tooltip_bar-color-type-item green">פנוי</span>
+    <span class="tooltip_bar-color-type-item grey">תפוס</span>
+    <!-- <span class="tooltip_bar-color-type-item blue" >שוריין עבורי</span> -->
+  </div>
 </div>
-   

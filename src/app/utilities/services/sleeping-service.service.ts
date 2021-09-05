@@ -28,7 +28,6 @@ export class SleepingServiceService {
       inputProps: {
         // labelLength: 'extraWide',
         options: [
-          // { key: 'חדרים', value: 'חדרים' },
           { key: 'בקתות', value: 'בקתות' },
           { key: 'גיחה', value: 'גיחה' },
           { key: 'אוהלים', value: 'אוהלים' },
@@ -89,8 +88,7 @@ export class SleepingServiceService {
   ];
 
   constructor(private checkAvailabiltyService: CheckAvailabilityService) {
-    this.checkAvailabilltyValues =
-      this.checkAvailabiltyService.checkAvailabilltyValues;
+    this.checkAvailabilltyValues = this.checkAvailabiltyService.checkAvailabilltyValues;
   }
 
   updateQuestions(

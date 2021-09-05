@@ -46,7 +46,7 @@ import { BottomNavigationComponent } from './components/bottom-navigation/bottom
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
 import { EducationComponent } from './screens/search/education/education.component';
 import { MapsComponent } from './screens/education-results/maps/maps.component';
-import { ApiModule } from './api/api.module'
+import { ApiModule } from 'src/app/open-api/api.module';
 import { InfoCardComponent } from './components/info-card/info-card.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';

@@ -2,6 +2,9 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
+import { MovementsService } from './api/movements.service';
+import { OrderService } from './api/order.service';
+import { QueuetasksService } from './api/queuetasks.service';
 import { UserService } from './api/user.service';
 
 @NgModule({

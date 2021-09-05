@@ -33,21 +33,21 @@ export class SleepingOptionsComponent implements OnInit {
       options: [
         {
           svgUrl: 'assets/images/cabin.svg',
-          sleepingAreas: 2,
+          sleepingAreas: 3,
           avialableSpaces: 16,
           type: 'בקתות',
           singleUnit: 'בבקתה',
         },
         {
           svgUrl: 'assets/images/tent.svg',
-          sleepingAreas: 4,
+          sleepingAreas: 5,
           avialableSpaces: 6,
           type: 'אוהלים',
           singleUnit: 'באוהל',
         },
         {
           svgUrl: 'assets/images/camp.svg',
-          sleepingAreas: 1,
+          sleepingAreas: 2,
           avialableSpaces: 1670,
           type: 'גיחה',
           singleUnit: 'לנים',
@@ -214,25 +214,26 @@ export class SleepingOptionsComponent implements OnInit {
         options: [
           {
             svgUrl: 'assets/images/cabin.svg',
-            sleepingAreas: 2,
-            avialableSpaces: 16,
+            sleepingAreas: 1,
+            avialableSpaces: 36,
             type: 'בקתות',
             singleUnit: 'בבקתה',
           },
           {
             svgUrl: 'assets/images/tent.svg',
-            sleepingAreas: 4,
-            avialableSpaces: 6,
+            sleepingAreas: 5,
+            avialableSpaces: 44,
             type: 'אוהלים',
             singleUnit: 'באוהל',
           },
           {
             svgUrl: 'assets/images/camp.svg',
-            sleepingAreas: 1,
+            sleepingAreas: 2,
             avialableSpaces: Math.floor(Math.random() * 90),
             type: 'גיחה',
             singleUnit: 'לנים',
           },
+          
         ],
       });
       newDate = new Date(date1.setDate(date1.getDate() + 1));

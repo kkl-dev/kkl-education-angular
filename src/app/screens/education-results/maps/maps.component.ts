@@ -84,14 +84,9 @@ export class MapsComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     console.log('changes', changes);
     // if (changes) {
-    //   this.changeForestCenter(changes);
+    //   this.updateForestCenter(changes);
     // }
   }
-
-  // changeForestCenter(visible: any) {
-  //   console.log('show', visible);
-  //   this.visibleChange.emit(visible);
-  // }
 
   queryandrender(place: any, fullhuts: any, datatoiter: any) {
     this.fullhuts = fullhuts;
