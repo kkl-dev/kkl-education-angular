@@ -34,6 +34,7 @@ export class FormInputComponent implements OnInit {
   @Input() public hint: string;
   @Input() public controlType: string;
   @Input() public options!: [];
+  @Input() public dateOptions!: [];
 
   @Input() public labelSize: number;
   @Input() public groupLabel!: string;
@@ -81,6 +82,21 @@ export class FormInputComponent implements OnInit {
 
   public handleChange(value: any) {
     this.value = value;
+  }
+
+  
+  newDateRecived(newDate:any){
+    console.log(newDate); 
+    
+  }
+  prevDateRecived(prevDate:any){
+    console.log(prevDate); 
+    
+  }
+  
+  newSleepingPlaceRecived(sleepingPlace:any){
+    console.log(sleepingPlace); 
+    
   }
 
   // subscription section

@@ -159,6 +159,22 @@ export class EducationComponent implements OnInit {
     freeSpacesArray: this.freeSpacesArray,
   };
 
+
+  
+  newDateRecived(newDate:any){
+    console.log(newDate); 
+    
+  }
+  prevDateRecived(prevDate:any){
+    console.log(prevDate); 
+    
+  }
+  
+  newSleepingPlaceRecived(sleepingPlace:any){
+    console.log(sleepingPlace); 
+    
+  }
+
   public dateObjChanged(e: string) {
     if (e.includes('-')) {
       let tempDateArr: string[] = [];
