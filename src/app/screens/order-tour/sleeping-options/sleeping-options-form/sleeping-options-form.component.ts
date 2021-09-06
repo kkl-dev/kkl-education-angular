@@ -55,22 +55,34 @@ export class SleepingOptionsFormComponent implements OnInit {
     };
   }
 
-  freeSpacesArrayGenarator(start: Date, end: Date) {
-    const i = 0;
-    let freeSpacesArrayTemp: FreeSpace[] = [];
-    while (start < end) {
-      start = new Date(start.setDate(start.getDate() + 1));
-      freeSpacesArrayTemp.push({
-        date: start,
-        freeSpace: {
-          cabins: Math.floor(Math.random() * 8),
-          tents: Math.floor(Math.random() * 8),
-          campgrounds: Math.floor(Math.random() * 8),
-        },
-      });
-    }
-    return freeSpacesArrayTemp;
+  
+ freeSpacesArrayGenarator(start: Date, end: Date) {
+  const i = 0;
+  let freeSpacesArray = [];
+  while (start < end) {
+    start = new Date(start.setDate(start.getDate() + 1));
+    freeSpacesArray.push({
+      date: start,
+      freeSpace: 
+        [
+          {
+            accomodationName: "cabin",
+            availableBeds: +Math.floor(Math.random() * 8).toString()
+          },
+                      {
+            accomodationName: "tent",
+            availableBeds: +Math.floor(Math.random() * 8).toString()
+          },
+                      {
+            accomodationName: "room",
+            availableBeds: +Math.floor(Math.random() * 8).toString()
+          },
+      ]
+    });
   }
+  return freeSpacesArray;
+}
+
 
   options: CalendarOptions = {
     firstCalendarDay: 0,
