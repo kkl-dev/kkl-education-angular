@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
   formOptions: any;
   location = '';
 
-  freeSpacesArray1: FreeSpace[] = [];
+  freeSpacesArray: FreeSpace[] = [];
 
   constructor(
     public usersService: UserService,
@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
     public tripService: TripService,
     public fakeApi: FakeService
   ) {
-    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
+    this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
     );
@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit {
     );
 
     this.location = this.checkAvailabillityService.checkAvailabilltyValues.sleepingPlace;
-    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
+    this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
     );
@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
       // maxDate: addDays(new Date(), 10),
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
-      freeSpacesArray: this.freeSpacesArray1,
+      freeSpacesArray: this.freeSpacesArray,
     };
   }
 
@@ -151,19 +151,37 @@ export class HeaderComponent implements OnInit {
     return arr;
   }
 
+  
+  newDateRecived(newDate:any){
+    console.log(newDate); 
+    
+  }
+  prevDateRecived(prevDate:any){
+    console.log(prevDate); 
+    
+  }
+  
+  newSleepingPlaceRecived(sleepingPlace:any){
+    console.log(sleepingPlace); 
+    
+  }
+
+ 
   freeSpacesArrayGenarator(start: Date, end: Date) {
-    const i = 0;
+    let i = 0;
     let freeSpacesArrayTemp: FreeSpace[] = [];
     while (start < end) {
       start = new Date(start.setDate(start.getDate() + 1));
       freeSpacesArrayTemp.push({
         date: start,
-        freeSpace: {
-          cabins: Math.floor(Math.random() * 8),
-          tents: Math.floor(Math.random() * 8),
-          campgrounds: Math.floor(Math.random() * 8),
-        },
+        freeSpace: [
+          ['בקתה', Math.floor(Math.random() * 8).toString()],
+          ['אוהל', Math.floor(Math.random() * 8).toString()],
+          ['קאמפ', Math.floor(Math.random() * 8).toString()], 
+          ['חדר', Math.floor(Math.random() * 8).toString()]
+        ]
       });
+      i++;
     }
     return freeSpacesArrayTemp;
   }
@@ -171,12 +189,11 @@ export class HeaderComponent implements OnInit {
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
+
     closeOnSelected: true,
-    // minDate: addDays(new Date(), 5),
-    // maxDate: addDays(new Date(), 10),
     minYear: 2019,
     maxYear: 2021,
-    freeSpacesArray: this.freeSpacesArray1,
+    freeSpacesArray: this.freeSpacesArray,
   };
 
   public dateObjChanged(e: string) {

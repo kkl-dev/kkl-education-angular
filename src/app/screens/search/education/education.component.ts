@@ -125,11 +125,12 @@ export class EducationComponent implements OnInit {
       start = new Date(start.setDate(start.getDate() + 1));
       freeSpacesArrayTemp.push({
         date: start,
-        freeSpace: {
-          cabins: Math.floor(Math.random() * 8),
-          tents: Math.floor(Math.random() * 8),
-          campgrounds: Math.floor(Math.random() * 8),
-        },
+        freeSpace: [
+          ['בקתה', Math.floor(Math.random() * 8).toString()],
+          ['אוהל', Math.floor(Math.random() * 8).toString()],
+          ['קאמפ', Math.floor(Math.random() * 8).toString()], 
+          ['חדר', Math.floor(Math.random() * 8).toString()]
+        ]
       });
       i++;
     }
@@ -147,6 +148,22 @@ export class EducationComponent implements OnInit {
     maxYear: 2021,
     freeSpacesArray: this.freeSpacesArray,
   };
+
+
+  
+  newDateRecived(newDate:any){
+    console.log(newDate); 
+    
+  }
+  prevDateRecived(prevDate:any){
+    console.log(prevDate); 
+    
+  }
+  
+  newSleepingPlaceRecived(sleepingPlace:any){
+    console.log(sleepingPlace); 
+    
+  }
 
   public dateObjChanged(e: string) {
     if (e.includes('-')) {
