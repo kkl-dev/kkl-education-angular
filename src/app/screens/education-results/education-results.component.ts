@@ -171,6 +171,9 @@ export class EducationResultsComponent implements OnInit {
   ngOnInit() {
     this.tripService.forestCenter.subscribe(result => {
       this.forestCenter = result; // this set's the username to the default observable value
+<<<<<<< HEAD
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
+=======
 >>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
     });
 
@@ -200,13 +203,19 @@ export class EducationResultsComponent implements OnInit {
 
     if (this.tripService.centerField) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       this.forestCenter = this.tripService.centerField;
 =======
+=======
+
+      this.dateObj = this.tripService.dateObj;
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
 
 >>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
       this.dateObj = this.tripService.dateObj;
       for (let key in this.dateObj) {
         let value = this.dateObj[key];
+<<<<<<< HEAD
 <<<<<<< HEAD
         // Use `key` and `value`
         console.log('key :' + key);
@@ -252,6 +261,37 @@ export class EducationResultsComponent implements OnInit {
     //this.availabilityItemsArray = this.tripService.dateObj;
     //this.centerField = this.tripService.centerField
     this.fromOtherComponent = false;
+=======
+      }
+    }
+
+
+  }
+
+
+  date1 = new Date('7/13/2010');
+  date2 = new Date('12/15/2010');
+
+
+  getDifferenceInDays(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60 * 60 * 24);
+  }
+
+  getDifferenceInHours(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60 * 60);
+  }
+
+  getDifferenceInMinutes(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60);
+  }
+
+  getDifferenceInSeconds(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / 1000;
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
   }
 
   getAvailableAccommodationDates() {
@@ -276,6 +316,12 @@ export class EducationResultsComponent implements OnInit {
       }
     }
 
+<<<<<<< HEAD
+=======
+  // changeForestCenter(e: any, visible: any) {
+  //   this.child.changeForestCenter(visible);
+  // }
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
 
   }
 

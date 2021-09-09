@@ -17,13 +17,8 @@ export class CheckAvailabilityService {
   checkAvailabilltyValues: {
     sleepingPlace: string;
     calendarInput: string;
-<<<<<<< HEAD
     //claendar input value for development in real app it will redirect to seatch page if calendar input wasnt set in the search page
   } = { sleepingPlace: '', calendarInput: '09/01/2021-09/04/2021' };
-=======
-    //calendar input value for development in real app it will redirect to search page if calendar input wasnt set in the search page
-  } = { sleepingPlace: '', calendarInput: '09/08/2021-09/11/2021' };
->>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
 
   public facilitiesArray: InfoCard[] = [
     {

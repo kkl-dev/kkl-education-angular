@@ -1,6 +1,7 @@
 import {
   Component,
-  ElementRef, OnInit,
+  ElementRef,
+  OnInit,
   ViewChild,
   EventEmitter,
   Output,
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit {
   forestCenterOptions: any | undefined;
   forestCenterId: number = 101;
   formOptions: any;
-  freeSpacesArray1: FreeSpace[] = [];
+  freeSpacesArray: FreeSpace[] = [];
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
@@ -44,13 +45,16 @@ export class HeaderComponent implements OnInit {
     // maxDate: addDays(new Date(), 10),
     minYear: 2019,
     maxYear: 2021,
-    freeSpacesArray: this.freeSpacesArray1,
+    freeSpacesArray: this.freeSpacesArray,
   };
 
-  constructor(public usersService: UserService, private userDataService: UserDataService,
+  constructor(
+    public usersService: UserService,
+    private userDataService: UserDataService,
     private checkAvailabillityService: CheckAvailabilityService,
-    public tripService: TripService, public fakeApi: FakeService) {
-    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
+    public tripService: TripService,
+    public fakeApi: FakeService) {
+    this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
     );
@@ -58,7 +62,7 @@ export class HeaderComponent implements OnInit {
     // this.dateObjChanged(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
     this.dateObjChanged(this.tripService.sleepingDatesValues.calendarInput);
 
-    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
+    this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
 
     this.options = {
       firstCalendarDay: 0,
@@ -66,7 +70,7 @@ export class HeaderComponent implements OnInit {
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
-      freeSpacesArray: this.freeSpacesArray1,
+      freeSpacesArray: this.freeSpacesArray,
     };
   }
 
@@ -74,9 +78,6 @@ export class HeaderComponent implements OnInit {
     this.tripService.forestCenter.subscribe(forestCenter => {
       this.forestCenter = forestCenter;
     });
-
-    // console.log('userDataService:', this.userDataService);
-    console.log('tripService:', this.tripService);
 
     //get forest center fake
     this.fakeApi.getForestCenter().subscribe((forestCenters) => {
@@ -112,14 +113,10 @@ export class HeaderComponent implements OnInit {
 
     // this.usersService.getLookupFieldForestCenters().subscribe(
     //   response => {
-    //     console.log(response);
     //     this.formOptions = response;
     //     //this.tripService.centerField = this.formOptions[0];
     //   },
-    //   error => console.log(error),       // error
-    //   () => console.log('completed')     // complete
     // )
-
 
     //  this.dateObj = this.tripService.dateObj;
     //  this.forestCenter = this.tripService.centerField;
@@ -154,31 +151,45 @@ export class HeaderComponent implements OnInit {
   }
 
   getDaysArray(start: any, end: any) {
-    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+    for (
+      var arr = [], dt = new Date(start);
+      dt <= end;
+      dt.setDate(dt.getDate() + 1)
+    ) {
       arr.push(new Date(dt));
     }
     return arr;
-  };
+  }
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
-    const i = 0;
+    let i = 0;
     let freeSpacesArrayTemp: FreeSpace[] = [];
     while (start < end) {
       start = new Date(start.setDate(start.getDate() + 1));
       freeSpacesArrayTemp.push({
         date: start,
-        freeSpace: {
-          cabins: Math.floor(Math.random() * 8),
-          tents: Math.floor(Math.random() * 8),
-          campgrounds: Math.floor(Math.random() * 8),
-        },
+        freeSpace:
+          [
+            {
+              accomodationName: "cabin",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+            {
+              accomodationName: "tent",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+            {
+              accomodationName: "room",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+          ]
       });
+      i++;
     }
     return freeSpacesArrayTemp;
   }
 
-  dateObjChanged(e: string) {
-    
+  public dateObjChanged(e: string) {
     if (e && e.includes('-')) {
       console.log('dateObjChanged =>', e);
       //this.updateTripDates(e);
