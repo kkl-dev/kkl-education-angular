@@ -17,14 +17,32 @@ export class SleepingOptionsByDayComponent implements OnInit {
       avialableSpaces: number;
       type: string;
       singleUnit: string;
+      
+//       accomodationTypeId: 1
+// acoomodationTypeName: "בקתה"
+// availableUnits: 10
+// img: "בקתה"
+// maxOccupancy: 20
+// nameEng: "cabin"
+
     }[];
   }[] = [];
+  AvailableSleepingOptions: any;
+
   constructor(public tripService: TripService) {}
 
   ngOnInit() {
     this.tripService.forestCenter.subscribe(forestCenter => {
       //this.forestCenter = result; // this set's the username to the default observable value
       console.log('header --> forestCenter result:', forestCenter);
+    });
+
+    this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {
+      this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
+      console.log('sleeping -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
+      console.log('sleeping -- > sleepingOptionsByDay:', this.sleepingOptionsByDay);
+
+      
     });
   }
 

@@ -1,4 +1,4 @@
-<div class="SOBD">
+<!-- <div class="SOBD">
   <ng-content></ng-content>
   <div class="SOBD__days">
     <div class="SOBD__days-current-day">
@@ -41,6 +41,59 @@
       <p class="SOBD__sleep-areas-options-item-count">
         <span class="SOBD__sleep-areas-options-item-count-number"><span>
             {{ item.sleepingAreas * item.avialableSpaces }}
+          </span></span>
+        <span>לנים</span>
+      </p>
+    </div>
+  </div>
+</div>
+ -->
+
+
+<div class="SOBD">
+  <ng-content></ng-content>
+  <div class="SOBD__days">
+    <div class="SOBD__days-current-day">
+      <button class="SOBD__days-current-day-previous" (click)="previousPage()"
+        [ngClass]="{ disabled: currentDay === 0 }" [disabled]="currentDay === 0">
+      </button>
+       <span class="SOBD__days-current-day-text"><span> {{ AvailableSleepingOptions[currentDay].date | date:'shortDate' }}</span> זמינות יום
+
+        {{ currentDay + 1 }}</span>
+      <button class="SOBD__days-current-day-next" (click)="nextPage()"
+        [ngClass]="{ disabled: currentDay === AvailableSleepingOptions.length - 1 }"
+        [disabled]="currentDay === AvailableSleepingOptions.length - 1">
+      </button>
+    </div>
+    <div class="SOBD__days-paginatior">
+      <span *ngFor="let day of AvailableSleepingOptions; let i = index" (click)="setCurrentDay(i)"
+        [ngClass]="{ chosen: i === currentDay }">{{ i + 1 }}</span>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div class="SOBD__sleep-areas-options-item" *ngFor="let item of AvailableSleepingOptions[currentDay].sleepingOptions; let i = index">
+      <svg-icon class="SOBD__sleep-areas-options-item-svg" src=" {{ item.img }} "></svg-icon>
+      <p class="SOBD__sleep-areas-options-item-count font-color-blue">
+        <span class="SOBD__sleep-areas-options-item-count-number">
+          <span>
+            {{ item.maxOccupancy }}
+          </span></span>
+        <span>
+          {{ item.acoomodationTypeName }}
+        </span>
+      </p>
+      <p class="SOBD__sleep-areas-options-item-count">
+        <span class="SOBD__sleep-areas-options-item-count-number"><span>
+            {{ item.availableUnits }}
+          </span></span>
+        <span>
+          {{ item.acoomodationTypeName }}
+        </span>
+      </p>
+      <p class="SOBD__sleep-areas-options-item-count">
+        <span class="SOBD__sleep-areas-options-item-count-number"><span>
+            {{ item.availableUnits * item.maxOccupancy }}
           </span></span>
         <span>לנים</span>
       </p>

@@ -21,8 +21,8 @@
         <div class="education-results__right-facilities-items">
           <app-info-card class="education-results__right-facilities-items-item"
             *ngFor="let item of facilitiesArray; let i = index" [item]="item">
-            <app-tooltip class="app-tooltip" [hours]="item.availability">
-            </app-tooltip>
+            <app-tooltip class="app-tooltip" [hours]="item.availability"></app-tooltip>
+            <!-- <app-tooltip class="app-tooltip" [hours]="item.facilitiesList"></app-tooltip> -->
           </app-info-card>
         </div>
       </div>

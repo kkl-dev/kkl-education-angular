@@ -9,14 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AvailableFacility } from './availableFacility';
 
 
 /**
- * Describes the availability of the facilities by date
+ * Number of available beds for a certain accomoadation type (ex. Cabin, room, tent etc.)
  */
-export interface FacilityDate { 
-    date?: string;
-    facilitiesList?: Array<AvailableFacility>;
+export interface AccomodationFreeSpaces { 
+    accomodationName?: string;
+    availableBeds?: number;
 }
 

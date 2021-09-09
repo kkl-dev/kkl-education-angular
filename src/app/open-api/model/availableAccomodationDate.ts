@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { AccomodationFreeSpaces } from './accomodationFreeSpaces';
 
 
 export interface AvailableAccomodationDate { 
@@ -32,5 +33,9 @@ export interface AvailableAccomodationDate {
      * available beds in rooms
      */
     availableBedsRoom?: number;
+    /**
+     * List of accomoadation free beds.
+     */
+    freeSpaces?: Array<AccomodationFreeSpaces>;
 }
 

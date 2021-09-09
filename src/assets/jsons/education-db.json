@@ -4,431 +4,353 @@
             "id": 101,
             "name": "נס הרים",
             "iconPath": "assets/images/select-4.jpg",
-            "acommodationList": [{
-                "id": 20,
-                "name": "בקתה",
-                "maxOccupancy": 40,
-                "totalUnits": 40,
-                "img": "..href",
-                "nameEng": "something"
-            }],
+            "acommodationList": [
+                {
+                    "id": 20,
+                    "name": "בקתה",
+                    "maxOccupancy": 40,
+                    "totalUnits": 40,
+                    "img": "..href",
+                    "nameEng": "something"
+                }
+            ],
             "linkSite": "http://"
         },
         {
             "id": 102,
             "name": "מרכז שדה ציפורי",
             "iconPath": "assets/images/select-3.jpg",
-            "acommodationList": [{
-                "id": 20,
-                "name": "בקתה",
-                "maxOccupancy": 40,
-                "totalUnits": 40,
-                "img": "..href",
-                "nameEng": "something"
-            },
-            {
-                "id": 21,
-                "name": "צימר",
-                "maxOccupancy": 40,
-                "totalUnits": 40,
-                "img": "..href",
-                "nameEng": "something"
-            },
-            {
-                "id": 22,
-                "name": "חדרים",
-                "maxOccupancy": 40,
-                "totalUnits": 40,
-                "img": "..href",
-                "nameEng": "something"
-            }],
+            "acommodationList": [
+                {
+                    "id": 20,
+                    "name": "בקתה",
+                    "maxOccupancy": 40,
+                    "totalUnits": 40,
+                    "img": "..href",
+                    "nameEng": "something"
+                },
+                {
+                    "id": 21,
+                    "name": "צימר",
+                    "maxOccupancy": 40,
+                    "totalUnits": 40,
+                    "img": "..href",
+                    "nameEng": "something"
+                },
+                {
+                    "id": 22,
+                    "name": "חדרים",
+                    "maxOccupancy": 40,
+                    "totalUnits": 40,
+                    "img": "..href",
+                    "nameEng": "something"
+                }
+            ],
             "linkSite": "http://"
         },
         {
             "id": 103,
             "name": "מרכז שדה שוני",
             "iconPath": "assets/images/select-2.jpg",
-            "acommodationList": [{
-                "id": 20,
-                "name": "בקתה",
-                "maxOccupancy": 40,
-                "totalUnits": 40,
-                "img": "..href",
-                "nameEng": "something"
-            }],
+            "acommodationList": [
+                {
+                    "id": 20,
+                    "name": "בקתה",
+                    "maxOccupancy": 40,
+                    "totalUnits": 40,
+                    "img": "..href",
+                    "nameEng": "something"
+                }
+            ],
             "linkSite": "http://"
         },
         {
             "id": 104,
             "name": "מרכז שדה יתיר",
             "iconPath": "assets/images/select-1.jpg",
-            "acommodationList": [{
-                "id": 20,
-                "name": "בקתה",
-                "maxOccupancy": 40,
-                "totalUnits": 40,
-                "img": "..href",
-                "nameEng": "something"
-            }],
+            "acommodationList": [
+                {
+                    "id": 20,
+                    "name": "בקתה",
+                    "maxOccupancy": 40,
+                    "totalUnits": 40,
+                    "img": "..href",
+                    "nameEng": "something"
+                }
+            ],
             "linkSite": "http://"
         },
         {
             "id": 105,
             "name": "מרכז שדה לביא",
             "iconPath": "assets/images/select-4.jpg",
-            "acommodationList": [{
-                "id": 20,
-                "name": "בקתה",
-                "maxOccupancy": 40,
-                "totalUnits": 40,
-                "img": "..href",
-                "nameEng": "something"
-            },
-            {
-                "id": 21,
-                "name": "חדרים",
-                "maxOccupancy": 40,
-                "totalUnits": 40,
-                "img": "..href",
-                "nameEng": "something"
-            }
-        ],
+            "acommodationList": [
+                {
+                    "id": 20,
+                    "name": "בקתה",
+                    "maxOccupancy": 40,
+                    "totalUnits": 40,
+                    "img": "..href",
+                    "nameEng": "something"
+                },
+                {
+                    "id": 21,
+                    "name": "חדרים",
+                    "maxOccupancy": 40,
+                    "totalUnits": 40,
+                    "img": "..href",
+                    "nameEng": "something"
+                }
+            ],
             "linkSite": "http://"
         }
     ],
-    "AvailableAccommodationDates": [
+    "AvailableSleepingOptionsByDay": [
         {
-            "id": 1,
-            "date": "2021-09-01T00:00:00",
-            "availableBedsTent": 20,
-            "availableBedsCabin": 10,
-            "availableBedsCamping": 100,
-            "availableBedsRoom": 3
+            "date": "2021-09-13T00:00:00",
+            "sleepingOptions": [
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "בקתה",
+                "maxOccupancy": 10,
+                "availableUnits": 10,
+                "nameEng": "cabin",
+                "img": "/assets/images/cabin.svg"
+            },
+              
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "גיחה",
+                "maxOccupancy": 100,
+                "availableUnits": 1,
+                "nameEng": "cabin",
+                "img": "/assets/images/camp.svg"
+            }
+            ]
           },
           {
-            "id": 2,
-            "date": "2021-09-02T00:00:00",
-            "availableBedsTent": 10,
-            "availableBedsCabin": 4,
-            "availableBedsCamping": 80,
-            "availableBedsRoom": 2
+            "date": "2021-09-14T00:00:00",
+            "sleepingOptions": [
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "בקתה",
+                "maxOccupancy": 20,
+                "availableUnits": 10,
+                "nameEng": "cabin",
+                "img": "/assets/images/cabin.svg"
+            },
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "אוהל",
+                "maxOccupancy": 70,
+                "availableUnits": 10,
+                "nameEng": "cabin",
+                "img": "/assets/images/tent.svg"
+            },
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "גיחה",
+                "maxOccupancy": 40,
+                "availableUnits": 10,
+                "nameEng": "cabin",
+                "img": "/assets/images/camp.svg"
+              }
+            ]
           },
           {
-            "id": 3,
-            "date": "2021-09-03T00:00:00",
-            "availableBedsTent": 5,
-            "availableBedsCabin": 2,
-            "availableBedsCamping": 40,
-            "availableBedsRoom": 5
+            "date": "2021-09-15T00:00:00",
+            "sleepingOptions": [
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "בקתה",
+                "maxOccupancy": 5,
+                "availableUnits": 10,
+                "nameEng": "cabin",
+                "img": "/assets/images/cabin.svg"
+              },
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "אוהל",
+                "maxOccupancy": 10,
+                "availableUnits": 10,
+                "nameEng": "cabin",
+                "img": "/assets/images/tent.svg"
+              },
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "גיחה",
+                "maxOccupancy": 77,
+                "availableUnits": 2,
+                "nameEng": "cabin",
+                "img": "/assets/images/tent.svg"
+              }
+            ]
           },
           {
-            "id": 4,
-            "date": "2021-09-04T00:00:00",
-            "availableBedsTent": 4,
-            "availableBedsCabin": 5,
-            "availableBedsCamping": 200,
-            "availableBedsRoom": 7
+            "date": "2021-09-16T00:00:00",
+            "sleepingOptions": [
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "בקתה",
+                "maxOccupancy": 8,
+                "availableUnits": 15,
+                "nameEng": "cabin",
+                "img": "/assets/images/cabin.svg"
+              },
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "אוהל",
+                "maxOccupancy": 20,
+                "availableUnits": 10,
+                "nameEng": "cabin",
+                "img": "/assets/images/tent.svg"
+              },
+              {
+                "accomodationTypeId": 1,
+                "acoomodationTypeName": "גיחה",
+                "maxOccupancy": 60,
+                "availableUnits": 1,
+                "nameEng": "cabin",
+                "img": "/assets/images/camp.svg"
+              }
+            ]
           }
     ],
-    "AvailableFacilityDates": [{
-        "today": "2021-01-01T00:00:00",
-        "facilitiesList": [{
-            "id": 1380,
-            "name": "יום ירוק במרכז השדה",
-            "occupiedHours": [{
-                "fromHour": "09:00",
-                "tillHour": "10:00",
-                "customer": {
-                    "id": 50,
-                    "name": "סמינר הקיבוצים"
-                }
-            }]
-        }, {
-            "id": 1814,
-            "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
-            "occupiedHours": [{
-                    "fromHour": "09:00",
-                    "tillHour": "10:00",
-                    "customer": {
-                        "id": 50,
-                        "name": "סמינר הקיבוצים"
-                    }
+
+    "AvailableFacilityDates": [
+        
+        {
+            "date": "2021-09-09T:00:00:00",
+            "facilitiesList": [
+                {
+                    "id": 8,
+                    "name": "כיתה גדולה",
+                    "maxOccupancy": 40,
+                    "occupiedHours": [
+                        {
+                            "fromHour": "2021-09-09T08:00:00",
+                            "tillHour": "2021-09-09T10:00:00",
+                            "customerName": "סימינר הקיבוצים"
+                        },
+                        {
+                            "fromHour": "2021-09-09T16:00:00",
+                            "tillHour": "2021-09-09T17:00:00",
+                            "customerName": "סימינר הקיבוצים"
+                        }
+                    ]
                 },
                 {
-                    "fromHour": "12:00",
-                    "tillHour": "13:00",
-                    "customer": {
-                        "id": 50,
-                        "name": "סמינר הקיבוצים"
-                    }
+                    "id": 1380,
+                    "name": "יום ירוק במרכז השדה",
+                    "occupiedHours": []
+                },
+                {
+                    "id": 1814,
+                    "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
+                    "occupiedHours": []
+                },
+                {
+                    "id": 1819,
+                    "name": "מגרש ספורט",
+                    "occupiedHours": []
+                },
+                {
+                    "id": 1830,
+                    "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
+                    "occupiedHours": []
+                },
+                {
+                    "id": 1826,
+                    "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
+                    "occupiedHours": []
+                },
+                {
+                    "id": 1840,
+                    "name": "אולם כנסים נס הרים",
+                    "occupiedHours": []
+                },
+                {
+                    "id": 398,
+                    "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
+                    "occupiedHours": []
+                },
+                {
+                    "id": 1829,
+                    "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
+                    "occupiedHours": []
+                },
+                {
+                    "id": 1828,
+                    "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
+                    "occupiedHours": []
                 }
             ]
-        }, {
-            "id": 1819,
-            "name": "מגרש ספורט",
-            "occupiedHours": []
-        }, {
-            "id": 1429,
-            "name": "נס הרים -  בישול עצמי בגיחה קטנה ",
-            "occupiedHours": {
-                "fromHour": "09:00",
-                "tillHour": "10:00",
-                "customer": {
-                    "id": 50,
-                    "name": "סמינר הקיבוצים"
+        },
+        {
+            "date": "2021-09-10T:00:00:00",
+            "facilitiesList": [
+                {
+                    "id": 8,
+                    "name": "כיתה קטנה",
+                    "maxOccupancy": 20,
+                    "occupiedHours": [
+                        {
+                            "fromHour": "2021-09-10T09:00:00",
+                            "tillHour": "2021-09-10T11:00:00",
+                            "customerName": "סימינר הקיבוצים"
+                        },
+                        {
+                            "fromHour": "2021-09-10T14:00:00",
+                            "tillHour": "2021-09-10T15:00:00",
+                            "customerName": "קיבוץ לביא"
+                        }
+                    ]
                 }
-            }
-        }, {
-            "id": 1368,
-            "name": "נס הרים-בישול עצמי בשטח מול כיתות הלימוד",
-            "occupiedHours": []
-        }, {
-            "id": 1359,
-            "name": "פעילות במיתחם הגיחה ללא לינה (לביא/ציפורי/נס הרים)",
-            "occupiedHours": []
-        }, {
-            "id": 381,
-            "name": "ציוד אור קולי (ברקו+מחשב+מסך)",
-            "occupiedHours": []
-        }, {
-            "id": 1831,
-            "name": "כיתה רגילה (25 משתתפים) ל 3 שעות",
-            "occupiedHours": {
-                "fromHour": "09:00",
-                "tillHour": "10:00",
-                "customer": {
-                    "id": 50,
-                    "name": "סמינר הקיבוצים"
+            ]
+        },
+        {
+            "date": "2021-09-09T:00:00:00",
+            "facilitiesList": [
+                {
+                    "id": 8,
+                    "name": "כיתה גדולה",
+                    "maxOccupancy": 40,
+                    "occupiedHours": [
+                        {
+                            "fromHour": "2021-09-09T08:00:00",
+                            "tillHour": "2021-09-09T10:00:00",
+                            "customerName": "סימינר הקיבוצים"
+                        },
+                        {
+                            "fromHour": "2021-09-09T16:00:00",
+                            "tillHour": "2021-09-09T17:00:00",
+                            "customerName": "סימינר הקיבוצים"
+                        }
+                    ]
                 }
-            }
-        }, {
-            "id": 1827,
-            "name": "כיתה רגילה (25 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }, {
-            "id": 1830,
-            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1826,
-            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }, {
-            "id": 1840,
-            "name": "אולם כנסים נס הרים",
-            "occupiedHours": {
-                "fromHour": "09:00",
-                "tillHour": "10:00",
-                "customer": {
-                    "id": 50,
-                    "name": "סמינר הקיבוצים"
+            ]
+        },
+        {
+            "date": "2021-09-10T:00:00:00",
+            "facilitiesList": [
+                {
+                    "id": 8,
+                    "name": "כיתה קטנה",
+                    "maxOccupancy": 20,
+                    "occupiedHours": [
+                        {
+                            "fromHour": "2021-09-10T09:00:00",
+                            "tillHour": "2021-09-10T11:00:00",
+                            "customerName": "סימינר הקיבוצים"
+                        },
+                        {
+                            "fromHour": "2021-09-10T14:00:00",
+                            "tillHour": "2021-09-10T15:00:00",
+                            "customerName": "קיבוץ לביא"
+                        }
+                    ]
                 }
-            }
-        }, {
-            "id": 398,
-            "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
-            "occupiedHours": []
-        }, {
-            "id": 1829,
-            "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1828,
-            "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }]
-    }, {
-        "today": "2021-01-02T00:00:00",
-        "facilitiesList": [{
-            "id": 1380,
-            "name": "יום ירוק במרכז השדה",
-            "occupiedHours": []
-        }, {
-            "id": 1814,
-            "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
-            "occupiedHours": []
-        }, {
-            "id": 1819,
-            "name": "מגרש ספורט",
-            "occupiedHours": []
-        }, {
-            "id": 1429,
-            "name": "נס הרים -  בישול עצמי בגיחה קטנה ",
-            "occupiedHours": []
-        }, {
-            "id": 1368,
-            "name": "נס הרים-בישול עצמי בשטח מול כיתות הלימוד",
-            "occupiedHours": []
-        }, {
-            "id": 1359,
-            "name": "פעילות במיתחם הגיחה ללא לינה (לביא/ציפורי/נס הרים)",
-            "occupiedHours": []
-        }, {
-            "id": 381,
-            "name": "ציוד אור קולי (ברקו+מחשב+מסך)",
-            "occupiedHours": []
-        }, {
-            "id": 1831,
-            "name": "כיתה רגילה (25 משתתפים) ל 3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1827,
-            "name": "כיתה רגילה (25 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }, {
-            "id": 1830,
-            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1826,
-            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }, {
-            "id": 1840,
-            "name": "אולם כנסים נס הרים",
-            "occupiedHours": []
-        }, {
-            "id": 398,
-            "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
-            "occupiedHours": []
-        }, {
-            "id": 1829,
-            "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1828,
-            "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }]
-    }, {
-        "today": "2021-01-03T00:00:00",
-        "facilitiesList": [{
-            "id": 1380,
-            "name": "יום ירוק במרכז השדה",
-            "occupiedHours": []
-        }, {
-            "id": 1814,
-            "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
-            "occupiedHours": []
-        }, {
-            "id": 1819,
-            "name": "מגרש ספורט",
-            "occupiedHours": []
-        }, {
-            "id": 1429,
-            "name": "נס הרים -  בישול עצמי בגיחה קטנה ",
-            "occupiedHours": []
-        }, {
-            "id": 1368,
-            "name": "נס הרים-בישול עצמי בשטח מול כיתות הלימוד",
-            "occupiedHours": []
-        }, {
-            "id": 1359,
-            "name": "פעילות במיתחם הגיחה ללא לינה (לביא/ציפורי/נס הרים)",
-            "occupiedHours": []
-        }, {
-            "id": 381,
-            "name": "ציוד אור קולי (ברקו+מחשב+מסך)",
-            "occupiedHours": []
-        }, {
-            "id": 1831,
-            "name": "כיתה רגילה (25 משתתפים) ל 3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1827,
-            "name": "כיתה רגילה (25 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }, {
-            "id": 1830,
-            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1826,
-            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }, {
-            "id": 1840,
-            "name": "אולם כנסים נס הרים",
-            "occupiedHours": []
-        }, {
-            "id": 398,
-            "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
-            "occupiedHours": []
-        }, {
-            "id": 1829,
-            "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1828,
-            "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }]
-    }, {
-        "today": "2021-01-04T00:00:00",
-        "facilitiesList": [{
-            "id": 1380,
-            "name": "יום ירוק במרכז השדה",
-            "occupiedHours": []
-        }, {
-            "id": 1814,
-            "name": "יום ירוק במרכז שדה(כולל מטבח שדה עד 150 משתתפים)",
-            "occupiedHours": []
-        }, {
-            "id": 1819,
-            "name": "מגרש ספורט",
-            "occupiedHours": []
-        }, {
-            "id": 1429,
-            "name": "נס הרים -  בישול עצמי בגיחה קטנה ",
-            "occupiedHours": []
-        }, {
-            "id": 1368,
-            "name": "נס הרים-בישול עצמי בשטח מול כיתות הלימוד",
-            "occupiedHours": []
-        }, {
-            "id": 1359,
-            "name": "פעילות במיתחם הגיחה ללא לינה (לביא/ציפורי/נס הרים)",
-            "occupiedHours": []
-        }, {
-            "id": 381,
-            "name": "ציוד אור קולי (ברקו+מחשב+מסך)",
-            "occupiedHours": []
-        }, {
-            "id": 1831,
-            "name": "כיתה רגילה (25 משתתפים) ל 3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1827,
-            "name": "כיתה רגילה (25 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }, {
-            "id": 1830,
-            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ל3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1826,
-            "name": "כיתת לימוד גדולה קטלב (55 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }, {
-            "id": 1840,
-            "name": "אולם כנסים נס הרים",
-            "occupiedHours": []
-        }, {
-            "id": 398,
-            "name": "יום עיון אולם אורן (מחשבים) + אר\"צ + קפה רץ",
-            "occupiedHours": []
-        }, {
-            "id": 1829,
-            "name": "כיתת לימוד מחשבים(14 משתתפים) ל 3 שעות",
-            "occupiedHours": []
-        }, {
-            "id": 1828,
-            "name": "כיתת לימוד מחשבים(14 משתתפים) ליום מלא",
-            "occupiedHours": []
-        }]
-    }]
-
+            ]
+        }
+    ]
 }
-
-
- 

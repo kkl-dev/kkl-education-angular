@@ -79,7 +79,7 @@ paths:
     get:
       tags:
       - user
-      operationId: getLookupAcommodationType
+      operationId: GetLookupAcommodationType
       parameters:
       - name: fieldForestCenterId
         in: path
@@ -102,7 +102,7 @@ paths:
       tags:
       - user
       operationId: GetAvailableAccomodationDates
-      description: get the available accomodation units number by dates range
+      description: ''
       parameters:
       - name: fieldForestCenterId
         in: path
@@ -138,12 +138,13 @@ paths:
                   $ref: '#/components/schemas/AvailableAccomodationDate'
         "400":
           description: invalid data
-  /availableLodgingDates/{fieldForestCenterId}/{fromDate}/{tillDate}:
+
+  /availableSleepingOptions/{fieldForestCenterId}/{fromDate}/{tillDate}:
     get:
       tags:
       - user
-      operationId: GetAvailableLodgingDates
-      description : getting total occupancy for lodging type
+      operationId: GetAvailableSleepingOptionsByDay
+      description : ''
       parameters:
       - name: fieldForestCenterId
         in: path
@@ -176,7 +177,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AvailableLodgingDate'
+                  $ref: '#/components/schemas/AvailableSleepingOptionsByDay'
         "400":
           description: invalid data
   /getAvailableFacilities/{fieldForestCenterId}/{fromDate}/{tillDate}:
@@ -1005,14 +1006,13 @@ components:
           type: string
           description: 'For compatibility reasons'
           example: ..href
-        # need to check if that property needed
         maxOccupancy:
           type: integer
           description: max occupancy (beds) per one lodging place
           example: 40
         totalUnits:
           type: integer
-          description: m
+          description: num of units in fieldforestcenter
           example: 40
     AvailableAccomodationDate:
       required:
@@ -1024,36 +1024,36 @@ components:
           type: string
           description: Current date of a month title
           format: date-time
-        availableBedsTent:
-          type: integer
-          description: available lodging places in tents
-          example: 20
-        availableBedsCabin:
-          type: integer
-          description: available beds in cabins
-          example: 10
-        availableBedsCamping:
-          type: integer
-          description: available lodging places in  campaing
-          example: 10
-        availableBedsRoom:
-          type: integer
-          description: available beds in rooms
-          example: 10
-
-    AvailableLodgingDate:
+        freeSpaces:
+          type: array
+          description: List of accomoadation free beds.
+          items:
+            $ref: '#/components/schemas/AccomodationFreeSpaces'
+        
+    AccomodationFreeSpaces:
        type: object
-       description : decsribe the total occupancy for 
+       description :  Number of available beds for a certain accomoadation type (ex. Cabin, room, tent etc.)
+       properties:
+        accomodationName:
+          type: string
+          example: name
+        availableBeds:
+          type: integer
+          example: 20
+
+    AvailableSleepingOptionsByDay:
+       type: object
+       description : Available sleeping options by Day and maximum occupancy.
        properties:
         date:
           type: string
           format: date
-        AvailableLodgingList:
+        sleepingOptions:
           type: array
           items:
-            $ref: '#/components/schemas/AvailableLodging'
+            $ref: '#/components/schemas/SleepingOptions'
 
-    AvailableLodging: 
+    SleepingOptions: 
         type: object
         properties:
          accomodationTypeId:
@@ -1064,11 +1064,12 @@ components:
            example: 'בקתה'
          maxOccupancy:
            type: integer
+           description: Maximum per lodging unit.
            example: 20
          availableUnits:
-           type: integer
-           description: avaliable units for day
-           example: 10
+           type: integer           
+           description: Number of avaliable lodging units for a day
+           example: 2
          nameEng: 
            type: string
            example: "cabin"

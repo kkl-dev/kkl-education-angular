@@ -22,9 +22,7 @@ import { CheckAvailabilityService } from 'src/app/utilities/services/check-avail
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  //@ViewChild('forestCenter') forestCenter: ElementRef | undefined;
-  //@ViewChild('forestCenter', {static: true}) signupForm: NgForm;
-  //@Input() categoryId: string;
+
   @ViewChild('resultsForm') signupForm: NgForm;
   @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
 
@@ -37,9 +35,17 @@ export class HeaderComponent implements OnInit {
   forestCenterOptions: any | undefined;
   forestCenterId: number = 101;
   formOptions: any;
-  location = '';
-
   freeSpacesArray1: FreeSpace[] = [];
+  options: CalendarOptions = {
+    firstCalendarDay: 0,
+    format: 'LL/dd/yyyy',
+    closeOnSelected: true,
+    // minDate: addDays(new Date(), 5),
+    // maxDate: addDays(new Date(), 10),
+    minYear: 2019,
+    maxYear: 2021,
+    freeSpacesArray: this.freeSpacesArray1,
+  };
 
   constructor(public usersService: UserService, private userDataService: UserDataService,
     private checkAvailabillityService: CheckAvailabilityService,
@@ -52,17 +58,12 @@ export class HeaderComponent implements OnInit {
     // this.dateObjChanged(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
     this.dateObjChanged(this.tripService.sleepingDatesValues.calendarInput);
 
-    //this.location = this.checkAvailabillityService.checkAvailabilltyValues.sleepingPlace;
-    this.location = this.tripService.sleepingDatesValues.forestCenter;
-
     this.freeSpacesArray1 = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
 
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
       closeOnSelected: true,
-      // minDate: addDays(new Date(), 5),
-      // maxDate: addDays(new Date(), 10),
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
       freeSpacesArray: this.freeSpacesArray1,
@@ -71,8 +72,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.tripService.forestCenter.subscribe(forestCenter => {
-      //this.forestCenter = result; // this set's the username to the default observable value
-      console.log('header --> forestCenter result:', forestCenter);
       this.forestCenter = forestCenter;
     });
 
@@ -144,14 +143,14 @@ export class HeaderComponent implements OnInit {
 
   updateForestCenter(id: any) {
     this.forestCenter = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
-    console.log('forestCenter obj =>', this.forestCenter);
+    //console.log('forestCenter obj =>', this.forestCenter);
     this.tripService.updateForestCenter(this.forestCenter);
   }
 
-  updateTripDates(id: any) {
-    this.tripDates = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
-    console.log('new forestCenter obj =>', this.forestCenter);
-    this.tripService.updateDatesObject(this.forestCenter);
+  updateTripDates(dates: any) {
+    // this.tripDates = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
+    console.log('updateTripDates =>', this.forestCenter);
+    this.tripService.updateSleepingDates(dates);
   }
 
   getDaysArray(start: any, end: any) {
@@ -160,7 +159,6 @@ export class HeaderComponent implements OnInit {
     }
     return arr;
   };
-
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
@@ -179,20 +177,13 @@ export class HeaderComponent implements OnInit {
     return freeSpacesArrayTemp;
   }
 
-  options: CalendarOptions = {
-    firstCalendarDay: 0,
-    format: 'LL/dd/yyyy',
-    closeOnSelected: true,
-    // minDate: addDays(new Date(), 5),
-    // maxDate: addDays(new Date(), 10),
-    minYear: 2019,
-    maxYear: 2021,
-    freeSpacesArray: this.freeSpacesArray1,
-  };
-
-  public dateObjChanged(e: string) {
-
+  dateObjChanged(e: string) {
+    
     if (e && e.includes('-')) {
+      console.log('dateObjChanged =>', e);
+      //this.updateTripDates(e);
+      this.tripService.updateSleepingDates(e);
+
       this.emitNewDates.emit(e);
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
@@ -208,5 +199,4 @@ export class HeaderComponent implements OnInit {
       this.dateObj.to = '';
     }
   }
-  
 }

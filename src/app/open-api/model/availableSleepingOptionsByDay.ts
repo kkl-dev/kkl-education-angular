@@ -9,14 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AvailableFacility } from './availableFacility';
+import { SleepingOptions } from './sleepingOptions';
 
 
 /**
- * Describes the availability of the facilities by date
+ * Available sleeping options by Day and maximum occupancy.
  */
-export interface FacilityDate { 
+export interface AvailableSleepingOptionsByDay { 
     date?: string;
-    facilitiesList?: Array<AvailableFacility>;
+    sleepingOptions?: Array<SleepingOptions>;
 }
 

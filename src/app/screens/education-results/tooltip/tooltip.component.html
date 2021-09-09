@@ -4,10 +4,13 @@
   <div class="tooltip__occupied-hours">
     <div class="tooltip__occupied-hours-hour" *ngIf='hours.length===0'> טרם שורינו מקומות </div>
     <div class="tooltip__occupied-hours-hour" *ngFor="let item of hours">
+      <!-- <span class="tooltip__occupied-hours-hour-start">{{item.fromHour | date:'shortTime' }}</span> -->
       <span class="tooltip__occupied-hours-hour-start">{{item.startingHour | numberToTimePipe}}</span>
       <span class="tooltip__occupied-hours-hour-end">
         <span> -</span> {{ item.endingHour | numberToTimePipe}}</span>
+        <!-- <span> -</span> {{ item.tillHour | date:'shortTime'</span> -->
       <span class="tooltip__occupied-hours-hour-user">נתפס ע"י {{ item.user }} </span>
+      <!-- <span class="tooltip__occupied-hours-hour-user">נתפס ע"י {{ item.customerName }} </span> -->
     </div>
   </div>
 

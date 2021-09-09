@@ -22,7 +22,7 @@ export interface InfoCard {
 
 export class EducationResultsComponent implements OnInit {
   // @ViewChild('child') child!: MapsComponent;
-  centerField: string = 'מרכז שדה - נס הרים';
+  // centerField: string = 'מרכז שדה - נס הרים';
   forestCenter: any | undefined;
   //forestCenter: any | undefined = this.tripService.centerField || {};
 
@@ -30,30 +30,9 @@ export class EducationResultsComponent implements OnInit {
   dateObj: any;
   fromOtherComponent: boolean = true;
 
-  // public sleepingOptionsArray = [
-  //   {
-  //     svgUrl: 'assets/images/cabin.svg',
-  //     sleepingAreas: 42,
-  //     avialableSpaces: 16,
-  //     type: 'בקתות',
-  //     singleUnit: 'בבקתה'
-  //   },
-  //   {
-  //     svgUrl: 'assets/images/tent.svg',
-  //     sleepingAreas: 28,
-  //     avialableSpaces: 36,
-  //     type: 'אוהלים',
-  //     singleUnit: 'באוהל'
-  //   },
-  //   {
-  //     svgUrl: 'assets/images/camp.svg',
-  //     sleepingAreas: 22,
-  //     avialableSpaces: 120,
-  //     type: 'גיחה',
-  //     singleUnit: 'לנים'
-  //   }
-  // ];
-  public facilitiesArray: InfoCard[] = [];
+  //public facilitiesArray: InfoCard[] = [];
+  public facilitiesArray: any = [];
+
   public chosenDate: number = 0
 
   sleepingOptionsByDay: {
@@ -172,12 +151,8 @@ export class EducationResultsComponent implements OnInit {
       }
     ];
 
-  public changeDate(newDate: number) {
-    this.chosenDate = newDate;
-    this.checkAvailabillityService.getNewFacilitiesArray(
-      this.sleepingOptionsByDay[newDate].day
-    );
-  }
+  AvailableSleepingOptions: any;
+
 
   constructor(private router: Router, private checkAvailabillityService: CheckAvailabilityService,
     public usersService: UserService, private route: ActivatedRoute,
@@ -194,13 +169,26 @@ export class EducationResultsComponent implements OnInit {
     });
 
     this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
+    console.log('facilitiesArray1', this.facilitiesArray);
+
+    // this.facilitiesArray = this.api.getAvailableFacilityDates(this.AvailableSleepingOptions[0].day);
+    // console.log('facilitiesArray2', this.facilitiesArray);
+
     console.log(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
     // this.changeDatesHandler(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
 
     console.log(this.tripService.sleepingDatesValues.calendarInput);
-     this.changeDatesHandler(this.tripService.sleepingDatesValues.calendarInput);
+    this.changeDatesHandler(this.tripService.sleepingDatesValues.calendarInput);
 
   }
+  //yak del not in use
+  // public changeDate(newDate: number) {
+  //   this.chosenDate = newDate;
+  //   this.checkAvailabillityService.getNewFacilitiesArray(
+  //     this.sleepingOptionsByDay[newDate].day
+  //   );
+  // }
+
 
   ngOnInit() {
 
@@ -214,12 +202,6 @@ export class EducationResultsComponent implements OnInit {
         console.log('value :' + value);
       }
     }
-
-    // this.availabilityItemsArray = [
-    //   { date: '15.06.21', text: '1' },
-    //   { date: '16.06.21', text: '2' },
-    //   { date: '17.06.21', text: '3' }
-    // ]
 
     // this.usersService.getLookupFieldForestCenters().subscribe(
     //   response => {
@@ -263,7 +245,7 @@ export class EducationResultsComponent implements OnInit {
 
   getAvailableAccommodationDates() {
     //get forest center fake
-    this.api.getAvailableAccommodationDates().subscribe((dates) => {
+    this.api.getAvailableSleepingOptionsByDay('').subscribe((dates) => {
       if (dates) {
         console.log('dates', { dates });
 
@@ -283,21 +265,43 @@ export class EducationResultsComponent implements OnInit {
 
 
   currentDayHandler(newCurrentDay: number) {
+    console.log('currentDayHandler: newCurrentDay: ' + newCurrentDay)
+
     this.chosenDate = newCurrentDay;
-    this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(
-      this.sleepingOptionsByDay[newCurrentDay].day
-    );
+
+    this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day);
+    console.log('facilitiesArray1', this.facilitiesArray);
+
+    // this.facilitiesArray = this.api.getAvailableFacilityDates(this.AvailableSleepingOptions[newCurrentDay].day);
+    // console.log('facilitiesArray2', this.facilitiesArray)
+    this.api.getAvailableFacilityDates('').subscribe((data) => {
+      console.log('data', { data });
+
+      if (data) {
+        //this.facilitiesArray = data[0];
+
+      } else {
+        console.log('no data in dates');
+      }
+    },
+      error => {
+        console.log({ error });
+      });
   }
 
+
+
   changeDatesHandler(newDates: string) {
+    console.log('changeDatesHandler: newDates : ' + newDates)
+
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
 
     let date1 = new Date(dates[0]);
     let date2 = new Date(dates[1]);
-    console.log('date 1', date1);
-    console.log('date 2', date2);
+    // console.log('date 1', date1);
+    // console.log('date 2', date2);
 
     const utc1 = Date.UTC(
       date1.getFullYear(),
@@ -323,14 +327,14 @@ export class EducationResultsComponent implements OnInit {
           {
             svgUrl: 'assets/images/cabin.svg',
             sleepingAreas: 5,
-            avialableSpaces: 7,
+            avialableSpaces: Math.floor(Math.random() * 8),
             type: 'בקתות',
             singleUnit: 'בבקתה',
           },
           {
             svgUrl: 'assets/images/tent.svg',
             sleepingAreas: 1,
-            avialableSpaces: 20,
+            avialableSpaces: Math.floor(Math.random() * 20),
             type: 'אוהלים',
             singleUnit: 'באוהל',
           },
@@ -346,9 +350,10 @@ export class EducationResultsComponent implements OnInit {
       newDate = new Date(date1.setDate(date1.getDate() + 1));
     }
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
+    this.AvailableSleepingOptions = newSleepingOptionsByDay;
   }
 
-  public onClick() {
+  onClick() {
     this.router.navigateByUrl('education/order-tour/squad-assemble');
   }
 }

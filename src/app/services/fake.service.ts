@@ -19,16 +19,22 @@ export class FakeService {
     return this.http.get(`${this.url}forestCenters`, { headers });
   }
 
-  getAvailableAccommodationDates() {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
-    return this.http.get(`${this.url}AvailableAccommodationDates`, { headers });
-  }
+  // getAvailableAccommodationDates() {
+  //   const headers = new HttpHeaders()
+  //     .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
+  //   return this.http.get(`${this.url}AvailableAccommodationDates`, { headers });
+  // }
 
-  getAvailableFacilityDates() {
+  getAvailableFacilityDates(day: any) {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
     return this.http.get(`${this.url}AvailableFacilityDates`, { headers });
+  }
+
+  getAvailableSleepingOptionsByDay(dates: string) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    return this.http.get(`${this.url}AvailableSleepingOptionsByDay`, { headers });
   }
 
   // getAll(): Observable<any> {

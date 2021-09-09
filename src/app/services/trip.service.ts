@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FieldForestCenter } from 'src/app/open-api/model/models';
 import { BehaviorSubject } from 'rxjs';
+import { FakeService } from 'src/app/services/fake.service';
+
 
 
 
@@ -8,7 +10,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class TripService {
-  centerField: FieldForestCenter | undefined;
+
+  constructor(public fakeApi: FakeService) { }
+
+  centerField: FieldForestCenter | undefined; // id 
   dateObj: any;
   sleepingDates: any;
 
@@ -61,65 +66,7 @@ export class TripService {
       ]
     };
 
-    availableLodgingByDate: any = [
-      {
-        "date": "2021-09-01T00:00:00",
-        "AvailableLodgingList": [
-          {
-            "accomodationTypeId": 1,
-            "acoomodationTypeName": "בקתה",
-            "maxOccupancy": 20,
-            "availableUnits": 10,
-            "nameEng": "cabin",
-            "img": "בקתה"
-          },
-          {
-            "accomodationTypeId": 1,
-            "acoomodationTypeName": "אוהל",
-            "maxOccupancy": 20,
-            "availableUnits": 10,
-            "nameEng": "cabin",
-            "img": "בקתה"
-          },
-          {
-            "accomodationTypeId": 1,
-            "acoomodationTypeName": "גיחה",
-            "maxOccupancy": 100,
-            "availableUnits": 10,
-            "nameEng": "cabin",
-            "img": "בקתה"
-          }
-        ]
-      },
-      {
-        "date": "2021-09-02T00:00:00",
-        "AvailableLodgingList": [
-          {
-            "accomodationTypeId": 1,
-            "acoomodationTypeName": "בקתה",
-            "maxOccupancy": 20,
-            "availableUnits": 10,
-            "nameEng": "cabin",
-            "img": "בקתה"
-          },
-          {
-            "accomodationTypeId": 1,
-            "acoomodationTypeName": "אוהל",
-            "maxOccupancy": 20,
-            "availableUnits": 5,
-            "nameEng": "cabin",
-            "img": "בקתה"
-          },
-          {
-            "accomodationTypeId": 1,
-            "acoomodationTypeName": "גיחה",
-            "maxOccupancy": 20,
-            "availableUnits": 1,
-            "nameEng": "cabin",
-            "img": "בקתה"
-          }
-        ]
-      },
+    public AvailableSleepingOptionsByDay = new BehaviorSubject<any>([
       {
         "date": "2021-09-03T00:00:00",
         "AvailableLodgingList": [
@@ -129,7 +76,7 @@ export class TripService {
             "maxOccupancy": 20,
             "availableUnits": 10,
             "nameEng": "cabin",
-            "img": "בקתה"
+            "img": "/assets/images/cabin.svg"
           },
           {
             "accomodationTypeId": 1,
@@ -137,7 +84,7 @@ export class TripService {
             "maxOccupancy": 20,
             "availableUnits": 10,
             "nameEng": "cabin",
-            "img": "בקתה"
+            "img": "/assets/images/cabin.svg"
           },
           {
             "accomodationTypeId": 1,
@@ -145,7 +92,7 @@ export class TripService {
             "maxOccupancy": 20,
             "availableUnits": 10,
             "nameEng": "cabin",
-            "img": "בקתה"
+            "img": "/assets/images/cabin.svg"
           }
         ]
       },
@@ -156,19 +103,17 @@ export class TripService {
             "accomodationTypeId": 1,
             "acoomodationTypeName": "בקתה",
             "maxOccupancy": 20,
-          // "availableBeds": 34,
             "availableUnits": 10,
             "nameEng": "cabin",
-            "img": "בקתה"
+            "img": "/assets/images/cabin.svg"
           },
           {
             "accomodationTypeId": 1,
             "acoomodationTypeName": "אוהל",
-            // "availableBeds": 34,
             "maxOccupancy": 100,
             "availableUnits": 144,
             "nameEng": "cabin",
-            "img": "בקתה"
+            "img": "assets/images/tent.svg"
           },
           {
             "accomodationTypeId": 1,
@@ -176,11 +121,11 @@ export class TripService {
             "maxOccupancy": 20,
             "availableUnits": 10,
             "nameEng": "cabin",
-            "img": "בקתה"
+            "img": "/assets/images/cabin.svg"
           }
         ]
       }
-    ]
+    ]);
 
   public sleepingDatesObj = new BehaviorSubject<any>([
     {
@@ -215,9 +160,8 @@ export class TripService {
   ]);
 
   forestCenter = this.centerFieldObj.asObservable();
-  tripDates = this.sleepingDatesObj.asObservable();
+  AvailableSleepingOptions = this.AvailableSleepingOptionsByDay.asObservable();
 
-  constructor() { }
 
   updateForestCenter(forestCenter: any) {
     this.centerFieldObj.next(forestCenter);
@@ -225,8 +169,29 @@ export class TripService {
     this.sleepingDatesValues.forestCenter = forestCenter.name;
   }
 
-  updateDatesObject(dates: any) {
-    this.sleepingDatesObj.next(dates);
+  // updateAvailableSleepingOptionsObj(dates: any) {
+  //   this.sleepingDatesObj.next(dates);
+  // }
+
+  updateSleepingDates(dates: any) {
+    this.sleepingDates = dates;
+    this.getAvailableSleepingOptions(dates)
+  }
+
+  getAvailableSleepingOptions(dates: string) {    
+    this.fakeApi.getAvailableSleepingOptionsByDay(dates).subscribe((sleepingAvailability) => {
+      if (sleepingAvailability) {
+        console.log('sleepingAvailability ==>', { sleepingAvailability });
+        
+        this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
+
+      } else {
+        console.log('no data in sleepingAvailability');
+      }
+    },
+      error => {
+        console.log({ error });
+      });
   }
 
 }

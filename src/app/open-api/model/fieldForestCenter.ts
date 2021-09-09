@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AcommodationTypeByFieldCenter } from './acommodationTypeByFieldCenter';
+import { AcommodationType } from './acommodationType';
 
 
 export interface FieldForestCenter { 
@@ -28,7 +28,7 @@ export interface FieldForestCenter {
     /**
      * list of available accomoadation types
      */
-    acommodationList?: Array<AcommodationTypeByFieldCenter>;
+    acommodationList?: Array<AcommodationType>;
     /**
      * gg
      */

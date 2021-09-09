@@ -13,7 +13,7 @@ import { CheckAvailabilityService } from 'src/app/utilities/services/check-avail
 import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from '../../../services/trip.service'
-import { AcommodationTypeByFieldCenter, AvailableAccomodationDate, FieldForestCenter } from 'src/app/open-api/model/models';
+import { AvailableAccomodationDate, FieldForestCenter, AcommodationType } from 'src/app/open-api/model/models';
 import { FakeService } from 'src/app/services/fake.service';
 
 @Component({
@@ -33,7 +33,7 @@ export class EducationComponent implements OnInit {
   routerLinkContinue = '/education/results'
   formOptions!: FieldForestCenter[];
   AvailableDates!: AvailableAccomodationDate[];
-  AcommodationTypes!: AcommodationTypeByFieldCenter[];
+  AcommodationTypes!: AcommodationType[];
   // SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
 
   constructor(public usersService: UserService, public tripService: TripService,

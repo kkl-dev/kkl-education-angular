@@ -183,6 +183,8 @@ export class SleepingOptionsComponent implements OnInit {
   questions: QuestionBase<string | number>[] = [];
 
   changeDatesHandler(newDates: string) {
+    console.log('changeDatesHandler')
+
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
     if (newDates && !newDates.includes('-')) return;
@@ -233,7 +235,7 @@ export class SleepingOptionsComponent implements OnInit {
             type: 'גיחה',
             singleUnit: 'לנים',
           },
-          
+
         ],
       });
       newDate = new Date(date1.setDate(date1.getDate() + 1));

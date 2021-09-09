@@ -10,14 +10,16 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/accomodationFreeSpaces.ts
 model/account.ts
-model/acommodationTypeByFieldCenter.ts
+model/acommodationType.ts
 model/activityType.ts
 model/ageGroup.ts
 model/area.ts
 model/attribute.ts
 model/availableAccomodationDate.ts
 model/availableFacility.ts
+model/availableSleepingOptionsByDay.ts
 model/baseCustomer.ts
 model/budget.ts
 model/budgetByParams.ts
@@ -43,6 +45,7 @@ model/orderModel.ts
 model/orderType.ts
 model/paginationSpecParams.ts
 model/participantType.ts
+model/sleepingOptions.ts
 model/status.ts
 model/supplier.ts
 model/tripInfo.ts
