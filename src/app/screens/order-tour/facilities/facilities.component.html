@@ -1,0 +1,91 @@
+<div class="facilities">
+    <div class="content-1">
+        <div class="card">
+            <div class="header">
+                <select>
+                    <option>יום 1</option>
+                    <option>יום 2</option>
+                </select>
+                <p>יום ג' 15.06.21</p>
+                <div class="arrows">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </div>
+            </div>
+            <div class="description">
+                <div class="square" [ngStyle]="{background: '#448ecd'}"></div>
+                <p>מתקן</p>
+                <div class="square" [ngStyle]="{background: '#37c563'}"></div>
+                <p>פעילות</p>
+                <div class="square" [ngStyle]="{background: '#d220ba'}"></div>
+                <p>תוספות בתשלום</p>
+            </div>
+            <div class="timeline">
+            <app-calendar></app-calendar>
+            </div>
+
+        </div>
+    </div>
+    <div class="content-2">
+        <div class="header">
+            <div class="title">
+                <p>הוספת פעילות ללו"ז</p>
+                <button>הוספת פעילות חדשה +</button>
+            </div>
+            <div class="forms">
+                <app-form-container [questions]='formArray' [cols]='4'>
+                </app-form-container>
+            </div>
+        </div>
+        <div class="cards">
+            <div class="titles">
+                <p>מתקני מרכז שדה</p>
+            </div>
+            <div class="info-card">
+                <ng-container *ngFor="let item of facilitiesArray; let i = index">
+                    <app-info-card class="facilities-items-item" *ngIf='5 > i' [item]="item">
+                        <app-tooltip class="app-tooltip" [hours]="item.availability">
+                        </app-tooltip>
+                    </app-info-card>
+                </ng-container>
+                <ng-container *ngFor="let item of facilitiesArray; let i = index">
+                    <app-info-card class="facilities-items-item" *ngIf='i >= 5 && hiddenElements.facilities'
+                        [item]="item">
+                        <app-tooltip class="app-tooltip" [hours]="item.availability">
+                        </app-tooltip>
+                    </app-info-card>
+                </ng-container>
+            </div>
+            <p class="full-list"
+                (click)="hiddenElements.facilities ? hiddenElements.facilities = false : hiddenElements.facilities = true">
+                {{hiddenElements.facilities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p>
+        </div>
+        <div class="cards">
+            <div class="titles">
+                <p>פעילויות קבועות</p>
+            </div>
+            <div class="info-card" id="activities">
+                <ng-container *ngFor="let item of activitiesArray; let i = index">
+                    <app-info-card class="facilities-items-item" [item]="item" *ngIf='5 > i'>
+                    </app-info-card>
+                </ng-container>
+                <ng-container *ngFor="let item of activitiesArray; let i = index">
+                    <app-info-card class="facilities-items-item" [item]="item" *ngIf='i >= 5 && hiddenElements.activities'>
+                    </app-info-card>
+                </ng-container>
+            </div>
+            <p class="full-list"
+                (click)="hiddenElements.activities ? hiddenElements.activities = false : hiddenElements.activities = true">
+                {{hiddenElements.activities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p>
+        </div>
+        <div class="cards">
+            <div class="titles">
+                <p>פעילויות קרובות</p>
+            </div>
+            <div class="card-container">
+                <app-activities-card *ngFor="let card of upComingActivitiesArray" [obj]='card'></app-activities-card>
+            </div>
+            <app-pagination pagesCount='5' currentPage='1'></app-pagination>
+        </div>
+    </div>
+</div>

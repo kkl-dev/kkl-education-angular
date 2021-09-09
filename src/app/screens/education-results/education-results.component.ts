@@ -11,7 +11,7 @@ export interface InfoCard {
   svgUrl: string;
   headline: string;
   subHeadline?: string;
-  availability: TooltipDataModel[];
+  availability?: TooltipDataModel[];
 }
 
 @Component({
@@ -30,6 +30,7 @@ export class EducationResultsComponent implements OnInit {
   dateObj: any;
   fromOtherComponent: boolean = true;
 
+<<<<<<< HEAD
   //public facilitiesArray: InfoCard[] = [];
   public facilitiesArray: any = [];
 
@@ -166,6 +167,11 @@ export class EducationResultsComponent implements OnInit {
       if (!this.fromOtherComponent) {
         this.getAvailableAccommodationDates();
       }
+=======
+  ngOnInit() {
+    this.tripService.forestCenter.subscribe(result => {
+      this.forestCenter = result; // this set's the username to the default observable value
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
     });
 
     this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
@@ -193,10 +199,15 @@ export class EducationResultsComponent implements OnInit {
   ngOnInit() {
 
     if (this.tripService.centerField) {
+<<<<<<< HEAD
       this.forestCenter = this.tripService.centerField;
+=======
+
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
       this.dateObj = this.tripService.dateObj;
       for (let key in this.dateObj) {
         let value = this.dateObj[key];
+<<<<<<< HEAD
         // Use `key` and `value`
         console.log('key :' + key);
         console.log('value :' + value);
@@ -261,13 +272,50 @@ export class EducationResultsComponent implements OnInit {
       error => {
         console.log({ error });
       });
+=======
+      }
+    }
+
+
+  }
+
+
+  date1 = new Date('7/13/2010');
+  date2 = new Date('12/15/2010');
+
+
+  getDifferenceInDays(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60 * 60 * 24);
+  }
+
+  getDifferenceInHours(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60 * 60);
+  }
+
+  getDifferenceInMinutes(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60);
+  }
+
+  getDifferenceInSeconds(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / 1000;
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
   }
 
 
   currentDayHandler(newCurrentDay: number) {
     console.log('currentDayHandler: newCurrentDay: ' + newCurrentDay)
 
+<<<<<<< HEAD
     this.chosenDate = newCurrentDay;
+=======
+  // changeForestCenter(e: any, visible: any) {
+  //   this.child.changeForestCenter(visible);
+  // }
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
 
     this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day);
     console.log('facilitiesArray1', this.facilitiesArray);
@@ -353,7 +401,31 @@ export class EducationResultsComponent implements OnInit {
     this.AvailableSleepingOptions = newSleepingOptionsByDay;
   }
 
+<<<<<<< HEAD
   onClick() {
+=======
+  public facilitiesArray: InfoCard[] = [];
+
+  constructor(
+    private router: Router,
+    private checkAvailabillityService: CheckAvailabilityService,
+    public usersService: UserService,
+    private route: ActivatedRoute,
+    private userDataService: UserDataService,
+    private tripService: TripService
+  ) {
+    this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(
+      this.sleepingOptionsByDay[0].day
+    );
+
+
+    this.changeDatesHandler(
+      this.checkAvailabillityService.checkAvailabilltyValues.calendarInput
+    );
+  }
+
+  public onClick() {
+>>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
     this.router.navigateByUrl('education/order-tour/squad-assemble');
   }
 }

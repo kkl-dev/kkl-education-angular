@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
+import { StepModel } from 'src/app/utilities/models/step.model';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
 
   @Input() public prefix: string = '';
   @Input() public showStatus: boolean = true;
-  @Input() public status: NavigationCardModel[] = [];
+  @Input() public status: StepModel[] = [];
 
   public isOpen: boolean = true;
 

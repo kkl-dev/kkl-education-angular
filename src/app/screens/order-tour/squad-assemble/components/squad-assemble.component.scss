@@ -1,0 +1,25 @@
+@import "../../../../../styles.scss";
+
+mat-grid-list,
+mat-grid-tile,
+app-form-container,
+app-squad-group,
+.assemble-container {
+  height: 100%;
+  width: 100%;
+}
+
+.assemble-container {
+  padding-left: spacing(3);
+  padding-right: spacing(3);
+}
+
+.form-container {
+  width: 80%;
+}
+
+.divider {
+  height: 90%;
+  width: 50px;
+  border-right : 1px solid color(border);
+}

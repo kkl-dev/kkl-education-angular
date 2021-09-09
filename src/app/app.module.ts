@@ -5,10 +5,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
+import { MyToursComponent } from './screens/my-tours/my-tours.component';
+import { EducationComponent } from './screens/search/education/education.component';
+import { OrderTourComponent } from './screens/order-tour/order-tour.component';
+import { FormContainerComponent } from './components/form/form-container/form-container.component';
+import { LinksComponent } from './components/links/links.component';
+
 // FULL CALENDER PLUGIN
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import  InteractionPlugin  from '@fullcalendar/interaction';
 
 import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
@@ -48,11 +57,9 @@ import { WorkingStepsComponent } from './components/working-steps/working-steps.
 import { MapsComponent } from './screens/education-results/maps/maps.component';
 import { ApiModule } from 'src/app/open-api/api.module';
 import { InfoCardComponent } from './components/info-card/info-card.component';
-import { NumberInputComponent } from './components/number-input/number-input.component';
+import { NumberInputComponent } from './components/form/number-input/number-input.component';
 import { IconComponent } from './components/icon/icon.component';
-import { TransportComponent } from './screens/order-tour/additions/transport/transport.component';
-import { NavigationGridComponent } from './screens/order-tour/additions/navigation-grid/navigation-grid.component';
-import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+// import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
 import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
@@ -109,7 +116,7 @@ import { SizeDirective } from './utilities/directivs/size.directive';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
-  interactionPlugin
+  InteractionPlugin
 ]);
 
 @NgModule({
@@ -165,7 +172,6 @@ FullCalendarModule.registerPlugins([
     WorkingStepsComponent,
     DrawerComponent,
     InfoCardComponent,
-    NumberInputComponent,
     IconComponent,
     ExpendPanelComponent,
     TypographyComponent,

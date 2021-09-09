@@ -29,6 +29,23 @@
           <input class="header__form-group-input" airbnb-calendar type="text" [(ngModel)]="date" [options]="options"
             (ngModelChange)="dateObjChanged($event)" [disabled]="disableDates" name="calendarInput"
             id="calendarInput" />
+        <label
+          class="header__form-group-pseudo-input label-input"
+          for="calendarInput"
+        >
+          <input
+            class="header__form-group-input"
+            airbnb-calendar
+            (newDate)='newDateRecived($event)'
+            (sleepingPlace)='newSleepingPlaceRecived($event)'
+            (prevDate)='prevDateRecived($event)'
+            type="text"
+            [(ngModel)]="date"
+            [options]="options"
+            (ngModelChange)="dateObjChanged($event)"
+            name="calendarInput"
+            id="calendarInput"
+          />
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.from }}</span>
         </label>
@@ -49,10 +66,6 @@
         <button routerLink="{{routerLinkContinue}}" (click)="printFormValues()" (click)="printFormValues()"
           class="education__link" [disabled]="disableContinueBtn"><span>המשך</span></button>
       </div>
-
-      <mat-checkbox class="education__form-checkbox" [ngModelOptions]="{ standalone: true }" (change)="singleDayTrip()"
-        [(ngModel)]="checkedSingleDay">טיול
-        חד יומי</mat-checkbox>
     </form>
   </div>
 </div>

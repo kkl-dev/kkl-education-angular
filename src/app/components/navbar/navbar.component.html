@@ -1,44 +1,64 @@
 <div class="navbar">
   <!-- toggle menu button -->
-  <div class="sidebar-toggle" [ngClass]="{
+  <div
+    class="sidebar-toggle"
+    [ngClass]="{
       closed: isOpen,
       'education-fill education-border': prefix === 'education',
       'forestry-fill forestry-border': prefix === 'forestry'
-    }" (click)="toggleMenu()">
+    }"
+    (click)="toggleMenu()"
+  >
     <span class="sidebar-toggle__icon">
-      <svg-icon id="tree-light" [ngClass]="{
+      <svg-icon
+        id="tree-light"
+        [ngClass]="{
           closed: isOpen,
           'education-fill': prefix === 'education'
-        }" src="assets/images/{{ isOpen ? 'tree-light' : 'tree-gradient' }}.svg">
+        }"
+        src="assets/images/{{ isOpen ? 'tree-light' : 'tree-gradient' }}.svg"
+      >
       </svg-icon>
     </span>
     <span class="sidebar-toggle__text">{{
       isOpen ? " תפריט" : " סגור תפריט"
-      }}</span>
+    }}</span>
   </div>
   <p class="worker-position">קק"ל חינוך - הזמנות טיולים</p>
 
   <!-- main navbar links -->
   <div class="project-status" *ngIf="showStatus">
     <div class="project-status__item" *ngFor="let item of status">
-      <div class="project-status__item-badge" [ngClass]="{
+      <div
+        class="project-status__item-badge"
+        [ngClass]="{
           'badge-education': prefix === 'education'
-        }" matBadgeOverlap matBadge="{{ item.badgeValue }}"></div>
+        }"
+        matBadgeOverlap
+        matBadge="{{ item.badgeValue }}"
+      ></div>
 
       <div class="project-status__item-icon">
         <div class="icon-container">
-          <app-icon [color]="'default'" type="svg" [key]="item.svgUrl"></app-icon>
+          <app-icon
+            [color]="'default'"
+            type="svg"
+            [key]="item.svgUrl"
+          ></app-icon>
         </div>
       </div>
       <span class="project-status__item-text">{{ item.title }}</span>
     </div>
   </div>
 
-
   <!-- left side logo -->
   <a routerLink="/" class="left-logos">
-    <svg-icon class="left-logo-years" src="assets/images/left-logo-years-new.svg">
+    <svg-icon
+      class="left-logo-years"
+      src="assets/images/left-logo-years-new.svg"
+    >
     </svg-icon>
-    <svg-icon src="assets/images/left-logo.svg"></svg-icon>
+    <!-- <svg-icon src="assets/images/left-logo.svg"></svg-icon> -->
+    <!-- <app-icon type="svg" key="logo" size="30"></app-icon> -->
   </a>
 </div>

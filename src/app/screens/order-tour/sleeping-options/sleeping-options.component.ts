@@ -11,7 +11,7 @@ export interface formGroupGrid {
   formCols?: string;
   questions: QuestionBase<string | Date | number>[];
 }
- 
+
 @Component({
   selector: 'app-sleeping-options',
   templateUrl: './sleeping-options.component.html',
@@ -250,7 +250,7 @@ export class SleepingOptionsComponent implements OnInit {
     this.questions = this.sleepingService.questions;
     this.changeDatesHandler(
       this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
-    ); 
+    );
   }
 
   addFilledNight(form) {
@@ -260,14 +260,14 @@ export class SleepingOptionsComponent implements OnInit {
       this.filledNightsArray.push(form.value);
     }
     this.indexToPatch = -1;
-    this.filledNightsForm.form.reset();
+    this.filledNightsForm.formGroup.reset();
   }
 
   deleteFilledNight(index: number) {
     this.filledNightsArray.splice(index, 1);
   }
   editFilledNight(form, index) {
-    this.filledNightsForm.form.patchValue(form);
+    this.filledNightsForm.formGroup.patchValue(form);
     this.indexToPatch = index;
   }
 
