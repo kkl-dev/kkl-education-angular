@@ -5,8 +5,8 @@
   <app-sleeping-options-by-day [sleepingOptionsByDay]="sleepingOptionsByDay">
     <h4>זמינות לינה</h4>
   </app-sleeping-options-by-day>
-  <app-form-container 
-  #filledNightsForm
+  <app-form-container
+    #filledNightsForm
     [cols]="'12'"
     (emitFormValues)="addFilledNight($event)"
     [questions]="questions"
@@ -15,15 +15,13 @@
     <button class="form-btn" button>שלח</button>
   </app-form-container>
 
-
-
   <div class="sleeping-options__filled-nights">
     <app-filled-night
       *ngFor="let filledNight of filledNightsArray; let i = index"
       (deleteFilledNight)="deleteFilledNight(i)"
-      (editFilledNight)="editFilledNight($event ,i)"
+      (editFilledNight)="editFilledNight($event, i)"
       [filledNight]="filledNight"
-      [index]="index" 
+      [index]="index"
     ></app-filled-night>
   </div>
 </div>
