@@ -156,7 +156,15 @@ export class EducationComponent implements OnInit {
         new Date(),
         new Date(new Date().setFullYear(newDate.getFullYear() + 1))
       );
-      this.options.maxDate = new Date(new Date().setFullYear(newDate.getFullYear() + 1))
+      this.options = {
+        firstCalendarDay: 0,
+        format: 'LL/dd/yyyy',
+        maxDate: new Date(new Date().setFullYear(newDate.getFullYear() + 1)),
+        closeOnSelected: true,
+        minYear: new Date().getFullYear() - 1,
+        maxYear: newDate.getFullYear() + 1,
+        freeSpacesArray: this.freeSpacesArray,
+      };
     }
   }
   prevDateRecived(prevDate: any) {
