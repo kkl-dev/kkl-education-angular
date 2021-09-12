@@ -24,27 +24,30 @@ export class EducationComponent implements OnInit {
   @ViewChild('educationForm') signupForm: NgForm;
   @Output() emitFormValues: EventEmitter<NgForm> = new EventEmitter();
   public checked = false;
-  sleepingPlace: string = '';
+  sleepingPlace: any;
+  // sleepingPlace: string = '';
   disableDates = true;
   disableContinueBtn = true;
   checkedSingleDay = false;
   routerLinkContinue = '/education/results'
-  formOptions!: FieldForestCenter[];
+  // formOptions!: FieldForestCenter[];
   AvailableDates!: AvailableDate[];
   AcommodationTypes!: AcommodationType[];
+  AcommodationType = 'cabin';
   SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
 
-  constructor(public usersService: UserService, public tripService: TripService, 
+  constructor(public usersService: UserService, public tripService: TripService,
     private checkAvailabilltyService: CheckAvailabilityService, public fakeApi: FakeService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
-      new Date(2021, 11, 17)
+      new Date(new Date().setFullYear(new Date().getFullYear() + 1))
     );
 
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
-
+      // maxDate: new Date(2021, 11, 15),
+      maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
@@ -53,42 +56,27 @@ export class EducationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getLookupFieldForestCenters();
-    this.getLookupAcommodationType();
+    this.tripService.getLookupFieldForestCenters();
+    // this.formOptions=this.tripService.formOptions;
+    // this.getLookupAcommodationType();
   }
+  public formOptions = [
+    { iconPath: 'assets/images/select-1.jpg', name: 'ציפורי', id: 101 },
+    { iconPath: 'assets/images/select-2.jpg', name: 'לביא', id: 102 },
+    { iconPath: 'assets/images/select-3.jpg', name: 'נס הרים', id: 103 },
+    { iconPath: 'assets/images/select-4.jpg', name: 'יתיר', id: 104 },
+  ];
 
-  getLookupFieldForestCenters() {
-        //get forest center fake
-        this.fakeApi.getForestCenter().subscribe((forestCenters: any) => {
-          if (forestCenters) {
-            console.log('forest Centers', { forestCenters });
-            this.formOptions = forestCenters;
-          } else {
-            console.log('no data in forest center');    
-          }
-        },
-          error => {
-            console.log({ error })
-          });
-    //yak del to get an array
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //     this.formOptions = response;
-    //   },
-    //   error => console.log(error),       // error
-    //   () => console.log('completed')     // complete
-    // )
-  }
 
-  getLookupAcommodationType() {
-    this.usersService.getLookupAcommodationType().subscribe(
-      response => {
-        this.AcommodationTypes = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  // getLookupAcommodationType() {
+  //   this.usersService.getLookupAcommodationType().subscribe(
+  //     response => {
+  //       this.AcommodationTypes = response;
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 
   selectChange(event: any) {
     this.tripService.centerField = this.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
@@ -118,33 +106,33 @@ export class EducationComponent implements OnInit {
   freeSpacesArray: FreeSpace[] = [];
 
 
-  
- freeSpacesArrayGenarator(start: Date, end: Date) {
-  const i = 0;
-  let freeSpacesArray = [];
-  while (start < end) {
-    start = new Date(start.setDate(start.getDate() + 1));
-    freeSpacesArray.push({
-      date: start,
-      freeSpace: 
-        [
-          {
-            accomodationName: "cabin",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
-          },
-                      {
-            accomodationName: "tent",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
-          },
-                      {
-            accomodationName: "room",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
-          },
-      ]
-    });
+
+  freeSpacesArrayGenarator(start: Date, end: Date) {
+    const i = 0;
+    let freeSpacesArray = [];
+    while (start < end) {
+      start = new Date(start.setDate(start.getDate() + 1));
+      freeSpacesArray.push({
+        date: start,
+        freeSpace:
+          [
+            {
+              accomodationName: "cabin",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+            {
+              accomodationName: "tent",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+            {
+              accomodationName: "room",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+          ]
+      });
+    }
+    return freeSpacesArray;
   }
-  return freeSpacesArray;
-}
 
   // cabins: this.AvailableDates[i].availableBedsCabin!,
   // tents: this.AvailableDates[i].availableBedsTent!,
@@ -152,7 +140,7 @@ export class EducationComponent implements OnInit {
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
-
+    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
     closeOnSelected: true,
     minYear: 2019,
     maxYear: 2021,
@@ -160,19 +148,25 @@ export class EducationComponent implements OnInit {
   };
 
 
-  
-  newDateRecived(newDate:any){
-    console.log(newDate); 
-    
+
+  newDateRecived(newDate: any) {
+    console.log(newDate);
+    if (new Date(newDate).getMonth() + 2 === new Date().getMonth()) {
+      this.freeSpacesArray = this.freeSpacesArrayGenarator(
+        new Date(),
+        new Date(new Date().setFullYear(newDate.getFullYear() + 1))
+      );
+      this.options.maxDate = new Date(new Date().setFullYear(newDate.getFullYear() + 1))
+    }
   }
-  prevDateRecived(prevDate:any){
-    console.log(prevDate); 
-    
+  prevDateRecived(prevDate: any) {
+    console.log(prevDate);
+
   }
-  
-  newSleepingPlaceRecived(sleepingPlace:any){
-    console.log(sleepingPlace); 
-    
+
+  newSleepingPlaceRecived(sleepingPlace: any) {
+    console.log(sleepingPlace);
+    this.AcommodationType = sleepingPlace;
   }
 
   public dateObjChanged(e: string) {
@@ -191,16 +185,20 @@ export class EducationComponent implements OnInit {
       this.dateObj.from = e;
       this.dateObj.to = '';
     }
-    this.AvailableDaysChecking();
     this.disableContinueBtn = false;
     this.tripService.dateObj = this.dateObj;
+
   }
 
   AvailableDaysChecking() {
-    let index = this.freeSpacesArray.findIndex(start => start.date.getDate() === new Date(this.dateObj.from).getDate());
-    while (this.freeSpacesArray[index].date.getDate() !== new Date(this.dateObj.to).getDate()) {
-      // if(this.freeSpacesArray[index].freeSpace)
+    this.tripService.dateRange = this.getDaysArray(new Date(this.dateObj.from), new Date(this.dateObj.to))
+    var flag = true;
+    for (var i in this.tripService.dateRange) {
+      let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationType);
+      if (typeAmount.availableBeds === 0) { flag = false; }
+      if (!flag) { console.log('אחד  הימים בטווח התאריכים אינו פנוי'); return flag; }
     }
+    return flag;
   }
   hideSelectPlaceholder(sel: MatSelect) {
     sel.placeholder = '';
@@ -213,19 +211,29 @@ export class EducationComponent implements OnInit {
   }
 
   printFormValues() {
-    if (this.signupForm != undefined) {
+    if (this.signupForm != undefined && this.AvailableDaysChecking()) {
       this.emitFormValues.emit(this.signupForm);
       this.checkAvailabilltyService.saveCheackAvailabilltyValues(this.signupForm)
     }
   }
   singleDayTrip() { if (this.checkedSingleDay) { this.routerLinkContinue = '/education/my-tours' } }
+
   convertDate(today: any) {//function to change date format '1990-04-13' to '13-04-1990'
     var thisDate = today.toISOString().split('T')[0].split('-');
     return [thisDate[2], thisDate[1], thisDate[0]].join("-");
   }
+
+  // getDaysArray(start: any, end: any) {
+  //   for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
+  //   return arr;
+  // };
   getDaysArray(start: any, end: any) {
-    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
+    var arr = [];
+    let index = this.freeSpacesArray.findIndex(Start => Start.date.getDate() === new Date(start).getDate());
+    while (this.freeSpacesArray[index].date.getDate() <= new Date(end).getDate()) {
+      arr.push(this.freeSpacesArray[index]);
+      index++;
+    }
     return arr;
-  };
-  listDays = this.getDaysArray(this.dateObj.from, this.dateObj.to);
+  }
 }
