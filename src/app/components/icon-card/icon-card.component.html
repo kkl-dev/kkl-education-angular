@@ -1,0 +1,18 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div class="card-svg-container" (click)="onCardClick()" [matBadge]="step.badgeValue" matBadgeColor="accent"
+    matBadgeSize="medium" fxFill>
+    <mat-card [ngClass]="{stepper : true, active : step.isActive, circle : shape, square : !shape}">
+      <mat-card-content>
+        <div class="icon-container" fxLayout="column" fxLayoutAlign="center center">
+          <app-icon [color]="step.isActive ? 'active' : 'default'" type="svg" [key]="step.svgUrl" scale="1.5">
+          </app-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="label-container" fxLayout="column" fxLayoutAlign="center center" fxFlex="30">
+    <app-typography [bold]="step.isActive ?  600  : 500" [size]="11">
+      {{ step.label }}
+    </app-typography>
+  </div>
+</div>

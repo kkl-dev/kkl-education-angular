@@ -1,66 +1,20 @@
 @import "../../../styles.scss";
 
 .order-tour {
-  position: relative;
   background-color: color(paper);
-
-  &__steps {
-    justify-self: stretch;
-    width: 60%;
-    padding: 0px 20%;
-    margin-bottom: 30px;
-    background: linear-gradient(0deg, #ffffff 0%, rgba(#d8d8d8, 0.5) 100%);
-  }
-
-  &__main {
-    box-sizing: border-box;
-    flex: 1;
-  }
-}
-
-::ng-deep div#working-steps {
-  border-bottom: 0;
-  padding: 0 !important;
-}
-
-::ng-deep div.working-steps__backstroke {
-  width: 90% !important;
-  top: calc(50% - 10px) !important;
-  background-color: #e8e8e8 !important;
-}
-
-::ng-deep .working-steps__step-icon {
-  margin-bottom: 0 !important;
-  margin-top: 10px !important;
-}
-
-::ng-deep .working-steps__step-text {
-  padding-top: 10px !important;
-}
-
-::ng-deep .chosen {
-  background-color: color(primary) !important;
-
-  &__text {
-    border-bottom: 3px solid color(primary) !important;
-    box-sizing: border-box;
-    text-shadow: 0 0 0.01px black;
-  }
 }
 
 div {
   height: 100%;
 }
 
-app-working-steps {
-  width: 100%;
-}
-
 .stepper {
-  width: 60%;
-  direction: rtl;
-  display: flex;
-  justify-content: space-between;
+  background: transparent linear-gradient(0deg, #FFFFFF 0%, #F3F3F3 100%) 0% 0% no-repeat padding-box;
+
+  app-working-steps {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 app-bottom-navigation {

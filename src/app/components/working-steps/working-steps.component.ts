@@ -1,3 +1,4 @@
+import { StepModel } from './../../utilities/models/step.model';
 import {
   Component,
   OnInit,
@@ -7,41 +8,40 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
 
 @Component({
   selector: 'app-working-steps',
   templateUrl: './working-steps.component.html',
   styleUrls: ['./working-steps.component.scss'],
 })
-export class WorkingStepsComponent implements OnInit, AfterViewInit {
-  @Input() $activeStep: Observable<number>;
-  @Input() steps: IconCardModel[];
+export class WorkingStepsComponent implements OnInit {
+
+  @Input() steps: StepModel[];
+  @Input() variant: string;
+  @Input() size: number;
+  @Input() iconSize: number;
+  @Input() divider: boolean;
 
   @Output() changeActiveStep = new EventEmitter<number>();
+  @Output() changStep = new EventEmitter<StepModel>();
 
-  public activeStep: number;
+  constructor() { }
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {
-    this.subscribeToActiveStep();
+  ngOnInit(): void {
+    this.setStype()
   }
 
-  public onStepClick({ path, index }) {
-    this.setActiveStep(index);
+  public onStepClick(index: number) {
+    this.changeActiveStep.emit(index);
   }
 
-  setActiveStep(number: number) {
-    this.changeActiveStep.emit(number);
+  public onCardClick(step: StepModel) {
+    this.changStep.emit(step)
   }
 
-
-  private subscribeToActiveStep() {
-    this.$activeStep.subscribe((value) => {
-      this.activeStep = value;
-    });
+  private setStype() {
+    this.size = this.size || 80
+    this.divider = this.divider
+    this.variant = this.variant || 'circle'
   }
 }

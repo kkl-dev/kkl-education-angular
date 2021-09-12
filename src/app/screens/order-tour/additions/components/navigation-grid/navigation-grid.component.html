@@ -6,9 +6,8 @@
       </app-typography>
     </div>
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
-      <div class="nav-card" *ngFor="let item of cards$ | async;">
-        <app-nav-card (onClick)="onCardClick($event)" [item]="item"></app-nav-card>
-      </div>
+      <app-working-steps variant="square" [divider]="false" [steps]="steps" (changStep)="onChangeStep($event)">
+      </app-working-steps>
     </div>
   </div>
 </div>
