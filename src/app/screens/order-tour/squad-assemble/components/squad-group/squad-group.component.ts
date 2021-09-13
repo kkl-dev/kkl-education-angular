@@ -72,6 +72,12 @@ export class SquadGroupComponent {
     }
   }
 
+  //log form when valid
+
+  logForm(form){
+    console.log(form.valid);
+  }
+
   // method to change squad assemble form
   public onGenderChange() {
     this.mixed = !this.mixed;
