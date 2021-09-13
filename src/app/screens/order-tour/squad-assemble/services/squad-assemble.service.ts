@@ -271,14 +271,15 @@ export class SquadAssembleService {
       rows: 3,
       label: 'קבוצת גיל',
       inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
+        options:this.tripService.ageGroup,
       },
     }),
+    // [
+    //   { key: '1', value: '1' },
+    //   { key: 'עוד לקוח', value: '10+' },
+    //   { key: 'לקוח מספר שלוש', value: '20+' },
+    //   { key: 'לקוח מספר ארבע', value: '30+' },
+    // ]
     new QuestionBase({
       key: 'participants',
       fullWidth: true,
@@ -339,28 +340,29 @@ export class SquadAssembleService {
       type: 'select',
       inputProps: {
         labelSize: 's4',
-        options: [
-          { key: 'פרומלי', value: 'פרומלי' },
-          { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
-          { key: 'מעוף', value: 'מעוף' },
-          { key: 'חו"ל', value: 'חו"ל' },
-          { key: 'הנהלת אגף', value: 'הנהלת אגף' },
-        ],
+        options: this.tripService.attributes,
       },
     }),
+    // [
+    //   { key: 'פרומלי', value: 'פרומלי' },
+    //   { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
+    //   { key: 'מעוף', value: 'מעוף' },
+    //   { key: 'חו"ל', value: 'חו"ל' },
+    //   { key: 'הנהלת אגף', value: 'הנהלת אגף' },
+    // ]
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
       type: 'select',
       inputProps: {
         labelSize: 's4',
-        options: [
-          { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
-          { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
-        ],
+        options: this.tripService.activityByAttribute,
       },
     }),
-
+    // [
+    //   { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
+    //   { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
+    // ]
     new QuestionRadio({
       key: 'tripLocation',
       label: 'מחלקה',

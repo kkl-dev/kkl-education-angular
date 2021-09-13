@@ -11,7 +11,7 @@ import { Area, ActivityType, FieldForestCenter, AgeGroup, Attribute, Participant
 export class TripService {
   centerField: FieldForestCenter | undefined;
   dateObj: any;
-
+  formGroupSquadAssembles = [];
   public centerFieldObj = new BehaviorSubject<any>({
     "id": 101,
     "name": "נס הרים",
@@ -41,10 +41,10 @@ export class TripService {
 
   ageGroup = [];//to convert to model of comrax
   fieldForestCenters = [];//to convert to model of comrax
-  activityByAttribute: ActivityType[]
+  activityByAttribute = []
   customersByParams: Customer[]
   areas: Area[];
-  attributes: Attribute[];
+  attributes = [];
   participantTypes: ParticipantType[];
   languages: Language[];
   countries: Country[];
@@ -76,15 +76,23 @@ export class TripService {
     //     error => console.log(error),       // error
     //     () => console.log('completed')     // complete
     //   )
-
-    // this.userService.getActivityByAttribute().subscribe(
+    // this.userService.getCustomersByParams().subscribe(
     //   response => {
     //     console.log('response', response)
-    //     this.ActivityByAttribute = response;
+    //     this.customersByParams = response;
     //   },
     //   error => console.log(error),       // error
     //   () => console.log('completed')     // complete
     // )
+    this.userService.getActivityByAttribute(1, '12').subscribe(
+      response => {
+        response.forEach(element => {
+          this.activityByAttribute.push({ key: element.name, value: element.id.toString() });
+        });
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
     this.userService.getAreas().subscribe(
       response => {
         console.log('response', response)
@@ -95,8 +103,9 @@ export class TripService {
     )
     this.userService.getAttributes().subscribe(
       response => {
-        console.log('response', response)
-        this.attributes = response;
+        response.forEach(element => {
+          this.attributes.push({ key: element.name, value: element.id.toString() });
+        });
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { TripService } from 'src/app/services/trip.service';
 import { SquadAssembleService } from '../services/squad-assemble.service';
+import { SquadGroupComponent } from './squad-group/squad-group.component';
 
 interface SquadGroup {
   group: QuestionGroup;
@@ -17,14 +18,14 @@ interface SquadGroup {
 export class SquadAssembleComponent implements OnInit {
   public squads: SquadGroup[];
 
-  constructor(private squadAssembleService: SquadAssembleService,private tripService: TripService) { }
+  constructor(private squadAssembleService: SquadAssembleService, private tripService: TripService) { }
 
   ngOnInit(): void {
     this.tripService.getLookUp();
     this.squads = [
       {
         group: {
-          key : 'date',
+          key: 'date',
           header: { text: 'מועד ושם הטיול', custom: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
@@ -33,7 +34,7 @@ export class SquadAssembleComponent implements OnInit {
       },
       {
         group: {
-          key : 'client',
+          key: 'client',
           header: { text: 'לקוח', custom: 'client' },
           questions: this.squadAssembleService.customerFormInputs,
           cols: '3',
@@ -41,7 +42,7 @@ export class SquadAssembleComponent implements OnInit {
       },
       {
         group: {
-          key : 'squad',
+          key: 'squad',
           header: { text: 'הרכב הקבוצה', custom: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: '5',
@@ -50,7 +51,7 @@ export class SquadAssembleComponent implements OnInit {
       },
       {
         group: {
-          key : 'details',
+          key: 'details',
           header: { text: 'פרטי הטיול', custom: '' },
           questions: this.squadAssembleService.tourDetailsFormInputs,
         },
