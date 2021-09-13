@@ -30,7 +30,6 @@ export class EducationComponent implements OnInit {
   disableContinueBtn = true;
   checkedSingleDay = false;
   routerLinkContinue = '/education/results'
-  // formOptions!: FieldForestCenter[];
   AvailableDates!: AvailableDate[];
   AcommodationTypes!: AcommodationType[];
   AcommodationType = 'cabin';
@@ -57,40 +56,25 @@ export class EducationComponent implements OnInit {
 
   ngOnInit() {
     this.tripService.getLookupFieldForestCenters();
-    // this.formOptions=this.tripService.formOptions;
-    // this.getLookupAcommodationType();
   }
-  public formOptions = [
-    { iconPath: 'assets/images/select-1.jpg', name: 'ציפורי', id: 101 },
-    { iconPath: 'assets/images/select-2.jpg', name: 'לביא', id: 102 },
-    { iconPath: 'assets/images/select-3.jpg', name: 'נס הרים', id: 103 },
-    { iconPath: 'assets/images/select-4.jpg', name: 'יתיר', id: 104 },
-  ];
+  // public formOptions = [
+  //   { iconPath: 'assets/images/select-1.jpg', name: 'ציפורי', id: 101 },
+  //   { iconPath: 'assets/images/select-2.jpg', name: 'לביא', id: 102 },
+  //   { iconPath: 'assets/images/select-3.jpg', name: 'נס הרים', id: 103 },
+  //   { iconPath: 'assets/images/select-4.jpg', name: 'יתיר', id: 104 },
+  // ];
 
 
-  // getLookupAcommodationType() {
-  //   this.usersService.getLookupAcommodationType().subscribe(
-  //     response => {
-  //       this.AcommodationTypes = response;
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
+
 
   selectChange(event: any) {
-    this.tripService.centerField = this.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
+    this.tripService.centerField = this.tripService.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
     this.getAvailableDates();
     this.disableDates = false;
   }
 
   getAvailableDates() {
-    //request body to get available dates
-    this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
-    this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
-    var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
-    this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
-    this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
+    this.usersService.getAvailableDates().subscribe(
       response => {
         console.log(response)
         this.AvailableDates = response;

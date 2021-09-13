@@ -9,7 +9,7 @@
           <mat-select #select [(ngModel)]="sleepingPlace" name="sleepingPlace" class="education__form-group-select"
             (selectionChange)="selectChange($event)" (opened)="hideSelectPlaceholder(select)"
             (closed)="showSelectPlaceholder(select)">
-            <mat-option value="{{ option.id }}" *ngFor="let option of formOptions" >
+            <mat-option value="{{ option.id }}" *ngFor="let option of tripService.formOptions" >
               <span class="education__select-option">
                 <img [src]="option.iconPath" class="education__select-option-svg" />
                 <span class="education__select-option-text">{{option.name}}</span>
