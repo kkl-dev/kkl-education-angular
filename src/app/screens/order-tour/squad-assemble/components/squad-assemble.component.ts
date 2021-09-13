@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../services/squad-assemble.service';
 
@@ -13,7 +13,7 @@ interface SquadGroup {
   templateUrl: './squad-assemble.component.html',
   styleUrls: ['./squad-assemble.component.scss'],
 })
-export class SquadAssembleComponent implements OnInit {
+export class SquadAssembleComponent implements OnInit,OnDestroy {
   public squads: SquadGroup[];
 
   constructor(private squadAssembleService: SquadAssembleService) { }
@@ -54,5 +54,10 @@ export class SquadAssembleComponent implements OnInit {
         },
       },
     ].reverse();
+  }
+
+  ngOnDestroy(){
+    console.log();
+    
   }
 }

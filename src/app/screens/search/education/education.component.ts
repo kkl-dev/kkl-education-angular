@@ -10,15 +10,17 @@ import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
-import { UserService } from '../../../api/api/user.service';
+import { UserService } from 'src/app/open-api';
 import { TripService } from '../../../services/trip.service'
-import { AcommodationType, AvailableDate, FieldForestCenter, SearchAvailableDatesOptions } from 'src/app/api';
+import {  FieldForestCenter } from 'src/app/open-api/model/fieldForestCenter';
 import { FakeService } from 'src/app/services/fake.service';
+import {DatePipe} from '@angular/common';    
 
 @Component({
   selector: 'app-education',
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.scss'],
+  providers: [DatePipe]
 })
 export class EducationComponent implements OnInit {
   @ViewChild('educationForm') signupForm: NgForm;
@@ -30,11 +32,11 @@ export class EducationComponent implements OnInit {
   checkedSingleDay = false;
   routerLinkContinue = '/education/results'
   formOptions!: FieldForestCenter[];
-  AvailableDates!: AvailableDate[];
-  AcommodationTypes!: AcommodationType[];
-  SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
+  //AvailableDates!: AvailableDate[];
+ // AcommodationTypes!: AcommodationType[];
+  //SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
 
-  constructor(public usersService: UserService, public tripService: TripService, 
+  constructor(public usersService: UserService, public tripService: TripService, private datepipe: DatePipe,
     private checkAvailabilltyService: CheckAvailabilityService, public fakeApi: FakeService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
@@ -54,7 +56,7 @@ export class EducationComponent implements OnInit {
 
   ngOnInit() {
     this.getLookupFieldForestCenters();
-    this.getLookupAcommodationType();
+    //this.getLookupAcommodationType();
   }
 
   getLookupFieldForestCenters() {
@@ -80,37 +82,37 @@ export class EducationComponent implements OnInit {
     // )
   }
 
-  getLookupAcommodationType() {
-    this.usersService.getLookupAcommodationType().subscribe(
-      response => {
-        this.AcommodationTypes = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  // getLookupAcommodationType() {
+  //   this.usersService.getLookupAcommodationType().subscribe(
+  //     response => {
+  //       this.AcommodationTypes = response;
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 
   selectChange(event: any) {
     this.tripService.centerField = this.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
-    this.getAvailableDates();
+   // this.getAvailableDates();
     this.disableDates = false;
   }
 
-  getAvailableDates() {
-    //request body to get available dates
-    this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
-    this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
-    var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
-    this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
-    this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
-      response => {
-        console.log(response)
-        this.AvailableDates = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  // getAvailableDates() {
+  //   //request body to get available dates
+  //   this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
+  //   this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
+  //   var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
+  //   this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
+  //   this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
+  //     response => {
+  //       console.log(response)
+  //       this.AvailableDates = response;
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
@@ -230,4 +232,14 @@ export class EducationComponent implements OnInit {
     return arr;
   };
   listDays = this.getDaysArray(this.dateObj.from, this.dateObj.to);
+
+  // test(){
+  //   let myDate = new Date(); 
+  //  console.log(myDate);
+  //  let year= myDate.getFullYear();
+  //  let month= myDate.getMonth();
+  //  let day = myDate.getDay();
+  //  console.log(year+'-'+month+'-'+day);
+
+  // }
 }
