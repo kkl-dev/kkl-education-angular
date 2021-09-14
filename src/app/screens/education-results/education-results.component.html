@@ -19,19 +19,22 @@
       <div class="education-results__right-facilities">
         <h4 class="education-results__right-facilities-headline">מתקנים</h4>
         <div class="education-results__right-facilities-items">
-          <app-info-card class="education-results__right-facilities-items-item"
-            *ngFor="let item of facilitiesArray; let i = index" [item]="item">
-            <app-tooltip class="app-tooltip" [hours]="item.availability"></app-tooltip>
-            <!-- <app-tooltip class="app-tooltip" [hours]="item.facilitiesList"></app-tooltip> -->
+
+          <!-- <ng-container *ngFor="let item of facilitiesArray; let i = index"> -->
+
+
+            <app-info-card class="education-results__right-facilities-items-item"
+            *ngFor="let item of facilityForDay; let i = index" [item]="item">
+            <!-- <app-tooltip class="app-tooltip" [hours]="item.availability"></app-tooltip> -->
+            <app-tooltip class="app-tooltip" [hours]="item.occupiedHours"></app-tooltip>
           </app-info-card>
+        <!-- </ng-container> -->
         </div>
       </div>
     </div>
     <!-- submit form -->
     <div class="education-results__right-button-container">
-      <button routerLink="/education/order-tour/squad-assemble" type="button" class="education-results__right-button">
-        הזמן
-      </button>
+      <button routerLink="/education/order-tour/squad-assemble" type="button" class="education-results__right-button">הזמן</button>
     </div>
   </div>
 </div>

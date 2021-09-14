@@ -85,13 +85,6 @@ export class MapsComponent implements OnInit {
     // }
   }
 
-<<<<<<< HEAD
-=======
-  // changeForestCenter(visible: any) {
-  //   this.visibleChange.emit(visible);
-  // }
-
->>>>>>> f4d162008b99e6fb4b421df779d66c21023cfd63
   queryandrender(place: any, fullhuts: any, datatoiter: any) {
     this.fullhuts = fullhuts;
     this.datatoiter = datatoiter;
@@ -129,7 +122,8 @@ export class MapsComponent implements OnInit {
 
     if ((this.place == "נס הרים") && (this.day == 1)) {
       this.place = "מרכז שדה נס הרים";
-      rawservicedata = this.nesharimday1; };
+      rawservicedata = this.nesharimday1;
+    };
     if ((this.place == "מרכז שדה ציפורי") && (this.day == 1)) { rawservicedata = this.ziporiday1; };
     if ((this.place == "אילנות מערב") && (this.day == 1)) { rawservicedata = this.ilanotday1 };
     if ((this.place == "מצפה בית אשל") && (this.day == 1)) { rawservicedata = this.betieshelday1 };

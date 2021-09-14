@@ -1,6 +1,6 @@
+export * from './accommodationType';
 export * from './accomodationFreeSpaces';
 export * from './account';
-export * from './acommodationType';
 export * from './activityType';
 export * from './ageGroup';
 export * from './area';
@@ -36,3 +36,4 @@ export * from './sleepingOptions';
 export * from './status';
 export * from './supplier';
 export * from './tripInfo';
+export * from './tripModel';

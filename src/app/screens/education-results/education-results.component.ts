@@ -21,8 +21,6 @@ export interface InfoCard {
 })
 
 export class EducationResultsComponent implements OnInit {
-  // @ViewChild('child') child!: MapsComponent;
-  // centerField: string = 'מרכז שדה - נס הרים';
   forestCenter: any | undefined;
   //forestCenter: any | undefined = this.tripService.centerField || {};
 
@@ -31,9 +29,68 @@ export class EducationResultsComponent implements OnInit {
   fromOtherComponent: boolean = true;
 
   //public facilitiesArray: InfoCard[] = [];
-  public facilitiesArray: any = [];
-
-  public chosenDate: number = 0
+  public facilitiesArray: any = [{
+    "date": "2021-09-10T:00:00:00",
+    "facilitiesList": [
+      {
+        "id": 8,
+        "name": "כיתה קטנה",
+        "maxOccupancy": 20,
+        "occupiedHours": [
+          {
+            "fromHour": "2021-09-10T09:00:00",
+            "tillHour": "2021-09-10T11:00:00",
+            "customerName": "סימינר הקיבוצים"
+          },
+          {
+            "fromHour": "2021-09-10T14:00:00",
+            "tillHour": "2021-09-10T15:00:00",
+            "customerName": "קיבוץ לביא"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "כיתה dgfghdfg",
+        "maxOccupancy": 20,
+        "occupiedHours": [
+          {
+            "fromHour": "2021-09-10T09:00:00",
+            "tillHour": "2021-09-10T11:00:00",
+            "customerName": "סימינר ffff"
+          },
+          {
+            "fromHour": "2021-09-10T14:00:00",
+            "tillHour": "2021-09-10T15:00:00",
+            "customerName": "קיבddddd ץ לביא"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-09-10T:00:00:00",
+    "facilitiesList": [
+      {
+        "id": 8,
+        "name": "כיתה קטנה",
+        "maxOccupancy": 20,
+        "occupiedHours": [
+          {
+            "fromHour": "2021-09-10T09:00:00",
+            "tillHour": "2021-09-10T11:00:00",
+            "customerName": "סימינר הקיבוצים"
+          },
+          {
+            "fromHour": "2021-09-10T14:00:00",
+            "tillHour": "2021-09-10T15:00:00",
+            "customerName": "קיבוץ לביא"
+          }
+        ]
+      }
+    ]
+  }];
+  facilityForDay: any;
 
   sleepingOptionsByDay: {
     day: string;
@@ -123,63 +180,59 @@ export class EducationResultsComponent implements OnInit {
           },
         ],
       },
-      {
-        day: '04.9.21',
-        options: [
-          {
-            svgUrl: 'assets/images/cabin.svg',
-            sleepingAreas: 24,
-            avialableSpaces: 186,
-            type: 'בקתות',
-            singleUnit: 'בבקתה',
-          },
-          {
-            svgUrl: 'assets/images/tent.svg',
-            sleepingAreas: 46,
-            avialableSpaces: 386,
-            type: 'אוהלים',
-            singleUnit: 'באוהל',
-          },
-          {
-            svgUrl: 'assets/images/camp.svg',
-            sleepingAreas: 17,
-            avialableSpaces: 120,
-            type: 'גיחה',
-            singleUnit: 'לנים',
-          },
-        ],
-      }
     ];
 
   AvailableSleepingOptions: any;
 
-
-  constructor(private router: Router, private checkAvailabillityService: CheckAvailabilityService,
+  constructor(private router: Router, private checkAvailabilityService: CheckAvailabilityService,
     public usersService: UserService, private route: ActivatedRoute,
     private userDataService: UserDataService, private tripService: TripService, private api: FakeService) {
+    console.log(this.tripService);
 
     this.tripService.forestCenter.subscribe(forestCenter => {
       this.forestCenter = forestCenter; // this set's the username to the default observable value
       console.log('parent -- > forest Center from server BehaviorSubject:', this.forestCenter);
       // call api if place changed for dates and facilities;
-      console.log('fromOtherComponent: ' + this.fromOtherComponent);
+      //console.log('fromOtherComponent: ' + this.fromOtherComponent);
       if (!this.fromOtherComponent) {
-        this.getAvailableAccommodationDates();
+        this.getAvailableAccommodationDates(forestCenter);
       }
+      //for facilities
+      this.getAvailableFacilities();
+      alert('iiuiu')
     });
 
-    this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
-    console.log('facilitiesArray1', this.facilitiesArray);
+    console.log('facilitiesArray: ', this.facilitiesArray);
+    this.facilityForDay = this.facilitiesArray[0].facilitiesList;
+    console.log('facilityForDay: ', this.facilityForDay);
 
-    // this.facilitiesArray = this.api.getAvailableFacilityDates(this.AvailableSleepingOptions[0].day);
+    //deleted temp
+    //this.facilitiesArray = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
+    let a = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
+    console.log('a: ', a);
+
+    // this.api.getAvailableFacilityDates('').subscribe((data) => {
+    //   console.log('data', { data });
+
+    //   if (data) {
+    //     this.facilitiesArray = data[0];
+    //     console.log('facilitiesArray from fake api', this.facilitiesArray);
+
+    //   } else {
+    //     console.log('no data in dates');
+    //   }
+    // },
+    //   error => {
+    //     console.log({ error });
+    //   });
+
+    //this.facilitiesArray = this.api.getAvailableFacilityDates('this.AvailableSleepingOptions[0].day');
     // console.log('facilitiesArray2', this.facilitiesArray);
 
-    console.log(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
+    console.log(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
     // this.changeDatesHandler(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
-
     console.log(this.tripService.sleepingDatesValues.calendarInput);
     this.changeDatesHandler(this.tripService.sleepingDatesValues.calendarInput);
-
   }
   //yak del not in use
   // public changeDate(newDate: number) {
@@ -189,12 +242,11 @@ export class EducationResultsComponent implements OnInit {
   //   );
   // }
 
-
   ngOnInit() {
 
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
-      this.dateObj = this.tripService.dateObj;
+      this.dateObj = this.tripService.sleepingDates;
       for (let key in this.dateObj) {
         let value = this.dateObj[key];
         // Use `key` and `value`
@@ -203,27 +255,17 @@ export class EducationResultsComponent implements OnInit {
       }
     }
 
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //     console.log('response: ', response);
-    //   },
-    //   error => console.log('error:', error),       // error
-    //   () => console.log('completed')     // complete
-    // );
-
-    // this.usersService.getLookupFieldForestCenters().subscribe((data: any) => {
-    //   //  this.spinner.hide();
-    //     if (data) {
-    //       console.log('getLookupFieldForestCenters: ', data);
-    //     }
-    //     else {
-    //       console.log('no data in getLookupFieldForestCenters');
-    //     }
-    //   },
-    //     error => {
-    //   //    this.spinner.hide();
-    //       console.log({ error })
-    //     });
+    this.usersService.getLookupFieldForestCenters().subscribe((data: any) => {
+      if (data) {
+        console.log('getLookupFieldForestCenters: ', data);
+      }
+      else {
+        console.log('no data in getLookupFieldForestCenters');
+      }
+    },
+      error => {
+        console.log({ error })
+      });
 
     // this.usersService.getLookupFieldForestCenters().subscribe(
     //   response => {
@@ -232,68 +274,35 @@ export class EducationResultsComponent implements OnInit {
     //   error => console.log('error:', error),       // error
     //   () => console.log('completed')     // complete
     // );
-
-
     // console.log('userDataService:', this.userDataService);
     console.log('tripService:', this.tripService);
-
-
     //this.availabilityItemsArray = this.tripService.dateObj;
     //this.centerField = this.tripService.centerField
     this.fromOtherComponent = false;
   }
 
-  getAvailableAccommodationDates() {
+  getAvailableAccommodationDates(forestCenter: any) {
     //get forest center fake
-    this.api.getAvailableSleepingOptionsByDay('').subscribe((dates) => {
-      if (dates) {
-        console.log('dates', { dates });
+    // this.api.getAvailableSleepingOptionsByDay('').subscribe((dates) => {
+    //   if (dates) {
+    //     console.log('dates', { dates });
 
-        // if (this.tripService.centerField) {
-        //  // this.forestCenterId = this.tripService.centerField.id;
-        //   this.forestCenter = this.tripService.centerField;
-        //   this.dateObj = this.tripService.dateObj;
-        // }
-      } else {
-        console.log('no data in dates');
-      }
-    },
-      error => {
-        console.log({ error });
-      });
+    //     // if (this.tripService.centerField) {
+    //     //  // this.forestCenterId = this.tripService.centerField.id;
+    //     //   this.forestCenter = this.tripService.centerField;
+    //     //   this.dateObj = this.tripService.dateObj;
+    //     // }
+    //   } else {
+    //     console.log('no data in dates');
+    //   }
+    // },
+    //   error => {
+    //     console.log({ error });
+    //   });
   }
-
-
-  currentDayHandler(newCurrentDay: number) {
-    console.log('currentDayHandler: newCurrentDay: ' + newCurrentDay)
-
-    this.chosenDate = newCurrentDay;
-
-    this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day);
-    console.log('facilitiesArray1', this.facilitiesArray);
-
-    // this.facilitiesArray = this.api.getAvailableFacilityDates(this.AvailableSleepingOptions[newCurrentDay].day);
-    // console.log('facilitiesArray2', this.facilitiesArray)
-    this.api.getAvailableFacilityDates('').subscribe((data) => {
-      console.log('data', { data });
-
-      if (data) {
-        //this.facilitiesArray = data[0];
-
-      } else {
-        console.log('no data in dates');
-      }
-    },
-      error => {
-        console.log({ error });
-      });
-  }
-
-
 
   changeDatesHandler(newDates: string) {
     console.log('changeDatesHandler: newDates : ' + newDates)
-
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
@@ -351,6 +360,31 @@ export class EducationResultsComponent implements OnInit {
     }
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
     this.AvailableSleepingOptions = newSleepingOptionsByDay;
+  }
+
+  currentDayHandler(newCurrentDay: number) {
+    console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
+    //this.facilitiesArray = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day);
+    //console.log('facilitiesArray', this.facilitiesArray);
+    this.facilityForDay = this.facilitiesArray[newCurrentDay].facilitiesList;
+  }
+
+  getAvailableFacilities() {
+    //this.tripService.dateObj.from, this.tripService.dateObj.till
+    this.usersService.getAvailableFacilities(this.forestCenter.id, this.tripService.sleepingDates.from, this.tripService.sleepingDates.till).subscribe((facilities: any) => {
+      if (facilities) {
+        console.log('getAvailableFacilities: ', facilities);
+        this.facilitiesArray = facilities;
+        this.facilityForDay = facilities[0].facilitiesList;
+        console.log('facilityForDay: ', this.facilityForDay);
+      }
+      else {
+        console.log('no data in getAvailableFacilities');
+      }
+    },
+      error => {
+        console.log({ error });
+      });
   }
 
   onClick() {

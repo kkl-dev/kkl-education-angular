@@ -1,4 +1,4 @@
----
+
 openapi: 3.0.1
 info:
   title: kkl Education API
@@ -75,11 +75,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FieldForestCenter'
-  /lookup/acommodationType/{fieldForestCenterId}:
+  /lookup/accommodationType/{fieldForestCenterId}:
     get:
       tags:
       - user
-      operationId: GetLookupAcommodationType
+      operationId: GetLookupAccommodationType
       parameters:
       - name: fieldForestCenterId
         in: path
@@ -96,7 +96,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AcommodationType'
+                  $ref: '#/components/schemas/AccommodationType'
   /availableAccomodationDates/{fieldForestCenterId}/{fromDate}/{tillDate}:
     get:
       tags:
@@ -143,7 +143,7 @@ paths:
     get:
       tags:
       - user
-      operationId: GetAvailableSleepingOptionsByDay
+      operationId: GetAvailableSleepingOptionsByDates
       description : ''
       parameters:
       - name: fieldForestCenterId
@@ -392,8 +392,8 @@ paths:
       - name: tripId
         in: path
         required: true
-        style: simple
-        explode: false
+        # style: simple
+        # explode: false
         schema:
           type: integer
       responses:
@@ -447,7 +447,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripInfo'
+                $ref: '#/components/schemas/TripModel'
         "400":
           description: invalid data
   /updateTrip/{tripId}/{userNmae}:
@@ -484,11 +484,48 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripInfo'
+                $ref: '#/components/schemas/TripModel'
         "400":
           description: Invalid tripId  supplied
         "404":
           description: the tripId supplied not found
+  /cancelTrip:
+    post:
+      tags:
+      - user
+      operationId: CancelTrip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelTrip'
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: the tripId supplied not found
+        "500":
+            description: internal server error
+
+  /getTrip/{tripId}: 
+    get:
+      tags:
+      - user
+      operationId: GetTripDetails
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer   
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripModel' 
+
   /QueueTasks/SearchQueTasks/{tripId}:
     get:
       tags:
@@ -509,23 +546,8 @@ paths:
             text/json:
               schema:
                 type: string
-  /cancelTrip:
-    post:
-      tags:
-      - user
-      operationId: CancelTrip
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CancelTrip'
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripInfo'
+  
+  
   /Movements/GetAllMovementsById/{tripId}:
     get:
       tags:
@@ -565,7 +587,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Movements'
-  /Order/AddOrder/{userName}/{permissionId}/{is_occupancy_problemFromSp}/{ib_remove_occ_prob}:
+  /Order/AddOrder/{userName}/{permissionId}/{isOccupancyProblemFromSp}/{ibRemoveOccProb}:
     post:
       tags:
       - order
@@ -586,7 +608,7 @@ paths:
         explode: false
         schema:
           type: integer
-      - name: is_occupancy_problemFromSp
+      - name: isOccupancyProblemFromSp
         in: path
         required: true
         style: simple
@@ -594,7 +616,7 @@ paths:
         schema:
           type: string
           nullable: true
-      - name: ib_remove_occ_prob
+      - name: ibRemoveOccProb
         in: path
         required: true
         style: simple
@@ -612,7 +634,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripInfo'
+                $ref: '#/components/schemas/TripModel'
   /Order/EditOrder/{tripId}/{userName}/{permId}/{descOccupancyProbFromSp}/{isRemoveOccProb}:
     put:
       tags:
@@ -667,7 +689,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripInfo'
+                $ref: '#/components/schemas/TripModel'
   /Order/orderType:
     get:
       tags:
@@ -973,16 +995,16 @@ components:
           type: string
           description: yochai will check for path or base64
           example: href...
-        acommodationList:
+        accommodationList:
           type: array
           description: list of available accomoadation types
           items:
-            $ref: '#/components/schemas/AcommodationType'
+            $ref: '#/components/schemas/AccommodationType'
         linkSite:
           type: string
           description: gg
           example: http://
-    AcommodationType:
+    AccommodationType:
       required:
       - id
       - name
@@ -1107,6 +1129,9 @@ components:
           type: integer
           description: rerer
           example: 40
+        iconPath:
+          type: string
+          example: 'http..'
         occupiedHours:
           type: array
           items:
@@ -1120,10 +1145,13 @@ components:
       properties:
         fromHour:
           type: string
-          format: date-time
+          example: 13:00
         tillHour:
           type: string
-          format: date-time
+          example: 15:00
+        totalTime:
+          type: number
+          example: 1.25
         customerName:
           type: string
           example: סימינר הקיבוצים
@@ -1167,15 +1195,21 @@ components:
     LodgingReservation:
       type: object
       properties:
-        acomodationTypeId:
+        accomodationTypeId:
           type: integer
           example: 2
+        accomodationTypeName:
+          type: string
+          example: בקתה
         date:
           type: string
           format: date
+        participantId:
+          type: integer
+          example: 1
         participantName:
-          type: string
-          example: מבוגרים
+           type: string
+           example: מבוגרים
         lodgersNumber:
           type: integer
           example: 10
@@ -1405,7 +1439,6 @@ components:
         tripEnding:
           type: string
           format: date-time
-          nullable: true
         generateTime:
           type: string
           description: Trip creation date
@@ -1437,7 +1470,6 @@ components:
         tripStart:
           type: string
           format: date-time
-          nullable: true
         tripStatusId:
           type: integer
           example: 3
@@ -1722,14 +1754,14 @@ components:
           type: string
           nullable: true
           example: active
-        secureId:
-          type: integer
-          nullable: true
-          example: 3
-        percent:
-          type: integer
-          nullable: true
-          example: 10
+        # secureId:
+        #   type: integer
+        #   nullable: true
+        #   example: 3
+        # percent:
+        #   type: integer
+        #   nullable: true
+        #   example: 10
     Movements:
       type: object
       properties:
@@ -1809,6 +1841,10 @@ components:
           example: 7
     CancelTrip:
       type: object
+      required:
+      - tripId
+      - userName
+      - statusToUpdateId
       properties:
         tripId:
           type: integer
@@ -2361,3 +2397,24 @@ components:
           items:
             type: string
             nullable: true
+
+    TripModel:
+      type: object
+      properties:
+        trip:
+          $ref: '#/components/schemas/TripInfo'
+        # listCharuzim:
+        #   type: array
+        #   items:
+        #     $ref: '#/components/schemas/CharuzimByDateModel'
+          nullable: true
+        orderList:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderModel'
+          nullable: true
+        movementsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Movements'
+          nullable: true

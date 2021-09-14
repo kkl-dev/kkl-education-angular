@@ -14,7 +14,5 @@
 export interface Status { 
     id?: number | null;
     name?: string | null;
-    secureId?: number | null;
-    percent?: number | null;
 }
 

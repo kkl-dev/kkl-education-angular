@@ -18,6 +18,8 @@ export interface formGroupGrid {
   styleUrls: ['./sleeping-options.component.scss'],
 })
 export class SleepingOptionsComponent implements OnInit {
+  @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
+
   sleepingOptionsByDay: {
     day: string;
     options: {
@@ -159,7 +161,7 @@ export class SleepingOptionsComponent implements OnInit {
       ],
     },
   ];
-  @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
+  
   public indexToPatch: number = -1;
   filledNightsArray: {
     sleepingPlace: string;
@@ -244,13 +246,9 @@ export class SleepingOptionsComponent implements OnInit {
   }
 
   constructor(
-    private checkAvailabilityService: CheckAvailabilityService,
-    private sleepingService: SleepingServiceService
-  ) {
+    private checkAvailabilityService: CheckAvailabilityService, private sleepingService: SleepingServiceService) {
     this.questions = this.sleepingService.questions;
-    this.changeDatesHandler(
-      this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
-    );
+    this.changeDatesHandler(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
   }
 
   addFilledNight(form) {

@@ -20,7 +20,9 @@ export class CheckAvailabilityService {
     //claendar input value for development in real app it will redirect to seatch page if calendar input wasnt set in the search page
   } = { sleepingPlace: '', calendarInput: '09/01/2021-09/04/2021' };
 
-  public facilitiesArray: InfoCard[] = [
+  //public facilitiesArray: InfoCard[] = [
+    public facilitiesArray: any = [
+
     {
       svgUrl: 'assets/images/stage.svg',
       headline: 'תאטרון',

@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
@@ -29,18 +22,20 @@ export class HeaderComponent implements OnInit {
 
   date: string | null = null;
 
-  dateObj: { from: string; to: string } = { from: '', to: '' };
+  dateObj: { from: string; till: string } = { from: '', till: '' };
   forestCenter: any | undefined;
   tripDates: any | undefined;
 
   forestCenterOptions: any | undefined;
-  forestCenterId: number = 101;
+  forestCenterId: number = 1;
   formOptions: any;
   freeSpacesArray: FreeSpace[] = [];
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
     closeOnSelected: true,
+    maxDate: new Date(2022, 11, 15),
+
     // minDate: addDays(new Date(), 5),
     // maxDate: addDays(new Date(), 10),
     minYear: 2019,
@@ -49,27 +44,21 @@ export class HeaderComponent implements OnInit {
   };
 
   constructor(
-    public usersService: UserService,
-    private userDataService: UserDataService,
-    private checkAvailabillityService: CheckAvailabilityService,
-    public tripService: TripService,
-    public fakeApi: FakeService) {
-    this.freeSpacesArray = this.freeSpacesArrayGenarator(
-      new Date(),
-      new Date(2022, 11, 17)
-    );
+    public usersService: UserService, private userDataService: UserDataService,
+    private checkAvailabilityService: CheckAvailabilityService,
+    public tripService: TripService, public fakeApi: FakeService) {
 
-    // this.dateObjChanged(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
+    // this.dateObjChanged(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
     this.dateObjChanged(this.tripService.sleepingDatesValues.calendarInput);
-
     this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
 
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
       closeOnSelected: true,
-      minYear: getYear(new Date()) - 1,
+      // minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
+      maxDate: new Date(2022, 11, 15),
       freeSpacesArray: this.freeSpacesArray,
     };
   }
@@ -89,22 +78,19 @@ export class HeaderComponent implements OnInit {
 
         // //save the forestCenters in server for acommodationList 
         // this.tripService.forestCenters = forestCenters;
+        this.dateObj = this.tripService.sleepingDates;
         if (this.tripService.centerField) {
           this.forestCenterId = this.tripService.centerField.id;
           this.forestCenter = this.tripService.centerField;
-          this.dateObj = this.tripService.dateObj;
+          //this.dateObj = this.tripService.sleepingDates;
 
-          let b = this.getDates(this.dateObj.from, this.dateObj.to);
+          let b = this.getDates(this.dateObj.from, this.dateObj.till);
           console.log('b:', b);
-
-
-          let a = this.getDaysArray(this.dateObj.from, this.dateObj.to);
+          let a = this.getDaysArray(this.dateObj.from, this.dateObj.till);
           console.log('a:', a);
-
         }
       } else {
         console.log('no data in forestCenter');
-
       }
     },
       error => {
@@ -140,14 +126,16 @@ export class HeaderComponent implements OnInit {
 
   updateForestCenter(id: any) {
     this.forestCenter = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
-    //console.log('forestCenter obj =>', this.forestCenter);
+    console.log('updateForestCenter obj =>', this.forestCenter);
     this.tripService.updateForestCenter(this.forestCenter);
   }
 
   updateTripDates(dates: any) {
     // this.tripDates = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
     console.log('updateTripDates =>', this.forestCenter);
-    this.tripService.updateSleepingDates(dates);
+    console.log('dates =>', dates);
+
+    this.tripService.updateSleepingDates(this.dateObj);
   }
 
   getDaysArray(start: any, end: any) {
@@ -183,31 +171,60 @@ export class HeaderComponent implements OnInit {
               availableBeds: +Math.floor(Math.random() * 8).toString()
             },
           ]
+
+        // {
+        //   "date": "2015-07-20T15:49:04-07:00",
+        //   "freeSpaces": [
+        //     {
+        //       "accomodationName": "name",
+        //       "availableBeds": 20
+        //     }
+        //   ]
+        // }
       });
       i++;
     }
     return freeSpacesArrayTemp;
   }
 
-  public dateObjChanged(e: string) {
+  dateObjChanged(e: string) {
     if (e && e.includes('-')) {
       console.log('dateObjChanged =>', e);
       //this.updateTripDates(e);
-      this.tripService.updateSleepingDates(e);
 
       this.emitNewDates.emit(e);
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
+      let from = tempDateArr[0].replace(/\//g, '-');
+      let till = tempDateArr[1].replace(/\//g, '-');
+
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
-        this.dateObj.from = tempDateArr[0];
-        this.dateObj.to = tempDateArr[1];
+        this.dateObj.from = from;
+        this.dateObj.till = till;
       } else {
-        this.dateObj.from = tempDateArr[1];
-        this.dateObj.to = tempDateArr[0];
+        this.dateObj.from = from;
+        this.dateObj.till = till;
       }
+      this.tripService.sleepingDates.from = this.dateObj.from;
+      this.tripService.sleepingDates.till = this.dateObj.till;
+
+      this.tripService.updateSleepingDates(this.dateObj);
     } else {
       this.dateObj.from = e;
-      this.dateObj.to = '';
+      this.dateObj.till = '';
     }
+  }
+
+  newDateRecived(newDate: any) {
+    console.log(newDate);
+  }
+
+  prevDateRecived(prevDate: any) {
+    console.log(prevDate);
+  }
+
+  newSleepingPlaceRecived(sleepingPlace: any) {
+    console.log(sleepingPlace);
+
   }
 }

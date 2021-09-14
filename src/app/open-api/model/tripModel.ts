@@ -9,15 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TripInfo } from './tripInfo';
+import { Movements } from './movements';
+import { OrderModel } from './orderModel';
 
 
-/**
- * decribes ... 
- */
-export interface OccupiedHours { 
-    fromHour: string;
-    tillHour: string;
-    totalTime?: number;
-    customerName?: string;
+export interface TripModel { 
+    trip?: TripInfo;
+    orderList?: Array<OrderModel> | null;
+    movementsList?: Array<Movements> | null;
 }
 

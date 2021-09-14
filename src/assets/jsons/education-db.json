@@ -1,7 +1,7 @@
 {
     "forestCenters": [
         {
-            "id": 101,
+            "id": 1,
             "name": "נס הרים",
             "iconPath": "assets/images/select-4.jpg",
             "acommodationList": [
@@ -17,7 +17,7 @@
             "linkSite": "http://"
         },
         {
-            "id": 102,
+            "id": 1,
             "name": "מרכז שדה ציפורי",
             "iconPath": "assets/images/select-3.jpg",
             "acommodationList": [
@@ -49,7 +49,7 @@
             "linkSite": "http://"
         },
         {
-            "id": 103,
+            "id": 1,
             "name": "מרכז שדה שוני",
             "iconPath": "assets/images/select-2.jpg",
             "acommodationList": [
@@ -65,7 +65,7 @@
             "linkSite": "http://"
         },
         {
-            "id": 104,
+            "id": 1,
             "name": "מרכז שדה יתיר",
             "iconPath": "assets/images/select-1.jpg",
             "acommodationList": [
@@ -81,7 +81,7 @@
             "linkSite": "http://"
         },
         {
-            "id": 105,
+            "id": 1,
             "name": "מרכז שדה לביא",
             "iconPath": "assets/images/select-4.jpg",
             "acommodationList": [

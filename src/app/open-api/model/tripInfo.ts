@@ -53,7 +53,7 @@ export interface TripInfo {
      */
     departmentId?: number;
     lodgingReservation?: Array<LodgingReservation>;
-    tripEnding?: string | null;
+    tripEnding?: string;
     /**
      * Trip creation date
      */
@@ -66,7 +66,7 @@ export interface TripInfo {
     numDrivers?: number;
     numShtilim?: number;
     noPayment?: number | null;
-    tripStart?: string | null;
+    tripStart?: string;
     tripStatusId?: number;
     tripStatusName?: string;
     userMobile?: string | null;

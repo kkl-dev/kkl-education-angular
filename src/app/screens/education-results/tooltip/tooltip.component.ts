@@ -23,6 +23,7 @@ export class TooltipComponent implements OnInit {
 
   ngOnInit(): void {
     this.createOccupiedHoursArray();
+    console.log('this.hours: ' + this.hours)
   }
 
   createOccupiedHoursArray() {
@@ -53,7 +54,6 @@ export class TooltipComponent implements OnInit {
 
   calculateWidth(totalHours: number): string {
     const totalHoursPrecent = (totalHours / 24) * 100;
-
     return `${totalHoursPrecent}%`;
   }
 }

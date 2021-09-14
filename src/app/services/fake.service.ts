@@ -19,12 +19,6 @@ export class FakeService {
     return this.http.get(`${this.url}forestCenters`, { headers });
   }
 
-  // getAvailableAccommodationDates() {
-  //   const headers = new HttpHeaders()
-  //     .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
-  //   return this.http.get(`${this.url}AvailableAccommodationDates`, { headers });
-  // }
-
   getAvailableFacilityDates(day: any) {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');

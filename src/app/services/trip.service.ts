@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { FieldForestCenter } from 'src/app/open-api/model/models';
 import { BehaviorSubject } from 'rxjs';
 import { FakeService } from 'src/app/services/fake.service';
-
-
-
+import { UserService } from '../open-api/api/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
 
-  constructor(public fakeApi: FakeService) { }
+  constructor(public fakeApi: FakeService, public usersService: UserService) { }
 
   centerField: FieldForestCenter | undefined; // id 
-  dateObj: any;
-  sleepingDates: any;
+  dateObj: any = {
+    from: '2021-07-01T00:00:00',
+    till: '2021-07-13T00:00:00'
+  };
 
   //  forestCenters: any = {};
 
@@ -23,7 +23,7 @@ export class TripService {
   //need to add array of object for available accomedations of chosen dates
 
   public centerFieldObj = new BehaviorSubject<any>({
-    "id": 101,
+    "id": 1,
     "name": "נס הרים",
     "iconPath": "assets/images/userImage.jpg",
     "acommodationList": [
@@ -46,6 +46,12 @@ export class TripService {
     ],
     "linkSite": "http://"
   });
+
+  sleepingDates: any = {
+    from: '2021-07-01',
+    till: '2021-07-13'
+  };
+ 
 
   sleepingDatesValues: {
     calendarInput: string;
@@ -127,41 +133,8 @@ export class TripService {
       }
     ]);
 
-  public sleepingDatesObj = new BehaviorSubject<any>([
-    {
-      "date": "2021-09-01T00:00:00",
-      "availableBedsTent": 20,
-      "availableBedsCabin": 10,
-      "availableBedsCamping": 100,
-      "availableBedsRoom": 3
-    },
-    {
-      "date": "2021-09-02T00:00:00",
-      "availableBedsTent": 10,
-      "availableBedsCabin": 4,
-      "availableBedsCamping": 80,
-      "availableBedsRoom": 2
-    },
-    {
-      "date": "2021-09-03T00:00:00",
-      "availableBedsTent": 5,
-      "availableBedsCabin": 2,
-      "availableBedsCamping": 40,
-      "availableBedsRoom": 5
-    },
-    {
-      "date": "2021-09-04T00:00:00",
-      "availableBedsTent": 4,
-      "availableBedsCabin": 5,
-      "availableBedsCamping": 200,
-      "availableBedsRoom": 7
-    }
-
-  ]);
-
   forestCenter = this.centerFieldObj.asObservable();
   AvailableSleepingOptions = this.AvailableSleepingOptionsByDay.asObservable();
-
 
   updateForestCenter(forestCenter: any) {
     this.centerFieldObj.next(forestCenter);
@@ -169,29 +142,41 @@ export class TripService {
     this.sleepingDatesValues.forestCenter = forestCenter.name;
   }
 
-  // updateAvailableSleepingOptionsObj(dates: any) {
-  //   this.sleepingDatesObj.next(dates);
-  // }
-
   updateSleepingDates(dates: any) {
-    this.sleepingDates = dates;
     this.getAvailableSleepingOptions(dates)
   }
 
-  getAvailableSleepingOptions(dates: string) {    
-    this.fakeApi.getAvailableSleepingOptionsByDay(dates).subscribe((sleepingAvailability) => {
+  getAvailableSleepingOptions(dates: string) {   
+    this.usersService.getAvailableSleepingOptionsByDates(this.centerFieldObj.value.id, this.sleepingDates.from, this.sleepingDates.till).subscribe((sleepingAvailability: any) => {
       if (sleepingAvailability) {
-        console.log('sleepingAvailability ==>', { sleepingAvailability });
-        
-        this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
-
-      } else {
-        console.log('no data in sleepingAvailability');
+            console.log('sleepingAvailability ==>', { sleepingAvailability });
+            
+            this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
+    
+          } else {
+            console.log('no data in sleepingAvailability');
       }
     },
       error => {
         console.log({ error });
-      });
+      }); 
+    // this.fakeApi.getAvailableSleepingOptionsByDay(dates).subscribe((sleepingAvailability) => {
+    //   if (sleepingAvailability) {
+    //     console.log('sleepingAvailability ==>', { sleepingAvailability });
+        
+    //     this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
+
+    //   } else {
+    //     console.log('no data in sleepingAvailability');
+    //   }
+    // },
+    //   error => {
+    //     console.log({ error });
+    //   });
+
   }
 
 }
+
+
+     

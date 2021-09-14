@@ -12,8 +12,10 @@
 
 
 export interface LodgingReservation { 
-    acomodationTypeId?: number;
+    accomodationTypeId?: number;
+    accomodationTypeName?: string;
     date?: string;
+    participantId?: number;
     participantName?: string;
     lodgersNumber?: number;
     unitsNumber?: number;

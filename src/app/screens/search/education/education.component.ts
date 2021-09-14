@@ -13,8 +13,9 @@ import { CheckAvailabilityService } from 'src/app/utilities/services/check-avail
 import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from '../../../services/trip.service'
-import { AvailableAccomodationDate, FieldForestCenter, AcommodationType } from 'src/app/open-api/model/models';
+import { AvailableAccomodationDate, FieldForestCenter, AccommodationType } from 'src/app/open-api/model/models';
 import { FakeService } from 'src/app/services/fake.service';
+import { AcommodationType } from 'src/app/open-api/model/acommodationType';
 
 @Component({
   selector: 'app-education',
@@ -25,7 +26,8 @@ export class EducationComponent implements OnInit {
 
   @ViewChild('educationForm') signupForm: NgForm;
   @Output() emitFormValues: EventEmitter<NgForm> = new EventEmitter();
-  public checked = false;
+
+  checked = false;
   sleepingPlace: string = '';
   disableDates = true;
   disableContinueBtn = true;
@@ -83,7 +85,7 @@ export class EducationComponent implements OnInit {
   }
 
   getLookupAcommodationType() {
-    this.usersService.getLookupAcommodationType(1).subscribe(
+    this.usersService.getLookupAccommodationType(1).subscribe(
       response => {
         this.AcommodationTypes = response;
       },
@@ -193,9 +195,9 @@ export class EducationComponent implements OnInit {
       this.dateObj.from = e;
       this.dateObj.to = '';
     }
-    this.AvailableDaysChecking();
-    this.disableContinueBtn = false;
-    this.tripService.dateObj = this.dateObj;
+    // this.AvailableDaysChecking();
+    // this.disableContinueBtn = false;
+    // this.tripService.dateObj = this.dateObj;
   }
 
   AvailableDaysChecking() {
