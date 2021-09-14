@@ -11,11 +11,13 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent, HttpParameterCodec }       from '@angular/common/http';
-import { CustomHttpParameterCodec }                          from '../encoder';
-import { Observable }                                        from 'rxjs';
+import { Inject, Injectable, Optional } from '@angular/core';
+import {
+    HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent, HttpParameterCodec
+} from '@angular/common/http';
+import { CustomHttpParameterCodec } from '../encoder';
+import { Observable } from 'rxjs';
 
 import { AccommodationType } from '../model/models';
 import { Account } from '../model/models';
@@ -38,22 +40,23 @@ import { ParticipantType } from '../model/models';
 import { TripInfo } from '../model/models';
 import { TripModel } from '../model/models';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { Configuration } from '../configuration';
 
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
 
-    protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
+    // protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
+    protected basePath = 'http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (configuration) {
             this.configuration = configuration;
         }
@@ -83,16 +86,16 @@ export class UserService {
 
         if (typeof value === "object") {
             if (Array.isArray(value)) {
-                (value as any[]).forEach( elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
+                (value as any[]).forEach(elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
             } else if (value instanceof Date) {
                 if (key != null) {
                     httpParams = httpParams.append(key,
                         (value as Date).toISOString().substr(0, 10));
                 } else {
-                   throw Error("key may not be null if value is Date");
+                    throw Error("key may not be null if value is Date");
                 }
             } else {
-                Object.keys(value).forEach( k => httpParams = this.addToHttpParamsRecursive(
+                Object.keys(value).forEach(k => httpParams = this.addToHttpParamsRecursive(
                     httpParams, value[k], key != null ? `${key}.${k}` : k));
             }
         } else if (key != null) {
@@ -108,10 +111,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public cancelTrip(cancelTrip?: CancelTrip, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
-    public cancelTrip(cancelTrip?: CancelTrip, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
-    public cancelTrip(cancelTrip?: CancelTrip, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
-    public cancelTrip(cancelTrip?: CancelTrip, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+    public cancelTrip(cancelTrip?: CancelTrip, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<any>;
+    public cancelTrip(cancelTrip?: CancelTrip, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<HttpResponse<any>>;
+    public cancelTrip(cancelTrip?: CancelTrip, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<HttpEvent<any>>;
+    public cancelTrip(cancelTrip?: CancelTrip, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: undefined }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -137,7 +140,7 @@ export class UserService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -158,10 +161,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createTrip(tripInfo?: TripInfo, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripModel>;
-    public createTrip(tripInfo?: TripInfo, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripModel>>;
-    public createTrip(tripInfo?: TripInfo, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripModel>>;
-    public createTrip(tripInfo?: TripInfo, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public createTrip(tripInfo?: TripInfo, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<TripModel>;
+    public createTrip(tripInfo?: TripInfo, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<TripModel>>;
+    public createTrip(tripInfo?: TripInfo, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<TripModel>>;
+    public createTrip(tripInfo?: TripInfo, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -188,7 +191,7 @@ export class UserService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -210,10 +213,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ActivityType>>;
-    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ActivityType>>>;
-    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ActivityType>>>;
-    public getActivityByAttribute(attributeId: number, userId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<ActivityType>>;
+    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<ActivityType>>>;
+    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<ActivityType>>>;
+    public getActivityByAttribute(attributeId: number, userId: string, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
         if (attributeId === null || attributeId === undefined) {
             throw new Error('Required parameter attributeId was null or undefined when calling getActivityByAttribute.');
         }
@@ -237,7 +240,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -256,10 +259,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAgeGroup(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<AgeGroup>>;
-    public getAgeGroup(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<AgeGroup>>>;
-    public getAgeGroup(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<AgeGroup>>>;
-    public getAgeGroup(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAgeGroup(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<AgeGroup>>;
+    public getAgeGroup(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<AgeGroup>>>;
+    public getAgeGroup(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<AgeGroup>>>;
+    public getAgeGroup(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -277,7 +280,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -296,10 +299,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAreas(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Area>>;
-    public getAreas(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Area>>>;
-    public getAreas(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Area>>>;
-    public getAreas(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAreas(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<Area>>;
+    public getAreas(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<Area>>>;
+    public getAreas(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<Area>>>;
+    public getAreas(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -317,7 +320,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -336,10 +339,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAttributes(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Attribute>>;
-    public getAttributes(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Attribute>>>;
-    public getAttributes(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Attribute>>>;
-    public getAttributes(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAttributes(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<Attribute>>;
+    public getAttributes(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<Attribute>>>;
+    public getAttributes(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<Attribute>>>;
+    public getAttributes(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -357,7 +360,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -379,10 +382,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAvailableAccomodationDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<AvailableAccomodationDate>>;
-    public getAvailableAccomodationDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<AvailableAccomodationDate>>>;
-    public getAvailableAccomodationDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<AvailableAccomodationDate>>>;
-    public getAvailableAccomodationDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAvailableAccomodationDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<AvailableAccomodationDate>>;
+    public getAvailableAccomodationDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<AvailableAccomodationDate>>>;
+    public getAvailableAccomodationDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<AvailableAccomodationDate>>>;
+    public getAvailableAccomodationDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
         if (fieldForestCenterId === null || fieldForestCenterId === undefined) {
             throw new Error('Required parameter fieldForestCenterId was null or undefined when calling getAvailableAccomodationDates.');
         }
@@ -409,11 +412,11 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<AvailableAccomodationDate>>(`${this.configuration.basePath}/availableAccomodationDates/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate.toISOString()))}/${encodeURIComponent(String(tillDate.toISOString()))}`,
+        return this.httpClient.get<Array<AvailableAccomodationDate>>(`${this.configuration.basePath}/availableAccomodationDates/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate))}/${encodeURIComponent(String(tillDate))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -431,10 +434,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAvailableFacilities(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<FacilityDate>>;
-    public getAvailableFacilities(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<FacilityDate>>>;
-    public getAvailableFacilities(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<FacilityDate>>>;
-    public getAvailableFacilities(fieldForestCenterId: number, fromDate: string, tillDate: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAvailableFacilities(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<FacilityDate>>;
+    public getAvailableFacilities(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<FacilityDate>>>;
+    public getAvailableFacilities(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<FacilityDate>>>;
+    public getAvailableFacilities(fieldForestCenterId: number, fromDate: string, tillDate: string, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
         if (fieldForestCenterId === null || fieldForestCenterId === undefined) {
             throw new Error('Required parameter fieldForestCenterId was null or undefined when calling getAvailableFacilities.');
         }
@@ -461,11 +464,11 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<FacilityDate>>(`${this.configuration.basePath}/getAvailableFacilities/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate.toISOString()))}/${encodeURIComponent(String(tillDate.toISOString()))}`,
+        return this.httpClient.get<Array<FacilityDate>>(`${this.configuration.basePath}/getAvailableFacilities/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate))}/${encodeURIComponent(String(tillDate))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -483,10 +486,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAvailableSleepingOptionsByDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<AvailableSleepingOptionsByDay>>;
-    public getAvailableSleepingOptionsByDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<AvailableSleepingOptionsByDay>>>;
-    public getAvailableSleepingOptionsByDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<AvailableSleepingOptionsByDay>>>;
-    public getAvailableSleepingOptionsByDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAvailableSleepingOptionsByDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<AvailableSleepingOptionsByDay>>;
+    public getAvailableSleepingOptionsByDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<AvailableSleepingOptionsByDay>>>;
+    public getAvailableSleepingOptionsByDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<AvailableSleepingOptionsByDay>>>;
+    public getAvailableSleepingOptionsByDates(fieldForestCenterId: number, fromDate: string, tillDate: string, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
         if (fieldForestCenterId === null || fieldForestCenterId === undefined) {
             throw new Error('Required parameter fieldForestCenterId was null or undefined when calling getAvailableSleepingOptionsByDates.');
         }
@@ -513,11 +516,11 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<AvailableSleepingOptionsByDay>>(`${this.configuration.basePath}/availableSleepingOptions/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate.toISOString()))}/${encodeURIComponent(String(tillDate.toISOString()))}`,
+        return this.httpClient.get<Array<AvailableSleepingOptionsByDay>>(`${this.configuration.basePath}/availableSleepingOptions/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate))}/${encodeURIComponent(String(tillDate))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -533,10 +536,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBadgetExpensesAndIncome(budgetByParams?: BudgetByParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Budget>;
-    public getBadgetExpensesAndIncome(budgetByParams?: BudgetByParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Budget>>;
-    public getBadgetExpensesAndIncome(budgetByParams?: BudgetByParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Budget>>;
-    public getBadgetExpensesAndIncome(budgetByParams?: BudgetByParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getBadgetExpensesAndIncome(budgetByParams?: BudgetByParams, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Budget>;
+    public getBadgetExpensesAndIncome(budgetByParams?: BudgetByParams, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Budget>>;
+    public getBadgetExpensesAndIncome(budgetByParams?: BudgetByParams, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Budget>>;
+    public getBadgetExpensesAndIncome(budgetByParams?: BudgetByParams, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -563,7 +566,7 @@ export class UserService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -584,10 +587,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBadgetKKl(budgetByParams?: BudgetByParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Budget>;
-    public getBadgetKKl(budgetByParams?: BudgetByParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Budget>>;
-    public getBadgetKKl(budgetByParams?: BudgetByParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Budget>>;
-    public getBadgetKKl(budgetByParams?: BudgetByParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getBadgetKKl(budgetByParams?: BudgetByParams, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Budget>;
+    public getBadgetKKl(budgetByParams?: BudgetByParams, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Budget>>;
+    public getBadgetKKl(budgetByParams?: BudgetByParams, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Budget>>;
+    public getBadgetKKl(budgetByParams?: BudgetByParams, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -614,7 +617,7 @@ export class UserService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -634,10 +637,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCountries(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Country>>;
-    public getCountries(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Country>>>;
-    public getCountries(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Country>>>;
-    public getCountries(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getCountries(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<Country>>;
+    public getCountries(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<Country>>>;
+    public getCountries(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<Country>>>;
+    public getCountries(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -655,7 +658,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -675,10 +678,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCustomersByParams(paginationSpecParams?: PaginationSpecParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<CustomerPagination>;
-    public getCustomersByParams(paginationSpecParams?: PaginationSpecParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<CustomerPagination>>;
-    public getCustomersByParams(paginationSpecParams?: PaginationSpecParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<CustomerPagination>>;
-    public getCustomersByParams(paginationSpecParams?: PaginationSpecParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getCustomersByParams(paginationSpecParams?: PaginationSpecParams, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<CustomerPagination>;
+    public getCustomersByParams(paginationSpecParams?: PaginationSpecParams, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<CustomerPagination>>;
+    public getCustomersByParams(paginationSpecParams?: PaginationSpecParams, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<CustomerPagination>>;
+    public getCustomersByParams(paginationSpecParams?: PaginationSpecParams, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -705,7 +708,7 @@ export class UserService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -726,10 +729,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getKKlAmount(tripId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<number>;
-    public getKKlAmount(tripId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<number>>;
-    public getKKlAmount(tripId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<number>>;
-    public getKKlAmount(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+    public getKKlAmount(tripId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<number>;
+    public getKKlAmount(tripId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpResponse<number>>;
+    public getKKlAmount(tripId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpEvent<number>>;
+    public getKKlAmount(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'text/plain' }): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling getKKlAmount.');
         }
@@ -750,7 +753,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -769,10 +772,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getLanguages(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Language>>;
-    public getLanguages(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Language>>>;
-    public getLanguages(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Language>>>;
-    public getLanguages(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getLanguages(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<Language>>;
+    public getLanguages(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<Language>>>;
+    public getLanguages(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<Language>>>;
+    public getLanguages(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -790,7 +793,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -810,10 +813,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getLookupAccommodationType(fieldForestCenterId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<AccommodationType>>;
-    public getLookupAccommodationType(fieldForestCenterId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<AccommodationType>>>;
-    public getLookupAccommodationType(fieldForestCenterId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<AccommodationType>>>;
-    public getLookupAccommodationType(fieldForestCenterId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getLookupAccommodationType(fieldForestCenterId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<AccommodationType>>;
+    public getLookupAccommodationType(fieldForestCenterId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<AccommodationType>>>;
+    public getLookupAccommodationType(fieldForestCenterId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<AccommodationType>>>;
+    public getLookupAccommodationType(fieldForestCenterId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
         if (fieldForestCenterId === null || fieldForestCenterId === undefined) {
             throw new Error('Required parameter fieldForestCenterId was null or undefined when calling getLookupAccommodationType.');
         }
@@ -834,7 +837,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -853,10 +856,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getLookupFieldForestCenters(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<FieldForestCenter>>;
-    public getLookupFieldForestCenters(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<FieldForestCenter>>>;
-    public getLookupFieldForestCenters(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<FieldForestCenter>>>;
-    public getLookupFieldForestCenters(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getLookupFieldForestCenters(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<FieldForestCenter>>;
+    public getLookupFieldForestCenters(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<FieldForestCenter>>>;
+    public getLookupFieldForestCenters(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<FieldForestCenter>>>;
+    public getLookupFieldForestCenters(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -874,7 +877,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -893,10 +896,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getParticipantTypes(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ParticipantType>>;
-    public getParticipantTypes(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ParticipantType>>>;
-    public getParticipantTypes(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ParticipantType>>>;
-    public getParticipantTypes(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getParticipantTypes(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<ParticipantType>>;
+    public getParticipantTypes(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<ParticipantType>>>;
+    public getParticipantTypes(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<ParticipantType>>>;
+    public getParticipantTypes(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -914,7 +917,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -934,10 +937,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getTripDetails(tripId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripModel>;
-    public getTripDetails(tripId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripModel>>;
-    public getTripDetails(tripId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripModel>>;
-    public getTripDetails(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getTripDetails(tripId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<TripModel>;
+    public getTripDetails(tripId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<TripModel>>;
+    public getTripDetails(tripId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<TripModel>>;
+    public getTripDetails(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling getTripDetails.');
         }
@@ -958,7 +961,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -979,10 +982,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<boolean>;
-    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<boolean>>;
-    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<boolean>>;
-    public isExistBudgetToYishuv(start: string, budget?: Budget, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<boolean>;
+    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpResponse<boolean>>;
+    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpEvent<boolean>>;
+    public isExistBudgetToYishuv(start: string, budget?: Budget, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'text/plain' }): Observable<any> {
         if (start === null || start === undefined) {
             throw new Error('Required parameter start was null or undefined when calling isExistBudgetToYishuv.');
         }
@@ -1012,11 +1015,11 @@ export class UserService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<boolean>(`${this.configuration.basePath}/budget/IsExistBudgetToYishuv/${encodeURIComponent(String(start.toISOString()))}`,
+        return this.httpClient.post<boolean>(`${this.configuration.basePath}/budget/IsExistBudgetToYishuv/${encodeURIComponent(String(start))}`,
             budget,
             {
                 responseType: <any>responseType_,
@@ -1035,10 +1038,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Account>;
-    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Account>>;
-    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Account>>;
-    public loginPB(permissionId: number, permissionName: string, userId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Account>;
+    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Account>>;
+    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Account>>;
+    public loginPB(permissionId: number, permissionName: string, userId: string, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
         if (permissionId === null || permissionId === undefined) {
             throw new Error('Required parameter permissionId was null or undefined when calling loginPB.');
         }
@@ -1065,7 +1068,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -1084,10 +1087,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public loginToPBTest(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Account>;
-    public loginToPBTest(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Account>>;
-    public loginToPBTest(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Account>>;
-    public loginToPBTest(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public loginToPBTest(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Account>;
+    public loginToPBTest(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Account>>;
+    public loginToPBTest(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Account>>;
+    public loginToPBTest(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -1105,7 +1108,7 @@ export class UserService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -1127,10 +1130,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripModel>;
-    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripModel>>;
-    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripModel>>;
-    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<TripModel>;
+    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<TripModel>>;
+    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<TripModel>>;
+    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling updateTrip.');
         }
@@ -1166,7 +1169,7 @@ export class UserService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 

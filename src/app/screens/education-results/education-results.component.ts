@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CheckAvailabilityService} from 'src/app/utilities/services/check-availability.service';
 import {TooltipDataModel} from './tooltip/tooltip.component';
 import {UserDataService} from 'src/app/services/user-data.service';
-import {UserService} from '../../api/api/user.service';
+import {UserService} from '../../open-api/api/user.service';
 import {TripService} from 'src/app/services/trip.service';
 
 export interface InfoCard {

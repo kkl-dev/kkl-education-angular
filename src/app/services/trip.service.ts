@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { FieldForestCenter } from '../api/';
+import { FieldForestCenter } from 'src/app/open-api/model/fieldForestCenter';
 import { BehaviorSubject } from 'rxjs';
-import { UserService } from '../api/api/user.service';
+import { UserService } from 'src/app/open-api/api/user.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
-  centerField: FieldForestCenter | undefined;
+  centerField: FieldForestCenter={
+    id: 0,
+    name: ''
+  };
   dateObj: any;
   dateRange: any;
   formOptions!: FieldForestCenter[];
