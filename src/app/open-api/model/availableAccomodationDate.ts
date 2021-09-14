@@ -20,6 +20,6 @@ export interface AvailableAccomodationDate {
     /**
      * List of accomoadation free beds.
      */
-    freeSpaces?: Array<AccomodationFreeSpaces>;
+    freeSpace?: Array<AccomodationFreeSpaces>;
 }
 

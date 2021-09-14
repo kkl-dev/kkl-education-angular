@@ -6,28 +6,13 @@
       <div class="education__form-group" disableOptionCentering="false">
         <label class="education__form-group-label">איפה ישנים</label>
         <mat-form-field>
-          <mat-select
-            #select
-            [(ngModel)]="sleepingPlace"
-            name="sleepingPlace"
-            class="education__form-group-select"
-            (selectionChange)="selectChange($event)"
-            (opened)="hideSelectPlaceholder(select)"
-            (closed)="showSelectPlaceholder(select)"
-
-            >
-            <mat-option
-              value="{{ option.value }}"
-              *ngFor="let option of formOptions"
-            >
+          <mat-select #select [(ngModel)]="sleepingPlace" name="sleepingPlace" class="education__form-group-select"
+            (selectionChange)="selectChange($event)" (opened)="hideSelectPlaceholder(select)"
+            (closed)="showSelectPlaceholder(select)">
+            <mat-option value="{{ option.id }}" *ngFor="let option of tripService.formOptions">
               <span class="education__select-option">
-                <img
-                  [src]="option.iconPath"
-                  class="education__select-option-svg"
-                />
-                <span class="education__select-option-text">{{
-                  option.name
-                }}</span>
+                <img [src]="option.linkSite" class="education__select-option-svg" />
+                <span class="education__select-option-text">{{option.name}}</span>
               </span>
             </mat-option>
           </mat-select>
@@ -36,11 +21,9 @@
 
       <div class="education__form-group">
         <label class="education__form-group-label">מתאריך</label>
-        <svg-icon
-          src="assets/images/calendar.svg"
-          class="education__form-group-svg"
-        ></svg-icon>
+        <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
 
+<<<<<<< HEAD
         <label
           class="header__form-group-pseudo-input label-input"
           for="calendar-input"
@@ -60,36 +43,47 @@
             name="calendar-input"
             id="calendar-input"
           />
+=======
+        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
+          <input class="header__form-group-input" airbnb-calendar (newDate)='newDateRecived($event)'
+            [disabled]="disableDates" (sleepingPlace)='newSleepingPlaceRecived($event)'
+            (prevDate)='prevDateRecived($event)' type="text" [(ngModel)]="date" [options]="options"
+            (ngModelChange)="dateObjChanged($event)" name="calendarInput" id="calendarInput" />
+>>>>>>> ef8b99374f5bfb88188a930dd8fe0d84cad41847
           <span class="header__form-group-pseudo-input-value">
-            {{ dateObj.from }}</span
-          >
+            {{ dateObj.from }}</span>
         </label>
       </div>
       <div class="education__form-group">
         <label class="education__form-group-label">עד תאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
         <!-- <input class="education__form-group-input" type="text" /> -->
+<<<<<<< HEAD
         <label
           class="header__form-group-pseudo-input label-input"
           for="calendar-input"
         >
+=======
+        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
+>>>>>>> ef8b99374f5bfb88188a930dd8fe0d84cad41847
           <span class="header__form-group-pseudo-input-value">
-            {{ dateObj.to }}</span
-          >
+            {{ dateObj.to }}</span>
           <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
         </label>
       </div>
 
       <div class="education__link-group">
         <label class="education__form-group-label link-group">buffer</label>
-        <button
-          routerLink="{{routerLinkContinue}}" (click)="printFormValues()"
-          (click)="printFormValues()"
-          class="education__link"
+        <!-- routerLink="{{routerLinkContinue}}" -->
+        <button (click)="printFormValues()" class="education__link"
           [disabled]="disableContinueBtn"><span>המשך</span></button>
       </div>
     </form>
     <button type="button" (click)="test()">test</button>
   </div>
+<<<<<<< HEAD
   
 </div>
+=======
+</div>
+>>>>>>> ef8b99374f5bfb88188a930dd8fe0d84cad41847

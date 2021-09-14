@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import { FieldForestCenter } from 'src/app/open-api/model/fieldForestCenter';
 import { BehaviorSubject } from 'rxjs';
-
+import { UserService } from 'src/app/open-api/api/user.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
-  centerField: FieldForestCenter | undefined;
+  centerField: FieldForestCenter={
+    id: 0,
+    name: ''
+  };
   dateObj: any;
-  
+  dateRange: any;
+  formOptions!: FieldForestCenter[];
   public centerFieldObj = new BehaviorSubject<any>({
     "id": 101,
     "name": "נס הרים",
@@ -28,11 +32,20 @@ export class TripService {
     "linkSite": "http://"
   });
   forestCenter = this.centerFieldObj.asObservable();
-  
-  constructor() { }
+
+  constructor(public userService: UserService) { }
 
   changeForestCenter(forestCenter: any) {
     this.centerFieldObj.next(forestCenter);
   }
-  
+  getLookupFieldForestCenters() {
+    this.userService.getLookupFieldForestCenters().subscribe(
+      response => {
+        console.log(response)
+        this.formOptions = response;
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
 }

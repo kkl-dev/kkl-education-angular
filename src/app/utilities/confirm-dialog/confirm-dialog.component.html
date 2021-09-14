@@ -1,0 +1,19 @@
+<h1 mat-dialog-title></h1>
+<div mat-dialog-content>
+  <p style="font-size: 16px;"> {{data.message}} </p>
+  <!-- {{data.content}} -->
+</div>
+
+<div>
+  <mat-form-field *ngIf="data.isWithFillField" class="op-field-fill">
+    <textarea #fill matInput autocomplete="off" [(ngModel)]="messageToReturn" rows="2"></textarea>
+  </mat-form-field>
+</div>
+<!-- <p class="message" *ngIf="invalid">{{M.MUST_FILL_CAUSE_OF_CANCEL}}</p> -->
+<div class="container d-flex flex-row" mat-dialog-actions>
+  <button *ngIf="data.leftButton!=null" mat-button class="button-next"
+    (click)="onNoClick()">{{data.leftButton}}</button>
+    <!--  [mat-dialog-close]="0" -->
+  <button mat-button class="button-bottom" cdkFocusInitial
+    (click)="onYesClick()">{{data.rightButton}}</button>
+</div>

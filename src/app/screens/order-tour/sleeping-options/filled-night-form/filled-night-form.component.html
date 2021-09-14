@@ -4,6 +4,9 @@
   (ngSubmit)="onSubmit()"
   [formGroup]="filledNightForm"
 >
+<div formArrayName="filledUnits">
+  <div *ngFor="let unit of filledNightForm.get('filledUnits')['controls']; let i=index">
+    <div [formGroupName]="i">
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>סוג לינה</mat-label>
     <mat-select name="sleepingPlace" formControlName="sleepingPlace">
@@ -60,6 +63,9 @@
     <mat-label>כמות</mat-label>
     <input matInput type="number" name="amount" formControlName="amount" />
   </mat-form-field>
+  </div>
+ </div>
+</div>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
     <mat-label>הערות</mat-label>
     <textarea matInput name="comments" formControlName="comments"></textarea>

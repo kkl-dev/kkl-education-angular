@@ -1148,10 +1148,7 @@ components:
           example: 13:00
         tillHour:
           type: string
-          example: 15:00
-        totalTime:
-          type: number
-          example: 1.25
+          example: 14:00
         customerName:
           type: string
           example: סימינר הקיבוצים
