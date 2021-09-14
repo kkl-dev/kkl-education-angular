@@ -11,7 +11,7 @@
  */
 
 
-export interface AcommodationType { 
+export interface AccommodationType { 
     /**
      * Accomodation Type Id
      */

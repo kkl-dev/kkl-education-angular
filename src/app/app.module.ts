@@ -30,8 +30,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
 
-// import { ApiModule } from './api';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -112,6 +110,7 @@ import { IconCardComponent } from './components/icon-card/icon-card.component';
 import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
 import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
 import { SizeDirective } from './utilities/directivs/size.directive';
+import { ConfirmDialogComponent } from './utilities/confirm-dialog/confirm-dialog.component';
 
 
 FullCalendarModule.registerPlugins([
@@ -216,7 +215,8 @@ FullCalendarModule.registerPlugins([
     IconCardComponent,
     CalendarComponent,
     ActiveStateDirective,
-    SizeDirective
+    SizeDirective,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

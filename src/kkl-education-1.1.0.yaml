@@ -136,6 +136,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AvailableAccomodationDate'
+<<<<<<< HEAD
+=======
+
+>>>>>>> c73675a30338872f557d406d34420d5f545a19eb
         "400":
           description: invalid data
 
@@ -1046,7 +1050,7 @@ components:
           type: string
           description: Current date of a month title
           format: date-time
-        freeSpaces:
+        freeSpace:
           type: array
           description: List of accomoadation free beds.
           items:

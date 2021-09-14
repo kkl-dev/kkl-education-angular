@@ -10,12 +10,10 @@ import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from '../../../services/trip.service'
-import { AvailableAccomodationDate, FieldForestCenter, AccommodationType } from 'src/app/open-api/model/models';
-import { FakeService } from 'src/app/services/fake.service';
-import { AcommodationType } from 'src/app/open-api/model/acommodationType';
+import { AccommodationType, AvailableAccomodationDate } from 'src/app/open-api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-education',
@@ -26,29 +24,29 @@ export class EducationComponent implements OnInit {
 
   @ViewChild('educationForm') signupForm: NgForm;
   @Output() emitFormValues: EventEmitter<NgForm> = new EventEmitter();
-
-  checked = false;
-  sleepingPlace: string = '';
+  public checked = false;
+  sleepingPlace: any;
+  // sleepingPlace: string = '';
   disableDates = true;
   disableContinueBtn = true;
   checkedSingleDay = false;
   routerLinkContinue = '/education/results'
-  formOptions!: FieldForestCenter[];
   AvailableDates!: AvailableAccomodationDate[];
-  AcommodationTypes!: AcommodationType[];
-  // SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
+  AcommodationTypes!: AccommodationType[];
+  AcommodationType = 'בקתה';
 
-  constructor(public usersService: UserService, public tripService: TripService,
-    private checkAvailabilltyService: CheckAvailabilityService, public fakeApi: FakeService) {
+  constructor(public usersService: UserService, private router: Router, public tripService: TripService,
+    private checkAvailabilltyService: CheckAvailabilityService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
-      new Date(2021, 11, 17)
+      new Date(new Date().setFullYear(new Date().getFullYear() + 1))
     );
 
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
-
+      // maxDate: new Date(2021, 11, 15),
+      maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
@@ -57,64 +55,74 @@ export class EducationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getLookupFieldForestCenters();
-    this.getLookupAcommodationType();
+    this.tripService.getLookupFieldForestCenters();
   }
 
-  getLookupFieldForestCenters() {
-    //get forest centers fake
-    this.fakeApi.getForestCenter().subscribe((forestCenters: any) => {
-      if (forestCenters) {
-        console.log('forest Centers', { forestCenters });
-        this.formOptions = forestCenters;
-      } else {
-        console.log('no data in forest center');
-      }
-    },
-      error => {
-        console.log({ error })
-      });
-    //yak del to get an array
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //     this.formOptions = response;
-    //   },
-    //   error => console.log(error),       // error
-    //   () => console.log('completed')     // complete
-    // )
+  selectChange(event: any) {
+    this.tripService.centerField = this.tripService.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
+    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString());
+    this.disableDates = false;
   }
 
-  getLookupAcommodationType() {
-    this.usersService.getLookupAccommodationType(1).subscribe(
+  getAvailableDates(fromDate: string, tillDate: string) {
+    fromDate = fromDate.substring(0, 10)
+    tillDate = tillDate.substring(0, 10)
+    // tillDate = '2021-11-30'
+    this.usersService.getAvailableAccomodationDates(this.tripService.centerField.id, fromDate, tillDate).subscribe(
       response => {
-        this.AcommodationTypes = response;
+        console.log(response)
+        this.AvailableDates = response;
+        this.AvailableDates.forEach(element => element.freeSpace.forEach(element => { if (element.availableBeds === undefined) { element.availableBeds = 0; } }));
+        this.freeSpacesArray = this.freeSpacesArrayGenaratorFromServer(new Date(fromDate), new Date(tillDate));
+        this.options = {
+          firstCalendarDay: 0,
+          format: 'LL/dd/yyyy',
+          maxDate: new Date(tillDate),
+          closeOnSelected: true,
+          minYear: new Date().getFullYear() - 1,
+          maxYear: new Date(tillDate).getFullYear() + 1,
+          freeSpacesArray: this.freeSpacesArray,
+        };
+        this.disableDates = false;
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
-
-  selectChange(event: any) {
-    this.tripService.centerField = this.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
-    this.getAvailableDates();
-    this.disableDates = false;
+  freeSpacesArrayGenaratorFromServer(start: Date, end: Date) {
+    var i = 0;
+    let freeSpacesArray = [];
+    while (start < end && i <= this.AvailableDates.length) {
+      freeSpacesArray.push({
+        date: start,
+        freeSpace:
+          [
+            {
+              accomodationName: this.AvailableDates[i].freeSpace[0].accomodationName,
+              availableBeds: this.AvailableDates[i].freeSpace[0].availableBeds
+            },
+            {
+              accomodationName: this.AvailableDates[i].freeSpace[1].accomodationName,
+              availableBeds: this.AvailableDates[i].freeSpace[1].availableBeds
+            },
+            {
+              accomodationName: this.AvailableDates[i].freeSpace[2].accomodationName,
+              availableBeds: this.AvailableDates[i].freeSpace[2].availableBeds
+            },
+            {
+              accomodationName: this.AvailableDates[i].freeSpace[3].accomodationName,
+              availableBeds: this.AvailableDates[i].freeSpace[3].availableBeds
+            },
+          ]
+      });
+      start = new Date(start.setDate(start.getDate() + 1)); i++;
+    }
+    return freeSpacesArray;
   }
 
-  getAvailableDates() {
-    //request body to get available dates
-    // this.SearchAvailableDatesOptionsRequestBody.FieldForestCenter = this.tripService.centerField;
-    // this.SearchAvailableDatesOptionsRequestBody.fromDate = this.convertDate(new Date());
-    // var tillDate = new Date(new Date().setMonth(new Date().getMonth() + 4))
-    // this.SearchAvailableDatesOptionsRequestBody.tillDate = this.convertDate(tillDate);
-    // this.usersService.getAvailableDates(this.SearchAvailableDatesOptionsRequestBody).subscribe(
-    //   response => {
-    //     console.log(response)
-    //     this.AvailableDates = response;
-    //   },
-    //   error => console.log(error),       // error
-    //   () => console.log('completed')     // complete
-    // )
-  }
+
+
 
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
@@ -122,41 +130,38 @@ export class EducationComponent implements OnInit {
   freeSpacesArray: FreeSpace[] = [];
 
 
-  
- freeSpacesArrayGenarator(start: Date, end: Date) {
-  const i = 0;
-  let freeSpacesArray = [];
-  while (start < end) {
-    start = new Date(start.setDate(start.getDate() + 1));
-    freeSpacesArray.push({
-      date: start,
-      freeSpace: 
-        [
-          {
-            accomodationName: "cabin",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
-          },
-                      {
-            accomodationName: "tent",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
-          },
-                      {
-            accomodationName: "room",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
-          },
-      ]
-    });
-  }
-  return freeSpacesArray;
-}
 
-  // cabins: this.AvailableDates[i].availableBedsCabin!,
-  // tents: this.AvailableDates[i].availableBedsTent!,
-  // campgrounds: this.AvailableDates[i].availableBedsCamping!,
+  freeSpacesArrayGenarator(start: Date, end: Date) {
+    const i = 0;
+    let freeSpacesArray = [];
+    while (start < end) {
+      start = new Date(start.setDate(start.getDate() + 1));
+      freeSpacesArray.push({
+        date: start,
+        freeSpace:
+          [
+            {
+              accomodationName: "cabin",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+            {
+              accomodationName: "tent",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+            {
+              accomodationName: "room",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+          ]
+      });
+    }
+    return freeSpacesArray;
+  }
+
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
-
+    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
     closeOnSelected: true,
     minYear: 2019,
     maxYear: 2021,
@@ -164,19 +169,33 @@ export class EducationComponent implements OnInit {
   };
 
 
-  
-  newDateRecived(newDate:any){
-    console.log(newDate); 
-    
+
+  newDateRecived(newDate: any) {
+    console.log(newDate);
+    if (new Date().getMonth() + 2 === new Date(newDate).getMonth()) {
+      this.getAvailableDates(
+        new Date().toString(),
+        new Date(new Date().setMonth(newDate.getMonth() + 1)).toString()
+      );
+      this.options = {
+        firstCalendarDay: 0,
+        format: 'LL/dd/yyyy',
+        maxDate: new Date(new Date().setMonth(newDate.getMonth() + 1)),
+        closeOnSelected: true,
+        minYear: new Date().getFullYear() - 1,
+        maxYear: newDate.getFullYear() + 1,
+        freeSpacesArray: this.freeSpacesArray,
+      };
+    }
   }
-  prevDateRecived(prevDate:any){
-    console.log(prevDate); 
-    
+  prevDateRecived(prevDate: any) {
+    console.log(prevDate);
+
   }
-  
-  newSleepingPlaceRecived(sleepingPlace:any){
-    console.log(sleepingPlace); 
-    
+
+  newSleepingPlaceRecived(sleepingPlace: any) {
+    console.log(sleepingPlace);
+    this.AcommodationType = sleepingPlace;
   }
 
   public dateObjChanged(e: string) {
@@ -195,16 +214,20 @@ export class EducationComponent implements OnInit {
       this.dateObj.from = e;
       this.dateObj.to = '';
     }
-    // this.AvailableDaysChecking();
-    // this.disableContinueBtn = false;
-    // this.tripService.dateObj = this.dateObj;
+    this.disableContinueBtn = false;
+    this.tripService.dateObj = this.dateObj;
+
   }
 
   AvailableDaysChecking() {
-    let index = this.freeSpacesArray.findIndex(start => start.date.getDate() === new Date(this.dateObj.from).getDate());
-    while (this.freeSpacesArray[index].date.getDate() !== new Date(this.dateObj.to).getDate()) {
-      // if(this.freeSpacesArray[index].freeSpace)
+    this.tripService.dateRange = this.getDaysArray(new Date(this.dateObj.from), new Date(this.dateObj.to))
+    var flag = true;
+    for (var i in this.tripService.dateRange) {
+      let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationType);
+      if (typeAmount.availableBeds === 0) { flag = false; }
+      if (!flag) { console.log('אחד  הימים בטווח התאריכים אינו פנוי'); return flag; }
     }
+    return flag;
   }
   
   hideSelectPlaceholder(sel: MatSelect) {
@@ -218,19 +241,30 @@ export class EducationComponent implements OnInit {
   }
 
   printFormValues() {
-    if (this.signupForm != undefined) {
+    if (this.signupForm != undefined && this.AvailableDaysChecking()) {
       this.emitFormValues.emit(this.signupForm);
       this.checkAvailabilltyService.saveCheackAvailabilltyValues(this.signupForm)
+      this.router.navigate([this.routerLinkContinue])
     }
   }
   singleDayTrip() { if (this.checkedSingleDay) { this.routerLinkContinue = '/education/my-tours' } }
-  convertDate(today: any) {//function to change date format '1990-04-13' to '13-04-1990'
-    var thisDate = today.toISOString().split('T')[0].split('-');
-    return [thisDate[2], thisDate[1], thisDate[0]].join("-");
-  }
+
+  // convertDate(today: any) {//function to change date format '1990-04-13' to '13-04-1990'
+  //   var thisDate = today.toISOString().split('T')[0].split('-');
+  //   return [thisDate[2], thisDate[1], thisDate[0]].join("-");
+  // }
+
+  // getDaysArray(start: any, end: any) {
+  //   for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
+  //   return arr;
+  // };
   getDaysArray(start: any, end: any) {
-    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
+    var arr = [];
+    let index = this.freeSpacesArray.findIndex(Start => Start.date.getDate() === new Date(start).getDate());
+    while (this.freeSpacesArray[index].date.getDate() <= new Date(end).getDate()) {
+      arr.push(this.freeSpacesArray[index]);
+      index++;
+    }
     return arr;
-  };
-  listDays = this.getDaysArray(this.dateObj.from, this.dateObj.to);
+  }
 }

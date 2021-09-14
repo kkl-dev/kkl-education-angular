@@ -9,19 +9,25 @@ import { UserService } from '../open-api/api/user.service';
 })
 export class TripService {
 
-  constructor(public fakeApi: FakeService, public usersService: UserService) { }
+  constructor(public fakeApi: FakeService, public userService: UserService) { }
 
-  centerField: FieldForestCenter | undefined; // id 
-  dateObj: any = {
-    from: '2021-07-01T00:00:00',
-    till: '2021-07-13T00:00:00'
-  };
+  // dateObj: any = {
+  //   from: '2021-07-01T00:00:00',
+  //   till: '2021-07-13T00:00:00'
+  // };
 
   //  forestCenters: any = {};
 
   //need to add array of object for available dates
   //need to add array of object for available accomedations of chosen dates
 
+  centerField: FieldForestCenter={
+    id: 0,
+    name: ''
+  };
+  dateObj: any;
+  dateRange: any;
+  formOptions!: FieldForestCenter[];
   public centerFieldObj = new BehaviorSubject<any>({
     "id": 1,
     "name": "נס הרים",
@@ -147,7 +153,7 @@ export class TripService {
   }
 
   getAvailableSleepingOptions(dates: string) {   
-    this.usersService.getAvailableSleepingOptionsByDates(this.centerFieldObj.value.id, this.sleepingDates.from, this.sleepingDates.till).subscribe((sleepingAvailability: any) => {
+    this.userService.getAvailableSleepingOptionsByDates(this.centerFieldObj.value.id, this.sleepingDates.from, this.sleepingDates.till).subscribe((sleepingAvailability: any) => {
       if (sleepingAvailability) {
             console.log('sleepingAvailability ==>', { sleepingAvailability });
             
@@ -175,7 +181,16 @@ export class TripService {
     //   });
 
   }
-
+  getLookupFieldForestCenters() {
+    this.userService.getLookupFieldForestCenters().subscribe(
+      response => {
+        console.log(response)
+        this.formOptions = response;
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
 }
 
 
