@@ -11,6 +11,7 @@ export class FilledNightFormComponent implements OnInit {
   @Output() emitFormValues: EventEmitter<FormGroup> = new EventEmitter();
   saveForValue: string = '';
 
+  
   sleepingTypeOptions = [
     { value: 'בקתה', text: 'בקתה' },
     { value: 'אוהל', text: 'אוהל' },

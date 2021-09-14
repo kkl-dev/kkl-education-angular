@@ -120,16 +120,11 @@ export class EducationComponent implements OnInit {
     return freeSpacesArray;
   }
 
-
-
-
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
 
  freeSpacesArray: FreeSpace[] = [];
  
-
-
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];

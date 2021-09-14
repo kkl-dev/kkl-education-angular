@@ -17,10 +17,7 @@
 export interface OccupiedHours { 
     fromHour: string;
     tillHour: string;
-<<<<<<< HEAD
     totalTime?: number;
-=======
->>>>>>> ef8b99374f5bfb88188a930dd8fe0d84cad41847
     customerName?: string;
 }
 

@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
+import {TripService} from '../../../../services/trip.service';
 
 @Component({
   selector: 'app-sleeping-options-form',
@@ -19,22 +20,22 @@ export class SleepingOptionsFormComponent implements OnInit {
   @ViewChild('resultsForm') signupForm: NgForm;
   @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
   date: string = '';
-  public formOptions: { imgSrc: string; text: string; value: string }[] = [
-    { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: 'ציפורי' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: 'לביא' },
-    {
-      imgSrc: 'assets/images/userImage.jpg',
-      text: 'נס הרים',
-      value: 'נס הרים',
-    },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: 'יתיק' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: 'שוני' },
-  ];
-
+  // public formOptions: { imgSrc: string; text: string; value: string }[] = [
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: 'ציפורי' },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: 'לביא' },
+  //   {
+  //     imgSrc: 'assets/images/userImage.jpg',
+  //     text: 'נס הרים',
+  //     value: 'נס הרים',
+  //   },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: 'יתיק' },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: 'שוני' },
+  // ];
+  public formOptions;
   freeSpacesArray: FreeSpace[] = [];
   location: string = '';
 
-  constructor(private checkAvailabilityService: CheckAvailabilityService) {
+  constructor(private checkAvailabilityService: CheckAvailabilityService,private _tripService:TripService) {
     this.location =
       this.checkAvailabilityService.checkAvailabilltyValues.sleepingPlace;
     this.date =
@@ -108,5 +109,8 @@ export class SleepingOptionsFormComponent implements OnInit {
     if (e.includes('-')) this.emitNewDates.emit(e);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+     this.formOptions= this._tripService.formOptions;
+    
+  }
 }

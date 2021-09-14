@@ -23,7 +23,6 @@
         <label class="education__form-group-label">מתאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
 
-<<<<<<< HEAD
         <label
           class="header__form-group-pseudo-input label-input"
           for="calendar-input"
@@ -43,13 +42,6 @@
             name="calendar-input"
             id="calendar-input"
           />
-=======
-        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
-          <input class="header__form-group-input" airbnb-calendar (newDate)='newDateRecived($event)'
-            [disabled]="disableDates" (sleepingPlace)='newSleepingPlaceRecived($event)'
-            (prevDate)='prevDateRecived($event)' type="text" [(ngModel)]="date" [options]="options"
-            (ngModelChange)="dateObjChanged($event)" name="calendarInput" id="calendarInput" />
->>>>>>> ef8b99374f5bfb88188a930dd8fe0d84cad41847
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.from }}</span>
         </label>
@@ -58,14 +50,10 @@
         <label class="education__form-group-label">עד תאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
         <!-- <input class="education__form-group-input" type="text" /> -->
-<<<<<<< HEAD
         <label
           class="header__form-group-pseudo-input label-input"
           for="calendar-input"
         >
-=======
-        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
->>>>>>> ef8b99374f5bfb88188a930dd8fe0d84cad41847
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.to }}</span>
           <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
@@ -79,11 +67,7 @@
           [disabled]="disableContinueBtn"><span>המשך</span></button>
       </div>
     </form>
-    <button type="button" (click)="test()">test</button>
+    <!-- <button type="button" (click)="test()">test</button> -->
   </div>
-<<<<<<< HEAD
   
 </div>
-=======
-</div>
->>>>>>> ef8b99374f5bfb88188a930dd8fe0d84cad41847
