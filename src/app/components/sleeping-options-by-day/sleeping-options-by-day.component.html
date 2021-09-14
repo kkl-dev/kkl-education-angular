@@ -57,8 +57,8 @@
       <button class="SOBD__days-current-day-previous" (click)="previousPage()"
         [ngClass]="{ disabled: currentDay === 0 }" [disabled]="currentDay === 0">
       </button>
-       <span class="SOBD__days-current-day-text"><span> {{ AvailableSleepingOptions[currentDay].date | date:'shortDate' }}</span> זמינות יום
-
+       <span class="SOBD__days-current-day-text">
+         <span> {{ AvailableSleepingOptions[currentDay].date | date:'shortDate' }}</span> זמינות יום
         {{ currentDay + 1 }}</span>
       <button class="SOBD__days-current-day-next" (click)="nextPage()"
         [ngClass]="{ disabled: currentDay === AvailableSleepingOptions.length - 1 }"

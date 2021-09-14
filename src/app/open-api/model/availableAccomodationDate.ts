@@ -18,22 +18,6 @@ export interface AvailableAccomodationDate {
      */
     date: string;
     /**
-     * available lodging places in tents
-     */
-    availableBedsTent?: number;
-    /**
-     * available beds in cabins
-     */
-    availableBedsCabin?: number;
-    /**
-     * available lodging places in  campaing
-     */
-    availableBedsCamping?: number;
-    /**
-     * available beds in rooms
-     */
-    availableBedsRoom?: number;
-    /**
      * List of accomoadation free beds.
      */
     freeSpaces?: Array<AccomodationFreeSpaces>;

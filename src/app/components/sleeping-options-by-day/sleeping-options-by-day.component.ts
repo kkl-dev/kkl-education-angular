@@ -6,8 +6,9 @@ import { TripService } from 'src/app/services/trip.service';
   templateUrl: './sleeping-options-by-day.component.html',
   styleUrls: ['./sleeping-options-by-day.component.scss'],
 })
+
 export class SleepingOptionsByDayComponent implements OnInit {
-  currentDay: number = 0;
+
   @Output() emitCurrentDay: EventEmitter<number> = new EventEmitter();
   @Input() sleepingOptionsByDay: {
     day: string;
@@ -17,19 +18,21 @@ export class SleepingOptionsByDayComponent implements OnInit {
       avialableSpaces: number;
       type: string;
       singleUnit: string;
-      
-//       accomodationTypeId: 1
-// acoomodationTypeName: "בקתה"
-// availableUnits: 10
-// img: "בקתה"
-// maxOccupancy: 20
-// nameEng: "cabin"
+////our data =>
+      //       accomodationTypeId: 1
+      // acoomodationTypeName: "בקתה"
+      // availableUnits: 10
+      // img: "בקתה"
+      // maxOccupancy: 20
+      // nameEng: "cabin"
 
     }[];
   }[] = [];
+  //@Input() AvailableSleepingOptions: any;
   AvailableSleepingOptions: any;
+  currentDay: number = 0;
 
-  constructor(public tripService: TripService) {}
+  constructor(public tripService: TripService) { }
 
   ngOnInit() {
     this.tripService.forestCenter.subscribe(forestCenter => {
@@ -41,8 +44,6 @@ export class SleepingOptionsByDayComponent implements OnInit {
       this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
       console.log('sleeping -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
       console.log('sleeping -- > sleepingOptionsByDay:', this.sleepingOptionsByDay);
-
-      
     });
   }
 
