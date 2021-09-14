@@ -126,10 +126,8 @@ export class EducationComponent implements OnInit {
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
 
- // freeSpacesArray: FreeSpace[] = [];
-  freeSpacesArray1: FreeSpace[] = [];
-  freeSpacesArray: any[] = [];
-
+ freeSpacesArray: FreeSpace[] = [];
+ 
 
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
