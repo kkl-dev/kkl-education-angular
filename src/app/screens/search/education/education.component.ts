@@ -46,7 +46,7 @@ export class EducationComponent implements OnInit {
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
-
+      maxDate:new Date(2021, 10, 10),
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
@@ -117,7 +117,9 @@ export class EducationComponent implements OnInit {
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
 
-  freeSpacesArray: FreeSpace[] = [];
+ // freeSpacesArray: FreeSpace[] = [];
+  freeSpacesArray1: FreeSpace[] = [];
+  freeSpacesArray: any[] = [];
 
 
   
@@ -131,15 +133,15 @@ export class EducationComponent implements OnInit {
       freeSpace: 
         [
           {
-            accomodationName: "cabin",
+            accomodationName: "בקתה",
             availableBeds: +Math.floor(Math.random() * 8).toString()
           },
                       {
-            accomodationName: "tent",
+            accomodationName: "אוהל",
             availableBeds: +Math.floor(Math.random() * 8).toString()
           },
                       {
-            accomodationName: "room",
+            accomodationName: "חדר",
             availableBeds: +Math.floor(Math.random() * 8).toString()
           },
       ]
@@ -234,14 +236,54 @@ export class EducationComponent implements OnInit {
   listDays = this.getDaysArray(this.dateObj.from, this.dateObj.to);
 
   test(){
-    let fieldNum=1;
-    let from= "2021-09-14";
-    let till ="2021-09-20"
-     this.usersService.getAvailableAccomodationDates(fieldNum,from,till).subscribe(res=>{
-         console.log(res);
-     },(err)=>{
-       console.log(err);
-     })
-
+    let num=1;
+    let from ="2021-09-14";
+    let till ="2021-09-19"
+    this.usersService.getAvailableAccomodationDates(num,from,till).subscribe(res=>{
+     //this.freeSpacesArray=  res;
+      this.options = {
+        firstCalendarDay: 0,
+        format: 'LL/dd/yyyy',
+        maxDate:new Date(2021, 8, 19),
+        closeOnSelected: true,
+        minYear: getYear(new Date()) - 1,
+        maxYear: getYear(new Date()) + 1,
+         freeSpacesArray: this.freeSpacesArray,
+      };
+        console.log(res);
+    },(err)=>{
+      console.log(err);
+    })
   }
+
+  test1(){
+    //this.date="09/17/2021T:00:00:00";
+    //document.getElementById("calendarInput").innerHTML="09/17/2021";
+    
+    this.freeSpacesArray1 = this.freeSpacesArrayGenarator(
+      new Date(2022, 8, 10),
+      new Date(2023, 8, 10)
+    );
+    console.log(this.freeSpacesArray1);
+    this.freeSpacesArray=this.freeSpacesArray.concat(this.freeSpacesArray1);
+    //this.freeSpacesArray2=this.freeSpacesArray.concat(this.freeSpacesArray1);
+    console.log(this.freeSpacesArray);
+    this.options = {
+      firstCalendarDay: 0,
+      format: 'LL/dd/yyyy',
+      maxDate:new Date(2023, 8, 10),
+      closeOnSelected: true,
+      minYear: getYear(new Date()) - 1,
+      maxYear: getYear(new Date()) + 1,
+      freeSpacesArray: this.freeSpacesArray,
+    };
+    console.log(this.options.maxDate);
+    
+  }
+
+
+
+
+
+  
 }

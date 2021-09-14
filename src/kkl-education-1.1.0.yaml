@@ -259,7 +259,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TripAttribute'
+                  $ref: '#/components/schemas/Attribute'
   /activityType/{attributeId}/{userId}:
     get:
       tags:
@@ -1046,7 +1046,7 @@ components:
           type: string
           description: Current date of a month title
           format: date-time
-        freeSpaces:
+        freeSpace:
           type: array
           description: List of accomoadation free beds.
           items:
@@ -1367,7 +1367,7 @@ components:
         ageGroup:
           $ref: '#/components/schemas/AgeGroup'
         attribute:
-          $ref: '#/components/schemas/TripAttribute'
+          $ref: '#/components/schemas/Attribute'
         areaTrip:
           $ref: '#/components/schemas/Area'
         budget:
@@ -1559,7 +1559,7 @@ components:
           type: string
           format: date-time
         attribute:
-          $ref: '#/components/schemas/TripAttribute'
+          $ref: '#/components/schemas/Attribute'
         activitiy:
           $ref: '#/components/schemas/ActivityType'
         budget:
@@ -1643,7 +1643,7 @@ components:
           type: string
           nullable: true
           example: מבוגרים
-    TripAttribute:
+    Attribute:
       type: object
       properties:
         id:
