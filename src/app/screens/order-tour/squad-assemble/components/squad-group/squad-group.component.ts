@@ -44,7 +44,7 @@ export class SquadGroupComponent {
     this.questions = this.group.questions || [];
 
     if (this.hasBottom) {
-      this.setSelectDataDemo()
+      this.setSelectDataDemo();
     }
   }
 
@@ -68,14 +68,14 @@ export class SquadGroupComponent {
           label: 'מס משתתפים',
           value: '120',
         },
-         ];
+      ];
     }
   }
 
   //log form when valid
 
-  logForm(form){
-    console.log(form.valid);
+  logForm(form) {
+    this.squadAssembleService.updateFormArray(form); 
   }
 
   // method to change squad assemble form
