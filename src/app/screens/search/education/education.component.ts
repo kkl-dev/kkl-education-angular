@@ -171,21 +171,21 @@ export class EducationComponent implements OnInit {
 
   newDateRecived(newDate: any) {
     console.log(newDate);
-    if (new Date(newDate).getFullYear() === new Date(this.AvailableDates[this.AvailableDates.length].date).getFullYear()) {
-      this.getAvailableDates(
-        new Date().toISOString(),
-        new Date(new Date().setFullYear(newDate.getFullYear() + 1)).toISOString()
-      );
-      this.options = {
-        firstCalendarDay: 0,
-        format: 'LL/dd/yyyy',
-        maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-        closeOnSelected: true,
-        minYear: new Date().getFullYear() - 1,
-        maxYear: newDate.getFullYear() + 1,
-        freeSpacesArray: this.freeSpacesArray,
-      };
-    }
+    // if (new Date(newDate).getFullYear() === new Date(this.AvailableDates[this.AvailableDates.length].date).getFullYear()) {
+    //   this.getAvailableDates(
+    //     new Date().toISOString(),
+    //     new Date(new Date().setFullYear(newDate.getFullYear() + 1)).toISOString()
+    //   );
+    //   this.options = {
+    //     firstCalendarDay: 0,
+    //     format: 'LL/dd/yyyy',
+    //     maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+    //     closeOnSelected: true,
+    //     minYear: new Date().getFullYear() - 1,
+    //     maxYear: newDate.getFullYear() + 1,
+    //     freeSpacesArray: this.freeSpacesArray,
+    //   };
+    // }
   }
   prevDateRecived(prevDate: any) {
     console.log(prevDate);
