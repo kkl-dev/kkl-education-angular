@@ -199,7 +199,6 @@ export class EducationResultsComponent implements OnInit {
       }
       //for facilities
       this.getAvailableFacilities();
-      alert('iiuiu')
     });
 
     console.log('facilitiesArray: ', this.facilitiesArray);
