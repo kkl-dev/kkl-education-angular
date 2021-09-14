@@ -59,7 +59,7 @@ export class EducationComponent implements OnInit {
 
   selectChange(event: any) {
     this.tripService.centerField = this.tripService.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
-    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString());
+    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
     this.disableDates = false;
   }
 
@@ -171,15 +171,15 @@ export class EducationComponent implements OnInit {
 
   newDateRecived(newDate: any) {
     console.log(newDate);
-    if (new Date().getMonth() + 2 === new Date(newDate).getMonth()) {
+    if (new Date(newDate).getFullYear() === new Date(this.AvailableDates[this.AvailableDates.length].date).getFullYear()) {
       this.getAvailableDates(
-        new Date().toString(),
-        new Date(new Date().setMonth(newDate.getMonth() + 1)).toString()
+        new Date().toISOString(),
+        new Date(new Date().setFullYear(newDate.getFullYear() + 1)).toISOString()
       );
       this.options = {
         firstCalendarDay: 0,
         format: 'LL/dd/yyyy',
-        maxDate: new Date(new Date().setMonth(newDate.getMonth() + 1)),
+        maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
         closeOnSelected: true,
         minYear: new Date().getFullYear() - 1,
         maxYear: newDate.getFullYear() + 1,
