@@ -174,7 +174,7 @@ export class HeaderComponent implements OnInit {
       start = new Date(start.setDate(start.getDate() + 1));
       freeSpacesArrayTemp.push({
         date: start,
-        freeSpaces: 
+        freeSpace: 
           [
             {
               accomodationName: "cabin",
