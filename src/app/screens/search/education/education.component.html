@@ -43,8 +43,10 @@
 
         <label
           class="header__form-group-pseudo-input label-input"
-          for="calendarInput"
+          for="calendar-input"
         >
+
+       
           <input
             class="header__form-group-input"
             airbnb-calendar
@@ -55,8 +57,8 @@
             [(ngModel)]="date"
             [options]="options"
             (ngModelChange)="dateObjChanged($event)"
-            name="calendarInput"
-            id="calendarInput"
+            name="calendar-input"
+            id="calendar-input"
           />
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.from }}</span
@@ -69,7 +71,7 @@
         <!-- <input class="education__form-group-input" type="text" /> -->
         <label
           class="header__form-group-pseudo-input label-input"
-          for="calendarInput"
+          for="calendar-input"
         >
           <span class="header__form-group-pseudo-input-value">
             {{ dateObj.to }}</span

@@ -17,6 +17,7 @@
         [$questions]="$questions"
         [hasBottomButton]="true"
         [slots]="{ groupInputs }"
+        (valueChange)="logForm($event)"
       >
       </app-form-container>
     </mat-grid-tile>

@@ -1,0 +1,35 @@
+.form {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  column-gap: 30px;
+}
+
+.btn {
+  background-color: #fff;
+  color: #448ecd;
+  border: 5px solid #448ecd;
+  outline: none;
+  width: fit-content;
+  padding: 10px 25px;
+  font-weight: bolder;
+  font-size: 18px;
+  border-radius: 5px;
+  &__container {
+    text-align: left;
+    grid-column: span 13;
+    padding-top: 15px;
+    border-top: 1px solid #f1f1f1;
+  }
+}
+
+.save-for-text {
+  margin-top: -20px;
+  color: #448ecd;
+}
+::ng-deep .width-auto > .mat-form-field-infix {
+  width: auto !important;
+}
+
+::ng-deep .width-auto .mat-form-field-infix {
+  width: auto !important;
+}

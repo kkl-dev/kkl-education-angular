@@ -176,6 +176,8 @@ export class EducationComponent implements OnInit {
   }
 
   public dateObjChanged(e: string) {
+    console.log('asdasd');
+    
     if (e.includes('-')) {
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
@@ -191,9 +193,9 @@ export class EducationComponent implements OnInit {
       this.dateObj.from = e;
       this.dateObj.to = '';
     }
-    this.AvailableDaysChecking();
-    this.disableContinueBtn = false;
-    this.tripService.dateObj = this.dateObj;
+    // this.AvailableDaysChecking();
+    // this.disableContinueBtn = false;
+    // this.tripService.dateObj = this.dateObj;
   }
 
   AvailableDaysChecking() {

@@ -3,9 +3,18 @@
     <div class="header__form-group" disableOptionCentering="false">
       <label class="header__form-group-label">איפה ישנים</label>
       <mat-form-field>
-        <mat-select [ngModelOptions]="{ standalone: true }" #select class="header__form-group-select"
-          [(ngModel)]="forestCenterId" name="forestCenterId" (ngModelChange)="updateForestCenter($event)">
-          <mat-option *ngFor="let option of forestCenterOptions" [value]="option.id">
+        <mat-select
+          [ngModelOptions]="{ standalone: true }"
+          #select
+          class="header__form-group-select"
+          [(ngModel)]="forestCenterId"
+          name="forestCenterId"
+          (ngModelChange)="updateForestCenter($event)"
+        >
+          <mat-option
+            *ngFor="let option of forestCenterOptions"
+            [value]="option.id"
+          >
             <span class="header__select-option">
               <span class="header__select-option-text">{{ option.name }}</span>
               <img [src]="option.iconPath" class="header__select-option-svg" />
@@ -17,26 +26,43 @@
 
     <div class="header__form-group">
       <label class="header__form-group-label">מתאריך</label>
-      <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
+      <svg-icon
+        src="assets/images/calendar.svg"
+        class="header__form-group-svg"
+      ></svg-icon>
       <label class="header__form-group-pseudo-input">
-        <input class="header__form-group-input" airbnb-calendar 
-        (newDate)='newDateRecived($event)'
-        (sleepingPlace)='newSleepingPlaceRecived($event)'
-        (prevDate)='prevDateRecived($event)'
-        type="text" [(ngModel)]="date" [options]="options"
-          (ngModelChange)="dateObjChanged($event)" name="calendar-input" id="calendar-input" />
+        <input
+          class="header__form-group-input"
+          airbnb-calendar
+          (newDate)="newDateRecived($event)"
+          (sleepingPlace)="newSleepingPlaceRecived($event)"
+          (prevDate)="prevDateRecived($event)"
+          type="text"
+          [(ngModel)]="date"
+          [options]="options"
+          (ngModelChange)="dateObjChanged($event)"
+          name="calendar-input"
+          id="calendar-input"
+        />
         <span class="header__form-group-pseudo-input-value">
-          {{ dateObj.from }}</span>
+          {{ dateObj.from }}</span
+        >
       </label>
     </div>
-    
+
     <div class="header__form-group">
       <label class="header__form-group-label">עד תאריך</label>
-      <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
-      <label class="header__form-group-pseudo-input label-input" for="calendar-input">
-
+      <svg-icon
+        src="assets/images/calendar.svg"
+        class="header__form-group-svg"
+      ></svg-icon>
+      <label
+        class="header__form-group-pseudo-input label-input"
+        for="calendar-input"
+      >
         <span class="header__form-group-pseudo-input-value">
-          {{ dateObj.to }}</span>
+          {{ dateObj.to }}</span
+        >
         <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
       </label>
     </div>
