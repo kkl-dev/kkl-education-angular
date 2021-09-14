@@ -233,13 +233,15 @@ export class EducationComponent implements OnInit {
   };
   listDays = this.getDaysArray(this.dateObj.from, this.dateObj.to);
 
-  // test(){
-  //   let myDate = new Date(); 
-  //  console.log(myDate);
-  //  let year= myDate.getFullYear();
-  //  let month= myDate.getMonth();
-  //  let day = myDate.getDay();
-  //  console.log(year+'-'+month+'-'+day);
+  test(){
+    let fieldNum=1;
+    let from= "2021-09-14";
+    let till ="2021-09-20"
+     this.usersService.getAvailableAccomodationDates(fieldNum,from,till).subscribe(res=>{
+         console.log(res);
+     },(err)=>{
+       console.log(err);
+     })
 
-  // }
+  }
 }

@@ -259,7 +259,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Attribute'
+                  $ref: '#/components/schemas/TripAttribute'
   /activityType/{attributeId}/{userId}:
     get:
       tags:
@@ -1367,7 +1367,7 @@ components:
         ageGroup:
           $ref: '#/components/schemas/AgeGroup'
         attribute:
-          $ref: '#/components/schemas/Attribute'
+          $ref: '#/components/schemas/TripAttribute'
         areaTrip:
           $ref: '#/components/schemas/Area'
         budget:
@@ -1559,7 +1559,7 @@ components:
           type: string
           format: date-time
         attribute:
-          $ref: '#/components/schemas/Attribute'
+          $ref: '#/components/schemas/TripAttribute'
         activitiy:
           $ref: '#/components/schemas/ActivityType'
         budget:
@@ -1643,7 +1643,7 @@ components:
           type: string
           nullable: true
           example: מבוגרים
-    Attribute:
+    TripAttribute:
       type: object
       properties:
         id:
