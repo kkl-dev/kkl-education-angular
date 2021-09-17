@@ -16,7 +16,19 @@ export class FakeService {
   getForestCenter() {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
-    return this.http.get(`${this.url}forestCenter`, { headers });
+    return this.http.get(`${this.url}forestCenters`, { headers });
+  }
+
+  getAvailableFacilityDates(day: any) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    return this.http.get(`${this.url}AvailableFacilityDates`, { headers });
+  }
+
+  getAvailableSleepingOptionsByDay(dates: string) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    return this.http.get(`${this.url}AvailableSleepingOptionsByDay`, { headers });
   }
 
   // getAll(): Observable<any> {

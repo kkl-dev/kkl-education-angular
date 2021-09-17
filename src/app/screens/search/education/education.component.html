@@ -1,7 +1,6 @@
 <div class="education">
   <div class="education__form-container">
     <p class="education__form-container-headline">בדיקת זמינות</p>
-
     <form #educationForm="ngForm">
       <div class="education__form-group" disableOptionCentering="false">
         <label class="education__form-group-label">איפה ישנים</label>
@@ -43,7 +42,7 @@
             id="calendar-input"
           />
           <span class="header__form-group-pseudo-input-value">
-            {{ dateObj.from }}</span>
+            {{ sleepingDates.from }}</span>
         </label>
       </div>
       <div class="education__form-group">
@@ -55,11 +54,10 @@
           for="calendar-input"
         >
           <span class="header__form-group-pseudo-input-value">
-            {{ dateObj.to }}</span>
+            {{ sleepingDates.till }}</span>
           <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
         </label>
       </div>
-
       <div class="education__link-group">
         <label class="education__form-group-label link-group">buffer</label>
         <!-- routerLink="{{routerLinkContinue}}" -->

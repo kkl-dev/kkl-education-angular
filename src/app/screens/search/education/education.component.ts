@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./education.component.scss'],
 })
 export class EducationComponent implements OnInit {
+
   @ViewChild('educationForm') signupForm: NgForm;
   @Output() emitFormValues: EventEmitter<NgForm> = new EventEmitter();
   public checked = false;
@@ -33,6 +34,10 @@ export class EducationComponent implements OnInit {
   AvailableDates!: AvailableAccomodationDate[];
   AcommodationTypes!: AccommodationType[];
   AcommodationType = 'בקתה';
+
+  date: string | null = null;
+  sleepingDates: { from: string; till: string } = { from: '', till: '' };
+  freeSpacesArray: FreeSpace[] = [];
 
   constructor(public usersService: UserService, private router: Router, public tripService: TripService,
     private checkAvailabilltyService: CheckAvailabilityService) {
@@ -73,6 +78,7 @@ export class EducationComponent implements OnInit {
         this.AvailableDates = response;
         this.AvailableDates.forEach(element => element.freeSpace.forEach(element => { if (element.availableBeds === undefined) { element.availableBeds = 0; } }));
         this.freeSpacesArray = this.freeSpacesArrayGenaratorFromServer(new Date(fromDate), new Date(tillDate));
+        this.tripService.setFreeSpacesArray(this.freeSpacesArray);
         this.options = {
           firstCalendarDay: 0,
           format: 'LL/dd/yyyy',
@@ -120,10 +126,19 @@ export class EducationComponent implements OnInit {
     return freeSpacesArray;
   }
 
+<<<<<<< HEAD
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
 
   freeSpacesArray: FreeSpace[] = [];
+=======
+
+
+
+
+
+
+>>>>>>> origin/yakovs-branch
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
@@ -195,35 +210,38 @@ export class EducationComponent implements OnInit {
     console.log('asdasd');
     
     if (e.includes('-')) {
-      let tempDateArr: string[] = [];
-      tempDateArr = e.split('-');
+      
+       let tempDateArr: string[] = [];
+       tempDateArr = e.split('-');
+
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
-        this.dateObj.from = tempDateArr[0];
-        this.dateObj.to = tempDateArr[1];
+        this.sleepingDates.from = tempDateArr[0];
+        this.sleepingDates.till = tempDateArr[1];
       } else {
-        this.dateObj.from = tempDateArr[1];
-        this.dateObj.to = tempDateArr[0];
+        this.sleepingDates.from = tempDateArr[1];
+        this.sleepingDates.till = tempDateArr[0];
       }
     } else {
 
-      this.dateObj.from = e;
-      this.dateObj.to = '';
+      this.sleepingDates.from = e;
+      this.sleepingDates.till = '';
     }
     this.disableContinueBtn = false;
-    this.tripService.dateObj = this.dateObj;
+    this.tripService.sleepingDates = this.sleepingDates;
 
   }
 
   AvailableDaysChecking() {
-    this.tripService.dateRange = this.getDaysArray(new Date(this.dateObj.from), new Date(this.dateObj.to))
+    this.tripService.dateRange = this.getDaysArray(new Date(this.sleepingDates.from), new Date(this.sleepingDates.till))
     var flag = true;
     for (var i in this.tripService.dateRange) {
       let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationType);
       if (typeAmount.availableBeds === 0) { flag = false; }
-      if (!flag) { console.log('אחד  הימים בטווח התאריכים אינו פנוי'); return flag; }
+      if (!flag) { console.log('אחד הימים בטווח התאריכים אינו פנוי'); return flag; }
     }
     return flag;
   }
+  
   hideSelectPlaceholder(sel: MatSelect) {
     sel.placeholder = '';
   }

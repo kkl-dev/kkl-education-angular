@@ -5,10 +5,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
+import { MyToursComponent } from './screens/my-tours/my-tours.component';
+import { EducationComponent } from './screens/search/education/education.component';
+import { OrderTourComponent } from './screens/order-tour/order-tour.component';
+import { FormContainerComponent } from './components/form/form-container/form-container.component';
+import { LinksComponent } from './components/links/links.component';
+
 // FULL CALENDER PLUGIN
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import  InteractionPlugin  from '@fullcalendar/interaction';
 
 import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
@@ -21,8 +30,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
 
+<<<<<<< HEAD
 import { ApiModule } from 'src/app/open-api';
 
+=======
+>>>>>>> origin/yakovs-branch
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -46,26 +58,17 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { BottomNavigationComponent } from './components/bottom-navigation/bottom-navigation.component';
 import { WorkingStepsComponent } from './components/working-steps/working-steps.component';
 import { MapsComponent } from './screens/education-results/maps/maps.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { UserInfoComponent } from './components/user-info/user-info.component';
-
-import { ToursTableComponent } from './screens/my-tours/tours-table/tours-table.component';
-import { MyToursComponent } from './screens/my-tours/my-tours.component';
-import { EducationComponent } from './screens/search/education/education.component';
-import { OrderTourComponent } from './screens/order-tour/order-tour.component';
-
-import { LinksComponent } from './components/links/links.component';
-
-import { FormContainerComponent } from './components/form/form-container/form-container.component';
+import { ApiModule } from 'src/app/open-api/api.module';
+import { InfoCardComponent } from './components/info-card/info-card.component';
+import { NumberInputComponent } from './components/form/number-input/number-input.component';
+import { IconComponent } from './components/icon/icon.component';
+// import { AdditionsComponent } from './screens/order-tour/additions/additions.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
 import { FormQuestionComponent } from './components/form/form-question/form-question.component';
 import { FormInputComponent } from './components/form/form-input/form-input.component';
 import { InputRadioComponent } from './components/form/input-radio/input-radio.component';
 import { FormGroupComponent } from './components/form/form-group/form-group.component';
 
-import { InfoCardComponent } from './components/info-card/info-card.component';
-import { NumberInputComponent } from './components/form/number-input/number-input.component';
-import { IconComponent } from './components/icon/icon.component';
-import { DrawerComponent } from './components/drawer/drawer.component';
 import { ExpendPanelComponent } from './components/expend-panel/expend-panel.component';
 
 import { TypographyComponent } from './components/typography/typography.component';
@@ -118,7 +121,7 @@ import { ConfirmDialogComponent } from './utilities/confirm-dialog/confirm-dialo
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
-  interactionPlugin
+  InteractionPlugin
 ]);
 
 @NgModule({
@@ -174,7 +177,6 @@ FullCalendarModule.registerPlugins([
     WorkingStepsComponent,
     DrawerComponent,
     InfoCardComponent,
-    NumberInputComponent,
     IconComponent,
     ExpendPanelComponent,
     TypographyComponent,

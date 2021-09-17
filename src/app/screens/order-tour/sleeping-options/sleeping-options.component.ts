@@ -18,6 +18,8 @@ export interface formGroupGrid {
   styleUrls: ['./sleeping-options.component.scss'],
 })
 export class SleepingOptionsComponent implements OnInit {
+  @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
+
   sleepingOptionsByDay: {
     day: string;
     options: {
@@ -33,21 +35,21 @@ export class SleepingOptionsComponent implements OnInit {
       options: [
         {
           svgUrl: 'assets/images/cabin.svg',
-          sleepingAreas: 2,
+          sleepingAreas: 3,
           avialableSpaces: 16,
           type: 'בקתות',
           singleUnit: 'בבקתה',
         },
         {
           svgUrl: 'assets/images/tent.svg',
-          sleepingAreas: 4,
+          sleepingAreas: 5,
           avialableSpaces: 6,
           type: 'אוהלים',
           singleUnit: 'באוהל',
         },
         {
           svgUrl: 'assets/images/camp.svg',
-          sleepingAreas: 1,
+          sleepingAreas: 2,
           avialableSpaces: 1670,
           type: 'גיחה',
           singleUnit: 'לנים',
@@ -159,7 +161,7 @@ export class SleepingOptionsComponent implements OnInit {
       ],
     },
   ];
-  @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
+  
   public indexToPatch: number = -1;
   filledNightsArray: {
     sleepingPlace: string;
@@ -183,6 +185,8 @@ export class SleepingOptionsComponent implements OnInit {
   questions: QuestionBase<string | number>[] = [];
 
   changeDatesHandler(newDates: string) {
+    console.log('changeDatesHandler')
+
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
     if (newDates && !newDates.includes('-')) return;
@@ -214,25 +218,26 @@ export class SleepingOptionsComponent implements OnInit {
         options: [
           {
             svgUrl: 'assets/images/cabin.svg',
-            sleepingAreas: 2,
-            avialableSpaces: 16,
+            sleepingAreas: 1,
+            avialableSpaces: 36,
             type: 'בקתות',
             singleUnit: 'בבקתה',
           },
           {
             svgUrl: 'assets/images/tent.svg',
-            sleepingAreas: 4,
-            avialableSpaces: 6,
+            sleepingAreas: 5,
+            avialableSpaces: 44,
             type: 'אוהלים',
             singleUnit: 'באוהל',
           },
           {
             svgUrl: 'assets/images/camp.svg',
-            sleepingAreas: 1,
+            sleepingAreas: 2,
             avialableSpaces: Math.floor(Math.random() * 90),
             type: 'גיחה',
             singleUnit: 'לנים',
           },
+
         ],
       });
       newDate = new Date(date1.setDate(date1.getDate() + 1));
@@ -241,13 +246,9 @@ export class SleepingOptionsComponent implements OnInit {
   }
 
   constructor(
-    private checkAvailabilityService: CheckAvailabilityService,
-    private sleepingService: SleepingServiceService
-  ) {
+    private checkAvailabilityService: CheckAvailabilityService, private sleepingService: SleepingServiceService) {
     this.questions = this.sleepingService.questions;
-    this.changeDatesHandler(
-      this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
-    );
+    this.changeDatesHandler(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
   }
 
   addFilledNight(form) {

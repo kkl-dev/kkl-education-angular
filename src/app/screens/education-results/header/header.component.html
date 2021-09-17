@@ -1,5 +1,6 @@
 <div class="header">
   <form class="header__form">
+
     <div class="header__form-group" disableOptionCentering="false">
       <label class="header__form-group-label">איפה ישנים</label>
       <mat-form-field>
@@ -31,6 +32,7 @@
         class="header__form-group-svg"
       ></svg-icon>
       <label class="header__form-group-pseudo-input">
+<<<<<<< HEAD
         <input
           class="header__form-group-input"
           airbnb-calendar
@@ -47,11 +49,20 @@
         <span class="header__form-group-pseudo-input-value">
           {{ dateObj.from }}</span
         >
+=======
+        <input class="header__form-group-input" airbnb-calendar (newDate)='newDateRecived($event)'
+          (sleepingPlace)='newSleepingPlaceRecived($event)' (prevDate)='prevDateRecived($event)' type="text"
+          [(ngModel)]="date" [options]="options" (ngModelChange)="dateObjChanged($event)" name="calendar-input"
+          id="calendar-input" />
+        <span class="header__form-group-pseudo-input-value">
+          {{ sleepingDates.from }}</span>
+>>>>>>> origin/yakovs-branch
       </label>
     </div>
 
     <div class="header__form-group">
       <label class="header__form-group-label">עד תאריך</label>
+<<<<<<< HEAD
       <svg-icon
         src="assets/images/calendar.svg"
         class="header__form-group-svg"
@@ -63,9 +74,19 @@
         <span class="header__form-group-pseudo-input-value">
           {{ dateObj.to }}</span
         >
+=======
+      <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
+      <label class="header__form-group-pseudo-input label-input" for="calendar-input">
+        <span class="header__form-group-pseudo-input-value">
+          {{ sleepingDates.till }}</span>
+>>>>>>> origin/yakovs-branch
         <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
       </label>
     </div>
   </form>
 </div>
+<<<<<<< HEAD
 <h1 class="headline">מרכז שדה - {{ location }}</h1>
+=======
+<h1 class="headline">{{ forestCenter.name }}</h1>
+>>>>>>> origin/yakovs-branch
