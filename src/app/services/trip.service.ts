@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { SelectOption } from '../components/form/logic/question-base';
+import { ForestCenter } from '../models/forest-center.model';
 import { Area, ActivityType, FieldForestCenter, AgeGroup, Attribute, ParticipantType, Language, Country, Customer } from '../open-api';
 
 @Injectable({
@@ -40,7 +41,9 @@ export class TripService {
 
 
   ageGroup = [];//to convert to model of comrax
+  ageGroupOriginal: AgeGroup[];
   fieldForestCenters = [];//to convert to model of comrax
+  fieldForestCentersOriginal: FieldForestCenter[];
   activityByAttribute = []
   customersByParams: Customer[]
   areas: Area[];
@@ -51,6 +54,7 @@ export class TripService {
   getLookUp() {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {
+        this.fieldForestCentersOriginal = response;
         response.forEach(element => {
           this.fieldForestCenters.push({ key: element.name, value: element.id.toString() });
         });
@@ -61,6 +65,7 @@ export class TripService {
 
     this.userService.getAgeGroup().subscribe(
       response => {
+        this.ageGroupOriginal = response;
         response.forEach(element => {
           this.ageGroup.push({ key: element.name, value: element.id.toString() });
         });
