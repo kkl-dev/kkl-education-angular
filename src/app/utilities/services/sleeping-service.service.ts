@@ -36,6 +36,25 @@ export class SleepingServiceService {
       },
     }),
 
+    // new QuestionSelect({
+    //   key: 'sleepingPlace',
+    //   label: ' סוג לינה', 
+    //   type: 'select',
+    //   cols: '2',
+
+    //   validations: [Validators.required],
+    //   inputProps: {
+    //     // labelLength: 'extraWide',
+    //     options: [
+    //       // { key: 'חדרים', value: 'חדרים' },
+    //       { name: 'בקתות', id: 'בקתות' },
+    //       { name: 'גיחה', id: 'גיחה' },
+    //       { name: 'אוהלים', id: 'אוהלים' },
+    //     ],
+    //   },
+    // }),
+
+
     new QuestionSelect({
       key: 'nightsCount',
       type: 'select',
@@ -50,6 +69,22 @@ export class SleepingServiceService {
         ],
       },
     }),
+
+    // new QuestionSelect({
+    //   key: 'nightsCount',
+    //   type: 'select',
+    //   cols: '2',
+    //   label: 'קבוצת גיל',
+    //   inputProps: {
+    //     options: [
+    //       { name: '1', id: 'לילה 1' },
+    //       { name: '2', id: 'לילה 2' },
+    //       { name: '3', id: 'לילה 3' },
+    //       { name: '4', id: 'לילה 4' },
+    //     ],
+    //   },
+    // }),
+
     new QuestionSelect({
       key: 'saveFor',
       type: 'select',
@@ -64,6 +99,23 @@ export class SleepingServiceService {
         ],
       },
     }),
+
+    // new QuestionSelect({
+    //   key: 'saveFor',
+    //   type: 'select',
+    //   cols: '2',
+    //   label: 'שריין עבור',
+    //   inputProps: {
+    //     options: [
+    //       { name: 'מבוגרים', id: 'מבוגרים' },
+    //       { name: 'נוער', id: 'נוער' },
+    //       { name: 'מדריכים', id: 'מדריכים' },
+    //       { name: 'חובשים', id: 'חובשים' },
+    //     ],
+    //   },
+    // }),
+
+
     new QuestionNumber({
       key: 'peopleCount',
       label: 'מספר לנים',

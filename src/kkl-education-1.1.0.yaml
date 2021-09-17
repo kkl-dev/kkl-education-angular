@@ -1217,8 +1217,10 @@ components:
           type: string
           example: בקתה
         date:
-          type: string
-          format: date
+          type: array
+        items:
+            type: string
+            format: date
         participantId:
           type: integer
           example: 1

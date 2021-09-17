@@ -7,6 +7,11 @@ export interface SelectOption {
   value: string;
 }
 
+// export interface SelectOption {
+//   name: string;
+//   id: string;
+// }
+
 export class QuestionBase<T> {
   value: T | undefined;
   type: string;

@@ -173,6 +173,21 @@ export class SquadAssembleService {
       },
     }),
 
+    // new QuestionSelect({
+    //   key: 'clientPool',
+    //   type: 'select',
+    //   label: 'הכול',
+    //   inputProps: {
+    //     labelSize: 's1',
+    //     options: [
+    //       { name: 'שם נוסף', id: 'שם נוסף' },
+    //       { name: 'עוד לקוח', id: 'עוד לקוח' },
+    //       { name: 'לקוח מספר שלוש', id: 'לקוח מספר שלוש' },
+    //       { name: 'לקוח מספר ארבע', id: 'לקוח מספר ארבע' },
+    //     ],
+    //   },
+    // }),
+
     new QuestionSelect({
       key: 'payerName',
       label: 'לקוח משלם',
@@ -247,6 +262,23 @@ export class SquadAssembleService {
       },
     }),
 
+    // public groupAssembleFormMixedInputs: QuestionBase<string | number>[] = [
+    //   new QuestionSelect({
+    //     key: 'age',
+    //     type: 'select',
+    //     fullWidth: true,
+    //     rows: 4,
+    //     label: 'קבוצת גיל',
+    //     inputProps: {
+    //       options: [
+    //         { name: '1', id: '1' },
+    //         { name: 'עוד לקוח', id: '10+' },
+    //         { name: 'לקוח מספר שלוש', id: '20+' },
+    //         { name: 'לקוח מספר ארבע', id: '30+' },
+    //       ],
+    //     },
+    //   }),
+
     new QuestionNumber({
       key: 'chaperones',
       label: 'מלווים',
@@ -301,6 +333,24 @@ export class SquadAssembleService {
         ],
       },
     }),
+
+    // public groupAssembleFormInputs: QuestionBase<string>[] = [
+    //   new QuestionSelect({
+    //     key: 'age',
+    //     type: 'select',
+    //     fullWidth: true,
+    //     rows: 3,
+    //     label: 'קבוצת גיל',
+    //     inputProps: {
+    //       options: [
+    //         { name: '1', id: '1' },
+    //         { name: 'עוד לקוח', id: '10+' },
+    //         { name: 'לקוח מספר שלוש', id: '20+' },
+    //         { name: 'לקוח מספר ארבע', id: '30+' },
+    //       ],
+    //     },
+    //   }),
+
     new QuestionBase({
       key: 'participants',
       fullWidth: true,
@@ -370,6 +420,27 @@ export class SquadAssembleService {
         ],
       },
     }),
+
+    
+  // public tourDetailsFormInputs: QuestionBase<string>[] = [
+  //   new QuestionSelect({
+  //     key: 'characteristic',
+  //     label: 'מאפיין',
+  //     type: 'select',
+  //     inputProps: {
+  //       labelSize: 's4',
+  //       options: [
+  //         { name: 'פרומלי', id: 'פרומלי' },
+  //         { name: 'בלתי פורמלי', id: 'בלתי פורמלי' },
+  //         { name: 'מעוף', id: 'מעוף' },
+  //         { name: 'חו"ל', id: 'חו"ל' },
+  //         { name: 'הנהלת אגף', id: 'הנהלת אגף' },
+  //       ],
+  //     },
+  //   }),
+
+
+
     new QuestionSelect({
       key: 'activityType',
       label: 'סוג הפעילות',
@@ -382,6 +453,19 @@ export class SquadAssembleService {
         ],
       },
     }),
+
+    // new QuestionSelect({
+    //   key: 'activityType',
+    //   label: 'סוג הפעילות',
+    //   type: 'select',
+    //   inputProps: {
+    //     labelSize: 's4',
+    //     options: [
+    //       { name: 'אירוח אכסנייה', id: 'אירוח אכסנייה' },
+    //       { name: 'מחזון להגשמה', id: 'מחזון להגשמה' },
+    //     ],
+    //   },
+    // }),
 
     new QuestionRadio({
       key: 'tripLocation',
@@ -397,6 +481,21 @@ export class SquadAssembleService {
       },
     }),
 
+    
+    // new QuestionRadio({
+    //   key: 'tripLocation',
+    //   label: 'מחלקה',
+    //   custom: true,
+    //   value: 'ישראל',
+    //   rows: 4,
+    //   inputProps: {
+    //     options: [
+    //       { name: 'ישראל', id: 'ישראל' },
+    //       { name: 'חו"ל', id: 'חו"ל' },
+    //     ],
+    //   },
+    // }),
+
     new QuestionRadio({
       custom: true,
       key: 'tripCenter',
@@ -411,6 +510,20 @@ export class SquadAssembleService {
       },
     }),
 
+    // new QuestionRadio({
+    //   custom: true,
+    //   key: 'tripCenter',
+    //   label: 'פנים/חוץ מרכז שדה',
+    //   value: 'ישראל',
+    //   rows: 4,
+    //   inputProps: {
+    //     options: [
+    //       { name: 'פנים', id: 'פנים' },
+    //       { name: 'חוץ', id: 'חוץ' },
+    //     ],
+    //   },
+    // }),
+
     new QuestionTextarea({
       key: 'comments',
       label: 'הערות מנהליות',
@@ -418,24 +531,7 @@ export class SquadAssembleService {
     }),
   ];
 
-  // set lookups
-   
-    // setLookupsForFirstGroup(){
-    //   console.log('tripinput' ,this.timeAndNameFormInputs);
-    //   this.timeAndNameFormInputs.forEach(element => {
-    //     if (element.key=='centerField'){
-    //         this.userService.getLookupFieldForestCenters().subscribe(res=>{
-    //           res.forEach(ele => {
-    //             let options={
-    //                value: ele.id,
-    //                key:  ele.name
-    //             }
-    //             element.inputProps.options.push(options)
-    //          });
-    //       })
-    //     }
-    //  });
-    // }
+  
    
 
   updateFormArray(form: FormGroup) {
