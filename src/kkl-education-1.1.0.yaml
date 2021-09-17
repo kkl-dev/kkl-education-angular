@@ -1216,11 +1216,14 @@ components:
         accomodationTypeName:
           type: string
           example: בקתה
-        date:
-          type: array
-        items:
-            type: string
-            format: date
+        # dates:
+        #   type: array
+        #   items:
+        #      type: string
+        #      format: date
+        date: 
+          type: string
+          format: date
         participantId:
           type: integer
           example: 1
@@ -1577,7 +1580,7 @@ components:
           format: date-time
         attribute:
           $ref: '#/components/schemas/Attribute'
-        activitiy:
+        activity:
           $ref: '#/components/schemas/ActivityType'
         budget:
           $ref: '#/components/schemas/Budget'
