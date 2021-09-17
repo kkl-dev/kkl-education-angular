@@ -31,6 +31,7 @@ export class MapsComponent implements OnInit {
   fullhuts: any;
   datatoiter: any;
   pointGraphic: any;
+  forestCenter: any;
 
   constructor(public tripService: TripService, public fakeApi: FakeService) { }
 
@@ -62,19 +63,21 @@ export class MapsComponent implements OnInit {
     this.loadWebMap();
     if (this.tripService.centerField) {
       this.place = this.tripService.centerField.name;
+      this.forestCenter = this.tripService.centerField.name;
+
       this.onChangeForestCenter();
     }
-    else {
-      this.tripService.forestCenter.subscribe(result => {
-        try {
-          this.place = result.name;
-          this.onChangeForestCenter();
 
-        } catch (error) {
+    //else {
 
-        }
+      this.tripService.forestCenter.subscribe(forestCenter => {
+        this.forestCenter = forestCenter; // this set's the username to the default observable value
+        console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
+        this.place = forestCenter.name;
+        this.onChangeForestCenter();
       });
-    }
+  
+    //}
 
 
   }
@@ -124,12 +127,14 @@ export class MapsComponent implements OnInit {
       this.place = "מרכז שדה נס הרים";
       rawservicedata = this.nesharimday1;
     };
-    if ((this.place == "מרכז שדה ציפורי") && (this.day == 1)) { rawservicedata = this.ziporiday1; };
-    if ((this.place == "אילנות מערב") && (this.day == 1)) { rawservicedata = this.ilanotday1 };
-    if ((this.place == "מצפה בית אשל") && (this.day == 1)) { rawservicedata = this.betieshelday1 };
-    if ((this.place == "מרכז שדה יתיר") && (this.day == 1)) { rawservicedata = this.yatirday1 };
-    if ((this.place == "מרכז שדה לביא") && (this.day == 1)) { rawservicedata = this.laviday1 };
-    if ((this.place == "מרכז שדה שוני") && (this.day == 1)) { rawservicedata = this.shuniday1 };
+    // fix search by id 
+    //this.forestCenter
+    if ((this.place == "ציפורי") && (this.day == 1)) { rawservicedata = this.ziporiday1; };
+    if ((this.place == "אילנות") && (this.day == 1)) { rawservicedata = this.ilanotday1 };
+    if ((this.place == "בית אש\"ל") && (this.day == 1)) { rawservicedata = this.betieshelday1 };
+    if ((this.place == "יתיר") && (this.day == 1)) { rawservicedata = this.yatirday1 };
+    if ((this.place == "לביא") && (this.day == 1)) { rawservicedata = this.laviday1 };
+    if ((this.place == "שוני") && (this.day == 1)) { rawservicedata = this.shuniday1 };
 
     var datatoiter = rawservicedata["biktot"]["bikta"]
     for (let i = 0; i < datatoiter.length; i++) {

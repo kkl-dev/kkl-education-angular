@@ -28,7 +28,7 @@
             (prevDate)='prevDateRecived($event)' type="text" [(ngModel)]="date" [options]="options"
             (ngModelChange)="dateObjChanged($event)" name="calendarInput" id="calendarInput" />
           <span class="header__form-group-pseudo-input-value">
-            {{ dateObj.from }}</span>
+            {{ sleepingDates.from }}</span>
         </label>
       </div>
       <div class="education__form-group">
@@ -37,7 +37,7 @@
         <!-- <input class="education__form-group-input" type="text" /> -->
         <label class="header__form-group-pseudo-input label-input" for="calendarInput">
           <span class="header__form-group-pseudo-input-value">
-            {{ dateObj.to }}</span>
+            {{ sleepingDates.till }}</span>
           <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
         </label>
       </div>

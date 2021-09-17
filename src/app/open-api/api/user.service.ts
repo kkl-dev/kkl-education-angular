@@ -50,8 +50,8 @@ import { Configuration } from '../configuration';
 })
 export class UserService {
 
+    // protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     protected basePath = 'http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
-    //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

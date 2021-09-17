@@ -18,14 +18,6 @@ export class SleepingOptionsByDayComponent implements OnInit {
       avialableSpaces: number;
       type: string;
       singleUnit: string;
-////our data =>
-      //       accomodationTypeId: 1
-      // acoomodationTypeName: "בקתה"
-      // availableUnits: 10
-      // img: "בקתה"
-      // maxOccupancy: 20
-      // nameEng: "cabin"
-
     }[];
   }[] = [];
   //@Input() AvailableSleepingOptions: any;
@@ -37,13 +29,13 @@ export class SleepingOptionsByDayComponent implements OnInit {
   ngOnInit() {
     this.tripService.forestCenter.subscribe(forestCenter => {
       //this.forestCenter = result; // this set's the username to the default observable value
-      console.log('header --> forestCenter result:', forestCenter);
+      console.log('sleeping --> forestCenter result:', forestCenter);
     });
 
-    this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {
+    this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {      
       this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
       console.log('sleeping -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
-      console.log('sleeping -- > sleepingOptionsByDay:', this.sleepingOptionsByDay);
+     // console.log('sleeping -- > sleepingOptionsByDay:', this.sleepingOptionsByDay);
     });
   }
 

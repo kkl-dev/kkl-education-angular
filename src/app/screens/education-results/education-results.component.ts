@@ -25,7 +25,7 @@ export class EducationResultsComponent implements OnInit {
   //forestCenter: any | undefined = this.tripService.centerField || {};
 
   // availabilityItemsArray: any = [];
-  dateObj: any;
+  sleepingDates: any;
   fromOtherComponent: boolean = true;
 
   //public facilitiesArray: InfoCard[] = [];
@@ -187,28 +187,11 @@ export class EducationResultsComponent implements OnInit {
   constructor(private router: Router, private checkAvailabilityService: CheckAvailabilityService,
     public usersService: UserService, private route: ActivatedRoute,
     private userDataService: UserDataService, private tripService: TripService, private api: FakeService) {
-    console.log(this.tripService);
-
-    this.tripService.forestCenter.subscribe(forestCenter => {
-      this.forestCenter = forestCenter; // this set's the username to the default observable value
-      console.log('parent -- > forest Center from server BehaviorSubject:', this.forestCenter);
-      // call api if place changed for dates and facilities;
-      //console.log('fromOtherComponent: ' + this.fromOtherComponent);
-      if (!this.fromOtherComponent) {
-        this.getAvailableAccommodationDates(forestCenter);
-      }
-      //for facilities
-      this.getAvailableFacilities();
-    });
-
-    console.log('facilitiesArray: ', this.facilitiesArray);
-    this.facilityForDay = this.facilitiesArray[0].facilitiesList;
-    console.log('facilityForDay: ', this.facilityForDay);
-
+   
     //deleted temp
     //this.facilitiesArray = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
-    let a = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
-    console.log('a: ', a);
+    // let a = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
+    // console.log('checkAvailabilityService  a: ', a);
 
     // this.api.getAvailableFacilityDates('').subscribe((data) => {
     //   console.log('data', { data });
@@ -230,8 +213,7 @@ export class EducationResultsComponent implements OnInit {
 
     console.log(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
     // this.changeDatesHandler(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
-    console.log(this.tripService.sleepingDatesValues.calendarInput);
-    this.changeDatesHandler(this.tripService.sleepingDatesValues.calendarInput);
+    // this.changeDatesHandler('09/01/2021-09/04/2021');
   }
   //yak del not in use
   // public changeDate(newDate: number) {
@@ -242,40 +224,38 @@ export class EducationResultsComponent implements OnInit {
   // }
 
   ngOnInit() {
+    console.log(this.tripService);
+    this.changeDatesHandler(this.tripService.sleepingDates.from + "-" + this.tripService.sleepingDates.till);
 
-    if (this.tripService.centerField) {
+   // if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
-      this.dateObj = this.tripService.sleepingDates;
-      for (let key in this.dateObj) {
-        let value = this.dateObj[key];
-        // Use `key` and `value`
-        console.log('key :' + key);
-        console.log('value :' + value);
-      }
-    }
+      this.sleepingDates = this.tripService.sleepingDates;
+      // for (let key in this.sleepingDates) {
+      //   let value = this.sleepingDates[key];
+      //   // Use `key` and `value`
+      //   console.log('key :' + key);
+      //   console.log('value :' + value);
+      // }
+    //}
 
-    this.usersService.getLookupFieldForestCenters().subscribe((data: any) => {
-      if (data) {
-        console.log('getLookupFieldForestCenters: ', data);
+    this.tripService.forestCenter.subscribe(forestCenter => {
+      this.forestCenter = forestCenter; // this set's the username to the default observable value
+      console.log('edudation result -- > forest Center from server BehaviorSubject:', this.forestCenter);
+      // call api if place changed for dates and facilities;
+      //console.log('fromOtherComponent: ' + this.fromOtherComponent);
+      if (!this.fromOtherComponent) {
+        // this.getAvailableAccommodationDates(forestCenter);
       }
-      else {
-        console.log('no data in getLookupFieldForestCenters');
-      }
-    },
-      error => {
-        console.log({ error })
-      });
+      //get Available Facilities
+      this.getAvailableFacilities();
+    });
 
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //     console.log('response:', response);
-    //   },
-    //   error => console.log('error:', error),       // error
-    //   () => console.log('completed')     // complete
-    // );
-    // console.log('userDataService:', this.userDataService);
-    console.log('tripService:', this.tripService);
-    //this.availabilityItemsArray = this.tripService.dateObj;
+    console.log('facilitiesArray: ', this.facilitiesArray);
+    this.facilityForDay = this.facilitiesArray[0].facilitiesList;
+    console.log('facilityForDay: ', this.facilityForDay);
+
+     //console.log('userDataService:', this.userDataService);
+    //this.availabilityItemsArray = this.tripService.sleepingDates;
     //this.centerField = this.tripService.centerField
     this.fromOtherComponent = false;
   }
@@ -289,7 +269,7 @@ export class EducationResultsComponent implements OnInit {
     //     // if (this.tripService.centerField) {
     //     //  // this.forestCenterId = this.tripService.centerField.id;
     //     //   this.forestCenter = this.tripService.centerField;
-    //     //   this.dateObj = this.tripService.dateObj;
+    //     //   this.sleepingDates = this.tripService.sleepingDates;
     //     // }
     //   } else {
     //     console.log('no data in dates');
@@ -301,7 +281,13 @@ export class EducationResultsComponent implements OnInit {
   }
 
   changeDatesHandler(newDates: string) {
-    console.log('changeDatesHandler: newDates : ' + newDates)
+    console.log('changeDatesHandler: newDates : ' + newDates);
+    console.log('sleepingOptionsByDay : ', this.sleepingOptionsByDay);
+
+    console.log(this.tripService);
+
+
+    this.getAvailableFacilities();
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
@@ -358,6 +344,8 @@ export class EducationResultsComponent implements OnInit {
       newDate = new Date(date1.setDate(date1.getDate() + 1));
     }
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
+    console.log('sleepingOptionsByDay 2 : ', this.sleepingOptionsByDay);
+
     this.AvailableSleepingOptions = newSleepingOptionsByDay;
   }
 
@@ -369,16 +357,15 @@ export class EducationResultsComponent implements OnInit {
   }
 
   getAvailableFacilities() {
-    //this.tripService.dateObj.from, this.tripService.dateObj.till
-    this.usersService.getAvailableFacilities(this.forestCenter.id, this.tripService.sleepingDates.from, this.tripService.sleepingDates.till).subscribe((facilities: any) => {
+    let sleepingDates = this.tripService.convertDatesFromSlashToMinus();
+    //this.tripService.sleepingDates.from, this.tripService.sleepingDates.till
+    
+    this.usersService.getAvailableFacilities(this.tripService.centerField.id, sleepingDates.from, sleepingDates.till).subscribe((facilities: any) => {
+      console.log('get Available Facilities: ', facilities);
       if (facilities) {
-        console.log('getAvailableFacilities: ', facilities);
         this.facilitiesArray = facilities;
         this.facilityForDay = facilities[0].facilitiesList;
-        console.log('facilityForDay: ', this.facilityForDay);
-      }
-      else {
-        console.log('no data in getAvailableFacilities');
+        console.log('facility For Day: ', this.facilityForDay);
       }
     },
       error => {

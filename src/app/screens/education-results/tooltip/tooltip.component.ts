@@ -14,7 +14,7 @@ export interface TooltipDataModel {
   styleUrls: ['./tooltip.component.scss'],
 })
 export class TooltipComponent implements OnInit {
-  occupiedHoursArray: { totalHours: number; user: string }[] = [];
+  occupiedHoursArray: { totalTime: number; customerName: string }[] = [];
   @Input() hours: TooltipDataModel[];
   username: string = '';
   constructor(private userDataService: UserDataService) {
@@ -32,22 +32,22 @@ export class TooltipComponent implements OnInit {
     this.hours.map((hour) => {
       if (startingHour < hour.startingHour) {
         this.occupiedHoursArray.push({
-          totalHours: hour.startingHour - startingHour,
-          user: 'none',
+          totalTime: hour.startingHour - startingHour,
+          customerName: 'none',
         });
       }
 
       this.occupiedHoursArray.push({
-        totalHours: hour.totalTime,
-        user: hour.user,
+        totalTime: hour.totalTime,
+        customerName: hour.user,
       });
       startingHour = hour.endingHour;
     });
 
     if (startingHour < 24) {
       this.occupiedHoursArray.push({
-        totalHours: 24 - startingHour,
-        user: 'none',
+        totalTime: 24 - startingHour,
+        customerName: 'none',
       });
     }
   }
