@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FieldForestCenter } from 'src/app/open-api/model/fieldForestCenter';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/open-api/api/user.service';
+import { TripInfo } from '../open-api';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class TripService {
   dateObj: any;
   dateRange: any;
   formOptions!: FieldForestCenter[];
+  tripInfo: TripInfo
   public centerFieldObj = new BehaviorSubject<any>({
     "id": 101,
     "name": "נס הרים",
