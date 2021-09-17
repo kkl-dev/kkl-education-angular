@@ -8,6 +8,9 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
+import { faCentercode } from '@fortawesome/free-brands-svg-icons';
+import { counter } from '@fortawesome/fontawesome-svg-core';
+import { UserService } from 'src/app/open-api';
 
 @Injectable({
   providedIn: 'root',
@@ -73,7 +76,7 @@ export class SquadAssembleService {
     }),
   ];
 
-  constructor() {
+  constructor(private userService:UserService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2021, 11, 17)
@@ -82,7 +85,7 @@ export class SquadAssembleService {
 
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
-      key: 'tourName',
+      key: 'tripDescription',
       label: 'שם הטיול',
       value: '',
       rows: 4,
@@ -93,25 +96,47 @@ export class SquadAssembleService {
     }),
 
     new QuestionSelect({
-      key: 'fieldCenter',
+      key: 'centerField',
       type: 'select',
       label: 'מרכז שדה',
 
       inputProps: {
         options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
+          // { key: 'solid', value: '12123' },
+          // { key: 'great', value: '23' },
+          // { key: 'good', value: '123' },
+          // { key: 'unproven', value: '123123123' },
         ],
         labelSize: 's3',
       },
       validations: [Validators.required],
     }),
 
+    // new QuestionCalendar({
+    //   key: 'dates',
+    //   label: 'תאריכי לינה',
+    //   value: null,
+    //   rows: 4,
+    //   validations: [Validators.required],
+    //   inputProps: {
+    //     labelSize: 's3',
+    //   },
+    // }),
+
     new QuestionCalendar({
-      key: 'dates',
-      label: 'תאריכי לינה',
+      key: 'tripStart',
+      label: 'תאריך התחלה',
+      value: null,
+      rows: 4,
+      validations: [Validators.required],
+      inputProps: {
+        labelSize: 's3',
+      },
+    }),
+
+    new QuestionCalendar({
+      key: 'tripEnding',
+      label: 'תאריך סיום',
       value: null,
       rows: 4,
       validations: [Validators.required],
@@ -393,18 +418,39 @@ export class SquadAssembleService {
     }),
   ];
 
+  // set lookups
+   
+    // setLookupsForFirstGroup(){
+    //   console.log('tripinput' ,this.timeAndNameFormInputs);
+    //   this.timeAndNameFormInputs.forEach(element => {
+    //     if (element.key=='centerField'){
+    //         this.userService.getLookupFieldForestCenters().subscribe(res=>{
+    //           res.forEach(ele => {
+    //             let options={
+    //                value: ele.id,
+    //                key:  ele.name
+    //             }
+    //             element.inputProps.options.push(options)
+    //          });
+    //       })
+    //     }
+    //  });
+    // }
+   
+
   updateFormArray(form: FormGroup) {
     const index = this.formsArray.findIndex(
       (formItem) => form.controls == formItem.controls
     );
     if (index > -1) {
       this.formsArray[index] = form;
-      console.log('fonund');
+      //console.log('fonund');
     } else {
-      console.log('else');
+      //console.log('else');
       this.formsArray.push(form);
     }
     
-    console.log(this.formsArray);
+    //console.log(this.formsArray);
+     console.log(this.formsArray[index].value);
   }
 }

@@ -110,6 +110,7 @@ export class SleepingOptionsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+     
      this.formOptions= this._tripService.formOptions;
     
   }

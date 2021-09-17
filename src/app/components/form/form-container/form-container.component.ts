@@ -51,7 +51,10 @@ export class FormContainerComponent implements OnInit {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
-      this.valueChange.emit(this.formGroup);
+      if(!this.formGroup.invalid){
+        this.valueChange.emit(this.formGroup);
+      }
+     
     }
   }
 

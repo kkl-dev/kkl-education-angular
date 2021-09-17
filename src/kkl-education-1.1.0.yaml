@@ -349,6 +349,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerPagination'
+  /getCustomers:
+    get:
+      tags:
+      - user
+      operationId: GetCustomers
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BaseCustomer'           
+  
   /budget/expensesAndIncome:
     put:
       tags:
@@ -1148,7 +1163,10 @@ components:
           example: 13:00
         tillHour:
           type: string
-          example: 14:00
+          example: 15:00
+        totalTime:
+          type: number
+          example: 1.25
         customerName:
           type: string
           example: סימינר הקיבוצים

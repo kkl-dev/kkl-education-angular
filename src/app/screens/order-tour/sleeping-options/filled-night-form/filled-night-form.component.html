@@ -12,11 +12,12 @@
     <mat-select name="sleepingPlace" formControlName="sleepingPlace">
       <mat-option
         *ngFor="let option of sleepingTypeOptions"
-        value="{{ option.value }}"
-        >{{ option.text }}</mat-option
+        value="{{ option.id }}"
+        >{{ option.name }}</mat-option
       >
     </mat-select>
   </mat-form-field>
+ 
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>בחר לילות</mat-label>
     <mat-select name="nightsCount" formControlName="nightsCount">
@@ -25,7 +26,7 @@
         </mat-option> -->
       <mat-option
         *ngFor="let option of nightNumberOptions"
-        value="{{ option.value }}"
+         value="{{ option.id }}" 
       >
         {{ option.text }}
       </mat-option>
@@ -40,8 +41,8 @@
     >
       <mat-option
         *ngFor="let option of saveForOptions"
-        value="{{ option.value }}"
-        >{{ option.text }}</mat-option
+        value="{{ option.id }}"
+        >{{ option.name }}</mat-option
       >
     </mat-select>
   </mat-form-field> 
