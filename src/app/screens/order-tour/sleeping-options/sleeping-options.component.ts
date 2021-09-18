@@ -245,6 +245,9 @@ export class SleepingOptionsComponent implements OnInit {
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
   }
 
+
+
+
   constructor(
     private checkAvailabilityService: CheckAvailabilityService, private sleepingService: SleepingServiceService) {
     this.questions = this.sleepingService.questions;

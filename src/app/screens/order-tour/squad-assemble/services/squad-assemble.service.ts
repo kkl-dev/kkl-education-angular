@@ -112,9 +112,20 @@ export class SquadAssembleService {
       validations: [Validators.required],
     }),
 
+    new QuestionCalendar({
+      key: 'dates',
+      label: 'תאריכי לינה',
+      value: null,
+      rows: 4,
+      validations: [Validators.required],
+      inputProps: {
+        labelSize: 's3',
+      },
+    }),
+
     // new QuestionCalendar({
-    //   key: 'dates',
-    //   label: 'תאריכי לינה',
+    //   key: 'tripStart',
+    //   label: 'תאריך התחלה',
     //   value: null,
     //   rows: 4,
     //   validations: [Validators.required],
@@ -123,27 +134,16 @@ export class SquadAssembleService {
     //   },
     // }),
 
-    new QuestionCalendar({
-      key: 'tripStart',
-      label: 'תאריך התחלה',
-      value: null,
-      rows: 4,
-      validations: [Validators.required],
-      inputProps: {
-        labelSize: 's3',
-      },
-    }),
-
-    new QuestionCalendar({
-      key: 'tripEnding',
-      label: 'תאריך סיום',
-      value: null,
-      rows: 4,
-      validations: [Validators.required],
-      inputProps: {
-        labelSize: 's3',
-      },
-    }),
+    // new QuestionCalendar({
+    //   key: 'tripEnding',
+    //   label: 'תאריך סיום',
+    //   value: null,
+    //   rows: 4,
+    //   validations: [Validators.required],
+    //   inputProps: {
+    //     labelSize: 's3',
+    //   },
+    // }),
   ];
 
   public customerFormInputs: QuestionBase<string>[] = [

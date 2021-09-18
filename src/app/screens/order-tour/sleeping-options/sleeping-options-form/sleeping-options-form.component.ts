@@ -20,26 +20,29 @@ export class SleepingOptionsFormComponent implements OnInit {
   @ViewChild('resultsForm') signupForm: NgForm;
   @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
   date: string = '';
-  // public formOptions: { imgSrc: string; text: string; value: string }[] = [
-  //   { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: 'ציפורי' },
-  //   { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: 'לביא' },
-  //   {
-  //     imgSrc: 'assets/images/userImage.jpg',
-  //     text: 'נס הרים',
-  //     value: 'נס הרים',
-  //   },
-  //   { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: 'יתיק' },
-  //   { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: 'שוני' },
-  // ];
-  public formOptions;
+  disableDates = true;
+  public formOptions: { imgSrc: string; text: string; value: string }[] = [
+    { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: 'ציפורי' },
+    { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: 'לביא' },
+    {
+      imgSrc: 'assets/images/userImage.jpg',
+      text: 'נס הרים',
+      value: 'נס הרים',
+    },
+    { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: 'יתיק' },
+    { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: 'שוני' },
+  ];
+  //public formOptions;
   freeSpacesArray: FreeSpace[] = [];
   location: string = '';
 
   constructor(private checkAvailabilityService: CheckAvailabilityService,private _tripService:TripService) {
-    this.location =
-      this.checkAvailabilityService.checkAvailabilltyValues.sleepingPlace;
-    this.date =
-      this.checkAvailabilityService.checkAvailabilltyValues.calendarInput;
+    // this.location =
+    //   this.checkAvailabilityService.checkAvailabilltyValues.sleepingPlace;
+    // this.date =
+    //   this.checkAvailabilityService.checkAvailabilltyValues.calendarInput;
+    
+    console.log('options2',this._tripService.formOptions);
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2022, 11, 17)
@@ -48,7 +51,6 @@ export class SleepingOptionsFormComponent implements OnInit {
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
-
       closeOnSelected: true,
       minDate: new Date(),
       maxDate: new Date(2022, 11, 17),
@@ -110,8 +112,10 @@ export class SleepingOptionsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     
-     this.formOptions= this._tripService.formOptions;
     
+   // this._tripService.getAvailableSleepingOptions();
+    // this.formOptions= this._tripService.formOptions;
+    // this.location=  this._tripService.centerField.name;
+     //this.date= this._tripService.sleepingDates.from +' - ' + this._tripService.sleepingDates.till;
   }
 }

@@ -1392,24 +1392,28 @@ components:
           $ref: '#/components/schemas/Area'
         budget:
           $ref: '#/components/schemas/Budget'
-        customerId:
-          type: integer
-          example: 124
-        customerName:
-          type: string
-          example: סימינר הקיבוצים
+        customer:
+          $ref: '#/components/schemas/BaseCustomer'
+        # customerId:
+        #   type: integer
+        #   example: 124
+        # customerName:
+        #   type: string
+        #   example: סימינר הקיבוצים
         customerType:
           type: string
           example: חול
         customerRegionName:
           type: string
           example: גליל
-        customerPayId:
-          type: integer
-          example: 124
-        customerPayName:
-          type: string
-          example: סימינר הקיבוצים
+        customerPay:
+          $ref: '#/components/schemas/BaseCustomer'
+        # customerPayId:
+        #   type: integer
+        #   example: 124
+        # customerPayName:
+        #   type: string
+        #   example: סימינר הקיבוצים
         customerPayType:
           type: string
           example: חול

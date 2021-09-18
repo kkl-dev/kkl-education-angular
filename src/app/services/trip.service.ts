@@ -1,22 +1,18 @@
 import { Injectable } from '@angular/core';
 import { FieldForestCenter } from 'src/app/open-api/model/models';
 import { BehaviorSubject } from 'rxjs';
-<<<<<<< HEAD
 import { UserService } from 'src/app/open-api/api/user.service';
 import { TripInfo } from '../open-api';
-
-=======
-import { FakeService } from 'src/app/services/fake.service';
-import { UserService } from '../open-api/api/user.service';
+//import { FakeService } from './fake.service';
 import { FreeSpace } from 'comrax-alex-airbnb-calendar';
->>>>>>> origin/yakovs-branch
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
 
-  constructor(public fakeApi: FakeService, public userService: UserService) { }
+  constructor( public userService: UserService) { }
 
   //  forestCenters: any = {};
 

@@ -30,11 +30,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
 
-<<<<<<< HEAD
-import { ApiModule } from 'src/app/open-api';
-
-=======
->>>>>>> origin/yakovs-branch
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 

@@ -18,7 +18,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   public $activeStep = new Subject<number>();
 
-  public nextPage: string = 'education/search';
+  public nextPage: string = 'education/search'; 
   public prevPage: string = 'education/results';
 
   public currentRoute: string;

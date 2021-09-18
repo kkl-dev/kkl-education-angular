@@ -25,13 +25,12 @@
         <label
           class="header__form-group-pseudo-input label-input"
           for="calendar-input"
-        >
-
-       
+        >   
           <input
             class="header__form-group-input"
             airbnb-calendar
             (newDate)='newDateRecived($event)'
+            [disabled]="disableDates"
             (sleepingPlace)='newSleepingPlaceRecived($event)'
             (prevDate)='prevDateRecived($event)'
             type="text"

@@ -4,16 +4,16 @@
   (ngSubmit)="onSubmit()"
   [formGroup]="filledNightForm"
 >
-<div formArrayName="filledUnits">
-  <div *ngFor="let unit of filledNightForm.get('filledUnits')['controls']; let i=index">
-    <div [formGroupName]="i">
+<!-- <div formArrayName="filledUnits"> -->
+  <!-- <div *ngFor="let unit of filledNightForm.get('filledUnits')['controls']; let i=index">
+    <div [formGroupName]="i"> -->
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>סוג לינה</mat-label>
     <mat-select name="sleepingPlace" formControlName="sleepingPlace">
       <mat-option
         *ngFor="let option of sleepingTypeOptions"
-        value="{{ option.id }}"
-        >{{ option.name }}</mat-option
+        value="{{ option.value }}"
+        >{{ option.text }}</mat-option
       >
     </mat-select>
   </mat-form-field>
@@ -26,7 +26,7 @@
         </mat-option> -->
       <mat-option
         *ngFor="let option of nightNumberOptions"
-         value="{{ option.id }}" 
+         value="{{ option.value }}" 
       >
         {{ option.text }}
       </mat-option>
@@ -41,8 +41,8 @@
     >
       <mat-option
         *ngFor="let option of saveForOptions"
-        value="{{ option.id }}"
-        >{{ option.name }}</mat-option
+        value="{{ option.value}}"
+        >{{ option.text}}</mat-option
       >
     </mat-select>
   </mat-form-field> 
@@ -64,9 +64,9 @@
     <mat-label>כמות</mat-label>
     <input matInput type="number" name="amount" formControlName="amount" />
   </mat-form-field>
-  </div>
- </div>
-</div>
+  <!-- </div>
+ </div> -->
+<!-- </div> -->
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
     <mat-label>הערות</mat-label>
     <textarea matInput name="comments" formControlName="comments"></textarea>
@@ -76,4 +76,5 @@
       הוסף
     </button>
   </div>
+
 </form>

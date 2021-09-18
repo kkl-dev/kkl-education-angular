@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CheckAvailabilityService} from 'src/app/utilities/services/check-availability.service';
@@ -6,16 +5,7 @@ import {TooltipDataModel} from './tooltip/tooltip.component';
 import {UserDataService} from 'src/app/services/user-data.service';
 import {UserService} from 'src/app/open-api';
 import {TripService} from 'src/app/services/trip.service';
-=======
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
-import { TooltipDataModel } from './tooltip/tooltip.component';
-import { UserDataService } from 'src/app/services/user-data.service';
-import { UserService } from 'src/app/open-api/api/user.service';
-import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
->>>>>>> origin/yakovs-branch
 
 export interface InfoCard {
   svgUrl: string;
@@ -234,7 +224,8 @@ export class EducationResultsComponent implements OnInit {
   // }
 
   ngOnInit() {
-    console.log(this.tripService);
+    //console.log(this.tripService);
+   console.log('sleepingDates is :' + this.tripService.sleepingDates.from)
     this.changeDatesHandler(this.tripService.sleepingDates.from + "-" + this.tripService.sleepingDates.till);
 
    // if (this.tripService.centerField) {

@@ -126,19 +126,12 @@ export class EducationComponent implements OnInit {
     return freeSpacesArray;
   }
 
-<<<<<<< HEAD
-  date: string | null = null;
-  dateObj: { from: string; to: string } = { from: '', to: '' };
-
-  freeSpacesArray: FreeSpace[] = [];
-=======
 
 
 
 
 
 
->>>>>>> origin/yakovs-branch
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
