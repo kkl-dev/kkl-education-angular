@@ -17,14 +17,7 @@
 export interface OccupiedHours { 
     fromHour: string;
     tillHour: string;
-<<<<<<< HEAD
     totalTime?: number;
-=======
-<<<<<<< HEAD:src/app/open-api/model/occupiedHours.ts
-    totalTime?: number;
-=======
->>>>>>> searchPage-yael:src/app/api/model/occupiedHours.ts
->>>>>>> syncToServer
     customerName?: string;
 }
 

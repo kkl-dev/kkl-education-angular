@@ -60,13 +60,14 @@
     <mat-label>כמות</mat-label>
     <input matInput type="number" name="amount" formControlName="amount" />
   </mat-form-field>
-  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
-    <mat-label>הערות</mat-label>
-    <textarea matInput name="comments" formControlName="comments"></textarea>
-  </mat-form-field>
+  
   <div class="btn__container">
     <button [disabled]="!filledNightForm.valid" class="btn" type="submit">
       הוסף
     </button>
+    <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
+      <mat-label>הערות</mat-label>
+      <textarea matInput name="comments" formControlName="comments"></textarea>
+    </mat-form-field>
   </div>
 </form>

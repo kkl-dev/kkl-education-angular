@@ -108,6 +108,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   }
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
+    try{
     this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[3].get('tripDescription').value;
     var center = this.squadAssemble.formsArray[3].get('centerField').value;
     this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
@@ -130,10 +131,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[0].get('departmentId').value);
     var attribute = this.squadAssemble.formsArray[0].get('attribute').value;
     this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
+    }
+    catch(error){
+      console.log(error);
+    }      
 
+   console.log(this.squadAssemble.tripInfo);
 
-
-    // this.activeStep = +newActiveStep;
+    this.activeStep = +newActiveStep;
   }
 
 }

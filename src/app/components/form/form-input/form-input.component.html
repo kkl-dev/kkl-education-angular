@@ -22,8 +22,8 @@
     <mat-select color="primary" [formControl]="control" *ngIf="controlType === 'select'"
       (selectionChange)="onSelectChange($event,control,question,input)" (openedChange)="validate()">
       <mat-option>{{ label }}</mat-option>
-      <!-- <mat-option *ngFor="let option of options" [value]="option.value"> -->
-      <mat-option *ngFor="let option of options" [value]="option">
+      <mat-option *ngFor="let option of options" [value]="option.value">
+      <!-- <mat-option *ngFor="let option of options" [value]="option."> -->
         {{ option.key }}
       </mat-option>
     </mat-select>
