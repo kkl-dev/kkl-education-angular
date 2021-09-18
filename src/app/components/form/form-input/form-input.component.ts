@@ -116,7 +116,9 @@ export class FormInputComponent implements OnInit {
     });
   }
 
-  public onSelectChange() {
+  public onSelectChange(event:any,c:any,question:any,i:any) {
+    console.log(event)
+    
     this.formService.onChangeSelect.next(true);
   }
 

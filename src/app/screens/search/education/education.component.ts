@@ -127,11 +127,6 @@ export class EducationComponent implements OnInit {
   }
 
 
-
-
-
-
-
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
@@ -196,7 +191,7 @@ export class EducationComponent implements OnInit {
 
   newSleepingPlaceRecived(sleepingPlace: any) {
     console.log(sleepingPlace);
-    this.AcommodationType = sleepingPlace;
+    this.AcommodationTypes = sleepingPlace;
   }
 
   public dateObjChanged(e: string) {
@@ -228,7 +223,7 @@ export class EducationComponent implements OnInit {
     this.tripService.dateRange = this.getDaysArray(new Date(this.sleepingDates.from), new Date(this.sleepingDates.till))
     var flag = true;
     for (var i in this.tripService.dateRange) {
-      let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationType);
+      let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationTypes);
       if (typeAmount.availableBeds === 0) { flag = false; }
       if (!flag) { console.log('אחד הימים בטווח התאריכים אינו פנוי'); return flag; }
     }

@@ -17,7 +17,11 @@ import { Budget } from './budget';
 export interface BudgetByParams { 
     tripStart?: string;
     attribute?: Attribute;
+<<<<<<< HEAD
+    activity?: ActivityType;
+=======
     activitiy?: ActivityType;
+>>>>>>> searchPage-yael
     budget?: Budget;
     userName?: string;
     userId?: string;

@@ -1,30 +1,20 @@
-
 <form
-
-[dir]="'rtl'"
-(ngSubmit)="onSubmit()"
-[formGroup]="filledNightForm"
+  class="form"
+  [dir]="'rtl'"
+  (ngSubmit)="onSubmit()"
+  [formGroup]="filledNightForm"
 >
-<div formArrayName="filledUnits">
-  <div *ngFor="let unit of filledNightForm.get('filledUnits')['controls']; let i=index">
-   <div [formGroupName]="i">
-    <div  fxLayout="row"   fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1%" >
-  <div  fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%">
-  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
-    <mat-form-field appearance="outline" >
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>סוג לינה</mat-label>
     <mat-select name="sleepingPlace" formControlName="sleepingPlace">
       <mat-option
         *ngFor="let option of sleepingTypeOptions"
-        value="{{ option.id }}"
-        >{{ option.name }}</mat-option
+        value="{{ option.value }}"
+        >{{ option.text }}</mat-option
       >
     </mat-select>
   </mat-form-field>
-  </div>
-  <div  fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%">
-  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
-    <mat-form-field appearance="outline" >
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>בחר לילות</mat-label>
     <mat-select name="nightsCount" formControlName="nightsCount">
       <!-- <mat-option *ngFor="let option of nightNumberOptions; let i =index" [value]="{option.value"}>
@@ -32,16 +22,13 @@
         </mat-option> -->
       <mat-option
         *ngFor="let option of nightNumberOptions"
-         value="{{ option.id }}" 
+        value="{{ option.value }}"
       >
         {{ option.text }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-</div>
-<div  fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%">
-  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
-    <mat-form-field appearance="outline" >
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>שריין עבור</mat-label>
     <mat-select
       (selectionChange)="saveForChangeHandler($event.value)"
@@ -50,16 +37,13 @@
     >
       <mat-option
         *ngFor="let option of saveForOptions"
-        value="{{ option.id }}"
-        >{{ option.name }}</mat-option
+        value="{{ option.value }}"
+        >{{ option.text }}</mat-option
       >
     </mat-select>
   </mat-form-field> 
-</div>
-  <!-- <div [ngStyle]="{ 'grid-column': 'span 2' }"> -->
-    <div  fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%">
-    <!-- <mat-form-field appearance="outline" class="width-auto" [ngStyle]="{ 'width': 'auto !importent' }"> -->
-      <mat-form-field appearance="outline" >
+  <div [ngStyle]="{ 'grid-column': 'span 2' }">
+    <mat-form-field appearance="outline" class="width-auto" [ngStyle]="{ 'width': 'auto !importent' }">
       <mat-label>מס לנים</mat-label> 
       <input
         matInput
@@ -72,25 +56,17 @@
       מתוך {{ totalAmount }} {{ saveForValue }}
     </div>
   </div>
-  <div  fxFlex="15%" fxFlex.xs="100%" fxFlex.sm="25%">
-  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 2' }"> -->
-  <mat-form-field appearance="outline" >
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 2' }">
     <mat-label>כמות</mat-label>
     <input matInput type="number" name="amount" formControlName="amount" />
   </mat-form-field>
-  </div>
-  </div>
-  </div>
- </div>
-</div>
- <div class="btn__container">
-    <button [disabled]="!filledNightForm.valid" class="btn" type="submit">
-    הוסף
-   </button>
-  </div>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
     <mat-label>הערות</mat-label>
     <textarea matInput name="comments" formControlName="comments"></textarea>
   </mat-form-field>
- 
+  <div class="btn__container">
+    <button [disabled]="!filledNightForm.valid" class="btn" type="submit">
+      הוסף
+    </button>
+  </div>
 </form>

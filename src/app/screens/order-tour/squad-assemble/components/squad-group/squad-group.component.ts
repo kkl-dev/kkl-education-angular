@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { FlexCell } from 'src/app/components/grid/flex-cell/flex-cell.component';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
+import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 
 export interface FormHeader {
   text: string;
@@ -18,7 +19,8 @@ export interface FormHeader {
   providers: [FormService],
 })
 export class SquadGroupComponent {
-  public tripId: string = '0000000';
+  @ViewChild(FormContainerComponent) FormContainerComponent: FormContainerComponent;
+
 
   @Input() public group: QuestionGroup;
   @Input() public questions: QuestionBase<string | number | Date>[];
@@ -115,4 +117,5 @@ export class SquadGroupComponent {
       }
     });
   }
+
 }

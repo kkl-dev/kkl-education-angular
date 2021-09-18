@@ -36,7 +36,7 @@ export class FilledNightFormComponent implements OnInit {
   //   { value: 'teachers', text: 'מורים' },
   // ];
 
-  constructor(private formBuilder: FormBuilder, private _userService:UserService, private _tripService:TripService, private squadAssembleService:SquadAssembleService ) {}
+  constructor(private formBuilder: FormBuilder, private _userService:UserService, private squadAssembleService:SquadAssembleService ) {}
 
   ngOnInit(): void {
     // this.filledNightForm = new FormGroup({
@@ -129,7 +129,7 @@ export class FilledNightFormComponent implements OnInit {
     const control = <FormArray>this.filledNightForm.controls["filledUnits"];
     control.push(this.getLodging());
     console.log(this.filledNightForm.value);
-    this.tripInfo= this._tripService.tripInfo;
+    this.tripInfo= this.squadAssembleService.tripInfo;
     // let obj ={
     //   customerId:5,
     //   customerName: 'eyal'

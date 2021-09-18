@@ -22,6 +22,7 @@
         <label class="education__form-group-label">מתאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
 
+<<<<<<< HEAD
         <label
           class="header__form-group-pseudo-input label-input"
           for="calendar-input"
@@ -40,6 +41,13 @@
             name="calendar-input"
             id="calendar-input"
           />
+=======
+        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
+          <input class="header__form-group-input" airbnb-calendar (newDate)='newDateRecived($event)'
+            [disabled]="disableDates" (sleepingPlace)='newSleepingPlaceRecived($event)'
+            (prevDate)='prevDateRecived($event)' type="text" [(ngModel)]="date" [options]="options"
+            (ngModelChange)="dateObjChanged($event)" name="calendarInput" id="calendarInput" />
+>>>>>>> syncToServer
           <span class="header__form-group-pseudo-input-value">
             {{ sleepingDates.from }}</span>
         </label>
@@ -48,12 +56,18 @@
         <label class="education__form-group-label">עד תאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
         <!-- <input class="education__form-group-input" type="text" /> -->
+<<<<<<< HEAD
         <label
           class="header__form-group-pseudo-input label-input"
           for="calendar-input"
         >
           <span class="header__form-group-pseudo-input-value">
             {{ sleepingDates.till }}</span>
+=======
+        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
+          <span class="header__form-group-pseudo-input-value">
+            {{ sleepingDates.to }}</span>
+>>>>>>> syncToServer
           <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
         </label>
       </div>
