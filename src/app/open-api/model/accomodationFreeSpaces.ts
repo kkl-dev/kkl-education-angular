@@ -12,12 +12,10 @@
 
 
 /**
- * decribes ... 
+ * Number of available beds for a certain accomoadation type (ex. Cabin, room, tent etc.)
  */
-export interface OccupiedHours { 
-    fromHour: string;
-    tillHour: string;
-    totalTime?: number;
-    customerName?: string;
+export interface AccomodationFreeSpaces { 
+    accomodationName?: string;
+    availableBeds?: number;
 }
 

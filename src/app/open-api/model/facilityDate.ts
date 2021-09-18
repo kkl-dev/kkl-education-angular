@@ -16,7 +16,7 @@ import { AvailableFacility } from './availableFacility';
  * Describes the availability of the facilities by date
  */
 export interface FacilityDate { 
-    today?: string;
+    date?: string;
     facilitiesList?: Array<AvailableFacility>;
 }
 

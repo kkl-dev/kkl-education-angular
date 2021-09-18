@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { Area } from './area';
+import { BaseCustomer } from './baseCustomer';
 import { Language } from './language';
 import { AgeGroup } from './ageGroup';
 import { Attribute } from './attribute';
@@ -31,12 +32,10 @@ export interface TripInfo {
     attribute?: Attribute;
     areaTrip?: Area;
     budget?: Budget;
-    customerId?: number;
-    customerName?: string;
+    customer?: BaseCustomer;
     customerType?: string;
     customerRegionName?: string;
-    customerPayId?: number;
-    customerPayName?: string;
+    customerPay?: BaseCustomer;
     customerPayType?: string;
     customerPayRegionName?: string;
     centerField?: FieldForestCenter;
@@ -53,7 +52,7 @@ export interface TripInfo {
      */
     departmentId?: number;
     lodgingReservation?: Array<LodgingReservation>;
-    tripEnding?: string | null;
+    tripEnding?: string;
     /**
      * Trip creation date
      */
@@ -66,7 +65,7 @@ export interface TripInfo {
     numDrivers?: number;
     numShtilim?: number;
     noPayment?: number | null;
-    tripStart?: string | null;
+    tripStart?: string;
     tripStatusId?: number;
     tripStatusName?: string;
     userMobile?: string | null;

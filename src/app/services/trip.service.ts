@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
-import { Area, ActivityType, FieldForestCenter, AgeGroup, Attribute, ParticipantType, Language, Country, Customer } from '../open-api';
+import { Area, ActivityType, FieldForestCenter, AgeGroup, Attribute, ParticipantType, Language, Country, Customer, BaseCustomer } from '../open-api';
 
 @Injectable({
   providedIn: 'root'
@@ -45,9 +45,11 @@ export class TripService {
   fieldForestCenters = [];//to convert to model of comrax
   fieldForestCentersOriginal: FieldForestCenter[];
   activityByAttribute = []
-  customersByParams: Customer[]
+  customers = [];
+  customersOriginal: BaseCustomer[]
   areas: Area[];
   attributes = [];
+  attributesOriginal: Attribute[];
   participantTypes: ParticipantType[];
   languages: Language[];
   countries: Country[];
@@ -62,7 +64,6 @@ export class TripService {
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
-
     this.userService.getAgeGroup().subscribe(
       response => {
         this.ageGroupOriginal = response;
@@ -81,14 +82,17 @@ export class TripService {
     //     error => console.log(error),       // error
     //     () => console.log('completed')     // complete
     //   )
-    // this.userService.getCustomersByParams().subscribe(
-    //   response => {
-    //     console.log('response', response)
-    //     this.customersByParams = response;
-    //   },
-    //   error => console.log(error),       // error
-    //   () => console.log('completed')     // complete
-    // )
+    this.userService.getCustomers().subscribe(
+      response => {
+        console.log('response', response)
+        this.customersOriginal = response;
+        response.forEach(element => {
+          this.customers.push({ key: element.name, value: element.id.toString() });
+        });
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
     this.userService.getActivityByAttribute(1, '12').subscribe(
       response => {
         response.forEach(element => {
@@ -108,6 +112,7 @@ export class TripService {
     )
     this.userService.getAttributes().subscribe(
       response => {
+        this.attributesOriginal = response;
         response.forEach(element => {
           this.attributes.push({ key: element.name, value: element.id.toString() });
         });

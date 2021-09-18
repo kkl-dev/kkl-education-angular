@@ -113,6 +113,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
     this.squadAssemble.tripInfo.tripEnding = this.squadAssemble.formsArray[3].get('tripEnding').value;
     this.squadAssemble.tripInfo.tripStart = this.squadAssemble.formsArray[3].get('tripStart').value;
+    var customer = this.squadAssemble.formsArray[2].get('customer').value;
+    this.squadAssemble.tripInfo.customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(customer))[0];
     this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[2].get('contact').get('contactName').value;
     this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[2].get('contact').get('contactPhone').value;
     this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[2].get('contact').get('contactEmail').value;
@@ -123,6 +125,11 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.squadAssemble.tripInfo.numAccompanied = this.squadAssemble.formsArray[1].get('numAccompanied').value;
     this.squadAssemble.tripInfo.numGuides = this.squadAssemble.formsArray[1].get('numGuides').value;
     this.squadAssemble.tripInfo.numAccompaniedAndGuide = this.squadAssemble.formsArray[1].get('numAccompaniedAndGuide').value;
+    this.squadAssemble.tripInfo.commentManager = this.squadAssemble.formsArray[0].get('commentManager').value;
+    this.squadAssemble.tripInfo.insideCenterFieldId = parseInt(this.squadAssemble.formsArray[0].get('insideCenterFieldId').value);
+    this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[0].get('departmentId').value);
+    var attribute = this.squadAssemble.formsArray[0].get('attribute').value;
+    this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
 
 
 

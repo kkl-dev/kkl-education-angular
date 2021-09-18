@@ -157,20 +157,20 @@ export class SquadAssembleService {
     }),
 
     new QuestionSelect({
-      key: 'clientPool',
+      key: 'customer',
       type: 'select',
       label: 'הכול',
       inputProps: {
         labelSize: 's1',
-        options: [
-          { key: 'שם נוסף', value: 'שם נוסף' },
-          { key: 'עוד לקוח', value: 'עוד לקוח' },
-          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-        ],
+        options:this.tripService.customers ,
       },
     }),
-
+    // [
+    //   { key: 'שם נוסף', value: 'שם נוסף' },
+    //   { key: 'עוד לקוח', value: 'עוד לקוח' },
+    //   { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+    //   { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+    // ]
     new QuestionSelect({
       key: 'payerName',
       label: 'לקוח משלם',
@@ -356,7 +356,7 @@ export class SquadAssembleService {
 
   public tourDetailsFormInputs: QuestionBase<string>[] = [
     new QuestionSelect({
-      key: 'characteristic',
+      key: 'attribute',
       label: 'מאפיין',
       type: 'select',
       inputProps: {
@@ -385,35 +385,35 @@ export class SquadAssembleService {
     //   { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
     // ]
     new QuestionRadio({
-      key: 'tripLocation',
+      key: 'departmentId',
       label: 'מחלקה',
       custom: true,
-      value: 'ישראל',
+      value: '1',
       rows: 4,
       inputProps: {
         options: [
-          { key: 'ישראל', value: 'ישראל' },
-          { key: 'חו"ל', value: 'חו"ל' },
+          { key: 'ישראל', value: '1' },
+          { key: 'חו"ל', value: '8' },
         ],
       },
     }),
 
     new QuestionRadio({
       custom: true,
-      key: 'tripCenter',
+      key: 'insideCenterFieldId',
       label: 'פנים/חוץ מרכז שדה',
-      value: 'ישראל',
+      value: '1',
       rows: 4,
       inputProps: {
         options: [
-          { key: 'פנים', value: 'פנים' },
-          { key: 'חוץ', value: 'חוץ' },
+          { key: 'פנים', value: '1' },
+          { key: 'חוץ', value: '2' },
         ],
       },
     }),
 
     new QuestionTextarea({
-      key: 'comments',
+      key: 'commentManager',
       label: 'הערות מנהליות',
       rows: 6,
     }),

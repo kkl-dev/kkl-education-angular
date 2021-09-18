@@ -9,15 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { SleepingOptions } from './sleepingOptions';
 
 
 /**
- * decribes ... 
+ * Available sleeping options by Day and maximum occupancy.
  */
-export interface OccupiedHours { 
-    fromHour: string;
-    tillHour: string;
-    totalTime?: number;
-    customerName?: string;
+export interface AvailableSleepingOptionsByDay { 
+    date?: string;
+    sleepingOptions?: Array<SleepingOptions>;
 }
 

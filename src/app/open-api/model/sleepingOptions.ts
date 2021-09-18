@@ -9,26 +9,20 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { OccupiedHours } from './occupiedHours';
 
 
-/**
- * decribes ...
- */
-export interface AvailableFacility { 
+export interface SleepingOptions { 
+    accomodationTypeId?: number;
+    acoomodationTypeName?: string;
     /**
-     * Field-Forest-Center Facility Id
-     */
-    id: number;
-    /**
-     * Facility name
-     */
-    name: string;
-    /**
-     * rerer
+     * Maximum per lodging unit.
      */
     maxOccupancy?: number;
-    iconPath?: string;
-    occupiedHours?: Array<OccupiedHours>;
+    /**
+     * Number of avaliable lodging units for a day
+     */
+    availableUnits?: number;
+    nameEng?: string;
+    img?: string;
 }
 

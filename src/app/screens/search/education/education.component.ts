@@ -12,7 +12,7 @@ import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from '../../../services/trip.service'
-import { AcommodationTypeByFieldCenter, AvailableAccomodationDate , FieldForestCenter} from 'src/app/open-api/model/models';
+import { AccommodationType, AvailableAccomodationDate , FieldForestCenter} from 'src/app/open-api/model/models';
 import { FakeService } from 'src/app/services/fake.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class EducationComponent implements OnInit {
   routerLinkContinue = '/education/results'
   formOptions!: FieldForestCenter[];
   AvailableDates!: AvailableAccomodationDate[];
-  AcommodationTypes!: AcommodationTypeByFieldCenter[];
+  AcommodationTypes!: AccommodationType[];
   //SearchAvailableDatesOptionsRequestBody = {} as SearchAvailableDatesOptions;
 
   constructor(public usersService: UserService, public tripService: TripService, 
@@ -81,7 +81,7 @@ export class EducationComponent implements OnInit {
   }
 
   getLookupAcommodationType() {
-    this.usersService.getLookupAcommodationType(1).subscribe(
+    this.usersService.getLookupAccommodationType(1).subscribe(
       response => {
         this.AcommodationTypes = response;
       },

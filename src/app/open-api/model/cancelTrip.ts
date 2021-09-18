@@ -12,10 +12,10 @@
 
 
 export interface CancelTrip { 
-    tripId?: number;
+    tripId: number;
     causeCancel?: string;
-    statusToUpdateId?: number;
-    userName?: string;
+    statusToUpdateId: number;
+    userName: string;
     userNameEng?: string;
 }
 

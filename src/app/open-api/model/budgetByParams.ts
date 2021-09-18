@@ -17,7 +17,7 @@ import { Budget } from './budget';
 export interface BudgetByParams { 
     tripStart?: string;
     attribute?: Attribute;
-    activitiy?: ActivityType;
+    activity?: ActivityType;
     budget?: Budget;
     userName?: string;
     userId?: string;
