@@ -2,7 +2,7 @@
   <h3 class="sleeping-form">שם הטיול</h3>
   <p class="sleeping-form">12121212</p>
   <mat-form-field appearance="outline">
-      <mat-select
+      <!-- <mat-select
       #select
       [(ngModel)]="location"
       name="location"
@@ -12,13 +12,14 @@
       <mat-option value="{{ option.value }}" *ngFor="let option of formOptions">
           <span class="education__select-option-text">{{ option.text }}</span>
         </mat-option>
-    </mat-select>
+    </mat-select> -->
+    <input matInput  [(ngModel)]="location" style="text-align: center;" readonly>
 </mat-form-field>
-
 
       <mat-form-field appearance="outline">
 
           <input matInput class="header__form-group-input"
+          style="text-align: center;"
           airbnb-calendar type="text" [(ngModel)]="date"
           [disabled]="disableDates"
           [options]="options"

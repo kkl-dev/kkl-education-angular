@@ -14,76 +14,75 @@ export class FilledNightFormComponent implements OnInit {
   @Input() totalAmount: number = 0;
   @Output() emitFormValues: EventEmitter<FormGroup> = new EventEmitter();
   saveForValue: string = '';
-  
-  //sleepingTypeOptions: AccommodationType[];
-  //saveForOptions: ParticipantType[];
-  //nightNumberOptions: any[]=[]
-  tripInfo : TripInfo;
-  sleepingTypeOptions  = [
-    { value: 'בקתה', text: 'בקתה' },
-    { value: 'אוהל', text: 'אוהל' },
-    { value: 'חדר', text: 'חדר' },
-  ];
+  sleepingTypeOptions: AccommodationType[];
+  saveForOptions: ParticipantType[];
+  nightNumberOptions: any[]=[]
+  tripInfo : TripInfo
+  // sleepingTypeOptions = [
+  //   { value: 'בקתה', text: 'בקתה' },
+  //   { value: 'אוהל', text: 'אוהל' },
+  //   { value: 'חדר', text: 'חדר' },
+  // ];
 
-  nightNumberOptions   = [
-    { value: '1 לילה ', text: 'לילה 1' },
-    { value: '2 לילה ', text: 'לילה 2' },
-    { value: '3 לילה ', text: 'לילה 3' },
-  ];
+  // nightNumberOptions = [
+  //   { value: '1 לילה ', text: 'לילה 1' },
+  //   { value: '2 לילה ', text: 'לילה 2' },
+  //   { value: '3 לילה ', text: 'לילה 3' },
+  // ];
 
-  saveForOptions   = [
-    { value: 'grownUps', text: 'מבוגרים' },
-    { value: 'childs', text: 'ילדים' },
-    { value: 'teachers', text: 'מורים' },
-  ];
+  // saveForOptions = [
+  //   { value: 'grownUps', text: 'מבוגרים' },
+  //   { value: 'childs', text: 'ילדים' },
+  //   { value: 'teachers', text: 'מורים' },
+  // ];
 
   constructor(private formBuilder: FormBuilder, private _userService:UserService, private _tripService:TripService, private squadAssembleService:SquadAssembleService ) {}
 
   ngOnInit(): void {
-    this.filledNightForm = new FormGroup({
-      sleepingPlace: new FormControl(null, [Validators.required]),
-      nightsCount: new FormControl(null, [Validators.required]),
-      saveFor: new FormControl(null, [Validators.required]),
-      sleepingAmount: new FormControl(null, [Validators.required]),
-      amount: new FormControl(null, [Validators.required]),
-      comments: new FormControl(null, [Validators.required]),
-    });
-  
     // this.filledNightForm = new FormGroup({
-    //   filledUnits: this.formBuilder.array([
-    //     this.getLodging()
-    //   ]),
+    //   sleepingPlace: new FormControl(null, [Validators.required]),
+    //   nightsCount: new FormControl(null, [Validators.required]),
+    //   saveFor: new FormControl(null, [Validators.required]),
+    //   sleepingAmount: new FormControl(null, [Validators.required]),
+    //   amount: new FormControl(null, [Validators.required]),
     //   comments: new FormControl(null, [Validators.required]),
     // });
+
+    this.filledNightForm = new FormGroup({
+      filledUnits: this.formBuilder.array([
+        this.getLodging()
+      ]),
+      comments: new FormControl(null),
+    });
    
-    //  this._userService.getLookupAccommodationType(1).subscribe(res=>{
-    //    console.log(res);
-    //     this.sleepingTypeOptions= res;
-    //  },(err)=>{
-    //      console.log(err);
-    //  })
-    //  this._userService.getParticipantTypes().subscribe(res=>{
-    //   console.log(res);
-    //    this.saveForOptions=res;
-    // },(err)=>{
-    //   console.log(err);
-    // })
+     this._userService.getLookupAccommodationType(1).subscribe(res=>{
+       console.log(res);
+        this.sleepingTypeOptions= res;
+     },(err)=>{
+         console.log(err);
+     })
+     this._userService.getParticipantTypes().subscribe(res=>{
+      console.log(res);
+       this.saveForOptions=res;
+    },(err)=>{
+      console.log(err);
+    })
     
     
-    //  let startDate= '09/08/2021';
-    //  let endDate= '09/12/2021';
-    // this.setnightNumberOptions(startDate,endDate)
+     let startDate= '09/08/2021';
+     let endDate= '09/12/2021';
+    this.setnightNumberOptions(startDate,endDate)
     
   }
-  //  getLodging(){
-  //   return this.formBuilder.group({
-  //     sleepingPlace: [null, Validators.required],
-  //     nightsCount: [null, [Validators.required]],
-  //     saveFor: [null, [Validators.required]],
-  //     sleepingAmount: [null, [Validators.required]],
-  //     amount: [null, [Validators.required]]
-  //   });
-  // }
+   getLodging(){
+    return this.formBuilder.group({
+      sleepingPlace: [null, Validators.required],
+      nightsCount: [null, [Validators.required]],
+      saveFor: [null, [Validators.required]],
+      sleepingAmount: [null, [Validators.required]],
+      amount: [null, [Validators.required]]
+    });
+  }
   setnightNumberOptions(startDate,endDate){
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
        let date1 = new Date(startDate);
@@ -112,40 +111,40 @@ export class FilledNightFormComponent implements OnInit {
          id:newDateStringUsaFormat,
          text: newDateStringIsraelFormat
        }
-       //this.nightNumberOptions.push(obj);
+       this.nightNumberOptions.push(obj);
        newDate = new Date(date1.setDate(date1.getDate() + 1));
      }
      console.log(this.nightNumberOptions);
   }
 
   saveForChangeHandler(text: any) {
-    this.saveForValue = this.saveForOptions.filter(
-      (item) => item.value === this.filledNightForm.value.saveFor
-    )[0].text;
-    console.log(this.saveForValue);
+    // this.saveForValue = this.saveForOptions.filter(
+    //   (item) => item.value === this.filledNightForm.value.saveFor
+    // )[0].text;
+    // console.log(this.saveForValue);
   }
 
   onSubmit() {
-    this.emitFormValues.emit(this.filledNightForm);
-    // const control = <FormArray>this.filledNightForm.controls["filledUnits"];
-    // control.push(this.getLodging());
-    // console.log(this.filledNightForm.value);
-    // this.tripInfo= this._tripService.tripInfo;
+    //this.emitFormValues.emit(this.filledNightForm);
+    const control = <FormArray>this.filledNightForm.controls["filledUnits"];
+    control.push(this.getLodging());
+    console.log(this.filledNightForm.value);
+    this.tripInfo= this._tripService.tripInfo;
     // let obj ={
     //   customerId:5,
     //   customerName: 'eyal'
     // }
 
     // this.tripInfo=obj;
-    // console.log('tripInfoAfterObj:', this.tripInfo);
-    // this.tripInfo= this.squadAssembleService.formsArray[0].value;
-    // this.tripInfo.lodgingReservation= this.filledNightForm.controls['filledUnits'].value;
-    // this.tripInfo.commentManager= this.filledNightForm.controls['comments'].value;
-    // this._userService.createTrip(this.tripInfo).subscribe(res=>{
-    //    console.log(res);
-    // },(err)=>{
-    //   console.log(err);
-    // })
+    //console.log('tripInfoAfterObj:', this.tripInfo);
+   // this.tripInfo= this.squadAssembleService.formsArray[0].value
+    this.tripInfo.lodgingReservation= this.filledNightForm.controls['filledUnits'].value;
+    this.tripInfo.commentManager= this.filledNightForm.controls['comments'].value;
+    this._userService.createTrip(this.tripInfo).subscribe(res=>{
+       console.log(res);
+    },(err)=>{
+      console.log(err);
+    })
     this.filledNightForm.reset();
   }
   // onChange(value) {

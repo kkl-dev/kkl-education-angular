@@ -18,21 +18,21 @@ import {TripService} from '../../../../services/trip.service';
 })
 export class SleepingOptionsFormComponent implements OnInit {
   @ViewChild('resultsForm') signupForm: NgForm;
-  @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
+ // @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
   date: string = '';
   disableDates = true;
-  public formOptions: { imgSrc: string; text: string; value: string }[] = [
-    { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: 'ציפורי' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: 'לביא' },
-    {
-      imgSrc: 'assets/images/userImage.jpg',
-      text: 'נס הרים',
-      value: 'נס הרים',
-    },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: 'יתיק' },
-    { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: 'שוני' },
-  ];
-  //public formOptions;
+  // public formOptions: { imgSrc: string; text: string; value: string }[] = [
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: 'ציפורי' },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: 'לביא' },
+  //   {
+  //     imgSrc: 'assets/images/userImage.jpg',
+  //     text: 'נס הרים',
+  //     value: 'נס הרים',
+  //   },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'יתיר', value: 'יתיק' },
+  //   { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: 'שוני' },
+  // ];
+  public formOptions;
   freeSpacesArray: FreeSpace[] = [];
   location: string = '';
 
@@ -108,14 +108,15 @@ export class SleepingOptionsFormComponent implements OnInit {
   }
 
   public dateObjChanged(e: string) {
-    if (e.includes('-')) this.emitNewDates.emit(e);
+    //if (e.includes('-')) this.emitNewDates.emit(e);
   }
 
   ngOnInit(): void {
     
-   // this._tripService.getAvailableSleepingOptions();
-    // this.formOptions= this._tripService.formOptions;
-    // this.location=  this._tripService.centerField.name;
-     //this.date= this._tripService.sleepingDates.from +' - ' + this._tripService.sleepingDates.till;
+    this._tripService.getAvailableSleepingOptions();
+     this.formOptions= this._tripService.formOptions;
+     this.location=  this._tripService.centerField.name;
+     this.location= ' נס הרים';
+     this.date= this._tripService.sleepingDates.from +' - ' + this._tripService.sleepingDates.till;
   }
 }
