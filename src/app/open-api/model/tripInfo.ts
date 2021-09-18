@@ -10,7 +10,10 @@
  * Do not edit the class manually.
  */
 import { Area } from './area';
+<<<<<<< HEAD
 import { BaseCustomer } from './baseCustomer';
+=======
+>>>>>>> searchPage-yael
 import { Language } from './language';
 import { AgeGroup } from './ageGroup';
 import { Attribute } from './attribute';
@@ -32,10 +35,19 @@ export interface TripInfo {
     attribute?: Attribute;
     areaTrip?: Area;
     budget?: Budget;
+<<<<<<< HEAD
     customer?: BaseCustomer;
     customerType?: string;
     customerRegionName?: string;
     customerPay?: BaseCustomer;
+=======
+    customerId?: number;
+    customerName?: string;
+    customerType?: string;
+    customerRegionName?: string;
+    customerPayId?: number;
+    customerPayName?: string;
+>>>>>>> searchPage-yael
     customerPayType?: string;
     customerPayRegionName?: string;
     centerField?: FieldForestCenter;

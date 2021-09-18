@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CheckAvailabilityService} from 'src/app/utilities/services/check-availability.service';
 import {TooltipDataModel} from './tooltip/tooltip.component';
 import {UserDataService} from 'src/app/services/user-data.service';
-import {UserService} from 'src/app/open-api/api/user.service';
+import {UserService} from '../../open-api/api/user.service';
 import {TripService} from 'src/app/services/trip.service';
 
 export interface InfoCard {
@@ -38,7 +38,7 @@ export class EducationResultsComponent implements OnInit {
 
     if (this.tripService.centerField) {
 
-      this.dateObj = this.tripService.dateObj;
+      this.dateObj = this.tripService.sleepingDates;
 
       for (let key in this.dateObj) {
         let value = this.dateObj[key];

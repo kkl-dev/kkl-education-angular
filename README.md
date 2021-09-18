@@ -29,3 +29,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
  ## to execute yaml
 openapi-generator-cli generate -i src/kkl-education-1.1.0.yaml -g typescript-angular -o src/app/open-api
 
+<<<<<<< HEAD
+=======
+ #yael
+ link to the server
+  protected basePath=http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0
+>>>>>>> searchPage-yael

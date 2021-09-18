@@ -6,28 +6,13 @@
       <div class="education__form-group" disableOptionCentering="false">
         <label class="education__form-group-label">איפה ישנים</label>
         <mat-form-field>
-          <mat-select
-            #select
-            [(ngModel)]="sleepingPlace"
-            name="sleepingPlace"
-            class="education__form-group-select"
-            (selectionChange)="selectChange($event)"
-            (opened)="hideSelectPlaceholder(select)"
-            (closed)="showSelectPlaceholder(select)"
-
-            >
-            <mat-option
-              value="{{ option.value }}"
-              *ngFor="let option of formOptions"
-            >
+          <mat-select #select [(ngModel)]="sleepingPlace" name="sleepingPlace" class="education__form-group-select"
+            (selectionChange)="selectChange($event)" (opened)="hideSelectPlaceholder(select)"
+            (closed)="showSelectPlaceholder(select)">
+            <mat-option value="{{ option.id }}" *ngFor="let option of tripService.formOptions">
               <span class="education__select-option">
-                <img
-                  [src]="option.iconPath"
-                  class="education__select-option-svg"
-                />
-                <span class="education__select-option-text">{{
-                  option.name
-                }}</span>
+                <img [src]="option.linkSite" class="education__select-option-svg" />
+                <span class="education__select-option-text">{{option.name}}</span>
               </span>
             </mat-option>
           </mat-select>
@@ -36,56 +21,32 @@
 
       <div class="education__form-group">
         <label class="education__form-group-label">מתאריך</label>
-        <svg-icon
-          src="assets/images/calendar.svg"
-          class="education__form-group-svg"
-        ></svg-icon>
+        <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
 
-        <label
-          class="header__form-group-pseudo-input label-input"
-          for="calendar-input"
-        >
-
-       
-          <input
-            class="header__form-group-input"
-            airbnb-calendar
-            (newDate)='newDateRecived($event)'
-            (sleepingPlace)='newSleepingPlaceRecived($event)'
-            (prevDate)='prevDateRecived($event)'
-            type="text"
-            [(ngModel)]="date"
-            [options]="options"
-            (ngModelChange)="dateObjChanged($event)"
-            name="calendar-input"
-            id="calendar-input"
-          />
+        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
+          <input class="header__form-group-input" airbnb-calendar (newDate)='newDateRecived($event)'
+            [disabled]="disableDates" (sleepingPlace)='newSleepingPlaceRecived($event)'
+            (prevDate)='prevDateRecived($event)' type="text" [(ngModel)]="date" [options]="options"
+            (ngModelChange)="dateObjChanged($event)" name="calendarInput" id="calendarInput" />
           <span class="header__form-group-pseudo-input-value">
-            {{ dateObj.from }}</span
-          >
+            {{ sleepingDates.from }}</span>
         </label>
       </div>
       <div class="education__form-group">
         <label class="education__form-group-label">עד תאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
         <!-- <input class="education__form-group-input" type="text" /> -->
-        <label
-          class="header__form-group-pseudo-input label-input"
-          for="calendar-input"
-        >
+        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
           <span class="header__form-group-pseudo-input-value">
-            {{ dateObj.to }}</span
-          >
+            {{ sleepingDates.to }}</span>
           <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
         </label>
       </div>
 
       <div class="education__link-group">
         <label class="education__form-group-label link-group">buffer</label>
-        <button
-          routerLink="{{routerLinkContinue}}" (click)="printFormValues()"
-          (click)="printFormValues()"
-          class="education__link"
+        <!-- routerLink="{{routerLinkContinue}}" -->
+        <button (click)="printFormValues()" class="education__link"
           [disabled]="disableContinueBtn"><span>המשך</span></button>
       </div>
     </form>

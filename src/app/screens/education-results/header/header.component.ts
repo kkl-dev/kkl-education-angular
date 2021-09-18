@@ -13,7 +13,7 @@ import { subDays, addDays } from 'date-fns';
 import { Locale, getYear } from 'date-fns';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
-import { UserService } from 'src/app/open-api/api/user.service';
+import { UserService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 
@@ -30,8 +30,7 @@ export class HeaderComponent implements OnInit {
   @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
 
   date: string | null = null;
-
-  dateObj: { from: string; to: string } = { from: '', to: '' };
+  sleepingDates: { from: string; till: string } = { from: '', till: '' };
   forestCenter: any | undefined;
   forestCenterOptions: any | undefined;
   forestCenterId: number = 101;
@@ -88,13 +87,13 @@ export class HeaderComponent implements OnInit {
         if (this.tripService.centerField) {
           this.forestCenterId = this.tripService.centerField.id;
           this.forestCenter = this.tripService.centerField;
-          this.dateObj = this.tripService.dateObj;
+          this.sleepingDates = this.tripService.sleepingDates;
 
-          let b = this.getDates(this.dateObj.from, this.dateObj.to);
+          let b = this.getDates(this.sleepingDates.from, this.sleepingDates.till);
           console.log('b:', b);
 
 
-          let a = this.getDaysArray(this.dateObj.from, this.dateObj.to);
+          let a = this.getDaysArray(this.sleepingDates.from, this.sleepingDates.till);
           console.log('a:', a);
 
         }
@@ -212,15 +211,15 @@ export class HeaderComponent implements OnInit {
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
-        this.dateObj.from = tempDateArr[0];
-        this.dateObj.to = tempDateArr[1];
+        this.sleepingDates.from = tempDateArr[0];
+        this.sleepingDates.till = tempDateArr[1];
       } else {
-        this.dateObj.from = tempDateArr[1];
-        this.dateObj.to = tempDateArr[0];
+        this.sleepingDates.from = tempDateArr[1];
+        this.sleepingDates.till = tempDateArr[0];
       }
     } else {
-      this.dateObj.from = e;
-      this.dateObj.to = '';
+      this.sleepingDates.from = e;
+      this.sleepingDates.till = '';
     }
   }
 }

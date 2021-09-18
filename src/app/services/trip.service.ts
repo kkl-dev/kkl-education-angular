@@ -10,9 +10,15 @@ import { Area, ActivityType, FieldForestCenter, AgeGroup, Attribute, Participant
   providedIn: 'root'
 })
 export class TripService {
-  centerField: FieldForestCenter | undefined;
-  dateObj: any;
+  centerField: FieldForestCenter={
+    id: 0,
+    name: ''
+  };
+  // dateObj: any;
+  sleepingDates: { from: string; till: string } = { from: '', till: '' };
   formGroupSquadAssembles = [];
+  dateRange: any;
+  formOptions!: FieldForestCenter[];
   public centerFieldObj = new BehaviorSubject<any>({
     "id": 101,
     "name": "נס הרים",
@@ -37,9 +43,6 @@ export class TripService {
     this.centerFieldObj.next(forestCenter);
   }
 
-
-
-
   ageGroup = [];//to convert to model of comrax
   ageGroupOriginal: AgeGroup[];
   fieldForestCenters = [];//to convert to model of comrax
@@ -53,6 +56,18 @@ export class TripService {
   participantTypes: ParticipantType[];
   languages: Language[];
   countries: Country[];
+
+  getLookupFieldForestCenters() {
+    this.userService.getLookupFieldForestCenters().subscribe(
+      response => {
+        console.log(response)
+        this.formOptions = response;
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
   getLookUp() {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {

@@ -21,7 +21,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
 
+<<<<<<< HEAD
 import { ApiModule } from 'src/app/open-api';
+=======
+import { ApiModule } from './open-api';
+>>>>>>> searchPage-yael
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -112,7 +116,11 @@ import { IconCardComponent } from './components/icon-card/icon-card.component';
 import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
 import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
 import { SizeDirective } from './utilities/directivs/size.directive';
+<<<<<<< HEAD
 import { FilledNightFormComponent } from './screens/order-tour/sleeping-options/filled-night-form/filled-night-form.component';
+=======
+import { ConfirmDialogComponent } from './utilities/confirm-dialog/confirm-dialog.component';
+>>>>>>> searchPage-yael
 
 
 FullCalendarModule.registerPlugins([
@@ -219,7 +227,11 @@ FullCalendarModule.registerPlugins([
     CalendarComponent,
     ActiveStateDirective,
     SizeDirective,
+<<<<<<< HEAD
     FilledNightFormComponent
+=======
+    ConfirmDialogComponent
+>>>>>>> searchPage-yael
   ],
   imports: [
     BrowserModule,
