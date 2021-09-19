@@ -64,7 +64,7 @@ export class HeaderComponent implements OnInit {
 
     this.options = {
       firstCalendarDay: 0,
-      format: 'LL/dd/yyyy',
+      format: 'LL/dd/yyyy', 
       closeOnSelected: true,
       // minDate: addDays(new Date(), 5),
       // maxDate: addDays(new Date(), 10),
