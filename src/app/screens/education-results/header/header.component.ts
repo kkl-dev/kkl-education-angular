@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
     //this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
     this.options = {
       firstCalendarDay: 0,
-      format: 'LL/dd/yyyy',
+      format: 'LL/dd/yyyy', 
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,

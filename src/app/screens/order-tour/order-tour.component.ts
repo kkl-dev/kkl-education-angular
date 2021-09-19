@@ -43,6 +43,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.subscribeToCurrentRoute();
     this.getActiveStep();
     this.setActiveStep()
+
+    
   }
 
   ngAfterViewInit() {
