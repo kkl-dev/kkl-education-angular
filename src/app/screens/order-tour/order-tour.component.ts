@@ -119,6 +119,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[3].get('tripDescription').value;
       var center = this.squadAssemble.formsArray[3].get('centerField').value;
       this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
+      this.squadAssemble.tripInfo.centerField.linkSite='';
       this.squadAssemble.tripInfo.tripEnding = this.squadAssemble.formsArray[3].get('tripEnding').value;
       this.tripService.sleepingDates.till= this.squadAssemble.tripInfo.tripEnding;
       this.squadAssemble.tripInfo.tripStart = this.squadAssemble.formsArray[3].get('tripStart').value;

@@ -15,7 +15,7 @@
   <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
    <mat-form-field appearance="outline" >
     <mat-label>סוג לינה</mat-label>
-    <mat-select name="sleepingPlace" formControlName="sleepingPlace">
+    <mat-select name="accomodationTypeId" formControlName="accomodationTypeId">
       <mat-option
         *ngFor="let option of sleepingTypeOptions"
         value="{{ option.id }}"
@@ -24,11 +24,19 @@
     </mat-select>
   </mat-form-field>
  </div>
+ <div style="display:none">
+  <input
+  matInput
+  type="text"
+  name="accomodationTypeName"
+  formControlName="accomodationTypeName"
+/>
+</div>
  <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%"  >
   <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
     <mat-form-field appearance="outline" >
     <mat-label>בחר לילות</mat-label>
-    <mat-select name="nightsCount" formControlName="nightsCount">
+    <mat-select name="date" formControlName="date">
       <!-- <mat-option *ngFor="let option of nightNumberOptions; let i =index" [value]="{option.value"}>
             <mat-checkbox [checked]="selected === i" (change)="onChange(option.text );selected = i"> {{option.text }}</mat-checkbox>
         </mat-option> -->
@@ -41,14 +49,15 @@
     </mat-select>
   </mat-form-field>
  </div>
+ 
  <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%"  >
   <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
     <mat-form-field appearance="outline" >
     <mat-label>שריין עבור</mat-label>
     <mat-select
       (selectionChange)="saveForChangeHandler($event.value)"
-      name="saveFor"
-      formControlName="saveFor"
+      name="participantId"
+      formControlName="participantId"
     >
       <mat-option
         *ngFor="let option of saveForOptions"
@@ -58,6 +67,14 @@
     </mat-select>
   </mat-form-field> 
 </div>
+<div style="display:none">
+  <input
+  matInput
+  type="text"
+  name="participantName"
+  formControlName="participantName"
+/>
+</div>
  <div fxFlex="15%" fxFlex.xs="100%" fxFlex.sm="25%"  > 
    <!-- <div [ngStyle]="{ 'grid-column': 'span 2' }"> -->
     <!-- <mat-form-field appearance="outline" class="width-auto" [ngStyle]="{ 'width': 'auto !importent' }"> -->
@@ -66,8 +83,8 @@
       <input
         matInput
         type="number"
-        name="sleepingAmount"
-        formControlName="sleepingAmount"
+        name="lodgersNumber"
+        formControlName="lodgersNumber"
       />
     </mat-form-field>
     <div *ngIf="this.filledNightForm.value.saveFor" class="save-for-text">
@@ -78,7 +95,7 @@
   <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 2' }"> -->
     <mat-form-field appearance="outline" >
     <mat-label>כמות</mat-label>
-    <input matInput type="number" name="amount" formControlName="amount" />
+    <input matInput type="number" name="unitsNumber" formControlName="unitsNumber" />
   </mat-form-field>
   </div>
   </div>

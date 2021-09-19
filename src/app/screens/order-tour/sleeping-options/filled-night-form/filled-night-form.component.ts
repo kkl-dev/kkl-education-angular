@@ -78,11 +78,13 @@ export class FilledNightFormComponent implements OnInit {
   }
    getLodging(){
     return this.formBuilder.group({
-      sleepingPlace: [null, Validators.required],
-      nightsCount: [null, [Validators.required]],
-      saveFor: [null, [Validators.required]],
-      sleepingAmount: [null, [Validators.required]],
-      amount: [null, [Validators.required]]
+      accomodationTypeId: [null, Validators.required],
+      accomodationTypeName: [null],
+      date: [null, [Validators.required]],
+      participantId: [null, [Validators.required]],
+      participantName: [null,],
+      lodgersNumber: [null, [Validators.required]],
+      unitsNumber: [null, [Validators.required]]
     });
   }
   setnightNumberOptions(startDate,endDate){
@@ -152,6 +154,10 @@ export class FilledNightFormComponent implements OnInit {
     //console.log('tripInfoAfterObj:', this.tripInfo);
    // this.tripInfo= this.squadAssembleService.formsArray[0].value
     this.tripInfo.lodgingReservation= this.filledNightForm.controls['filledUnits'].value;
+    this.tripInfo.lodgingReservation[0].accomodationTypeName= 'בקתה';
+    this.tripInfo.lodgingReservation[1].accomodationTypeName= 'אוהל'
+    this.tripInfo.lodgingReservation[0].participantName='מלווים';
+    this.tripInfo.lodgingReservation[1].participantName ='מבוגרים';
     this.tripInfo.commentManager= this.filledNightForm.controls['comments'].value;
     this._userService.createTrip(this.tripInfo).subscribe(res=>{
        console.log(res);
