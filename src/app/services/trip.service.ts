@@ -34,14 +34,6 @@ export class TripService {
         "totalUnits": 30,
         "img": "..href",
         "nameEng": "something"
-      },
-      {
-        "id": 21,
-        "name": "חדר",
-        "maxOccupancy": 10,
-        "totalUnits": 20,
-        "img": "..href",
-        "nameEng": "something"
       }
     ],
     "linkSite": "http://"
@@ -63,22 +55,6 @@ export class TripService {
           "availableUnits": 10,
           "nameEng": "cabin",
           "img": "/assets/images/cabin.svg"
-        },
-        {
-          "accomodationTypeId": 1,
-          "acoomodationTypeName": "אוהל",
-          "maxOccupancy": 20,
-          "availableUnits": 10,
-          "nameEng": "cabin",
-          "img": "/assets/images/cabin.svg"
-        },
-        {
-          "accomodationTypeId": 1,
-          "acoomodationTypeName": "גיחה",
-          "maxOccupancy": 20,
-          "availableUnits": 10,
-          "nameEng": "cabin",
-          "img": "/assets/images/cabin.svg"
         }
       ]
     }
@@ -89,10 +65,15 @@ export class TripService {
 
   setFreeSpacesArray(freeSpacesArray: any) {
     this.freeSpacesArray = freeSpacesArray;
+    console.log('this.freeSpacesArray: ', this.freeSpacesArray);
+
   }
 
   updateForestCenter(forestCenter: any) {
     this.centerFieldObj.next(forestCenter);
+    console.log('this. centerFieldObj: ', this.centerFieldObj);
+
+    this.getAvailableSleepingOptions();
   }
 
   // updateSleepingDates() {
@@ -114,9 +95,8 @@ export class TripService {
     // this.convertDatesFromSlashToMinus() 
     let from = this.sleepingDates.from.replace(/\//g, '-');
     let till = this.sleepingDates.till.replace(/\//g, '-');
-
-    console.log('this.centerFieldObj.value.id, from, till' + this.centerFieldObj.value.id, from, till)
-    this.userService.getAvailableSleepingOptionsByDates(this.centerFieldObj.value.id, from, till).subscribe((sleepingAvailability: any) => {
+    //console.log('this.centerFieldObj.value.id, from, till: ' + this.centerFieldObj.value.id, from, till)
+    this.userService.getAvailableSleepingOptionsByDates(this.centerField.id, from, till).subscribe((sleepingAvailability: any) => {
       console.log('sleepingAvailability ==>', { sleepingAvailability });
       if (sleepingAvailability) {
         this.AvailableSleepingOptionsByDay.next(sleepingAvailability);

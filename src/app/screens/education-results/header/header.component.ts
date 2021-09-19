@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   forestCenterId: number = 1;
   formOptions: any;
   AvailableDates!: AvailableAccomodationDate[];
-  AcommodationType = 'בקתה';
+  // AcommodationType = 'בקתה';
   //disableDates = true;
 
   freeSpacesArray: FreeSpace[] = [];
@@ -45,14 +45,11 @@ export class HeaderComponent implements OnInit {
 
   constructor(public usersService: UserService, private userDataService: UserDataService,
     private checkAvailabilityService: CheckAvailabilityService, public tripService: TripService, public fakeApi: FakeService) {
-      // this.tripService.forestCenter.subscribe(forestCenter => {
-      //   this.forestCenter = forestCenter;
-      // });
-      this.freeSpacesArray = this.tripService.freeSpacesArray;
-    this.tripService.getAvailableSleepingOptions();
-        // this.dateObjChanged(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
-    //this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
 
+    this.freeSpacesArray = this.tripService.freeSpacesArray;
+    this.tripService.getAvailableSleepingOptions();
+    // this.dateObjChanged(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
+    //this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
     this.options = {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy',
@@ -71,17 +68,14 @@ export class HeaderComponent implements OnInit {
     this.sleepingDates = this.tripService.sleepingDates;
 
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
-    //this.disableDates = false;
-   // if (this.tripService.centerField) {
-      
 
-      let b = this.getDates(this.sleepingDates.from, this.sleepingDates.till);
-      console.log('b:', b);
-      let a = this.getDaysArray(this.sleepingDates.from, this.sleepingDates.till);
-      console.log('a:', a);
+    //yak del 19-9-21 bug in addDays
+    // let b = this.getDates(this.sleepingDates.from, this.sleepingDates.till);
+    // console.log('b:', b);
+    // let a = this.getDaysArray(this.sleepingDates.from, this.sleepingDates.till);
+    // console.log('a:', a);
   }
 
-  
   getAvailableDates(fromDate: string, tillDate: string) {
     fromDate = fromDate.substring(0, 10)
     tillDate = tillDate.substring(0, 10)
@@ -102,13 +96,12 @@ export class HeaderComponent implements OnInit {
           maxYear: new Date(tillDate).getFullYear() + 1,
           freeSpacesArray: this.freeSpacesArray,
         };
-        //this.disableDates = false;
-
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
+
   freeSpacesArrayGenaratorFromServer(start: Date, end: Date) {
     var i = 0;
     let freeSpacesArray = [];
@@ -140,39 +133,28 @@ export class HeaderComponent implements OnInit {
     return freeSpacesArray;
   }
 
+  // addDays(days: any) {
+  //   var date = new Date(days);
+  //   date.setDate(date.getDate() + days);
+  //   return date;
+  // }
 
-  addDays(days: any) {
-    var date = new Date(days);
-    date.setDate(date.getDate() + days);
-    return date;
-  }
-
-  getDates(startDate: any, stopDate: any) {
-    var dateArray = new Array();
-    var currentDate = startDate;
-    while (currentDate <= stopDate) {
-      dateArray.push(new Date(currentDate));
-      currentDate = currentDate.this.addDays(1);
-    }
-    return dateArray;
-  }
+  // getDates(startDate: any, stopDate: any) {
+  //   var dateArray = new Array();
+  //   var currentDate = startDate;
+  //   while (currentDate <= stopDate) {
+  //     dateArray.push(new Date(currentDate));
+  //     currentDate = currentDate.this.addDays(1);
+  //   }
+  //   return dateArray;
+  // }
 
   updateForestCenter(id: any) {
     this.forestCenter = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
+    this.tripService.centerField = this.forestCenter;
     this.tripService.updateForestCenter(this.forestCenter);
     console.log('updateForestCenter obj =>', this.forestCenter);
-
-    this.tripService.centerField = this.tripService.formOptions.filter((el: { id: number; }) => el.id === parseInt(id.value))[0];
-    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
-
-  // updateTripDates(dates: any) {
-  //   // this.tripDates = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
-  //   console.log('updateTripDates =>', this.forestCenter);
-  //   console.log('dates =>', dates);
-
-  //   this.tripService.updateSleepingDates();
-  // }
 
   getDaysArray(start: any, end: any) {
     for (
@@ -226,19 +208,19 @@ export class HeaderComponent implements OnInit {
   dateObjChanged(e: string) {
     if (e && e.includes('-')) {
       console.log('dateObjChanged =>', + e);
-      this.emitNewDates.emit(e);
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
 
- if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
+      if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       } else {
         this.sleepingDates.from = tempDateArr[1];
         this.sleepingDates.till = tempDateArr[0];
-    }
+      }
       this.tripService.sleepingDates.from = this.sleepingDates.from;
       this.tripService.sleepingDates.till = this.sleepingDates.till;
+      this.emitNewDates.emit(e);
 
       this.tripService.getAvailableSleepingOptions();
     } else {

@@ -129,13 +129,24 @@ export class MapsComponent implements OnInit {
     };
     // fix search by id 
     //this.forestCenter
-    if ((this.place == "ציפורי") && (this.day == 1)) { rawservicedata = this.ziporiday1; };
-    if ((this.place == "אילנות") && (this.day == 1)) { rawservicedata = this.ilanotday1 };
-    if ((this.place == "בית אש\"ל") && (this.day == 1)) { rawservicedata = this.betieshelday1 };
-    if ((this.place == "יתיר") && (this.day == 1)) { rawservicedata = this.yatirday1 };
-    if ((this.place == "לביא") && (this.day == 1)) { rawservicedata = this.laviday1 };
-    if ((this.place == "שוני") && (this.day == 1)) { rawservicedata = this.shuniday1 };
-
+    if ((this.place == "ציפורי") && (this.day == 1)) { 
+      this.place = "מרכז שדה ציפורי";    
+      rawservicedata = this.ziporiday1; };
+    if ((this.place == "אילנות") && (this.day == 1)) { 
+      this.place = "אילנות מערב";          
+      rawservicedata = this.ilanotday1 };
+    if ((this.place == "בית אשל") && (this.day == 1)) { 
+      this.place = "מצפה בית אשל";    
+      rawservicedata = this.betieshelday1 };
+    if ((this.place == "יתיר") && (this.day == 1)) { 
+      this.place = "מרכז שדה יתיר";    
+      rawservicedata = this.yatirday1 };
+    if ((this.place == "לביא") && (this.day == 1)) { 
+      this.place = "מרכז שדה לביא";    
+      rawservicedata = this.laviday1 };
+    if ((this.place == "שוני") && (this.day == 1)) { 
+      this.place = "מרכז שדה שוני";    
+      rawservicedata = this.shuniday1 };
     var datatoiter = rawservicedata["biktot"]["bikta"]
     for (let i = 0; i < datatoiter.length; i++) {
       fullhuts.push(Number(datatoiter[i]["uid"]))

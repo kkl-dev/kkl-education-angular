@@ -32,8 +32,8 @@ export class SleepingOptionsByDayComponent implements OnInit {
       console.log('sleeping --> forestCenter result:', forestCenter);
     });
 
-    this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {      
-      this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
+    this.tripService.AvailableSleepingOptions.subscribe(sleepingOptions => {      
+      this.AvailableSleepingOptions = sleepingOptions; // this set's the username to the default observable value
       console.log('sleeping -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
      // console.log('sleeping -- > sleepingOptionsByDay:', this.sleepingOptionsByDay);
     });
