@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
-import { Area, ActivityType, FieldForestCenter, AgeGroup, Attribute, ParticipantType, Language, Country, Customer, BaseCustomer } from '../open-api';
+import { Area, FieldForestCenter, AgeGroup, Attribute, ParticipantType, Language, Country, Customer, BaseCustomer,ActivityType } from '../open-api';
 
 @Injectable({
   providedIn: 'root'
@@ -134,7 +134,8 @@ export class TripService {
   ageGroupOriginal: AgeGroup[];
   fieldForestCenters = [];//to convert to model of comrax
   fieldForestCentersOriginal: FieldForestCenter[];
-  activityByAttribute = []
+  activityByAttribute = [];
+  activityByAttributeOriginal : ActivityType[]
   customers = [];
   customersOriginal: BaseCustomer[]
   areas: Area[];
@@ -155,6 +156,21 @@ export class TripService {
     )
   }
 
+  getActivityLookupsByAttribute(attributeId: number, userId: string){
+    this.userService.getActivityByAttribute(attributeId, userId).subscribe(
+      response => {
+        this.activityByAttributeOriginal = response;
+        response.forEach(element => {
+          this.activityByAttribute.push({ key: element.name, value: element.id.toString() });
+        });
+        console.log('activityByAttribute is :',this.activityByAttribute)
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+  
   getLookUp() {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {
@@ -195,15 +211,7 @@ export class TripService {
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
-    this.userService.getActivityByAttribute(1, '12').subscribe(
-      response => {
-        response.forEach(element => {
-          this.activityByAttribute.push({ key: element.name, value: element.id.toString() });
-        });
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
+   
     this.userService.getAreas().subscribe(
       response => {
         console.log('response', response)

@@ -116,7 +116,7 @@ export class SleepingOptionsFormComponent implements OnInit {
     this._tripService.getAvailableSleepingOptions();
      this.formOptions= this._tripService.formOptions;
      this.location=  this._tripService.centerField.name;
-     this.location= ' נס הרים';
+     //this.location= ' נס הרים';
      this.date= this._tripService.sleepingDates.from +' - ' + this._tripService.sleepingDates.till;
   }
 }

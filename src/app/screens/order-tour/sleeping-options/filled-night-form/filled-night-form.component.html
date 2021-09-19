@@ -1,20 +1,32 @@
 <form
-  class="form"
   [dir]="'rtl'"
   (ngSubmit)="onSubmit()"
   [formGroup]="filledNightForm"
 >
-  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
+<div formArrayName="filledUnits">
+  <div *ngFor="let unit of filledNightForm.get('filledUnits')['controls']; let i=index">
+   <div [formGroupName]="i">
+     <div  fxLayout="row"
+     fxLayout.xs="column"
+     fxLayoutWrap
+     fxLayoutGap="1%"
+     >
+  <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%"  >
+  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
+   <mat-form-field appearance="outline" >
     <mat-label>סוג לינה</mat-label>
     <mat-select name="sleepingPlace" formControlName="sleepingPlace">
       <mat-option
         *ngFor="let option of sleepingTypeOptions"
-        value="{{ option.value }}"
-        >{{ option.text }}</mat-option
+        value="{{ option.id }}"
+        >{{ option.name }}</mat-option
       >
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
+ </div>
+ <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%"  >
+  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
+    <mat-form-field appearance="outline" >
     <mat-label>בחר לילות</mat-label>
     <mat-select name="nightsCount" formControlName="nightsCount">
       <!-- <mat-option *ngFor="let option of nightNumberOptions; let i =index" [value]="{option.value"}>
@@ -22,13 +34,16 @@
         </mat-option> -->
       <mat-option
         *ngFor="let option of nightNumberOptions"
-        value="{{ option.value }}"
+        value="{{ option.id }}"
       >
-        {{ option.text }}
+        {{ option.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
+ </div>
+ <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%"  >
+  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
+    <mat-form-field appearance="outline" >
     <mat-label>שריין עבור</mat-label>
     <mat-select
       (selectionChange)="saveForChangeHandler($event.value)"
@@ -37,13 +52,16 @@
     >
       <mat-option
         *ngFor="let option of saveForOptions"
-        value="{{ option.value }}"
-        >{{ option.text }}</mat-option
+        value="{{ option.id }}"
+        >{{ option.name }}</mat-option
       >
     </mat-select>
   </mat-form-field> 
-  <div [ngStyle]="{ 'grid-column': 'span 2' }">
-    <mat-form-field appearance="outline" class="width-auto" [ngStyle]="{ 'width': 'auto !importent' }">
+</div>
+ <div fxFlex="15%" fxFlex.xs="100%" fxFlex.sm="25%"  > 
+   <!-- <div [ngStyle]="{ 'grid-column': 'span 2' }"> -->
+    <!-- <mat-form-field appearance="outline" class="width-auto" [ngStyle]="{ 'width': 'auto !importent' }"> -->
+     <mat-form-field appearance="outline" >
       <mat-label>מס לנים</mat-label> 
       <input
         matInput
@@ -56,18 +74,27 @@
       מתוך {{ totalAmount }} {{ saveForValue }}
     </div>
   </div>
-  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 2' }">
+  <div fxFlex="15%" fxFlex.xs="100%" fxFlex.sm="25%"  > 
+  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 2' }"> -->
+    <mat-form-field appearance="outline" >
     <mat-label>כמות</mat-label>
     <input matInput type="number" name="amount" formControlName="amount" />
   </mat-form-field>
-  
+  </div>
+  </div>
+  </div>
+ </div>
+</div>
   <div class="btn__container">
-    <button [disabled]="!filledNightForm.valid" class="btn" type="submit">
+    <button [disabled]="!filledNightForm.valid" class="btn" (click)="addRow()">
       הוסף
     </button>
     <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
       <mat-label>הערות</mat-label>
       <textarea matInput name="comments" formControlName="comments"></textarea>
     </mat-form-field>
+    <button [disabled]="!filledNightForm.valid" class="btn" type="submit">
+      הזמן טיול
+    </button>
   </div>
 </form>

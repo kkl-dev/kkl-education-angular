@@ -203,6 +203,7 @@ export class SquadAssembleService {
             inputProps: {
               labelSize: 's1',
             },
+            value: 'tal'
           }),
 
           new QuestionTextbox({
@@ -213,6 +214,7 @@ export class SquadAssembleService {
             inputProps: {
               labelSize: 's3',
             },
+            value: '0525888888'
           }),
           new QuestionTextbox({
             key: 'contactEmail',
@@ -222,6 +224,7 @@ export class SquadAssembleService {
             inputProps: {
               labelSize: 's1',
             },
+            value: 'test@gmail.com'
           }),
         ],
       },
@@ -361,7 +364,8 @@ export class SquadAssembleService {
       type: 'select',
       inputProps: {
         labelSize: 's4',
-        options: this.tripService.attributes,
+         options: this.tripService.attributes,
+       
       },
     }),
     // [
@@ -377,7 +381,8 @@ export class SquadAssembleService {
       type: 'select',
       inputProps: {
         labelSize: 's4',
-        options: this.tripService.activityByAttribute,
+         options: this.tripService.activityByAttribute,
+       
       },
     }),
     // [

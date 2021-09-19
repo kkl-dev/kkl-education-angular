@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
+import { TripService } from 'src/app/services/trip.service';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -55,7 +56,7 @@ export class FormInputComponent implements OnInit {
   public OnChange!: (event: Event) => void;
   public onTouched!: () => void;
 
-  constructor(private formService: FormService) {}
+  constructor(private formService: FormService, private tripService:TripService) {}
 
   ngOnInit(): void {
     this.subscribeToControl();
@@ -119,6 +120,15 @@ export class FormInputComponent implements OnInit {
   public onSelectChange(event:any,c:any,question:any,i:any) {
     console.log(event)
     
+    try{
+    if(c.parent.value.attribute){
+      this.tripService.getActivityLookupsByAttribute(c.parent.value.attribute,'itiel');
+      //console.log('I amm attribute');
+    }
+  }
+  catch(error){
+    console.log(error);
+  }      
     this.formService.onChangeSelect.next(true);
   }
 

@@ -36,7 +36,7 @@ export class FilledNightFormComponent implements OnInit {
   //   { value: 'teachers', text: 'מורים' },
   // ];
 
-  constructor(private formBuilder: FormBuilder, private _userService:UserService, private squadAssembleService:SquadAssembleService ) {}
+  constructor(private formBuilder: FormBuilder, private _userService:UserService, private squadAssembleService:SquadAssembleService  ) {}
 
   ngOnInit(): void {
     // this.filledNightForm = new FormGroup({
@@ -69,8 +69,10 @@ export class FilledNightFormComponent implements OnInit {
     })
     
     
-     let startDate= '09/08/2021';
-     let endDate= '09/12/2021';
+     let startDate= this.squadAssembleService.tripInfo.tripStart;
+     //let startDate= '2021/09/22';
+     let endDate= this.squadAssembleService.tripInfo.tripEnding;
+     //let endDate= '2021/09/25';
     this.setnightNumberOptions(startDate,endDate)
     
   }
@@ -101,6 +103,7 @@ export class FilledNightFormComponent implements OnInit {
      const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
      let newDate = new Date(date1.setDate(date1.getDate()));
      for (let i = 0; i <= (totalDays-1); i++) {
+      
        const newDateStringIsraelFormat = `${newDate.getDate()}.${
         newDate.getMonth() + 1
        }.${newDate.getFullYear()}`;
@@ -109,10 +112,17 @@ export class FilledNightFormComponent implements OnInit {
        }-${newDate.getDate()}`;
        let obj={
          id:newDateStringUsaFormat,
-         text: newDateStringIsraelFormat
+         name: newDateStringIsraelFormat
        }
        this.nightNumberOptions.push(obj);
        newDate = new Date(date1.setDate(date1.getDate() + 1));
+      // else{
+      //   let obj={
+      //     id:5,
+      //     name: 'הכל'
+      //   }
+      //   this.nightNumberOptions.push(obj);
+      // }
      }
      console.log(this.nightNumberOptions);
   }
@@ -124,10 +134,13 @@ export class FilledNightFormComponent implements OnInit {
     // console.log(this.saveForValue);
   }
 
-  onSubmit() {
-    //this.emitFormValues.emit(this.filledNightForm);
+  addRow(){
     const control = <FormArray>this.filledNightForm.controls["filledUnits"];
     control.push(this.getLodging());
+  }
+  onSubmit() {
+    //this.emitFormValues.emit(this.filledNightForm);
+   
     console.log(this.filledNightForm.value);
     this.tripInfo= this.squadAssembleService.tripInfo;
     // let obj ={
@@ -145,7 +158,7 @@ export class FilledNightFormComponent implements OnInit {
     },(err)=>{
       console.log(err);
     })
-    this.filledNightForm.reset();
+    //this.filledNightForm.reset();
   }
   // onChange(value) {
   //   console.log(value);
