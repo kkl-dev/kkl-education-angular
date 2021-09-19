@@ -23,11 +23,8 @@ export interface InfoCard {
 export class EducationResultsComponent implements OnInit {
   forestCenter: any | undefined;
   //forestCenter: any | undefined = this.tripService.centerField || {};
-
-  // availabilityItemsArray: any = [];
   sleepingDates: any;
   fromOtherComponent: boolean = true;
-
   //public facilitiesArray: InfoCard[] = [];
   public facilitiesArray: any = [{
     "date": "2021-09-10T:00:00:00",
@@ -67,29 +64,8 @@ export class EducationResultsComponent implements OnInit {
         ]
       }
     ]
-  },
-  {
-    "date": "2021-09-10T:00:00:00",
-    "facilitiesList": [
-      {
-        "id": 8,
-        "name": "כיתה קטנה",
-        "maxOccupancy": 20,
-        "occupiedHours": [
-          {
-            "fromHour": "2021-09-10T09:00:00",
-            "tillHour": "2021-09-10T11:00:00",
-            "customerName": "סימינר הקיבוצים"
-          },
-          {
-            "fromHour": "2021-09-10T14:00:00",
-            "tillHour": "2021-09-10T15:00:00",
-            "customerName": "קיבוץ לביא"
-          }
-        ]
-      }
-    ]
   }];
+
   facilityForDay: any;
 
   sleepingOptionsByDay: {
@@ -211,9 +187,8 @@ export class EducationResultsComponent implements OnInit {
     //this.facilitiesArray = this.api.getAvailableFacilityDates('this.AvailableSleepingOptions[0].day');
     // console.log('facilitiesArray2', this.facilitiesArray);
 
-    console.log(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
+    //console.log(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
     // this.changeDatesHandler(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
-    // this.changeDatesHandler('09/01/2021-09/04/2021');
   }
   //yak del not in use
   // public changeDate(newDate: number) {
@@ -245,53 +220,40 @@ export class EducationResultsComponent implements OnInit {
       // call api if place changed for dates and facilities;
       //console.log('fromOtherComponent: ' + this.fromOtherComponent);
       if (!this.fromOtherComponent) {
-        // this.getAvailableAccommodationDates(forestCenter);
+
       }
       //get Available Facilities
+      //getAvailableFacilities is been called from changeDatesHandler;
+      //this.getAvailableFacilities();
+    });
+
+    this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {      
+      this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
+      console.log('educational -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
+
       this.getAvailableFacilities();
     });
 
-    console.log('facilitiesArray: ', this.facilitiesArray);
+    console.log('facilities Array: ', this.facilitiesArray);
     this.facilityForDay = this.facilitiesArray[0].facilitiesList;
     console.log('facilityForDay: ', this.facilityForDay);
-
      //console.log('userDataService:', this.userDataService);
-    //this.availabilityItemsArray = this.tripService.sleepingDates;
     //this.centerField = this.tripService.centerField
     this.fromOtherComponent = false;
   }
 
-  getAvailableAccommodationDates(forestCenter: any) {
-    //get forest center fake
-    // this.api.getAvailableSleepingOptionsByDay('').subscribe((dates) => {
-    //   if (dates) {
-    //     console.log('dates', { dates });
-
-    //     // if (this.tripService.centerField) {
-    //     //  // this.forestCenterId = this.tripService.centerField.id;
-    //     //   this.forestCenter = this.tripService.centerField;
-    //     //   this.sleepingDates = this.tripService.sleepingDates;
-    //     // }
-    //   } else {
-    //     console.log('no data in dates');
-    //   }
-    // },
-    //   error => {
-    //     console.log({ error });
-    //   });
-  }
 
   changeDatesHandler(newDates: string) {
     console.log('changeDatesHandler: newDates : ' + newDates);
     console.log('sleepingOptionsByDay : ', this.sleepingOptionsByDay);
 
-    console.log(this.tripService);
-
-
-    this.getAvailableFacilities();
+   // console.log(this.tripService);
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    if (newDates && !newDates.includes('-')) return;
+    if (newDates && !newDates.includes('-')) {
+      return;
+    }
     const dates = newDates.split('-');
+    this.getAvailableFacilities();
 
     let date1 = new Date(dates[0]);
     let date2 = new Date(dates[1]);
