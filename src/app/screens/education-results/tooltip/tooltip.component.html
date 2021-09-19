@@ -16,8 +16,6 @@
     </div>
   </div>
 
-  <!-- fix add hours from service -->
-
   <div class="tooltip__occupied-hours-bar">
     <span class="tooltip__occupied-hours-bar-slot" *ngFor="let item of occupiedHoursArray" [ngClass]="{'background-green':item.customerName =='none',
       'background-grey':(item.customerName !=='none' && item.customerName !== username), 
