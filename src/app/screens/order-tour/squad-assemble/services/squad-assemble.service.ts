@@ -18,6 +18,7 @@ export class SquadAssembleService {
   freeSpacesArray: FreeSpace[] = [];
   tripInfo: TripInfo = {}
   formsArray: FormGroup[] = [];
+  filledNightsArray :[];
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
@@ -81,6 +82,7 @@ export class SquadAssembleService {
     );
   }
 
+  //public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
   public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tripDescription',
@@ -101,6 +103,7 @@ export class SquadAssembleService {
         options: this.tripService.fieldForestCenters,
         labelSize: 's3',
       },
+      value: this.tripService.centerField.id.toString(),
       validations: [Validators.required],
     }),
     // 
@@ -123,7 +126,6 @@ export class SquadAssembleService {
     new QuestionCalendar({
       key: 'tripStart',
       label: 'תאריך התחלה',
-      value: null,
       rows: 4,
       validations: [Validators.required],
       inputProps: {
@@ -134,8 +136,8 @@ export class SquadAssembleService {
     new QuestionCalendar({
       key: 'tripEnding',
       label: 'תאריך סיום',
-      value: null,
       rows: 4,
+      value: new Date(this.tripService.sleepingDates.till),
       validations: [Validators.required],
       inputProps: {
         labelSize: 's3',
@@ -469,5 +471,10 @@ export class SquadAssembleService {
     }
 
     console.log(this.formsArray);
+  }
+
+  savefilledNightsArray(array){
+    this.filledNightsArray= array;
+    console.log('I am service: ',this.filledNightsArray);
   }
 }

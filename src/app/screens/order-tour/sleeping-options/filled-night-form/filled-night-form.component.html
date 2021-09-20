@@ -1,19 +1,10 @@
 <form
+  class="form"
   [dir]="'rtl'"
   (ngSubmit)="onSubmit()"
   [formGroup]="filledNightForm"
 >
-<div formArrayName="filledUnits">
-  <div *ngFor="let unit of filledNightForm.get('filledUnits')['controls']; let i=index">
-   <div [formGroupName]="i">
-     <div  fxLayout="row"
-     fxLayout.xs="column"
-     fxLayoutWrap
-     fxLayoutGap="1%"
-     >
-  <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%"  >
-  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
-   <mat-form-field appearance="outline" >
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>סוג לינה</mat-label>
     <mat-select name="accomodationTypeId" formControlName="accomodationTypeId">
       <mat-option
@@ -23,18 +14,15 @@
       >
     </mat-select>
   </mat-form-field>
- </div>
- <div style="display:none">
-  <input
-  matInput
-  type="text"
-  name="accomodationTypeName"
-  formControlName="accomodationTypeName"
-/>
-</div>
- <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%"  >
-  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
-    <mat-form-field appearance="outline" >
+  <div style="display: none;">
+    <input
+    matInput
+    type="text"
+    name="accomodationTypeName"
+    formControlName="accomodationTypeName"
+  />
+  </div>
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>בחר לילות</mat-label>
     <mat-select name="date" formControlName="date">
       <!-- <mat-option *ngFor="let option of nightNumberOptions; let i =index" [value]="{option.value"}>
@@ -48,11 +36,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
- </div>
- 
- <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="25%"  >
-  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }"> -->
-    <mat-form-field appearance="outline" >
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>שריין עבור</mat-label>
     <mat-select
       (selectionChange)="saveForChangeHandler($event.value)"
@@ -66,19 +50,16 @@
       >
     </mat-select>
   </mat-form-field> 
-</div>
-<div style="display:none">
-  <input
-  matInput
-  type="text"
-  name="participantName"
-  formControlName="participantName"
-/>
-</div>
- <div fxFlex="15%" fxFlex.xs="100%" fxFlex.sm="25%"  > 
-   <!-- <div [ngStyle]="{ 'grid-column': 'span 2' }"> -->
-    <!-- <mat-form-field appearance="outline" class="width-auto" [ngStyle]="{ 'width': 'auto !importent' }"> -->
-     <mat-form-field appearance="outline" >
+  <div style="display: none;">
+    <input
+    matInput
+    type="text"
+    name="participantName"
+    formControlName="participantName"
+  />
+  </div>
+  <div [ngStyle]="{ 'grid-column': 'span 2' }">
+    <mat-form-field appearance="outline" class="width-auto" [ngStyle]="{ 'width': 'auto !importent' }">
       <mat-label>מס לנים</mat-label> 
       <input
         matInput
@@ -91,27 +72,17 @@
       מתוך {{ totalAmount }} {{ saveForValue }}
     </div>
   </div>
-  <div fxFlex="15%" fxFlex.xs="100%" fxFlex.sm="25%"  > 
-  <!-- <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 2' }"> -->
-    <mat-form-field appearance="outline" >
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 2' }">
     <mat-label>כמות</mat-label>
     <input matInput type="number" name="unitsNumber" formControlName="unitsNumber" />
   </mat-form-field>
-  </div>
-  </div>
-  </div>
- </div>
-</div>
+  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
+    <mat-label>הערות</mat-label>
+    <textarea matInput name="comments" formControlName="comments"></textarea>
+  </mat-form-field>
   <div class="btn__container">
-    <button [disabled]="!filledNightForm.valid" class="btn" (click)="addRow()">
-      הוסף
-    </button>
-    <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
-      <mat-label>הערות</mat-label>
-      <textarea matInput name="comments" formControlName="comments"></textarea>
-    </mat-form-field>
     <button [disabled]="!filledNightForm.valid" class="btn" type="submit">
-      הזמן טיול
+      הוסף
     </button>
   </div>
 </form>

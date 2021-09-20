@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm, Validators } from '@angular/forms';
 import { FormContainerComponent } from 'src/app/components/form/form-container/form-container.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { LodgingReservation, TripInfo, UserService } from 'src/app/open-api';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
+import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.service';
 
 export interface formGroupGrid {
   title: string;
@@ -20,23 +22,35 @@ export interface formGroupGrid {
 export class SleepingOptionsComponent implements OnInit {
   @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
 
- 
+  // accomodationTypeId: new FormControl(null, [Validators.required]),
+  // date: new FormControl(null, [Validators.required]),
+  // participantId: new FormControl(null, [Validators.required]),
+  // lodgersNumber: new FormControl(null, [Validators.required]),
+  // amount: new FormControl(null, [Validators.required]),
+  // unitsNumber: new FormControl(null, [Validators.required]),
+  //  comments: new FormControl(null, [Validators.required]),
   public indexToPatch: number = -1;
+  tripInfo: TripInfo;
+  filledNightsArray1 :LodgingReservation[]=[];
   filledNightsArray: {
-    sleepingPlace: string;
-    nightsCount: string;
-    saveFor: string;
-    peopleCount: string;
-    amount: string;
-    comments: string;
+    accomodationTypeId: number,
+    accomodationTypeName: string,
+    date: string,
+    participantId: number,
+    participantName: string,
+    lodgersNumber: number,
+    unitsNumber: number,
+    comments: string,
   }[] = [
     {
-      amount: '3',
+      unitsNumber: 3,
       comments: 'הערה חדשה',
-      nightsCount: 'לילה 1',
-      peopleCount: '3',
-      saveFor: 'מבוגרים',
-      sleepingPlace: 'גיחה',
+      date: 'לילה 1',
+      lodgersNumber: 3,
+      participantId: 4,
+      accomodationTypeId: 1,
+      accomodationTypeName: 'בקתה',
+      participantName: 'מבוגרים'
     },
   ];
 
@@ -44,7 +58,7 @@ export class SleepingOptionsComponent implements OnInit {
   questions: QuestionBase<string | number>[] = [];
 
   constructor(
-    private checkAvailabilityService: CheckAvailabilityService, private sleepingService: SleepingServiceService) {
+    private checkAvailabilityService: CheckAvailabilityService, private sleepingService: SleepingServiceService, private squadAssembleService:SquadAssembleService ,private userService:UserService ) {
     //this.questions = this.sleepingService.questions;
     //this.changeDatesHandler(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
   }
@@ -54,7 +68,11 @@ export class SleepingOptionsComponent implements OnInit {
       this.filledNightsArray[this.indexToPatch] = form.value;
     } else {
       this.filledNightsArray.push(form.value);
+      this.filledNightsArray1.push(form.value);
+      //console.log(this.filledNightsArray);
     }
+     this.squadAssembleService.savefilledNightsArray(this.filledNightsArray1);
+     console.log('filledNightsArray is: ',this.squadAssembleService.filledNightsArray);
     this.indexToPatch = -1;
     this.filledNightsForm.formGroup.reset();
   }
@@ -68,4 +86,17 @@ export class SleepingOptionsComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+
+   createTrip(){
+    this.tripInfo= this.squadAssembleService.tripInfo;
+    this.tripInfo.lodgingReservation= this.filledNightsArray;
+    
+    this.userService.createTrip(this.tripInfo).subscribe(res=>{
+      console.log(res);
+   },(err)=>{
+     console.log(err);
+   })
+  }
+
 }

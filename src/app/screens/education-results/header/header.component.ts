@@ -9,7 +9,7 @@ import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
-import { AvailableAccomodationDate } from 'src/app/open-api';
+import { AvailableAccomodationDate, FieldForestCenter } from 'src/app/open-api';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
 
   date: string | null = null;
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
-  forestCenter: any | undefined;
+  forestCenter: FieldForestCenter | undefined;
   tripDates: any | undefined;
   forestCenterOptions: any | undefined;
   forestCenterId: number = 1;
@@ -66,7 +66,12 @@ export class HeaderComponent implements OnInit {
     this.forestCenterId = this.tripService.centerField.id;
     this.forestCenter = this.tripService.centerField;
     this.sleepingDates = this.tripService.sleepingDates;
-
+    if (typeof(Storage) !== "undefined") {
+      localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
+      localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
+      localStorage.setItem("forestCenterId",this.forestCenterId.toString() );
+      localStorage.setItem("forestCenterName",this.forestCenter.name );
+    }   
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
 
     //yak del 19-9-21 bug in addDays

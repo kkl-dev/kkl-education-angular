@@ -97,8 +97,20 @@ export class FormInputComponent implements OnInit {
   
   newSleepingPlaceRecived(sleepingPlace:any){
     console.log(sleepingPlace); 
-    
   }
+
+  //adding by itiel
+  setInputValues(){
+    if(true){
+      // localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
+      // localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
+      // localStorage.setItem("forestCenterId",this.forestCenterId.toString() );
+      // localStorage.setItem("forestCenterName",this.forestCenter.name );
+      
+      //let centerfieldId= localStorage.getItem("forestCenterId");
+    }
+  }
+  // end itiel!
 
   // subscription section
   private subscribeToControl() {
@@ -119,7 +131,6 @@ export class FormInputComponent implements OnInit {
 
   public onSelectChange(event:any,c:any,question:any,i:any) {
     console.log(event)
-    
     try{
     if(c.parent.value.attribute){
       this.tripService.getActivityLookupsByAttribute(c.parent.value.attribute,'itiel');

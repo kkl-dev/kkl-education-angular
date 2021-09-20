@@ -22,7 +22,6 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   public nextPage: string = 'education/search'; 
   public prevPage: string = 'education/results';
-  routerLinkContinue = 'education/order-tour/sleeping'
   public currentRoute: string;
   public sleepStatus: boolean;
 

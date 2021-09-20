@@ -1,12 +1,24 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 
+
+      //  accomodationTypeId: new FormControl(null, [Validators.required]),
+      // accomodationTypeName: new FormControl(null, [Validators.required]),
+      // date: new FormControl(null, [Validators.required]),
+      // participantId: new FormControl(null, [Validators.required]),
+      // participantName: new FormControl(null, [Validators.required]),
+      // lodgersNumber: new FormControl(null, [Validators.required]),
+      // unitsNumber: new FormControl(null, [Validators.required]),
+      //  comments: new FormControl(null, [Validators.required]),
+
 export interface FilledNight {
-  sleepingPlace: string;
-  nightsCount: string;
-  saveFor: string;
-  peopleCount: string;
-  amount: string;
+  accomodationTypeId: number;
+  accomodationTypeName: string;
+  date: string;
+  participantName: string;
+  participantId: number;
+  lodgersNumber: number;
+  unitsNumber: number;
   comments: string;
 }
 @Component({

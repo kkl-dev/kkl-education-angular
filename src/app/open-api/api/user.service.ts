@@ -51,6 +51,7 @@ export class UserService {
 
     //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     protected basePath = 'http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
+   
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -193,7 +194,8 @@ export class UserService {
         if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
-
+        //this.configuration.basePath= 'http://localhost:8080/shivek/kkl-education/1.1.0';
+        
         return this.httpClient.post<TripModel>(`${this.configuration.basePath}/createTrip`,
             tripInfo,
             {
