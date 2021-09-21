@@ -1,19 +1,45 @@
+// .filled-night {
+//     margin-top: 10px;
+//   display: flex;
+//   width: 100%;
+//   justify-content: space-around;
+//   direction: rtl;
+//    background-color: #F6F6F6;
+//   &__btn {
+//     background-color: transparent;
+//     cursor: pointer;
+//     padding: 4px;
+//     border: 0;
+//     color: #37c56b;
+//     border-bottom: 1px solid #37c56b;
+//     &:first-of-type {
+//       margin-left: 5px;
+//     }
+//   }
+// }
 .filled-night {
-    margin-top: 10px;
   display: flex;
-  width: 100%;
-  justify-content: space-around;
+  min-height: 50px;
   direction: rtl;
-   background-color: #F6F6F6;
-  &__btn {
-    background-color: transparent;
-    cursor: pointer;
-    padding: 4px;
-    border: 0;
-    color: #37c56b;
-    border-bottom: 1px solid #37c56b;
-    &:first-of-type {
-      margin-left: 5px;
-    }
+  background: #F6F6F6;
+  border-radius: 6px;
+  margin: 10px;
+  div {
+    flex-grow: 1;
+    max-width: 30%;
+    flex-basis: 0;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .date {
+    color: #448ECD;
+    font-weight: 600;
+  }
+  .controllers > p {
+    margin: 0;
+    text-decoration: underline;
+    color: #448ECD;
   }
 }

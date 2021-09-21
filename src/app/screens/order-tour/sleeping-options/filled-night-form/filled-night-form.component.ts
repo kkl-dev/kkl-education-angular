@@ -40,6 +40,7 @@ export class FilledNightFormComponent implements OnInit {
       sleepingAmount: new FormControl(null, [Validators.required]),
       amount: new FormControl(null, [Validators.required]),
       comments: new FormControl(null, [Validators.required]),
+      date: new FormControl(null)
     });
   }
 
@@ -47,11 +48,12 @@ export class FilledNightFormComponent implements OnInit {
     this.saveForValue = this.saveForOptions.filter(
       (item) => item.value === this.filledNightForm.value.saveFor
     )[0].text;
-    console.log(this.saveForValue);
   }
 
   onSubmit() {
+    this.updateNightCount();
     this.emitFormValues.emit(this.filledNightForm);
+    console.log(this.filledNightForm.value)
     this.filledNightForm.reset();
   }
   public selectAllOptions(): void {
