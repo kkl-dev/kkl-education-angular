@@ -28,137 +28,137 @@ export class SleepingOptionsComponent implements OnInit {
       singleUnit: string;
     }[];
   }[] = [
-    {
-      day: '15.6.21',
-      options: [
-        {
-          svgUrl: 'assets/images/cabin.svg',
-          sleepingAreas: 2,
-          avialableSpaces: 16,
-          type: 'בקתות',
-          singleUnit: 'בבקתה',
-        },
-        {
-          svgUrl: 'assets/images/tent.svg',
-          sleepingAreas: 4,
-          avialableSpaces: 6,
-          type: 'אוהלים',
-          singleUnit: 'באוהל',
-        },
-        {
-          svgUrl: 'assets/images/camp.svg',
-          sleepingAreas: 1,
-          avialableSpaces: 1670,
-          type: 'גיחה',
-          singleUnit: 'לנים',
-        },
-      ],
-    },
-    {
-      day: '16.6.21',
-      options: [
-        {
-          svgUrl: 'assets/images/cabin.svg',
-          sleepingAreas: 2,
-          avialableSpaces: 16,
-          type: 'בקתות',
-          singleUnit: 'בבקתה',
-        },
-        {
-          svgUrl: 'assets/images/tent.svg',
-          sleepingAreas: 4,
-          avialableSpaces: 36,
-          type: 'אוהלים',
-          singleUnit: 'באוהל',
-        },
-        {
-          svgUrl: 'assets/images/camp.svg',
-          sleepingAreas: 1,
-          avialableSpaces: 670,
-          type: 'גיחה',
-          singleUnit: 'לנים',
-        },
-      ],
-    },
-    {
-      day: '17.6.21',
-      options: [
-        {
-          svgUrl: 'assets/images/cabin.svg',
-          sleepingAreas: 2,
-          avialableSpaces: 46,
-          type: 'בקתות',
-          singleUnit: 'בבקתה',
-        },
-        {
-          svgUrl: 'assets/images/tent.svg',
-          sleepingAreas: 4,
-          avialableSpaces: 32,
-          type: 'אוהלים',
-          singleUnit: 'באוהל',
-        },
-        {
-          svgUrl: 'assets/images/camp.svg',
-          sleepingAreas: 1,
-          avialableSpaces: 10,
-          type: 'גיחה',
-          singleUnit: 'לנים',
-        },
-      ],
-    },
-    {
-      day: '18.6.21',
-      options: [
-        {
-          svgUrl: 'assets/images/cabin.svg',
-          sleepingAreas: 2,
-          avialableSpaces: 16,
-          type: 'בקתות',
-          singleUnit: 'בבקתה',
-        },
-        {
-          svgUrl: 'assets/images/tent.svg',
-          sleepingAreas: 4,
-          avialableSpaces: 36,
-          type: 'אוהלים',
-          singleUnit: 'באוהל',
-        },
-        {
-          svgUrl: 'assets/images/camp.svg',
-          sleepingAreas: 1,
-          avialableSpaces: 120,
-          type: 'גיחה',
-          singleUnit: 'לנים',
-        },
-      ],
-    },
-    {
-      day: '19.6.21',
-      options: [
-        {
-          svgUrl: 'assets/images/cabin.svg',
-          sleepingAreas: 2,
-          avialableSpaces: 16,
-          type: 'בקתות',
-          singleUnit: 'בבקתה',
-        },
-        {
-          svgUrl: 'assets/images/tent.svg',
-          sleepingAreas: 4,
-          avialableSpaces: 36,
-          type: 'אוהלים',
-          singleUnit: 'באוהל',
-        },
-        {
-          svgUrl: 'assets/images/camp.svg',
-          sleepingAreas: 1,
-          avialableSpaces: 120,
-          type: 'גיחה',
-          singleUnit: 'לנים',
-        },
-      ],
-    },
-  ];
+      {
+        day: '15.6.21',
+        options: [
+          {
+            svgUrl: 'assets/images/cabin.svg',
+            sleepingAreas: 2,
+            avialableSpaces: 16,
+            type: 'בקתות',
+            singleUnit: 'בבקתה',
+          },
+          {
+            svgUrl: 'assets/images/tent.svg',
+            sleepingAreas: 4,
+            avialableSpaces: 6,
+            type: 'אוהלים',
+            singleUnit: 'באוהל',
+          },
+          {
+            svgUrl: 'assets/images/camp.svg',
+            sleepingAreas: 1,
+            avialableSpaces: 1670,
+            type: 'גיחה',
+            singleUnit: 'לנים',
+          },
+        ],
+      },
+      {
+        day: '16.6.21',
+        options: [
+          {
+            svgUrl: 'assets/images/cabin.svg',
+            sleepingAreas: 2,
+            avialableSpaces: 16,
+            type: 'בקתות',
+            singleUnit: 'בבקתה',
+          },
+          {
+            svgUrl: 'assets/images/tent.svg',
+            sleepingAreas: 4,
+            avialableSpaces: 36,
+            type: 'אוהלים',
+            singleUnit: 'באוהל',
+          },
+          {
+            svgUrl: 'assets/images/camp.svg',
+            sleepingAreas: 1,
+            avialableSpaces: 670,
+            type: 'גיחה',
+            singleUnit: 'לנים',
+          },
+        ],
+      },
+      {
+        day: '17.6.21',
+        options: [
+          {
+            svgUrl: 'assets/images/cabin.svg',
+            sleepingAreas: 2,
+            avialableSpaces: 46,
+            type: 'בקתות',
+            singleUnit: 'בבקתה',
+          },
+          {
+            svgUrl: 'assets/images/tent.svg',
+            sleepingAreas: 4,
+            avialableSpaces: 32,
+            type: 'אוהלים',
+            singleUnit: 'באוהל',
+          },
+          {
+            svgUrl: 'assets/images/camp.svg',
+            sleepingAreas: 1,
+            avialableSpaces: 10,
+            type: 'גיחה',
+            singleUnit: 'לנים',
+          },
+        ],
+      },
+      {
+        day: '18.6.21',
+        options: [
+          {
+            svgUrl: 'assets/images/cabin.svg',
+            sleepingAreas: 2,
+            avialableSpaces: 16,
+            type: 'בקתות',
+            singleUnit: 'בבקתה',
+          },
+          {
+            svgUrl: 'assets/images/tent.svg',
+            sleepingAreas: 4,
+            avialableSpaces: 36,
+            type: 'אוהלים',
+            singleUnit: 'באוהל',
+          },
+          {
+            svgUrl: 'assets/images/camp.svg',
+            sleepingAreas: 1,
+            avialableSpaces: 120,
+            type: 'גיחה',
+            singleUnit: 'לנים',
+          },
+        ],
+      },
+      {
+        day: '19.6.21',
+        options: [
+          {
+            svgUrl: 'assets/images/cabin.svg',
+            sleepingAreas: 2,
+            avialableSpaces: 16,
+            type: 'בקתות',
+            singleUnit: 'בבקתה',
+          },
+          {
+            svgUrl: 'assets/images/tent.svg',
+            sleepingAreas: 4,
+            avialableSpaces: 36,
+            type: 'אוהלים',
+            singleUnit: 'באוהל',
+          },
+          {
+            svgUrl: 'assets/images/camp.svg',
+            sleepingAreas: 1,
+            avialableSpaces: 120,
+            type: 'גיחה',
+            singleUnit: 'לנים',
+          },
+        ],
+      },
+    ];
   @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
   public indexToPatch: number = -1;
   filledNightsArray: {
@@ -168,16 +168,18 @@ export class SleepingOptionsComponent implements OnInit {
     peopleCount: string;
     amount: string;
     comments: string;
+    date: string | Date;
   }[] = [
-    {
-      amount: '3',
-      comments: 'הערה חדשה',
-      nightsCount: 'לילה 1',
-      peopleCount: '3',
-      saveFor: 'מבוגרים',
-      sleepingPlace: 'גיחה',
-    },
-  ];
+      {
+        amount: '3',
+        comments: 'הערה חדשה',
+        nightsCount: 'לילה 1',
+        peopleCount: '3',
+        saveFor: 'מבוגרים',
+        sleepingPlace: 'גיחה',
+        date: '17/2/21'
+      },
+    ];
 
   formCols: number = 12;
   questions: QuestionBase<string | number>[] = [];
@@ -206,9 +208,8 @@ export class SleepingOptionsComponent implements OnInit {
     let newDate = new Date(date1.setDate(date1.getDate()));
     for (let i = 0; i <= totalDays; i++) {
       //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
-      const newDateString = `${newDate.getDate()}.${
-        newDate.getMonth() + 1
-      }.${newDate.getFullYear()}`;
+      const newDateString = `${newDate.getDate()}.${newDate.getMonth() + 1
+        }.${newDate.getFullYear()}`;
       newSleepingOptionsByDay.push({
         day: newDateString,
         options: [
@@ -249,8 +250,10 @@ export class SleepingOptionsComponent implements OnInit {
       this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
     );
   }
+  public currentDate: any;
 
-  addFilledNight(form) {
+  addFilledNight(form: FormGroup) {
+    form.controls.date.setValue(this.currentDate.day);
     if (this.indexToPatch > -1) {
       this.filledNightsArray[this.indexToPatch] = form.value;
     } else {
@@ -267,8 +270,8 @@ export class SleepingOptionsComponent implements OnInit {
     this.filledNightsForm.formGroup.patchValue(form);
     this.indexToPatch = index;
   }
-  public getCurrentDate(event):void {
-  console.log(event)
+  public getCurrentDate(event): void {
+    this.currentDate = event;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

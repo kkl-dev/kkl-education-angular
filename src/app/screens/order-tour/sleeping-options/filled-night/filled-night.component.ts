@@ -8,6 +8,7 @@ export interface FilledNight {
   peopleCount: string;
   amount: string;
   comments: string;
+  date:string | Date;
 }
 @Component({
   selector: 'app-filled-night',
@@ -28,8 +29,6 @@ export class FilledNightComponent implements OnInit {
   }
 
   emitEditFilledNight(filledNight: FilledNight): void {
-    console.log(filledNight);
-     
     this.editFilledNight.emit(filledNight);
   } 
 

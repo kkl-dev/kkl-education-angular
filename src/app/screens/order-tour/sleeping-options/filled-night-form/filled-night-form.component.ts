@@ -40,6 +40,7 @@ export class FilledNightFormComponent implements OnInit {
       sleepingAmount: new FormControl(null, [Validators.required]),
       amount: new FormControl(null, [Validators.required]),
       comments: new FormControl(null, [Validators.required]),
+      date: new FormControl(null)
     });
   }
 
