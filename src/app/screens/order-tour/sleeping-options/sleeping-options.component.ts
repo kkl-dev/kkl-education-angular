@@ -267,6 +267,8 @@ export class SleepingOptionsComponent implements OnInit {
     this.filledNightsForm.formGroup.patchValue(form);
     this.indexToPatch = index;
   }
-
+  public getCurrentDate(event):void {
+  console.log(event)
+  }
   ngOnInit(): void {}
 }
