@@ -1,25 +1,10 @@
-<div class="working-steps" id="working-steps">
-  <div
-    class="working-steps__step"
-    *ngFor="let step of steps; let i = index"
-    (click)="onStepClick({ path: step.path, index: i })"
-  >
-    <div
-      class="working-steps__step-icon"
-      [ngClass]="{ active: activeStep == i }"
-    >
-      <app-icon
-        [isActive]="activeStep == i"
-        [type]="step.iconType || 'svg'"
-        [key]="step.svgUrl"
-      ></app-icon>
+<div fxLayout="row" class="steps-container" fxLayoutAlign="center center">
+  <div *ngFor="let step of steps; let i = index" fxLayout="row">
+    <div [appSize] [size]="size" (click)="onStepClick(i)">
+      <app-icon-card [step]="step" [variant]="variant" (onClick)="onCardClick(step)"></app-icon-card>
     </div>
-    <div
-      class="working-steps__step-text"
-      [ngClass]="{ chosen__text: activeStep == i }"
-    >
-      {{ step.text }}
+    <div class="backstroke-container" fxLayout="column" fxLayoutAlign="center center">
+      <div class="backstroke" *ngIf="divider && i !== (steps.length -1)"></div>
     </div>
   </div>
-  <div class="working-steps__backstroke"></div>
 </div>

@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./typography.component.scss'],
 })
 export class TypographyComponent implements OnInit {
+  
   @Input() color: string;
   @Input() size: number | string;
   @Input() bold: number | string;

@@ -1,5 +1,5 @@
-import { TableCellModel} from './../../../utilities/models/TableCell';
 import { Component, Input, OnInit } from '@angular/core';
+import { TableCellModel} from './../../../utilities/models/TableCell';
 
 @Component({
   selector: 'app-flex-row',

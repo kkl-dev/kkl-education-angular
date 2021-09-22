@@ -1,0 +1,15 @@
+<div fxFill fxLayout="row" fxLayoutAlign="start center">
+  <app-typography [size]="size" class="label-text" *ngIf="label" [bold]="600">
+    {{ label }}:
+  </app-typography>
+
+  <ng-container [ngSwitch]="type">
+    <app-typography [size]="size" *ngSwitchCase="'date'">
+      {{ value | date: "M/d/yy" }}
+    </app-typography>
+
+    <app-typography [size]="size" *ngSwitchDefault [bold]="bold">
+      {{ value }}
+    </app-typography>
+  </ng-container>
+</div>

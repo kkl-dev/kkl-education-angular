@@ -79,7 +79,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatCardModule,
     MatExpansionModule,
     FlexLayoutModule,
-    MatDividerModule
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule
+
   ],
 })
 export class MaterialModule {}

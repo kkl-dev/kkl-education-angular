@@ -104,7 +104,7 @@ $icon: (
 
 $primary: mat.define-palette($primary, 500);
 $accent: mat.define-palette($accent, 500, A100, A400);
-$warn: mat.define-palette($icon, 200);
+$warn: mat.define-palette((mat.$red-palette));
 
 $theme: mat.define-light-theme(
   (
@@ -115,6 +115,5 @@ $theme: mat.define-light-theme(
     ),
   )
 );
-
 
 @include mat.all-component-themes($theme);

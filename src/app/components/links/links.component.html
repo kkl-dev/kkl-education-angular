@@ -9,7 +9,7 @@
     ראשי
   </div>
   <mat-list class="list" role="list" *ngFor="let link of links; let i = index">
-    <mat-list-item
+    <!-- <mat-list-item
       class="list__headline"
       [ngClass]="{
         'headline-education': prefix === 'education',
@@ -18,7 +18,7 @@
       role="listitem"
     >
       {{ link.headline }}</mat-list-item
-    >
+    > -->
     <mat-list-item
       role="listitem"
       *ngFor="let item of link.links; let j = index"
@@ -43,7 +43,15 @@
           class="list-icon"
           src="assets/images/right-arrow.svg"
         ></svg-icon>
-        {{ item }}
+        <a
+          class="item__list-link"
+          [ngClass]="{
+            'sign-out-education': prefix === 'education',
+            'sign-out-forestry': prefix === 'forestry'
+          }" 
+          routerLink="{{ link.url }}"
+          ><span class="item__list-link-text"> {{ item }}</span></a
+        >
       </div>
     </mat-list-item>
   </mat-list>

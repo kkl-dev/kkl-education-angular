@@ -1,0 +1,13 @@
+<div class="nav-container">
+  <div fxLayout="column" fxLayoutGap="40px">
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="80px">
+      <app-typography [bold]="600" [size]="24">
+        {{ title }}
+      </app-typography>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
+      <app-working-steps variant="square" [divider]="false" [steps]="steps" (changStep)="onChangeStep($event)">
+      </app-working-steps>
+    </div>
+  </div>
+</div>

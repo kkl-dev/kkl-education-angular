@@ -14,8 +14,8 @@
             <thead>
                 <tr>
                     <ng-container *ngFor='let item of tableTitles'>
-                        <th *ngIf='item.name'>{{item.name}}</th>
-                        <th *ngIf='item.icon'>
+                        <th *ngIf='item.name' [ngStyle]="{width: item.width ? item.width : '200px'}">{{item.name}}</th>
+                        <th *ngIf='item.icon' [ngStyle]="{width:'auto'}">
                             <svg-icon [src]="'assets/images/' + item.icon"></svg-icon>
                         </th>
                     </ng-container>
@@ -40,7 +40,7 @@
                             <td>{{e.date}}</td>
                             <td>{{e.supplier}}</td>
                             <td>{{e.item}}</td>
-                            <td>{{e.comments}}</td>
+                            <td [ngStyle]="{color : e.customerOrder ? 'red' : '#707070'}">{{e.comments}}</td>
                             <td>{{e.amount}}</td>
                             <td>{{e.price | currency:'₪'}}</td>
                             <td>{{e.supplierCharge | currency:'₪'}}</td>

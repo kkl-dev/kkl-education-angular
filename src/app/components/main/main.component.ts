@@ -1,9 +1,8 @@
-import { UserDataService } from './../../utilities/services/user-data.service';
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { IconCardModel } from 'src/app/utilities/models/IconCardModel';
+import { StepModel } from 'src/app/utilities/models/step.model';
 import { RouteService } from 'src/app/utilities/services/route.service';
 
 @Component({
@@ -19,19 +18,19 @@ export class MainComponent implements OnInit {
 
 
 
-  public status: IconCardModel[] = [
+  public status: StepModel[] = [
     {
-      title: 'בתהליך',
+      label: 'בתהליך',
       svgUrl: 'reload',
       badgeValue: 3,
     },
     {
-      title: 'מחכה לאישור',
+      label: 'מחכה לאישור',
       svgUrl: 'report',
       badgeValue: 1,
     },
     {
-      title: 'סגור',
+      label: 'סגור',
       svgUrl: 'flag',
       badgeValue: 20,
     },

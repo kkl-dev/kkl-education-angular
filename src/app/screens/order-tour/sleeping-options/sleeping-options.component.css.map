@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,iBAAiB,CAAA;EACb,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,eAAe;CACzB",
-    "sources": [
-        "sleeping-options.component.scss"
-    ],
-    "names": [],
-    "file": "sleeping-options.component.css"
-}

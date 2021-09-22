@@ -7,20 +7,23 @@
           [ngModelOptions]="{ standalone: true }"
           #select
           class="header__form-group-select"
-          [(ngModel)]="location"
+          [(ngModel)]="forestCenterId"
+          name="forestCenterId"
+          (ngModelChange)="updateForestCenter($event)"
         >
           <mat-option
-            value="{{ option.value }}"
-            *ngFor="let option of formOptions"
+            *ngFor="let option of forestCenterOptions"
+            [value]="option.id"
           >
             <span class="header__select-option">
-              <span class="header__select-option-text">{{ option.text }}</span>
-              <img [src]="option.imgSrc" class="header__select-option-svg" />
+              <span class="header__select-option-text">{{ option.name }}</span>
+              <img [src]="option.iconPath" class="header__select-option-svg" />
             </span>
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
+
     <div class="header__form-group">
       <label class="header__form-group-label">מתאריך</label>
       <svg-icon
@@ -31,6 +34,9 @@
         <input
           class="header__form-group-input"
           airbnb-calendar
+          (newDate)="newDateRecived($event)"
+          (sleepingPlace)="newSleepingPlaceRecived($event)"
+          (prevDate)="prevDateRecived($event)"
           type="text"
           [(ngModel)]="date"
           [options]="options"
@@ -43,6 +49,7 @@
         >
       </label>
     </div>
+
     <div class="header__form-group">
       <label class="header__form-group-label">עד תאריך</label>
       <svg-icon

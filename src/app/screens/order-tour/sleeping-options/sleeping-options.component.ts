@@ -168,6 +168,7 @@ export class SleepingOptionsComponent implements OnInit {
     peopleCount: string;
     amount: string;
     comments: string;
+    date: string | Date;
   }[] = [
     {
       amount: '3',
@@ -176,6 +177,7 @@ export class SleepingOptionsComponent implements OnInit {
       peopleCount: '3',
       saveFor: 'מבוגרים',
       sleepingPlace: 'גיחה',
+      date: '17/2/21',
     },
   ];
 
@@ -186,10 +188,16 @@ export class SleepingOptionsComponent implements OnInit {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
     if (newDates && !newDates.includes('-')) return;
-
     const dates = newDates.split('-');
-    let date1 = new Date(dates[0]);
-    let date2 = new Date(dates[1]);
+    const dateFormat1 = dates[0].split('/').reverse();
+    dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+    dateFormat1[2] = (+dateFormat1[2]).toString();
+    const dateFormat2 = dates[1].split('/').reverse();
+    dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+    dateFormat2[2] = (+dateFormat2[2]).toString();
+    let date1 = new Date(dateFormat1.join(','));
+    let date2 = new Date(dateFormat2.join(','));
+
     const utc1 = Date.UTC(
       date1.getFullYear(),
       date1.getMonth(),
@@ -207,7 +215,7 @@ export class SleepingOptionsComponent implements OnInit {
     for (let i = 0; i <= totalDays; i++) {
       //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
       const newDateString = `${newDate.getDate()}.${
-        newDate.getMonth() + 1
+        newDate.getMonth() + 2
       }.${newDate.getFullYear()}`;
       newSleepingOptionsByDay.push({
         day: newDateString,
@@ -249,8 +257,10 @@ export class SleepingOptionsComponent implements OnInit {
       this.checkAvailabilityService.checkAvailabilltyValues.calendarInput
     );
   }
+  public currentDate: any;
 
-  addFilledNight(form) {
+  addFilledNight(form: FormGroup) {
+    form.controls.date.setValue(this.currentDate.day);
     if (this.indexToPatch > -1) {
       this.filledNightsArray[this.indexToPatch] = form.value;
     } else {
@@ -267,6 +277,8 @@ export class SleepingOptionsComponent implements OnInit {
     this.filledNightsForm.formGroup.patchValue(form);
     this.indexToPatch = index;
   }
-
+  public getCurrentDate(event): void {
+    this.currentDate = event;
+  }
   ngOnInit(): void {}
 }

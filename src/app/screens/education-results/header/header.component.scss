@@ -2,14 +2,14 @@
 
 .header {
   height: 118px;
-  max-width:100%;
+  max-width: 100%;
   background: linear-gradient(
     0deg,
     rgba(255, 255, 255, 1) 0%,
     rgba(239, 239, 239, 1) 100%
   );
   display: flex;
-  
+
   &__select-option {
     display: flex;
     height: 100%;
@@ -31,6 +31,8 @@
     &-svg {
       margin-left: 10px;
       border-radius: 100px;
+      width: 50px;
+      height: 50px;
     }
     &-text {
       align-self: center;
@@ -43,12 +45,11 @@
     margin-top: 25px;
     justify-content: space-evenly;
     display: flex;
-    gap:20px;
+    gap: 20px;
     direction: rtl;
     width: 80%;
     padding: 0 10px;
 
-  
     &-group {
       align-items: flex-start;
       flex: 30%;
@@ -57,7 +58,6 @@
       position: relative;
       justify-content: space-evenly;
 
-    
       &:not(:last-child) {
         margin-left: 10px;
       }
@@ -75,7 +75,7 @@
         background-color: #ffffff;
         cursor: pointer;
         position: relative;
-        &-value{
+        &-value {
           position: absolute;
           top: 50%;
           right: 5px;
@@ -83,7 +83,7 @@
         }
       }
 
-      &-input { 
+      &-input {
         opacity: 0;
         visibility: none;
         cursor: pointer;
@@ -107,82 +107,128 @@
         transform: translate(40%, -0%);
         position: absolute;
         left: 0;
-        width:20px !important;
+        width: 20px !important;
         z-index: 10000;
-        height:20px !important;
+        height: 20px !important;
 
-        &  * {
+        & * {
           fill: #66a3d6 !important;
-          width:20px !important;
-          height:20px !important;
+          width: 20px !important;
+          height: 20px !important;
         }
       }
+
     }
   }
 }
 
+.header {
+  // ::ng-deep .mat-select-value,
+  // ::ng-deep .mat-select-value-text,
+  // ::ng-deep .mat-select-min-line {
+  //   height: 51px !important;
+  //   vertical-align: middle;
+  //   padding-right: 5px;
+  // }
 
-::ng-deep .mat-select-value,
-::ng-deep .mat-select-value-text,
-::ng-deep .mat-select-min-line {
-  height: 51px !important;
-  vertical-align: middle;
-  padding-right: 5px;
-}
+  ::ng-deep .mat-select-value-text {
+    margin: auto;
+  }
 
-::ng-deep .mat-select-value-text {
-  margin: auto;
-}
+  ::ng-deep .mat-select-value,
+  ::ng-deep .mat-select-value-text,
+  ::ng-deep .mat-select-min-line {
+    height: 40px !important;
+    padding-right: 5px;
+    margin-top:10px;
+  }
 
-::ng-deep .mat-select-value,
-::ng-deep .mat-select-value-text,
-::ng-deep .mat-select-min-line {
-  height: 40px !important;
-  padding-right: 5px;
-  margin-top:10px;
-}
+  ::ng-deep .mat-select-value-text {
+    margin: auto;
+  }
+  ::ng-deep .mat-select-min-line {
+    height: 40px !important;
+  }
+  ::ng-deep .mat-select-panel {
+    text-align: right;
+    margin-left: auto;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
 
-::ng-deep .mat-select-value-text {
-  margin: auto;
-}
-::ng-deep .mat-select-min-line {
-  height: 40px !important;
+  ::ng-deep .cdk-overlay-pane {
+    text-align: right;
+    transform: translateX(0) !important;
+    transform: translatey(51px) !important;
+  }
+
+  ::ng-deep .mat-select-panel {
+    // min-width: 261px !important;
+    text-align: right;
+    margin-left: auto;
+    width: 100%;
+    max-width: 100% !important;
+    max-height: fit-content !important;
+  }
+
+  ::ng-deep .mat-form-field {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+
+  ::ng-deep .mat-select-arrow {
+    border: 0 !important;
+    &:before {
+      border-style: solid;
+      border-width: 0.15em 0.15em 0 0;
+      content: "";
+      display: inline-block;
+      height: 0.9em;
+      left: 20px;
+      position: relative;
+      top: -10px;
+      transform: rotate(135deg);
+      vertical-align: top;
+      width: 0.9em;
+      color: #66a3d6;
+    }
+  }
+
+  ::ng-deep .mat-form-field-infix,
+  .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0 !important;
+    border-top: 0;
+  }
+
+  ::ng-deep .mat-form-field-wrapper,
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper,
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
+
+  ::ng-deep .mat-select-trigger {
+    vertical-align: middle;
+    height: 100%;
+  }
+
+   ::ng-deep .airbnb-calendar-container {
+    left: -350px !important;
+  }
 }
 
 .mat-select-panel .mat-primary {
   text-align: right;
 }
 
-::ng-deep .mat-select-panel {
-  text-align: right;
-  margin-left: auto;
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
-}
-
-::ng-deep .cdk-overlay-pane {
-  text-align: right;
-  transform: translateX(0) !important;
-  transform: translatey(51px) !important;
-}
-
-::ng-deep .mat-select-panel {
-  // min-width: 261px !important;
-  text-align: right;
-  margin-left: auto;
-  width: 100%;
-  max-width: 100% !important;
-  max-height: fit-content !important;
-}
 .mat-option {
   text-align: right;
   margin: 10px 0;
   min-height: 55px;
-
 }
-
-
 
 mat-select,
 #input {
@@ -194,63 +240,15 @@ mat-select,
   margin-left: 40px;
   border: none !important;
 }
-::ng-deep .mat-form-field {
-  width: 100%;
-}
-
-::ng-deep .mat-form-field-underline {
-  display: none;
-}
-
-::ng-deep .mat-select-arrow {
-  border: 0 !important;
-  &:before {
-    border-style: solid;
-    border-width: 0.15em 0.15em 0 0;
-    content: "";
-    display: inline-block;
-    height: 0.9em;
-    left: 20px;
-    position: relative;
-    top: -10px;
-    transform: rotate(135deg);
-    vertical-align: top;
-    width: 0.9em;
-    color: #66a3d6;
-  }
-}
-
-::ng-deep .mat-form-field-infix,
-.mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0 !important;
-  border-top: 0;
-}
-
-::ng-deep .mat-form-field-wrapper,
-.mat-form-field-appearance-legacy .mat-form-field-wrapper,
-.mat-form-field-appearance-legacy .mat-form-field-wrapper {
-  padding-bottom: 0 !important;
-}
-
-::ng-deep .mat-select-trigger {
-  vertical-align: middle;
-  height: 100%;
-}
-
- ::ng-deep .airbnb-calendar-container {
-  left: -350px !important;
-  background-color: black;
-}
-
-.negative-z-index{
+.negative-z-index {
   z-index: -1;
 }
 
-.label-input{
+.label-input {
   // width: 47px !important;
 }
 
-.headline{
+.headline {
   font-weight: bold;
   font-size: x-larger;
 }
