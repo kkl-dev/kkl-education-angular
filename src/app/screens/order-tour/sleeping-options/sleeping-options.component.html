@@ -2,8 +2,8 @@
   <app-sleeping-options-form
     (emitNewDates)="changeDatesHandler($event)"
   ></app-sleeping-options-form>
-  <app-sleeping-options-by-day [sleepingOptionsByDay]="sleepingOptionsByDay">
-    <h4>זמינות לינה</h4>
+  <app-sleeping-options-by-day [sleepingOptionsByDay]="sleepingOptionsByDay" (currentDate)='getCurrentDate($event)'>
+    <span class="title-span">זמינות לינה</span>
   </app-sleeping-options-by-day>
   <!-- <app-form-container
     #filledNightsForm
@@ -14,7 +14,10 @@
   >
     <button class="form-btn" button>שלח</button>
   </app-form-container> -->
-<h4>שריין לינה</h4>
+  <div class="title">
+    <span class="title-span">שריין לינה</span>
+  </div>
+  <hr>
   <app-filled-night-form
   [totalAmount]="5"
   (emitFormValues)="addFilledNight($event)">

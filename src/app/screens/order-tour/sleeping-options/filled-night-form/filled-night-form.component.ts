@@ -18,10 +18,11 @@ export class FilledNightFormComponent implements OnInit {
   ];
 
   nightNumberOptions = [
-    { value: '1 לילה ', text: 'לילה 1' },
-    { value: '2 לילה ', text: 'לילה 2' },
-    { value: '3 לילה ', text: 'לילה 3' },
+    { value: '1 לילה ', text: 'לילה 1', date: '1/1/21', completed: false },
+    { value: '2 לילה ', text: 'לילה 2', date: '1/1/21', completed: false },
+    { value: '3 לילה ', text: 'לילה 3', date: '1/1/21', completed: false },
   ];
+  public allComplete: boolean = false;
 
   saveForOptions = [
     { value: 'grownUps', text: 'מבוגרים' },
@@ -29,7 +30,7 @@ export class FilledNightFormComponent implements OnInit {
     { value: 'teachers', text: 'מורים' },
   ];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.filledNightForm = new FormGroup({
@@ -39,6 +40,7 @@ export class FilledNightFormComponent implements OnInit {
       sleepingAmount: new FormControl(null, [Validators.required]),
       amount: new FormControl(null, [Validators.required]),
       comments: new FormControl(null, [Validators.required]),
+      date: new FormControl(null)
     });
   }
 
@@ -46,14 +48,30 @@ export class FilledNightFormComponent implements OnInit {
     this.saveForValue = this.saveForOptions.filter(
       (item) => item.value === this.filledNightForm.value.saveFor
     )[0].text;
-    console.log(this.saveForValue);
   }
 
   onSubmit() {
-    console.log(this.filledNightForm.value); 
-    
+    this.updateNightCount();
     this.emitFormValues.emit(this.filledNightForm);
+    console.log(this.filledNightForm.value)
     this.filledNightForm.reset();
+  }
+  public selectAllOptions(): void {
+    if (!this.allComplete) {
+      this.nightNumberOptions.forEach(t => t.completed = true);
+      this.allComplete = true;
+    } else {
+      this.nightNumberOptions.forEach(t => t.completed = false);
+      this.allComplete = false;
+    }
+    this.updateNightCount()
+  }
+  public updateNightCount(): void {
+    this.filledNightForm.controls.nightsCount.setValue(this.filterSelectedOptions())
+  }
+  public filterSelectedOptions() {
+    let tmpArr = this.nightNumberOptions.filter(i => i.completed);
+    return tmpArr.map(i => i.value);
   }
   // onChange(value) {
   //   console.log(value);
