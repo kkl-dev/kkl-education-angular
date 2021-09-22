@@ -7,11 +7,22 @@
     font-weight: 600;
   }
   hr {
-    border: 1px solid #707070;
-    opacity: 0.14;
+    border: 1px solid #0572BA2B;
   }
   .title {
-    margin-top: 20px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #0572BA2B;
+    *{
+      margin: 10px;
+    }
+    .add {
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .chosen{
+      border-bottom: 1px solid #448ECD;
+    }
   }
 }
 

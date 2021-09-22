@@ -2,7 +2,7 @@
   <app-sleeping-options-form
     (emitNewDates)="changeDatesHandler($event)"
   ></app-sleeping-options-form>
-  <app-sleeping-options-by-day [sleepingOptionsByDay]="sleepingOptionsByDay" (currentDate)='getCurrentDate($event)'>
+  <app-sleeping-options-by-day [sleepingOptionsByDay]="sleepingOptionsByDay">
     <span class="title-span">זמינות לינה</span>
   </app-sleeping-options-by-day>
   <!-- <app-form-container
@@ -15,9 +15,12 @@
     <button class="form-btn" button>שלח</button>
   </app-form-container> -->
   <div class="title">
-    <span class="title-span">שריין לינה</span>
+    <span class="title-span" [ngStyle]="!addSleepingNight ? addSleepingNightStyles[0] : addSleepingNightStyles[2]" (click)='addSleepingNightHandler()'
+    >מקומות לינה ששוריינו</span>
+    <span class="title-span add" [ngStyle]="addSleepingNight ? addSleepingNightStyles[1] : null" (click)='addSleepingNightHandler()'
+    >הוספת שיריון חדש</span>
   </div>
-  <hr>
+  <!-- <hr> -->
   <app-filled-night-form
   [totalAmount]="5"
   (emitFormValues)="addFilledNight($event)">
