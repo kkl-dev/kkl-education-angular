@@ -15,7 +15,7 @@
         <mat-checkbox (change)="selectAllOptions()">בחר הכול</mat-checkbox>
       </mat-option>
 
-      <mat-option *ngFor="let option of nightNumberOptions;let index=index" value="{{ option.value }}">
+      <mat-option class="my-select" *ngFor="let option of nightNumberOptions;let index=index" value="{{ option.value }}">
         <mat-checkbox class="example-margin" ngDefaultControl
         [(ngModel)]="nightNumberOptions[index].completed" [ngModelOptions]="{standalone: true}" (change)='updateNightCount()'>
           <div>

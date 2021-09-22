@@ -60,7 +60,6 @@ export class FilledNightComponent implements OnInit {
   public arrangeNightCountForDisplay() {
     let first:any, last:any;
     const arr: any[] = this.filledNight.nightsCount;
-    console.log(arr)
     arr.map(i => {
       let item = i.nightNumber;
       if (!first && !last) {

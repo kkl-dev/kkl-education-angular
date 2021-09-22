@@ -34,13 +34,13 @@ export class FilledNightFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.filledNightForm = new FormGroup({
-      sleepingPlace: new FormControl(null, [Validators.required]),
-      nightsCount: new FormControl(null, [Validators.required]),
-      saveFor: new FormControl(null, [Validators.required]),
-      sleepingAmount: new FormControl(null, [Validators.required]),
-      amount: new FormControl(null, [Validators.required]),
-      comments: new FormControl(null, [Validators.required]),
-      date: new FormControl(null)
+      sleepingPlace: new FormControl(null),
+      nightsCount: new FormControl(null),
+      saveFor: new FormControl(null),
+      sleepingAmount: new FormControl(null),
+      amount: new FormControl(null),
+      comments: new FormControl(null),
+      optionsArr: new FormControl(null)
     });
   }
 
