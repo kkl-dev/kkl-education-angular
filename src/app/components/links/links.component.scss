@@ -1,6 +1,5 @@
 @import "../../../styles.scss";
 
-
 .chosen {
   background-color: #0d916d;
   color: #ffffff;
@@ -9,11 +8,11 @@
   background-color: color(success);
 }
 
-.chosen-education{
+.chosen-education {
   background-color: color(primary);
 }
 
-.chosen-forestry{
+.chosen-forestry {
   background-color: color(success);
 }
 
@@ -27,33 +26,35 @@
   border-top-left-radius: 50px;
 }
 
-.sign-out-education, .title-education, .headline-education{
-color: #009eee !important;
+.sign-out-education,
+.title-education,
+.headline-education {
+  color: #009eee !important;
 }
-.sign-out-forestry, .title-forestry, .headline-forestry{
-  color:  color(success) !important;
-  }
+.sign-out-forestry,
+.title-forestry,
+.headline-forestry {
+  color: color(success) !important;
+}
 
 .links {
   overflow: hidden;
   position: relative;
   height: calc(100% - 100px);
-background: none !important;
-  &__sign-out{
+  background: none !important;
+  &__sign-out {
     position: absolute;
     bottom: 15%;
     right: 25px;
-    color:  color(success);
+    color: color(success);
     text-decoration: none;
   }
 
-
-
-  &-title{
+  &-title {
     margin-right: 10px;
-    color:  color(success);
+    color: color(success);
   }
-  &__bottom-icon{
+  &__bottom-icon {
     position: absolute;
     bottom: -5px;
     // left: ;
@@ -86,7 +87,7 @@ background: none !important;
   margin-left: 5px;
   padding-right: 10px;
 }
-.mat-list{
+.mat-list {
   padding-top: 0;
 }
 ::ng-deep .mat-list-item-content {
@@ -94,12 +95,15 @@ background: none !important;
   margin-right: 0 !important;
 }
 
-.item__list{
+.item__list {
   padding-left: 20px !important ;
-
+  &-link {
+    color: inherit !important;
+    border-bottom: none;
+    text-decoration: none;
+  }
 }
-.item__list-div{
+.item__list-div {
   padding: 5px 0 !important;
   padding-left: 20px !important ;
-
 }

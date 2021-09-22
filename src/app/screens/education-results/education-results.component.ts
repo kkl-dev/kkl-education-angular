@@ -259,8 +259,14 @@ export class EducationResultsComponent implements OnInit {
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
 
-    let date1 = new Date(dates[0]);
-    let date2 = new Date(dates[1]);
+    const dateFormat1 = dates[0].split('/').reverse();
+    dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+    dateFormat1[2] = (+dateFormat1[2]).toString();
+    const dateFormat2 = dates[1].split('/').reverse();
+    dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+    dateFormat2[2] = (+dateFormat2[2]).toString();
+    let date1 = new Date(dateFormat1.join(','));
+    let date2 = new Date(dateFormat2.join(','));
     console.log(date1.getMonth());
     console.log(date1.getDate());
     console.log(date1.getFullYear());
@@ -268,12 +274,12 @@ export class EducationResultsComponent implements OnInit {
     const utc1 = Date.UTC(
       date1.getFullYear(),
       date1.getMonth(),
-      date1.getDate(),
+      date1.getDate()
     );
     const utc2 = Date.UTC(
       date2.getFullYear(),
       date2.getMonth(),
-      date2.getDate(),
+      date2.getDate()
     );
 
     const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
@@ -283,7 +289,7 @@ export class EducationResultsComponent implements OnInit {
     for (let i = 0; i <= totalDays; i++) {
       //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
       const newDateString = `${newDate.getDate()}.${
-        newDate.getMonth() + 1
+        (newDate.getMonth() + 2).toString()
       }.${newDate.getFullYear()}`;
       newSleepingOptionsByDay.push({
         day: newDateString,
