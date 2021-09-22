@@ -19,8 +19,8 @@
         <mat-checkbox class="example-margin" ngDefaultControl
         [(ngModel)]="nightNumberOptions[index].completed" [ngModelOptions]="{standalone: true}" (change)='updateNightCount()'>
           <div>
-            <span>{{option.date}}</span>
-            <span class="checkbox-night-option">{{ option.text}}</span>
+            <span>{{option.date | date:'d/M/yy'}}</span>
+            <span class="checkbox-night-option">לילה {{ option.nightNumber}}</span>
           </div>
         </mat-checkbox>
       </mat-option>

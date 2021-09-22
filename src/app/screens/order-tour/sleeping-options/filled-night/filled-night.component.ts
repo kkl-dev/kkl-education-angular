@@ -19,9 +19,11 @@ export class FilledNightComponent implements OnInit {
   @Input() index: number;
   @Output() deleteFilledNight: EventEmitter<void> = new EventEmitter();
   @Output() editFilledNight: EventEmitter<FilledNight> = new EventEmitter();
+  public nightsCountForDisplay:string;
+  public datesForDisplay:string;
 
-  constructor(private sleepingService:SleepingServiceService) {
-  } 
+  constructor(private sleepingService: SleepingServiceService) {
+  }
 
   emitDeleteFilledNight(): void {
     this.deleteFilledNight.emit();
@@ -29,9 +31,51 @@ export class FilledNightComponent implements OnInit {
 
   emitEditFilledNight(filledNight: FilledNight): void {
     this.editFilledNight.emit(filledNight);
-  } 
+  }
 
   ngOnInit(): void {
-    console.log(this.filledNight)
+    this.nightsCountForDisplay = this.arrangeNightCountForDisplay();
+    this.datesForDisplay = this.arrangeDatesForDisplay();
   }
+
+  public arrangeDatesForDisplay(): string {
+    let low: Date;
+    let hight: Date;
+    const arr: any[] = this.filledNight.nightsCount;
+    arr.map(item => {
+      let day = item.date.getDate();
+      if (!low && !hight) {
+        hight = day;
+        low = day;
+      }
+      if (day < low) {
+        low = day;
+      }
+      if (day > hight) {
+        hight = day;
+      }
+    });
+    return `${low}-${hight}.${arr[0].date.getMonth()}.${arr[0].date.getFullYear()}`;
+  }
+  public arrangeNightCountForDisplay() {
+    let first:any, last:any;
+    const arr: any[] = this.filledNight.nightsCount;
+    console.log(arr)
+    arr.map(i => {
+      let item = i.nightNumber;
+      if (!first && !last) {
+        last = item;
+        first = item;
+      }
+      if (item < first) {
+        first = item;
+      }
+      if (item > last) {
+        last = item;
+      }
+    });
+    return `לילה ${first}-${last}`;
+  }
+
+
 }

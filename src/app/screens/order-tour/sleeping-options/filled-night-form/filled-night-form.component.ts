@@ -18,9 +18,9 @@ export class FilledNightFormComponent implements OnInit {
   ];
 
   nightNumberOptions = [
-    { value: '1 לילה ', text: 'לילה 1', date: '1/1/21', completed: false },
-    { value: '2 לילה ', text: 'לילה 2', date: '1/1/21', completed: false },
-    { value: '3 לילה ', text: 'לילה 3', date: '1/1/21', completed: false },
+    { value: '1 לילה ', nightNumber: 1, date: new Date(2021, 11, 15) , completed: false },
+    { value: '2 לילה ', nightNumber: 2, date: new Date(2021, 11, 16), completed: false },
+    { value: '3 לילה ', nightNumber: 3, date: new Date(2021, 11, 17), completed: false },
   ];
   public allComplete: boolean = false;
 

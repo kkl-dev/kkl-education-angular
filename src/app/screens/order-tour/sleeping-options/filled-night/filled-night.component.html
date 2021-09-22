@@ -1,9 +1,17 @@
 <div class="filled-night">
-  <div class="date" *ngFor='let item of filledNight.nightsCount'>
-    <span>{{item.date}}</span>
-    <span>{{item.text}}</span>
+  <ng-container *ngIf='filledNight.nightsCount.length !== 1'>
+    <div class="date">
+      <span>{{datesForDisplay}}</span>
+      <span>{{nightsCountForDisplay}}</span>
+
+    </div>
+  </ng-container>
+  <div class="date" *ngIf='filledNight.nightsCount.length == 1'>
+    <span>{{filledNight.nightsCount[0].date | date:'d/M/yy'}}</span>
+    <span>לילה {{filledNight.nightsCount[0].nightNumber}}</span>
   </div>
-  <div class="nigths">לילות {{ filledNight.nightsCount.length }}</div>
+  <div class="nigths" *ngIf='filledNight.nightsCount.length !== 1'>{{ filledNight.nightsCount.length }} לילות</div>
+  <div class="nigths" *ngIf='filledNight.nightsCount.length == 1'>לילה {{ filledNight.nightsCount.length }}</div>
   <div class="sleeping-place">{{ filledNight.amount }} {{ filledNight.sleepingPlace }}</div>
   <div class="peoples">{{ filledNight.peopleCount }} {{ filledNight.saveFor }}</div>
   <div class="comments">הערה: {{ filledNight.comments }}</div>
