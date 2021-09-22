@@ -50,6 +50,8 @@ export class FilledNightFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.filledNightForm.value); 
+    
     this.emitFormValues.emit(this.filledNightForm);
     this.filledNightForm.reset();
   }
