@@ -67,10 +67,9 @@ export class HeaderComponent implements OnInit {
     this.forestCenter = this.tripService.centerField;
     this.sleepingDates = this.tripService.sleepingDates;
     if (typeof(Storage) !== "undefined") {
-      localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
-      localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
-      localStorage.setItem("forestCenterId",this.forestCenterId.toString() );
-      localStorage.setItem("forestCenterName",this.forestCenter.name );
+      // localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
+      // localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
+     
     }   
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
 

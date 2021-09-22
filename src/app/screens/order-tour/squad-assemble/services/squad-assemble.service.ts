@@ -103,7 +103,6 @@ export class SquadAssembleService {
         options: this.tripService.fieldForestCenters,
         labelSize: 's3',
       },
-      value: this.tripService.centerField.id.toString(),
       validations: [Validators.required],
     }),
     // 
@@ -125,7 +124,9 @@ export class SquadAssembleService {
     // }),
     new QuestionCalendar({
       key: 'tripStart',
+      type: 'calendar',
       label: 'תאריך התחלה',
+      value: null,
       rows: 4,
       validations: [Validators.required],
       inputProps: {
@@ -135,9 +136,10 @@ export class SquadAssembleService {
 
     new QuestionCalendar({
       key: 'tripEnding',
+      type: 'calendar',
       label: 'תאריך סיום',
+      value: null,
       rows: 4,
-      value: new Date(this.tripService.sleepingDates.till),
       validations: [Validators.required],
       inputProps: {
         labelSize: 's3',

@@ -132,10 +132,15 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[2].get('contact').get('contactEmail').value;
       var ageGroup = this.squadAssemble.formsArray[1].get('ageGroup').value;
       this.squadAssemble.tripInfo.ageGroup = this.tripService.ageGroupOriginal.filter(el => el.id === parseInt(ageGroup))[0];
+      if(this.squadAssemble.formsArray[1].get('numAdultAndYoung').value)
       this.squadAssemble.tripInfo.numAdultAndYoung = +this.squadAssemble.formsArray[1].get('numAdultAndYoung').value;
+      if (this.squadAssemble.formsArray[1].get('numDrivers').value)
       this.squadAssemble.tripInfo.numDrivers = +this.squadAssemble.formsArray[1].get('numDrivers').value;
+      if(this.squadAssemble.formsArray[1].get('numAccompanied').value)
       this.squadAssemble.tripInfo.numAccompanied = +this.squadAssemble.formsArray[1].get('numAccompanied').value;
+      if(this.squadAssemble.formsArray[1].get('numGuides').value)
       this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[1].get('numGuides').value;
+      if(this.squadAssemble.formsArray[1].get('numAccompaniedAndGuide').value)
       this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[1].get('numAccompaniedAndGuide').value;
       this.squadAssemble.tripInfo.commentManager = this.squadAssemble.formsArray[0].get('commentManager').value;
       this.squadAssemble.tripInfo.insideCenterFieldId = parseInt(this.squadAssemble.formsArray[0].get('insideCenterFieldId').value);

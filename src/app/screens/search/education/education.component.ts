@@ -14,6 +14,8 @@ import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from '../../../services/trip.service'
 import { AccommodationType, AvailableAccomodationDate } from 'src/app/open-api';
 import { Router } from '@angular/router';
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-education',
@@ -39,7 +41,7 @@ export class EducationComponent implements OnInit {
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[] = [];
 
-  constructor(public usersService: UserService, private router: Router, public tripService: TripService,
+  constructor(public usersService: UserService, private router: Router,private _dialog: MatDialog, public tripService: TripService,
     private checkAvailabilltyService: CheckAvailabilityService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
@@ -225,7 +227,13 @@ export class EducationComponent implements OnInit {
     for (var i in this.tripService.dateRange) {
       let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationTypes);
       if (typeAmount.availableBeds === 0) { flag = false; }
-      if (!flag) { console.log('אחד הימים בטווח התאריכים אינו פנוי'); return flag; }
+      //if (!flag) { console.log('אחד הימים בטווח התאריכים אינו פנוי'); return flag; }
+      if (!flag) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '300px',
+          data: { message: 'אחד  הימים בטווח התאריכים אינו פנוי', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        }); console.log('אחד  הימים בטווח התאריכים אינו פנוי'); return flag;
+      }
     }
     return flag;
   }

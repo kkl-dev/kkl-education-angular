@@ -31,7 +31,7 @@ export class SleepingOptionsComponent implements OnInit {
   //  comments: new FormControl(null, [Validators.required]),
   public indexToPatch: number = -1;
   tripInfo: TripInfo;
-  filledNightsArray1 :LodgingReservation[]=[];
+  // filledNightsArray1 :LodgingReservation[]=[];
   filledNightsArray: {
     accomodationTypeId: number,
     accomodationTypeName: string,
@@ -42,16 +42,16 @@ export class SleepingOptionsComponent implements OnInit {
     unitsNumber: number,
     comments: string,
   }[] = [
-    {
-      unitsNumber: 3,
-      comments: 'הערה חדשה',
-      date: 'לילה 1',
-      lodgersNumber: 3,
-      participantId: 4,
-      accomodationTypeId: 1,
-      accomodationTypeName: 'בקתה',
-      participantName: 'מבוגרים'
-    },
+    // {
+    //   unitsNumber: 3,
+    //   comments: 'הערה חדשה',
+    //   date: 'לילה 1',
+    //   lodgersNumber: 3,
+    //   participantId: 4,
+    //   accomodationTypeId: 1,
+    //   accomodationTypeName: 'בקתה',
+    //   participantName: 'מבוגרים'
+    // },
   ];
 
   formCols: number = 12;
@@ -68,10 +68,9 @@ export class SleepingOptionsComponent implements OnInit {
       this.filledNightsArray[this.indexToPatch] = form.value;
     } else {
       this.filledNightsArray.push(form.value);
-      this.filledNightsArray1.push(form.value);
       //console.log(this.filledNightsArray);
     }
-     this.squadAssembleService.savefilledNightsArray(this.filledNightsArray1);
+     this.squadAssembleService.savefilledNightsArray(this.filledNightsArray);
      console.log('filledNightsArray is: ',this.squadAssembleService.filledNightsArray);
     this.indexToPatch = -1;
     this.filledNightsForm.formGroup.reset();
@@ -88,15 +87,15 @@ export class SleepingOptionsComponent implements OnInit {
   ngOnInit(): void {}
 
 
-   createTrip(){
-    this.tripInfo= this.squadAssembleService.tripInfo;
-    this.tripInfo.lodgingReservation= this.filledNightsArray;
+  createTrip(){
+  //   this.tripInfo= this.squadAssembleService.tripInfo;
+  //   this.tripInfo.lodgingReservation= this.filledNightsArray;
     
-    this.userService.createTrip(this.tripInfo).subscribe(res=>{
-      console.log(res);
-   },(err)=>{
-     console.log(err);
-   })
+  //   this.userService.createTrip(this.tripInfo).subscribe(res=>{
+  //     console.log(res);
+  //  },(err)=>{
+  //    console.log(err);
+  //  })
   }
 
 }

@@ -13,11 +13,13 @@
     (newDate)='newDateRecived($event)'
     (sleepingPlace)='newSleepingPlaceRecived($event)'
     (prevDate)='prevDateRecived($event)'
+    (ngModelChange)="dateObjChanged($event, control)"
     [options]="dateOptions"
     airbnb-calendar
      control="control"
       autocomplete="none" 
       [(ngModel)]="control.value" dir="rtl" />
+
 
     <mat-select color="primary" [formControl]="control" *ngIf="controlType === 'select'"
       (selectionChange)="onSelectChange($event,control,question,input)" (openedChange)="validate()">

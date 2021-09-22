@@ -6,7 +6,7 @@ import {
   ViewChild,
   Output,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, FormControl, AbstractControl, FormGroup } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { TripService } from 'src/app/services/trip.service';
 import { FormService } from '../logic/form.service';
@@ -59,11 +59,21 @@ export class FormInputComponent implements OnInit {
   constructor(private formService: FormService, private tripService:TripService) {}
 
   ngOnInit(): void {
+    //console.log('control is :' ,this.control);
+    let name = this.getName(this.control);
+    console.log('control name is :', name);
+    if(name=='tripStart' || name=='tripEnding' || name == 'centerField')
+    this.setDefaultValues(name);
     this.subscribeToControl();
 
     this.labelLength = `size-${this.labelSize || 1}`
 
   }
+
+  ngAfterViewInit(){
+   
+ }
+
 
   public writeValue(value: any): void {
     this.value = value ? value : '';
@@ -88,7 +98,7 @@ export class FormInputComponent implements OnInit {
   
   newDateRecived(newDate:any){
     console.log(newDate); 
-    
+    //console.log(c);
   }
   prevDateRecived(prevDate:any){
     console.log(prevDate); 
@@ -98,17 +108,72 @@ export class FormInputComponent implements OnInit {
   newSleepingPlaceRecived(sleepingPlace:any){
     console.log(sleepingPlace); 
   }
+  dateObjChanged(e: string, c: any){
+    console.log(e);  
+    
+  }
 
   //adding by itiel
-  setInputValues(){
-    if(true){
-      // localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
-      // localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
-      // localStorage.setItem("forestCenterId",this.forestCenterId.toString() );
-      // localStorage.setItem("forestCenterName",this.forestCenter.name );
-      
-      //let centerfieldId= localStorage.getItem("forestCenterId");
+  setDefaultValues(name: string){
+      if(this.tripService.sleepingDates){
+        switch(name) { 
+          case 'tripStart':
+            this.control.setValue(this.tripService.sleepingDates.from);
+            if (typeof(Storage) !== "undefined") {
+              localStorage.setItem("sleepingDateStart",this.tripService.sleepingDates.from);
+            }
+            
+           break; 
+          case  'tripEnding':
+            this.control.setValue(this.tripService.sleepingDates.till);
+            if (typeof(Storage) !== "undefined") {
+              localStorage.setItem("sleepingDateTill",this.tripService.sleepingDates.till);
+            }       
+            break;
+          case 'centerField':
+            console.log('lookupInput is:',this.tripService.fieldForestCenters);
+            this.control.setValue(this.tripService.centerField.id.toString());
+            if (typeof(Storage) !== "undefined") {
+              localStorage.setItem("centerFieldId",this.tripService.centerField.id.toString());
+              localStorage.setItem("centerFieldName",this.tripService.centerField.name);
+            }
+        }
+      }
+      else{
+        switch(name) { 
+          case 'tripStart':
+            this.control.setValue(localStorage.getItem("sleepingDateStart"));
+           break; 
+          case  'tripEnding':
+            this.control.setValue(localStorage.getItem("sleepingDateTill"));
+            break;
+          case 'centerField':
+            this.control.setValue(localStorage.getItem("centerFieldId"));
+        }
+      }   
+     
+  }
+
+   getName(control: AbstractControl): string | null {
+    let group = <FormGroup>control.parent;
+
+    if (!group) {
+      return null;
     }
+
+    let name: string;
+
+    Object.keys(group.controls).forEach(key => {
+      let childControl = group.get(key);
+
+      if (childControl !== control) {
+        return;
+      }
+
+      name = key;
+    });
+
+    return name;
   }
   // end itiel!
 

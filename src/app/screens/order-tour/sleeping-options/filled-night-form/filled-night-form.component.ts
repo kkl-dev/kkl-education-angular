@@ -2,6 +2,8 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AccommodationType, ParticipantType, UserService } from 'src/app/open-api';
 import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-filled-night-form',
   templateUrl: './filled-night-form.component.html',
@@ -56,11 +58,8 @@ export class FilledNightFormComponent implements OnInit {
      console.log(err);
    })
    
-   
     let startDate= this.squadAssembleService.tripInfo.tripStart;
-    //let startDate= '2021/09/22';
     let endDate= this.squadAssembleService.tripInfo.tripEnding;
-    //let endDate= '2021/09/25';
      this.setnightNumberOptions(startDate,endDate)
   }
 
@@ -92,7 +91,7 @@ export class FilledNightFormComponent implements OnInit {
        }-${newDate.getDate()}`;
        let obj={
          id:newDateStringUsaFormat,
-         name: newDateStringIsraelFormat
+         name:(i+1) +'לילה'+':'+newDateStringIsraelFormat
        }
        this.nightNumberOptions.push(obj);
        newDate = new Date(date1.setDate(date1.getDate() + 1));
@@ -108,13 +107,17 @@ export class FilledNightFormComponent implements OnInit {
   }
 
   onSubmit() {
-    let x= 'בקתה';
-    let y= 'מלווים';
-    this.filledNightForm.get('accomodationTypeName').setValue(x);
-    this.filledNightForm.get('participantName').setValue(y);
+     let sleepingTypeSelected= this.sleepingTypeOptions.find((item)=>item.id== this.filledNightForm.get('accomodationTypeId').value);
+     let participantIdSelected= this.saveForOptions.find((item)=>item.id== this.filledNightForm.get('participantId').value)
+    this.filledNightForm.get('accomodationTypeName').setValue(sleepingTypeSelected.name);
+    this.filledNightForm.get('participantName').setValue(participantIdSelected.name);
     this.emitFormValues.emit(this.filledNightForm);
     this.filledNightForm.reset();
   }
+
+    validateForm(){
+       //let paticipantIdSelected= 
+   }
   // onChange(value) {
   //   console.log(value);
   // }
