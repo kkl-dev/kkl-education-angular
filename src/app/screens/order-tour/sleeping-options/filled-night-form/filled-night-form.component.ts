@@ -25,9 +25,9 @@ export class FilledNightFormComponent implements OnInit {
   public allComplete: boolean = false;
 
   saveForOptions = [
-    { value: 'grownUps', text: 'מבוגרים' },
-    { value: 'childs', text: 'ילדים' },
-    { value: 'teachers', text: 'מורים' },
+    { value: 'מבוגרים' },
+    { value: 'ילדים' },
+    { value: 'מורים' },
   ];
 
   constructor() { }
@@ -44,11 +44,6 @@ export class FilledNightFormComponent implements OnInit {
     });
   }
 
-  saveForChangeHandler(text: any) {
-    this.saveForValue = this.saveForOptions.filter(
-      (item) => item.value === this.filledNightForm.value.saveFor
-    )[0].text;
-  }
 
   onSubmit() {
     this.updateNightCount();
@@ -71,7 +66,7 @@ export class FilledNightFormComponent implements OnInit {
   }
   public filterSelectedOptions() {
     let tmpArr = this.nightNumberOptions.filter(i => i.completed);
-    return tmpArr.map(i => i.value);
+    return tmpArr.map(i => i);
   }
   // onChange(value) {
   //   console.log(value);

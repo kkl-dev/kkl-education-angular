@@ -3,12 +3,11 @@ import { SleepingServiceService } from 'src/app/utilities/services/sleeping-serv
 
 export interface FilledNight {
   sleepingPlace: string;
-  nightsCount: string;
+  nightsCount: string | any;
   saveFor: string;
   peopleCount: string;
   amount: string;
   comments: string;
-  date:string | Date;
 }
 @Component({
   selector: 'app-filled-night',
@@ -32,5 +31,7 @@ export class FilledNightComponent implements OnInit {
     this.editFilledNight.emit(filledNight);
   } 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.filledNight)
+  }
 }

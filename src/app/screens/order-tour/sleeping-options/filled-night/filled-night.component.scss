@@ -21,7 +21,7 @@
   display: flex;
   min-height: 50px;
   direction: rtl;
-  background: #F6F6F6;
+  background: #f6f6f6;
   border-radius: 6px;
   margin: 10px;
   div {
@@ -34,12 +34,17 @@
     justify-content: space-evenly;
   }
   .date {
-    color: #448ECD;
+    display: flex;
+    flex-direction: column;
+    color: #707070;
+  }
+  .date > span:first-child {
+    color: #448ecd;
     font-weight: 600;
   }
   .controllers > p {
     margin: 0;
     text-decoration: underline;
-    color: #448ECD;
+    color: #448ecd;
   }
 }

@@ -29,8 +29,8 @@
   </mat-form-field>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>שריין עבור</mat-label>
-    <mat-select (selectionChange)="saveForChangeHandler($event.value)" name="saveFor" formControlName="saveFor">
-      <mat-option *ngFor="let option of saveForOptions" value="{{ option.value }}">{{ option.text }}</mat-option>
+    <mat-select name="saveFor" formControlName="saveFor">
+      <mat-option *ngFor="let option of saveForOptions" value="{{ option.value }}">{{ option.value }}</mat-option>
     </mat-select>
   </mat-form-field>
   <div [ngStyle]="{ 'grid-column': 'span 2' }">

@@ -1,8 +1,9 @@
 <div class="filled-night">
-  <div class="date">
-    {{filledNight.date}}
+  <div class="date" *ngFor='let item of filledNight.nightsCount'>
+    <span>{{item.date}}</span>
+    <span>{{item.text}}</span>
   </div>
-  <div class="nigths">{{ filledNight.nightsCount }}</div>
+  <div class="nigths">לילות {{ filledNight.nightsCount.length }}</div>
   <div class="sleeping-place">{{ filledNight.amount }} {{ filledNight.sleepingPlace }}</div>
   <div class="peoples">{{ filledNight.peopleCount }} {{ filledNight.saveFor }}</div>
   <div class="comments">הערה: {{ filledNight.comments }}</div>

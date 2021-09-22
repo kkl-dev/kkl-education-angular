@@ -18,7 +18,8 @@ export interface formGroupGrid {
   styleUrls: ['./sleeping-options.component.scss'],
 })
 export class SleepingOptionsComponent implements OnInit {
-  public addSleepingNight: boolean = false;
+  public addSleepingNight: boolean = true;
+  public addSleepingNightDirty:boolean = false;
   public addSleepingNightStyles = [
     { 'border-bottom': '1px solid #448ECD'},
     { 'border-bottom': '1px solid #448ECD','text-decoration':'none','font-weight':'600'},
@@ -249,14 +250,14 @@ constructor(
   public currentDate: any;
 
 addFilledNight(form: FormGroup) {
-  form.controls.date.setValue(this.currentDate.day);
   if (this.indexToPatch > -1) {
     this.filledNightsArray[this.indexToPatch] = form.value;
   } else {
     this.filledNightsArray.push(form.value);
   }
   this.indexToPatch = -1;
-  this.filledNightsForm.formGroup.reset();
+  this.addSleepingNightDirty = true;
+  this.addSleepingNight = false;
 }
 
 deleteFilledNight(index: number) {
