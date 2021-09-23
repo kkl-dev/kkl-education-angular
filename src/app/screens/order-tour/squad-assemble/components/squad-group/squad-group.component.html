@@ -6,6 +6,7 @@
         [custom]="group.header.custom"
         [slots]="{ gender, client, tourId }"
         [title]="true"
+        class="header"
       >
       </app-form-header>
     </mat-grid-tile>
@@ -22,13 +23,13 @@
       </app-form-container>
     </mat-grid-tile>
 
-    <mat-grid-tile>
+    <mat-grid-tile class="row-height"> 
       <mat-grid-list
         *ngIf="hasBottom"
         [cols]="bottomData.length"
         rowHeight="5vh"
-      >
-        <mat-grid-tile *ngFor="let item of bottomData; let i = index">
+      > 
+        <mat-grid-tile *ngFor="let item of bottomData; let i = index" >
           <div fxFill fxLayout="row" fxLayoutAlign="start center" dir="rtl">
             <div fxFlex="50">
               <app-typography size="14" class="label-text" [bold]="500">
