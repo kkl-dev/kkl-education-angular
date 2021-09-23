@@ -114,44 +114,42 @@ export class FormInputComponent implements OnInit {
   }
 
   //adding by itiel
-  setDefaultValues(name: string){
-      if(this.tripService.sleepingDates){
+  setDefaultValues(name: string){ 
         switch(name) { 
           case 'tripStart':
-            this.control.setValue(this.tripService.sleepingDates.from);
-            if (typeof(Storage) !== "undefined") {
-              localStorage.setItem("sleepingDateStart",this.tripService.sleepingDates.from);
-            }
-            
+            if(this.tripService.sleepingDates.from !=''){
+              this.control.setValue(this.tripService.sleepingDates.from);
+              if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("sleepingDateStart",this.tripService.sleepingDates.from);
+              }
+            } 
+            else{
+              this.control.setValue(localStorage.getItem("sleepingDateStart"));
+            }     
            break; 
           case  'tripEnding':
-            this.control.setValue(this.tripService.sleepingDates.till);
-            if (typeof(Storage) !== "undefined") {
-              localStorage.setItem("sleepingDateTill",this.tripService.sleepingDates.till);
-            }       
+            if(this.tripService.sleepingDates.till !=''){
+              this.control.setValue(this.tripService.sleepingDates.till);
+              if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("sleepingDateTill",this.tripService.sleepingDates.till);
+              }      
+            }  
+            else{
+              this.control.setValue(localStorage.getItem("sleepingDateTill"));
+            }  
             break;
           case 'centerField':
-            console.log('lookupInput is:',this.tripService.fieldForestCenters);
-            this.control.setValue(this.tripService.centerField.id.toString());
-            if (typeof(Storage) !== "undefined") {
-              localStorage.setItem("centerFieldId",this.tripService.centerField.id.toString());
-              localStorage.setItem("centerFieldName",this.tripService.centerField.name);
+            if(this.tripService.centerField.id!=0){
+              this.control.setValue(this.tripService.centerField.id.toString());
+              if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("centerFieldId",this.tripService.centerField.id.toString());
+                localStorage.setItem("centerFieldName",this.tripService.centerField.name);
+              }
             }
-        }
-      }
-      else{
-        switch(name) { 
-          case 'tripStart':
-            this.control.setValue(localStorage.getItem("sleepingDateStart"));
-           break; 
-          case  'tripEnding':
-            this.control.setValue(localStorage.getItem("sleepingDateTill"));
-            break;
-          case 'centerField':
-            this.control.setValue(localStorage.getItem("centerFieldId"));
-        }
-      }   
-     
+            else{
+              this.control.setValue(localStorage.getItem("centerFieldId"));
+            }         
+        }   
   }
 
    getName(control: AbstractControl): string | null {

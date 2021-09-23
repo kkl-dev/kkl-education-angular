@@ -91,7 +91,7 @@ export class FilledNightFormComponent implements OnInit {
        }-${newDate.getDate()}`;
        let obj={
          id:newDateStringUsaFormat,
-         name:(i+1) +'לילה'+':'+newDateStringIsraelFormat
+         name:(i+1) +'לילה'+' : '+newDateStringIsraelFormat
        }
        this.nightNumberOptions.push(obj);
        newDate = new Date(date1.setDate(date1.getDate() + 1));
