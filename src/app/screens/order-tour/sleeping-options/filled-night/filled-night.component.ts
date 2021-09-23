@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 
 export interface FilledNight {
@@ -8,19 +8,24 @@ export interface FilledNight {
   peopleCount: string;
   amount: string;
   comments: string;
+  optionsArr: any[];
 }
 @Component({
   selector: 'app-filled-night',
   templateUrl: './filled-night.component.html',
   styleUrls: ['./filled-night.component.scss'],
 })
-export class FilledNightComponent implements OnInit {
+export class FilledNightComponent implements OnInit, OnChanges {
   @Input() filledNight!: FilledNight;
   @Input() index: number;
+  @Input() filledNightOptions: any[];
   @Output() deleteFilledNight: EventEmitter<void> = new EventEmitter();
+  @Output() deleteFilledNightOption: EventEmitter<number> = new EventEmitter();
   @Output() editFilledNight: EventEmitter<FilledNight> = new EventEmitter();
-  public nightsCountForDisplay:string;
-  public datesForDisplay:string;
+  @Output() editFilledNightOption: EventEmitter<any> = new EventEmitter();
+
+  public nightsCountForDisplay: string;
+  public datesForDisplay: string;
 
   constructor(private sleepingService: SleepingServiceService) {
   }
@@ -28,7 +33,9 @@ export class FilledNightComponent implements OnInit {
   emitDeleteFilledNight(): void {
     this.deleteFilledNight.emit();
   }
-
+  public emitDeleteFilledNightOption(indexOfOption: number): void {
+    this.deleteFilledNightOption.emit(indexOfOption);
+  }
   emitEditFilledNight(filledNight: FilledNight): void {
     this.editFilledNight.emit(filledNight);
   }
@@ -38,6 +45,9 @@ export class FilledNightComponent implements OnInit {
     this.datesForDisplay = this.arrangeDatesForDisplay();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+
+  }
   public arrangeDatesForDisplay(): string {
     let low: Date;
     let hight: Date;
@@ -58,7 +68,7 @@ export class FilledNightComponent implements OnInit {
     return `${low}-${hight}.${arr[0].date.getMonth()}.${arr[0].date.getFullYear()}`;
   }
   public arrangeNightCountForDisplay() {
-    let first:any, last:any;
+    let first: any, last: any;
     const arr: any[] = this.filledNight.nightsCount;
     arr.map(i => {
       let item = i.nightNumber;

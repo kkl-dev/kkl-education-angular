@@ -30,7 +30,7 @@
 
   <div class="sleeping-options__filled-nights">
     <app-filled-night *ngFor="let filledNight of filledNightsArray; let i = index"
-      (deleteFilledNight)="deleteFilledNight(i)" (editFilledNight)="editFilledNight($event, i)"
-      [filledNight]="filledNight" [index]="index"></app-filled-night>
+      (deleteFilledNight)="deleteFilledNight(i)" (editFilledNight)="editFilledNight($event, i)" (deleteFilledNightOption)='deleteFilledNightOption($event,i)'
+      [filledNight]="filledNight" [index]="index" [filledNightOptions]='filledNight.optionsArr'></app-filled-night>
   </div>
 </div>

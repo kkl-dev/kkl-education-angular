@@ -7,6 +7,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class FilledNightFormComponent implements OnInit {
   filledNightForm: FormGroup;
+  @Input() valuesForEdit: any;
   @Input() totalAmount: number = 0;
   @Output() emitFormValues: EventEmitter<FormGroup> = new EventEmitter();
   saveForValue: string = '';
@@ -18,7 +19,7 @@ export class FilledNightFormComponent implements OnInit {
   ];
 
   nightNumberOptions = [
-    { value: '1 לילה ', nightNumber: 1, date: new Date(2021, 11, 15) , completed: false },
+    { value: '1 לילה ', nightNumber: 1, date: new Date(2021, 11, 15), completed: false },
     { value: '2 לילה ', nightNumber: 2, date: new Date(2021, 11, 16), completed: false },
     { value: '3 לילה ', nightNumber: 3, date: new Date(2021, 11, 17), completed: false },
   ];
@@ -40,7 +41,7 @@ export class FilledNightFormComponent implements OnInit {
       sleepingAmount: new FormControl(null),
       amount: new FormControl(null),
       comments: new FormControl(null),
-      optionsArr: new FormControl(null)
+      optionsArr: new FormControl([])
     });
   }
 
@@ -48,7 +49,6 @@ export class FilledNightFormComponent implements OnInit {
   onSubmit() {
     this.updateNightCount();
     this.emitFormValues.emit(this.filledNightForm);
-    console.log(this.filledNightForm.value)
     this.filledNightForm.reset();
   }
   public selectAllOptions(): void {
