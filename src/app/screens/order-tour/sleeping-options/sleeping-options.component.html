@@ -24,13 +24,15 @@
     </ng-container>
   </div>
   <!-- <hr> -->
-  <app-filled-night-form [totalAmount]="5" (emitFormValues)="addFilledNight($event)" *ngIf='!addSleepingNightDirty && addSleepingNight || addSleepingNight && addSleepingNightDirty'>
+  <app-filled-night-form [totalAmount]="5" (emitFormValues)="addFilledNight($event)" [valuesForEdit]='editFormObj'
+   *ngIf='!addSleepingNightDirty && addSleepingNight || addSleepingNight && addSleepingNightDirty'>
 
   </app-filled-night-form>
 
   <div class="sleeping-options__filled-nights">
     <app-filled-night *ngFor="let filledNight of filledNightsArray; let i = index"
-      (deleteFilledNight)="deleteFilledNight(i)" (editFilledNight)="editFilledNight($event, i)" (deleteFilledNightOption)='deleteFilledNightOption($event,i)'
+      (deleteFilledNight)="deleteFilledNight(i)" (editFilledNight)="editFilledNight($event, i)" 
+      (deleteFilledNightOption)='deleteFilledNightOption($event,i)' (editFilledNightOption)='editFilledNightOption($event,i)'
       [filledNight]="filledNight" [index]="index" [filledNightOptions]='filledNight.optionsArr'></app-filled-night>
   </div>
 </div>

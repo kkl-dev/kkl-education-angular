@@ -29,7 +29,7 @@
       <div class="peoples">{{ item.peopleCount }} {{ item.saveFor }}</div>
       <div class="comments">הערה: {{ item.comments }}</div>
       <div class="controllers">
-        <p class="filled-night__btn" (click)="emitEditFilledNightOption()">עריכה</p>
+        <p class="filled-night__btn" (click)="emitEditFilledNightOption(index)">עריכה</p>
         <p class="filled-night__btn" (click)="emitDeleteFilledNightOption(index)">מחיקה</p>
       </div>
     </div>

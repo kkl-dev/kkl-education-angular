@@ -18,6 +18,7 @@ export interface formGroupGrid {
   styleUrls: ['./sleeping-options.component.scss'],
 })
 export class SleepingOptionsComponent implements OnInit {
+  public editFormObj: any;
   public addSleepingNight: boolean = true;
   public addSleepingNightDirty: boolean = false;
   public addSleepingNightStyles = [
@@ -286,6 +287,15 @@ export class SleepingOptionsComponent implements OnInit {
     console.log(this.filledNightsForm)
     this.filledNightsForm.formGroup.patchValue(form);
     this.indexToPatch = index;
+  }
+  public editFilledNightOption(optionIndex: number, index: number) {
+    const item = this.filledNightsArray[index].optionsArr[optionIndex];
+    this.editFormObj = { ...item };
+
+    console.log({ item });
+
+    this.addSleepingNight = true;
+    this.addSleepingNightDirty = true;
   }
   public addSleepingNightHandler(): void {
     this.addSleepingNight = !this.addSleepingNight;

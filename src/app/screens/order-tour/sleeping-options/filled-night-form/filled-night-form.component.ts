@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-filled-night-form',
   templateUrl: './filled-night-form.component.html',
   styleUrls: ['./filled-night-form.component.scss'],
 })
-export class FilledNightFormComponent implements OnInit {
-  filledNightForm: FormGroup;
+export class FilledNightFormComponent implements OnInit, OnChanges {
+  public filledNightForm: FormGroup;
   @Input() valuesForEdit: any;
   @Input() totalAmount: number = 0;
   @Output() emitFormValues: EventEmitter<FormGroup> = new EventEmitter();
@@ -43,8 +43,32 @@ export class FilledNightFormComponent implements OnInit {
       comments: new FormControl(null),
       optionsArr: new FormControl([])
     });
+
+    if(this.valuesForEdit) {
+      this.updateItem(this.valuesForEdit);
+    }
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.valuesForEdit.currentValue !== undefined) {
+      this.updateItem(changes.valuesForEdit.currentValue);
+    }
+  }
+
+  public updateItem(item: any) {
+    const { controls } = this.filledNightForm || {}; 
+
+    if (controls) {
+      controls.nightsCount.setValue(item.nightsCount)
+      controls.sleepingPlace.setValue(item.sleepingPlace)
+      controls.saveFor.setValue(item.saveFor)
+      controls.sleepingAmount.setValue(item.sleepingAmount)
+      controls.amount.setValue(item.amount)
+      controls.comments.setValue(item.comments)
+      controls.optionsArr.setValue(item.optionsArr)
+    }
+    console.log(this.filledNightForm)
+  }
 
   onSubmit() {
     this.updateNightCount();

@@ -36,6 +36,9 @@ export class FilledNightComponent implements OnInit, OnChanges {
   public emitDeleteFilledNightOption(indexOfOption: number): void {
     this.deleteFilledNightOption.emit(indexOfOption);
   }
+  public emitEditFilledNightOption(indexOfOption: number): void {
+    this.editFilledNightOption.emit(indexOfOption);
+  }
   emitEditFilledNight(filledNight: FilledNight): void {
     this.editFilledNight.emit(filledNight);
   }
