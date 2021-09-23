@@ -15,12 +15,12 @@
         <mat-checkbox (change)="selectAllOptions()">בחר הכול</mat-checkbox>
       </mat-option>
 
-      <mat-option *ngFor="let option of nightNumberOptions;let index=index" value="{{ option.value }}">
+      <mat-option class="my-select" *ngFor="let option of nightNumberOptions;let index=index" value="{{ option.value }}">
         <mat-checkbox class="example-margin" ngDefaultControl
         [(ngModel)]="nightNumberOptions[index].completed" [ngModelOptions]="{standalone: true}" (change)='updateNightCount()'>
           <div>
-            <span>{{option.date}}</span>
-            <span class="checkbox-night-option">{{ option.text}}</span>
+            <span>{{option.date | date:'d/M/yy'}}</span>
+            <span class="checkbox-night-option">לילה {{ option.nightNumber}}</span>
           </div>
         </mat-checkbox>
       </mat-option>
@@ -29,8 +29,8 @@
   </mat-form-field>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>שריין עבור</mat-label>
-    <mat-select (selectionChange)="saveForChangeHandler($event.value)" name="saveFor" formControlName="saveFor">
-      <mat-option *ngFor="let option of saveForOptions" value="{{ option.value }}">{{ option.text }}</mat-option>
+    <mat-select name="saveFor" formControlName="saveFor">
+      <mat-option *ngFor="let option of saveForOptions" value="{{ option.value }}">{{ option.value }}</mat-option>
     </mat-select>
   </mat-form-field>
   <div [ngStyle]="{ 'grid-column': 'span 2' }">
