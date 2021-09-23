@@ -250,7 +250,10 @@ export class SleepingOptionsComponent implements OnInit {
   public currentDate: any;
 
   addFilledNight(form: FormGroup) {
-    this.checkIfFilledNightExists(form.value);
+    let check = this.checkIfFilledNightExists(form.value);
+    if(check){
+      
+    }
     if (this.indexToPatch > -1) {
       this.filledNightsArray[this.indexToPatch] = form.value;
     } else {
@@ -272,17 +275,16 @@ export class SleepingOptionsComponent implements OnInit {
     this.addSleepingNight = !this.addSleepingNight;
   }
 
-  public checkIfFilledNightExists(form: any) {
+  public checkIfFilledNightExists(form: any) :boolean{
     let check: boolean;
     if (this.filledNightsArray.length >= 1) {
-
       this.filledNightsArray.map(item => {
-
         if (form.nightsCount.length === item.nightsCount.length) {
-          this.compareValues(form.nightsCount, item.nightsCount);
+          check = this.compareValues(form.nightsCount, item.nightsCount);
         }
       });
     }
+    return check;
   }
   public compareValues(first, second) {
     let check: any[] = [];
@@ -295,6 +297,6 @@ export class SleepingOptionsComponent implements OnInit {
       return true;
     } else { return false; }
   }
-  
+
   ngOnInit(): void { }
 }
