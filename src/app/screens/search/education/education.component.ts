@@ -4,6 +4,8 @@ import {
   ViewChild,
   Output,
   EventEmitter,
+  ElementRef
+  
 } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { NgForm } from '@angular/forms';
@@ -25,6 +27,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class EducationComponent implements OnInit {
 
   @ViewChild('educationForm') signupForm: NgForm;
+  @ViewChild('container') container: ElementRef;
   @Output() emitFormValues: EventEmitter<NgForm> = new EventEmitter();
   public checked = false;
   sleepingPlace: any;
@@ -50,9 +53,8 @@ export class EducationComponent implements OnInit {
 
     this.options = {
       firstCalendarDay: 0,
-      format: 'LL/dd/yyyy',
-      // maxDate: new Date(2021, 11, 15),
-      maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      format: 'dd/LL/yyyy',
+
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
@@ -128,7 +130,6 @@ export class EducationComponent implements OnInit {
     return freeSpacesArray;
   }
 
-
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
@@ -136,21 +137,20 @@ export class EducationComponent implements OnInit {
       start = new Date(start.setDate(start.getDate() + 1));
       freeSpacesArray.push({
         date: start,
-        freeSpace:
-          [
-            {
-              accomodationName: "cabin",
-              availableBeds: +Math.floor(Math.random() * 8).toString()
-            },
-            {
-              accomodationName: "tent",
-              availableBeds: +Math.floor(Math.random() * 8).toString()
-            },
-            {
-              accomodationName: "room",
-              availableBeds: +Math.floor(Math.random() * 8).toString()
-            },
-          ]
+        freeSpace: [
+          {
+            accomodationName: 'cabin',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
+          },
+          {
+            accomodationName: 'tent',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
+          },
+          {
+            accomodationName: 'room',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
+          },
+        ],
       });
     }
     return freeSpacesArray;
@@ -158,8 +158,7 @@ export class EducationComponent implements OnInit {
 
   options: CalendarOptions = {
     firstCalendarDay: 0,
-    format: 'LL/dd/yyyy',
-    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+    format: 'dd/LL/yyyy',
     closeOnSelected: true,
     minYear: 2019,
     maxYear: 2021,
@@ -197,14 +196,20 @@ export class EducationComponent implements OnInit {
   }
 
   public dateObjChanged(e: string) {
-    console.log('asdasd');
-    
-    if (e.includes('-')) {
-      
-       let tempDateArr: string[] = [];
-       tempDateArr = e.split('-');
+ 
 
-      if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
+    if (e.includes('-')) {
+      let tempDateArr: string[] = [];
+      tempDateArr = e.split('-');
+      //change date from obj to new Date format
+      const dateFormat1 = tempDateArr[0].split('/').reverse();
+      dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+      dateFormat1[2] = (+dateFormat1[2]).toString();
+      const dateFormat2 = tempDateArr[1].split('/').reverse();
+      dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+      dateFormat2[2] = (+dateFormat2[2]).toString();
+
+      if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       } else {
@@ -221,6 +226,7 @@ export class EducationComponent implements OnInit {
 
   }
 
+ 
   AvailableDaysChecking() {
     this.tripService.dateRange = this.getDaysArray(new Date(this.sleepingDates.from), new Date(this.sleepingDates.till))
     var flag = true;
@@ -251,28 +257,30 @@ export class EducationComponent implements OnInit {
   printFormValues() {
     if (this.signupForm != undefined && this.AvailableDaysChecking()) {
       this.emitFormValues.emit(this.signupForm);
-      this.checkAvailabilltyService.saveCheackAvailabilltyValues(this.signupForm)
-      this.router.navigate([this.routerLinkContinue])
+      this.checkAvailabilltyService.saveCheackAvailabilltyValues(
+        this.signupForm
+      );
     }
   }
-  singleDayTrip() { if (this.checkedSingleDay) { this.routerLinkContinue = '/education/my-tours' } }
-
-  // convertDate(today: any) {//function to change date format '1990-04-13' to '13-04-1990'
-  //   var thisDate = today.toISOString().split('T')[0].split('-');
-  //   return [thisDate[2], thisDate[1], thisDate[0]].join("-");
-  // }
-
-  // getDaysArray(start: any, end: any) {
-  //   for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
-  //   return arr;
-  // };
+  singleDayTrip() {
+    if (this.checkedSingleDay) {
+      this.routerLinkContinue = '/education/my-tours';
+    }
+  }
+  convertDate(today: any) {
+    //function to change date format '1990-04-13' to '13-04-1990'
+    var thisDate = today.toISOString().split('T')[0].split('-');
+    return [thisDate[2], thisDate[1], thisDate[0]].join('-');
+  }
   getDaysArray(start: any, end: any) {
-    var arr = [];
-    let index = this.freeSpacesArray.findIndex(Start => Start.date.getDate() === new Date(start).getDate());
-    while (this.freeSpacesArray[index].date.getDate() <= new Date(end).getDate()) {
-      arr.push(this.freeSpacesArray[index]);
-      index++;
+    for (
+      var arr = [], dt = new Date(start);
+      dt <= end;
+      dt.setDate(dt.getDate() + 1)
+    ) {
+      arr.push(new Date(dt));
     }
     return arr;
   }
+  listDays = this.getDaysArray(this.sleepingDates.from, this.sleepingDates.till);
 }

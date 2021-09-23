@@ -4,6 +4,10 @@ form {
   grid-template-columns: 1fr 0.7fr 0.7fr 0.6fr;
   column-gap: 40px;
 }
+.education:focus{
+  background-color: black !important;
+  padding: 10000px !important;
+}
 .education {
   height: calc(100% - 90px);
   background-image: url("../../../../assets/images/education-table-background.jpg");
@@ -236,7 +240,6 @@ mat-select {
 
   ::ng-deep .airbnb-calendar-container {
     left: -360px !important;
-    background-color: black;
   }
 }
 

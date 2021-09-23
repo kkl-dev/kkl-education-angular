@@ -50,7 +50,8 @@ export class SleepingOptionsFormComponent implements OnInit {
 
     this.options = {
       firstCalendarDay: 0,
-      format: 'LL/dd/yyyy',
+      format: 'dd/LL/yyyy',
+
       closeOnSelected: true,
       minDate: new Date(),
       maxDate: new Date(2022, 11, 17),
@@ -88,7 +89,7 @@ export class SleepingOptionsFormComponent implements OnInit {
 
   options: CalendarOptions = {
     firstCalendarDay: 0,
-    format: 'LL/dd/yyyy',
+    format: 'dd/LL/yyyy',
 
     closeOnSelected: true,
     minYear: 2019,

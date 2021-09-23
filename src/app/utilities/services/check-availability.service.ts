@@ -18,8 +18,8 @@ export class CheckAvailabilityService {
     sleepingPlace: string;
     calendarInput: string;
     //calendar input value for development in real app it will redirect to search page if calendar input wasnt set in the search page
-  } = { sleepingPlace: '', calendarInput: '09/17/2021-09/19/2021' };
-   
+  } = { sleepingPlace: '', calendarInput: '19/09/2021-22/09/2021' };
+    
   public facilitiesArray: InfoCard[] = [
     {
       svgUrl: 'assets/images/stage.svg',
@@ -133,7 +133,9 @@ export class CheckAvailabilityService {
   constructor() {}  
 
   saveCheackAvailabilltyValues(newFormValues: NgForm) {
-    this.checkAvailabilltyValues = newFormValues.form.value;
+    this.checkAvailabilltyValues = newFormValues.form.value;  
+    console.log(this.checkAvailabilltyValues.calendarInput);
+    
   }
 
   getNewFacilitiesArray(date: string) {

@@ -10,6 +10,12 @@ app-typography {
   width: 100%;
 }
 
+.row-height {
+  top: calc((4vh + 1px) * 11) !important;
+}
+.container {
+  padding-top: 70px;
+}
 button.gender-button {
   height: 40px !important;
   width: 40px !important;
@@ -33,9 +39,7 @@ button.gender-button {
   padding-left: spacing(1);
 }
 
-
 .divider {
   display: flex;
   justify-content: center;
 }
-

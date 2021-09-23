@@ -1,125 +1,98 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AccommodationType, ParticipantType, UserService } from 'src/app/open-api';
-import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
-import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-filled-night-form',
   templateUrl: './filled-night-form.component.html',
   styleUrls: ['./filled-night-form.component.scss'],
 })
-export class FilledNightFormComponent implements OnInit {
-  filledNightForm: FormGroup;
+export class FilledNightFormComponent implements OnInit, OnChanges {
+  public filledNightForm: FormGroup;
+  @Input() valuesForEdit: any;
   @Input() totalAmount: number = 0;
   @Output() emitFormValues: EventEmitter<FormGroup> = new EventEmitter();
   saveForValue: string = '';
-  sleepingTypeOptions: AccommodationType[];
-  saveForOptions: ParticipantType[];
-  nightNumberOptions: any[]=[]
 
-  // nightNumberOptions = [
-  //   { value: '1 לילה ', text: 'לילה 1' },
-  //   { value: '2 לילה ', text: 'לילה 2' },
-  //   { value: '3 לילה ', text: 'לילה 3' },
-  // ];
+  sleepingTypeOptions = [
+    { value: 'בקתה', text: 'בקתה' },
+    { value: 'אוהל', text: 'אוהל' },
+    { value: 'חדר', text: 'חדר' },
+  ];
 
-  constructor(private _userService:UserService, private squadAssembleService:SquadAssembleService ) {}
+  nightNumberOptions = [
+    { value: '1 לילה ', nightNumber: 1, date: new Date(2021, 11, 15), completed: false },
+    { value: '2 לילה ', nightNumber: 2, date: new Date(2021, 11, 16), completed: false },
+    { value: '3 לילה ', nightNumber: 3, date: new Date(2021, 11, 17), completed: false },
+  ];
+  public allComplete: boolean = false;
+
+  saveForOptions = [
+    { value: 'מבוגרים' },
+    { value: 'ילדים' },
+    { value: 'מורים' },
+  ];
+
+  constructor() { }
 
   ngOnInit(): void {
     this.filledNightForm = new FormGroup({
-      // sleepingPlace: new FormControl(null, [Validators.required]),
-      // nightsCount: new FormControl(null, [Validators.required]),
-      // saveFor: new FormControl(null, [Validators.required]),
-      // sleepingAmount: new FormControl(null, [Validators.required]),
-      // amount: new FormControl(null, [Validators.required]),
-      // comments: new FormControl(null, [Validators.required]),
-
-      accomodationTypeId: new FormControl(null, [Validators.required]),
-      accomodationTypeName: new FormControl(null),
-      date: new FormControl(null, [Validators.required]),
-      participantId: new FormControl(null, [Validators.required]),
-      participantName: new FormControl(null),
-      lodgersNumber: new FormControl(null, [Validators.required]),
-      unitsNumber: new FormControl(null, [Validators.required]),
-       comments: new FormControl(null, [Validators.required]),
+      sleepingPlace: new FormControl(null),
+      nightsCount: new FormControl(null),
+      saveFor: new FormControl(null),
+      sleepingAmount: new FormControl(null),
+      amount: new FormControl(null),
+      comments: new FormControl(null),
+      optionsArr: new FormControl([])
     });
 
-    this._userService.getLookupAccommodationType(1).subscribe(res=>{
-      console.log(res);
-       this.sleepingTypeOptions= res;
-    },(err)=>{
-        console.log(err);
-    })
-    this._userService.getParticipantTypes().subscribe(res=>{
-     console.log(res);
-      this.saveForOptions=res;
-   },(err)=>{
-     console.log(err);
-   })
-   
-    let startDate= this.squadAssembleService.tripInfo.tripStart;
-    let endDate= this.squadAssembleService.tripInfo.tripEnding;
-     this.setnightNumberOptions(startDate,endDate)
+    if(this.valuesForEdit) {
+      this.updateItem(this.valuesForEdit);
+    }
   }
 
-
-  setnightNumberOptions(startDate,endDate){
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-       let date1 = new Date(startDate);
-       let date2 = new Date(endDate);
-        const utc1 = Date.UTC(
-        date1.getFullYear(),
-        date1.getMonth(),
-        date1.getDate(),
-       );
-      const utc2 = Date.UTC(
-      date2.getFullYear(),
-      date2.getMonth(),
-      date2.getDate(),
-     );
-
-     const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
-     let newDate = new Date(date1.setDate(date1.getDate()));
-     for (let i = 0; i <= (totalDays-1); i++) {
-      
-       const newDateStringIsraelFormat = `${newDate.getDate()}.${
-        newDate.getMonth() + 1
-       }.${newDate.getFullYear()}`;
-       const newDateStringUsaFormat = `${newDate.getFullYear()}-${
-        newDate.getMonth() + 1
-       }-${newDate.getDate()}`;
-       let obj={
-         id:newDateStringUsaFormat,
-         name:(i+1) +'לילה'+' : '+newDateStringIsraelFormat
-       }
-       this.nightNumberOptions.push(obj);
-       newDate = new Date(date1.setDate(date1.getDate() + 1));
-     }
-     console.log(this.nightNumberOptions);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.valuesForEdit.currentValue !== undefined) {
+      this.updateItem(changes.valuesForEdit.currentValue);
+    }
   }
 
-  saveForChangeHandler(text: any) {
-    this.saveForValue = this.saveForOptions.filter(
-      (item) => item.id === this.filledNightForm.value.saveFor
-    )[0].name;
-    console.log(this.saveForValue);
+  public updateItem(item: any) {
+    const { controls } = this.filledNightForm || {}; 
+
+    if (controls) {
+      controls.nightsCount.setValue(item.nightsCount)
+      controls.sleepingPlace.setValue(item.sleepingPlace)
+      controls.saveFor.setValue(item.saveFor)
+      controls.sleepingAmount.setValue(item.sleepingAmount)
+      controls.amount.setValue(item.amount)
+      controls.comments.setValue(item.comments)
+      controls.optionsArr.setValue(item.optionsArr)
+    }
+    console.log(this.filledNightForm)
   }
 
   onSubmit() {
-     let sleepingTypeSelected= this.sleepingTypeOptions.find((item)=>item.id== this.filledNightForm.get('accomodationTypeId').value);
-     let participantIdSelected= this.saveForOptions.find((item)=>item.id== this.filledNightForm.get('participantId').value)
-    this.filledNightForm.get('accomodationTypeName').setValue(sleepingTypeSelected.name);
-    this.filledNightForm.get('participantName').setValue(participantIdSelected.name);
+    this.updateNightCount();
     this.emitFormValues.emit(this.filledNightForm);
     this.filledNightForm.reset();
   }
-
-    validateForm(){
-       //let paticipantIdSelected= 
-   }
+  public selectAllOptions(): void {
+    if (!this.allComplete) {
+      this.nightNumberOptions.forEach(t => t.completed = true);
+      this.allComplete = true;
+    } else {
+      this.nightNumberOptions.forEach(t => t.completed = false);
+      this.allComplete = false;
+    }
+    this.updateNightCount()
+  }
+  public updateNightCount(): void {
+    this.filledNightForm.controls.nightsCount.setValue(this.filterSelectedOptions())
+  }
+  public filterSelectedOptions() {
+    let tmpArr = this.nightNumberOptions.filter(i => i.completed);
+    return tmpArr.map(i => i);
+  }
   // onChange(value) {
   //   console.log(value);
   // }
 }
-

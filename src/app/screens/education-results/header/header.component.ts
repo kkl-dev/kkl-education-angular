@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
     //this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
     this.options = {
       firstCalendarDay: 0,
-      format: 'LL/dd/yyyy', 
+      format: 'dd/LL/yyyy', 
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
@@ -214,8 +214,14 @@ export class HeaderComponent implements OnInit {
       console.log('dateObjChanged =>', + e);
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
-
-      if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
+      const dateFormat1 = tempDateArr[0].split('/').reverse();
+      dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+      dateFormat1[2] = (+dateFormat1[2]).toString(); 
+      const dateFormat2 = tempDateArr[1].split('/').reverse();
+      dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+      dateFormat2[2] = (+dateFormat2[2]).toString();
+    
+      if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       } else {

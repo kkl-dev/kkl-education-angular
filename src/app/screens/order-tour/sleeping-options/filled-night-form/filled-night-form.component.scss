@@ -4,10 +4,11 @@
   column-gap: 30px;
 }
 
+
 .btn {
   background-color: #fff;
   color: #448ecd;
-  border: 5px solid #448ecd;
+  border: 3px solid #448ecd;
   outline: none;
   width: fit-content;
   padding: 10px 25px;
@@ -21,7 +22,11 @@
     border-top: 1px solid #f1f1f1;
   }
 }
-
+.checkbox-night-option {
+  margin-right: 5px;
+  font-size: 12px;
+  color: grey;
+}
 .save-for-text {
   margin-top: -20px;
   color: #448ecd;
