@@ -19,6 +19,7 @@ export interface formGroupGrid {
 })
 export class SleepingOptionsComponent implements OnInit {
   public editFormObj: any;
+  public editMode:boolean = false;
   public addSleepingNight: boolean = true;
   public addSleepingNightDirty: boolean = false;
   public addSleepingNightStyles = [
@@ -281,12 +282,14 @@ export class SleepingOptionsComponent implements OnInit {
     this.editFormObj = [this.filledNightsArray[index], index];
     this.addSleepingNight = true;
     this.addSleepingNightDirty = true;
+    this.editMode = true;
   }
   public editFilledNightOption(optionIndex: number, index: number) {
     const item = this.filledNightsArray[index].optionsArr[optionIndex];
     this.editFormObj = [item, index, optionIndex];
     this.addSleepingNight = true;
     this.addSleepingNightDirty = true;
+    this.editMode = true;
   }
   public updateFilledNightItem(item: any[]): void {
     const index = item[1];
@@ -302,6 +305,7 @@ export class SleepingOptionsComponent implements OnInit {
     }
     this.addSleepingNight = false;
     this.editFormObj = null;
+    this.editMode = false;
   }
   public addSleepingNightHandler(): void {
     this.addSleepingNight = !this.addSleepingNight;

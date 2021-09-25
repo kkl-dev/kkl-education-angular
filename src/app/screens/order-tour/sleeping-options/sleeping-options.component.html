@@ -17,7 +17,7 @@
       <span class="title-span" [ngStyle]="!addSleepingNight ? addSleepingNightStyles[0] : addSleepingNightStyles[2]"
         (click)='addSleepingNightHandler()'>מקומות לינה ששוריינו</span>
       <span class="title-span add" [ngStyle]="addSleepingNight ? addSleepingNightStyles[1] : null"
-        (click)='addSleepingNightHandler()'>הוספת שיריון חדש</span>
+        (click)='addSleepingNightHandler()'>{{editMode ? 'עדכון שיריון' : 'הוספת שיריון חדש'}}</span>
     </ng-container>
     <ng-container *ngIf='!addSleepingNightDirty'>
       <span class="title-span">שריין לינה</span>

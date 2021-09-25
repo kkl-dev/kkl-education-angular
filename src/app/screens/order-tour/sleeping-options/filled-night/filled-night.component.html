@@ -14,7 +14,12 @@
     <div class="nigths" *ngIf='filledNight.nightsCount.length !== 1'>{{ filledNight.nightsCount.length }} לילות</div>
     <div class="nigths" *ngIf='filledNight.nightsCount.length == 1'>לילה {{ filledNight.nightsCount.length }}</div>
     <div class="sleeping-place">{{ filledNight.amount }} {{ filledNight.sleepingPlace }}</div>
-    <div class="peoples">{{ filledNight.peopleCount }} {{ filledNight.saveFor }}</div>
+    <div class="peoples">
+      <div class="peoples">
+        {{ filledNight.sleepingAmount }} {{ filledNight.saveFor }}
+      </div>
+      <div>מתוך 20</div>
+    </div>
     <div class="comments">הערה: {{ filledNight.comments }}</div>
     <div class="controllers">
       <p class="filled-night__btn" (click)="emitEditFilledNight()">עריכה</p>
@@ -26,7 +31,12 @@
       <div></div>
       <div></div>
       <div class="sleeping-place">{{ item.amount }} {{ item.sleepingPlace }}</div>
-      <div class="peoples">{{ item.peopleCount }} {{ item.saveFor }}</div>
+      <div class="peoples">
+        <div class="peoples">
+          {{ item.sleepingAmount }} {{ item.saveFor }}
+        </div>
+        <div>מתוך 20</div>
+      </div>
       <div class="comments">הערה: {{ item.comments }}</div>
       <div class="controllers">
         <p class="filled-night__btn" (click)="emitEditFilledNightOption(index)">עריכה</p>
