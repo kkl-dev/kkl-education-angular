@@ -7,14 +7,20 @@
   .main-card {
     display: flex;
     padding: 10px;
+    align-items: baseline;
     div {
+      margin-top: 5px;
       flex-grow: 1;
-      max-width: 30%;
+    
       flex-basis: 0;
       display: flex;
       text-align: center;
       align-items: center;
       justify-content: space-evenly;
+    }
+    .peoples{
+      display: flex;
+      flex-direction: column;
     }
     .date {
       display: flex;
@@ -37,12 +43,15 @@
 
     div {
       flex: 1 1 25%;
-      max-width: 30%;
       flex-basis: 0;
       display: flex;
       text-align: center;
       align-items: center;
       justify-content: space-evenly;
+    }
+    .peoples{
+      display: flex;
+      flex-direction: column;
     }
     .date {
       display: flex;

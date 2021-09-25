@@ -17,21 +17,21 @@
       <span class="title-span" [ngStyle]="!addSleepingNight ? addSleepingNightStyles[0] : addSleepingNightStyles[2]"
         (click)='addSleepingNightHandler()'>מקומות לינה ששוריינו</span>
       <span class="title-span add" [ngStyle]="addSleepingNight ? addSleepingNightStyles[1] : null"
-        (click)='addSleepingNightHandler()'>הוספת שיריון חדש</span>
+        (click)='addSleepingNightHandler()'>{{editMode ? 'עדכון שיריון' : 'הוספת שיריון חדש'}}</span>
     </ng-container>
     <ng-container *ngIf='!addSleepingNightDirty'>
       <span class="title-span">שריין לינה</span>
     </ng-container>
   </div>
   <!-- <hr> -->
-  <app-filled-night-form [totalAmount]="5" (emitFormValues)="addFilledNight($event)" [valuesForEdit]='editFormObj'
+  <app-filled-night-form [totalAmount]="5" (emitFormValues)="addFilledNight($event)" [valuesForEdit]='editFormObj' (emitFormUpdate)='updateFilledNightItem($event)'
    *ngIf='!addSleepingNightDirty && addSleepingNight || addSleepingNight && addSleepingNightDirty'>
 
   </app-filled-night-form>
 
   <div class="sleeping-options__filled-nights">
     <app-filled-night *ngFor="let filledNight of filledNightsArray; let i = index"
-      (deleteFilledNight)="deleteFilledNight(i)" (editFilledNight)="editFilledNight($event, i)" 
+      (deleteFilledNight)="deleteFilledNight(i)" (editFilledNight)="editFilledNight(i)" 
       (deleteFilledNightOption)='deleteFilledNightOption($event,i)' (editFilledNightOption)='editFilledNightOption($event,i)'
       [filledNight]="filledNight" [index]="index" [filledNightOptions]='filledNight.optionsArr'></app-filled-night>
   </div>
