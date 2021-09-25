@@ -7,7 +7,9 @@
   .main-card {
     display: flex;
     padding: 10px;
+    align-items: baseline;
     div {
+      margin-top: 5px;
       flex-grow: 1;
       max-width: 30%;
       flex-basis: 0;

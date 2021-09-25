@@ -176,7 +176,6 @@ export class SleepingOptionsComponent implements OnInit {
     peopleCount: string;
     amount: string;
     comments: string;
-    date: string | Date;
     optionsArr: any[];
   }[] = [
 
@@ -267,12 +266,7 @@ export class SleepingOptionsComponent implements OnInit {
       this.addSleepingNight = false;
       return;
     }
-    if (this.indexToPatch > -1) {
-      this.filledNightsArray[this.indexToPatch] = form.value;
-    } else {
-      this.filledNightsArray.push(form.value);
-    }
-    this.indexToPatch = -1;
+    this.filledNightsArray.push(form.value);
     this.addSleepingNightDirty = true;
     this.addSleepingNight = false;
   }
@@ -283,19 +277,31 @@ export class SleepingOptionsComponent implements OnInit {
   deleteFilledNightOption(indexOfOption: number, index: number) {
     this.filledNightsArray[index].optionsArr.splice(indexOfOption, 1);
   }
-  editFilledNight(form, index) {
-    console.log(this.filledNightsForm)
-    this.filledNightsForm.formGroup.patchValue(form);
-    this.indexToPatch = index;
+  editFilledNight(index:number) {
+    this.editFormObj = [this.filledNightsArray[index], index];
+    this.addSleepingNight = true;
+    this.addSleepingNightDirty = true;
   }
   public editFilledNightOption(optionIndex: number, index: number) {
     const item = this.filledNightsArray[index].optionsArr[optionIndex];
-    this.editFormObj = { ...item };
-
-    console.log({ item });
-
+    this.editFormObj = [item, index, optionIndex];
     this.addSleepingNight = true;
     this.addSleepingNightDirty = true;
+  }
+  public updateFilledNightItem(item: any[]): void {
+    const index = item[1];
+    const newItem = item[0].value;
+    const arr = [... this.filledNightsArray]
+    if (item.length === 3) {
+      const optionIndex = item[2];
+      arr[index].optionsArr[optionIndex] = newItem;
+      this.filledNightsArray = arr;
+    } else {
+      arr[index] = newItem;
+      this.filledNightsArray = arr;
+    }
+    this.addSleepingNight = false;
+    this.editFormObj = null;
   }
   public addSleepingNightHandler(): void {
     this.addSleepingNight = !this.addSleepingNight;

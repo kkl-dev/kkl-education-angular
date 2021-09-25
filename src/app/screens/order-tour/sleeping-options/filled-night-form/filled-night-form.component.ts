@@ -7,9 +7,12 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class FilledNightFormComponent implements OnInit, OnChanges {
   public filledNightForm: FormGroup;
+  public editMode: boolean = false;
   @Input() valuesForEdit: any;
   @Input() totalAmount: number = 0;
   @Output() emitFormValues: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() emitFormUpdate: EventEmitter<any> = new EventEmitter();
+
   saveForValue: string = '';
 
   sleepingTypeOptions = [
@@ -43,21 +46,21 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
       comments: new FormControl(null),
       optionsArr: new FormControl([])
     });
-
-    if(this.valuesForEdit) {
-      this.updateItem(this.valuesForEdit);
+    if (this.valuesForEdit !== undefined && this.valuesForEdit !== null) {
+      this.updateItem(this.valuesForEdit[0]);
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.valuesForEdit.currentValue !== undefined) {
-      this.updateItem(changes.valuesForEdit.currentValue);
-    }
+    // if (changes.valuesForEdit.currentValue && changes.valuesForEdit.currentValue[0] !== undefined) {
+    //   console.log(changes.valuesForEdit.currentValue)
+    //   this.updateItem(changes.valuesForEdit.currentValue[0],changes.value.currentValue[1],changes.value.currentValue[2]);
+    // }
   }
 
   public updateItem(item: any) {
-    const { controls } = this.filledNightForm || {}; 
-
+    this.editMode = true;
+    const { controls } = this.filledNightForm || {};
     if (controls) {
       controls.nightsCount.setValue(item.nightsCount)
       controls.sleepingPlace.setValue(item.sleepingPlace)
@@ -67,9 +70,15 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
       controls.comments.setValue(item.comments)
       controls.optionsArr.setValue(item.optionsArr)
     }
-    console.log(this.filledNightForm)
   }
-
+  
+  public sumbitUpdatedItem(): void {
+    this.updateNightCount();    
+    this.valuesForEdit[2] !== undefined ? this.emitFormUpdate.emit([this.filledNightForm, this.valuesForEdit[1], this.valuesForEdit[2]])
+      : this.emitFormUpdate.emit([this.filledNightForm, this.valuesForEdit[1]]);
+    this.editMode = false;
+    this.valuesForEdit = null;
+  }
   onSubmit() {
     this.updateNightCount();
     this.emitFormValues.emit(this.filledNightForm);
@@ -86,13 +95,13 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
     this.updateNightCount()
   }
   public updateNightCount(): void {
-    this.filledNightForm.controls.nightsCount.setValue(this.filterSelectedOptions())
+    const options = this.filterSelectedOptions();
+    if(options.length !== 0){
+      this.filledNightForm.controls.nightsCount.setValue(options);
+    }
   }
   public filterSelectedOptions() {
     let tmpArr = this.nightNumberOptions.filter(i => i.completed);
     return tmpArr.map(i => i);
   }
-  // onChange(value) {
-  //   console.log(value);
-  // }
 }
