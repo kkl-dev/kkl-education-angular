@@ -33,7 +33,7 @@ export class BottomNavigationComponent implements OnInit {
     if (this.currentPage == this.lastPage - 1) {
       this.router.navigateByUrl(this.nextUrl);
     } else {
-       this.createTrip();
+       //this.createTrip();
       this.currentPage++;
       this.changePage.emit(+this.currentPage);
     }

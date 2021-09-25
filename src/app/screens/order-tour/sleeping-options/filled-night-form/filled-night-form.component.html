@@ -5,17 +5,9 @@
       <mat-option *ngFor="let option of sleepingTypeOptions" value="{{ option.value }}">{{ option.text }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <div style="display: none;">
-    <input
-    matInput
-    type="text"
-    name="accomodationTypeName"
-    formControlName="accomodationTypeName"
-  />
-  </div>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>בחר לילות</mat-label>
-    <mat-select name="date" formControlName="date">
+    <mat-select name="nightsCount" formControlName="nightsCount">
       <!-- <mat-option *ngFor="let option of nightNumberOptions; let i =index" [value]="{option.value"}>
             <mat-checkbox [checked]="selected === i" (change)="onChange(option.text );selected = i"> {{option.text }}</mat-checkbox>
         </mat-option> -->
@@ -52,7 +44,7 @@
   </div>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 2' }">
     <mat-label>כמות</mat-label>
-    <input matInput type="number" name="unitsNumber" formControlName="unitsNumber" />
+    <input matInput type="number" name="amount" formControlName="amount" />
   </mat-form-field>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
     <mat-label>הערות</mat-label>

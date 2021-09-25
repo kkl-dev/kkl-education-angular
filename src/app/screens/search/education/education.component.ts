@@ -213,8 +213,8 @@ export class EducationComponent implements OnInit {
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       } else {
-        this.sleepingDates.from = tempDateArr[1];
-        this.sleepingDates.till = tempDateArr[0];
+        this.sleepingDates.from = tempDateArr[0];
+        this.sleepingDates.till = tempDateArr[1];
       }
     } else {
 
@@ -260,6 +260,7 @@ export class EducationComponent implements OnInit {
       this.checkAvailabilltyService.saveCheackAvailabilltyValues(
         this.signupForm
       );
+      this.router.navigate([this.routerLinkContinue])
     }
   }
   singleDayTrip() {
@@ -272,15 +273,20 @@ export class EducationComponent implements OnInit {
     var thisDate = today.toISOString().split('T')[0].split('-');
     return [thisDate[2], thisDate[1], thisDate[0]].join('-');
   }
+  
+  //   getDaysArray(start: any, end: any) {
+  //   for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
+  //   return arr;
+  // };
+
   getDaysArray(start: any, end: any) {
-    for (
-      var arr = [], dt = new Date(start);
-      dt <= end;
-      dt.setDate(dt.getDate() + 1)
-    ) {
-      arr.push(new Date(dt));
+    var arr = [];
+    let index = this.freeSpacesArray.findIndex(Start => Start.date.getDate() === new Date(start).getDate());
+    while (this.freeSpacesArray[index].date.getDate() <= new Date(end).getDate()) {
+      arr.push(this.freeSpacesArray[index]);
+      index++;
     }
     return arr;
   }
-  listDays = this.getDaysArray(this.sleepingDates.from, this.sleepingDates.till);
+  //listDays = this.getDaysArray(this.sleepingDates.from, this.sleepingDates.till);
 }

@@ -207,7 +207,6 @@ export class SquadAssembleService {
             inputProps: {
               labelSize: 's1',
             },
-            value: 'tal'
           }),
 
           new QuestionTextbox({
@@ -218,7 +217,6 @@ export class SquadAssembleService {
             inputProps: {
               labelSize: 's3',
             },
-            value: '0525888888'
           }),
           new QuestionTextbox({
             key: 'contactEmail',
@@ -228,7 +226,6 @@ export class SquadAssembleService {
             inputProps: {
               labelSize: 's1',
             },
-            value: 'test@gmail.com'
           }),
         ],
       },
@@ -477,6 +474,6 @@ export class SquadAssembleService {
 
   savefilledNightsArray(array){
     this.filledNightsArray= array;
-    console.log('I am service: ',this.filledNightsArray);
+    console.log('filledNightsArray is: ',this.filledNightsArray);
   }
 }
