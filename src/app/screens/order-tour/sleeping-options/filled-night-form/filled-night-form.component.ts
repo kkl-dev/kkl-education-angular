@@ -52,6 +52,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.valuesForEdit.currentValue !== undefined) {
       this.updateItem(changes.valuesForEdit.currentValue);
+      // console
     }
   }
 
