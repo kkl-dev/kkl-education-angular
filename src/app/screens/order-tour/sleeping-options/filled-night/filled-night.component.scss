@@ -1,19 +1,71 @@
 .filled-night {
-    margin-top: 10px;
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
+  min-height: 85px;
   direction: rtl;
-   background-color: #F6F6F6;
-  &__btn {
-    background-color: transparent;
-    cursor: pointer;
-    padding: 4px;
-    border: 0;
-    color: #37c56b;
-    border-bottom: 1px solid #37c56b;
-    &:first-of-type {
-      margin-left: 5px;
+  background: #f6f6f6;
+  border-radius: 6px;
+  margin: 10px;
+  .main-card {
+    display: flex;
+    padding: 10px;
+    align-items: baseline;
+    div {
+      margin-top: 5px;
+      flex-grow: 1;
+    
+      flex-basis: 0;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    .peoples{
+      display: flex;
+      flex-direction: column;
+    }
+    .date {
+      display: flex;
+      flex-direction: column;
+      color: #707070;
+    }
+    .date > span:first-child {
+      color: #448ecd;
+      font-weight: 600;
+    }
+    .controllers > p {
+      margin: 0;
+      text-decoration: underline;
+      color: #448ecd;
+    }
+  }
+  .more-options {
+    display: flex;
+    padding: 10px;
+
+    div {
+      flex: 1 1 25%;
+      flex-basis: 0;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    .peoples{
+      display: flex;
+      flex-direction: column;
+    }
+    .date {
+      display: flex;
+      flex-direction: column;
+      color: #707070;
+    }
+    .date > span:first-child {
+      color: #448ecd;
+      font-weight: 600;
+    }
+    .controllers > p {
+      margin: 0;
+      text-decoration: underline;
+      color: #448ecd;
     }
   }
 }

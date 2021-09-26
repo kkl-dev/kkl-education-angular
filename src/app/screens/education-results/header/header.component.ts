@@ -64,7 +64,7 @@ export class HeaderComponent implements OnInit {
 
     this.options = {
       firstCalendarDay: 0,
-      format: 'LL/dd/yyyy',
+      format: 'dd/LL/yyyy', 
       closeOnSelected: true,
       // minDate: addDays(new Date(), 5),
       // maxDate: addDays(new Date(), 10),
@@ -174,21 +174,31 @@ export class HeaderComponent implements OnInit {
       start = new Date(start.setDate(start.getDate() + 1));
       freeSpacesArrayTemp.push({
         date: start,
-        freeSpace: [
-          ['בקתה', Math.floor(Math.random() * 8).toString()],
-          ['אוהל', Math.floor(Math.random() * 8).toString()],
-          ['קאמפ', Math.floor(Math.random() * 8).toString()], 
-          ['חדר', Math.floor(Math.random() * 8).toString()]
+        freeSpace: 
+          [
+            {
+              accomodationName: "cabin",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+                        {
+              accomodationName: "tent",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
+                        {
+              accomodationName: "room",
+              availableBeds: +Math.floor(Math.random() * 8).toString()
+            },
         ]
       });
       i++;
     }
     return freeSpacesArrayTemp;
   }
+  
 
   options: CalendarOptions = {
     firstCalendarDay: 0,
-    format: 'LL/dd/yyyy',
+    format: 'dd/LL/yyyy',
 
     closeOnSelected: true,
     minYear: 2019,
@@ -201,7 +211,14 @@ export class HeaderComponent implements OnInit {
       this.emitNewDates.emit(e);
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
-      if (new Date(tempDateArr[0]) < new Date(tempDateArr[1])) {
+      const dateFormat1 = tempDateArr[0].split('/').reverse();
+      dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+      dateFormat1[2] = (+dateFormat1[2]).toString(); 
+      const dateFormat2 = tempDateArr[1].split('/').reverse();
+      dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+      dateFormat2[2] = (+dateFormat2[2]).toString();
+    
+      if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
         this.dateObj.from = tempDateArr[0];
         this.dateObj.to = tempDateArr[1];
       } else {

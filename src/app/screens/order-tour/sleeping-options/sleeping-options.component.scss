@@ -1,6 +1,29 @@
 .sleeping-options {
   height: 100%;
   width: 100% !important;
+  .title-span {
+    color: #448ecd;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  hr {
+    border: 1px solid #0572BA2B;
+  }
+  .title {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #0572BA2B;
+    *{
+      margin: 10px;
+    }
+    .add {
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .chosen{
+      border-bottom: 1px solid #448ECD;
+    }
+  }
 }
 
 ::ng-deep .form {
@@ -16,6 +39,6 @@
   padding: 10px 15px;
 }
 
-::ng-deep .airbnb-calendar-container{
+::ng-deep .airbnb-calendar-container {
   left: 0 !important;
 }

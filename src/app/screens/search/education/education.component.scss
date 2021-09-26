@@ -4,6 +4,10 @@ form {
   grid-template-columns: 1fr 0.7fr 0.7fr 0.6fr;
   column-gap: 40px;
 }
+.education:focus{
+  background-color: black !important;
+  padding: 10000px !important;
+}
 .education {
   height: calc(100% - 90px);
   background-image: url("../../../../assets/images/education-table-background.jpg");
@@ -149,20 +153,94 @@ mat-select {
   text-align: center;
 }
 
+.education {
+  ::ng-deep .mat-select-value,
+  ::ng-deep .mat-select-value-text,
+  ::ng-deep .mat-select-min-line {
+    height: 51px !important;
+    vertical-align: middle;
+    padding-right: 5px;
+  }
 
-::ng-deep .mat-select-value,
-::ng-deep .mat-select-value-text,
-::ng-deep .mat-select-min-line {
-  height: 51px !important;
-  vertical-align: middle;
-  padding-right: 5px;
-}
+  ::ng-deep .mat-select-value-text {
+    margin: auto;
+  }
+  ::ng-deep .mat-select-min-line {
+    height: 51px !important;
+  }
 
-::ng-deep .mat-select-value-text {
-  margin: auto;
-}
-::ng-deep .mat-select-min-line {
-  height: 51px !important;
+  ::ng-deep .mat-select-panel {
+    min-width: 261px !important;
+    text-align: right;
+    margin-left: auto;
+    width: 100%;
+    max-width: 100% !important;
+    max-height: fit-content !important;
+  }
+
+  ::ng-deep .cdk-overlay-pane {
+    text-align: right;
+    transform: translateX(0) !important;
+    transform: translatey(51px) !important;
+  }
+
+  ::ng-deep .mat-form-field {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+
+  ::ng-deep .mat-select-arrow {
+    border: 0 !important;
+    &:before {
+      border-style: solid;
+      border-width: 0.15em 0.15em 0 0;
+      content: "";
+      display: inline-block;
+      height: 0.7em;
+      left: 20px;
+      position: relative;
+      top: -5px;
+      transform: rotate(135deg);
+      vertical-align: top;
+      width: 0.7em;
+      // color: $--green-color-bright;
+    }
+  }
+
+  ::ng-deep .mat-form-field-infix,
+  .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0 !important;
+    border-top: 0;
+  }
+
+  ::ng-deep .mat-form-field-wrapper,
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper,
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
+
+  ::ng-deep .mat-checkbox-inner-container,
+  .mat-checkbox-frame {
+    height: 25px !important;
+    width: 25px !important;
+    margin-top: 5px !important ;
+    margin-left: 5px !important;
+  }
+  ::ng-deep .mat-checkbox-label {
+    margin-top: 5px !important ;
+  }
+  // overwrite the checkbox background
+  ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+  .mat-checkbox-indeterminate .mat-checkbox-background {
+    background-color: #009eee !important;
+  }
+
+  ::ng-deep .airbnb-calendar-container {
+    left: -360px !important;
+  }
 }
 
 .mat-select-panel .mat-primary {
@@ -170,20 +248,6 @@ mat-select {
   width: 100%;
 }
 
-::ng-deep .mat-select-panel {
-  min-width: 261px !important;
-  text-align: right;
-  margin-left: auto;
-  width: 100%;
-  max-width: 100% !important;
-  max-height: fit-content !important;
-}
-
-::ng-deep .cdk-overlay-pane {
-  text-align: right;
-  transform: translateX(0) !important;
-  transform: translatey(51px) !important;
-}
 .mat-option {
   text-align: right;
   margin: 10px 0;
@@ -201,62 +265,8 @@ mat-select,
   margin-left: 40px;
   width: 100%;
 }
-::ng-deep .mat-form-field {
-  width: 100%;
-}
-
-::ng-deep .mat-form-field-underline {
-  display: none;
-}
-
-::ng-deep .mat-select-arrow {
-  border: 0 !important;
-  &:before {
-    border-style: solid;
-    border-width: 0.15em 0.15em 0 0;
-    content: "";
-    display: inline-block;
-    height: 0.7em;
-    left: 20px;
-    position: relative;
-    top: -5px;
-    transform: rotate(135deg);
-    vertical-align: top;
-    width: 0.7em;
-    // color: $--green-color-bright;
-  }
-}
-
-::ng-deep .mat-form-field-infix,
-.mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0 !important;
-  border-top: 0;
-}
-
-::ng-deep .mat-form-field-wrapper,
-.mat-form-field-appearance-legacy .mat-form-field-wrapper,
-.mat-form-field-appearance-legacy .mat-form-field-wrapper {
-  padding-bottom: 0 !important;
-}
-
 app-date-picker {
   align-self: center;
-}
-
-::ng-deep .mat-checkbox-inner-container,
-.mat-checkbox-frame {
-  height: 25px !important;
-  width: 25px !important;
-  margin-top: 5px !important ;
-  margin-left: 5px !important;
-}
-::ng-deep .mat-checkbox-label {
-  margin-top: 5px !important ;
-}
-// overwrite the checkbox background
-::ng-deep .mat-checkbox-checked .mat-checkbox-background,
-.mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: #009eee !important;
 }
 
 // overwrite the ripple overlay on hover and click
@@ -265,10 +275,4 @@ app-date-picker {
   .mat-checkbox-ripple
   .mat-ripple-element {
   background-color: #009eee !important;
-}
-
-
-::ng-deep .airbnb-calendar-container {
-  left: -360px !important;
-  background-color: black;
 }

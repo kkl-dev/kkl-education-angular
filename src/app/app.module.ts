@@ -112,6 +112,7 @@ import { IconCardComponent } from './components/icon-card/icon-card.component';
 import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
 import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
 import { SizeDirective } from './utilities/directivs/size.directive';
+import { FilledNightFormComponent } from './screens/order-tour/sleeping-options/filled-night-form/filled-night-form.component';
 
 
 FullCalendarModule.registerPlugins([
@@ -217,7 +218,8 @@ FullCalendarModule.registerPlugins([
     IconCardComponent,
     CalendarComponent,
     ActiveStateDirective,
-    SizeDirective
+    SizeDirective,
+    FilledNightFormComponent
   ],
   imports: [
     BrowserModule,
@@ -232,7 +234,7 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     AirbnbCalendarModule,
     ApiModule,
-    FullCalendarModule,
+    FullCalendarModule, 
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

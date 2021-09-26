@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CheckAvailabilityService} from 'src/app/utilities/services/check-availability.service';
-import {TooltipDataModel} from './tooltip/tooltip.component';
-import {UserDataService} from 'src/app/services/user-data.service';
-import {UserService} from '../../api/api/user.service';
-import {TripService} from 'src/app/services/trip.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
+import { TooltipDataModel } from './tooltip/tooltip.component';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { UserService } from '../../api/api/user.service';
+import { TripService } from 'src/app/services/trip.service';
 
 export interface InfoCard {
   svgUrl: string;
@@ -26,32 +26,27 @@ export class EducationResultsComponent implements OnInit {
   dateObj: any;
 
   ngOnInit() {
-    this.tripService.forestCenter.subscribe(result => {
+    this.tripService.forestCenter.subscribe((result) => {
       this.forestCenter = result; // this set's the username to the default observable value
     });
 
     this.availabilityItemsArray = [
-      {date: '15.06.21', text: '1'},
-      {date: '16.06.21', text: '2'},
-      {date: '17.06.21', text: '3'}
-    ]
+      { date: '15.06.21', text: '1' },
+      { date: '16.06.21', text: '2' },
+      { date: '17.06.21', text: '3' },
+    ];
 
     if (this.tripService.centerField) {
-
       this.dateObj = this.tripService.dateObj;
 
       for (let key in this.dateObj) {
         let value = this.dateObj[key];
       }
     }
-
-
   }
-
 
   date1 = new Date('7/13/2010');
   date2 = new Date('12/15/2010');
-
 
   getDifferenceInDays(date1: any, date2: any) {
     const diffInMs = Math.abs(date2 - date1);
@@ -79,30 +74,29 @@ export class EducationResultsComponent implements OnInit {
       sleepingAreas: 2,
       avialableSpaces: 16,
       type: 'בקתות',
-      singleUnit: 'בבקתה'
-
+      singleUnit: 'בבקתה',
     },
     {
       svgUrl: 'assets/images/tent.svg',
       sleepingAreas: 4,
       avialableSpaces: 36,
       type: 'אוהלים',
-      singleUnit: 'באוהל'
+      singleUnit: 'באוהל',
     },
     {
       svgUrl: 'assets/images/camp.svg',
       sleepingAreas: 1,
       avialableSpaces: 120,
       type: 'גיחה',
-      singleUnit: 'לנים'
-    }
+      singleUnit: 'לנים',
+    },
   ];
 
   // changeForestCenter(e: any, visible: any) {
   //   this.child.changeForestCenter(visible);
   // }
 
-  public chosenDate: number = 0
+  public chosenDate: number = 0;
 
   sleepingOptionsByDay: {
     day: string;
@@ -261,24 +255,31 @@ export class EducationResultsComponent implements OnInit {
   }
 
   changeDatesHandler(newDates: string) {
-
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
 
-
-    let date1 = new Date(dates[0]);
-    let date2 = new Date(dates[1]);
+    const dateFormat1 = dates[0].split('/').reverse();
+    dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+    dateFormat1[2] = (+dateFormat1[2]).toString();
+    const dateFormat2 = dates[1].split('/').reverse();
+    dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+    dateFormat2[2] = (+dateFormat2[2]).toString();
+    let date1 = new Date(dateFormat1.join(','));
+    let date2 = new Date(dateFormat2.join(','));
+    console.log(date1.getMonth());
+    console.log(date1.getDate());
+    console.log(date1.getFullYear());
 
     const utc1 = Date.UTC(
       date1.getFullYear(),
       date1.getMonth(),
-      date1.getDate(),
+      date1.getDate()
     );
     const utc2 = Date.UTC(
       date2.getFullYear(),
       date2.getMonth(),
-      date2.getDate(),
+      date2.getDate()
     );
 
     const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
@@ -288,7 +289,7 @@ export class EducationResultsComponent implements OnInit {
     for (let i = 0; i <= totalDays; i++) {
       //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
       const newDateString = `${newDate.getDate()}.${
-        newDate.getMonth() + 1
+        (newDate.getMonth() + 2).toString()
       }.${newDate.getFullYear()}`;
       newSleepingOptionsByDay.push({
         day: newDateString,
@@ -334,7 +335,6 @@ export class EducationResultsComponent implements OnInit {
     this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(
       this.sleepingOptionsByDay[0].day
     );
-
 
     this.changeDatesHandler(
       this.checkAvailabillityService.checkAvailabilltyValues.calendarInput

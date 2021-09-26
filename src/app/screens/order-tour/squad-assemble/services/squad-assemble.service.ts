@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
@@ -15,24 +15,32 @@ import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 export class SquadAssembleService {
   freeSpacesArray: FreeSpace[] = [];
 
-  
+  formsArray: FormGroup[] = [];
+
   freeSpacesArrayGenarator(start: Date, end: Date) {
-    let i = 0;
-    let freeSpacesArrayTemp: FreeSpace[] = [];
+    const i = 0;
+    let freeSpacesArray = [];
     while (start < end) {
       start = new Date(start.setDate(start.getDate() + 1));
-      freeSpacesArrayTemp.push({
+      freeSpacesArray.push({
         date: start,
         freeSpace: [
-          ['בקתה', Math.floor(Math.random() * 8).toString()],
-          ['אוהל', Math.floor(Math.random() * 8).toString()],
-          ['קאמפ', Math.floor(Math.random() * 8).toString()], 
-          ['חדר', Math.floor(Math.random() * 8).toString()]
-        ]
+          {
+            accomodationName: 'cabin',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
+          },
+          {
+            accomodationName: 'tent',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
+          },
+          {
+            accomodationName: 'room',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
+          },
+        ],
       });
-      i++;
     }
-    return freeSpacesArrayTemp;
+    return freeSpacesArray;
   }
   // cabins: this.AvailableDates[i].availableBedsCabin!,
   // tents: this.AvailableDates[i].availableBedsTent!,
@@ -88,6 +96,7 @@ export class SquadAssembleService {
       key: 'fieldCenter',
       type: 'select',
       label: 'מרכז שדה',
+
       inputProps: {
         options: [
           { key: 'solid', value: '12123' },
@@ -383,4 +392,19 @@ export class SquadAssembleService {
       rows: 6,
     }),
   ];
+
+  updateFormArray(form: FormGroup) {
+    const index = this.formsArray.findIndex(
+      (formItem) => form.controls == formItem.controls
+    );
+    if (index > -1) {
+      this.formsArray[index] = form;
+      console.log('fonund');
+    } else {
+      console.log('else');
+      this.formsArray.push(form);
+    }
+    
+    console.log(this.formsArray);
+  }
 }
