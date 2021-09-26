@@ -16,10 +16,14 @@ export class ExpendPanelComponent implements OnInit {
 
   // prop for custom class
   @Input() public variant: string;
+  @Input() public expanded: boolean;
 
   public panelOpenState = false;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.variant = this.variant || ''
+    this.expanded = this.expanded || false
+  }
 }
