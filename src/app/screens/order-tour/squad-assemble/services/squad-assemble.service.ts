@@ -43,9 +43,6 @@ export class SquadAssembleService {
     }
     return freeSpacesArray;
   }
-  // cabins: this.AvailableDates[i].availableBedsCabin!,
-  // tents: this.AvailableDates[i].availableBedsTent!,
-  // campgrounds: this.AvailableDates[i].availableBedsCamping!,
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
@@ -135,7 +132,6 @@ export class SquadAssembleService {
         cols: 3,
         rows: 6,
         questions: [
-
           new QuestionAutocomplete({
             key: 'clientName',
             label: 'הקלד לקוח רצוי',
@@ -178,7 +174,6 @@ export class SquadAssembleService {
         cols: 3,
         rows: 6,
         questions: [
-
           new QuestionAutocomplete({
             key: 'payerName',
             label: 'לקוח משלם',
@@ -410,6 +405,52 @@ export class SquadAssembleService {
         options: [
           { key: 'פנים', value: 'פנים' },
           { key: 'חוץ', value: 'חוץ' },
+        ],
+      },
+    }),
+  ];
+
+  public budgetQuestions: QuestionBase<string>[] = [
+    new QuestionSelect({
+      key: 'budgetIncome',
+      type: 'select',
+      fullWidth: true,
+      rows: 4,
+      label: 'תת סעיף תקציב הכנסות',
+      inputProps: {
+        options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+      },
+    }),
+    new QuestionSelect({
+      key: 'budgetExpense',
+      type: 'select',
+      fullWidth: true,
+      rows: 4,
+      label: 'תת סעיף תקציב הוצאות',
+      inputProps: {
+        options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+      },
+    }),
+    new QuestionBase({
+      key: 'location',
+      isGroup: true,
+      fullWidth: true,
+      rows : 6,
+      group: {
+        label: 'תקצוב פעילות',
+        key: 'location',
+        rows : 6,
+        questions: [
+          new QuestionSelect({
+            label: 'ישוב',
+            key: 'location',
+            type: 'select',
+            fullWidth: true,
+            rows: 4,
+            inputProps: {
+              options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+            },
+          }),
         ],
       },
     }),
