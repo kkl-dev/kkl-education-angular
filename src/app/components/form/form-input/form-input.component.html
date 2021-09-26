@@ -9,14 +9,14 @@
         " matInput [type]="type" [formControl]="control" control="control" autocomplete="off"
       (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" #input [placeholder]="label" />
 
-    <input #dateInput *ngIf="controlType === 'calendar'" matInput type="text" 
+    <input #dateInput *ngIf="controlType === 'calendar'" matInput type="text"
     (newDate)='newDateRecived($event)'
     (sleepingPlace)='newSleepingPlaceRecived($event)'
     (prevDate)='prevDateRecived($event)'
     [options]="dateOptions"
     airbnb-calendar
      control="control"
-      autocomplete="none" 
+      autocomplete="none"
       [(ngModel)]="control.value" dir="rtl" />
 
     <mat-select color="primary" [formControl]="control" *ngIf="controlType === 'select'"
