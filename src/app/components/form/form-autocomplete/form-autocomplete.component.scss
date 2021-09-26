@@ -1,0 +1,13 @@
+@import "../../../../styles.scss";
+
+mat-grid-list,
+mat-grid-tile,
+app-form-input {
+  height: 100%;
+  width: 100%;
+}
+
+.autocomplete {
+  background-color: color(border);
+  padding-right: spacing(1);
+}

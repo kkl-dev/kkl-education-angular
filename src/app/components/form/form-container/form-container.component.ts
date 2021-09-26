@@ -6,7 +6,7 @@ import {
   EventEmitter,
   ElementRef,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
@@ -36,6 +36,7 @@ export class FormContainerComponent implements OnInit {
   };
 
   @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
 
   constructor(private formService: FormService) {}
 
@@ -78,5 +79,9 @@ export class FormContainerComponent implements OnInit {
 
   public onEdit() {
     this.form.enable();
+  }
+
+  public onAutocomplete(control) {
+    this.autocomplete.emit(control)
   }
 }

@@ -113,6 +113,7 @@ import { CalendarComponent } from './screens/order-tour/facilities/calendar/cale
 import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
 import { SizeDirective } from './utilities/directivs/size.directive';
 import { FilledNightFormComponent } from './screens/order-tour/sleeping-options/filled-night-form/filled-night-form.component';
+import { FormAutocompleteComponent } from './components/form/form-autocomplete/form-autocomplete.component';
 
 
 FullCalendarModule.registerPlugins([
@@ -219,7 +220,8 @@ FullCalendarModule.registerPlugins([
     CalendarComponent,
     ActiveStateDirective,
     SizeDirective,
-    FilledNightFormComponent
+    FilledNightFormComponent,
+    FormAutocompleteComponent
   ],
   imports: [
     BrowserModule,

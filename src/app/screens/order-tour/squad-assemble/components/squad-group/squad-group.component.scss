@@ -5,7 +5,8 @@ mat-grid-tile,
 app-form-container,
 app-form-input,
 app-form-header,
-app-typography {
+app-typography,
+app-form-autocomplete  {
   height: 100%;
   width: 100%;
 }
@@ -43,3 +44,8 @@ button.gender-button {
   display: flex;
   justify-content: center;
 }
+
+app-form-container {
+  overflow: auto;
+}
+

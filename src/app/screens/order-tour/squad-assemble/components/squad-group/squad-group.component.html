@@ -17,19 +17,19 @@
         [questions]="questions"
         [$questions]="$questions"
         [hasBottomButton]="true"
-        [slots]="{ groupInputs }"
+        [slots]="{ contact, payerName, wantedClient }"
         (valueChange)="logForm($event)"
       >
       </app-form-container>
     </mat-grid-tile>
 
-    <mat-grid-tile class="row-height"> 
+    <mat-grid-tile class="row-height">
       <mat-grid-list
         *ngIf="hasBottom"
         [cols]="bottomData.length"
         rowHeight="5vh"
-      > 
-        <mat-grid-tile *ngFor="let item of bottomData; let i = index" >
+      >
+        <mat-grid-tile *ngFor="let item of bottomData; let i = index">
           <div fxFill fxLayout="row" fxLayoutAlign="start center" dir="rtl">
             <div fxFlex="50">
               <app-typography size="14" class="label-text" [bold]="500">
@@ -75,21 +75,37 @@
   <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
 </ng-template>
 
-<ng-template
-  #groupInputs
-  let-group="group"
-  let-question="question"
-  let-formGroup="formGroup"
->
-  <app-form-input
-    class="group-input"
-    [groupLabel]="question.key === 'girls' ? question.label : 'g'"
-    [control]="formGroup.controls[group.key].controls[question.key]"
-    [label]="question.label"
-    [split]="cols > question.cols"
-    [theme]="question.key === 'girls' && 'accent'"
-    [type]="question.controlType"
-    [labelSize]="question.inputProps?.labelSize"
-  >
-  </app-form-input>
+<ng-template #contact let-group="group" let-formGroup="formGroup">
+  <mat-grid-list [cols]="group.cols" rowHeight="2vh">
+    <mat-grid-tile
+      *ngFor="let question of group.questions"
+      [colspan]="question.cols"
+      [rowspan]="question.rows"
+    >
+      <app-form-input
+        class="group-input"
+        [groupLabel]="question.key === 'girls' ? question.label : 'g'"
+        [control]="formGroup.controls[group.key].controls[question.key]"
+        [label]="question.label"
+        [split]="cols > question.cols"
+        [theme]="question.key === 'girls' && 'accent'"
+        [type]="question.controlType"
+      >
+      </app-form-input>
+    </mat-grid-tile>
+  </mat-grid-list>
+</ng-template>
+
+<ng-template #payerName let-group="group" let-formGroup="formGroup">
+  <app-form-autocomplete
+    [group]="group"
+    [formGroup]="formGroup"
+  ></app-form-autocomplete>
+</ng-template>
+
+<ng-template #wantedClient let-group="group" let-formGroup="formGroup">
+  <app-form-autocomplete
+    [group]="group"
+    [formGroup]="formGroup"
+  ></app-form-autocomplete>
 </ng-template>
