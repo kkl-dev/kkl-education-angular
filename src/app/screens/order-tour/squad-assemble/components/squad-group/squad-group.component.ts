@@ -18,11 +18,13 @@ export interface FormHeader {
   providers: [FormService],
 })
 export class SquadGroupComponent {
-  public tripId: string = '0000000';
 
   @Input() public group: QuestionGroup;
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;
+
+
+  public tripId: string = '0000000';
 
   // array to hold data for bottom form text
   public bottomData: FlexCell[] = [];
@@ -44,7 +46,7 @@ export class SquadGroupComponent {
     this.questions = this.group.questions || [];
 
     if (this.hasBottom) {
-      this.setSelectDataDemo()
+      this.setSelectDataDemo();
     }
   }
 
@@ -68,14 +70,14 @@ export class SquadGroupComponent {
           label: 'מס משתתפים',
           value: '120',
         },
-         ];
+      ];
     }
   }
 
   //log form when valid
 
-  logForm(form){
-    console.log(form.valid);
+  logForm(form) {
+    this.squadAssembleService.updateFormArray(form);
   }
 
   // method to change squad assemble form
@@ -110,9 +112,12 @@ export class SquadGroupComponent {
     this.formService.onChangeSelect.subscribe((value) => {
       if (this.group.key === 'client') {
         this.onAddClient();
-        console.log(this.formService.formGroup.controls.contact);
         this.formService.formGroup.controls.contact.disable();
       }
     });
   }
+
+  public onAutocomplete(control) {
+  }
+ 
 }

@@ -5,6 +5,7 @@ import {
   Input,
   ViewChild,
   Output,
+  EventEmitter,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
@@ -52,6 +53,8 @@ export class FormInputComponent implements OnInit {
   public error!: string;
   public serverError!: string;
 
+  @Output() autocomplete : EventEmitter<FormControl> = new EventEmitter()
+
   public OnChange!: (event: Event) => void;
   public onTouched!: () => void;
 
@@ -84,19 +87,19 @@ export class FormInputComponent implements OnInit {
     this.value = value;
   }
 
-  
+
   newDateRecived(newDate:any){
-    console.log(newDate); 
-    
+    console.log(newDate);
+
   }
   prevDateRecived(prevDate:any){
-    console.log(prevDate); 
-    
+    console.log(prevDate);
+
   }
-  
+
   newSleepingPlaceRecived(sleepingPlace:any){
-    console.log(sleepingPlace); 
-    
+    console.log(sleepingPlace);
+
   }
 
   // subscription section
@@ -112,6 +115,9 @@ export class FormInputComponent implements OnInit {
         this.color = 'danger';
       } else {
         this.color = '';
+      }
+      if(this.controlType === 'autocomplete') {
+        this.autocomplete.emit(this.control)
       }
     });
   }

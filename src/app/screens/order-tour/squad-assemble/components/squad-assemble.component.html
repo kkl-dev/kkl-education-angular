@@ -1,12 +1,22 @@
 <div class="assemble-container">
-  <mat-grid-list cols="4" rowHeight="60vh">
+  <mat-grid-list cols="4" rowHeight="65vh">
     <mat-grid-tile *ngFor="let squad of squads; let i = index">
-      <div class="form-container">
-        <app-squad-group [group]="squad.group" [hasBottom]="squad.hasBottom">
-        </app-squad-group>
-      </div>
-      <div *ngIf="i !== squads.length - 1" class="divider">
-      </div>
+      <ng-container [ngSwitch]="squad.group.key">
+        <ng-container *ngSwitchCase="'details'">
+          <app-form-details [detailsGroup]="squad.group" [budgetGroup]="budgetGroup"></app-form-details>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          <div class="form-container">
+            <app-squad-group
+              [group]="squad.group"
+              [hasBottom]="squad.hasBottom"
+            >
+            </app-squad-group>
+          </div>
+        </ng-container>
+        <div *ngIf="i !== squads.length - 1" class="divider"></div>
+      </ng-container>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

@@ -35,7 +35,7 @@
             [options]="question.inputProps?.options"
             [dateOptions]="question.inputProps?.dateOptions"
             [controlType]="question.controlType"
-            [labelSize]="question.inputProps?.labelSize"
+            (autocomplete)="onAutocomplete($event)"
           ></app-form-input>
 
           <app-input-radio
@@ -48,13 +48,14 @@
 
         <mat-grid-tile
           *ngIf="question?.isGroup"
-          [colspan]="question.fullWidth ? cols : question.cols || 1"
+          [colspan]="1"
           [rowspan]="question.rows || 20"
         >
           <app-form-group
+            [question]="question"
             [group]="question.group"
             [formGroup]="formGroup"
-            [slot]="slots.groupInputs"
+            [slot]="slots[question.key]"
           ></app-form-group>
         </mat-grid-tile>
       </ng-container>

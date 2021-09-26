@@ -1,4 +1,4 @@
-<div class="order-tour" [ngClass]="{ 'sleeping-width': activeStep === 1 }">
+<div class="order-tour" [ngClass]="{ 'sleeping-width': activeStep === 1 || currentRoute === 'sleeping' }">
   <app-drawer *ngIf="activeStep === 0"></app-drawer>
   <div>
     <div class="content" fxLayout="column" fxLayoutAlign="stretch" fxLayout.xs="column" fxFlexFill>
@@ -7,12 +7,12 @@
           (changStep)="onChangeStep($event)">
         </app-working-steps>
       </div>
-      <div fxFlex="60">
+      <div fxFlex="65">
         <div class="steps-container">
           <ng-content></ng-content>
         </div>
       </div>
-      <div fxFlex="15" fxFlex.xs="15">
+      <div fxFlex="10" fxFlex.xs="15">
         <app-bottom-navigation [currentPage]="0" previousUrl="prevPage" nextUrl="nextPage" [lastPage]="steps.length"
           (changePage)="changeActiveStepBottomNavigation($event)"
           [title]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"></app-bottom-navigation>

@@ -21,6 +21,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDividerModule} from '@angular/material/divider';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatCardModule,
     MatExpansionModule,
     FlexLayoutModule,
-    MatDividerModule
+    MatDividerModule,
+    MatAutocompleteModule
 
   ],
   exports: [
@@ -81,7 +83,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule,
     MatDividerModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatAutocompleteModule
 
   ],
 })

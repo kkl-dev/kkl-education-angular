@@ -13,7 +13,7 @@
       {{ text }}
     </app-typography>
   </div>
-  <div fxFlex="50" fxLayoutAlign="end">
+  <div *ngIf="slots" fxFlex="50" fxLayoutAlign="end">
     <ng-container *ngTemplateOutlet="slots[custom]"></ng-container>
   </div>
 </div>

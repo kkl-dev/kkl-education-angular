@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionCalendar } from 'src/app/components/form/logic/question-calendar';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
@@ -8,6 +8,7 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
+import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 
 @Injectable({
   providedIn: 'root',
@@ -15,37 +16,33 @@ import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 export class SquadAssembleService {
   freeSpacesArray: FreeSpace[] = [];
 
-  
-  
- freeSpacesArrayGenarator(start: Date, end: Date) {
-  const i = 0;
-  let freeSpacesArray = [];
-  while (start < end) {
-    start = new Date(start.setDate(start.getDate() + 1));
-    freeSpacesArray.push({
-      date: start,
-      freeSpace: 
-        [
+  formsArray: FormGroup[] = [];
+
+  freeSpacesArrayGenarator(start: Date, end: Date) {
+    const i = 0;
+    let freeSpacesArray = [];
+    while (start < end) {
+      start = new Date(start.setDate(start.getDate() + 1));
+      freeSpacesArray.push({
+        date: start,
+        freeSpace: [
           {
-            accomodationName: "cabin",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
+            accomodationName: 'cabin',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
           },
-                      {
-            accomodationName: "tent",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
+          {
+            accomodationName: 'tent',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
           },
-                      {
-            accomodationName: "room",
-            availableBeds: +Math.floor(Math.random() * 8).toString()
+          {
+            accomodationName: 'room',
+            availableBeds: +Math.floor(Math.random() * 8).toString(),
           },
-      ]
-    });
+        ],
+      });
+    }
+    return freeSpacesArray;
   }
-  return freeSpacesArray;
-}
-  // cabins: this.AvailableDates[i].availableBedsCabin!,
-  // tents: this.AvailableDates[i].availableBedsTent!,
-  // campgrounds: this.AvailableDates[i].availableBedsCamping!,
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
@@ -88,15 +85,14 @@ export class SquadAssembleService {
       value: '',
       rows: 4,
       validations: [Validators.required],
-      inputProps: {
-        labelSize: 's2',
-      },
+      inputProps: {},
     }),
 
     new QuestionSelect({
       key: 'fieldCenter',
       type: 'select',
       label: 'מרכז שדה',
+
       inputProps: {
         options: [
           { key: 'solid', value: '12123' },
@@ -104,7 +100,6 @@ export class SquadAssembleService {
           { key: 'good', value: '123' },
           { key: 'unproven', value: '123123123' },
         ],
-        labelSize: 's3',
       },
       validations: [Validators.required],
     }),
@@ -115,51 +110,99 @@ export class SquadAssembleService {
       value: null,
       rows: 4,
       validations: [Validators.required],
-      inputProps: {
-        labelSize: 's3',
-      },
+      inputProps: {},
+    }),
+
+    new QuestionTextarea({
+      key: 'comments',
+      label: 'הערות מנהליות',
+      rows: 6,
     }),
   ];
 
   public customerFormInputs: QuestionBase<string>[] = [
-    new QuestionTextbox({
-      key: 'clientName',
-      label: 'הקלד לקוח רצוי',
-      cols: 2,
-      value: '',
-      validations: [Validators.required],
-      inputProps: {
-        labelSize: 's8',
-      },
-    }),
-
-    new QuestionSelect({
-      key: 'clientPool',
-      type: 'select',
-      label: 'הכול',
-      inputProps: {
-        labelSize: 's1',
-        options: [
-          { key: 'שם נוסף', value: 'שם נוסף' },
-          { key: 'עוד לקוח', value: 'עוד לקוח' },
-          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+    new QuestionBase({
+      key: 'wantedClient',
+      isGroup: true,
+      fullWidth: true,
+      rows: 6,
+      type: 'autocomplete',
+      group: {
+        key: 'wantedClient',
+        cols: 3,
+        rows: 6,
+        questions: [
+          new QuestionAutocomplete({
+            key: 'clientName',
+            label: 'הקלד לקוח רצוי',
+            cols: 2,
+            value: '',
+            validations: [Validators.required],
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
+          new QuestionSelect({
+            key: 'clientPool',
+            type: 'select',
+            label: 'הכול',
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
         ],
       },
     }),
-
-    new QuestionSelect({
+    new QuestionBase({
       key: 'payerName',
-      label: 'לקוח משלם',
-      type: 'select',
+      isGroup: true,
       fullWidth: true,
-      inputProps: {
-        labelSize: 's3',
-        options: [
-          { key: 'שם נוסף', value: 'שם נוסף' },
-          { key: 'עוד לקוח', value: 'עוד לקוח' },
-          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+      rows: 6,
+      type: 'autocomplete',
+      group: {
+        key: 'payerName',
+        cols: 3,
+        rows: 6,
+        questions: [
+          new QuestionAutocomplete({
+            key: 'payerName',
+            label: 'לקוח משלם',
+            type: 'autocomplete',
+            cols: 2,
+            value: '',
+            validations: [Validators.required],
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
+          new QuestionSelect({
+            key: 'payerPool',
+            type: 'select',
+            label: 'הכול',
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
         ],
       },
     }),
@@ -168,18 +211,15 @@ export class SquadAssembleService {
       key: 'contact',
       isGroup: true,
       fullWidth: true,
-      rows: 15,
+      rows: 14,
       group: {
         key: 'contact',
         cols: 1,
-        rows: 3,
+        rows: 14,
         questions: [
           new QuestionTextbox({
             key: 'fullName',
             label: 'איש קשר',
-            inputProps: {
-              labelSize: 's1',
-            },
           }),
 
           new QuestionTextbox({
@@ -187,18 +227,12 @@ export class SquadAssembleService {
             label: 'נייד איש קשר',
             type: 'text',
             validations: [Validators.required],
-            inputProps: {
-              labelSize: 's3',
-            },
           }),
           new QuestionTextbox({
             key: 'email',
             label: 'מייל',
             type: 'text',
             validations: [Validators.required],
-            inputProps: {
-              labelSize: 's1',
-            },
           }),
         ],
       },
@@ -234,9 +268,6 @@ export class SquadAssembleService {
       offset: 1,
       cols: 2,
       rows: 4,
-      inputProps: {
-        labelSize: 'xl4',
-      },
     }),
     new QuestionNumber({
       key: 'drivers',
@@ -335,7 +366,6 @@ export class SquadAssembleService {
       label: 'מאפיין',
       type: 'select',
       inputProps: {
-        labelSize: 's4',
         options: [
           { key: 'פרומלי', value: 'פרומלי' },
           { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
@@ -350,20 +380,16 @@ export class SquadAssembleService {
       label: 'סוג הפעילות',
       type: 'select',
       inputProps: {
-        labelSize: 's4',
         options: [
           { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
           { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
         ],
       },
     }),
-
-    new QuestionRadio({
+    new QuestionSelect({
       key: 'tripLocation',
       label: 'מחלקה',
-      custom: true,
-      value: 'ישראל',
-      rows: 4,
+      type: 'select',
       inputProps: {
         options: [
           { key: 'ישראל', value: 'ישראל' },
@@ -371,13 +397,10 @@ export class SquadAssembleService {
         ],
       },
     }),
-
-    new QuestionRadio({
-      custom: true,
+    new QuestionSelect({
       key: 'tripCenter',
       label: 'פנים/חוץ מרכז שדה',
-      value: 'ישראל',
-      rows: 4,
+      type: 'select',
       inputProps: {
         options: [
           { key: 'פנים', value: 'פנים' },
@@ -385,11 +408,62 @@ export class SquadAssembleService {
         ],
       },
     }),
+  ];
 
-    new QuestionTextarea({
-      key: 'comments',
-      label: 'הערות מנהליות',
-      rows: 6,
+  public budgetQuestions: QuestionBase<string>[] = [
+    new QuestionSelect({
+      key: 'budgetIncome',
+      type: 'select',
+      fullWidth: true,
+      rows: 4,
+      label: 'תת סעיף תקציב הכנסות',
+      inputProps: {
+        options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+      },
+    }),
+    new QuestionSelect({
+      key: 'budgetExpense',
+      type: 'select',
+      fullWidth: true,
+      rows: 4,
+      label: 'תת סעיף תקציב הוצאות',
+      inputProps: {
+        options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+      },
+    }),
+    new QuestionBase({
+      key: 'location',
+      isGroup: true,
+      fullWidth: true,
+      rows : 6,
+      group: {
+        label: 'תקצוב פעילות',
+        key: 'location',
+        rows : 6,
+        questions: [
+          new QuestionSelect({
+            label: 'ישוב',
+            key: 'location',
+            type: 'select',
+            fullWidth: true,
+            rows: 4,
+            inputProps: {
+              options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+            },
+          }),
+        ],
+      },
     }),
   ];
+
+  updateFormArray(form: FormGroup) {
+    const index = this.formsArray.findIndex(
+      (formItem) => form.controls == formItem.controls
+    );
+    if (index > -1) {
+      this.formsArray[index] = form;
+    } else {
+      this.formsArray.push(form);
+    }
+  }
 }
