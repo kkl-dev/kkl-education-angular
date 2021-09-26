@@ -2,10 +2,8 @@
   <mat-grid-list cols="4" rowHeight="65vh">
     <mat-grid-tile *ngFor="let squad of squads; let i = index">
       <ng-container [ngSwitch]="squad.group.key">
-
-
         <ng-container *ngSwitchCase="'details'">
-          
+          <app-form-details [detailsGroup]="squad.group" [budgetGroup]="budgetGroup"></app-form-details>
         </ng-container>
 
         <ng-container *ngSwitchDefault>
