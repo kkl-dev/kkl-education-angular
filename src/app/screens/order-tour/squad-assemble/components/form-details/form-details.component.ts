@@ -13,6 +13,8 @@ export class FormDetailsComponent implements OnInit {
   @Input() public detailsGroup: QuestionGroup;
   @Input() public budgetGroup: QuestionGroup;
 
+  public budget : number = 18332736;
+
   public $questions = new Subject<QuestionBase<string | number | Date>[]>();
 
   constructor() { }

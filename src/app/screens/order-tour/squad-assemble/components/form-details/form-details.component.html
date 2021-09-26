@@ -1,37 +1,22 @@
 <mat-accordion>
   <app-expend-panel>
-    <app-form-header
-      title
-      [text]="detailsGroup.header.text"
-      [custom]="detailsGroup.header?.custom"
-      [title]="true"
-      class="header"
-    >
+    <app-form-header title [text]="detailsGroup.header.text" [custom]="detailsGroup.header?.custom" [title]="true"
+      class="header">
     </app-form-header>
-    <app-form-container
-      content
-      [cols]="detailsGroup.cols"
-      [questions]="detailsGroup.questions"
-    >
+    <app-form-container content [cols]="detailsGroup.cols" [questions]="detailsGroup.questions">
     </app-form-container>
   </app-expend-panel>
 
   <app-expend-panel [expanded]="true">
-    <app-form-header
-      title
-      [text]="budgetGroup.header.text"
-      [custom]="budgetGroup.header?.custom"
-      [title]="true"
-      [slots]="{budget}"
-      class="header"
-    >
+    <app-form-header title [text]="budgetGroup.header.text" [custom]="budgetGroup.header?.custom" [title]="true"
+      [slots]="{budget}" class="header">
     </app-form-header>
-    <app-form-container
-      content
-      [cols]="budgetGroup.cols"
-      [questions]="budgetGroup.questions"
-      [slots]="{location}"
-    >
+    <div description>
+      <app-typography>
+        {{budget | number | currency : 'ILS'}}
+      </app-typography>
+    </div>
+    <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}">
     </app-form-container>
   </app-expend-panel>
 </mat-accordion>

@@ -435,11 +435,11 @@ export class SquadAssembleService {
       key: 'location',
       isGroup: true,
       fullWidth: true,
-      rows : 6,
+      rows : 16,
       group: {
         label: 'תקצוב פעילות',
         key: 'location',
-        rows : 6,
+        rows : 16,
         questions: [
           new QuestionSelect({
             label: 'ישוב',
