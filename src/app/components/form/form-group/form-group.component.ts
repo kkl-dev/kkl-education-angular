@@ -11,13 +11,14 @@ import { QuestionGroup } from '../logic/question-group';
 export class FormGroupComponent implements OnInit {
 
   @Input() group : QuestionGroup
-  @Input() questions : QuestionBase<string | number | Date>[]
+  @Input() question : QuestionBase<string | number | Date>[]
   @Input() formGroup : FormGroup
   @Input() slot : ElementRef
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.group)
   }
 
 }

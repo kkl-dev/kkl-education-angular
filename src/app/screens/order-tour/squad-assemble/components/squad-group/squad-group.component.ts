@@ -18,11 +18,16 @@ export interface FormHeader {
   providers: [FormService],
 })
 export class SquadGroupComponent {
-  public tripId: string = '0000000';
 
   @Input() public group: QuestionGroup;
   @Input() public questions: QuestionBase<string | number | Date>[];
   @Input() public hasBottom: boolean;
+
+
+  public tripId: string = '0000000';
+
+  // show autocomplete data
+  public data: boolean = false;
 
   // array to hold data for bottom form text
   public bottomData: FlexCell[] = [];
@@ -75,7 +80,7 @@ export class SquadGroupComponent {
   //log form when valid
 
   logForm(form) {
-    this.squadAssembleService.updateFormArray(form); 
+    this.squadAssembleService.updateFormArray(form);
   }
 
   // method to change squad assemble form
@@ -114,5 +119,9 @@ export class SquadGroupComponent {
         this.formService.formGroup.controls.contact.disable();
       }
     });
+  }
+
+  public onAutocomplete(control) {
+    this.data = true;
   }
 }

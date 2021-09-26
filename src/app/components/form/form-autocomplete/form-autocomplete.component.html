@@ -1,0 +1,17 @@
+<mat-grid-list
+  [cols]="group.cols || 1"
+  [gutterSize]="group.gutter || 1"
+  rowHeight="2vh"
+>
+  <mat-grid-tile [colspan]="1" [rowspan]="group.rows">
+    <ng-container
+      *ngTemplateOutlet="
+        slot;
+        context: {
+          formGroup: this.formGroup,
+          group: this.group
+        }
+      "
+    ></ng-container>
+  </mat-grid-tile>
+</mat-grid-list>

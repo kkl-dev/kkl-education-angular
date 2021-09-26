@@ -48,13 +48,14 @@
 
         <mat-grid-tile
           *ngIf="question?.isGroup"
-          [colspan]="question.fullWidth ? cols : question.cols || 1"
+          [colspan]="1"
           [rowspan]="question.rows || 20"
         >
           <app-form-group
+            [question]="question"
             [group]="question.group"
             [formGroup]="formGroup"
-            [slot]="slots.groupInputs"
+            [slot]="slots[question.key]"
           ></app-form-group>
         </mat-grid-tile>
       </ng-container>

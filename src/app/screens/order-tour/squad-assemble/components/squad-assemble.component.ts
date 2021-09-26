@@ -34,7 +34,7 @@ export class SquadAssembleComponent implements OnInit {
           key : 'client',
           header: { text: 'לקוח', custom: 'client' },
           questions: this.squadAssembleService.customerFormInputs,
-          cols: '3',
+          cols: 1,
         },
       },
       {

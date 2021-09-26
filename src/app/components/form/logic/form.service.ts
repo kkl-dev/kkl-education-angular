@@ -55,11 +55,11 @@ export class FormService {
     questions: QuestionBase<string | Date | number | QuestionGroup>[]
   ) {
     return questions.map((question) => {
-      const { key, value, isGroup, group, validations } = question;
+      const { key, value, isGroup, group, validations, disabled } = question;
       return {
         key: key,
         isGroup,
-        template: isGroup ? this.setGroup(group.questions) : [value, validations],
+        template: isGroup ? this.setGroup(group.questions) : [value, validations, disabled],
       };
     });
   }

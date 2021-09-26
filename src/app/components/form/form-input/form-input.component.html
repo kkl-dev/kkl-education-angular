@@ -1,5 +1,8 @@
 <div>
-  <mat-form-field [color]="theme" [appearance]="disabled ? 'fill' : 'outline'">
+  <mat-form-field
+    [color]="theme"
+    [appearance]="disabled ? 'fill' : 'outline'"
+  >
     <mat-label>{{ label }}</mat-label>
 
     <input
@@ -58,10 +61,7 @@
         [matAutocomplete]="auto"
       />
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option
-          *ngFor="let option of options"
-          [value]="option.value"
-        >
+        <mat-option *ngFor="let option of options" [value]="option.value">
           {{ option.key }}
         </mat-option>
       </mat-autocomplete>
