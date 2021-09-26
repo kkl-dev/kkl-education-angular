@@ -119,6 +119,5 @@ export class SquadGroupComponent {
 
   public onAutocomplete(control) {
   }
-  public onBudget() {
-  }
+ 
 }
