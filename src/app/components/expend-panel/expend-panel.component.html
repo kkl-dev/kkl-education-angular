@@ -1,7 +1,8 @@
-<mat-expansion-panel [expanded]="expanded" color="accent" [ngClass]="[variant, 'expend-panel', 'mat-elevation-z0']"
-  (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+<mat-expansion-panel [hideToggle]="hideToggle" dir="rtl" [expanded]="expanded" color="accent"
+  [ngClass]="[variant, 'expend-panel', 'mat-elevation-z0']" (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false">
   <mat-expansion-panel-header [ngClass]="[variant]">
-    <mat-panel-title>
+    <mat-panel-title [ngClass]="[variant]">
       <ng-content select="[title]"></ng-content>
     </mat-panel-title>
     <mat-panel-description>

@@ -1,19 +1,19 @@
-<mat-accordion>
-  <app-expend-panel>
-    <app-form-header title [text]="detailsGroup.header.text" [custom]="detailsGroup.header?.custom" [title]="true"
-      class="header">
-    </app-form-header>
+<mat-accordion dir="rtl" >
+  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="true">
+    <app-typography title color="primary" bold="600" size="16">
+      {{detailsGroup.header.text}}
+    </app-typography>
     <app-form-container content [cols]="detailsGroup.cols" [questions]="detailsGroup.questions">
     </app-form-container>
   </app-expend-panel>
 
-  <app-expend-panel [expanded]="true">
-    <app-form-header title [text]="budgetGroup.header.text" [custom]="budgetGroup.header?.custom" [title]="true"
-      [slots]="{budget}" class="header">
-    </app-form-header>
-    <div description>
+  <app-expend-panel [hideToggle]="true"  variant="form">
+    <app-typography title color="primary" bold="600" size="16">
+      {{budgetGroup.header.text}}
+    </app-typography>
+    <div description class="budget">
       <app-typography>
-        {{budget | number | currency : 'ILS'}}
+        {{budgetKKL| currency : 'ILS'}}
       </app-typography>
     </div>
     <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}">
