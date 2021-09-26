@@ -42,6 +42,17 @@
             <div class="divider" fxFlex="20" *ngIf="i !== 0">|</div>
           </div>
         </mat-grid-tile>
+
+        <mat-grid-tile rowspan="1" *ngIf="group.key === 'details'">
+          <app-form-header
+            text="תקציב"
+            custom="arrow"
+            [slots]="{ arrow }"
+            [title]="true"
+            class="header"
+          >
+          </app-form-header>
+        </mat-grid-tile>
       </mat-grid-list>
     </mat-grid-tile>
   </mat-grid-list>
@@ -57,6 +68,16 @@
     (click)="onGenderChange()"
   >
     <app-icon type="svg" key="gender" scale="2"></app-icon>
+  </button>
+</ng-template>
+
+<ng-template #arrow>
+  <button
+    mat-icon-button
+    disableRipple="true"
+    (click)="onBudget()"
+  >
+    <app-icon type="mat" key="expand_less" [scale]="2" color="primary"></app-icon>
   </button>
 </ng-template>
 

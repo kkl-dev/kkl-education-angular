@@ -113,6 +113,8 @@ import { CalendarComponent } from './screens/order-tour/facilities/calendar/cale
 import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
 import { SizeDirective } from './utilities/directivs/size.directive';
 import { FilledNightFormComponent } from './screens/order-tour/sleeping-options/filled-night-form/filled-night-form.component';
+import { FormDetailsComponent } from './screens/order-tour/squad-assemble/components/form-details/form-details.component';
+import { FormBudgetComponent } from './screens/order-tour/squad-assemble/components/form-budget/form-budget.component';
 import { FormAutocompleteComponent } from './components/form/form-autocomplete/form-autocomplete.component';
 
 
@@ -221,7 +223,9 @@ FullCalendarModule.registerPlugins([
     ActiveStateDirective,
     SizeDirective,
     FilledNightFormComponent,
-    FormAutocompleteComponent
+    FormAutocompleteComponent,
+    FormDetailsComponent,
+    FormBudgetComponent
   ],
   imports: [
     BrowserModule,
@@ -236,7 +240,7 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     AirbnbCalendarModule,
     ApiModule,
-    FullCalendarModule, 
+    FullCalendarModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
