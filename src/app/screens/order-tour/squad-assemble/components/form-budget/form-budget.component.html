@@ -1,1 +1,28 @@
-<p>form-budget works!</p>
+<mat-grid-list [cols]="group.cols" rowHeight="2vh">
+  <mat-grid-tile>
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <app-typography color="primary">
+        {{ group.label }}
+      </app-typography>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile
+    *ngFor="let question of group.questions"
+    [colspan]="question.cols"
+    [rowspan]="question.rows"
+  >
+    <app-form-input
+      [control]="formGroup.controls[group.key].controls[question.key]"
+      [label]="question.label"
+      [disabled]="question.disabled"
+      [split]="cols > question.cols"
+      [type]="question.type"
+      [label]="question.label"
+      [icon]="question.icon"
+      [options]="question.inputProps?.options"
+      [dateOptions]="question.inputProps?.dateOptions"
+      [controlType]="question.controlType"
+    >
+    </app-form-input>
+  </mat-grid-tile> </mat-grid-list
+>
