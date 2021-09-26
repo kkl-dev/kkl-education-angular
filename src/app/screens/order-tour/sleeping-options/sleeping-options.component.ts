@@ -32,8 +32,6 @@ export class SleepingOptionsComponent implements OnInit {
   @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
 
   public indexToPatch: number = -1;
-  tripInfo: TripInfo;
-  // filledNightsArray1 :LodgingReservation[]=[];
   filledNightsArray: {
     sleepingPlace: string;
     nightsCount: string | any;
@@ -41,11 +39,9 @@ export class SleepingOptionsComponent implements OnInit {
     peopleCount: string;
     amount: string;
     comments: string;
-    date: string | Date;
     optionsArr: any[];
-  }[] = [
-
-    ];
+  }[] = [];
+   
 
   formCols: number = 12;
   questions: QuestionBase<string | number>[] = [];
