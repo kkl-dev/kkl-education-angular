@@ -42,7 +42,7 @@ export class SquadAssembleComponent implements OnInit {
           key : 'squad',
           header: { text: 'הרכב הקבוצה', custom: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
-          cols: '5',
+          cols: 5,
         },
         hasBottom: true,
       },
@@ -52,6 +52,7 @@ export class SquadAssembleComponent implements OnInit {
           header: { text: 'פרטי הטיול', custom: '' },
           questions: this.squadAssembleService.tourDetailsFormInputs,
         },
+        hasBottom: true,
       },
     ].reverse();
   }

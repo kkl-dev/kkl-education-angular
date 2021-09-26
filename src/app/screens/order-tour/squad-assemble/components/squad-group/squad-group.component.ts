@@ -26,9 +26,6 @@ export class SquadGroupComponent {
 
   public tripId: string = '0000000';
 
-  // show autocomplete data
-  public data: boolean = false;
-
   // array to hold data for bottom form text
   public bottomData: FlexCell[] = [];
 
@@ -121,6 +118,7 @@ export class SquadGroupComponent {
   }
 
   public onAutocomplete(control) {
-    this.data = true;
+  }
+  public onBudget() {
   }
 }
