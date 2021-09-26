@@ -15,23 +15,23 @@ interface SquadGroup {
 })
 export class SquadAssembleComponent implements OnInit {
   public squads: SquadGroup[];
+  public budgetGroup: QuestionGroup;
 
-  constructor(private squadAssembleService: SquadAssembleService) { }
+  constructor(private squadAssembleService: SquadAssembleService) {}
 
   ngOnInit(): void {
     this.squads = [
       {
         group: {
-          key : 'date',
+          key: 'date',
           header: { text: 'מועד ושם הטיול', custom: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
         hasBottom: true,
-
       },
       {
         group: {
-          key : 'client',
+          key: 'client',
           header: { text: 'לקוח', custom: 'client' },
           questions: this.squadAssembleService.customerFormInputs,
           cols: 1,
@@ -39,7 +39,7 @@ export class SquadAssembleComponent implements OnInit {
       },
       {
         group: {
-          key : 'squad',
+          key: 'squad',
           header: { text: 'הרכב הקבוצה', custom: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: 5,
@@ -48,12 +48,20 @@ export class SquadAssembleComponent implements OnInit {
       },
       {
         group: {
-          key : 'details',
+          key: 'details',
           header: { text: 'פרטי הטיול', custom: '' },
           questions: this.squadAssembleService.tourDetailsFormInputs,
+
         },
         hasBottom: true,
       },
     ].reverse();
+
+    this.budgetGroup = {
+      key: 'budget',
+      header: { text: 'תקציב', custom: 'budget' },
+      questions: this.squadAssembleService.budgetQuestions,
+      cols: 1,
+    };
   }
 }
