@@ -87,9 +87,7 @@ export class SquadAssembleService {
       value: '',
       rows: 4,
       validations: [Validators.required],
-      inputProps: {
-        labelSize: 's2',
-      },
+      inputProps: {},
     }),
 
     new QuestionSelect({
@@ -104,7 +102,6 @@ export class SquadAssembleService {
           { key: 'good', value: '123' },
           { key: 'unproven', value: '123123123' },
         ],
-        labelSize: 's3',
       },
       validations: [Validators.required],
     }),
@@ -115,9 +112,13 @@ export class SquadAssembleService {
       value: null,
       rows: 4,
       validations: [Validators.required],
-      inputProps: {
-        labelSize: 's3',
-      },
+      inputProps: {},
+    }),
+
+    new QuestionTextarea({
+      key: 'comments',
+      label: 'הערות מנהליות',
+      rows: 6,
     }),
   ];
 
@@ -128,9 +129,7 @@ export class SquadAssembleService {
       cols: 2,
       value: '',
       validations: [Validators.required],
-      inputProps: {
-        labelSize: 's8',
-      },
+      inputProps: {},
     }),
 
     new QuestionSelect({
@@ -138,7 +137,6 @@ export class SquadAssembleService {
       type: 'select',
       label: 'הכול',
       inputProps: {
-        labelSize: 's1',
         options: [
           { key: 'שם נוסף', value: 'שם נוסף' },
           { key: 'עוד לקוח', value: 'עוד לקוח' },
@@ -154,7 +152,6 @@ export class SquadAssembleService {
       type: 'select',
       fullWidth: true,
       inputProps: {
-        labelSize: 's3',
         options: [
           { key: 'שם נוסף', value: 'שם נוסף' },
           { key: 'עוד לקוח', value: 'עוד לקוח' },
@@ -177,9 +174,6 @@ export class SquadAssembleService {
           new QuestionTextbox({
             key: 'fullName',
             label: 'איש קשר',
-            inputProps: {
-              labelSize: 's1',
-            },
           }),
 
           new QuestionTextbox({
@@ -187,18 +181,12 @@ export class SquadAssembleService {
             label: 'נייד איש קשר',
             type: 'text',
             validations: [Validators.required],
-            inputProps: {
-              labelSize: 's3',
-            },
           }),
           new QuestionTextbox({
             key: 'email',
             label: 'מייל',
             type: 'text',
             validations: [Validators.required],
-            inputProps: {
-              labelSize: 's1',
-            },
           }),
         ],
       },
@@ -234,9 +222,6 @@ export class SquadAssembleService {
       offset: 1,
       cols: 2,
       rows: 4,
-      inputProps: {
-        labelSize: 'xl4',
-      },
     }),
     new QuestionNumber({
       key: 'drivers',
@@ -335,7 +320,6 @@ export class SquadAssembleService {
       label: 'מאפיין',
       type: 'select',
       inputProps: {
-        labelSize: 's4',
         options: [
           { key: 'פרומלי', value: 'פרומלי' },
           { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
@@ -350,20 +334,16 @@ export class SquadAssembleService {
       label: 'סוג הפעילות',
       type: 'select',
       inputProps: {
-        labelSize: 's4',
         options: [
           { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
           { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
         ],
       },
     }),
-
-    new QuestionRadio({
+    new QuestionSelect({
       key: 'tripLocation',
       label: 'מחלקה',
-      custom: true,
-      value: 'ישראל',
-      rows: 4,
+      type: 'select',
       inputProps: {
         options: [
           { key: 'ישראל', value: 'ישראל' },
@@ -371,13 +351,10 @@ export class SquadAssembleService {
         ],
       },
     }),
-
-    new QuestionRadio({
-      custom: true,
+    new QuestionSelect({
       key: 'tripCenter',
       label: 'פנים/חוץ מרכז שדה',
-      value: 'ישראל',
-      rows: 4,
+      type: 'select',
       inputProps: {
         options: [
           { key: 'פנים', value: 'פנים' },
@@ -386,11 +363,6 @@ export class SquadAssembleService {
       },
     }),
 
-    new QuestionTextarea({
-      key: 'comments',
-      label: 'הערות מנהליות',
-      rows: 6,
-    }),
   ];
 
   updateFormArray(form: FormGroup) {
@@ -399,12 +371,8 @@ export class SquadAssembleService {
     );
     if (index > -1) {
       this.formsArray[index] = form;
-      console.log('fonund');
     } else {
-      console.log('else');
       this.formsArray.push(form);
     }
-    
-    console.log(this.formsArray);
   }
 }
