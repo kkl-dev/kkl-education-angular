@@ -115,7 +115,6 @@ export class SquadGroupComponent {
     this.formService.onChangeSelect.subscribe((value) => {
       if (this.group.key === 'client') {
         this.onAddClient();
-        console.log(this.formService.formGroup.controls.contact);
         this.formService.formGroup.controls.contact.disable();
       }
     });

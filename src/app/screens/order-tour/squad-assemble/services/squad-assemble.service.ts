@@ -124,47 +124,61 @@ export class SquadAssembleService {
   ];
 
   public customerFormInputs: QuestionBase<string>[] = [
-    // new QuestionAutocomplete({
-    //   key: 'clientName',
-    //   label: 'הקלד לקוח רצוי',
-    //   cols: 2,
-    //   value: '',
-    //   validations: [Validators.required],
-    //   inputProps: {
-    //     options: [
-    //       { key: 'שם נוסף', value: 'שם נוסף' },
-    //       { key: 'עוד לקוח', value: 'עוד לקוח' },
-    //       { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-    //       { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-    //     ],
-    //   },
-    // }),
+    new QuestionBase({
+      key: 'wantedClient',
+      isGroup: true,
+      fullWidth: true,
+      rows: 6,
+      type: 'autocomplete',
+      group: {
+        key: 'wantedClient',
+        cols: 3,
+        rows: 6,
+        questions: [
 
-    // new QuestionSelect({
-    //   key: 'clientPool',
-    //   type: 'select',
-    //   label: 'הכול',
-    //   inputProps: {
-    //     options: [
-    //       { key: 'שם נוסף', value: 'שם נוסף' },
-    //       { key: 'עוד לקוח', value: 'עוד לקוח' },
-    //       { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-    //       { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-    //     ],
-    //   },
-    // }),
-
+          new QuestionAutocomplete({
+            key: 'clientName',
+            label: 'הקלד לקוח רצוי',
+            cols: 2,
+            value: '',
+            validations: [Validators.required],
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
+          new QuestionSelect({
+            key: 'clientPool',
+            type: 'select',
+            label: 'הכול',
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
+        ],
+      },
+    }),
     new QuestionBase({
       key: 'payerName',
       isGroup: true,
       fullWidth: true,
       rows: 6,
-      type : 'autocomplete',
+      type: 'autocomplete',
       group: {
         key: 'payerName',
         cols: 3,
         rows: 6,
         questions: [
+
           new QuestionAutocomplete({
             key: 'payerName',
             label: 'לקוח משלם',
@@ -194,7 +208,6 @@ export class SquadAssembleService {
               ],
             },
           }),
-
         ],
       },
     }),
@@ -203,11 +216,11 @@ export class SquadAssembleService {
       key: 'contact',
       isGroup: true,
       fullWidth: true,
-      rows: 15,
+      rows: 14,
       group: {
         key: 'contact',
         cols: 1,
-        rows: 15,
+        rows: 14,
         questions: [
           new QuestionTextbox({
             key: 'fullName',

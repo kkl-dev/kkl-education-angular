@@ -17,7 +17,7 @@
         [questions]="questions"
         [$questions]="$questions"
         [hasBottomButton]="true"
-        [slots]="{ contact, payerName }"
+        [slots]="{ contact, payerName, wantedClient }"
         (valueChange)="logForm($event)"
       >
       </app-form-container>
@@ -97,27 +97,15 @@
 </ng-template>
 
 <ng-template #payerName let-group="group" let-formGroup="formGroup">
-  <mat-grid-list [cols]="group.cols" rowHeight="2vh">
-    <mat-grid-tile
-      *ngFor="let question of group.questions"
-      [colspan]="question.cols"
-      [rowspan]="question.rows || 2"
-    >
-      <app-form-input
-        [control]="formGroup.controls[group.key].controls[question.key]"
-        [label]="question.label"
-        [disabled]="question.disabled"
-        [split]="cols > question.cols"
-        [type]="question.type"
-        [label]="question.label"
-        [icon]="question.icon"
-        [options]="question.inputProps?.options"
-        [dateOptions]="question.inputProps?.dateOptions"
-        [controlType]="question.controlType"
-        (autocomplete)="onAutocomplete($event)"
-      >
-      </app-form-input>
-    </mat-grid-tile>
-    <mat-grid-tile> working </mat-grid-tile>
-  </mat-grid-list>
+  <app-form-autocomplete
+    [group]="group"
+    [formGroup]="formGroup"
+  ></app-form-autocomplete>
+</ng-template>
+
+<ng-template #wantedClient let-group="group" let-formGroup="formGroup">
+  <app-form-autocomplete
+    [group]="group"
+    [formGroup]="formGroup"
+  ></app-form-autocomplete>
 </ng-template>

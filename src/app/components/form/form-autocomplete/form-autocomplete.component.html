@@ -1,17 +1,32 @@
-<mat-grid-list
-  [cols]="group.cols || 1"
-  [gutterSize]="group.gutter || 1"
-  rowHeight="2vh"
->
-  <mat-grid-tile [colspan]="1" [rowspan]="group.rows">
-    <ng-container
-      *ngTemplateOutlet="
-        slot;
-        context: {
-          formGroup: this.formGroup,
-          group: this.group
-        }
-      "
-    ></ng-container>
+<mat-grid-list [cols]="group.cols" rowHeight="2vh">
+  <mat-grid-tile
+    *ngFor="let question of group.questions"
+    [colspan]="question.cols"
+    [rowspan]="data ? question.rows : 4"
+  >
+    <app-form-input
+      [control]="formGroup.controls[group.key].controls[question.key]"
+      [label]="question.label"
+      [disabled]="question.disabled"
+      [split]="cols > question.cols"
+      [type]="question.type"
+      [label]="question.label"
+      [icon]="question.icon"
+      [options]="question.inputProps?.options"
+      [dateOptions]="question.inputProps?.dateOptions"
+      [controlType]="question.controlType"
+      (autocomplete)="onAutocomplete($event)"
+    >
+    </app-form-input>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="3" rowspan="2" *ngIf="data">
+    <div
+      class="autocomplete"
+      fxLayout="row"
+      fxLayoutAlign="end center"
+      fxFill
+    >
+      {{ value }}
+    </div>
   </mat-grid-tile>
 </mat-grid-list>
