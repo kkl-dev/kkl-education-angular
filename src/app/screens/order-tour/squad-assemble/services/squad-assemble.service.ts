@@ -8,6 +8,7 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
+import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 
 @Injectable({
   providedIn: 'root',
@@ -123,13 +124,20 @@ export class SquadAssembleService {
   ];
 
   public customerFormInputs: QuestionBase<string>[] = [
-    new QuestionTextbox({
+    new QuestionAutocomplete({
       key: 'clientName',
       label: 'הקלד לקוח רצוי',
       cols: 2,
       value: '',
       validations: [Validators.required],
-      inputProps: {},
+      inputProps: {
+        options: [
+          { key: 'שם נוסף', value: 'שם נוסף' },
+          { key: 'עוד לקוח', value: 'עוד לקוח' },
+          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+        ],
+      },
     }),
 
     new QuestionSelect({
@@ -362,7 +370,6 @@ export class SquadAssembleService {
         ],
       },
     }),
-
   ];
 
   updateFormArray(form: FormGroup) {

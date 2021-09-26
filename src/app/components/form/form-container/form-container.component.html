@@ -1,10 +1,5 @@
 <div class="form">
-  <form
-    class="form-container"
-    (ngSubmit)="onSubmit()"
-    [formGroup]="formGroup"
-    dir="rtl"
-  >
+  <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formGroup">
     <mat-grid-list
       [cols]="group?.cols || cols || 1"
       rowHeight="2vh"
@@ -40,7 +35,7 @@
             [options]="question.inputProps?.options"
             [dateOptions]="question.inputProps?.dateOptions"
             [controlType]="question.controlType"
-            [labelSize]="question.inputProps?.labelSize"
+            (autocomplete)="onAutocomplete($event)"
           ></app-form-input>
 
           <app-input-radio
