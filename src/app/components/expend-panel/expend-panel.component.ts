@@ -18,6 +18,7 @@ export class ExpendPanelComponent implements OnInit {
   @Input() public variant: string;
   @Input() public expanded: boolean;
   @Input() public hideToggle: boolean;
+  @Input() public showHeader: boolean;
 
   public panelOpenState = false;
 
@@ -29,6 +30,8 @@ export class ExpendPanelComponent implements OnInit {
     this.variant = this.variant || ''
     this.expanded = this.expanded || false
     this.hideToggle = this.hideToggle || false
+    this.showHeader = this.showHeader || false
+    console.log(this.showHeader)
   }
 
   public onExpend() {

@@ -224,6 +224,7 @@ FullCalendarModule.registerPlugins([
     ActiveStateDirective,
     SizeDirective,
     FilledNightFormComponent,
+    
     FormAutocompleteComponent,
     FormDetailsComponent,
     FormBudgetComponent,

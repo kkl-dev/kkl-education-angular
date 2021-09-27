@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { FormService } from 'src/app/components/form/logic/form.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
+import { SquadAssembleService } from '../../services/squad-assemble.service';
+import { FormHeader } from '../squad-group/squad-group.component';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-squad-client',
@@ -7,9 +13,76 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SquadClientComponent implements OnInit {
 
-  constructor() { }
+  @Input() public group: QuestionGroup;
+
+  public expend: boolean = true;
+  public clientQuestions: QuestionBase<string | number | Date>[];
+  public contactQuestions: QuestionBase<string | number | Date>;
+  public $questions: BehaviorSubject<QuestionBase<string | number | Date>[]>;
+
+  private client: boolean = false;
+
+  constructor(
+    private squadAssembleService: SquadAssembleService,
+    private formService: FormService,
+
+  ) { }
 
   ngOnInit(): void {
+    this.subscribeToOnSelectChange();
+
+    this.$questions = new BehaviorSubject<QuestionBase<string | number | Date>[]>(this.group.questions)
+    this.contactQuestions = this.group.questions.pop()
+    this.setClientQuestions()
+  }
+
+
+  private finContactGroupIndex(): number {
+    return this.squadAssembleService.customerFormInputs.findIndex((item: QuestionBase<string>) => item.key === 'contact')
+
+  }
+
+  private setClientQuestions() {
+    this.group.questions = this.group.questions.filter((question: QuestionBase<string>) => question.key !== 'contect')
+  }
+
+  // method to add new client form
+  public onAddClient() {
+    this.client = !this.client;
+
+    this.updateClientHeader()
+
+  }
+
+  private updateClientHeader() {
+    const header: FormHeader = {
+      label: 'איש קשר',
+      slot: 'button',
+    };
+
+    this.client
+      ? (this.contactQuestions.group.header = header)
+      : (this.contactQuestions.group.header = null);
+
+    this.$questions.next([this.contactQuestions]);
+  }
+
+  private updateClientForm() {
+    this.updateClientHeader()
+    this.formService.formGroup.controls.contact.patchValue({ fullName: ' שלום אברהם' });
+  }
+
+  private subscribeToOnSelectChange() {
+
+
+    this.formService.onChangeSelect.subscribe((value) => {
+      if (this.group.key === 'client') {
+        this.client = true
+        this.updateClientForm();
+        this.formService.formGroup.controls.contact.disable();
+        console.log(this.formService.formGroup.controls.contact)
+      }
+    });
   }
 
 }

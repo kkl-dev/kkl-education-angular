@@ -1,9 +1,9 @@
 <mat-accordion dir="rtl">
-  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="expend">
+  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="expend" >
     <div title fxLayout="row" fxLayoutAlign="space-between center">
 
       <app-typography color="primary" bold="600" size="16">
-        {{detailsGroup.header.text}}
+        {{detailsGroup.header.label}}
       </app-typography>
       <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
 
@@ -16,7 +16,7 @@
     <div title fxLayout="row" fxLayoutAlign="space-between center">
 
       <app-typography color="primary" bold="600" size="16">
-        {{budgetGroup.header.text}}
+        {{budgetGroup.header.label}}
       </app-typography>
       <app-typography size="16">
         {{budgetKKL| currency : 'ILS'}}

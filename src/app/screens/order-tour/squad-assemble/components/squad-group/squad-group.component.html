@@ -6,7 +6,7 @@
         <div title fxLayout="row" fxLayoutAlign="start center">
 
           <app-typography color="primary" bold="600" size="16">
-            {{group.header.text}}
+            {{group.header.label}}
           </app-typography>
         </div>
 
@@ -14,8 +14,7 @@
     </mat-grid-tile>
 
     <mat-grid-tile rowspan="10">
-      <app-form-container [cols]="group.cols" [questions]="questions" [$questions]="$questions" [hasBottomButton]="true"
-        [slots]="{ contact, payerName, wantedClient }" (valueChange)="logForm($event)">
+      <app-form-container [cols]="group.cols" [questions]="questions" [$questions]="$questions" [hasBottomButton]="true" (valueChange)="logForm($event)">
       </app-form-container>
     </mat-grid-tile>
 
@@ -58,31 +57,8 @@
   </button>
 </ng-template>
 
-<ng-template #client>
-  <app-typography fxLayoutAlign="end" class="client-text" color="primary" (click)="onAddClient()">
-    לקוח חדש
-  </app-typography>
-</ng-template>
 
 <ng-template #tourId>
   <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
 </ng-template>
 
-<ng-template #contact let-group="group" let-formGroup="formGroup">
-  <mat-grid-list [cols]="group.cols" rowHeight="2vh">
-    <mat-grid-tile *ngFor="let question of group.questions" [colspan]="question.cols" [rowspan]="question.rows">
-      <app-form-input class="group-input" [groupLabel]="question.key === 'girls' ? question.label : 'g'"
-        [control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
-        [split]="cols > question.cols" [theme]="question.key === 'girls' && 'accent'" [type]="question.controlType">
-      </app-form-input>
-    </mat-grid-tile>
-  </mat-grid-list>
-</ng-template>
-
-<ng-template #payerName let-group="group" let-formGroup="formGroup">
-  <app-form-autocomplete [group]="group" [formGroup]="formGroup"></app-form-autocomplete>
-</ng-template>
-
-<ng-template #wantedClient let-group="group" let-formGroup="formGroup">
-  <app-form-autocomplete [group]="group" [formGroup]="formGroup"></app-form-autocomplete>
-</ng-template>

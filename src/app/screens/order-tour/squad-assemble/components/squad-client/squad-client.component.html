@@ -1,1 +1,52 @@
-<p>squad-client works!</p>
+<mat-accordion dir="rtl" multi>
+  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="expend">
+    <div title fxLayout="row" fxLayoutAlign="space-between center">
+
+      <app-typography color="primary" bold="600" size="16">
+        {{group.header.label}}
+      </app-typography>
+
+    </div>
+    <div description fxLayout="row" fxLayoutAlign="end">
+      <app-typography class="client-text" color="primary" (click)="onAddClient()">
+        לקוח חדש
+      </app-typography>
+    </div>
+    <app-form-container content [cols]="group.cols" [questions]="group.questions" [slots]="{payerName, wantedClient }">
+    </app-form-container>
+  </app-expend-panel>
+
+  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="true"
+    [showHeader]="!contactQuestions.group.header">
+
+    <div *ngIf="contactQuestions.group.header" title fxLayout="row" fxLayoutAlign="space-between center">
+
+      <app-typography color="primary" bold="600" size="16">
+        {{contactQuestions.group.header.label}}
+      </app-typography>
+
+    </div>
+    <app-form-container content [cols]="contactQuestions.cols" [questions]="contactQuestions.group.questions"
+      [slots]="{contact }">
+    </app-form-container>
+  </app-expend-panel>
+</mat-accordion>
+
+<ng-template #contact let-group="group" let-formGroup="formGroup">
+  <mat-grid-list [cols]="group.cols" rowHeight="2vh">
+    <mat-grid-tile *ngFor="let question of group.questions" [colspan]="question.cols" [rowspan]="question.rows">
+      <app-form-input class="group-input" [groupLabel]="question.key === 'girls' ? question.label : 'g'"
+        [control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
+        [split]="cols > question.cols" [theme]="question.key === 'girls' && 'accent'" [type]="question.controlType">
+      </app-form-input>
+    </mat-grid-tile>
+  </mat-grid-list>
+</ng-template>
+
+<ng-template #payerName let-group="group" let-formGroup="formGroup">
+  <app-form-autocomplete [group]="group" [formGroup]="formGroup"></app-form-autocomplete>
+</ng-template>
+
+<ng-template #wantedClient let-group="group" let-formGroup="formGroup">
+  <app-form-autocomplete [group]="group" [formGroup]="formGroup"></app-form-autocomplete>
+</ng-template>

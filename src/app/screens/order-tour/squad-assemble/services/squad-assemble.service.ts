@@ -214,6 +214,7 @@ export class SquadAssembleService {
       rows: 14,
       group: {
         key: 'contact',
+        header: null,
         cols: 1,
         rows: 14,
         questions: [
@@ -314,7 +315,7 @@ export class SquadAssembleService {
       isGroup: true,
       group: {
         key: 'participants',
-        header: { text: 'נוער / מבוגרים' },
+        header: { label: 'נוער / מבוגרים' },
         cols: 5,
         questions: this.genderArray,
       },
@@ -327,7 +328,7 @@ export class SquadAssembleService {
       isGroup: true,
       group: {
         key: 'chaperones',
-        header: { text: 'מלווים' },
+        header: { label: 'מלווים' },
         cols: 5,
         questions: this.genderArray,
       },
@@ -340,7 +341,7 @@ export class SquadAssembleService {
       rows: 5,
       group: {
         key: 'instructors',
-        header: { text: 'מדריכים' },
+        header: { label: 'מדריכים' },
         cols: 5,
         questions: this.genderArray,
       },
@@ -353,7 +354,7 @@ export class SquadAssembleService {
       rows: 5,
       group: {
         key: 'medics',
-        header: { text: 'חובשים' },
+        header: { label: 'חובשים' },
         cols: 5,
         questions: this.genderArray,
       },
@@ -435,11 +436,11 @@ export class SquadAssembleService {
       key: 'location',
       isGroup: true,
       fullWidth: true,
-      rows : 16,
+      rows: 16,
       group: {
         label: 'תקצוב פעילות',
         key: 'location',
-        rows : 16,
+        rows: 16,
         questions: [
           new QuestionSelect({
             label: 'ישוב',

@@ -13,6 +13,11 @@ mat-expansion-panel {
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
 
+
+   ::ng-deep div.mat-expansion-panel-body {
+      padding: 0px !important;
+    }
+
   }
 
 

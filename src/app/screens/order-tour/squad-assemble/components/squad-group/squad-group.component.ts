@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { Subject } from 'rxjs';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { FlexCell } from 'src/app/components/grid/flex-cell/flex-cell.component';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
+import { Subject } from 'rxjs';
 
 export interface FormHeader {
-  text: string;
+  label: string;
   slot?: any;
 }
 
@@ -34,15 +34,13 @@ export class SquadGroupComponent {
 
   //
   private mixed: boolean = true;
-  private client: boolean = false;
 
   constructor(
     private squadAssembleService: SquadAssembleService,
-    private formService: FormService
   ) { }
 
   ngOnInit() {
-    this.subscribeToOnSelectChange();
+
     this.questions = this.group.questions || [];
 
     if (this.hasBottom) {
@@ -91,46 +89,7 @@ export class SquadGroupComponent {
     );
   }
 
-  // method to add new client form
-  public onAddClient() {
-    this.client = !this.client;
 
-    this.updateClientHeader()
-
-  }
-
-  private updateClientHeader() {
-    const header: FormHeader = {
-      text: 'איש קשר',
-      slot: 'button',
-    };
-
-    const index = this.squadAssembleService.customerFormInputs.findIndex((item: QuestionBase<string>) => item.key === 'contact')
-
-    this.client
-      ? (this.squadAssembleService.customerFormInputs[index].group.header = header)
-      : (this.squadAssembleService.customerFormInputs[index].group.header = null);
-
-    this.$questions.next(this.squadAssembleService.customerFormInputs);
-  }
-
-  private updateClientForm() {
-    this.updateClientHeader()
-    this.formService.formGroup.controls.contact.patchValue({ fullName: ' שלום אברהם' });
-  }
-
-  private subscribeToOnSelectChange() {
-
-
-    this.formService.onChangeSelect.subscribe((value) => {
-      if (this.group.key === 'client') {
-        this.client = true
-        this.updateClientForm();
-        this.formService.formGroup.controls.contact.disable();
-        console.log(this.formService.formGroup.controls.contact)
-      }
-    });
-  }
 
 
 }

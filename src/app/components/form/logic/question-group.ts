@@ -1,5 +1,4 @@
 import { FormHeader } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
-import { QuestionBase } from './question-base';
 
 export class QuestionGroup {
   constructor(
