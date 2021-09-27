@@ -8,7 +8,7 @@ import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 export interface FormHeader {
   text: string;
-  custom?: any;
+  slot?: any;
 }
 
 @Component({
@@ -39,7 +39,7 @@ export class SquadGroupComponent {
   constructor(
     private squadAssembleService: SquadAssembleService,
     private formService: FormService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.subscribeToOnSelectChange();
@@ -95,29 +95,42 @@ export class SquadGroupComponent {
   public onAddClient() {
     this.client = !this.client;
 
+    this.updateClientHeader()
+
+  }
+
+  private updateClientHeader() {
     const header: FormHeader = {
       text: 'איש קשר',
-      custom: 'button',
+      slot: 'button',
     };
 
+    const index = this.squadAssembleService.customerFormInputs.findIndex((item: QuestionBase<string>) => item.key === 'contact')
+
     this.client
-      ? (this.squadAssembleService.customerFormInputs[3].group.header = header)
-      : (this.squadAssembleService.customerFormInputs[3].group.header = null);
+      ? (this.squadAssembleService.customerFormInputs[index].group.header = header)
+      : (this.squadAssembleService.customerFormInputs[index].group.header = null);
 
     this.$questions.next(this.squadAssembleService.customerFormInputs);
   }
 
-  // TODO - connect between client select to client contact data + disable mode style
+  private updateClientForm() {
+    this.updateClientHeader()
+    this.formService.formGroup.controls.contact.patchValue({ fullName: ' שלום אברהם' });
+  }
+
   private subscribeToOnSelectChange() {
+
+
     this.formService.onChangeSelect.subscribe((value) => {
       if (this.group.key === 'client') {
-        this.onAddClient();
+        this.client = true
+        this.updateClientForm();
         this.formService.formGroup.controls.contact.disable();
+        console.log(this.formService.formGroup.controls.contact)
       }
     });
   }
 
-  public onAutocomplete(control) {
-  }
- 
+
 }

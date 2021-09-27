@@ -3,7 +3,23 @@
 mat-grid-list,
 mat-grid-tile,
 app-form-input,
+mat-list,
+mat-list-item,
 div {
   height: 100%;
   width: 100%;
+}
+
+mat-list-item {
+  height: fit-content !important;
+  padding-bottom: spacing(1) !important;
+}
+
+
+
+
+.underline {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: color(primary);
 }

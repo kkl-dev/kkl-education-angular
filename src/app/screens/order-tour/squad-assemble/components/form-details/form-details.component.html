@@ -1,37 +1,30 @@
-<mat-accordion>
-  <app-expend-panel>
-    <app-form-header
-      title
-      [text]="detailsGroup.header.text"
-      [custom]="detailsGroup.header?.custom"
-      [title]="true"
-      class="header"
-    >
-    </app-form-header>
-    <app-form-container
-      content
-      [cols]="detailsGroup.cols"
-      [questions]="detailsGroup.questions"
-    >
+<mat-accordion dir="rtl">
+  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="expend">
+    <div title fxLayout="row" fxLayoutAlign="space-between center">
+
+      <app-typography color="primary" bold="600" size="16">
+        {{detailsGroup.header.text}}
+      </app-typography>
+      <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
+
+    </div>
+    <app-form-container content [cols]="detailsGroup.cols" [questions]="detailsGroup.questions">
     </app-form-container>
   </app-expend-panel>
 
-  <app-expend-panel [expanded]="true">
-    <app-form-header
-      title
-      [text]="budgetGroup.header.text"
-      [custom]="budgetGroup.header?.custom"
-      [title]="true"
-      [slots]="{budget}"
-      class="header"
-    >
-    </app-form-header>
-    <app-form-container
-      content
-      [cols]="budgetGroup.cols"
-      [questions]="budgetGroup.questions"
-      [slots]="{location}"
-    >
+  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="!expend">
+    <div title fxLayout="row" fxLayoutAlign="space-between center">
+
+      <app-typography color="primary" bold="600" size="16">
+        {{budgetGroup.header.text}}
+      </app-typography>
+      <app-typography size="16">
+        {{budgetKKL| currency : 'ILS'}}
+      </app-typography>
+      <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
+
+    </div>
+    <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}">
     </app-form-container>
   </app-expend-panel>
 </mat-accordion>

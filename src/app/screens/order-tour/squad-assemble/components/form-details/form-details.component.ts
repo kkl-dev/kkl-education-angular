@@ -13,6 +13,9 @@ export class FormDetailsComponent implements OnInit {
   @Input() public detailsGroup: QuestionGroup;
   @Input() public budgetGroup: QuestionGroup;
 
+  public budgetKKL: number = 18332736;
+  public expend: boolean = true;
+
   public $questions = new Subject<QuestionBase<string | number | Date>[]>();
 
   constructor() { }
@@ -22,4 +25,5 @@ export class FormDetailsComponent implements OnInit {
 
   public onBudget() {
   }
+
 }

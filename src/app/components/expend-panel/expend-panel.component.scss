@@ -4,15 +4,38 @@ mat-expansion-panel {
   margin-bottom: 15px;
 
   &.tour {
-    border-bottom: 1px solid color(primary-dark);
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
+    border-bottom: 1px solid color(primary-dark);
   }
 
+  &.form {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+
+  }
+
+
   mat-expansion-panel-header {
-    direction: rtl;
     &.tour {
       padding-right: 0px;
     }
+
+    &.form {
+      padding: 0px;
+      align-items: end;
+      border-bottom: 1px solid color(primary);
+
+      &:hover {
+        background-color: color(paper) !important;
+      }
+
+
+    }
+
+    mat-panel-title.form {
+      border-bottom: 3px solid color(primary);
+    }
+
   }
 }

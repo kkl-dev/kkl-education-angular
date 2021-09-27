@@ -20,4 +20,8 @@ export class FormGroupComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public onEdit() {
+    
+  }
+
 }
