@@ -1,16 +1,26 @@
-<mat-accordion dir="rtl" >
-  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="true">
-    <app-typography title color="primary" bold="600" size="16">
-      {{detailsGroup.header.text}}
-    </app-typography>
+<mat-accordion dir="rtl">
+  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="expend">
+    <div title fxLayout="row" fxLayoutAlign="space-between center">
+
+      <app-typography color="primary" bold="600" size="16">
+        {{detailsGroup.header.text}}
+      </app-typography>
+      <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
+
+    </div>
     <app-form-container content [cols]="detailsGroup.cols" [questions]="detailsGroup.questions">
     </app-form-container>
   </app-expend-panel>
 
-  <app-expend-panel [hideToggle]="true"  variant="form">
-    <app-typography title color="primary" bold="600" size="16">
-      {{budgetGroup.header.text}}
-    </app-typography>
+  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="!expend">
+    <div title fxLayout="row" fxLayoutAlign="space-between center">
+
+      <app-typography color="primary" bold="600" size="16">
+        {{budgetGroup.header.text}}
+      </app-typography>
+      <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
+
+    </div>
     <div description class="budget">
       <app-typography>
         {{budgetKKL| currency : 'ILS'}}

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 export interface PanelModel {
   title: ElementRef;
@@ -21,11 +21,17 @@ export class ExpendPanelComponent implements OnInit {
 
   public panelOpenState = false;
 
+  @Output() expand : EventEmitter<boolean> = new EventEmitter()
+
   constructor() {}
 
   ngOnInit(): void {
     this.variant = this.variant || ''
     this.expanded = this.expanded || false
     this.hideToggle = this.hideToggle || false
+  }
+
+  public onExpend() {
+    this.expand.emit()
   }
 }

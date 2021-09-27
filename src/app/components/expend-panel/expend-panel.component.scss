@@ -26,6 +26,11 @@ mat-expansion-panel {
       align-items: end;
       border-bottom: 1px solid color(primary);
 
+      &:hover {
+        background-color: color(paper) !important;
+      }
+
+
     }
 
     mat-panel-title.form {
