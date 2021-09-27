@@ -1,44 +1,32 @@
-<mat-grid-list
-  [cols]="1"
-  [gutterSize]="group.gutter || 1"
-  rowHeight="2vh"
->
-  <mat-grid-tile
-    *ngIf="group.header"
-    [colspan]="group.cols || 1"
-    [rowspan]="group.rows || 2"
-  >
-    <app-form-header
-      [text]="group.header.text"
-      [custom]="group.header?.custom"
-      [slots]="{button}"
-    >
+<mat-grid-list [cols]="1" [gutterSize]="group.gutter || 1" rowHeight="2vh">
+
+  <mat-grid-tile *ngIf="group.header" [colspan]="group.cols || 1" [rowspan]="2">
+    <app-form-header [slot]="group.header?.slot" [slots]="{button}">
+      <div title fxLayout="row" fxLayoutAlign="start center">
+
+        <app-typography color="primary" bold="600" size="16">
+          {{group.header.text}}
+        </app-typography>
+      </div>
+
     </app-form-header>
   </mat-grid-tile>
 
   <mat-grid-tile [rowspan]="group.rows">
-    <ng-container
-      *ngTemplateOutlet="
+    <ng-container *ngTemplateOutlet="
         slot;
         context: {
           formGroup: this.formGroup,
           group: this.group
         }
-      "
-    ></ng-container>
+      "></ng-container>
   </mat-grid-tile>
 
 
 </mat-grid-list>
 
 <ng-template #button>
-  <button
-    type="submit"
-    disableRipple="true"
-    (click)="onEdit()"
-    mat-icon-button
-    class="edit-button mat-elevation-z1"
-  >
+  <button type="submit" disableRipple="true" (click)="onEdit()" mat-icon-button class="edit-button mat-elevation-z1">
     <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
   </button>
 </ng-template>

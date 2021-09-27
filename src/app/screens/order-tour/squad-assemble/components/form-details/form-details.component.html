@@ -18,13 +18,11 @@
       <app-typography color="primary" bold="600" size="16">
         {{budgetGroup.header.text}}
       </app-typography>
-      <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
-
-    </div>
-    <div description class="budget">
-      <app-typography>
+      <app-typography size="16">
         {{budgetKKL| currency : 'ILS'}}
       </app-typography>
+      <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
+
     </div>
     <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}">
     </app-form-container>

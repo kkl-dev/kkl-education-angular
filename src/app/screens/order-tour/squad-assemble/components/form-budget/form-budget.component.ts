@@ -54,7 +54,6 @@ export class FormBudgetComponent implements OnInit {
 
   ngOnInit(): void {
     this.list = this.setList(this.list);
-    console.log(this.list)
   }
 
   private setList(list: ListItem[]): ListItem[] {

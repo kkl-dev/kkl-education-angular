@@ -24,7 +24,7 @@ export class SquadAssembleComponent implements OnInit {
       {
         group: {
           key: 'date',
-          header: { text: 'מועד ושם הטיול', custom: 'tourId' },
+          header: { text: 'מועד ושם הטיול', slot: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
         hasBottom: true,
@@ -32,7 +32,7 @@ export class SquadAssembleComponent implements OnInit {
       {
         group: {
           key: 'client',
-          header: { text: 'לקוח', custom: 'client' },
+          header: { text: 'לקוח', slot: 'client' },
           questions: this.squadAssembleService.customerFormInputs,
           cols: 1,
         },
@@ -40,7 +40,7 @@ export class SquadAssembleComponent implements OnInit {
       {
         group: {
           key: 'squad',
-          header: { text: 'הרכב הקבוצה', custom: 'gender' },
+          header: { text: 'הרכב הקבוצה', slot: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: 5,
         },
@@ -49,7 +49,7 @@ export class SquadAssembleComponent implements OnInit {
       {
         group: {
           key: 'details',
-          header: { text: 'פרטי הטיול', custom: '' },
+          header: { text: 'פרטי הטיול', slot: '' },
           questions: this.squadAssembleService.tourDetailsFormInputs,
 
         },
@@ -59,7 +59,7 @@ export class SquadAssembleComponent implements OnInit {
 
     this.budgetGroup = {
       key: 'budget',
-      header: { text: 'תקציב', custom: 'budget' },
+      header: { text: 'תקציב', slot: 'budget' },
       questions: this.squadAssembleService.budgetQuestions,
       cols: 1,
     };

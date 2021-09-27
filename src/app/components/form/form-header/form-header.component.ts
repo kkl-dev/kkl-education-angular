@@ -6,15 +6,14 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./form-header.component.scss'],
 })
 export class FormHeaderComponent implements OnInit {
-  @Input() text: string;
-  @Input() custom: string;
-  @Input() title: boolean;
+  @Input() variant: string;
+  @Input() slot: string;
   @Input() classes: {};
   @Input() slots: {};
 
   constructor() {}
 
   ngOnInit(): void {
-    this.title = this.title || false;
+    this.variant = this.variant || ''
   }
 }
