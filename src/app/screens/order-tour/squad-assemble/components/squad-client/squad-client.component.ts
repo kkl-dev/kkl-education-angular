@@ -29,7 +29,6 @@ export class SquadClientComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToOnSelectChange(); 
 
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>()
     this.contactQuestions = this.group.questions.pop()

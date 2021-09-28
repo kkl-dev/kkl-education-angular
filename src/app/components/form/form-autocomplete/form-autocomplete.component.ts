@@ -26,10 +26,17 @@ export class FormAutocompleteComponent implements OnInit {
 
   public onAutocomplete(control: FormControl) {
     console.log(control)
-
+    
     // TODO search server logic
-
-
     this.list.push(control.value)
+  }
+  
+  public onSelect(control: FormControl) {
+    console.log(control)
+
+  }
+  public onDelete() {
+    // TODO delete server logic
+
   }
 }

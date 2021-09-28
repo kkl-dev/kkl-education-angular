@@ -1,3 +1,4 @@
+import { SquadGroupService } from './../components/squad-assemble-form/squad-group.service';
 import { Injectable } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
@@ -9,16 +10,20 @@ import { QuestionTextarea } from 'src/app/components/form/logic/question-textare
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
+import { SquadClientService } from '../components/squad-client/squad-client.service';
+import { SquadDetailsService } from '../components/form-details/squad-details.service';
+import { SquadBudgetService } from '../components/form-budget/squad-budget.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SquadAssembleService {
+
   freeSpacesArray: FreeSpace[] = [];
 
   formsArray: FormGroup[] = [];
 
-  freeSpacesArrayGenarator(start: Date, end: Date) {
+  public freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
     while (start < end) {
@@ -43,7 +48,8 @@ export class SquadAssembleService {
     }
     return freeSpacesArray;
   }
-  options: CalendarOptions = {
+
+  public options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
 
@@ -71,7 +77,13 @@ export class SquadAssembleService {
     }),
   ];
 
-  constructor() {
+  constructor(
+    private squadClientService: SquadClientService,
+    private squadDetailsService: SquadDetailsService,
+    private squadBudgetService: SquadBudgetService,
+    private squadGroupService: SquadGroupService
+
+  ) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2021, 11, 17)
@@ -120,350 +132,17 @@ export class SquadAssembleService {
     }),
   ];
 
-  public customerFormInputs: QuestionBase<string>[] = [
-    new QuestionBase({
-      key: 'wantedClient',
-      isGroup: true,
-      fullWidth: true,
-      cols: 3,
-      rows: 6,
-      type: 'autocomplete',
-      group: {
-        key: 'wantedClient',
-        cols: 3,
-        rows: 6,
-        questions: [
-          new QuestionSelect({
-            key: 'clientPool',
-            type: 'select',
-            label: 'הכול',
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-          new QuestionAutocomplete({
-            key: 'clientName',
-            label: 'הקלד לקוח רצוי',
-            cols: 2,
-            value: '',
-            validations: [Validators.required],
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-        ],
-      },
-    }),
-    new QuestionBase({
-      key: 'payerPoll',
-      isGroup: true,
-      fullWidth: true,
-      cols: 3,
-      rows: 12,
-      type: 'autocomplete',
-      group: {
-        key: 'payerName',
-        cols: 3,
-        rows: 12,
-        questions: [
-          new QuestionSelect({
-            key: 'payerName',
-            type: 'select',
-            label: 'הכול',
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-          new QuestionAutocomplete({
-            key: 'payerPoll',
-            label: 'לקוח משלם',
-            type: 'autocomplete',
-            cols: 2,
-            value: '',
-            validations: [Validators.required],
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-        ],
-      },
-    }),
+  public customerFormInputs: QuestionBase<string>[] = this.squadClientService.clientQuestions;
 
-    new QuestionBase({
-      key: 'contact',
-      isGroup: true,
-      fullWidth: true,
-      rows: 14,
-      group: {
-        key: 'contact',
-        header: null,
-        cols: 1,
-        rows: 14,
-        questions: [
-          new QuestionTextbox({
-            key: 'fullName',
-            label: 'איש קשר',
-          }),
+  public groupAssembleFormMixedInputs: QuestionBase<string | number>[] = this.squadGroupService.mixedQuestions;
 
-          new QuestionTextbox({
-            key: 'phone',
-            label: 'נייד איש קשר',
-            type: 'text',
-            validations: [Validators.required],
-          }),
-          new QuestionTextbox({
-            key: 'email',
-            label: 'מייל',
-            type: 'text',
-            validations: [Validators.required],
-          }),
-        ],
-      },
-    }),
-  ];
+  public groupAssembleFormInputs: QuestionBase<string>[] = this.squadGroupService.groupQuestions;
 
-  public groupAssembleFormMixedInputs: QuestionBase<string | number>[] = [
-    new QuestionSelect({
-      key: 'age',
-      type: 'select',
-      fullWidth: true,
-      rows: 4,
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
-      },
-    }),
+  public tourDetailsFormInputs: QuestionBase<string>[] = this.squadDetailsService.questions;
 
-    new QuestionNumber({
-      key: 'chaperones',
-      label: 'מלווים',
-      cols: 2,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'participants',
-      label: 'נוער / מבוגרים',
-      offset: 1,
-      cols: 2,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'drivers',
-      label: 'נהגים',
-      cols: 2,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'instructors',
-      label: 'מדריכים',
-      offset: 1,
-      cols: 2,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'medics',
-      label: 'חובשים',
-      cols: 2,
-      rows: 4,
-      offset: 3,
-    }),
-  ];
+  public budgetQuestions: QuestionBase<string>[] = this.squadBudgetService.questions;
 
-  public groupAssembleFormInputs: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'age',
-      type: 'select',
-      fullWidth: true,
-      rows: 3,
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
-        ],
-      },
-    }),
-    new QuestionBase({
-      key: 'participants',
-      fullWidth: true,
-      rows: 5,
-      isGroup: true,
-      group: {
-        key: 'participants',
-        cols: 5,
-        rows: 5,
-        header: { label: 'נוער / מבוגרים' },
-        questions: this.genderArray,
-      },
-    }),
-
-    new QuestionBase({
-      key: 'chaperones',
-      fullWidth: true,
-      rows: 5,
-      isGroup: true,
-      group: {
-        key: 'chaperones',
-        cols: 5,
-        rows: 5,
-        header: { label: 'מלווים' },
-        questions: this.genderArray,
-      },
-    }),
-
-    new QuestionBase({
-      key: 'instructors',
-      isGroup: true,
-      fullWidth: true,
-      rows: 5,
-      group: {
-        key: 'instructors',
-        cols: 5,
-        rows: 5,
-        header: { label: 'מדריכים' },
-        questions: this.genderArray,
-      },
-    }),
-
-    new QuestionBase({
-      key: 'medics',
-      isGroup: true,
-      fullWidth: true,
-      rows: 5,
-      group: {
-        key: 'medics',
-        cols: 5,
-        rows: 5,
-        header: { label: 'חובשים' },
-        questions: this.genderArray,
-      },
-    }),
-  ];
-
-  public tourDetailsFormInputs: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'characteristic',
-      label: 'מאפיין',
-      type: 'select',
-      inputProps: {
-        options: [
-          { key: 'פרומלי', value: 'פרומלי' },
-          { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
-          { key: 'מעוף', value: 'מעוף' },
-          { key: 'חו"ל', value: 'חו"ל' },
-          { key: 'הנהלת אגף', value: 'הנהלת אגף' },
-        ],
-      },
-    }),
-    new QuestionSelect({
-      key: 'activityType',
-      label: 'סוג הפעילות',
-      type: 'select',
-      inputProps: {
-        options: [
-          { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
-          { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
-        ],
-      },
-    }),
-    new QuestionSelect({
-      key: 'tripLocation',
-      label: 'מחלקה',
-      type: 'select',
-      inputProps: {
-        options: [
-          { key: 'ישראל', value: 'ישראל' },
-          { key: 'חו"ל', value: 'חו"ל' },
-        ],
-      },
-    }),
-    new QuestionSelect({
-      key: 'tripCenter',
-      label: 'פנים/חוץ מרכז שדה',
-      type: 'select',
-      inputProps: {
-        options: [
-          { key: 'פנים', value: 'פנים' },
-          { key: 'חוץ', value: 'חוץ' },
-        ],
-      },
-    }),
-  ];
-
-  public budgetQuestions: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'budgetIncome',
-      type: 'select',
-      fullWidth: true,
-      rows: 4,
-      label: 'תת סעיף תקציב הכנסות',
-      inputProps: {
-        options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
-      },
-    }),
-    new QuestionSelect({
-      key: 'budgetExpense',
-      type: 'select',
-      fullWidth: true,
-      rows: 4,
-      label: 'תת סעיף תקציב הוצאות',
-      inputProps: {
-        options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
-      },
-    }),
-    new QuestionBase({
-      key: 'location',
-      isGroup: true,
-      fullWidth: true,
-      rows: 16,
-      group: {
-        label: 'תקצוב פעילות',
-        key: 'location',
-        rows: 16,
-        questions: [
-          new QuestionSelect({
-            label: 'ישוב',
-            key: 'location',
-            type: 'select',
-            fullWidth: true,
-            rows: 4,
-            inputProps: {
-              options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
-            },
-          }),
-        ],
-      },
-    }),
-  ];
-
-  updateFormArray(form: FormGroup) {
+  public updateFormArray(form: FormGroup) {
     const index = this.formsArray.findIndex(
       (formItem) => form.controls == formItem.controls
     );

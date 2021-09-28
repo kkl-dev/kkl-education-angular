@@ -45,6 +45,7 @@ export class FormInputComponent implements OnInit {
   public serverError!: string;
 
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter()
+  @Output() select: EventEmitter<FormControl> = new EventEmitter()
 
   public OnChange!: (event: Event) => void;
   public onTouched!: () => void;
@@ -99,9 +100,10 @@ export class FormInputComponent implements OnInit {
       }
     });
   }
-
+  
   public onSelectChange() {
     this.formService.onChangeSelect.next(true);
+    this.select.emit(this.control)
   }
 
   // LOGIC SECTION
