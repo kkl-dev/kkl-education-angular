@@ -1,87 +1,115 @@
+import { FormGroup } from '@angular/forms';
+import { SquadClientService } from './squad-client.service';
 import { FormService } from 'src/app/components/form/logic/form.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
-import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { FormHeader } from '../squad-group/squad-group.component';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-squad-client',
   templateUrl: './squad-client.component.html',
   styleUrls: ['./squad-client.component.scss']
 })
-export class SquadClientComponent implements OnInit {
-
+export class SquadClientComponent implements OnInit, OnDestroy {
   @Input() public group: QuestionGroup;
 
-  public expend: boolean = true;
   public clientQuestions: QuestionBase<string | number | Date>[];
   public contactQuestions: QuestionBase<string | number | Date>;
+
   public $questions: Subject<QuestionBase<string | number | Date>[]>;
 
-  private client: boolean = false;
+  public editMode: boolean;
+
+  private contactFormGroup: FormGroup
+
+  private header: FormHeader = {
+    label: 'איש קשר',
+    slot: 'button',
+  };
+
+  private unsubscribeToEdit: Subscription
+  private unsubscribeToClient: Subscription
 
   constructor(
-    private squadAssembleService: SquadAssembleService,
-    private formService: FormService,
+    private squadClientService: SquadClientService
 
   ) { }
 
   ngOnInit(): void {
 
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>()
-    this.contactQuestions = this.group.questions.pop()
     this.setClientQuestions()
+    this.subscribeToEditMode()
+    this.subscribeToClientData()
   }
 
-  private setClientQuestions() {
-    this.group.questions = this.group.questions.filter((question: QuestionBase<string>) => question.key !== 'contect')
+  ngOnDestroy(): void {
+    this.unsubscribeToEdit.unsubscribe();
+    this.unsubscribeToClient.unsubscribe();
   }
 
-  // method to add new client form
-  public onAddClient() {
-    this.client = !this.client;
-    console.log(this.client)
-
-    this.updateClientHeader()
-
+  private setClientQuestions(): void {
+    this.contactQuestions = this.group.questions.pop();
+    this.group.questions = this.group.questions.filter((question: QuestionBase<string>) => question.key !== 'contect');
   }
 
-  private updateClientHeader() {
-    const header: FormHeader = {
-      label: 'איש קשר',
-      slot: 'button',
-    };
 
-    this.client
-      ? (this.contactQuestions.group.header = header)
+  private subscribeToEditMode(): void {
+    this.unsubscribeToEdit = this.squadClientService.getEditModeObs().subscribe(
+      (mode: boolean) => {
+        this.editMode = mode;
+      }
+    )
+  }
+
+  private subscribeToClientData(): void {
+    this.unsubscribeToClient = this.squadClientService.getClientObs().subscribe(
+      (value: any) => {
+        this.squadClientService.emitEditMode(true)
+        this.updateClientHeader()
+        this.updateClientForm(value)      }
+    )
+  }
+
+  private toggleFormState(): void {
+    this.editMode
+      ? this.contactFormGroup.enable()
+      : this.contactFormGroup.disable()
+  }
+
+  private updateClientHeader(): void {
+
+    this.editMode
+      ? (this.contactQuestions.group.header = this.header)
       : (this.contactQuestions.group.header = null);
 
     this.$questions.next([this.contactQuestions]);
   }
 
-  private updateClientForm() {
+  private updateClientForm(value?: string): void {
+    this.contactFormGroup.patchValue({ fullName: value || ' שלום אברהם' });
+  }
+
+
+  // EVENTS METHOS SECTION
+
+  // method to add new editMode form
+  public onAddClient(): void {
+    this.editMode = !this.editMode;
+    this.toggleFormState()
     this.updateClientHeader()
-    this.formService.formGroup.controls.contact.patchValue({ fullName: ' שלום אברהם' });
   }
 
-  private subscribeToOnSelectChange() {
-
-
-    this.formService.onChangeSelect.subscribe((value) => {
-      if (this.group.key === 'client') {
-        this.client = true
-        this.updateClientForm();
-        this.formService.formGroup.controls.contact.disable();
-        console.log(this.formService.formGroup.controls.contact)
-      }
-    });
+  public registerToClient(formGroup: FormGroup) {
+    this.contactFormGroup = formGroup
   }
 
-  
-  public onEdit() {
-    
+
+  public onEdit(): void {
+    this.squadClientService.emitEditMode(true)
+    this.toggleFormState()
   }
 
 }

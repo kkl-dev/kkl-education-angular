@@ -14,3 +14,20 @@ div {
 .form-autocomplete {
   height: fit-content;
 }
+
+button.edit-button {
+  height: 2rem !important;
+  width: 2rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &.mat-icon-button {
+    border-radius: 20% !important;
+  }
+}
+
+div.edit-button-container {
+  padding-bottom: spacing(1);
+}

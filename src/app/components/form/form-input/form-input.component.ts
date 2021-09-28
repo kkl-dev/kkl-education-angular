@@ -7,6 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -28,7 +29,6 @@ export class FormInputComponent implements OnInit {
   @Input() public options!: [];
   @Input() public dateOptions!: [];
 
-  @Input() public labelSize: number;
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
@@ -38,25 +38,18 @@ export class FormInputComponent implements OnInit {
   @Input() public serverErrorMode!: boolean;
 
   public color: string;
-  public labelLength: string;
-
   public value!: any;
   public error!: string;
   public serverError!: string;
 
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter()
   @Output() select: EventEmitter<FormControl> = new EventEmitter()
-
-  public OnChange!: (event: Event) => void;
-  public onTouched!: () => void;
+  @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
   constructor(private formService: FormService) { }
 
   ngOnInit(): void {
     this.subscribeToControl();
-
-    this.labelLength = `size-${this.labelSize || 1}`
-
   }
 
   public handleChange(value: any) {
@@ -65,16 +58,16 @@ export class FormInputComponent implements OnInit {
 
 
   // CALANDER METHODS
-  newDateRecived(newDate: any) {
+  newDateReceived(newDate: any) {
     console.log(newDate);
 
   }
-  prevDateRecived(prevDate: any) {
+  prevDateReceived(prevDate: any) {
     console.log(prevDate);
 
   }
 
-  newSleepingPlaceRecived(sleepingPlace: any) {
+  newSleepingPlaceReceived(sleepingPlace: any) {
     console.log(sleepingPlace);
 
   }
@@ -100,10 +93,14 @@ export class FormInputComponent implements OnInit {
       }
     });
   }
-  
+
   public onSelectChange() {
     this.formService.onChangeSelect.next(true);
     this.select.emit(this.control)
+  }
+
+  public onOptionSelected(event: MatAutocompleteSelectedEvent) {
+    this.optionSelected.emit(event)
   }
 
   // LOGIC SECTION

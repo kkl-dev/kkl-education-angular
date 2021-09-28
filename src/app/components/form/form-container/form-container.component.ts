@@ -30,21 +30,24 @@ export class FormContainerComponent implements OnInit {
   @Input() hasButton: boolean = false;
   @Input() hasBottomButton: boolean = false;
 
+  @Input() disable: boolean;
+
+
   @Input() slots: {
     topButton?: ElementRef;
     groupInputs?: ElementRef;
   };
 
-  @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() register: EventEmitter<FormGroup> = new EventEmitter();
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
 
-  constructor(private formService: FormService) {}
+  constructor(private formService: FormService) { }
 
   ngOnInit() {
     this.initFormGroup();
     this.subscribeToQuestions();
     this.subscribeToFormValues();
-    this.formService.formGroup = this.formGroup;
+    this.dissableForm()
   }
 
   private initFormGroup() {
@@ -52,12 +55,18 @@ export class FormContainerComponent implements OnInit {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
-      this.valueChange.emit(this.formGroup);
+      this.register.emit(this.formGroup);
+    }
+  }
+
+  private dissableForm() {
+    if (this.disable) {
+      this.formGroup.disable()
     }
   }
 
   public onSubmit() {
-    this.valueChange.emit(this.formGroup);
+    this.register.emit(this.formGroup);
   }
 
   private subscribeToQuestions() {
@@ -74,7 +83,7 @@ export class FormContainerComponent implements OnInit {
 
   private subscribeToFormValues() {
     this.formGroup.valueChanges.subscribe(() => {
-      this.valueChange.emit(this.formGroup);
+      this.register.emit(this.formGroup);
     });
   }
 
