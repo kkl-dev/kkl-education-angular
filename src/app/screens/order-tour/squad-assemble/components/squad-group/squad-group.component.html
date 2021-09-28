@@ -1,43 +1,34 @@
-<div class="container" *ngIf="questions.length > 0">
-  <mat-grid-list cols="1" rowHeight="5vh">
-    <mat-grid-tile rowspan="1">
-
-      <app-form-header [slots]="{ gender, client, tourId }" [slot]="group.header.slot">
+<div fxFill fxLayout="row" fxLayoutAlign="center center" dir="rtl">
+  <div fxFlex="80" fxLayout="column" fxLayoutAlign=" center">
+    <div class="title">
+      <app-form-header [slots]="{ tourId}" slot="tourId">
         <div title fxLayout="row" fxLayoutAlign="start center">
-
           <app-typography color="primary" bold="600" size="16">
             {{group.header.label}}
           </app-typography>
         </div>
-
       </app-form-header>
-    </mat-grid-tile>
+    </div>
 
-    <mat-grid-tile rowspan="10">
-      <app-form-container [cols]="group.cols" [questions]="questions" [$questions]="$questions" [hasBottomButton]="true"
-        (valueChange)="logForm($event)" [slots]="{participants, instructors, chaperones, medics}">
+    <div>
+      <app-form-container [cols]="group.cols" [questions]="group.questions" (valueChange)="logForm($event)">
       </app-form-container>
-    </mat-grid-tile>
+    </div>
 
-    <mat-grid-tile class="row-height">
-      <mat-grid-list [cols]="list.length" rowHeight="5vh">
-        <mat-grid-tile *ngFor="let item of list; let i = index">
-          <div fxFill fxLayout="row" fxLayoutAlign="start center" dir="rtl">
-            <div fxFlex="50">
-              <app-typography size="14" class="label-text" [bold]="500">
-                {{ item.label }}:
-              </app-typography>
-              <app-typography [bold]="600" size="14">
-                {{ item.value }}
-              </app-typography>
-            </div>
-            <div class="divider" fxFlex="20" *ngIf="i !== 0">|</div>
-          </div>
-        </mat-grid-tile>
-   
-      </mat-grid-list>
-    </mat-grid-tile>
-  </mat-grid-list>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="5">
+      <ng-container *ngFor="let item of list; let i = index">
+        <div class="list-item">
+          <app-typography class="label-text">
+            {{ item.label }}:
+          </app-typography>
+          <app-typography [bold]="600">
+            {{ item.value }}
+          </app-typography>
+        </div>
+        <div class="divider" fxFlex="10">|</div>
+      </ng-container>
+    </div>
+  </div>
 </div>
 
 <!-- template components -->

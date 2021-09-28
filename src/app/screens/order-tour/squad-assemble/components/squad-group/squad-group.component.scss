@@ -1,7 +1,6 @@
 @import "../../.././../../../styles.scss";
 
-mat-grid-list,
-mat-grid-tile,
+div,
 app-form-container,
 app-form-input,
 app-form-header {
@@ -9,13 +8,8 @@ app-form-header {
   width: 100%;
 }
 
-.row-height {
-  top: calc((4vh + 1px) * 11) !important;
-}
-
-
-.client-text {
-  cursor: pointer;
+div.title {
+  height: 40px !important;
 }
 
 .label-text {
@@ -27,3 +21,6 @@ app-form-header {
   justify-content: center;
 }
 
+div.list-item {
+  width: fit-content;
+}
