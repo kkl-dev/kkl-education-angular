@@ -1,0 +1,16 @@
+@import "../../.././../../../styles.scss";
+
+app-form-container,
+app-form-input,
+app-form-header,
+app-form-autocomplete,
+app-form-group,
+mat-accordion,
+div {
+  height: 100%;
+  width: 100%;
+}
+
+.form-autocomplete {
+  height: fit-content;
+}

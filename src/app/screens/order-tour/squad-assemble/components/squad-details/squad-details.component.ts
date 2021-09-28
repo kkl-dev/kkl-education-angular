@@ -1,14 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-form-details',
-  templateUrl: './form-details.component.html',
-  styleUrls: ['./form-details.component.scss']
+  selector: 'app-squad-details',
+  templateUrl: './squad-details.component.html',
+  styleUrls: ['./squad-details.component.scss']
 })
-export class FormDetailsComponent implements OnInit {
+export class SquadDetailsComponent implements OnInit {
+
 
   @Input() public detailsGroup: QuestionGroup;
   @Input() public budgetGroup: QuestionGroup;

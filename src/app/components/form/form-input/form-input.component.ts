@@ -1,14 +1,12 @@
 import {
   Component,
   OnInit,
-  forwardRef,
   Input,
   ViewChild,
   Output,
   EventEmitter,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
-import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
+import { FormControl } from '@angular/forms';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -16,13 +14,6 @@ import { QuestionBase } from '../logic/question-base';
   selector: 'app-form-input',
   templateUrl: './form-input.component.html',
   styleUrls: ['./form-input.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormInputComponent),
-      multi: true,
-    },
-  ],
 })
 export class FormInputComponent implements OnInit {
   @ViewChild('input') input!: HTMLInputElement;
@@ -53,12 +44,13 @@ export class FormInputComponent implements OnInit {
   public error!: string;
   public serverError!: string;
 
-  @Output() autocomplete : EventEmitter<FormControl> = new EventEmitter()
+  @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter()
+  @Output() select: EventEmitter<FormControl> = new EventEmitter()
 
   public OnChange!: (event: Event) => void;
   public onTouched!: () => void;
 
-  constructor(private formService: FormService) {}
+  constructor(private formService: FormService) { }
 
   ngOnInit(): void {
     this.subscribeToControl();
@@ -67,40 +59,27 @@ export class FormInputComponent implements OnInit {
 
   }
 
-  public writeValue(value: any): void {
-    this.value = value ? value : '';
-  }
-
-  public registerOnChange(fn: any): void {
-    this.OnChange = fn;
-  }
-
-  public registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  public setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
-
   public handleChange(value: any) {
     this.value = value;
   }
 
 
-  newDateRecived(newDate:any){
+  // CALANDER METHODS
+  newDateRecived(newDate: any) {
     console.log(newDate);
 
   }
-  prevDateRecived(prevDate:any){
+  prevDateRecived(prevDate: any) {
     console.log(prevDate);
 
   }
 
-  newSleepingPlaceRecived(sleepingPlace:any){
+  newSleepingPlaceRecived(sleepingPlace: any) {
     console.log(sleepingPlace);
 
   }
+
+  // END IF CALENDER METHODS
 
   // subscription section
   private subscribeToControl() {
@@ -116,14 +95,15 @@ export class FormInputComponent implements OnInit {
       } else {
         this.color = '';
       }
-      if(this.controlType === 'autocomplete') {
+      if (this.controlType === 'autocomplete') {
         this.autocomplete.emit(this.control)
       }
     });
   }
-
+  
   public onSelectChange() {
     this.formService.onChangeSelect.next(true);
+    this.select.emit(this.control)
   }
 
   // LOGIC SECTION

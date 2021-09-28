@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { Subject } from 'rxjs';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
-import { FlexCell } from 'src/app/components/grid/flex-cell/flex-cell.component';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
+import { Subject } from 'rxjs';
+import { ListItem } from 'src/app/components/grid/list-item.model';
 
 export interface FormHeader {
-  text: string;
+  label: string;
   slot?: any;
 }
 
@@ -18,66 +18,23 @@ export interface FormHeader {
   providers: [FormService],
 })
 export class SquadGroupComponent {
-
   @Input() public group: QuestionGroup;
-  @Input() public questions: QuestionBase<string | number | Date>[];
-  @Input() public hasBottom: boolean;
 
+  public $questions = new Subject<QuestionBase<string | number | Date>[]>();
+  public mixed: boolean = true;
 
-  public tripId: string = '0000000';
-
-  // array to hold data for bottom form text
-  public bottomData: FlexCell[] = [];
-
-  // subject to handle update of questions form
-  private $questions = new Subject<QuestionBase<string | number | Date>[]>();
-
-  //
-  private mixed: boolean = true;
-  private client: boolean = false;
+  public list: ListItem[] = [
+    {
+      label: 'מס משתתפים',
+      value: '120',
+    }
+  ]
 
   constructor(
-    private squadAssembleService: SquadAssembleService,
-    private formService: FormService
+    private squadAssembleService: SquadAssembleService
   ) { }
 
-  ngOnInit() {
-    this.subscribeToOnSelectChange();
-    this.questions = this.group.questions || [];
-
-    if (this.hasBottom) {
-      this.setSelectDataDemo();
-    }
-  }
-
-  private setSelectDataDemo() {
-    if (this.group.key === 'date') {
-      this.bottomData = [
-        {
-          label: 'מס לילות',
-          value: '2',
-        },
-        {
-          label: 'מס ימים',
-          value: '3',
-        },
-      ].reverse();
-    }
-
-    if (this.group.key === 'squad') {
-      this.bottomData = [
-        {
-          label: 'מס משתתפים',
-          value: '120',
-        },
-      ];
-    }
-  }
-
-  //log form when valid
-
-  logForm(form) {
-    this.squadAssembleService.updateFormArray(form);
+  ngOnInit(): void {
   }
 
   // method to change squad assemble form
@@ -91,46 +48,7 @@ export class SquadGroupComponent {
     );
   }
 
-  // method to add new client form
-  public onAddClient() {
-    this.client = !this.client;
 
-    this.updateClientHeader()
-
-  }
-
-  private updateClientHeader() {
-    const header: FormHeader = {
-      text: 'איש קשר',
-      slot: 'button',
-    };
-
-    const index = this.squadAssembleService.customerFormInputs.findIndex((item: QuestionBase<string>) => item.key === 'contact')
-
-    this.client
-      ? (this.squadAssembleService.customerFormInputs[index].group.header = header)
-      : (this.squadAssembleService.customerFormInputs[index].group.header = null);
-
-    this.$questions.next(this.squadAssembleService.customerFormInputs);
-  }
-
-  private updateClientForm() {
-    this.updateClientHeader()
-    this.formService.formGroup.controls.contact.patchValue({ fullName: ' שלום אברהם' });
-  }
-
-  private subscribeToOnSelectChange() {
-
-
-    this.formService.onChangeSelect.subscribe((value) => {
-      if (this.group.key === 'client') {
-        this.client = true
-        this.updateClientForm();
-        this.formService.formGroup.controls.contact.disable();
-        console.log(this.formService.formGroup.controls.contact)
-      }
-    });
-  }
 
 
 }

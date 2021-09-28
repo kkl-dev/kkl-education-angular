@@ -17,14 +17,14 @@ export class SquadAssembleComponent implements OnInit {
   public squads: SquadGroup[];
   public budgetGroup: QuestionGroup;
 
-  constructor(private squadAssembleService: SquadAssembleService) {}
+  constructor(private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
     this.squads = [
       {
         group: {
-          key: 'date',
-          header: { text: 'מועד ושם הטיול', slot: 'tourId' },
+          key: 'schedule',
+          header: { label: 'מועד ושם הטיול', slot: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
         hasBottom: true,
@@ -32,15 +32,15 @@ export class SquadAssembleComponent implements OnInit {
       {
         group: {
           key: 'client',
-          header: { text: 'לקוח', slot: 'client' },
+          header: { label: 'לקוח', slot: 'client' },
           questions: this.squadAssembleService.customerFormInputs,
-          cols: 1,
+          cols: 3,
         },
       },
       {
         group: {
-          key: 'squad',
-          header: { text: 'הרכב הקבוצה', slot: 'gender' },
+          key: 'group',
+          header: { label: 'הרכב הקבוצה', slot: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: 5,
         },
@@ -49,7 +49,7 @@ export class SquadAssembleComponent implements OnInit {
       {
         group: {
           key: 'details',
-          header: { text: 'פרטי הטיול', slot: '' },
+          header: { label: 'פרטי הטיול', slot: '' },
           questions: this.squadAssembleService.tourDetailsFormInputs,
 
         },
@@ -59,7 +59,7 @@ export class SquadAssembleComponent implements OnInit {
 
     this.budgetGroup = {
       key: 'budget',
-      header: { text: 'תקציב', slot: 'budget' },
+      header: { label: 'תקציב', slot: 'budget' },
       questions: this.squadAssembleService.budgetQuestions,
       cols: 1,
     };

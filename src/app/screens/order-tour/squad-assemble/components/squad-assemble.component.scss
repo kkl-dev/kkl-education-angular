@@ -1,10 +1,9 @@
 @import "../../../../../styles.scss";
 
-mat-grid-list,
-mat-grid-tile,
-app-form-container,
+app-squad-client,
+app-squad-schedule,
 app-squad-group,
-app-form-details,
+app-squad-details,
 .assemble-container {
   height: 100%;
   width: 100%;
@@ -15,13 +14,9 @@ app-form-details,
   padding-right: spacing(3);
 }
 
-.form-container {
-  width: 80%;
-  overflow: auto;
-}
-
 .divider {
   height: 90%;
-  width: 50px;
+  width: 0.5rem;
+  margin-right: 0.5rem;
   border-right : 1px solid color(border);
 }

@@ -1,22 +1,17 @@
 @import "../../.././../../../styles.scss";
 
-mat-grid-list,
-mat-grid-tile,
 app-form-container,
 app-form-input,
 app-form-header,
-app-typography,
-app-form-autocomplete  {
+app-form-group,
+div {
   height: 100%;
   width: 100%;
 }
 
-.row-height {
-  top: calc((4vh + 1px) * 11) !important;
-}
 button.gender-button {
-  height: 40px !important;
-  width: 40px !important;
+  height: 2rem !important;
+  width: 2rem !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,21 +23,3 @@ button.gender-button {
     border-radius: 20% !important;
   }
 }
-
-.client-text {
-  cursor: pointer;
-}
-
-.label-text {
-  padding-left: spacing(1);
-}
-
-.divider {
-  display: flex;
-  justify-content: center;
-}
-
-app-form-container {
-  overflow: auto;
-}
-

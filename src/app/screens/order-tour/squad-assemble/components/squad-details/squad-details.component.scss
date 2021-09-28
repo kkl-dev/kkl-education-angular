@@ -5,16 +5,15 @@ mat-grid-tile,
 app-form-container,
 app-form-input,
 app-form-header,
-mat-accordion,
 app-expend-panel,
-app-form-budget,
+app-squad-budget,
 div {
   height: 100%;
   width: 100%;
 }
 
-.budget {
-  display: flex;
-  justify-content: flex-end;
-  align-items: baseline;
+
+mat-accordion {
+  height: 100%;
+  width: 90%;
 }

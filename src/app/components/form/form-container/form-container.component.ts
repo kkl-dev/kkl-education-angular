@@ -67,9 +67,8 @@ export class FormContainerComponent implements OnInit {
         this.formGroup = this.formService.setFormGroup({
           questions: this.questions,
         });
-
-        console.log(this.formGroup.controls['contact'])
       });
+
     }
   }
 
