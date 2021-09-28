@@ -11,8 +11,8 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { SquadClientService } from '../components/squad-client/squad-client.service';
-import { SquadDetailsService } from '../components/form-details/squad-details.service';
-import { SquadBudgetService } from '../components/form-budget/squad-budget.service';
+import { SquadDetailsService } from '../components/squad-details/squad-details.service';
+import { SquadBudgetService } from '../components/squad-budget/squad-budget.service';
 
 @Injectable({
   providedIn: 'root',

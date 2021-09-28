@@ -86,8 +86,6 @@ import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.compone
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
 import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 
-import { FormDetailsComponent } from './screens/order-tour/squad-assemble/components/form-details/form-details.component';
-import { FormBudgetComponent } from './screens/order-tour/squad-assemble/components/form-budget/form-budget.component';
 import { FormAutocompleteComponent } from './components/form/form-autocomplete/form-autocomplete.component';
 
 import { SquadClientComponent } from './screens/order-tour/squad-assemble/components/squad-client/squad-client.component';
@@ -233,8 +231,6 @@ FullCalendarModule.registerPlugins([
     FilledNightFormComponent,
     
     FormAutocompleteComponent,
-    FormDetailsComponent,
-    FormBudgetComponent,
     SquadClientComponent,
     SquadScheduleComponent,
     SquadDetailsComponent,

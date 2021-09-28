@@ -16,7 +16,7 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="'details'">
-          <app-form-details [detailsGroup]="squad.group" [budgetGroup]="budgetGroup"></app-form-details>
+          <app-squad-details [detailsGroup]="squad.group" [budgetGroup]="budgetGroup"></app-squad-details>
         </ng-container>
 
         <div *ngIf="i !== squads.length - 1" class="divider"></div>

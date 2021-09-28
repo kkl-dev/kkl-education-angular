@@ -1,9 +1,9 @@
 @import "../../../../../styles.scss";
 
-app-squad-group,
 app-squad-client,
-app-form-details,
-app-squad-assemble-form,
+app-squad-schedule,
+app-squad-group,
+app-squad-details,
 .assemble-container {
   height: 100%;
   width: 100%;
@@ -12,11 +12,6 @@ app-squad-assemble-form,
 .assemble-container {
   padding-left: spacing(3);
   padding-right: spacing(3);
-}
-
-.form-container {
-  width: 80%;
-  overflow: auto;
 }
 
 .divider {
