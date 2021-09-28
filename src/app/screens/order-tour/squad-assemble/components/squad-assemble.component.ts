@@ -23,7 +23,7 @@ export class SquadAssembleComponent implements OnInit {
     this.squads = [
       {
         group: {
-          key: 'date',
+          key: 'schedule',
           header: { label: 'מועד ושם הטיול', slot: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
@@ -39,7 +39,7 @@ export class SquadAssembleComponent implements OnInit {
       },
       {
         group: {
-          key: 'assemble',
+          key: 'group',
           header: { label: 'הרכב הקבוצה', slot: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: 5,

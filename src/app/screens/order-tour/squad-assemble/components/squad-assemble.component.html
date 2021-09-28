@@ -3,17 +3,16 @@
     <div *ngFor="let squad of squads; let i = index" fxFlex="25">
       <ng-container [ngSwitch]="squad.group.key">
 
-        <ng-container *ngSwitchCase="'date'">
-          <app-squad-group [group]="squad.group" [hasBottom]="squad.hasBottom">
-          </app-squad-group>
+        <ng-container *ngSwitchCase="'schedule'">
+          <app-squad-schedule [group]="squad.group" ></app-squad-schedule>
         </ng-container>
 
         <ng-container *ngSwitchCase="'client'">
           <app-squad-client [group]="squad.group"></app-squad-client>
         </ng-container>
 
-        <ng-container *ngSwitchCase="'assemble'">
-          <app-squad-assemble-form [group]="squad.group"></app-squad-assemble-form>
+        <ng-container *ngSwitchCase="'group'">
+          <app-squad-group [group]="squad.group"></app-squad-group>
         </ng-container>
 
         <ng-container *ngSwitchCase="'details'">

@@ -1,4 +1,4 @@
-import { SquadGroupService } from './../components/squad-assemble-form/squad-group.service';
+import { SquadGroupService } from '../components/squad-group/squad-group.service';
 import { Injectable } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
