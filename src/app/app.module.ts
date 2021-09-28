@@ -120,6 +120,8 @@ import { IconCardComponent } from './components/icon-card/icon-card.component';
 import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
 import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
 import { SizeDirective } from './utilities/directivs/size.directive';
+import { SquadDetailsComponent } from './screens/order-tour/squad-assemble/components/squad-details/squad-details.component';
+import { SquadBudgetComponent } from './screens/order-tour/squad-assemble/components/squad-budget/squad-budget.component';
 
 
 
@@ -234,7 +236,9 @@ FullCalendarModule.registerPlugins([
     FormDetailsComponent,
     FormBudgetComponent,
     SquadClientComponent,
-    SquadScheduleComponent
+    SquadScheduleComponent,
+    SquadDetailsComponent,
+    SquadBudgetComponent
   ],
   imports: [
     BrowserModule,
