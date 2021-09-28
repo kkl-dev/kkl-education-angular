@@ -1,10 +1,11 @@
 <div class="assemble-container">
-  <mat-grid-list cols="4" rowHeight="65vh">
-    <mat-grid-tile *ngFor="let squad of squads; let i = index">
+  <div fxLayout="row" fxLayoutAlign="space-around start">
+    <div *ngFor="let squad of squads; let i = index" fxFlex="25">
       <ng-container [ngSwitch]="squad.group.key">
 
-        <ng-container *ngSwitchCase="'details'">
-          <app-form-details [detailsGroup]="squad.group" [budgetGroup]="budgetGroup"></app-form-details>
+        <ng-container *ngSwitchCase="'date'">
+          <app-squad-group [group]="squad.group" [hasBottom]="squad.hasBottom">
+          </app-squad-group>
         </ng-container>
 
         <ng-container *ngSwitchCase="'client'">
@@ -15,17 +16,12 @@
           <app-squad-assemble-form [group]="squad.group"></app-squad-assemble-form>
         </ng-container>
 
-        <ng-container *ngSwitchDefault>
-          <div class="form-container">
-            <app-squad-group [group]="squad.group" [hasBottom]="squad.hasBottom">
-            </app-squad-group>
-          </div>
+        <ng-container *ngSwitchCase="'details'">
+          <app-form-details [detailsGroup]="squad.group" [budgetGroup]="budgetGroup"></app-form-details>
         </ng-container>
 
         <div *ngIf="i !== squads.length - 1" class="divider"></div>
       </ng-container>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
 </div>
-
-<ng-template> </ng-template>

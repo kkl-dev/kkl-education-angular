@@ -1,38 +1,49 @@
 <div fxFill fxLayout="row" fxLayoutAlign="center center" dir="rtl">
+  <div fxFlex="80" fxLayout="column" fxLayoutAlign=" center">
+    <div fxFlex="15">
+      <app-form-header [slots]="{ newClient}" slot="newClient">
+        <div title fxLayout="row" fxLayoutAlign="start center">
+          <app-typography color="primary" bold="600" size="16">
+            {{group.header.label}}
+          </app-typography>
+        </div>
+      </app-form-header>
+    </div>
 
-  <mat-accordion multi>
-    <app-expend-panel [hideToggle]="true" variant="form" [expanded]="expend">
-      <div title fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="form-autocomplete" *ngFor="let group of group.questions">
+      <app-form-autocomplete [group]="group.group"></app-form-autocomplete>
+    </div>
 
-        <app-typography color="primary" bold="600" size="16">
-          {{group.header.label}}
-        </app-typography>
+    <div fxFlex="10" *ngIf="contactQuestions.group.header">
+      <app-form-header [slots]="{ editButton }" slot="editButton">
+        <div title fxLayout="row" fxLayoutAlign="start center">
+          <app-typography color="primary" bold="600" size="16">
+            {{contactQuestions.group.header.label}}
+          </app-typography>
+        </div>
+      </app-form-header>
+    </div>
 
-      </div>
-      <div description fxLayout="row" fxLayoutAlign="end">
-        <app-typography class="client-text" color="primary" (click)="onAddClient()">
-          לקוח חדש
-        </app-typography>
-      </div>
-      <app-form-container content [cols]="group.cols" [questions]="group.questions"
-        [slots]="{payerName, wantedClient }">
-      </app-form-container>
-    </app-expend-panel>
-
-    <app-expend-panel [hideToggle]="true" variant="form" [expanded]="true" [disabled]="true"
-      [showHeader]="!contactQuestions.group.header">
-
-      <div *ngIf="contactQuestions.group.header" title fxLayout="row" fxLayoutAlign="space-between center">
-
-        <app-typography color="primary" bold="600" size="16">
-          {{contactQuestions.group.header.label}}
-        </app-typography>
-
-      </div>
+    <div>
       <app-form-container content [cols]="contactQuestions.cols" [questions]="contactQuestions.group.questions">
       </app-form-container>
-    </app-expend-panel>
-  </mat-accordion>
+    </div>
+
+  </div>
+
+  <ng-template #newClient let-group="group" let-formGroup="formGroup">
+    <div fxLayout="row" fxLayoutAlign="end">
+      <button mat-button color="primary" (click)="onAddClient()" disableRipple="true">
+        לקוח חדש
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template #editButton>
+    <button type="submit" disableRipple="true" (click)="onEdit()" mat-icon-button class="edit-button mat-elevation-z1">
+      <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
+    </button>
+  </ng-template>
 
   <ng-template #payerName let-group="group" let-formGroup="formGroup">
     <app-form-autocomplete [group]="group" [formGroup]="formGroup"></app-form-autocomplete>

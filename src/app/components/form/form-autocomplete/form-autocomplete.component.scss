@@ -2,7 +2,8 @@
 
 mat-grid-list,
 mat-grid-tile,
-app-form-input {
+app-form-input,
+form {
   height: 100%;
   width: 100%;
 }
@@ -10,4 +11,10 @@ app-form-input {
 .autocomplete {
   background-color: color(border);
   padding-right: spacing(1);
+  margin-bottom: spacing(1);
+  width: 100%;
+}
+
+div.data-container {
+  width: 100%;
 }

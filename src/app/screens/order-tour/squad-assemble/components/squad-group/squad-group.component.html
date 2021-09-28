@@ -20,8 +20,8 @@
     </mat-grid-tile>
 
     <mat-grid-tile class="row-height">
-      <mat-grid-list *ngIf="hasBottom" [cols]="bottomData.length" rowHeight="5vh">
-        <mat-grid-tile *ngFor="let item of bottomData; let i = index">
+      <mat-grid-list [cols]="list.length" rowHeight="5vh">
+        <mat-grid-tile *ngFor="let item of list; let i = index">
           <div fxFill fxLayout="row" fxLayoutAlign="start center" dir="rtl">
             <div fxFlex="50">
               <app-typography size="14" class="label-text" [bold]="500">
@@ -42,76 +42,6 @@
 
 <!-- template components -->
 
-<ng-template #gender>
-  <button mat-icon-button class="gender-button mat-elevation-z1" disableRipple="true" (click)="onGenderChange()">
-    <app-icon type="svg" key="gender" scale="2"></app-icon>
-  </button>
-</ng-template>
-
-<ng-template #arrow>
-  <button mat-icon-button disableRipple="true" (click)="onBudget()">
-    <app-icon type="mat" key="expand_less" [scale]="2" color="primary"></app-icon>
-  </button>
-</ng-template>
-
-
 <ng-template #tourId>
   <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
-</ng-template>
-
-
-<ng-template #participants let-group="group" let-formGroup="formGroup">
-  <mat-grid-list cols="5" rowHeight="2vh">
-    <ng-container *ngFor="let question of group.questions">
-      <mat-grid-tile [colspan]="question.cols" [rowspan]="question.rows || 2">
-        <app-form-input class="group-input" [groupLabel]="question.key === 'girls' ? question.label : 'g'"
-          [control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
-          [split]="cols > question.cols" [theme]="question.key === 'girls' && 'accent'" [type]="question.controlType">
-        </app-form-input>
-      </mat-grid-tile>
-      <mat-grid-tile *ngIf="question.offset"></mat-grid-tile>
-    </ng-container>
-  </mat-grid-list>
-</ng-template>
-
-<ng-template #instructors let-group="group" let-formGroup="formGroup">
-  <mat-grid-list cols="5" rowHeight="2vh">
-    <ng-container *ngFor="let question of group.questions">
-      <mat-grid-tile [colspan]="question.cols" [rowspan]="question.rows || 2">
-        <app-form-input class="group-input" [groupLabel]="question.key === 'girls' ? question.label : 'g'"
-          [control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
-          [split]="cols > question.cols" [theme]="question.key === 'girls' && 'accent'" [type]="question.controlType">
-        </app-form-input>
-      </mat-grid-tile>
-      <mat-grid-tile *ngIf="question.offset"></mat-grid-tile>
-    </ng-container>
-  </mat-grid-list>
-</ng-template>
-
-<ng-template #chaperones let-group="group" let-formGroup="formGroup">
-  <mat-grid-list cols="5" rowHeight="2vh">
-    <ng-container *ngFor="let question of group.questions">
-      <mat-grid-tile [colspan]="question.cols" [rowspan]="question.rows || 2">
-        <app-form-input class="group-input" [groupLabel]="question.key === 'girls' ? question.label : 'g'"
-          [control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
-          [split]="cols > question.cols" [theme]="question.key === 'girls' && 'accent'" [type]="question.controlType">
-        </app-form-input>
-      </mat-grid-tile>
-      <mat-grid-tile *ngIf="question.offset"></mat-grid-tile>
-    </ng-container>
-  </mat-grid-list>
-</ng-template>
-
-<ng-template #medics let-group="group" let-formGroup="formGroup">
-  <mat-grid-list cols="5" rowHeight="2vh">
-    <ng-container *ngFor="let question of group.questions">
-      <mat-grid-tile [colspan]="question.cols" [rowspan]="question.rows || 2">
-        <app-form-input class="group-input" [groupLabel]="question.key === 'girls' ? question.label : 'g'"
-          [control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
-          [split]="cols > question.cols" [theme]="question.key === 'girls' && 'accent'" [type]="question.controlType">
-        </app-form-input>
-      </mat-grid-tile>
-      <mat-grid-tile *ngIf="question.offset"></mat-grid-tile>
-    </ng-container>
-  </mat-grid-list>
 </ng-template>

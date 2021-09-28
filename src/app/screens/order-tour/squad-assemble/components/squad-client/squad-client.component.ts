@@ -36,12 +36,6 @@ export class SquadClientComponent implements OnInit {
     this.setClientQuestions()
   }
 
-
-  private finContactGroupIndex(): number {
-    return this.squadAssembleService.customerFormInputs.findIndex((item: QuestionBase<string>) => item.key === 'contact')
-
-  }
-
   private setClientQuestions() {
     this.group.questions = this.group.questions.filter((question: QuestionBase<string>) => question.key !== 'contect')
   }
@@ -84,6 +78,11 @@ export class SquadClientComponent implements OnInit {
         console.log(this.formService.formGroup.controls.contact)
       }
     });
+  }
+
+  
+  public onEdit() {
+    
   }
 
 }

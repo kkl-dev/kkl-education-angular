@@ -125,7 +125,7 @@ export class SquadAssembleService {
       key: 'wantedClient',
       isGroup: true,
       fullWidth: true,
-      cols : 3,
+      cols: 3,
       rows: 6,
       type: 'autocomplete',
       group: {
@@ -133,6 +133,19 @@ export class SquadAssembleService {
         cols: 3,
         rows: 6,
         questions: [
+          new QuestionSelect({
+            key: 'clientPool',
+            type: 'select',
+            label: 'הכול',
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
           new QuestionAutocomplete({
             key: 'clientName',
             label: 'הקלד לקוח רצוי',
@@ -148,8 +161,23 @@ export class SquadAssembleService {
               ],
             },
           }),
+        ],
+      },
+    }),
+    new QuestionBase({
+      key: 'payerPoll',
+      isGroup: true,
+      fullWidth: true,
+      cols: 3,
+      rows: 12,
+      type: 'autocomplete',
+      group: {
+        key: 'payerName',
+        cols: 3,
+        rows: 12,
+        questions: [
           new QuestionSelect({
-            key: 'clientPool',
+            key: 'payerName',
             type: 'select',
             label: 'הכול',
             inputProps: {
@@ -161,41 +189,13 @@ export class SquadAssembleService {
               ],
             },
           }),
-        ],
-      },
-    }),
-    new QuestionBase({
-      key: 'payerName',
-      isGroup: true,
-      fullWidth: true,
-      cols : 3,
-      rows: 6,
-      type: 'autocomplete',
-      group: {
-        key: 'payerName',
-        cols: 3,
-        rows: 6,
-        questions: [
           new QuestionAutocomplete({
-            key: 'payerName',
+            key: 'payerPoll',
             label: 'לקוח משלם',
             type: 'autocomplete',
             cols: 2,
             value: '',
             validations: [Validators.required],
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-          new QuestionSelect({
-            key: 'payerPool',
-            type: 'select',
-            label: 'הכול',
             inputProps: {
               options: [
                 { key: 'שם נוסף', value: 'שם נוסף' },
@@ -317,13 +317,13 @@ export class SquadAssembleService {
       isGroup: true,
       group: {
         key: 'participants',
-        cols : 5,
+        cols: 5,
         rows: 5,
         header: { label: 'נוער / מבוגרים' },
         questions: this.genderArray,
       },
     }),
-    
+
     new QuestionBase({
       key: 'chaperones',
       fullWidth: true,
@@ -331,7 +331,7 @@ export class SquadAssembleService {
       isGroup: true,
       group: {
         key: 'chaperones',
-        cols : 5,
+        cols: 5,
         rows: 5,
         header: { label: 'מלווים' },
         questions: this.genderArray,
@@ -345,7 +345,7 @@ export class SquadAssembleService {
       rows: 5,
       group: {
         key: 'instructors',
-        cols : 5,
+        cols: 5,
         rows: 5,
         header: { label: 'מדריכים' },
         questions: this.genderArray,
@@ -359,7 +359,7 @@ export class SquadAssembleService {
       rows: 5,
       group: {
         key: 'medics',
-        cols : 5,
+        cols: 5,
         rows: 5,
         header: { label: 'חובשים' },
         questions: this.genderArray,

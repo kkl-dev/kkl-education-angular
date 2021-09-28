@@ -21,8 +21,5 @@ export class FormGroupComponent implements OnInit {
     console.log(this.group)
   }
 
-  public onEdit() {
-    
-  }
 
 }

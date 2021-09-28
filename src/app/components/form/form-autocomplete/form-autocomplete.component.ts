@@ -1,6 +1,6 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { FormService } from 'src/app/components/form/logic/form.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { QuestionBase } from '../logic/question-base';
 import { QuestionGroup } from '../logic/question-group';
 
 @Component({
@@ -10,19 +10,26 @@ import { QuestionGroup } from '../logic/question-group';
 })
 export class FormAutocompleteComponent implements OnInit {
   @Input() group: QuestionGroup;
-  @Input() formGroup: FormGroup;
 
-  // show autocomplete data
-  public data: boolean = false;
-  public value: string ;
+  public formGroup: FormGroup;
+  public list: string[] = [];
 
-  constructor() {}
+  constructor(
+    private formService: FormService
+  ) { }
 
   ngOnInit(): void {
+    this.formGroup = this.formService.setFormGroup({
+      questions: this.group.questions,
+    });
   }
 
-  public onAutocomplete(control : FormControl) {
-    this.data = true;
-    this.value = control.value
+  public onAutocomplete(control: FormControl) {
+    console.log(control)
+
+    // TODO search server logic
+
+
+    this.list.push(control.value)
   }
 }
