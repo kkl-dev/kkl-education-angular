@@ -1,3 +1,4 @@
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FormHeader } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Injectable } from '@angular/core';
@@ -11,6 +12,8 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
   providedIn: 'root'
 })
 export class SquadClientService {
+
+  private $editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public clientQuestions: QuestionBase<string>[] = [
 
@@ -140,30 +143,11 @@ export class SquadClientService {
     private formService: FormService
   ) { }
 
-
-  private updateClientHeader() {
-    const header: FormHeader = {
-      label: 'איש קשר',
-      slot: 'button',
-    };
-
-    // this.client
-    //   ? (this.contactQuestions.group.header = header)
-    //   : (this.contactQuestions.group.header = null);
-
-    // this.$questions.next([this.contactQuestions]);
+  public emitEditMode(value: boolean) {
+    this.$editMode.next(value)
   }
-
-  private updateClientForm() {
-    this.updateClientHeader()
-    this.formService.formGroup.controls.contact.patchValue({ fullName: ' שלום אברהם' });
-  }
-
-  private subscribeToOnSelectChange() {
-
-    this.updateClientForm();
-    this.formService.formGroup.controls.contact.disable();
-    console.log(this.formService.formGroup.controls.contact)
+  public getEditMode(): Observable<boolean> {
+    return this.$editMode.asObservable()
   }
 
 }

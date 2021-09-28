@@ -1,10 +1,12 @@
+import { FormGroup } from '@angular/forms';
+import { SquadClientService } from './squad-client.service';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { FormHeader } from '../squad-group/squad-group.component';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-squad-client',
@@ -16,72 +18,86 @@ export class SquadClientComponent implements OnInit {
   @Input() public group: QuestionGroup;
 
   public expend: boolean = true;
+
+
   public clientQuestions: QuestionBase<string | number | Date>[];
   public contactQuestions: QuestionBase<string | number | Date>;
+
   public $questions: Subject<QuestionBase<string | number | Date>[]>;
 
-  private client: boolean = false;
+  public $editMode: Observable<boolean> = this.squadClientService.getEditMode()
+  public editMode: boolean;
+
+  private contactFormGroup: FormGroup
+
+  private header: FormHeader = {
+    label: 'איש קשר',
+    slot: 'button',
+  };
 
   constructor(
-    private squadAssembleService: SquadAssembleService,
     private formService: FormService,
+    private squadClientService: SquadClientService
 
   ) { }
 
   ngOnInit(): void {
 
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>()
-    this.contactQuestions = this.group.questions.pop()
+    this.$editMode = this.squadClientService.getEditMode()
     this.setClientQuestions()
+    this.subscribeToEditMode()
   }
 
   private setClientQuestions() {
+    this.contactQuestions = this.group.questions.pop()
     this.group.questions = this.group.questions.filter((question: QuestionBase<string>) => question.key !== 'contect')
   }
 
-  // method to add new client form
+
+  private subscribeToEditMode() {
+    this.$editMode.subscribe(
+      (mode: boolean) => {
+        this.editMode = mode
+      }
+    )
+  }
+
+
+  // method to add new editMode form
   public onAddClient() {
-    this.client = !this.client;
-    console.log(this.client)
-
+    this.editMode = !this.editMode;
+    this.toggleFormState()
     this.updateClientHeader()
+  }
 
+  private toggleFormState() {
+    this.editMode
+      ? this.contactFormGroup.enable()
+      : this.contactFormGroup.disable()
   }
 
   private updateClientHeader() {
-    const header: FormHeader = {
-      label: 'איש קשר',
-      slot: 'button',
-    };
 
-    this.client
-      ? (this.contactQuestions.group.header = header)
+    this.editMode
+      ? (this.contactQuestions.group.header = this.header)
       : (this.contactQuestions.group.header = null);
 
     this.$questions.next([this.contactQuestions]);
   }
 
   private updateClientForm() {
-    this.updateClientHeader()
-    this.formService.formGroup.controls.contact.patchValue({ fullName: ' שלום אברהם' });
+    this.contactFormGroup.patchValue({ fullName: ' שלום אברהם' });
   }
 
-  private subscribeToOnSelectChange() {
 
-
-    this.formService.onChangeSelect.subscribe((value) => {
-      if (this.group.key === 'client') {
-        this.client = true
-        this.updateClientForm();
-        this.formService.formGroup.controls.contact.disable();
-        console.log(this.formService.formGroup.controls.contact)
-      }
-    });
+  public registerToClient(formGroup: FormGroup) {
+    this.contactFormGroup = formGroup
   }
 
-  
+
   public onEdit() {
-    
+    this.updateClientForm()
   }
 
 }
