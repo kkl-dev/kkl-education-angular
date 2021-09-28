@@ -9,7 +9,7 @@
           [disabled]="question.disabled" [split]="cols > question.cols" [type]="question.type" [label]="question.label"
           [icon]="question.icon" [options]="question.inputProps?.options"
           [dateOptions]="question.inputProps?.dateOptions" [controlType]="question.controlType"
-          (autocomplete)="onAutocomplete($event)" (select)="onSelect($event)">
+          (autocomplete)="onAutocomplete($event)" (select)="onSelect($event)" (optionSelected)="onOptionSelected($event)">
         </app-form-input>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { FormHeader } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Injectable } from '@angular/core';
@@ -14,6 +14,7 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
 export class SquadClientService {
 
   private $editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private $clientSelected: Subject<any> = new Subject<any>();
 
   public clientQuestions: QuestionBase<string>[] = [
 
@@ -146,8 +147,16 @@ export class SquadClientService {
   public emitEditMode(value: boolean) {
     this.$editMode.next(value)
   }
-  public getEditMode(): Observable<boolean> {
+  public getEditModeObs(): Observable<boolean> {
     return this.$editMode.asObservable()
+  }
+
+  public emitClientSelected(value: any) {
+    this.$clientSelected.next(value)
+  }
+
+  public getClientObs(): Observable<any> {
+    return this.$clientSelected.asObservable()
   }
 
 }

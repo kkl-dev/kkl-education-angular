@@ -41,9 +41,12 @@
   </ng-template>
 
   <ng-template #editButton>
-    <button type="submit" disableRipple="true" (click)="onEdit()" mat-icon-button class="edit-button mat-elevation-z1">
-      <app-icon scale="0.8" color="primary" key="edit" type="mat"></app-icon>
-    </button>
+    <div class="edit-button-container">
+      <button type="submit" disableRipple="true" (click)="onEdit()" mat-icon-button
+        class="edit-button mat-elevation-z1">
+        <app-icon scale="0.8" color="primary" key="edit" type="mat"></app-icon>
+      </button>
+    </div>
   </ng-template>
 
   <ng-template #payerName let-group="group" let-formGroup="formGroup">
