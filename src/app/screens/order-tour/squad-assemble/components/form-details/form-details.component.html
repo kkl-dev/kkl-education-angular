@@ -1,33 +1,36 @@
-<mat-accordion dir="rtl">
-  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="expend" >
-    <div title fxLayout="row" fxLayoutAlign="space-between center">
+<div fxFill fxLayout="row" fxLayoutAlign="center center" dir="rtl">
 
-      <app-typography color="primary" bold="600" size="16">
-        {{detailsGroup.header.label}}
-      </app-typography>
-      <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
+  <mat-accordion>
+    <app-expend-panel [hideToggle]="true" variant="form" [expanded]="expend">
+      <div title fxLayout="row" fxLayoutAlign="space-between center">
 
-    </div>
-    <app-form-container content [cols]="detailsGroup.cols" [questions]="detailsGroup.questions">
-    </app-form-container>
-  </app-expend-panel>
+        <app-typography color="primary" bold="600" size="16">
+          {{detailsGroup.header.label}}
+        </app-typography>
+        <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
 
-  <app-expend-panel [hideToggle]="true" variant="form" [expanded]="!expend">
-    <div title fxLayout="row" fxLayoutAlign="space-between center">
+      </div>
+      <app-form-container content [cols]="detailsGroup.cols" [questions]="detailsGroup.questions">
+      </app-form-container>
+    </app-expend-panel>
 
-      <app-typography color="primary" bold="600" size="16">
-        {{budgetGroup.header.label}}
-      </app-typography>
-      <app-typography size="16">
-        {{budgetKKL| currency : 'ILS'}}
-      </app-typography>
-      <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
+    <app-expend-panel [hideToggle]="true" variant="form" [expanded]="!expend">
+      <div title fxLayout="row" fxLayoutAlign="space-between center">
 
-    </div>
-    <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}">
-    </app-form-container>
-  </app-expend-panel>
-</mat-accordion>
+        <app-typography color="primary" bold="600" size="16">
+          {{budgetGroup.header.label}}
+        </app-typography>
+        <app-typography size="16">
+          {{budgetKKL| currency : 'ILS'}}
+        </app-typography>
+        <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon>
+
+      </div>
+      <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}">
+      </app-form-container>
+    </app-expend-panel>
+  </mat-accordion>
+</div>
 
 <ng-template #budget></ng-template>
 <ng-template #location let-group="group" let-formGroup="formGroup">

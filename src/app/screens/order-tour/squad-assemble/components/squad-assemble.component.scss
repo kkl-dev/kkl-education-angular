@@ -6,6 +6,7 @@ app-form-container,
 app-squad-group,
 app-squad-client,
 app-form-details,
+app-squad-assemble-form,
 .assemble-container {
   height: 100%;
   width: 100%;
@@ -23,6 +24,7 @@ app-form-details,
 
 .divider {
   height: 90%;
-  width: 50px;
+  width: 0.5rem;
+  margin-right: 0.5rem;
   border-right : 1px solid color(border);
 }

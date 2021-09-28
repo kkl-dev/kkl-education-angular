@@ -125,6 +125,7 @@ export class SquadAssembleService {
       key: 'wantedClient',
       isGroup: true,
       fullWidth: true,
+      cols : 3,
       rows: 6,
       type: 'autocomplete',
       group: {
@@ -167,6 +168,7 @@ export class SquadAssembleService {
       key: 'payerName',
       isGroup: true,
       fullWidth: true,
+      cols : 3,
       rows: 6,
       type: 'autocomplete',
       group: {
@@ -315,12 +317,13 @@ export class SquadAssembleService {
       isGroup: true,
       group: {
         key: 'participants',
+        cols : 5,
+        rows: 5,
         header: { label: 'נוער / מבוגרים' },
-        cols: 5,
         questions: this.genderArray,
       },
     }),
-
+    
     new QuestionBase({
       key: 'chaperones',
       fullWidth: true,
@@ -328,8 +331,9 @@ export class SquadAssembleService {
       isGroup: true,
       group: {
         key: 'chaperones',
+        cols : 5,
+        rows: 5,
         header: { label: 'מלווים' },
-        cols: 5,
         questions: this.genderArray,
       },
     }),
@@ -341,8 +345,9 @@ export class SquadAssembleService {
       rows: 5,
       group: {
         key: 'instructors',
+        cols : 5,
+        rows: 5,
         header: { label: 'מדריכים' },
-        cols: 5,
         questions: this.genderArray,
       },
     }),
@@ -354,8 +359,9 @@ export class SquadAssembleService {
       rows: 5,
       group: {
         key: 'medics',
+        cols : 5,
+        rows: 5,
         header: { label: 'חובשים' },
-        cols: 5,
         questions: this.genderArray,
       },
     }),

@@ -17,7 +17,7 @@ export class SquadAssembleComponent implements OnInit {
   public squads: SquadGroup[];
   public budgetGroup: QuestionGroup;
 
-  constructor(private squadAssembleService: SquadAssembleService) {}
+  constructor(private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
     this.squads = [
@@ -34,12 +34,12 @@ export class SquadAssembleComponent implements OnInit {
           key: 'client',
           header: { label: 'לקוח', slot: 'client' },
           questions: this.squadAssembleService.customerFormInputs,
-          cols: 1,
+          cols: 3,
         },
       },
       {
         group: {
-          key: 'squad',
+          key: 'assemble',
           header: { label: 'הרכב הקבוצה', slot: 'gender' },
           questions: this.squadAssembleService.groupAssembleFormMixedInputs,
           cols: 5,

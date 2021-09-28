@@ -1,43 +1,31 @@
-<div class="container" *ngIf="questions.length > 0">
-  <mat-grid-list cols="1" rowHeight="5vh">
-    <mat-grid-tile rowspan="1">
-
-      <app-form-header [slots]="{ gender, client, tourId }" [slot]="group.header.slot">
+<div fxFill fxLayout="row" fxLayoutAlign="center center" dir="rtl">
+  <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
+    <div fxFlex="10">
+      <app-form-header [slots]="{ gender}" [slot]="group.header.slot">
         <div title fxLayout="row" fxLayoutAlign="start center">
-
           <app-typography color="primary" bold="600" size="16">
             {{group.header.label}}
           </app-typography>
         </div>
-
       </app-form-header>
-    </mat-grid-tile>
-
-    <mat-grid-tile rowspan="10">
-      <app-form-container [cols]="group.cols" [questions]="questions" [$questions]="$questions" [hasBottomButton]="true"
-        (valueChange)="logForm($event)" [slots]="{participants, instructors, chaperones, medics}">
+    </div>
+    <div [fxFlex]="mixed ? 60 : 90">
+      <app-form-container [cols]="group.cols" [questions]="group.questions" [$questions]="$questions"
+        [hasBottomButton]="true" [slots]="{participants, instructors, chaperones, medics}">
       </app-form-container>
-    </mat-grid-tile>
-
-    <mat-grid-tile class="row-height">
-      <mat-grid-list *ngIf="hasBottom" [cols]="bottomData.length" rowHeight="5vh">
-        <mat-grid-tile *ngFor="let item of bottomData; let i = index">
-          <div fxFill fxLayout="row" fxLayoutAlign="start center" dir="rtl">
-            <div fxFlex="50">
-              <app-typography size="14" class="label-text" [bold]="500">
-                {{ item.label }}:
-              </app-typography>
-              <app-typography [bold]="600" size="14">
-                {{ item.value }}
-              </app-typography>
-            </div>
-            <div class="divider" fxFlex="20" *ngIf="i !== 0">|</div>
-          </div>
-        </mat-grid-tile>
-   
-      </mat-grid-list>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="5">
+      <div fxFlex="30" *ngFor="let item of list; let i = index">
+        <app-typography size="14" class="label-text" [bold]="500">
+          {{ item.label }}:
+        </app-typography>
+        <app-typography [bold]="600" size="14">
+          {{ item.value }}
+        </app-typography>
+      </div>
+      <!-- <div class="divider" fxFlex="20" *ngIf="i !== 0">|</div> -->
+    </div>
+  </div>
 </div>
 
 <!-- template components -->
@@ -47,18 +35,6 @@
     <app-icon type="svg" key="gender" scale="2"></app-icon>
   </button>
 </ng-template>
-
-<ng-template #arrow>
-  <button mat-icon-button disableRipple="true" (click)="onBudget()">
-    <app-icon type="mat" key="expand_less" [scale]="2" color="primary"></app-icon>
-  </button>
-</ng-template>
-
-
-<ng-template #tourId>
-  <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
-</ng-template>
-
 
 <ng-template #participants let-group="group" let-formGroup="formGroup">
   <mat-grid-list cols="5" rowHeight="2vh">

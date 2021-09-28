@@ -11,15 +11,17 @@
           <app-squad-client [group]="squad.group"></app-squad-client>
         </ng-container>
 
+        <ng-container *ngSwitchCase="'assemble'">
+          <app-squad-assemble-form [group]="squad.group"></app-squad-assemble-form>
+        </ng-container>
+
         <ng-container *ngSwitchDefault>
           <div class="form-container">
-            <app-squad-group
-              [group]="squad.group"
-              [hasBottom]="squad.hasBottom"
-            >
+            <app-squad-group [group]="squad.group" [hasBottom]="squad.hasBottom">
             </app-squad-group>
           </div>
         </ng-container>
+
         <div *ngIf="i !== squads.length - 1" class="divider"></div>
       </ng-container>
     </mat-grid-tile>

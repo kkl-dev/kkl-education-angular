@@ -48,7 +48,7 @@
 
         <mat-grid-tile
           *ngIf="question?.isGroup"
-          [colspan]="1"
+          [colspan]="question.group?.cols || 1"
           [rowspan]="question.rows || 20"
         >
           <app-form-group

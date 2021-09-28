@@ -2,7 +2,7 @@ import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
 import { QuestionGroup } from './question-group';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 export interface FormTemplate {
   label?: string;
@@ -55,11 +55,11 @@ export class FormService {
     questions: QuestionBase<string | Date | number | QuestionGroup>[]
   ) {
     return questions.map((question) => {
-      const { key, value, isGroup, group, validations, disabled } = question;
+      const { key, value, isGroup, group, validations } = question;
       return {
         key: key,
         isGroup,
-        template: isGroup ? this.setGroup(group.questions) : [value, validations, disabled],
+        template: isGroup ? this.setGroup(group.questions) : [value, validations],
       };
     });
   }
@@ -99,9 +99,9 @@ export class FormService {
       });
       return this.fb.group(this.reduceArrayToObject(form));
     } else
-      return this.fb.group(
-        this.setForm(this.formatForm(formTemplate.questions))
-      );
+    return this.fb.group(
+      this.setForm(this.formatForm(formTemplate.questions))
+    );
   }
 
   // handle input error messages

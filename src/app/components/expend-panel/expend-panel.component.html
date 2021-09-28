@@ -1,4 +1,4 @@
-<mat-expansion-panel [hideToggle]="hideToggle" dir="rtl" [expanded]="expanded" 
+<mat-expansion-panel [hideToggle]="hideToggle" dir="rtl" [expanded]="expanded" [disabled]="disabled"
   [ngClass]="[variant, 'expend-panel', 'mat-elevation-z0']" (opened)="panelOpenState = true"
   (closed)="panelOpenState = false">
   <mat-expansion-panel-header *ngIf="!showHeader" [ngClass]="[variant]" (click)="onExpend()">

@@ -30,10 +30,7 @@ export class SquadGroupComponent {
   public bottomData: FlexCell[] = [];
 
   // subject to handle update of questions form
-  private $questions = new Subject<QuestionBase<string | number | Date>[]>();
-
-  //
-  private mixed: boolean = true;
+ 
 
   constructor(
     private squadAssembleService: SquadAssembleService,
@@ -74,19 +71,8 @@ export class SquadGroupComponent {
 
   //log form when valid
 
-  logForm(form) {
+  public logForm(form) {
     this.squadAssembleService.updateFormArray(form);
-  }
-
-  // method to change squad assemble form
-  public onGenderChange() {
-    this.mixed = !this.mixed;
-
-    this.$questions.next(
-      this.mixed
-        ? this.squadAssembleService.groupAssembleFormMixedInputs
-        : this.squadAssembleService.groupAssembleFormInputs
-    );
   }
 
 

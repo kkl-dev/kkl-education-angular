@@ -117,6 +117,7 @@ import { FormDetailsComponent } from './screens/order-tour/squad-assemble/compon
 import { FormBudgetComponent } from './screens/order-tour/squad-assemble/components/form-budget/form-budget.component';
 import { FormAutocompleteComponent } from './components/form/form-autocomplete/form-autocomplete.component';
 import { SquadClientComponent } from './screens/order-tour/squad-assemble/components/squad-client/squad-client.component';
+import { SquadAssembleFormComponent } from './screens/order-tour/squad-assemble/components/squad-assemble-form/squad-assemble-form.component';
 
 
 FullCalendarModule.registerPlugins([
@@ -228,7 +229,8 @@ FullCalendarModule.registerPlugins([
     FormAutocompleteComponent,
     FormDetailsComponent,
     FormBudgetComponent,
-    SquadClientComponent
+    SquadClientComponent,
+    SquadAssembleFormComponent
   ],
   imports: [
     BrowserModule,

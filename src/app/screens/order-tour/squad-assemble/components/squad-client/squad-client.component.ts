@@ -18,7 +18,7 @@ export class SquadClientComponent implements OnInit {
   public expend: boolean = true;
   public clientQuestions: QuestionBase<string | number | Date>[];
   public contactQuestions: QuestionBase<string | number | Date>;
-  public $questions: BehaviorSubject<QuestionBase<string | number | Date>[]>;
+  public $questions: Subject<QuestionBase<string | number | Date>[]>;
 
   private client: boolean = false;
 
@@ -29,9 +29,9 @@ export class SquadClientComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToOnSelectChange();
+    this.subscribeToOnSelectChange(); 
 
-    this.$questions = new BehaviorSubject<QuestionBase<string | number | Date>[]>(this.group.questions)
+    this.$questions = new Subject<QuestionBase<string | number | Date>[]>()
     this.contactQuestions = this.group.questions.pop()
     this.setClientQuestions()
   }
@@ -49,6 +49,7 @@ export class SquadClientComponent implements OnInit {
   // method to add new client form
   public onAddClient() {
     this.client = !this.client;
+    console.log(this.client)
 
     this.updateClientHeader()
 

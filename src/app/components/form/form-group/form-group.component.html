@@ -1,6 +1,7 @@
-<mat-grid-list [cols]="1" [gutterSize]="group.gutter || 1" rowHeight="2vh">
+<mat-grid-list [cols]="group.cols || 1" [gutterSize]="group.gutter || 1" rowHeight="2vh">
 
   <mat-grid-tile *ngIf="group.header" [colspan]="group.cols || 1" [rowspan]="2">
+
     <app-form-header [slot]="group.header?.slot" [slots]="{button}">
       <div title fxLayout="row" fxLayoutAlign="start center">
 
@@ -12,7 +13,7 @@
     </app-form-header>
   </mat-grid-tile>
 
-  <mat-grid-tile [rowspan]="group.rows">
+  <mat-grid-tile [colspan]="group.cols || 1" [rowspan]="group.rows" *ngIf="slot">
     <ng-container *ngTemplateOutlet="
         slot;
         context: {

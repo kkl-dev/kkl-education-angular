@@ -13,20 +13,6 @@ app-form-header {
   top: calc((4vh + 1px) * 11) !important;
 }
 
-button.gender-button {
-  height: 40px !important;
-  width: 40px !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: spacing(1);
-  margin-bottom: spacing(1);
-
-  &.mat-icon-button {
-    border-radius: 20% !important;
-  }
-}
 
 .client-text {
   cursor: pointer;
@@ -41,6 +27,3 @@ button.gender-button {
   justify-content: center;
 }
 
-app-form-container {
-  overflow: auto;
-}
