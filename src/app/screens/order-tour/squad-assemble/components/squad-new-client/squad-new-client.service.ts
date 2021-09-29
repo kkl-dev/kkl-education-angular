@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
@@ -82,6 +83,18 @@ export class SquadNewClientService {
       },
     }),
   ];
+
+  private $newClient: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  public emitNewClient(value: boolean) {
+    this.$newClient.next(value);
+  }
+
+  public getNewClientObs(): Observable<boolean> {
+    return this.$newClient.asObservable();
+  }
 
   constructor() {}
 }

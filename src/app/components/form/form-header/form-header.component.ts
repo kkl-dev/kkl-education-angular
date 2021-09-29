@@ -15,7 +15,5 @@ export class FormHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.variant = this.variant || ''
-    console.log(this.slots)
-    console.log(this.slot)
   }
 }

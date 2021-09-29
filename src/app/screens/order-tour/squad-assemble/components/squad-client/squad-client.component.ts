@@ -6,6 +6,7 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
+import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
 
 @Component({
   selector: 'app-squad-client',
@@ -32,6 +33,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   constructor(
     private formService: FormService,
     private squadClientService: SquadClientService,
+    private squadNewClientService: SquadNewClientService,
     private squadAssembleService: SquadAssembleService
   ) {}
 
@@ -95,6 +97,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   // method to add new editMode form
   public onAddClient(): void {
+    this.squadNewClientService.emitNewClient(true)
   }
 
   public onEdit(): void {

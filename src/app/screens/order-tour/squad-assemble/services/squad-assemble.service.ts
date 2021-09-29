@@ -14,6 +14,7 @@ import { SquadBudgetService } from '../components/squad-budget/squad-budget.serv
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SquadClientService } from '../components/squad-client/squad-client.service';
 import { SquadNewClientService } from '../components/squad-new-client/squad-new-client.service';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 
 @Injectable({
   providedIn: 'root',
@@ -139,8 +140,10 @@ export class SquadAssembleService {
   public customerFormInputs: QuestionBase<string>[] =
     this.squadClientService.questions;
 
-  public newClientQuestions: QuestionBase<string>[] =
-    this.squadNewClientService.questions;
+  public newClient: QuestionGroup = {
+    key: 'newClient',
+    questions: this.squadNewClientService.questions,
+  };
 
   public groupAssembleFormMixedInputs: QuestionBase<string | number>[] =
     this.squadGroupService.mixedQuestions;
@@ -153,7 +156,6 @@ export class SquadAssembleService {
 
   public budgetQuestions: QuestionBase<string>[] =
     this.squadBudgetService.questions;
-
 
   public updateFormArray(form: FormGroup) {
     const index = this.formsArray.findIndex(
@@ -172,5 +174,9 @@ export class SquadAssembleService {
 
   public emitSaveMode(value: boolean): void {
     this.$saveMode.next(value);
+  }
+
+  public getNewClientObs(): Observable<boolean> {
+    return this.squadNewClientService.getNewClientObs();
   }
 }
