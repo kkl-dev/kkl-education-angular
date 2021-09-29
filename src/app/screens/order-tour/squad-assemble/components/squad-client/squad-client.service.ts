@@ -19,14 +19,14 @@ export class SquadClientService {
 
   public clientQuestions: QuestionBase<string>[] = [
     new QuestionBase({
-      key: 'wantedClient',
+      key: 'client',
       isGroup: true,
       fullWidth: true,
       cols: 3,
       rows: 6,
       type: 'autocomplete',
       group: {
-        key: 'wantedClient',
+        key: 'client',
         cols: 3,
         rows: 6,
         questions: [
@@ -46,50 +46,6 @@ export class SquadClientService {
           new QuestionAutocomplete({
             key: 'clientName',
             label: 'הקלד לקוח רצוי',
-            cols: 2,
-            value: '',
-            validations: [Validators.required],
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-        ],
-      },
-    }),
-    new QuestionBase({
-      key: 'payerPoll',
-      isGroup: true,
-      fullWidth: true,
-      cols: 3,
-      rows: 12,
-      type: 'autocomplete',
-      group: {
-        key: 'payerName',
-        cols: 3,
-        rows: 12,
-        questions: [
-          new QuestionSelect({
-            key: 'payerName',
-            type: 'select',
-            label: 'הכול',
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-          new QuestionAutocomplete({
-            key: 'payerPoll',
-            label: 'לקוח משלם',
-            type: 'autocomplete',
             cols: 2,
             value: '',
             validations: [Validators.required],
@@ -137,9 +93,54 @@ export class SquadClientService {
         ],
       },
     }),
+    new QuestionBase({
+      key: 'payer',
+      isGroup: true,
+      fullWidth: true,
+      cols: 3,
+      rows: 12,
+      type: 'autocomplete',
+      group: {
+        key: 'payer',
+        cols: 3,
+        rows: 12,
+        questions: [
+          new QuestionSelect({
+            key: 'payerName',
+            type: 'select',
+            label: 'הכול',
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
+          new QuestionAutocomplete({
+            key: 'payerPoll',
+            label: 'לקוח משלם',
+            type: 'autocomplete',
+            cols: 2,
+            value: '',
+            validations: [Validators.required],
+            inputProps: {
+              options: [
+                { key: 'שם נוסף', value: 'שם נוסף' },
+                { key: 'עוד לקוח', value: 'עוד לקוח' },
+                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
+        ],
+      },
+    }),
   ];
 
-  constructor(private formService: FormService) {}
+
+  constructor() {}
 
   public emitEditMode(value: boolean) {
     this.$editMode.next(value);

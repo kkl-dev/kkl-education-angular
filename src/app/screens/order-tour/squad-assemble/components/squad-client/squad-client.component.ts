@@ -15,14 +15,15 @@ import { Subject, Observable, Subscription } from 'rxjs';
 export class SquadClientComponent implements OnInit, OnDestroy {
   @Input() public group: QuestionGroup;
 
-  public clientQuestions: QuestionBase<string | number | Date>[];
-  public contactQuestions: QuestionBase<string | number | Date>;
+  public clientQuestions: QuestionBase<string>;
+  public contactQuestions: QuestionBase<string>;
+  public payerQuestions: QuestionBase<string>;
 
   public $questions: Subject<QuestionBase<string | number | Date>[]>;
 
   public editMode: boolean;
 
-  private contactFormGroup: FormGroup;
+  private clientFormGroup: FormGroup;
 
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
@@ -31,7 +32,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
-    this.setClientQuestions();
+    this.setQuestions();
     this.subscribeToEditMode();
     this.subscribeToClientData();
   }
@@ -41,11 +42,16 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.unsubscribeToClient.unsubscribe();
   }
 
-  private setClientQuestions(): void {
-    this.contactQuestions = this.group.questions.pop();
-    this.group.questions = this.group.questions.filter(
-      (question: QuestionBase<string>) => question.key !== 'contect'
+  private findQuestions(key: string): QuestionBase<string> {
+    return this.group.questions.find(
+      (question: QuestionBase<string>) => question.key == key
     );
+  }
+
+  private setQuestions() {
+    this.clientQuestions = this.findQuestions('client');
+    this.contactQuestions = this.findQuestions('contact');
+    this.payerQuestions = this.findQuestions('payer');
   }
 
   private subscribeToEditMode(): void {
@@ -67,12 +73,12 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   private toggleFormState(): void {
     this.editMode
-      ? this.contactFormGroup.enable()
-      : this.contactFormGroup.disable();
+      ? this.clientFormGroup.enable()
+      : this.clientFormGroup.disable();
   }
 
   private updateClientForm(value?: string): void {
-    this.contactFormGroup.patchValue({ fullName: value || ' שלום אברהם' });
+    this.clientFormGroup.patchValue({ fullName: value || ' שלום אברהם' });
   }
 
   // EVENTS METHOS SECTION
@@ -84,7 +90,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   }
 
   public registerToClient(formGroup: FormGroup) {
-    this.contactFormGroup = formGroup;
+    this.clientFormGroup = formGroup;
   }
 
   public onEdit(): void {

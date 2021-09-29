@@ -4,6 +4,7 @@ import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { QuestionGroup } from '../logic/question-group';
+import { QuestionBase } from '../logic/question-base';
 
 @Component({
   selector: 'app-form-autocomplete',
