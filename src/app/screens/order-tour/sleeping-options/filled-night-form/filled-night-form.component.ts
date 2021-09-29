@@ -85,7 +85,10 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
   }
 
   setnightNumberOptions(from,till){
-   
+     let str = from.split("/");
+     let str2 = till.split("/");
+      from = str[2] + '-' + str[1] + '-' + str[0];
+      till = str2[2] + '-' + str2[1] + '-' + str2[0];
     let date1 = new Date(from);
     let date2 = new Date(till);
     console.log(date1.getMonth());

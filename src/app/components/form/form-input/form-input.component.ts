@@ -160,17 +160,16 @@ export class FormInputComponent implements OnInit {
       });
     }
 
-  public onSelectChange(event:any,c:any,question:any,i:any) {
-    console.log(event)
-    try{
-    if(c.parent.value.attribute){
-      this.tripService.getActivityLookupsByAttribute(c.parent.value.attribute,'itiel');
+  public onSelectChange() {
+    console.log('this.control is: ',this.control);
+    if(this.control.parent.value.attribute){
+      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute,'itiel');
     }
-   }
-    catch(error){
-    console.log(error);
-   }      
-   this.select.emit(this.control)
+    this.select.emit(this.control);
+  }
+
+  public onOptionSelected(event: MatAutocompleteSelectedEvent) {
+    this.optionSelected.emit(event)
   }
 
   // LOGIC SECTION

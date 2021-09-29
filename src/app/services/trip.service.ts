@@ -86,19 +86,30 @@ export class TripService {
 
   convertDatesFromSlashToMinus() {
     //for replacing the dash of dates to minus
-    let from = this.sleepingDates.from.replace(/\//g, '-');
-    let till = this.sleepingDates.till.replace(/\//g, '-');
+    // let from = this.sleepingDates.from.replace(/\//g, '-');
+    // let till = this.sleepingDates.till.replace(/\//g, '-');
+    let str = this.sleepingDates.from.split("/");
+    let str2 = this.sleepingDates.till.split("/");
+
     let sleepingDateObj = {
-      from: from,
-      till: till
+      from: str[2] + '-' + str[1] + '-' + str[0],
+      till: str2[2] + '-' + str2[1] + '-' + str2[0]
     }
     return sleepingDateObj;
   }
 
   getAvailableSleepingOptions() {
     // this.convertDatesFromSlashToMinus() 
-    let from = this.sleepingDates.from.replace(/\//g, '-');
-    let till = this.sleepingDates.till.replace(/\//g, '-');
+    // let from = this.sleepingDates.from.replace(/\//g, '-');
+    // let till = this.sleepingDates.till.replace(/\//g, '-');
+    let str = this.sleepingDates.from.split("/");
+    let str2 = this.sleepingDates.till.split("/");
+
+  
+      let from = str[2] + '-' + str[1] + '-' + str[0];
+      let till = str2[2] + '-' + str2[1] + '-' + str2[0];
+  
+
     //console.log('this.centerFieldObj.value.id, from, till: ' + this.centerFieldObj.value.id, from, till)
     this.userService.getAvailableSleepingOptionsByDates(this.centerField.id, from, till).subscribe((sleepingAvailability: any) => {
       console.log('sleepingAvailability ==>', { sleepingAvailability });
@@ -141,7 +152,7 @@ export class TripService {
       response => {
         this.activityByAttributeOriginal = response;
         response.forEach(element => {
-          this.activityByAttribute.push({ key: element.name, value: element.id.toString() });
+          this.activityByAttribute.push({ label: element.name, value: element.id.toString() });
         });
         console.log('activityByAttribute is :',this.activityByAttribute)
       },
@@ -156,7 +167,7 @@ export class TripService {
       response => {
         this.fieldForestCentersOriginal = response;
         response.forEach(element => {
-          this.fieldForestCenters.push({ key: element.name, value: element.id.toString() });
+          this.fieldForestCenters.push({ label: element.name, value: element.id.toString() });
         });
       },
       error => console.log(error),       // error
@@ -166,7 +177,7 @@ export class TripService {
       response => {
         this.ageGroupOriginal = response;
         response.forEach(element => {
-          this.ageGroup.push({ key: element.name, value: element.id.toString() });
+          this.ageGroup.push({ label: element.name, value: element.id.toString() });
         });
       },
       error => console.log(error),       // error
@@ -185,7 +196,7 @@ export class TripService {
         console.log('response', response)
         this.customersOriginal = response;
         response.forEach(element => {
-          this.customers.push({ key: element.name, value: element.id.toString() });
+          this.customers.push({ label: element.name, value: element.id.toString() });
         });
       },
       error => console.log(error),       // error
@@ -204,7 +215,7 @@ export class TripService {
       response => {
         this.attributesOriginal = response;
         response.forEach(element => {
-          this.attributes.push({ key: element.name, value: element.id.toString() });
+          this.attributes.push({ label: element.name, value: element.id.toString() });
         });
       },
       error => console.log(error),       // error

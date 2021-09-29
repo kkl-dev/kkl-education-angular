@@ -96,12 +96,13 @@ export class SquadAssembleService {
       type: 'select',
       label: 'מרכז שדה',
       inputProps: {
-        options: [
-          { label: 'solid', value: '12123' },
-          { label: 'great', value: '23' },
-          { label: 'good', value: '123' },
-          { label: 'unproven', value: '123123123' },
-        ],
+        // options: [
+        //   { label: 'solid', value: '12123' },
+        //   { label: 'great', value: '23' },
+        //   { label: 'good', value: '123' },
+        //   { label: 'unproven', value: '123123123' },
+        // ],
+        options: this.tripService.fieldForestCenters       
       },
       validations: [Validators.required],
     }),

@@ -63,18 +63,18 @@ export class SquadNewClientService {
         rows: 14,
         questions: [
           new QuestionTextbox({
-            key: 'fullName',
+            key: 'contactName',
             label: 'איש קשר',
           }),
 
           new QuestionTextbox({
-            key: 'phone',
+            key: 'contactPhone',
             label: 'נייד איש קשר',
             type: 'text',
             validations: [Validators.required],
           }),
           new QuestionTextbox({
-            key: 'email',
+            key: 'contactEmail',
             label: 'מייל',
             type: 'text',
             validations: [Validators.required],
