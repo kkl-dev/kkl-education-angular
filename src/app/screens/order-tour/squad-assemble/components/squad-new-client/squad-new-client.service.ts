@@ -58,7 +58,7 @@ export class SquadNewClientService {
       group: {
         isGroup: true,
         key: 'contact',
-        header: { label: 'איש קשר', slot: 'button' },
+        header: { label: 'איש קשר', slot: '' },
         rows: 14,
         questions: [
           new QuestionTextbox({

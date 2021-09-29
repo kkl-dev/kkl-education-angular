@@ -2,7 +2,7 @@
   <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
     <div *ngFor="let question of questions">
       <div class="form-title">
-        <app-form-header [slots]="{ tourId}" slot="tourId">
+        <app-form-header [slots]="{clear}" [slot]="question.group.header.slot">
           <div title fxLayout="row" fxLayoutAlign="start center">
             <app-typography color="primary" bold="600" size="16">
               {{ question.group.header.label }}
@@ -21,6 +21,12 @@
 
 <!-- template components -->
 
-<ng-template #tourId>
-  <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
-</ng-template>
+<ng-template #clear>
+  <div
+  class="clear-container underline button"
+  fxLayout="row"
+  fxLayoutAlign="end center"
+  (click)="onClear()"
+>
+  <app-typography color="primary"> X בטל </app-typography>
+</div></ng-template>
