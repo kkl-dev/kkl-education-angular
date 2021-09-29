@@ -78,18 +78,12 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
     if (changes.valuesForEdit.currentValue !== undefined) {
       this.updateItem(changes.valuesForEdit.currentValue);
       // console
+<<<<<<< HEAD
     }
   }
 
   setnightNumberOptions(from,till){
-    // const dateFormat1 = from.split('/').reverse();
-    // dateFormat1[1] = (+dateFormat1[1] - 1).toString();
-    // dateFormat1[2] = (+dateFormat1[2]).toString();
-    // const dateFormat2 = till.split('/').reverse();
-    // dateFormat2[1] = (+dateFormat2[1] - 1).toString();
-    // dateFormat2[2] = (+dateFormat2[2]).toString();
-    // let date1 = new Date(dateFormat1.join(','));
-    // let date2 = new Date(dateFormat2.join(','));
+   
     let date1 = new Date(from);
     let date2 = new Date(till);
     console.log(date1.getMonth());
@@ -122,6 +116,8 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
         selected: false
       });
       newDate = new Date(date1.setDate(date1.getDate() + 1));
+=======
+>>>>>>> 06f2f9aa110d0062e688974f94ebd8d70e8399f5
     }
   
   }
