@@ -85,7 +85,7 @@ export class EducationComponent implements OnInit {
         this.tripService.setFreeSpacesArray(this.freeSpacesArray);
         this.options = {
           firstCalendarDay: 0,
-          format: 'LL/dd/yyyy',
+          format: 'dd/LL/yyyy',
           maxDate: new Date(tillDate),
           closeOnSelected: true,
           minYear: new Date().getFullYear() - 1,
@@ -103,30 +103,21 @@ export class EducationComponent implements OnInit {
     var i = 0;
     let freeSpacesArray = [];
     while (start < end && i <= this.AvailableDates.length) {
+      // for (var j in this.AvailableDates[i].freeSpace) {
       freeSpacesArray.push({
         date: start,
-        freeSpace:
-          [
-            {
-              accomodationName: this.AvailableDates[i].freeSpace[0].accomodationName,             
-              availableBeds: this.AvailableDates[i].freeSpace[0].availableBeds
-            },
-            {
-              accomodationName: this.AvailableDates[i].freeSpace[1].accomodationName,
-              availableBeds: this.AvailableDates[i].freeSpace[1].availableBeds
-            },
-            {
-              accomodationName: this.AvailableDates[i].freeSpace[2].accomodationName,
-              availableBeds: this.AvailableDates[i].freeSpace[2].availableBeds
-            },
-            {
-              accomodationName: this.AvailableDates[i].freeSpace[3].accomodationName,
-              availableBeds: this.AvailableDates[i].freeSpace[3].availableBeds
-            },
-          ]
+        freeSpace: this.AvailableDates[i].freeSpace
+        // [
+        //   {
+        //     accomodationName: this.AvailableDates[i].freeSpace[j].accomodationName,
+        //     availableBeds: this.AvailableDates[i].freeSpace[j].availableBeds
+        //   }
+        // ]
       });
+      // }
       start = new Date(start.setDate(start.getDate() + 1)); i++;
     }
+
     return freeSpacesArray;
   }
 
@@ -212,11 +203,8 @@ export class EducationComponent implements OnInit {
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       } else {
-        // commented by itiel, need tk check the comrax version
-        // this.sleepingDates.from = tempDateArr[1];
-        // this.sleepingDates.till= tempDateArr[0];
-        this.sleepingDates.from = tempDateArr[0];
-        this.sleepingDates.till = tempDateArr[1];
+        this.sleepingDates.from = tempDateArr[1];
+        this.sleepingDates.till= tempDateArr[0];
       }
       console.log(this.container);
       this.container.nativeElement.focus();
