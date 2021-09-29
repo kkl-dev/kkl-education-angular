@@ -57,7 +57,7 @@ export class FormInputComponent implements OnInit {
   }
 
 
-  // CALANDER METHODS
+  // CALENDAR METHODS
   newDateReceived(newDate: any) {
     console.log(newDate);
 

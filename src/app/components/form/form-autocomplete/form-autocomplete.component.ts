@@ -18,7 +18,7 @@ export class FormAutocompleteComponent implements OnInit {
 
   constructor(
     private formService: FormService,
-    private squadClientServic: SquadClientService
+    private squadClientService: SquadClientService
   ) { }
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class FormAutocompleteComponent implements OnInit {
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
 
     // TODO get client from server logic
-    this.squadClientServic.emitClientSelected(event.option.value)
+    this.squadClientService.emitClientSelected(event.option.value)
     this.list.push(event.option.value)
   }
   public onDelete() {
