@@ -64,24 +64,6 @@ export class SquadAssembleService {
     freeSpacesArray: this.freeSpacesArray,
   };
 
-  private genderArray: QuestionNumber[] = [
-    new QuestionNumber({
-      key: 'boys',
-      label: 'בנים',
-      type: 'number',
-      cols: 2,
-      offset: 1,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'girls',
-      label: 'בנות',
-      type: 'number',
-      cols: 2,
-      rows: 4,
-    }),
-  ];
-
   constructor(
     private squadDetailsService: SquadDetailsService,
     private squadClientService: SquadClientService,
