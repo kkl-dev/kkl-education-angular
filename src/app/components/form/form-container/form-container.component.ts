@@ -6,7 +6,7 @@ import {
   EventEmitter,
   ElementRef,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
@@ -20,7 +20,7 @@ import { QuestionGroup } from '../logic/question-group';
 export class FormContainerComponent implements OnInit {
   public form: FormGroup;
 
-  @Input() formGroup: FormGroup;
+  @Input() formGroup: FormGroup = null;
   @Input() group: QuestionGroup;
   @Input() questions: QuestionBase<string | number | Date>[];
   @Input() $questions: Observable<QuestionBase<string | number | Date>[]>;
@@ -30,20 +30,24 @@ export class FormContainerComponent implements OnInit {
   @Input() hasButton: boolean = false;
   @Input() hasBottomButton: boolean = false;
 
+  @Input() disable: boolean;
+
+
   @Input() slots: {
     topButton?: ElementRef;
     groupInputs?: ElementRef;
   };
 
-  @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() register: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
 
-  constructor(private formService: FormService) {}
+  constructor(private formService: FormService) { }
 
   ngOnInit() {
     this.initFormGroup();
     this.subscribeToQuestions();
     this.subscribeToFormValues();
-    this.formService.formGroup = this.formGroup;
+    this.dissableForm()
   }
 
   private initFormGroup() {
@@ -51,17 +55,18 @@ export class FormContainerComponent implements OnInit {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
-      this.valueChange.emit(this.formGroup);
-      // if(!this.formGroup.invalid){
-       
-      // }
-     
+      this.register.emit(this.formGroup);
+    }
+  }
+
+  private dissableForm() {
+    if (this.disable) {
+      this.formGroup.disable()
     }
   }
 
   public onSubmit() {
-    console.log(this.formGroup.value);
-    this.valueChange.emit(this.formGroup);
+    this.register.emit(this.formGroup);
   }
 
   private subscribeToQuestions() {
@@ -72,16 +77,21 @@ export class FormContainerComponent implements OnInit {
           questions: this.questions,
         });
       });
+
     }
   }
 
   private subscribeToFormValues() {
     this.formGroup.valueChanges.subscribe(() => {
-      this.valueChange.emit(this.formGroup);
+      this.register.emit(this.formGroup);
     });
   }
 
   public onEdit() {
     this.form.enable();
+  }
+
+  public onAutocomplete(control) {
+    this.autocomplete.emit(control)
   }
 }

@@ -1,3 +1,4 @@
+import { SquadGroupService } from '../components/squad-group/squad-group.service';
 import { Injectable } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
@@ -10,17 +11,27 @@ import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox'
 import { TripService } from 'src/app/services/trip.service'
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { TripInfo, UserService } from 'src/app/open-api';
+import { SquadDetailsService } from '../components/squad-details/squad-details.service';
+import { SquadBudgetService } from '../components/squad-budget/squad-budget.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { SquadClientService } from '../components/squad-client/squad-client.service';
+import { SquadNewClientService } from '../components/squad-new-client/squad-new-client.service';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SquadAssembleService {
+  public $saveMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
   freeSpacesArray: FreeSpace[] = [];
   tripInfo: TripInfo = {}
   formsArray: FormGroup[] = [];
   filledNightsArray :[];
 
-  freeSpacesArrayGenarator(start: Date, end: Date) {
+  public freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
     while (start < end) {
@@ -45,10 +56,8 @@ export class SquadAssembleService {
     }
     return freeSpacesArray;
   }
-  // cabins: this.AvailableDates[i].availableBedsCabin!,
-  // tents: this.AvailableDates[i].availableBedsTent!,
-  // campgrounds: this.AvailableDates[i].availableBedsCamping!,
-  options: CalendarOptions = {
+
+  public options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'LL/dd/yyyy',
     closeOnSelected: true,
@@ -57,25 +66,14 @@ export class SquadAssembleService {
     freeSpacesArray: this.freeSpacesArray,
   };
 
-  private genderArray: QuestionNumber[] = [
-    new QuestionNumber({
-      key: 'boys',
-      label: 'בנים',
-      type: 'number',
-      cols: 2,
-      offset: 1,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'girls',
-      label: 'בנות',
-      type: 'number',
-      cols: 2,
-      rows: 4,
-    }),
-  ];
-
-  constructor(private tripService: TripService, public usersService: UserService) {
+  constructor(
+    private tripService: TripService, public usersService: UserService,
+    private squadDetailsService: SquadDetailsService,
+    private squadClientService: SquadClientService,
+    private squadNewClientService: SquadNewClientService,
+    private squadBudgetService: SquadBudgetService,
+    private squadGroupService: SquadGroupService // private squadScheduleService : SquadSch
+  ) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
       new Date(2021, 11, 17)
@@ -90,9 +88,7 @@ export class SquadAssembleService {
       value: '',
       rows: 4,
       validations: [Validators.required],
-      inputProps: {
-        labelSize: 's2',
-      },
+      inputProps: {},
     }),
 
     new QuestionSelect({
@@ -100,8 +96,12 @@ export class SquadAssembleService {
       type: 'select',
       label: 'מרכז שדה',
       inputProps: {
-        options: this.tripService.fieldForestCenters,
-        labelSize: 's3',
+        options: [
+          { label: 'solid', value: '12123' },
+          { label: 'great', value: '23' },
+          { label: 'good', value: '123' },
+          { label: 'unproven', value: '123123123' },
+        ],
       },
       validations: [Validators.required],
     }),
@@ -141,335 +141,57 @@ export class SquadAssembleService {
       value: null,
       rows: 4,
       validations: [Validators.required],
-      inputProps: {
-        labelSize: 's3',
-      },
+      inputProps: {},
     }),
-
-  ];
-
-  public customerFormInputs: QuestionBase<string>[] = [
-    new QuestionTextbox({
-      key: 'customerName',
-      label: 'הקלד לקוח רצוי',
-      cols: 2,
-      value: '',
-      validations: [Validators.required],
-      inputProps: {
-        labelSize: 's8',
-      },
-    }),
-
-    new QuestionSelect({
-      key: 'customer',
-      type: 'select',
-      label: 'הכול',
-      inputProps: {
-        labelSize: 's1',
-        options:this.tripService.customers ,
-      },
-    }),
-    // [
-    //   { key: 'שם נוסף', value: 'שם נוסף' },
-    //   { key: 'עוד לקוח', value: 'עוד לקוח' },
-    //   { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-    //   { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-    // ]
-    new QuestionSelect({
-      key: 'payerName',
-      label: 'לקוח משלם',
-      type: 'select',
-      fullWidth: true,
-      inputProps: {
-        labelSize: 's3',
-        options: [
-          { key: 'שם נוסף', value: 'שם נוסף' },
-          { key: 'עוד לקוח', value: 'עוד לקוח' },
-          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-        ],
-      },
-    }),
-
-    new QuestionBase({
-      key: 'contact',
-      isGroup: true,
-      fullWidth: true,
-      rows: 15,
-      group: {
-        key: 'contact',
-        cols: 1,
-        rows: 3,
-        questions: [
-          new QuestionTextbox({
-            key: 'contactName',
-            label: 'איש קשר',
-            inputProps: {
-              labelSize: 's1',
-            },
-          }),
-
-          new QuestionTextbox({
-            key: 'contactPhone',
-            label: 'נייד איש קשר',
-            type: 'text',
-            validations: [Validators.required],
-            inputProps: {
-              labelSize: 's3',
-            },
-          }),
-          new QuestionTextbox({
-            key: 'contactEmail',
-            label: 'מייל',
-            type: 'text',
-            validations: [Validators.required],
-            inputProps: {
-              labelSize: 's1',
-            },
-          }),
-        ],
-      },
-    }),
-  ];
-
-  public groupAssembleFormMixedInputs: QuestionBase<string | number>[] = [
-    new QuestionSelect({
-      key: 'ageGroup',
-      type: 'select',
-      fullWidth: true,
-      rows: 4,
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: this.tripService.ageGroup,
-      },
-    }),
-    // this.tripService.ageGroup
-    // [
-    //   { key: '1', value: '1' },
-    //   { key: 'עוד לקוח', value: '10+' },
-    //   { key: 'לקוח מספר שלוש', value: '20+' },
-    //   { key: 'לקוח מספר ארבע', value: '30+' },
-    // ],
-    new QuestionNumber({
-      key: 'numAccompanied',
-      label: 'מלווים',
-      cols: 2,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'numAdultAndYoung',
-      label: 'נוער / מבוגרים',
-      offset: 1,
-      cols: 2,
-      rows: 4,
-      inputProps: {
-        labelSize: 'xl4',
-      },
-    }),
-    new QuestionNumber({
-      key: 'numDrivers',
-      label: 'נהגים',
-      cols: 2,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'numGuides',
-      label: 'מדריכים',
-      offset: 1,
-      cols: 2,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'numAccompaniedAndGuide',
-      label: 'חובשים',
-      cols: 2,
-      rows: 4,
-      offset: 3,
-    }),
-  ];
-
-  public groupAssembleFormInputs: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'age',
-      type: 'select',
-      fullWidth: true,
-      rows: 3,
-      label: 'קבוצת גיל',
-      inputProps: {
-        options: this.tripService.ageGroup,
-      },
-    }),
-    // [
-    //   { key: '1', value: '1' },
-    //   { key: 'עוד לקוח', value: '10+' },
-    //   { key: 'לקוח מספר שלוש', value: '20+' },
-    //   { key: 'לקוח מספר ארבע', value: '30+' },
-    // ]
-    new QuestionBase({
-      key: 'participants',
-      fullWidth: true,
-      rows: 5,
-      isGroup: true,
-      group: {
-        key: 'participants',
-        header: { text: 'נוער / מבוגרים' },
-        cols: 5,
-        questions: this.genderArray,
-      },
-    }),
-
-    new QuestionBase({
-      key: 'chaperones',
-      fullWidth: true,
-      rows: 5,
-      isGroup: true,
-      group: {
-        key: 'chaperones',
-        header: { text: 'מלווים' },
-        cols: 5,
-        questions: this.genderArray,
-      },
-    }),
-
-    new QuestionBase({
-      key: 'instructors',
-      isGroup: true,
-      fullWidth: true,
-      rows: 5,
-      group: {
-        key: 'instructors',
-        header: { text: 'מדריכים' },
-        cols: 5,
-        questions: this.genderArray,
-      },
-    }),
-
-    new QuestionBase({
-      key: 'medics',
-      isGroup: true,
-      fullWidth: true,
-      rows: 5,
-      group: {
-        key: 'medics',
-        header: { text: 'חובשים' },
-        cols: 5,
-        questions: this.genderArray,
-      },
-    }),
-  ];
-
-  public tourDetailsFormInputs: QuestionBase<string>[] = [
-    new QuestionSelect({
-      key: 'attribute',
-      label: 'מאפיין',
-      type: 'select',
-      inputProps: {
-        labelSize: 's4',
-         options: this.tripService.attributes,
-       
-      },
-    }),
-    // [
-    //   { key: 'פרומלי', value: 'פרומלי' },
-    //   { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
-    //   { key: 'מעוף', value: 'מעוף' },
-    //   { key: 'חו"ל', value: 'חו"ל' },
-    //   { key: 'הנהלת אגף', value: 'הנהלת אגף' },
-    // ]
-    new QuestionSelect({
-      key: 'activityType',
-      label: 'סוג הפעילות',
-      type: 'select',
-      inputProps: {
-        labelSize: 's4',
-         options: this.tripService.activityByAttribute,
-       
-      },
-    }),
-    // [
-    //   { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
-    //   { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
-    // ]
-    new QuestionRadio({
-      key: 'departmentId',
-      label: 'מחלקה',
-      custom: true,
-      value: '1',
-      rows: 4,
-      inputProps: {
-        options: [
-          { key: 'ישראל', value: '1' },
-          { key: 'חו"ל', value: '8' },
-        ],
-      },
-    }),
-
-    
-    // new QuestionRadio({
-    //   key: 'tripLocation',
-    //   label: 'מחלקה',
-    //   custom: true,
-    //   value: 'ישראל',
-    //   rows: 4,
-    //   inputProps: {
-    //     options: [
-    //       { name: 'ישראל', id: 'ישראל' },
-    //       { name: 'חו"ל', id: 'חו"ל' },
-    //     ],
-    //   },
-    // }),
-
-    new QuestionRadio({
-      custom: true,
-      key: 'insideCenterFieldId',
-      label: 'פנים/חוץ מרכז שדה',
-      value: '1',
-      rows: 4,
-      inputProps: {
-        options: [
-          { key: 'פנים', value: '1' },
-          { key: 'חוץ', value: '2' },
-        ],
-      },
-    }),
-
-    // new QuestionRadio({
-    //   custom: true,
-    //   key: 'tripCenter',
-    //   label: 'פנים/חוץ מרכז שדה',
-    //   value: 'ישראל',
-    //   rows: 4,
-    //   inputProps: {
-    //     options: [
-    //       { name: 'פנים', id: 'פנים' },
-    //       { name: 'חוץ', id: 'חוץ' },
-    //     ],
-    //   },
-    // }),
 
     new QuestionTextarea({
-      key: 'commentManager',
+      key: 'comments',
       label: 'הערות מנהליות',
       rows: 6,
     }),
   ];
 
-  
-   
+  public customerFormInputs: QuestionBase<string>[] =
+    this.squadClientService.questions;
 
-  updateFormArray(form: FormGroup) {
+  public newClient: QuestionGroup = {
+    key: 'newClient',
+    questions: this.squadNewClientService.questions,
+  };
+
+  public groupAssembleFormMixedInputs: QuestionBase<string | number>[] =
+    this.squadGroupService.mixedQuestions;
+
+  public groupAssembleFormInputs: QuestionBase<string>[] =
+    this.squadGroupService.groupQuestions;
+
+  public tourDetailsFormInputs: QuestionBase<string>[] =
+    this.squadDetailsService.questions;
+
+  public budgetQuestions: QuestionBase<string>[] =
+    this.squadBudgetService.questions;
+
+  public updateFormArray(form: FormGroup) {
     const index = this.formsArray.findIndex(
       (formItem) => form.controls == formItem.controls
     );
     if (index > -1) {
       this.formsArray[index] = form;
-      //console.log('fonund');
     } else {
-      //console.log('else');
       this.formsArray.push(form);
     }
+  }
 
-    console.log(this.formsArray);
+  public getSaveModeObs(): Observable<boolean> {
+    return this.$saveMode.asObservable();
+  }
+
+  public emitSaveMode(value: boolean): void {
+    this.$saveMode.next(value);
+  }
+
+  public getNewClientObs(): Observable<boolean> {
+    return this.squadNewClientService.getNewClientObs();
   }
 
   savefilledNightsArray(array){

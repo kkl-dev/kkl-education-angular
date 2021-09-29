@@ -1,4 +1,4 @@
-<form class="form" [dir]="'rtl'" (ngSubmit)="onSubmit()" [formGroup]="filledNightForm">
+<form class="form" [dir]="'rtl'" [formGroup]="filledNightForm">
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
     <mat-label>סוג לינה</mat-label>
     <!-- <mat-select name="sleepingPlace" formControlName="sleepingPlace"> -->
@@ -60,8 +60,9 @@
     <textarea matInput name="comments" formControlName="comments"></textarea>
   </mat-form-field>
   <div class="btn__container">
-    <button [disabled]="!filledNightForm.valid" class="btn" type="submit">
+    <button *ngIf='!editMode' [disabled]="!filledNightForm.valid" class="btn" (click)='onSubmit()'>
       הוסף
     </button>
+    <button *ngIf='editMode' class="btn" (click)='sumbitUpdatedItem()'>שמירה</button>
   </div>
 </form>

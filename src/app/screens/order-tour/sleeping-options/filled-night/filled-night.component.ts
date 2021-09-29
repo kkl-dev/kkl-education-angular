@@ -14,7 +14,7 @@ export interface FilledNight1 {
   sleepingPlace: string;
   nightsCount1: string | any;
   saveFor: string;
-  peopleCount: string;
+  sleepingAmount: string;
   amount: string;
   comments: string;
   optionsArr: any[];
@@ -32,7 +32,7 @@ export interface FilledNight {
   templateUrl: './filled-night.component.html',
   styleUrls: ['./filled-night.component.scss'],
 })
-export class FilledNightComponent implements OnInit, OnChanges {
+export class FilledNightComponent implements OnInit {
   @Input() filledNight!: FilledNight;
   @Input() index: number;
   @Input() filledNightOptions: any[];
@@ -53,39 +53,39 @@ export class FilledNightComponent implements OnInit, OnChanges {
   public emitDeleteFilledNightOption(indexOfOption: number): void {
     this.deleteFilledNightOption.emit(indexOfOption);
   }
-  public emitEditFilledNightOption(indexOfOption: number): void {
+  public emitEditFilledNightOption(indexOfOption?: number): void {
     this.editFilledNightOption.emit(indexOfOption);
   }
-  emitEditFilledNight(filledNight: FilledNight): void {
-    this.editFilledNight.emit(filledNight);
+  emitEditFilledNight(): void {
+    this.editFilledNight.emit();
   }
 
   ngOnInit(): void {
+    console.log(this.filledNight)
     this.nightsCountForDisplay = this.arrangeNightCountForDisplay();
     this.datesForDisplay = this.arrangeDatesForDisplay();
     console.log('filledNightOptions is :', this.filledNightOptions);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-
-  }
   public arrangeDatesForDisplay(): string {
     let low: Date;
     let hight: Date;
     const arr: any[] = this.filledNight.nightsCount;
-    arr.map(item => {
-      let day = item.date.getDate();
-      if (!low && !hight) {
-        hight = day;
-        low = day;
-      }
-      if (day < low) {
-        low = day;
-      }
-      if (day > hight) {
-        hight = day;
-      }
-    });
+    if (arr) {
+      arr.map(item => {
+        let day = item.date.getDate();
+        if (!low && !hight) {
+          hight = day;
+          low = day;
+        }
+        if (day < low) {
+          low = day;
+        }
+        if (day > hight) {
+          hight = day;
+        }
+      });
+    }
     return `${low}-${hight}.${arr[0].date.getMonth()}.${arr[0].date.getFullYear()}`;
   }
   public arrangeNightCountForDisplay() {
