@@ -97,25 +97,22 @@ export class EducationComponent implements OnInit {
     var i = 0;
     let freeSpacesArray = [];
     while (start < end && i <= this.AvailableDates.length) {
-      for (var j in this.AvailableDates[i]) {
-        freeSpacesArray.push({
-          date: start,
-          freeSpace:
-            [
-              {
-                accomodationName: this.AvailableDates[i].freeSpace[j].accomodationName,
-                availableBeds: this.AvailableDates[i].freeSpace[j].availableBeds
-              }
-            ]
-        });
-      }
+      // for (var j in this.AvailableDates[i].freeSpace) {
+      freeSpacesArray.push({
+        date: start,
+        freeSpace: this.AvailableDates[i].freeSpace
+        // [
+        //   {
+        //     accomodationName: this.AvailableDates[i].freeSpace[j].accomodationName,
+        //     availableBeds: this.AvailableDates[i].freeSpace[j].availableBeds
+        //   }
+        // ]
+      });
+      // }
       start = new Date(start.setDate(start.getDate() + 1)); i++;
     }
     return freeSpacesArray;
   }
-
-
-
 
   date: string | null = null;
   dateObj: { from: string; to: string } = { from: '', to: '' };
