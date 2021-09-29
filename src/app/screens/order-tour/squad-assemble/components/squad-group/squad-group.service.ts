@@ -5,10 +5,9 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SquadGroupService {
-
   private genderArray: QuestionNumber[] = [
     new QuestionNumber({
       key: 'boys',
@@ -84,7 +83,7 @@ export class SquadGroupService {
       key: 'age',
       type: 'select',
       fullWidth: true,
-      rows: 3,
+      rows: 4,
       label: 'קבוצת גיל',
       inputProps: {
         options: [
@@ -104,7 +103,7 @@ export class SquadGroupService {
         key: 'participants',
         cols: 5,
         rows: 5,
-        header: { label: 'נוער / מבוגרים' },
+        label: 'נוער / מבוגרים',
         questions: this.genderArray,
       },
     }),
@@ -118,7 +117,7 @@ export class SquadGroupService {
         key: 'chaperones',
         cols: 5,
         rows: 5,
-        header: { label: 'מלווים' },
+        label: 'מלווים',
         questions: this.genderArray,
       },
     }),
@@ -132,7 +131,7 @@ export class SquadGroupService {
         key: 'instructors',
         cols: 5,
         rows: 5,
-        header: { label: 'מדריכים' },
+        label: 'מדריכים',
         questions: this.genderArray,
       },
     }),
@@ -146,13 +145,11 @@ export class SquadGroupService {
         key: 'medics',
         cols: 5,
         rows: 5,
-        header: { label: 'חובשים' },
+        label: 'חובשים',
         questions: this.genderArray,
       },
     }),
   ];
 
-  constructor(
-    private formService: FormService
-  ) { }
+  constructor(private formService: FormService) {}
 }
