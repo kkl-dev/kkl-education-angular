@@ -49,15 +49,11 @@ export class SleepingOptionsComponent implements OnInit {
     comments: string;
     optionsArr: any[];
   }[] = [];
-<<<<<<< HEAD
-
+  
   filledNightsArray1: {
     nightsCount: any[];
     lodgingPerDay: lodgingPerDay[]
   }[] = [];
-=======
-   
->>>>>>> 06f2f9aa110d0062e688974f94ebd8d70e8399f5
 
   formCols: number = 12;
   questions: QuestionBase<string | number>[] = [];
