@@ -18,7 +18,7 @@ export class ConfirmDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialog) { }
   ngOnInit(): void {
-    this.dialogRef.updateSize('250px')
+    this.dialogRef.updateSize('500px')
   }
 
   onNoClick(): void {

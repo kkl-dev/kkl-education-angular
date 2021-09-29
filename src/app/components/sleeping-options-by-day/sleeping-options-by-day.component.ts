@@ -10,16 +10,17 @@ import { TripService } from 'src/app/services/trip.service';
 export class SleepingOptionsByDayComponent implements OnInit {
 
   @Output() emitCurrentDay: EventEmitter<number> = new EventEmitter();
-  @Input() sleepingOptionsByDay: {
-    day: string;
-    options: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
-    }[];
-  }[] = [];
+  ////yak del 19-9-21
+  // @Input() sleepingOptionsByDay: {
+  //   day: string;
+  //   options: {
+  //     svgUrl: string;
+  //     sleepingAreas: number;
+  //     avialableSpaces: number;
+  //     type: string;
+  //     singleUnit: string;
+  //   }[];
+  // }[] = [];
   //@Input() AvailableSleepingOptions: any;
   AvailableSleepingOptions: any;
   currentDay: number = 0;
@@ -32,7 +33,8 @@ export class SleepingOptionsByDayComponent implements OnInit {
       console.log('sleeping --> forestCenter result:', forestCenter);
     });
 
-    this.tripService.AvailableSleepingOptions.subscribe(sleepingOptions => {      
+    this.tripService.AvailableSleepingOptions.subscribe(sleepingOptions => {    
+      this.currentDay = 0;  
       this.AvailableSleepingOptions = sleepingOptions; // this set's the username to the default observable value
       console.log('sleeping -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
      // console.log('sleeping -- > sleepingOptionsByDay:', this.sleepingOptionsByDay);

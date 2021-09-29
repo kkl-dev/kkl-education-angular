@@ -64,12 +64,8 @@ export class MapsComponent implements OnInit {
     if (this.tripService.centerField) {
       this.place = this.tripService.centerField.name;
       this.forestCenter = this.tripService.centerField.name;
-
       this.onChangeForestCenter();
     }
-
-    //else {
-
       this.tripService.forestCenter.subscribe(forestCenter => {
         this.forestCenter = forestCenter; // this set's the username to the default observable value
         console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);

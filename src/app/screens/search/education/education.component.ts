@@ -12,6 +12,8 @@ import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from '../../../services/trip.service'
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { AccommodationType, AvailableAccomodationDate } from 'src/app/open-api';
 import { Router } from '@angular/router';
 
@@ -39,7 +41,7 @@ export class EducationComponent implements OnInit {
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[] = [];
 
-  constructor(public usersService: UserService, private router: Router, public tripService: TripService,
+  constructor(public usersService: UserService, private _dialog: MatDialog, private router: Router, public tripService: TripService,
     private checkAvailabilltyService: CheckAvailabilityService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
@@ -60,6 +62,8 @@ export class EducationComponent implements OnInit {
 
   ngOnInit() {
     this.tripService.getLookupFieldForestCenters();
+    this.sleepingPlace = this.tripService.centerField.id;
+    if (this.tripService.sleepingDates !== undefined) { this.sleepingDates = this.tripService.sleepingDates };
   }
 
   selectChange(event: any) {
@@ -99,38 +103,22 @@ export class EducationComponent implements OnInit {
     var i = 0;
     let freeSpacesArray = [];
     while (start < end && i <= this.AvailableDates.length) {
+      // for (var j in this.AvailableDates[i].freeSpace) {
       freeSpacesArray.push({
         date: start,
-        freeSpace:
-          [
-            {
-              accomodationName: this.AvailableDates[i].freeSpace[0].accomodationName,
-              availableBeds: this.AvailableDates[i].freeSpace[0].availableBeds
-            },
-            {
-              accomodationName: this.AvailableDates[i].freeSpace[1].accomodationName,
-              availableBeds: this.AvailableDates[i].freeSpace[1].availableBeds
-            },
-            {
-              accomodationName: this.AvailableDates[i].freeSpace[2].accomodationName,
-              availableBeds: this.AvailableDates[i].freeSpace[2].availableBeds
-            },
-            {
-              accomodationName: this.AvailableDates[i].freeSpace[3].accomodationName,
-              availableBeds: this.AvailableDates[i].freeSpace[3].availableBeds
-            },
-          ]
+        freeSpace: this.AvailableDates[i].freeSpace
+        // [
+        //   {
+        //     accomodationName: this.AvailableDates[i].freeSpace[j].accomodationName,
+        //     availableBeds: this.AvailableDates[i].freeSpace[j].availableBeds
+        //   }
+        // ]
       });
+      // }
       start = new Date(start.setDate(start.getDate() + 1)); i++;
     }
     return freeSpacesArray;
   }
-
-
-
-
-
-
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
@@ -191,7 +179,6 @@ export class EducationComponent implements OnInit {
   }
   prevDateRecived(prevDate: any) {
     console.log(prevDate);
-
   }
 
   newSleepingPlaceRecived(sleepingPlace: any) {
@@ -228,7 +215,12 @@ export class EducationComponent implements OnInit {
     for (var i in this.tripService.dateRange) {
       let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationType);
       if (typeAmount.availableBeds === 0) { flag = false; }
-      if (!flag) { console.log('אחד הימים בטווח התאריכים אינו פנוי'); return flag; }
+      if (!flag) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '300px',
+          data: { message: 'אחד  הימים בטווח התאריכים אינו פנוי', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        }); console.log('אחד  הימים בטווח התאריכים אינו פנוי'); return flag;
+      }
     }
     return flag;
   }

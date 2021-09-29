@@ -19,7 +19,7 @@ import { AvailableAccomodationDate } from 'src/app/open-api';
 export class HeaderComponent implements OnInit {
 
   @ViewChild('resultsForm') signupForm: NgForm;
-  @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
+  //@Output() emitNewDates: EventEmitter<string> = new EventEmitter();
 
   date: string | null = null;
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
@@ -220,7 +220,7 @@ export class HeaderComponent implements OnInit {
       }
       this.tripService.sleepingDates.from = this.sleepingDates.from;
       this.tripService.sleepingDates.till = this.sleepingDates.till;
-      this.emitNewDates.emit(e);
+      //this.emitNewDates.emit(e);
 
       this.tripService.getAvailableSleepingOptions();
     } else {

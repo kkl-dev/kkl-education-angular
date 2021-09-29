@@ -2,9 +2,11 @@
   <app-sleeping-options-form
     (emitNewDates)="changeDatesHandler($event)"
   ></app-sleeping-options-form>
-  <app-sleeping-options-by-day [sleepingOptionsByDay]="sleepingOptionsByDay">
+  <app-sleeping-options-by-day>
     <h4>זמינות לינה</h4>
   </app-sleeping-options-by-day>
+<!-- yak del 19-9-21 -->
+  <!-- [sleepingOptionsByDay]="sleepingOptionsByDay" -->
   <app-form-container 
   #filledNightsForm
     [cols]="'12'"
