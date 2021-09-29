@@ -13,11 +13,15 @@ import { QuestionAutocomplete } from 'src/app/components/form/logic/question-aut
 import { SquadClientService } from '../components/squad-client/squad-client.service';
 import { SquadDetailsService } from '../components/squad-details/squad-details.service';
 import { SquadBudgetService } from '../components/squad-budget/squad-budget.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SquadAssembleService {
+  public $saveMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   freeSpacesArray: FreeSpace[] = [];
 
@@ -82,7 +86,6 @@ export class SquadAssembleService {
     private squadDetailsService: SquadDetailsService,
     private squadBudgetService: SquadBudgetService,
     private squadGroupService: SquadGroupService
-
   ) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
@@ -132,15 +135,20 @@ export class SquadAssembleService {
     }),
   ];
 
-  public customerFormInputs: QuestionBase<string>[] = this.squadClientService.clientQuestions;
+  public customerFormInputs: QuestionBase<string>[] =
+    this.squadClientService.clientQuestions;
 
-  public groupAssembleFormMixedInputs: QuestionBase<string | number>[] = this.squadGroupService.mixedQuestions;
+  public groupAssembleFormMixedInputs: QuestionBase<string | number>[] =
+    this.squadGroupService.mixedQuestions;
 
-  public groupAssembleFormInputs: QuestionBase<string>[] = this.squadGroupService.groupQuestions;
+  public groupAssembleFormInputs: QuestionBase<string>[] =
+    this.squadGroupService.groupQuestions;
 
-  public tourDetailsFormInputs: QuestionBase<string>[] = this.squadDetailsService.questions;
+  public tourDetailsFormInputs: QuestionBase<string>[] =
+    this.squadDetailsService.questions;
 
-  public budgetQuestions: QuestionBase<string>[] = this.squadBudgetService.questions;
+  public budgetQuestions: QuestionBase<string>[] =
+    this.squadBudgetService.questions;
 
   public updateFormArray(form: FormGroup) {
     const index = this.formsArray.findIndex(
@@ -151,5 +159,13 @@ export class SquadAssembleService {
     } else {
       this.formsArray.push(form);
     }
+  }
+
+  public getSaveModeObs(): Observable<boolean> {
+    return this.$saveMode.asObservable();
+  }
+
+  public emitSaveMode(value: boolean): void {
+    this.$saveMode.next(value);
   }
 }

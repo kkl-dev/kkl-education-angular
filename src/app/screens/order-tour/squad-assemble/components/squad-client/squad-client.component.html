@@ -16,8 +16,8 @@
       ></app-form-autocomplete>
     </div>
 
-    <div fxFlex="10" class="form-title">
-      <app-form-header [slots]="{ editButton }" slot="editButton">
+    <div fxFlex="15" class="form-title">
+      <app-form-header [slots]="{ contactButton }" slot="contactButton">
         <div title fxLayout="row" fxLayoutAlign="start center">
           <app-typography color="primary" bold="600" size="16">
             {{ contactQuestions.group.header.label }}
@@ -57,17 +57,43 @@
     </div>
   </ng-template>
 
-  <ng-template #editButton>
-    <div class="edit-button-container" *ngIf="editMode">
-      <button
-        type="submit"
-        disableRipple="true"
-        (click)="onEdit()"
-        mat-icon-button
-        class="edit-button mat-elevation-z1"
+  <ng-template #contactButton>
+    <div *ngIf="editMode">
+      <div class="edit-button-container" *ngIf="!($saveMode | async)">
+        <button
+          type="submit"
+          disableRipple="true"
+          (click)="onEdit()"
+          mat-icon-button
+          class="edit-button mat-elevation-z1"
+        >
+          <app-icon
+            scale="0.8"
+            color="primary"
+            key="edit"
+            type="mat"
+          ></app-icon>
+        </button>
+      </div>
+
+      <div
+        class="clear-container"
+        *ngIf="$saveMode | async"
+        fxLayout="row"
+        fxLayoutAlign="end"
       >
-        <app-icon scale="0.8" color="primary" key="edit" type="mat"></app-icon>
-      </button>
+        <app-icon scale="0.8" color="primary" key="clear" type="mat"></app-icon>
+        <button
+          type="submit"
+          disableRipple="true"
+          (click)="onClear()"
+          mat-button
+          color="primary"
+          class="mat-elevation-z0"
+        >
+          בטל
+        </button>
+      </div>
     </div>
   </ng-template>
 

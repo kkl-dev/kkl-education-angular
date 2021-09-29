@@ -6,6 +6,7 @@ import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { FormHeader } from '../squad-group/squad-group.component';
 import { Subject, Observable, Subscription } from 'rxjs';
+import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 @Component({
   selector: 'app-squad-client',
@@ -20,6 +21,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   public payerQuestions: QuestionBase<string>;
 
   public $questions: Subject<QuestionBase<string | number | Date>[]>;
+  public $saveMode: Observable<boolean>;
 
   public editMode: boolean;
 
@@ -28,13 +30,17 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
 
-  constructor(private squadClientService: SquadClientService) {}
+  constructor(
+    private squadClientService: SquadClientService,
+    private squadAssembleService: SquadAssembleService
+  ) {}
 
   ngOnInit(): void {
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
     this.setQuestions();
     this.subscribeToEditMode();
     this.subscribeToClientData();
+    this.$saveMode = this.squadAssembleService.getSaveModeObs();
   }
 
   ngOnDestroy(): void {
@@ -95,6 +101,11 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public onEdit(): void {
     this.squadClientService.emitEditMode(true);
+    this.squadAssembleService.emitSaveMode(true);
     this.toggleFormState();
+  }
+
+  public onCLear() {
+    this.squadAssembleService.emitSaveMode(false);
   }
 }

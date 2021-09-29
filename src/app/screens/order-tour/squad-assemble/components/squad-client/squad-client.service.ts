@@ -7,6 +7,7 @@ import { QuestionAutocomplete } from 'src/app/components/form/logic/question-aut
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 @Injectable({
   providedIn: 'root',
@@ -137,7 +138,6 @@ export class SquadClientService {
       },
     }),
   ];
-
 
   constructor() {}
 
