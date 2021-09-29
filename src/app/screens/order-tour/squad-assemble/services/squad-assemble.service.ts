@@ -9,11 +9,12 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
-import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
-import { SquadClientService } from '../components/squad-client/squad-client.service';
 import { SquadDetailsService } from '../components/squad-details/squad-details.service';
 import { SquadBudgetService } from '../components/squad-budget/squad-budget.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { SquadClientService } from '../components/squad-client/squad-client.service';
+import { SquadNewClientService } from '../components/squad-new-client/squad-new-client.service';
+import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 
 @Injectable({
   providedIn: 'root',
@@ -63,29 +64,12 @@ export class SquadAssembleService {
     freeSpacesArray: this.freeSpacesArray,
   };
 
-  private genderArray: QuestionNumber[] = [
-    new QuestionNumber({
-      key: 'boys',
-      label: 'בנים',
-      type: 'number',
-      cols: 2,
-      offset: 1,
-      rows: 4,
-    }),
-    new QuestionNumber({
-      key: 'girls',
-      label: 'בנות',
-      type: 'number',
-      cols: 2,
-      rows: 4,
-    }),
-  ];
-
   constructor(
-    private squadClientService: SquadClientService,
     private squadDetailsService: SquadDetailsService,
+    private squadClientService: SquadClientService,
+    private squadNewClientService: SquadNewClientService,
     private squadBudgetService: SquadBudgetService,
-    private squadGroupService: SquadGroupService
+    private squadGroupService: SquadGroupService // private squadScheduleService : SquadSch
   ) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
@@ -136,7 +120,12 @@ export class SquadAssembleService {
   ];
 
   public customerFormInputs: QuestionBase<string>[] =
-    this.squadClientService.clientQuestions;
+    this.squadClientService.questions;
+
+  public newClient: QuestionGroup = {
+    key: 'newClient',
+    questions: this.squadNewClientService.questions,
+  };
 
   public groupAssembleFormMixedInputs: QuestionBase<string | number>[] =
     this.squadGroupService.mixedQuestions;
@@ -167,5 +156,9 @@ export class SquadAssembleService {
 
   public emitSaveMode(value: boolean): void {
     this.$saveMode.next(value);
+  }
+
+  public getNewClientObs(): Observable<boolean> {
+    return this.squadNewClientService.getNewClientObs();
   }
 }

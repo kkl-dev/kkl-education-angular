@@ -7,32 +7,48 @@ import { Router } from '@angular/router';
   styleUrls: ['./bottom-navigation.component.scss'],
 })
 export class BottomNavigationComponent implements OnInit {
-  @Output() changePage: EventEmitter<number> = new EventEmitter();
-  @Input() currentPage: number = 0;
   @Input() previousUrl: string = '';
-  @Input() title: string = '';
+  @Input() text: string = '';
   @Input() nextUrl: string = '';
-  @Input() lastPage: number = 0;
+  @Input() prevUrl: string = '';
+  @Input() hasNext: boolean;
+  @Input() hasSave: boolean;
 
-  constructor(private router: Router) {}
+  @Output() previous = new EventEmitter();
+  @Output() next = new EventEmitter();
+  @Output() save = new EventEmitter();
+
+  constructor() {}
 
   ngOnInit(): void {}
 
-  public previousPageHandler(): void {
-    if (this.currentPage == 0) {
-      this.router.navigateByUrl(this.previousUrl);
-    } else {
-      this.currentPage--;
-      this.changePage.emit(+this.currentPage);
-    }
+  // public previousPageHandler(): void {
+  //   if (this.currentPage == 0) {
+  //     this.router.navigateByUrl(this.previousUrl);
+  //   } else {
+  //     this.currentPage--;
+  //     this.changePage.emit(+this.currentPage);
+  //   }
+  // }
+
+  // public nextPageHandler(): void {
+  //   if (this.currentPage == this.lastPage - 1) {
+  //     this.router.navigateByUrl(this.nextUrl);
+  //   } else {
+  //     this.currentPage++;
+  //     this.changePage.emit(+this.currentPage);
+  //   }
+  // }
+
+  public onPrevious(): void {
+    this.previous.emit();
   }
 
-  public nextPageHandler(): void {
-    if (this.currentPage == this.lastPage - 1) {
-      this.router.navigateByUrl(this.nextUrl);
-    } else {
-      this.currentPage++;
-      this.changePage.emit(+this.currentPage);
-    }
+  public onNext(): void {
+    this.next.emit();
+  }
+
+  public onSave(): void {
+    this.save.emit();
   }
 }

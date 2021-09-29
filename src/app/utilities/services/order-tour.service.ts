@@ -2,13 +2,12 @@ import { Observable } from 'rxjs';
 import { StepModel } from './../models/step.model';
 import { StepperService } from './stepper.service';
 import { Injectable } from '@angular/core';
+import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderTourService {
-
-
   private steps: StepModel[] = [
     {
       svgUrl: 'group',
@@ -43,16 +42,19 @@ export class OrderTourService {
   ];
 
   constructor(
-    private stepperService: StepperService
-  ) { }
+    private stepperService: StepperService,
+    private squadAssembleService: SquadAssembleService
+  ) {}
 
   public getSteps(): StepModel[] {
-    return [... this.steps]
+    return [...this.steps];
   }
 
-
   public updateStepStatus(step: StepModel, key: string) {
-    this.steps = this.stepperService.updateStepStatus(this.steps, step, key)
+    this.steps = this.stepperService.updateStepStatus(this.steps, step, key);
+  }
 
+  public getNewClientObs(): Observable<boolean> {
+    return this.squadAssembleService.getNewClientObs();
   }
 }

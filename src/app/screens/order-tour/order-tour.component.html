@@ -27,14 +27,13 @@
           <ng-content></ng-content>
         </div>
       </div>
-      <div fxFlex="10" fxFlex.xs="15">
+      <div fxFlex="10" fxFlex.xs="15" class="bottom-navigation" dir="rtl">
         <app-bottom-navigation
-          [currentPage]="0"
           previousUrl="prevPage"
           nextUrl="nextPage"
-          [lastPage]="steps.length"
           (changePage)="changeActiveStepBottomNavigation($event)"
-          [title]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"
+          [text]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"
+          [hasSave]="hasSave"
         ></app-bottom-navigation>
       </div>
     </div>
