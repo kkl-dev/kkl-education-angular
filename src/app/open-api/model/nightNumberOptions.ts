@@ -11,18 +11,16 @@
  */
 
 
-export interface SleepingOptions { 
-    accomodationTypeId?: number;
-    acoomodationTypeName?: string;
+/**
+ * describe the night index in the  range dates
+ */
+export interface NightNumberOptions { 
+    date?: string;
     /**
-     * Maximum per lodging unit.
+     * describe the
      */
-    maxOccupancy?: number;
-    /**
-     * Number of avaliable lodging units (not beds!) for a day
-     */
-    availableUnits?: number;
-    nameEng?: string;
-    img?: string;
+    nightNumber?: number;
+    nightNumberValue?: string;
+    selected?: boolean;
 }
 

@@ -11,18 +11,15 @@
  */
 
 
-export interface SleepingOptions { 
-    accomodationTypeId?: number;
-    acoomodationTypeName?: string;
+export interface TripAttribute { 
+    id?: number | null;
+    name?: string | null;
+    budgetId?: number | null;
+    budgetName?: string | null;
     /**
-     * Maximum per lodging unit.
+     * subsidization 1 to 25 ratio
      */
-    maxOccupancy?: number;
-    /**
-     * Number of avaliable lodging units (not beds!) for a day
-     */
-    availableUnits?: number;
-    nameEng?: string;
-    img?: string;
+    subsidization1To25?: number | null;
+    autoCustomerId?: number | null;
 }
 

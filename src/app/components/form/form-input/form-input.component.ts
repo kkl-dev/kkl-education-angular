@@ -59,7 +59,7 @@ export class FormInputComponent implements OnInit {
   constructor(private formService: FormService, private tripService:TripService) {}
 
   ngOnInit(): void {
-    //console.log('control is :' ,this.control);
+   
     let name = this.getName(this.control);
     console.log('control name is :', name);
     if(name=='tripStart' || name=='tripEnding' || name == 'centerField')
@@ -113,7 +113,7 @@ export class FormInputComponent implements OnInit {
     
   }
 
-  //adding by itiel
+  
   setDefaultValues(name: string){ 
         switch(name) { 
           case 'tripStart':

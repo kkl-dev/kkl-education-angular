@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
-import { Area, FieldForestCenter, AgeGroup, Attribute, ParticipantType, Language, Country, Customer, BaseCustomer,ActivityType } from '../open-api';
+import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer,ActivityType } from '../open-api';
 
 @Injectable({
   providedIn: 'root'
@@ -120,7 +120,7 @@ export class TripService {
   customersOriginal: BaseCustomer[]
   areas: Area[];
   attributes = [];
-  attributesOriginal: Attribute[];
+  attributesOriginal: TripAttribute[];
   participantTypes: ParticipantType[];
   languages: Language[];
   countries: Country[];
@@ -180,7 +180,7 @@ export class TripService {
     //     error => console.log(error),       // error
     //     () => console.log('completed')     // complete
     //   )
-    this.userService.getCustomers().subscribe(
+    this.userService.getCustomersByParameters('סימינר','all').subscribe(
       response => {
         console.log('response', response)
         this.customersOriginal = response;

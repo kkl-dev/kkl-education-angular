@@ -108,7 +108,7 @@ export class EducationComponent implements OnInit {
         freeSpace:
           [
             {
-              accomodationName: this.AvailableDates[i].freeSpace[0].accomodationName,
+              accomodationName: this.AvailableDates[i].freeSpace[0].accomodationName,             
               availableBeds: this.AvailableDates[i].freeSpace[0].availableBeds
             },
             {
@@ -208,14 +208,18 @@ export class EducationComponent implements OnInit {
       const dateFormat2 = tempDateArr[1].split('/').reverse();
       dateFormat2[1] = (+dateFormat2[1] - 1).toString();
       dateFormat2[2] = (+dateFormat2[2]).toString();
-
       if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       } else {
+        // commented by itiel, need tk check the comrax version
+        // this.sleepingDates.from = tempDateArr[1];
+        // this.sleepingDates.till= tempDateArr[0];
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       }
+      console.log(this.container);
+      this.container.nativeElement.focus();
     } else {
 
       this.sleepingDates.from = e;

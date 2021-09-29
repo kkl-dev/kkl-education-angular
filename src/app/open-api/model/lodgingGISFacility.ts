@@ -11,18 +11,18 @@
  */
 
 
-export interface SleepingOptions { 
-    accomodationTypeId?: number;
-    acoomodationTypeName?: string;
+export interface LodgingGISFacility { 
     /**
-     * Maximum per lodging unit.
+     * the id of current structure as defined in the GIS
      */
-    maxOccupancy?: number;
+    structureId?: number;
     /**
-     * Number of avaliable lodging units (not beds!) for a day
+     * three possible values - בנים, בנות,מעורב
      */
-    availableUnits?: number;
-    nameEng?: string;
-    img?: string;
+    gender?: string;
+    /**
+     * Possible values - פנוי, תפוס, בניקיון, בשיפוץ
+     */
+    status?: string;
 }
 

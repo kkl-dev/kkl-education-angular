@@ -225,8 +225,11 @@ export class HeaderComponent implements OnInit {
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       } else {
-        this.sleepingDates.from = tempDateArr[1];
-        this.sleepingDates.till = tempDateArr[0];
+        // commented by itiel, need tk check the comrax version
+        // this.sleepingDates.from = tempDateArr[1];
+        // this.sleepingDates.till = tempDateArr[0];
+        this.sleepingDates.from = tempDateArr[0];
+        this.sleepingDates.till = tempDateArr[1];
       }
       this.tripService.sleepingDates.from = this.sleepingDates.from;
       this.tripService.sleepingDates.till = this.sleepingDates.till;

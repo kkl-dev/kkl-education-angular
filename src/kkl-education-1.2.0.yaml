@@ -5,7 +5,7 @@ info:
   description: Education new project|
   contact:
     email: yochai@one1.co.il
-  version: 1.1.0
+  version: 1.2.0
 servers:
 - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
   description: SwaggerHub API Auto Mocking
@@ -218,6 +218,48 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FacilityDate'
+
+  /getMapFacilities/{fieldForestCenterId}/{fromDate}/{tillDate}:
+    get:
+      tags:
+      - user
+      operationId: GetMapFacilities
+      parameters:
+      - name: fieldForestCenterId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: fromDate
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: date-time
+      - name: tillDate
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FacilityMapByDates'
+        "400":
+           description: invalid data
+             
   /lookup/getAgeGroup:
     get:
       tags:
@@ -259,7 +301,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Attribute'
+                  $ref: '#/components/schemas/TripAttribute'
   /activityType/{attributeId}/{userId}:
     get:
       tags:
@@ -304,6 +346,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Country'
+
   /languages:
     get:
       tags:
@@ -332,28 +375,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Area'
-  /customers:
-    post:
-      tags:
-      - user
-      operationId: GetCustomersByParams
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PaginationSpecParams'
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomerPagination'
-  /getCustomers:
+ 
+  /customers/{custAutoComplete}/{filterParam}:
     get:
       tags:
       - user
-      operationId: GetCustomers
+      operationId: GetCustomersByParameters
+      parameters:
+      - name: custAutoComplete
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: filterParam
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         "200":
           description: Success
@@ -1105,7 +1143,7 @@ components:
            example: 20
          availableUnits:
            type: integer           
-           description: Number of avaliable lodging units for a day
+           description: Number of avaliable lodging units (not beds!) for a day
            example: 2
          nameEng: 
            type: string
@@ -1171,71 +1209,133 @@ components:
           type: string
           example: סימינר הקיבוצים
       description: 'decribes ... '
-    LodgingDaysList:
+    # LodgingDaysList:
+    #   type: object
+    #   properties:
+    #     date:
+    #       type: string
+    #       format: date
+    #       example: 0032-04-12
+    #     structuresList:
+    #       type: array
+    #       items:
+    #         $ref: '#/components/schemas/Lodging'
+    #   description: describe ...
+    # Lodging:
+    #   type: object
+    #   properties:
+    #     uid:
+    #       type: integer
+    #       example: 84
+    #     type:
+    #       type: string
+    #       description: Have four types - Cabin, tent, camping, room
+    #       example: tent
+    #     gender:
+    #       type: string
+    #       description: Two possible values - בנים, בנות
+    #       example: בנים
+    #     vacancy:
+    #       type: string
+    #       description: Possible values - פנוי, תפוס, בניקיון, בשיפוץ
+    #       example: תפוס
+    #     date:
+    #       type: string
+    #       format: date
+
+    FacilityMapByDates:
       type: object
+      description: 'map object received from the server (for the GIS map)'
       properties:
         date:
           type: string
           format: date
-          example: 0032-04-12
-        structuresList:
+        lodgingFacilityList:
           type: array
           items:
-            $ref: '#/components/schemas/Lodging'
-      description: describe ...
-    Lodging:
+            $ref: '#/components/schemas/LodgingGISFacility'
+
+         
+    MapParameters:
       type: object
+      description: 'parameters to send to the internal GIS map (angular component)'
       properties:
-        uid:
-          type: integer
-          example: 84
-        type:
+        fieldForestCenterName:
           type: string
-          description: Have four types - Cabin, tent, camping, room
-          example: tent
-        school:
+          example: 'נס הרים'
+        lodgingFacilityList:
+          type: array
+          items:
+            $ref: '#/components/schemas/LodgingGISFacility'
+
+    LodgingGISFacility:
+       type: object
+       properties:
+        structureId:
           type: integer
-          example: 50
+          description: 'the id of current structure as defined in the GIS'
+          example: 10
         gender:
           type: string
-          description: Two possible values - בנים, בנות
+          description: three possible values - בנים, בנות,מעורב
           example: בנים
-        vacancy:
+        status:
           type: string
           description: Possible values - פנוי, תפוס, בניקיון, בשיפוץ
           example: תפוס
-        date:
-          type: string
-          format: date
+
+
+
     LodgingReservation:
       type: object
       properties:
-        accomodationTypeId:
-          type: integer
-          example: 2
-        accomodationTypeName:
-          type: string
-          example: בקתה
-        # dates:
-        #   type: array
-        #   items:
-        #      type: string
-        #      format: date
-        date: 
-          type: string
-          format: date
-        participantId:
-          type: integer
-          example: 1
-        participantName:
-           type: string
-           example: מבוגרים
+        nightsCount:
+          type: array
+          items:
+            $ref: '#/components/schemas/NightNumberOptions'
+        lodgingDetailsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/LodgingDetailsPerDay'
+    
+    LodgingDetailsPerDay:
+       type: object
+       properties:
+        accomodationType:
+           $ref: '#/components/schemas/AccommodationType'
+        participant:
+           $ref: '#/components/schemas/ParticipantType'
         lodgersNumber:
           type: integer
           example: 10
         unitsNumber:
           type: integer
-          example: 2
+          example: 1
+        comments:
+          type: string
+          example: 'שולם'
+          
+
+    NightNumberOptions:
+       type: object
+       description: describe the night index in the  range dates
+       properties:
+        date: 
+          type: string
+          format: date
+          example: '2021-09-23'
+        nightNumber:
+          type: integer
+          description: describe the 
+          example: 1
+        nightNumberValue:
+          type: string
+          example: לילה 1
+        selected: 
+          type : boolean
+          example: true
+          
+
     BaseCustomer:
       required:
       - id
@@ -1355,22 +1455,22 @@ components:
           type: integer
           nullable: true
           example: 15
-    PaginationSpecParams:
-      type: object
-      properties:
-        pageIndex:
-          type: integer
-          example: 1
-        pageSize:
-          type: integer
-          example: 3
-        sort:
-          type: string
-          example: ""
-        search:
-          type: string
-          nullable: true
-          example: dan
+    # PaginationSpecParams:
+    #   type: object
+    #   properties:
+    #     pageIndex:
+    #       type: integer
+    #       example: 1
+    #     pageSize:
+    #       type: integer
+    #       example: 3
+    #     sort:
+    #       type: string
+    #       example: ""
+    #     search:
+    #       type: string
+    #       nullable: true
+    #       example: dan
     TripInfo:
       type: object
       properties:
@@ -1387,7 +1487,7 @@ components:
         ageGroup:
           $ref: '#/components/schemas/AgeGroup'
         attribute:
-          $ref: '#/components/schemas/Attribute'
+          $ref: '#/components/schemas/TripAttribute'
         areaTrip:
           $ref: '#/components/schemas/Area'
         budget:
@@ -1583,7 +1683,7 @@ components:
           type: string
           format: date-time
         attribute:
-          $ref: '#/components/schemas/Attribute'
+          $ref: '#/components/schemas/TripAttribute'
         activity:
           $ref: '#/components/schemas/ActivityType'
         budget:
@@ -1667,7 +1767,7 @@ components:
           type: string
           nullable: true
           example: מבוגרים
-    Attribute:
+    TripAttribute:
       type: object
       properties:
         id:
@@ -1885,20 +1985,21 @@ components:
         userNameEng:
           type: string
           example: kkmm
-    CustomerPagination:
-      type: object
-      properties:
-        pageIndex:
-          type: integer
-        pageSize:
-          type: integer
-        count:
-          type: integer
-        data:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/Customer'
+
+    # CustomerPagination:
+    #   type: object
+    #   properties:
+    #     pageIndex:
+    #       type: integer
+    #     pageSize:
+    #       type: integer
+    #     count:
+    #       type: integer
+    #     data:
+    #       type: array
+    #       nullable: true
+    #       items:
+    #         $ref: '#/components/schemas/Customer'
     Charuz:
       type: object
       properties:

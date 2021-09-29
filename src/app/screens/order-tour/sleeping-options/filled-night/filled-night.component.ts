@@ -1,25 +1,32 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { AccommodationType, ParticipantType } from 'src/app/open-api';
 import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 
+export interface lodgingPerDay{
+  accomodationType: AccommodationType;   
+  participant: ParticipantType;
+  lodgersNumber: number;
+  unitsNumber: number;
+  comments: string;
+}
 
-      //  accomodationTypeId: new FormControl(null, [Validators.required]),
-      // accomodationTypeName: new FormControl(null, [Validators.required]),
-      // date: new FormControl(null, [Validators.required]),
-      // participantId: new FormControl(null, [Validators.required]),
-      // participantName: new FormControl(null, [Validators.required]),
-      // lodgersNumber: new FormControl(null, [Validators.required]),
-      // unitsNumber: new FormControl(null, [Validators.required]),
-      //  comments: new FormControl(null, [Validators.required]),
-
-export interface FilledNight {
+export interface FilledNight1 {
   sleepingPlace: string;
-  nightsCount: string | any;
+  nightsCount1: string | any;
   saveFor: string;
   peopleCount: string;
   amount: string;
   comments: string;
   optionsArr: any[];
 }
+
+export interface FilledNight {
+  nightsCount: any;
+  lodgingPerDay: lodgingPerDay[]
+}
+
+
+
 @Component({
   selector: 'app-filled-night',
   templateUrl: './filled-night.component.html',
@@ -56,6 +63,7 @@ export class FilledNightComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.nightsCountForDisplay = this.arrangeNightCountForDisplay();
     this.datesForDisplay = this.arrangeDatesForDisplay();
+    console.log('filledNightOptions is :', this.filledNightOptions);
   }
 
   ngOnChanges(changes: SimpleChanges) {

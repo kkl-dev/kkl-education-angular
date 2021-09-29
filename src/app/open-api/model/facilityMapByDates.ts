@@ -9,15 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Order } from './order';
-import { OrderItem } from './orderItem';
+import { LodgingGISFacility } from './lodgingGISFacility';
 
 
-export interface OrderModel { 
-    order?: Order;
-    listItems?: Array<OrderItem> | null;
-    totalPayCustomer?: number | null;
-    totalPaySupplier?: number | null;
-    totalPayAfterKklSubsidy?: number | null;
+/**
+ * map object received from the server (for the GIS map)
+ */
+export interface FacilityMapByDates { 
+    date?: string;
+    lodgingFacilityList?: Array<LodgingGISFacility>;
 }
 
