@@ -25,12 +25,13 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public editMode: boolean;
 
-  private clientFormGroup: FormGroup;
+  public formGroup: FormGroup;
 
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
 
   constructor(
+    private formService: FormService,
     private squadClientService: SquadClientService,
     private squadAssembleService: SquadAssembleService
   ) {}
@@ -41,6 +42,9 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.subscribeToEditMode();
     this.subscribeToClientData();
     this.$saveMode = this.squadAssembleService.getSaveModeObs();
+
+    this.formGroup = this.formService.setFormGroup(this.group);
+    console.log(this.formGroup);
   }
 
   ngOnDestroy(): void {
@@ -79,12 +83,14 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   private toggleFormState(): void {
     this.editMode
-      ? this.clientFormGroup.enable()
-      : this.clientFormGroup.disable();
+      ? this.formGroup.controls.contact.enable()
+      : this.formGroup.controls.contact.disable();
   }
 
   private updateClientForm(value?: string): void {
-    this.clientFormGroup.patchValue({ fullName: value || ' שלום אברהם' });
+    this.formGroup.controls.contact.patchValue({
+      fullName: value || ' שלום אברהם',
+    });
   }
 
   // EVENTS METHOS SECTION
@@ -95,17 +101,14 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.toggleFormState();
   }
 
-  public registerToClient(formGroup: FormGroup) {
-    this.clientFormGroup = formGroup;
-  }
-
   public onEdit(): void {
     this.squadClientService.emitEditMode(true);
     this.squadAssembleService.emitSaveMode(true);
     this.toggleFormState();
   }
 
-  public onCLear() {
+  public onClear() {
     this.squadAssembleService.emitSaveMode(false);
+    this.formGroup.controls.contact.disable();
   }
 }

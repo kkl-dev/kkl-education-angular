@@ -1,6 +1,6 @@
 <div fxFill fxLayout="row" fxLayoutAlign="center center" dir="rtl">
-  <div fxFlex="80" fxLayout="column" fxLayoutAlign=" center">
-    <div fxFlex="15" class="form-title">
+  <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
+    <div fxFlex="10" class="form-title">
       <app-form-header [slots]="{ newClient}" slot="newClient">
         <div title fxLayout="row" fxLayoutAlign="start center">
           <app-typography color="primary" bold="600" size="16">
@@ -13,6 +13,7 @@
     <div class="form-autocomplete">
       <app-form-autocomplete
         [group]="clientQuestions.group"
+        [formGroup]="formGroup.controls.client"
       ></app-form-autocomplete>
     </div>
 
@@ -32,7 +33,7 @@
         content
         [cols]="contactQuestions.cols"
         [questions]="contactQuestions.group.questions"
-        (register)="registerToClient($event)"
+        [formGroup]="formGroup.controls.contact"
       >
       </app-form-container>
     </div>
@@ -40,20 +41,21 @@
     <div class="form-autocomplete">
       <app-form-autocomplete
         [group]="payerQuestions.group"
+        [formGroup]="formGroup.controls.payer"
       ></app-form-autocomplete>
     </div>
   </div>
 
   <ng-template #newClient let-group="group" let-formGroup="formGroup">
-    <div fxLayout="row" fxLayoutAlign="end">
-      <button
-        mat-button
-        color="primary"
-        (click)="onAddClient()"
-        disableRipple="true"
-      >
+    <div
+      fxLayout="row"
+      fxLayoutAlign="end center"
+      (click)="onAddClient()"
+      class="button"
+    >
+      <app-typography color="primary" class="underline">
         לקוח חדש
-      </button>
+      </app-typography>
     </div>
   </ng-template>
 
@@ -77,22 +79,13 @@
       </div>
 
       <div
-        class="clear-container"
+        class="clear-container underline button"
         *ngIf="$saveMode | async"
         fxLayout="row"
-        fxLayoutAlign="end"
+        fxLayoutAlign="end center"
+        (click)="onClear()"
       >
-        <app-icon scale="0.8" color="primary" key="clear" type="mat"></app-icon>
-        <button
-          type="submit"
-          disableRipple="true"
-          (click)="onClear()"
-          mat-button
-          color="primary"
-          class="mat-elevation-z0"
-        >
-          בטל
-        </button>
+        <app-typography color="primary"> X בטל </app-typography>
       </div>
     </div>
   </ng-template>

@@ -13,19 +13,21 @@ import { QuestionBase } from '../logic/question-base';
 })
 export class FormAutocompleteComponent implements OnInit {
   @Input() group: QuestionGroup;
+  @Input() public formGroup: FormGroup = null;
 
-  public formGroup: FormGroup;
   public list: string[] = [];
 
   constructor(
     private formService: FormService,
     private squadClientService: SquadClientService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.formGroup = this.formService.setFormGroup({
-      questions: this.group.questions,
-    });
+    this.formGroup =
+      this.formGroup ||
+      this.formService.setFormGroup({
+        questions: this.group.questions,
+      });
   }
 
   public onAutocomplete(control: FormControl) {
@@ -36,15 +38,12 @@ export class FormAutocompleteComponent implements OnInit {
     // TODO select server logic
   }
 
-
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
-
     // TODO get client from server logic
-    this.squadClientService.emitClientSelected(event.option.value)
-    this.list.push(event.option.value)
+    this.squadClientService.emitClientSelected(event.option.value);
+    this.list.push(event.option.value);
   }
   public onDelete() {
     // TODO delete server logic
-
   }
 }

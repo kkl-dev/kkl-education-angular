@@ -95,7 +95,6 @@ export class FormInputComponent implements OnInit {
   }
 
   public onSelectChange() {
-    this.formService.onChangeSelect.next(true);
     this.select.emit(this.control)
   }
 
