@@ -1,4 +1,4 @@
-<div fxFill fxLayout="row" fxLayoutAlign="center center" dir="rtl">
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
   <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
     <div fxFlex="10" class="form-title">
       <app-form-header [slots]="{ gender}" [slot]="group.header.slot">
@@ -19,7 +19,7 @@
       >
       </app-form-container>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="5">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="5" dir="rtl">
       <ng-container *ngFor="let item of list; let i = index">
         <div fxFlex="30">
           <app-typography size="14" class="label-text" [bold]="500">
@@ -51,7 +51,7 @@
 <ng-template #participants let-group="group" let-formGroup="formGroup">
   <mat-grid-list cols="5" rowHeight="2vh">
     <mat-grid-tile colspan="5">
-      <div>
+      <div  dir="rtl">
         <app-typography [bold]="600">
           {{ group.label }}
         </app-typography>
@@ -78,7 +78,7 @@
 <ng-template #instructors let-group="group" let-formGroup="formGroup">
   <mat-grid-list cols="5" rowHeight="2vh">
     <mat-grid-tile colspan="5">
-      <div>
+      <div  dir="rtl">
         <app-typography [bold]="600">
           {{ group.label }}
         </app-typography>
@@ -105,7 +105,7 @@
 <ng-template #chaperones let-group="group" let-formGroup="formGroup">
   <mat-grid-list cols="5" rowHeight="2vh">
     <mat-grid-tile colspan="5">
-      <div>
+      <div  dir="rtl">
         <app-typography [bold]="600">
           {{ group.label }}
         </app-typography>
@@ -132,7 +132,7 @@
 <ng-template #medics let-group="group" let-formGroup="formGroup">
   <mat-grid-list cols="5" rowHeight="2vh">
     <mat-grid-tile colspan="5">
-      <div>
+      <div  dir="rtl">
         <app-typography [bold]="600">
           {{ group.label }}
         </app-typography>

@@ -1,6 +1,6 @@
 <div class="form">
   <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="formGroup">
-    <mat-grid-list dir="rtl" [cols]="group?.cols || cols || 1" rowHeight="2vh" [gutterSize]="gutter">
+    <mat-grid-list [cols]="group?.cols || cols || 1" rowHeight="2vh" [gutterSize]="gutter">
       <ng-container *ngFor="let question of group?.questions || questions">
         <mat-grid-tile *ngIf="group?.hasButton || hasButton" colspan="1" [rowspan]="question.rows || 5">
           <ng-container *ngTemplateOutlet="slots?.topButton"></ng-container>

@@ -57,7 +57,7 @@ export class SquadClientService {
               ],
             },
           }),
-        ],
+        ].reverse(),
       },
     }),
 
@@ -133,7 +133,7 @@ export class SquadClientService {
               ],
             },
           }),
-        ],
+        ].reverse(),
       },
     }),
   ];

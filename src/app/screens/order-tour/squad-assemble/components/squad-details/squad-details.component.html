@@ -1,32 +1,39 @@
-<div fxFill fxLayout="row" fxLayoutAlign="center center" dir="rtl">
-
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
   <mat-accordion>
-    <app-expend-panel  variant="form" [expanded]="expend">
-      <div title fxLayout="row" fxLayoutAlign="space-between center" class="title">
-
+    <app-expend-panel variant="form" [expanded]="expend">
+      <div
+        title
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        class="title"
+      >
         <app-typography color="primary" bold="600" size="16">
-          {{detailsGroup.header.label}}
+          {{ detailsGroup.header.label }}
         </app-typography>
-        <!-- <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon> -->
-
       </div>
-      <app-form-container content [cols]="detailsGroup.cols" [questions]="detailsGroup.questions">
+      <app-form-container
+        content
+        [cols]="detailsGroup.cols"
+        [questions]="detailsGroup.questions"
+      >
       </app-form-container>
     </app-expend-panel>
 
-    <app-expend-panel  variant="form" [expanded]="!expend">
+    <app-expend-panel variant="form" [expanded]="!expend">
       <div title fxLayout="row" fxLayoutAlign="space-between center">
-
         <app-typography color="primary" bold="600" size="16">
-          {{budgetGroup.header.label}}
+          {{ budgetGroup.header.label }}
         </app-typography>
         <app-typography size="16">
-          {{budgetKKL| currency : 'ILS'}}
+          {{ budgetKKL | currency: "ILS" }}
         </app-typography>
-        <!-- <app-icon type="mat" key="expand_more" color="primary" scale="2"></app-icon> -->
-
       </div>
-      <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}">
+      <app-form-container
+        content
+        [cols]="budgetGroup.cols"
+        [questions]="budgetGroup.questions"
+        [slots]="{location}"
+      >
       </app-form-container>
     </app-expend-panel>
   </mat-accordion>
