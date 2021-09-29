@@ -115,8 +115,6 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
         selected: false
       });
       newDate = new Date(date1.setDate(date1.getDate() + 1));
-=======
->>>>>>> 06f2f9aa110d0062e688974f94ebd8d70e8399f5
     }
   
   }
