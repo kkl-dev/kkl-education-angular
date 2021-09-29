@@ -1,10 +1,7 @@
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Injectable } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +15,11 @@ export class SquadDetailsService {
       type: 'select',
       inputProps: {
         options: [
-          { key: 'פרומלי', value: 'פרומלי' },
-          { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
-          { key: 'מעוף', value: 'מעוף' },
-          { key: 'חו"ל', value: 'חו"ל' },
-          { key: 'הנהלת אגף', value: 'הנהלת אגף' },
+          { label: 'פרומלי', value: 'פרומלי' },
+          { label: 'בלתי פורמלי', value: 'בלתי פורמלי' },
+          { label: 'מעוף', value: 'מעוף' },
+          { label: 'חו"ל', value: 'חו"ל' },
+          { label: 'הנהלת אגף', value: 'הנהלת אגף' },
         ],
       },
     }),
@@ -32,8 +29,8 @@ export class SquadDetailsService {
       type: 'select',
       inputProps: {
         options: [
-          { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
-          { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
+          { label: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
+          { label: 'מחזון להגשמה', value: 'מחזון להגשמה' },
         ],
       },
     }),
@@ -43,8 +40,8 @@ export class SquadDetailsService {
       type: 'select',
       inputProps: {
         options: [
-          { key: 'ישראל', value: 'ישראל' },
-          { key: 'חו"ל', value: 'חו"ל' },
+          { label: 'ישראל', value: 'ישראל' },
+          { label: 'חו"ל', value: 'חו"ל' },
         ],
       },
     }),
@@ -54,8 +51,8 @@ export class SquadDetailsService {
       type: 'select',
       inputProps: {
         options: [
-          { key: 'פנים', value: 'פנים' },
-          { key: 'חוץ', value: 'חוץ' },
+          { label: 'פנים', value: 'פנים' },
+          { label: 'חוץ', value: 'חוץ' },
         ],
       },
     }),

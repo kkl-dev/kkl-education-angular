@@ -26,7 +26,7 @@ export class SquadGroupService {
       rows: 4,
     }),
   ];
-  
+
   public mixedQuestions: QuestionBase<string | number>[] = [
     new QuestionSelect({
       key: 'age',
@@ -36,10 +36,10 @@ export class SquadGroupService {
       label: 'קבוצת גיל',
       inputProps: {
         options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
+          { label: '1', value: '1' },
+          { label: 'עוד לקוח', value: '10+' },
+          { label: 'לקוח מספר שלוש', value: '20+' },
+          { label: 'לקוח מספר ארבע', value: '30+' },
         ],
       },
     }),
@@ -88,10 +88,10 @@ export class SquadGroupService {
       label: 'קבוצת גיל',
       inputProps: {
         options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
+          { label: '1', value: '1' },
+          { label: 'עוד לקוח', value: '10+' },
+          { label: 'לקוח מספר שלוש', value: '20+' },
+          { label: 'לקוח מספר ארבע', value: '30+' },
         ],
       },
     }),

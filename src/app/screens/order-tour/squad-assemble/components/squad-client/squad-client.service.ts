@@ -36,10 +36,10 @@ export class SquadClientService {
             label: 'הכול',
             inputProps: {
               options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { label: 'שם נוסף', value: 'שם נוסף' },
+                { label: 'עוד לקוח', value: 'עוד לקוח' },
+                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
               ],
             },
           }),
@@ -51,10 +51,9 @@ export class SquadClientService {
             validations: [Validators.required],
             inputProps: {
               options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { value: '521829121', label: '521829121 בית ספר תמיר' },
+                { value: '320382983', label: '320382983 מתנס אבן יהודה' },
+                { value: '428948934', label: '428948934 הגימנסיה הריאלית' },
               ],
             },
           }),
@@ -111,10 +110,10 @@ export class SquadClientService {
             label: 'הכול',
             inputProps: {
               options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { label: 'שם נוסף', value: 'שם נוסף' },
+                { label: 'עוד לקוח', value: 'עוד לקוח' },
+                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
               ],
             },
           }),
@@ -127,10 +126,10 @@ export class SquadClientService {
             validations: [Validators.required],
             inputProps: {
               options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { label: 'שם נוסף', value: 'שם נוסף' },
+                { label: 'עוד לקוח', value: 'עוד לקוח' },
+                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
               ],
             },
           }),
