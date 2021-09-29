@@ -78,7 +78,6 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
     if (changes.valuesForEdit.currentValue !== undefined) {
       this.updateItem(changes.valuesForEdit.currentValue);
       // console
-<<<<<<< HEAD
     }
   }
 
