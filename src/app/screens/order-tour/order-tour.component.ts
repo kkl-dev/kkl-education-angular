@@ -40,7 +40,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.getActiveStep();
     this.setActiveStep()
 
-    
+
   }
 
   ngAfterViewInit() {
@@ -58,7 +58,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // method to set initiel steps array
+  // method to set initial steps array
   private setOrderTourSteps() {
     this.steps = this.orderTourService.getSteps()
   }

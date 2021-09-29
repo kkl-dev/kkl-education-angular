@@ -6,43 +6,45 @@ import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { FormHeader } from '../squad-group/squad-group.component';
 import { Subject, Observable, Subscription } from 'rxjs';
+import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 @Component({
   selector: 'app-squad-client',
   templateUrl: './squad-client.component.html',
-  styleUrls: ['./squad-client.component.scss']
+  styleUrls: ['./squad-client.component.scss'],
 })
 export class SquadClientComponent implements OnInit, OnDestroy {
   @Input() public group: QuestionGroup;
 
-  public clientQuestions: QuestionBase<string | number | Date>[];
-  public contactQuestions: QuestionBase<string | number | Date>;
+  public clientQuestions: QuestionBase<string>;
+  public contactQuestions: QuestionBase<string>;
+  public payerQuestions: QuestionBase<string>;
 
   public $questions: Subject<QuestionBase<string | number | Date>[]>;
+  public $saveMode: Observable<boolean>;
 
   public editMode: boolean;
 
-  private contactFormGroup: FormGroup
+  public formGroup: FormGroup;
 
-  private header: FormHeader = {
-    label: 'איש קשר',
-    slot: 'button',
-  };
-
-  private unsubscribeToEdit: Subscription
-  private unsubscribeToClient: Subscription
+  private unsubscribeToEdit: Subscription;
+  private unsubscribeToClient: Subscription;
 
   constructor(
-    private squadClientService: SquadClientService
-
-  ) { }
+    private formService: FormService,
+    private squadClientService: SquadClientService,
+    private squadAssembleService: SquadAssembleService
+  ) {}
 
   ngOnInit(): void {
+    this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
+    this.setQuestions();
+    this.subscribeToEditMode();
+    this.subscribeToClientData();
+    this.$saveMode = this.squadAssembleService.getSaveModeObs();
 
-    this.$questions = new Subject<QuestionBase<string | number | Date>[]>()
-    this.setClientQuestions()
-    this.subscribeToEditMode()
-    this.subscribeToClientData()
+    this.formGroup = this.formService.setFormGroup(this.group);
+    console.log(this.formGroup);
   }
 
   ngOnDestroy(): void {
@@ -50,66 +52,63 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.unsubscribeToClient.unsubscribe();
   }
 
-  private setClientQuestions(): void {
-    this.contactQuestions = this.group.questions.pop();
-    this.group.questions = this.group.questions.filter((question: QuestionBase<string>) => question.key !== 'contect');
+  private findQuestions(key: string): QuestionBase<string> {
+    return this.group.questions.find(
+      (question: QuestionBase<string>) => question.key == key
+    );
   }
 
+  private setQuestions() {
+    this.clientQuestions = this.findQuestions('client');
+    this.contactQuestions = this.findQuestions('contact');
+    this.payerQuestions = this.findQuestions('payer');
+  }
 
   private subscribeToEditMode(): void {
-    this.unsubscribeToEdit = this.squadClientService.getEditModeObs().subscribe(
-      (mode: boolean) => {
+    this.unsubscribeToEdit = this.squadClientService
+      .getEditModeObs()
+      .subscribe((mode: boolean) => {
         this.editMode = mode;
-      }
-    )
+      });
   }
 
   private subscribeToClientData(): void {
-    this.unsubscribeToClient = this.squadClientService.getClientObs().subscribe(
-      (value: any) => {
-        this.squadClientService.emitEditMode(true)
-        this.updateClientHeader()
-        this.updateClientForm(value)      }
-    )
+    this.unsubscribeToClient = this.squadClientService
+      .getClientObs()
+      .subscribe((value: any) => {
+        this.squadClientService.emitEditMode(true);
+        this.updateClientForm(value);
+      });
   }
 
   private toggleFormState(): void {
     this.editMode
-      ? this.contactFormGroup.enable()
-      : this.contactFormGroup.disable()
-  }
-
-  private updateClientHeader(): void {
-
-    this.editMode
-      ? (this.contactQuestions.group.header = this.header)
-      : (this.contactQuestions.group.header = null);
-
-    this.$questions.next([this.contactQuestions]);
+      ? this.formGroup.controls.contact.enable()
+      : this.formGroup.controls.contact.disable();
   }
 
   private updateClientForm(value?: string): void {
-    this.contactFormGroup.patchValue({ fullName: value || ' שלום אברהם' });
+    this.formGroup.controls.contact.patchValue({
+      fullName: value || ' שלום אברהם',
+    });
   }
-
 
   // EVENTS METHOS SECTION
 
   // method to add new editMode form
   public onAddClient(): void {
     this.editMode = !this.editMode;
-    this.toggleFormState()
-    this.updateClientHeader()
+    this.toggleFormState();
   }
-
-  public registerToClient(formGroup: FormGroup) {
-    this.contactFormGroup = formGroup
-  }
-
 
   public onEdit(): void {
-    this.squadClientService.emitEditMode(true)
-    this.toggleFormState()
+    this.squadClientService.emitEditMode(true);
+    this.squadAssembleService.emitSaveMode(true);
+    this.toggleFormState();
   }
 
+  public onClear() {
+    this.squadAssembleService.emitSaveMode(false);
+    this.formGroup.controls.contact.disable();
+  }
 }

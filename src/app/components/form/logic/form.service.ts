@@ -17,25 +17,10 @@ export interface FormTemplate {
 })
 export class FormService {
 
-  public onChangeSelect = new Subject<boolean>();
-
-  public id: number;
-  public formGroup: FormGroup;
-
   constructor(private fb: FormBuilder) {
-    this.id = this.setId();
   }
 
-  private setId(): number {
-    return Math.random() * 10000;
-  }
 
-  private errorsMessage = {
-    required: (key: string): string => `${key} is required`,
-    pattern: (key: string): string => `${key} is not in  valid format`,
-    'string.empty': (key: string): string => `${key} is required`,
-    'number.base': (key: string): string => `${key} must be a number`,
-  };
 
   private setGroup(
     questions: QuestionBase<string | Date | number | QuestionGroup>[]

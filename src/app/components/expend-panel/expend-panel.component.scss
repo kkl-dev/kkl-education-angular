@@ -31,6 +31,7 @@ mat-expansion-panel {
       align-items: end;
       height: 40px !important;
       border-bottom: 1px solid color(primary);
+      margin-bottom: spacing(1);
 
       &:hover {
         background-color: color(paper) !important;

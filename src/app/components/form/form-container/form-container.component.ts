@@ -20,7 +20,7 @@ import { QuestionGroup } from '../logic/question-group';
 export class FormContainerComponent implements OnInit {
   public form: FormGroup;
 
-  @Input() formGroup: FormGroup;
+  @Input() formGroup: FormGroup = null;
   @Input() group: QuestionGroup;
   @Input() questions: QuestionBase<string | number | Date>[];
   @Input() $questions: Observable<QuestionBase<string | number | Date>[]>;

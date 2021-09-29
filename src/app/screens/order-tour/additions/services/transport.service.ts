@@ -19,10 +19,10 @@ export class TransportService {
       validations: [Validators.required],
       inputProps: {
         options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
+          { label: 'solid', value: '12123' },
+          { label: 'great', value: '23' },
+          { label: 'good', value: '123' },
+          { label: 'unproven', value: '123123123' },
         ],
       },
     }),
@@ -32,12 +32,11 @@ export class TransportService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        // labelSize: 's5',
         options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
+          { label: 'solid', value: '12123' },
+          { label: 'great', value: '23' },
+          { label: 'good', value: '123' },
+          { label: 'unproven', value: '123123123' },
         ],
       },
     }),
@@ -95,10 +94,10 @@ export class TransportService {
       validations: [Validators.required],
       inputProps: {
         options: [
-          { key: 'יום 1', value: '1' },
-          { key: 'יום 2', value: '2' },
-          { key: 'יום 3', value: '3' },
-          { key: 'יום 4', value: '4' },
+          { label: 'יום 1', value: '1' },
+          { label: 'יום 2', value: '2' },
+          { label: 'יום 3', value: '3' },
+          { label: 'יום 4', value: '4' },
         ],
       },
     }),
@@ -141,10 +140,10 @@ export class TransportService {
       type: 'select',
       inputProps: {
         options: [
-          { key: 'יום 1', value: '1' },
-          { key: 'יום 2', value: '2' },
-          { key: 'יום 3', value: '3' },
-          { key: 'יום 4', value: '4' },
+          { label: 'יום 1', value: '1' },
+          { label: 'יום 2', value: '2' },
+          { label: 'יום 3', value: '3' },
+          { label: 'יום 4', value: '4' },
         ],
       },
     }),

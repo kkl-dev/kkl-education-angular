@@ -7,26 +7,27 @@ import { QuestionAutocomplete } from 'src/app/components/form/logic/question-aut
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SquadClientService {
-
-  private $editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private $editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   private $clientSelected: Subject<any> = new Subject<any>();
 
   public clientQuestions: QuestionBase<string>[] = [
-
     new QuestionBase({
-      key: 'wantedClient',
+      key: 'client',
       isGroup: true,
       fullWidth: true,
       cols: 3,
       rows: 6,
       type: 'autocomplete',
       group: {
-        key: 'wantedClient',
+        key: 'client',
         cols: 3,
         rows: 6,
         questions: [
@@ -36,10 +37,10 @@ export class SquadClientService {
             label: 'הכול',
             inputProps: {
               options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { label: 'שם נוסף', value: 'שם נוסף' },
+                { label: 'עוד לקוח', value: 'עוד לקוח' },
+                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
               ],
             },
           }),
@@ -51,54 +52,9 @@ export class SquadClientService {
             validations: [Validators.required],
             inputProps: {
               options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-        ],
-      },
-    }),
-    new QuestionBase({
-      key: 'payerPoll',
-      isGroup: true,
-      fullWidth: true,
-      cols: 3,
-      rows: 12,
-      type: 'autocomplete',
-      group: {
-        key: 'payerName',
-        cols: 3,
-        rows: 12,
-        questions: [
-          new QuestionSelect({
-            key: 'payerName',
-            type: 'select',
-            label: 'הכול',
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
-              ],
-            },
-          }),
-          new QuestionAutocomplete({
-            key: 'payerPoll',
-            label: 'לקוח משלם',
-            type: 'autocomplete',
-            cols: 2,
-            value: '',
-            validations: [Validators.required],
-            inputProps: {
-              options: [
-                { key: 'שם נוסף', value: 'שם נוסף' },
-                { key: 'עוד לקוח', value: 'עוד לקוח' },
-                { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { value: '521829121', label: '521829121 בית ספר תמיר' },
+                { value: '320382983', label: '320382983 מתנס אבן יהודה' },
+                { value: '428948934', label: '428948934 הגימנסיה הריאלית' },
               ],
             },
           }),
@@ -113,7 +69,7 @@ export class SquadClientService {
       rows: 14,
       group: {
         key: 'contact',
-        header: null,
+        header: { label: 'איש קשר', slot: 'button' },
         cols: 1,
         rows: 14,
         questions: [
@@ -137,26 +93,66 @@ export class SquadClientService {
         ],
       },
     }),
+    new QuestionBase({
+      key: 'payer',
+      isGroup: true,
+      fullWidth: true,
+      cols: 3,
+      rows: 12,
+      type: 'autocomplete',
+      group: {
+        key: 'payer',
+        cols: 3,
+        rows: 12,
+        questions: [
+          new QuestionSelect({
+            key: 'payerName',
+            type: 'select',
+            label: 'הכול',
+            inputProps: {
+              options: [
+                { label: 'שם נוסף', value: 'שם נוסף' },
+                { label: 'עוד לקוח', value: 'עוד לקוח' },
+                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
+          new QuestionAutocomplete({
+            key: 'payerPoll',
+            label: 'לקוח משלם',
+            type: 'autocomplete',
+            cols: 2,
+            value: '',
+            validations: [Validators.required],
+            inputProps: {
+              options: [
+                { label: 'שם נוסף', value: 'שם נוסף' },
+                { label: 'עוד לקוח', value: 'עוד לקוח' },
+                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+              ],
+            },
+          }),
+        ],
+      },
+    }),
   ];
 
-
-  constructor(
-    private formService: FormService
-  ) { }
+  constructor() {}
 
   public emitEditMode(value: boolean) {
-    this.$editMode.next(value)
+    this.$editMode.next(value);
   }
   public getEditModeObs(): Observable<boolean> {
-    return this.$editMode.asObservable()
+    return this.$editMode.asObservable();
   }
 
   public emitClientSelected(value: any) {
-    this.$clientSelected.next(value)
+    this.$clientSelected.next(value);
   }
 
   public getClientObs(): Observable<any> {
-    return this.$clientSelected.asObservable()
+    return this.$clientSelected.asObservable();
   }
-
 }

@@ -16,7 +16,7 @@ export class SquadBudgetService {
       rows: 4,
       label: 'תת סעיף תקציב הכנסות',
       inputProps: {
-        options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+        options: [{ label: 'לקוח מספר ארבע', value: '30+' }],
       },
     }),
     new QuestionSelect({
@@ -26,7 +26,7 @@ export class SquadBudgetService {
       rows: 4,
       label: 'תת סעיף תקציב הוצאות',
       inputProps: {
-        options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+        options: [{ label: 'לקוח מספר ארבע', value: '30+' }],
       },
     }),
     new QuestionBase({
@@ -46,7 +46,7 @@ export class SquadBudgetService {
             fullWidth: true,
             rows: 4,
             inputProps: {
-              options: [{ key: 'לקוח מספר ארבע', value: '30+' }],
+              options: [{ label: 'לקוח מספר ארבע', value: '30+' }],
             },
           }),
         ],

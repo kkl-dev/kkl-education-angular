@@ -8,8 +8,9 @@ app-form-header {
   width: 100%;
 }
 
-div.title {
+div.form-title {
   height: 40px !important;
+  margin-bottom: spacing(1);
 }
 
 .label-text {
@@ -24,3 +25,4 @@ div.title {
 div.list-item {
   width: fit-content;
 }
+

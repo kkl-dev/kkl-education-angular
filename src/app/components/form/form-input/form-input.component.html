@@ -18,7 +18,7 @@
       (selectionChange)="onSelectChange()" (openedChange)="validate()">
       <mat-option>{{ label }}</mat-option>
       <mat-option *ngFor="let option of options" [value]="option.value">
-        {{ option.key }}
+        {{ option.label }}
       </mat-option>
     </mat-select>
 
@@ -26,7 +26,7 @@
       <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" />
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
         <mat-option *ngFor="let option of options" [value]="option.value">
-          {{ option.key }}
+          {{ option.label }}
         </mat-option>
       </mat-autocomplete>
     </ng-container>

@@ -5,7 +5,6 @@ app-form-input,
 app-form-header,
 app-form-autocomplete,
 app-form-group,
-mat-accordion,
 div {
   height: 100%;
   width: 100%;
@@ -30,4 +29,21 @@ button.edit-button {
 
 div.edit-button-container {
   padding-bottom: spacing(1);
+}
+
+div.clear-button-container {
+  display: flex;
+}
+
+.underline {
+  border-bottom: 1px solid color(primary);
+}
+div.form-title {
+  margin-bottom: spacing(1);
+}
+
+div.button {
+  cursor: pointer;
+  margin-bottom: spacing(1);
+  height: 2rem !important;
 }

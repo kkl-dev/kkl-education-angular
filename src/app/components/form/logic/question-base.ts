@@ -3,7 +3,7 @@ import { FormHeader } from 'src/app/screens/order-tour/squad-assemble/components
 import { QuestionGroup } from './question-group';
 
 export interface SelectOption {
-  key: string;
+  label: string;
   value: string;
 }
 
