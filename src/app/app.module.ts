@@ -120,6 +120,7 @@ import { ActiveStateDirective } from './utilities/directivs/active-state.directi
 import { SizeDirective } from './utilities/directivs/size.directive';
 import { SquadDetailsComponent } from './screens/order-tour/squad-assemble/components/squad-details/squad-details.component';
 import { SquadBudgetComponent } from './screens/order-tour/squad-assemble/components/squad-budget/squad-budget.component';
+import { SquadNewClientComponent } from './screens/order-tour/squad-assemble/components/squad-new-client/squad-new-client.component';
 
 
 
@@ -229,12 +230,13 @@ FullCalendarModule.registerPlugins([
     ActiveStateDirective,
     SizeDirective,
     FilledNightFormComponent,
-    
+
     FormAutocompleteComponent,
     SquadClientComponent,
     SquadScheduleComponent,
     SquadDetailsComponent,
-    SquadBudgetComponent
+    SquadBudgetComponent,
+    SquadNewClientComponent
   ],
   imports: [
     BrowserModule,

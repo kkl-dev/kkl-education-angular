@@ -4,8 +4,6 @@ import { SquadAssembleService } from '../services/squad-assemble.service';
 
 interface SquadGroup {
   group: QuestionGroup;
-  hasBottom?: boolean;
-  bottomText?: string;
 }
 
 @Component({
@@ -15,9 +13,11 @@ interface SquadGroup {
 })
 export class SquadAssembleComponent implements OnInit {
   public squads: SquadGroup[];
+
+  public squadGroups: QuestionGroup[];
   public budgetGroup: QuestionGroup;
 
-  constructor(private squadAssembleService: SquadAssembleService) { }
+  constructor(private squadAssembleService: SquadAssembleService) {}
 
   ngOnInit(): void {
     this.squads = [
@@ -27,16 +27,21 @@ export class SquadAssembleComponent implements OnInit {
           header: { label: 'מועד ושם הטיול', slot: 'tourId' },
           questions: this.squadAssembleService.timeAndNameFormInputs,
         },
-        hasBottom: true,
       },
       {
         group: {
           key: 'client',
-          header: { label: 'לקוח', slot: 'client' },
-          questions: this.squadAssembleService.customerFormInputs,
-          cols: 3,
+          questions: this.squadAssembleService.newClientQuestions,
         },
       },
+      // {
+      //   group: {
+      //     key: 'client',
+      //     header: { label: 'לקוח', slot: 'client' },
+      //     questions: this.squadAssembleService.customerFormInputs,
+      //     cols: 3,
+      //   },
+      // },
       {
         group: {
           key: 'group',
@@ -51,7 +56,6 @@ export class SquadAssembleComponent implements OnInit {
           key: 'details',
           header: { label: 'פרטי הטיול', slot: '' },
           questions: this.squadAssembleService.tourDetailsFormInputs,
-
         },
         hasBottom: true,
       },

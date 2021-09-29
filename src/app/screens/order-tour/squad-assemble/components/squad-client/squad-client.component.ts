@@ -1,12 +1,11 @@
 import { FormGroup } from '@angular/forms';
-import { SquadClientService } from './squad-client.service';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
-import { FormHeader } from '../squad-group/squad-group.component';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
+import { SquadClientService } from './squad-client.service';
 
 @Component({
   selector: 'app-squad-client',
@@ -41,10 +40,9 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.setQuestions();
     this.subscribeToEditMode();
     this.subscribeToClientData();
-    this.$saveMode = this.squadAssembleService.getSaveModeObs();
 
+    this.$saveMode = this.squadAssembleService.getSaveModeObs();
     this.formGroup = this.formService.setFormGroup(this.group);
-    console.log(this.formGroup);
   }
 
   ngOnDestroy(): void {
@@ -93,12 +91,10 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     });
   }
 
-  // EVENTS METHOS SECTION
+  // EVENTS METHODS SECTION
 
   // method to add new editMode form
   public onAddClient(): void {
-    this.editMode = !this.editMode;
-    this.toggleFormState();
   }
 
   public onEdit(): void {

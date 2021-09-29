@@ -1,10 +1,9 @@
-import { SquadClientService } from './../../../screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { QuestionGroup } from '../logic/question-group';
-import { QuestionBase } from '../logic/question-base';
+import { SquadClientService } from 'src/app/screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
 
 @Component({
   selector: 'app-form-autocomplete',

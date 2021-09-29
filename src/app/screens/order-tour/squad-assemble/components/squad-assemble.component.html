@@ -2,13 +2,13 @@
   <div fxLayout="row" fxLayoutAlign="space-around start">
     <div *ngFor="let squad of squads; let i = index" fxFlex="25">
       <ng-container [ngSwitch]="squad.group.key">
-
         <ng-container *ngSwitchCase="'schedule'">
-          <app-squad-schedule [group]="squad.group" ></app-squad-schedule>
+          <app-squad-schedule [group]="squad.group"></app-squad-schedule>
         </ng-container>
 
         <ng-container *ngSwitchCase="'client'">
-          <app-squad-client [group]="squad.group"></app-squad-client>
+          <!-- <app-squad-client [group]="squad.group"></app-squad-client> -->
+          <app-squad-new-client [group]="squad.group" [questions]="squad.group.questions"></app-squad-new-client>
         </ng-container>
 
         <ng-container *ngSwitchCase="'group'">
@@ -16,7 +16,10 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="'details'">
-          <app-squad-details [detailsGroup]="squad.group" [budgetGroup]="budgetGroup"></app-squad-details>
+          <app-squad-details
+            [detailsGroup]="squad.group"
+            [budgetGroup]="budgetGroup"
+          ></app-squad-details>
         </ng-container>
 
         <div *ngIf="i !== squads.length - 1" class="divider"></div>

@@ -18,7 +18,7 @@ export class SquadClientService {
   );
   private $clientSelected: Subject<any> = new Subject<any>();
 
-  public clientQuestions: QuestionBase<string>[] = [
+  public questions: QuestionBase<string>[] = [
     new QuestionBase({
       key: 'client',
       isGroup: true,

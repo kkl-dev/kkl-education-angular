@@ -1,0 +1,26 @@
+<div fxFill fxLayout="row" fxLayoutAlign="center center" dir="rtl">
+  <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
+    <div *ngFor="let question of questions">
+      <div class="form-title">
+        <app-form-header [slots]="{ tourId}" slot="tourId">
+          <div title fxLayout="row" fxLayoutAlign="start center">
+            <app-typography color="primary" bold="600" size="16">
+              {{ question.group.header.label }}
+            </app-typography>
+          </div>
+        </app-form-header>
+      </div>
+
+      <div>
+        <app-form-container [cols]="question.group.cols" [questions]="question.group.questions">
+        </app-form-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- template components -->
+
+<ng-template #tourId>
+  <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
+</ng-template>
