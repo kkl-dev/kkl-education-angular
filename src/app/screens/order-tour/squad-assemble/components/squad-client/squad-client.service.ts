@@ -9,15 +9,15 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SquadClientService {
-
-  private $editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private $editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   private $clientSelected: Subject<any> = new Subject<any>();
 
   public clientQuestions: QuestionBase<string>[] = [
-
     new QuestionBase({
       key: 'wantedClient',
       isGroup: true,
@@ -113,7 +113,7 @@ export class SquadClientService {
       rows: 14,
       group: {
         key: 'contact',
-        header: null,
+        header: { label: 'איש קשר', slot: 'button' },
         cols: 1,
         rows: 14,
         questions: [
@@ -139,24 +139,20 @@ export class SquadClientService {
     }),
   ];
 
-
-  constructor(
-    private formService: FormService
-  ) { }
+  constructor(private formService: FormService) {}
 
   public emitEditMode(value: boolean) {
-    this.$editMode.next(value)
+    this.$editMode.next(value);
   }
   public getEditModeObs(): Observable<boolean> {
-    return this.$editMode.asObservable()
+    return this.$editMode.asObservable();
   }
 
   public emitClientSelected(value: any) {
-    this.$clientSelected.next(value)
+    this.$clientSelected.next(value);
   }
 
   public getClientObs(): Observable<any> {
-    return this.$clientSelected.asObservable()
+    return this.$clientSelected.asObservable();
   }
-
 }
