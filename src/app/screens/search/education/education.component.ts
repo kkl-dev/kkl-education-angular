@@ -57,6 +57,8 @@ export class EducationComponent implements OnInit {
 
   ngOnInit() {
     this.tripService.getLookupFieldForestCenters();
+    this.sleepingPlace = this.tripService.centerField.id;
+    if (this.tripService.dateObj !== undefined) { this.dateObj = this.tripService.dateObj };
   }
 
   selectChange(event: any) {
