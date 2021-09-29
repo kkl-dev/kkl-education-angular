@@ -121,6 +121,7 @@ import { SizeDirective } from './utilities/directivs/size.directive';
 import { SquadDetailsComponent } from './screens/order-tour/squad-assemble/components/squad-details/squad-details.component';
 import { SquadBudgetComponent } from './screens/order-tour/squad-assemble/components/squad-budget/squad-budget.component';
 import { SquadNewClientComponent } from './screens/order-tour/squad-assemble/components/squad-new-client/squad-new-client.component';
+import { SquadGroupGenderComponent } from './screens/order-tour/squad-assemble/components/squad-group-gender/squad-group-gender.component';
 
 
 
@@ -236,7 +237,8 @@ FullCalendarModule.registerPlugins([
     SquadScheduleComponent,
     SquadDetailsComponent,
     SquadBudgetComponent,
-    SquadNewClientComponent
+    SquadNewClientComponent,
+    SquadGroupGenderComponent
   ],
   imports: [
     BrowserModule,

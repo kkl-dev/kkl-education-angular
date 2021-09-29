@@ -35,6 +35,7 @@ export class SquadGroupComponent {
   ) { }
 
   ngOnInit(): void {
+    // this.onGenderChange()
   }
 
   // method to change squad assemble form
