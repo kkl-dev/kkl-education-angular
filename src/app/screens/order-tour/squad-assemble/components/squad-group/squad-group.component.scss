@@ -1,24 +1,17 @@
 @import "../../.././../../../styles.scss";
 
-mat-grid-list,
-mat-grid-tile,
 app-form-container,
 app-form-input,
 app-form-header,
-app-typography {
+app-squad-group-gender,
+div {
   height: 100%;
   width: 100%;
 }
 
-.row-height {
-  top: calc((4vh + 1px) * 11) !important;
-}
-.container {
-  padding-top: 70px;
-}
 button.gender-button {
-  height: 40px !important;
-  width: 40px !important;
+  height: 2rem !important;
+  width: 2rem !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,15 +24,6 @@ button.gender-button {
   }
 }
 
-.client-text {
-  cursor: pointer;
-}
-
-.label-text {
-  padding-left: spacing(1);
-}
-
-.divider {
-  display: flex;
-  justify-content: center;
+div.form-title {
+  margin-bottom: spacing(1);
 }

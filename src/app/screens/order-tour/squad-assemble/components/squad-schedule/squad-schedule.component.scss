@@ -1,0 +1,28 @@
+@import "../../.././../../../styles.scss";
+
+div,
+app-form-container,
+app-form-input,
+app-form-header {
+  height: 100%;
+  width: 100%;
+}
+
+div.form-title {
+  height: 40px !important;
+  margin-bottom: spacing(1);
+}
+
+.label-text {
+  padding-left: spacing(1);
+}
+
+.divider {
+  display: flex;
+  justify-content: center;
+}
+
+div.list-item {
+  width: fit-content;
+}
+

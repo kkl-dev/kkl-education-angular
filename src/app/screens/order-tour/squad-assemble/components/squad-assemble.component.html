@@ -1,14 +1,35 @@
 <div class="assemble-container">
-  <mat-grid-list cols="4" rowHeight="60vh">
-    <mat-grid-tile *ngFor="let squad of squads; let i = index">
-      <div class="form-container">
-        <app-squad-group [group]="squad.group" [hasBottom]="squad.hasBottom">
-        </app-squad-group>
-      </div>
-      <div *ngIf="i !== squads.length - 1" class="divider">
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+  <div fxLayout="row" fxLayoutAlign="space-around start">
+    <div *ngFor="let squad of squads; let i = index" fxFlex="25">
+      <ng-container [ngSwitch]="squad.key">
+        <ng-container *ngSwitchCase="'schedule'">
+          <app-squad-schedule [group]="squad"></app-squad-schedule>
+        </ng-container>
 
-<ng-template> </ng-template>
+        <ng-container *ngSwitchCase="'client'">
+          <app-squad-client [group]="squad"></app-squad-client>
+        </ng-container>
+        
+        <ng-container *ngSwitchCase="'newClient'">
+          <app-squad-new-client
+            [group]="squad"
+            [questions]="squad.questions"
+          ></app-squad-new-client>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'group'">
+          <app-squad-group [group]="squad"></app-squad-group>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'details'">
+          <app-squad-details
+            [detailsGroup]="squad"
+            [budgetGroup]="budgetGroup"
+          ></app-squad-details>
+        </ng-container>
+
+        <div *ngIf="i !== squads.length - 1" class="divider"></div>
+      </ng-container>
+    </div>
+  </div>
+</div>

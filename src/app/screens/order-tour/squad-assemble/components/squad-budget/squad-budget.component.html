@@ -1,0 +1,45 @@
+<mat-grid-list [cols]="group.cols" rowHeight="2vh" dir="rtl">
+  <mat-grid-tile>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <app-typography color="primary" bold="600">
+        {{ group.label }}
+      </app-typography>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile *ngFor="let question of group.questions" [colspan]="question.cols" [rowspan]="question.rows">
+    <app-form-input [control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
+      [disabled]="question.disabled" [split]="cols > question.cols" [type]="question.type" [label]="question.label"
+      [icon]="question.icon" [options]="question.inputProps?.options" [dateOptions]="question.inputProps?.dateOptions"
+      [controlType]="question.controlType">
+    </app-form-input>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="12">
+
+    <mat-list>
+      <mat-list-item fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of list">
+        <div mat-line>
+          <app-typography>
+            {{ item.label }} :
+          </app-typography>
+          <ng-container [ngSwitch]="item.type">
+            <app-typography *ngSwitchDefault [bold]="600">
+              {{ item.value }}
+            </app-typography>
+            <app-typography *ngSwitchCase="'number'" [bold]="600">
+              {{ item.value | number }}
+            </app-typography>
+          </ng-container>
+        </div>
+      </mat-list-item>
+      <mat-list-item fxLayout="row" fxLayoutAlign="start center">
+        <div mat-line (click)="onClick()">
+          <app-typography class="underline" color="primary">
+            שלח תזכורת לתקציב חדש
+          </app-typography>
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-grid-tile>
+
+</mat-grid-list>

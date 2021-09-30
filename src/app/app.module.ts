@@ -86,14 +86,20 @@ import { FlexCellComponent } from './components/grid/flex-cell/flex-cell.compone
 import { SquadAssembleComponent } from './screens/order-tour/squad-assemble/components/squad-assemble.component';
 import { SquadGroupComponent } from './screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 
+import { FormAutocompleteComponent } from './components/form/form-autocomplete/form-autocomplete.component';
+
+import { SquadClientComponent } from './screens/order-tour/squad-assemble/components/squad-client/squad-client.component';
+import { SquadScheduleComponent } from './screens/order-tour/squad-assemble/components/squad-schedule/squad-schedule.component';
 import { SleepingOptionsComponent } from './screens/order-tour/sleeping-options/sleeping-options.component';
 import { SleepingOptionsFormComponent } from './screens/order-tour/sleeping-options/sleeping-options-form/sleeping-options-form.component';
 import { SleepingOptionsByDayComponent } from './components/sleeping-options-by-day/sleeping-options-by-day.component';
-import { FilledNightComponent } from './screens/order-tour/sleeping-options/filled-night/filled-night.component';
 
 import { FacilitiesComponent } from './screens/order-tour/facilities/facilities.component';
 
 import { TimelineCardComponent } from './screens/order-tour/facilities/timeline-card/timeline-card.component';
+
+import { FilledNightComponent } from './screens/order-tour/sleeping-options/filled-night/filled-night.component';
+import { FilledNightFormComponent } from './screens/order-tour/sleeping-options/filled-night-form/filled-night-form.component';
 
 import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
 import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
@@ -112,7 +118,12 @@ import { IconCardComponent } from './components/icon-card/icon-card.component';
 import { CalendarComponent } from './screens/order-tour/facilities/calendar/calendar.component';
 import { ActiveStateDirective } from './utilities/directivs/active-state.directive';
 import { SizeDirective } from './utilities/directivs/size.directive';
-import { FilledNightFormComponent } from './screens/order-tour/sleeping-options/filled-night-form/filled-night-form.component';
+import { SquadDetailsComponent } from './screens/order-tour/squad-assemble/components/squad-details/squad-details.component';
+import { SquadBudgetComponent } from './screens/order-tour/squad-assemble/components/squad-budget/squad-budget.component';
+import { SquadNewClientComponent } from './screens/order-tour/squad-assemble/components/squad-new-client/squad-new-client.component';
+import { SquadGroupGenderComponent } from './screens/order-tour/squad-assemble/components/squad-group-gender/squad-group-gender.component';
+
+
 
 
 FullCalendarModule.registerPlugins([
@@ -219,7 +230,15 @@ FullCalendarModule.registerPlugins([
     CalendarComponent,
     ActiveStateDirective,
     SizeDirective,
-    FilledNightFormComponent
+    FilledNightFormComponent,
+
+    FormAutocompleteComponent,
+    SquadClientComponent,
+    SquadScheduleComponent,
+    SquadDetailsComponent,
+    SquadBudgetComponent,
+    SquadNewClientComponent,
+    SquadGroupGenderComponent
   ],
   imports: [
     BrowserModule,
@@ -234,7 +253,7 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     AirbnbCalendarModule,
     ApiModule,
-    FullCalendarModule, 
+    FullCalendarModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

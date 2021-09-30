@@ -1,0 +1,27 @@
+@import "../../.././../../../styles.scss";
+
+div,
+app-form-container,
+app-form-input,
+app-form-header {
+  height: 100%;
+  width: 100%;
+}
+
+div.clear-button-container {
+  display: flex;
+}
+
+.underline {
+  border-bottom: 1px solid color(primary);
+}
+
+div.form-title {
+  margin-bottom: spacing(1);
+}
+
+div.button {
+  cursor: pointer;
+  margin-bottom: spacing(1);
+  height: 2rem !important;
+}

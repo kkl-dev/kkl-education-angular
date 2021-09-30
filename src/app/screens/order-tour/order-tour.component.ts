@@ -10,16 +10,16 @@ import { StepModel } from 'src/app/utilities/models/step.model';
   selector: 'app-order-tour',
   templateUrl: './order-tour.component.html',
   styleUrls: ['./order-tour.component.scss'],
-  providers: [StepperService]
+  providers: [StepperService],
 })
 export class OrderTourComponent implements OnInit, AfterViewInit {
-
   public activeStep: number;
 
   public $activeStep = new Subject<number>();
 
   public nextPage: string = 'education/search';
   public prevPage: string = 'education/results';
+  public hasSave: boolean;
 
   public currentRoute: string;
   public sleepStatus: boolean;
@@ -30,21 +30,18 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private orderTourService: OrderTourService
-  ) { }
-
+  ) {}
 
   ngOnInit(): void {
-    this.setOrderTourSteps()
+    this.setOrderTourSteps();
     this.getCurrentUrl();
     this.subscribeToCurrentRoute();
     this.getActiveStep();
-    this.setActiveStep()
-
-    
+    this.setActiveStep();
+    this.subscribeToNewClient()
   }
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   // SUBSCRIBE SECTION
   private subscribeToCurrentRoute() {
@@ -53,20 +50,26 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       .subscribe((event: any) => {
         this.formatUrl(event.url);
         this.handleSleepStatus();
-        this.getActiveStep()
-        this.setActiveStep()
+        this.getActiveStep();
+        this.setActiveStep();
       });
   }
 
-  // method to set initiel steps array
+  private subscribeToNewClient() {
+    this.orderTourService.getNewClientObs().subscribe((value: boolean) => {
+      this.hasSave = value;
+    });
+  }
+
+  // method to set initial steps array
   private setOrderTourSteps() {
-    this.steps = this.orderTourService.getSteps()
+    this.steps = this.orderTourService.getSteps();
   }
 
   // step logic
   private updateStepsStatus(step: StepModel) {
-    this.orderTourService.updateStepStatus(step, 'label')
-    this.steps = this.orderTourService.getSteps()
+    this.orderTourService.updateStepStatus(step, 'label');
+    this.steps = this.orderTourService.getSteps();
   }
 
   private handleSleepStatus() {
@@ -80,9 +83,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   }
 
   private setActiveStep() {
-    this.updateStepsStatus(this.currentStep)
+    this.updateStepsStatus(this.currentStep);
   }
-
 
   // route url logic
   private getCurrentUrl() {
@@ -94,19 +96,17 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.currentRoute = path[3];
   }
 
-
-  // LISTEN TO OUTPUE EVENTS
+  // LISTEN TO OUTPUT EVENTS
   public changeActiveStep(newActiveStep: number): void {
     this.activeStep = newActiveStep;
   }
 
   public onChangeStep(step: StepModel) {
     this.router.navigateByUrl(`/education/order-tour/${step.path}`);
-    this.updateStepsStatus(step)
+    this.updateStepsStatus(step);
   }
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
     this.activeStep = +newActiveStep;
   }
-
 }
