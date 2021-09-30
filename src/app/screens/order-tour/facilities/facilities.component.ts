@@ -48,19 +48,19 @@ export class FacilitiesComponent implements OnInit {
       key: 'durationOfActivity',
       label: 'משך פעילות',
       validations: [Validators.required],
-      inputProps: { options: [{ key: '', value: '' }] }
+      inputProps: { options: [{ label: '', value: '' }] }
     }),
     new QuestionSelect({
       key: 'area',
       label: 'אזור',
       validations: [Validators.required],
-      inputProps: { options: [{ key: '', value: '' }] }
+      inputProps: { options: [{ label: '', value: '' }] }
     }),
     new QuestionSelect({
       key: 'typeOfActivity',
       label: 'סוג פעילות',
       validations: [Validators.required],
-      inputProps: { options: [{ key: '', value: '' }] }
+      inputProps: { options: [{ label: '', value: '' }] }
     }),
     new QuestionTextbox({
       key: 'search',

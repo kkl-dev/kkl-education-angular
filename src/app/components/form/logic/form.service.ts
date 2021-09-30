@@ -2,7 +2,7 @@ import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
 import { QuestionGroup } from './question-group';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 export interface FormTemplate {
   label?: string;
@@ -17,25 +17,10 @@ export interface FormTemplate {
 })
 export class FormService {
 
-  public onChangeSelect = new Subject<boolean>();
-
-  public id: number;
-  public formGroup: FormGroup;
-
   constructor(private fb: FormBuilder) {
-    this.id = this.setId();
   }
 
-  private setId(): number {
-    return Math.random() * 10000;
-  }
 
-  private errorsMessage = {
-    required: (key: string): string => `${key} is required`,
-    pattern: (key: string): string => `${key} is not in  valid format`,
-    'string.empty': (key: string): string => `${key} is required`,
-    'number.base': (key: string): string => `${key} must be a number`,
-  };
 
   private setGroup(
     questions: QuestionBase<string | Date | number | QuestionGroup>[]
@@ -99,9 +84,9 @@ export class FormService {
       });
       return this.fb.group(this.reduceArrayToObject(form));
     } else
-      return this.fb.group(
-        this.setForm(this.formatForm(formTemplate.questions))
-      );
+    return this.fb.group(
+      this.setForm(this.formatForm(formTemplate.questions))
+    );
   }
 
   // handle input error messages

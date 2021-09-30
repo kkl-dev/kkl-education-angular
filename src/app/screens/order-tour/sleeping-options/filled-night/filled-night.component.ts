@@ -3,12 +3,12 @@ import { SleepingServiceService } from 'src/app/utilities/services/sleeping-serv
 
 export interface FilledNight {
   sleepingPlace: string;
-  nightsCount: string;
+  nightsCount: string | any;
   saveFor: string;
-  peopleCount: string;
+  sleepingAmount: string;
   amount: string;
   comments: string;
-  date:string | Date;
+  optionsArr: any[];
 }
 @Component({
   selector: 'app-filled-night',
@@ -18,19 +18,76 @@ export interface FilledNight {
 export class FilledNightComponent implements OnInit {
   @Input() filledNight!: FilledNight;
   @Input() index: number;
+  @Input() filledNightOptions: any[];
   @Output() deleteFilledNight: EventEmitter<void> = new EventEmitter();
+  @Output() deleteFilledNightOption: EventEmitter<number> = new EventEmitter();
   @Output() editFilledNight: EventEmitter<FilledNight> = new EventEmitter();
+  @Output() editFilledNightOption: EventEmitter<any> = new EventEmitter();
 
-  constructor(private sleepingService:SleepingServiceService) {
-  } 
+  public nightsCountForDisplay: string;
+  public datesForDisplay: string;
+
+  constructor(private sleepingService: SleepingServiceService) {
+  }
 
   emitDeleteFilledNight(): void {
     this.deleteFilledNight.emit();
   }
+  public emitDeleteFilledNightOption(indexOfOption: number): void {
+    this.deleteFilledNightOption.emit(indexOfOption);
+  }
+  public emitEditFilledNightOption(indexOfOption?: number): void {
+    this.editFilledNightOption.emit(indexOfOption);
+  }
+  emitEditFilledNight(): void {
+    this.editFilledNight.emit();
+  }
 
-  emitEditFilledNight(filledNight: FilledNight): void {
-    this.editFilledNight.emit(filledNight);
-  } 
+  ngOnInit(): void {
+    console.log(this.filledNight)
+    this.nightsCountForDisplay = this.arrangeNightCountForDisplay();
+    this.datesForDisplay = this.arrangeDatesForDisplay();
+  }
 
-  ngOnInit(): void {}
+  public arrangeDatesForDisplay(): string {
+    let low: Date;
+    let hight: Date;
+    const arr: any[] = this.filledNight.nightsCount;
+    if (arr) {
+      arr.map(item => {
+        let day = item.date.getDate();
+        if (!low && !hight) {
+          hight = day;
+          low = day;
+        }
+        if (day < low) {
+          low = day;
+        }
+        if (day > hight) {
+          hight = day;
+        }
+      });
+    }
+    return `${low}-${hight}.${arr[0].date.getMonth()}.${arr[0].date.getFullYear()}`;
+  }
+  public arrangeNightCountForDisplay() {
+    let first: any, last: any;
+    const arr: any[] = this.filledNight.nightsCount;
+    arr.map(i => {
+      let item = i.nightNumber;
+      if (!first && !last) {
+        last = item;
+        first = item;
+      }
+      if (item < first) {
+        first = item;
+      }
+      if (item > last) {
+        last = item;
+      }
+    });
+    return `לילה ${first}-${last}`;
+  }
+
+
 }

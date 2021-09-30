@@ -1,18 +1,11 @@
 @import "../../../../styles.scss";
 
-:host {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-bottom: spacing(1);
-}
-
-div.header {
-  direction: rtl !important;
+div.underline {
+  border-bottom: 1px solid color(primary);
 }
 
 div.title {
-  border-bottom: 1px solid color(primary);
+  border-bottom: 3px solid color(primary);
 }
 
 

@@ -20,15 +20,13 @@ export class SleepingServiceService {
 
     new QuestionSelect({
       key: 'sleepingPlace',
-      label: ' סוג לינה', 
+      label: ' סוג לינה',
       type: 'select',
       cols: '2',
 
       validations: [Validators.required],
       inputProps: {
-        // labelLength: 'extraWide',
         options: [
-          // { key: 'חדרים', value: 'חדרים' },
           { key: 'בקתות', value: 'בקתות' },
           { key: 'גיחה', value: 'גיחה' },
           { key: 'אוהלים', value: 'אוהלים' },
@@ -104,6 +102,7 @@ export class SleepingServiceService {
   }) {
 
 // this.questions.form.value=questionValues
-    
+    console.log(questionValues);
+
   }
 }

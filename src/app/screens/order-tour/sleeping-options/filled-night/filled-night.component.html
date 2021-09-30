@@ -1,13 +1,47 @@
 <div class="filled-night">
-  <div class="date">
-    {{filledNight.date}}
+  <div class="main-card">
+    <ng-container *ngIf='filledNight.nightsCount.length !== 1'>
+      <div class="date">
+        <span>{{datesForDisplay}}</span>
+        <span>{{nightsCountForDisplay}}</span>
+
+      </div>
+    </ng-container>
+    <div class="date" *ngIf='filledNight.nightsCount.length == 1'>
+      <span>{{filledNight.nightsCount[0].date | date:'d/M/yy'}}</span>
+      <span>לילה {{filledNight.nightsCount[0].nightNumber}}</span>
+    </div>
+    <div class="nigths" *ngIf='filledNight.nightsCount.length !== 1'>{{ filledNight.nightsCount.length }} לילות</div>
+    <div class="nigths" *ngIf='filledNight.nightsCount.length == 1'>לילה {{ filledNight.nightsCount.length }}</div>
+    <div class="sleeping-place">{{ filledNight.amount }} {{ filledNight.sleepingPlace }}</div>
+    <div class="peoples">
+      <div class="peoples">
+        {{ filledNight.sleepingAmount }} {{ filledNight.saveFor }}
+      </div>
+      <div>מתוך 20</div>
+    </div>
+    <div class="comments">הערה: {{ filledNight.comments }}</div>
+    <div class="controllers">
+      <p class="filled-night__btn" (click)="emitEditFilledNight()">עריכה</p>
+      <p class="filled-night__btn" (click)="emitDeleteFilledNight()">מחיקה</p>
+    </div>
   </div>
-  <div class="nigths">{{ filledNight.nightsCount }}</div>
-  <div class="sleeping-place">{{ filledNight.amount }} {{ filledNight.sleepingPlace }}</div>
-  <div class="peoples">{{ filledNight.peopleCount }} {{ filledNight.saveFor }}</div>
-  <div class="comments">הערה: {{ filledNight.comments }}</div>
-  <div class="controllers">
-    <p class="filled-night__btn" (click)="emitEditFilledNight(filledNight)">עריכה</p>
-    <p class="filled-night__btn" (click)="emitDeleteFilledNight()">מחיקה</p>
-  </div>
+  <ng-container *ngIf='filledNightOptions.length !== 0'>
+    <div class="more-options" *ngFor='let item of filledNightOptions;let index = index'>
+      <div></div>
+      <div></div>
+      <div class="sleeping-place">{{ item.amount }} {{ item.sleepingPlace }}</div>
+      <div class="peoples">
+        <div class="peoples">
+          {{ item.sleepingAmount }} {{ item.saveFor }}
+        </div>
+        <div>מתוך 20</div>
+      </div>
+      <div class="comments">הערה: {{ item.comments }}</div>
+      <div class="controllers">
+        <p class="filled-night__btn" (click)="emitEditFilledNightOption(index)">עריכה</p>
+        <p class="filled-night__btn" (click)="emitDeleteFilledNightOption(index)">מחיקה</p>
+      </div>
+    </div>
+  </ng-container>
 </div>

@@ -2,57 +2,64 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../services/squad-assemble.service';
 
-interface SquadGroup {
-  group: QuestionGroup;
-  hasBottom?: boolean;
-  bottomText?: string;
-}
-
 @Component({
   selector: 'app-squad-assemble',
   templateUrl: './squad-assemble.component.html',
   styleUrls: ['./squad-assemble.component.scss'],
 })
 export class SquadAssembleComponent implements OnInit {
-  public squads: SquadGroup[];
+  public squads: QuestionGroup[];
+  public budgetGroup: QuestionGroup;
 
-  constructor(private squadAssembleService: SquadAssembleService) { }
+  private newClientMode: boolean;
+
+  constructor(private squadAssembleService: SquadAssembleService) {}
 
   ngOnInit(): void {
+    this.subscribeToNewClient();
+    // this.setSquads();
+  }
+
+  private setSquads() {
     this.squads = [
       {
-        group: {
-          key : 'date',
-          header: { text: 'מועד ושם הטיול', custom: 'tourId' },
-          questions: this.squadAssembleService.timeAndNameFormInputs,
-        },
-        hasBottom: true,
-
+        key: 'schedule',
+        header: { label: 'מועד ושם הטיול', slot: 'tourId' },
+        questions: this.squadAssembleService.timeAndNameFormInputs,
+      },
+      this.newClientMode
+        ? this.squadAssembleService.newClient
+        : {
+            key: 'client',
+            header: { label: 'לקוח', slot: 'client' },
+            questions: this.squadAssembleService.customerFormInputs,
+            cols: 3,
+          },
+      {
+        key: 'group',
+        header: { label: 'הרכב הקבוצה', slot: 'gender' },
+        questions: this.squadAssembleService.groupAssembleFormMixedInputs,
+        cols: 5,
       },
       {
-        group: {
-          key : 'client',
-          header: { text: 'לקוח', custom: 'client' },
-          questions: this.squadAssembleService.customerFormInputs,
-          cols: '3',
-        },
-      },
-      {
-        group: {
-          key : 'squad',
-          header: { text: 'הרכב הקבוצה', custom: 'gender' },
-          questions: this.squadAssembleService.groupAssembleFormMixedInputs,
-          cols: '5',
-        },
-        hasBottom: true,
-      },
-      {
-        group: {
-          key : 'details',
-          header: { text: 'פרטי הטיול', custom: '' },
-          questions: this.squadAssembleService.tourDetailsFormInputs,
-        },
+        key: 'details',
+        header: { label: 'פרטי הטיול', slot: '' },
+        questions: this.squadAssembleService.tourDetailsFormInputs,
       },
     ].reverse();
+
+    this.budgetGroup = {
+      key: 'budget',
+      header: { label: 'תקציב', slot: 'budget' },
+      questions: this.squadAssembleService.budgetQuestions,
+      cols: 1,
+    };
+  }
+
+  private subscribeToNewClient() {
+    this.squadAssembleService.getNewClientObs().subscribe((value: boolean) => {
+      this.newClientMode = value;
+      this.setSquads()
+    });
   }
 }
