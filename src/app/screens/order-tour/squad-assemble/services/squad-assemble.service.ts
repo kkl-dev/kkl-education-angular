@@ -94,10 +94,10 @@ export class SquadAssembleService {
 
       inputProps: {
         options: [
-          { label: 'solid', value: '12123' },
-          { label: 'great', value: '23' },
-          { label: 'good', value: '123' },
-          { label: 'unproven', value: '123123123' },
+          { key: 'solid', value: '12123' },
+          { key: 'great', value: '23' },
+          { key: 'good', value: '123' },
+          { key: 'unproven', value: '123123123' },
         ],
       },
       validations: [Validators.required],

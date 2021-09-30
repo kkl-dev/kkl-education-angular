@@ -134,7 +134,6 @@ export class CheckAvailabilityService {
 
   saveCheackAvailabilltyValues(newFormValues: NgForm) {
     this.checkAvailabilltyValues = newFormValues.form.value;  
-    console.log(this.checkAvailabilltyValues.calendarInput);
     
   }
 

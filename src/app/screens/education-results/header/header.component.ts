@@ -61,11 +61,13 @@ export class HeaderComponent implements OnInit {
       new Date(),
       new Date(2022, 11, 17)
     );
-
     this.options = {
       firstCalendarDay: 0,
       format: 'dd/LL/yyyy', 
       closeOnSelected: true,
+  fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
+
+      // add fromto,
       // minDate: addDays(new Date(), 5),
       // maxDate: addDays(new Date(), 10),
       minYear: getYear(new Date()) - 1,
@@ -199,6 +201,7 @@ export class HeaderComponent implements OnInit {
   options: CalendarOptions = {
     firstCalendarDay: 0,
     format: 'dd/LL/yyyy',
+    fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
 
     closeOnSelected: true,
     minYear: 2019,

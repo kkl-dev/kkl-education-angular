@@ -22,8 +22,6 @@ export class PaginationComponent implements OnInit,OnChanges {
     this.pagesCount = Math.floor(+this.pagesCount + 0.99999);
 
     this.pageNumberArray = new Array(this.pagesCount)
-    // console.log(this.pageNumberArray.map((item, index) => {
-
     //   index >= this.pagesCount
     //     ? (this.pagesToShow = this.pagesToShow.slice(0, index))
     //     : (this.pagesToShow[index] = +this.currentPage + index);

@@ -267,9 +267,7 @@ export class EducationResultsComponent implements OnInit {
     dateFormat2[2] = (+dateFormat2[2]).toString();
     let date1 = new Date(dateFormat1.join(','));
     let date2 = new Date(dateFormat2.join(','));
-    console.log(date1.getMonth());
-    console.log(date1.getDate());
-    console.log(date1.getFullYear());
+    
 
     const utc1 = Date.UTC(
       date1.getFullYear(),
