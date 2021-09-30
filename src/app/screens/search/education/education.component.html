@@ -55,6 +55,7 @@
             (newDate)='newDateRecived($event)'
             (sleepingPlace)='newSleepingPlaceRecived($event)'
             (prevDate)='prevDateRecived($event)'
+            (closeCalendar)="closeCalendarHandler($event)"
             type="text"
             [(ngModel)]="date"
             [options]="options"

@@ -104,7 +104,6 @@ export class SleepingServiceService {
   }) {
 
 // this.questions.form.value=questionValues
-    console.log(questionValues);
     
   }
 }

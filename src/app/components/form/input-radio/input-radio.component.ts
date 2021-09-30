@@ -26,7 +26,7 @@ export class InputRadioComponent implements OnInit {
   }
 
   public handleChange(radio: MatRadioChange) {
-    console.log(this.control)
+    // console.log(this.control)
     this.control.setValue(radio.value)
 
   }

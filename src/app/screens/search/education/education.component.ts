@@ -206,10 +206,8 @@ export class EducationComponent implements OnInit {
         this.dateObj.from = tempDateArr[1];
         this.dateObj.to = tempDateArr[0];
       }
-      console.log('asd');
-      console.log(this.container);
+ 
       
-      this.container.nativeElement.focus();
     } else { 
       this.dateObj.from = e;
       this.dateObj.to = '';
@@ -218,8 +216,10 @@ export class EducationComponent implements OnInit {
     // this.disableContinueBtn = false;
     // this.tripService.dateObj = this.dateObj;
   }
-
- 
+  closeCalendarHandler(event: any){
+    console.log('asd'); 
+    
+  }
   AvailableDaysChecking() {
     let index = this.freeSpacesArray.findIndex(
       (start) => start.date.getDate() === new Date(this.dateObj.from).getDate()

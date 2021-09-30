@@ -61,7 +61,6 @@ export class DrawerComponent implements OnInit {
   ];
 
   newCommentHandler(newComment: { date: Date; time: string; comment: string }) {
-    console.log(this.drawerForm.formGroup.value);
     
     const newCommentToAdd = { ...this.drawerForm.formGroup.value, status: false };
     if (this.index > -1) {

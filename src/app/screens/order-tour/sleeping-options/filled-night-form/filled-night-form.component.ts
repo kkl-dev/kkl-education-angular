@@ -53,7 +53,6 @@ export class FilledNightFormComponent implements OnInit {
   onSubmit() {
     this.updateNightCount();
     this.emitFormValues.emit(this.filledNightForm);
-    console.log(this.filledNightForm.value)
     this.filledNightForm.reset();
   }
   public selectAllOptions(): void {

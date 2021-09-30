@@ -399,12 +399,9 @@ export class SquadAssembleService {
     );
     if (index > -1) {
       this.formsArray[index] = form;
-      console.log('fonund');
     } else {
-      console.log('else');
       this.formsArray.push(form);
     }
     
-    console.log(this.formsArray);
   }
 }
