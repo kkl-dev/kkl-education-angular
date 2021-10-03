@@ -27,9 +27,9 @@ export class SleepingServiceService {
       validations: [Validators.required],
       inputProps: {
         options: [
-          { key: 'בקתות', value: 'בקתות' },
-          { key: 'גיחה', value: 'גיחה' },
-          { key: 'אוהלים', value: 'אוהלים' },
+          { label: 'בקתות', value: 'בקתות' },
+          { label: 'גיחה', value: 'גיחה' },
+          { label: 'אוהלים', value: 'אוהלים' },
         ],
       },
     }),
@@ -41,10 +41,10 @@ export class SleepingServiceService {
       label: 'קבוצת גיל',
       inputProps: {
         options: [
-          { key: '1', value: 'לילה 1' },
-          { key: '2', value: 'לילה 2' },
-          { key: '3', value: 'לילה 3' },
-          { key: '4', value: 'לילה 4' },
+          { label: '1', value: 'לילה 1' },
+          { label: '2', value: 'לילה 2' },
+          { label: '3', value: 'לילה 3' },
+          { label: '4', value: 'לילה 4' },
         ],
       },
     }),
@@ -55,10 +55,10 @@ export class SleepingServiceService {
       label: 'שריין עבור',
       inputProps: {
         options: [
-          { key: 'מבוגרים', value: 'מבוגרים' },
-          { key: 'נוער', value: 'נוער' },
-          { key: 'מדריכים', value: 'מדריכים' },
-          { key: 'חובשים', value: 'חובשים' },
+          { label: 'מבוגרים', value: 'מבוגרים' },
+          { label: 'נוער', value: 'נוער' },
+          { label: 'מדריכים', value: 'מדריכים' },
+          { label: 'חובשים', value: 'חובשים' },
         ],
       },
     }),
