@@ -5,6 +5,8 @@ import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import Query from '@arcgis/core/rest/support/Query';
 import Graphic from '@arcgis/core/Graphic';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
+import BaseMap from '@arcgis/core/Basemap';
 import QueryTask from '@arcgis/core/tasks/QueryTask';
 import SpatialReference from '@arcgis/core/geometry/SpatialReference';
 import Point from '@arcgis/core/geometry/Point';
@@ -32,12 +34,49 @@ export class MapsComponent implements OnInit {
   datatoiter: any;
   pointGraphic: any;
   forestCenter: any;
+  vtLayer: VectorTileLayer;
+  basemap: BaseMap;
 
   constructor(public tripService: TripService, public fakeApi: FakeService) { }
 
+  popupTrailheads: any = {
+    "title": "{SiteName}",
+    "content": [
+      {
+        type: "fields",
+        fieldInfos: [{
+          fieldName: "SiteName",
+          visible: true,
+          label: "שם אתר:"
+        },
+        {
+          fieldName: "Purpose",
+          visible: true,
+          label: "שימוש המבנה:"
+        },
+        {
+          fieldName: "UID",
+          visible: true,
+          label: "מספר מבנה:"
+        }]
+      }, {
+        type: "attachments",
+        displayType: "list"
+      }
+    ]
+  };
+
   loadWebMap(): void {
+    this.vtLayer = new VectorTileLayer({
+      url: "https://kkl.maps.arcgis.com/sharing/rest/content/items/0a191451e15249d4b5a1cc3ac5d73dac/resources/styles/root.json"
+    });
+
+    this.basemap = new BaseMap({
+      baseLayers: [this.vtLayer]
+    });
+
     this.myMap = new WebMap({
-      basemap: "topo"
+      basemap: this.basemap
     });
     this.view = new MapView({
       map: this.myMap,
@@ -47,6 +86,7 @@ export class MapsComponent implements OnInit {
     });
     this.layer = new FeatureLayer({
       url: this.url,
+      popupTemplate: this.popupTrailheads
       //definitionExpression: filterex
     });
     this.graphicsLayer = new GraphicsLayer({
@@ -70,13 +110,13 @@ export class MapsComponent implements OnInit {
 
     //else {
 
-      this.tripService.forestCenter.subscribe(forestCenter => {
-        this.forestCenter = forestCenter; // this set's the username to the default observable value
-        console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
-        this.place = forestCenter.name;
-        this.onChangeForestCenter();
-      });
-  
+    this.tripService.forestCenter.subscribe(forestCenter => {
+      this.forestCenter = forestCenter; // this set's the username to the default observable value
+      console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
+      this.place = forestCenter.name;
+      this.onChangeForestCenter();
+    });
+
     //}
   }
 
@@ -127,24 +167,30 @@ export class MapsComponent implements OnInit {
     };
     // fix search by id 
     //this.forestCenter
-    if ((this.place == "ציפורי") && (this.day == 1)) { 
-      this.place = "מרכז שדה ציפורי";    
-      rawservicedata = this.ziporiday1; };
-    if ((this.place == "אילנות") && (this.day == 1)) { 
-      this.place = "אילנות מערב";          
-      rawservicedata = this.ilanotday1 };
-    if ((this.place == "בית אשל") && (this.day == 1)) { 
-      this.place = "מצפה בית אשל";    
-      rawservicedata = this.betieshelday1 };
-    if ((this.place == "יתיר") && (this.day == 1)) { 
-      this.place = "מרכז שדה יתיר";    
-      rawservicedata = this.yatirday1 };
-    if ((this.place == "לביא") && (this.day == 1)) { 
-      this.place = "מרכז שדה לביא";    
-      rawservicedata = this.laviday1 };
-    if ((this.place == "שוני") && (this.day == 1)) { 
-      this.place = "מרכז שדה שוני";    
-      rawservicedata = this.shuniday1 };
+    if ((this.place == "ציפורי") && (this.day == 1)) {
+      this.place = "מרכז שדה ציפורי";
+      rawservicedata = this.ziporiday1;
+    };
+    if ((this.place == "אילנות") && (this.day == 1)) {
+      this.place = "אילנות מערב";
+      rawservicedata = this.ilanotday1
+    };
+    if ((this.place == "בית אשל") && (this.day == 1)) {
+      this.place = "מצפה בית אשל";
+      rawservicedata = this.betieshelday1
+    };
+    if ((this.place == "יתיר") && (this.day == 1)) {
+      this.place = "מרכז שדה יתיר";
+      rawservicedata = this.yatirday1
+    };
+    if ((this.place == "לביא") && (this.day == 1)) {
+      this.place = "מרכז שדה לביא";
+      rawservicedata = this.laviday1
+    };
+    if ((this.place == "שוני") && (this.day == 1)) {
+      this.place = "מרכז שדה שוני";
+      rawservicedata = this.shuniday1
+    };
     var datatoiter = rawservicedata["biktot"]["bikta"]
     for (let i = 0; i < datatoiter.length; i++) {
       fullhuts.push(Number(datatoiter[i]["uid"]))
