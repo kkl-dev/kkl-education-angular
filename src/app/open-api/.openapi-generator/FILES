@@ -47,6 +47,7 @@ model/orderType.ts
 model/participantType.ts
 model/sleepingOptions.ts
 model/status.ts
+model/subBudget.ts
 model/supplier.ts
 model/tripAttribute.ts
 model/tripInfo.ts

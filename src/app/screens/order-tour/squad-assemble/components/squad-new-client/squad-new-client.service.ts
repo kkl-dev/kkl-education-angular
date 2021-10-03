@@ -39,10 +39,10 @@ export class SquadNewClientService {
             validations: [Validators.required],
             inputProps: {
               options: [
-                { label: 'שם נוסף', value: 'שם נוסף' },
-                { label: 'עוד לקוח', value: 'עוד לקוח' },
-                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { label: 'הכל', value: 'all' },
+                { label: 'לקוחות כלליים', value: 'global' },
+                { label: 'לקוחות חו"ל', value: 'abroad' },
+                { label: 'עובד קק"ל', value: 'kklWorker' },
               ],
             },
           }),
@@ -95,6 +95,7 @@ export class SquadNewClientService {
   public getNewClientObs(): Observable<boolean> {
     return this.$newClient.asObservable();
   }
+
 
   constructor() {}
 }

@@ -11,11 +11,8 @@
  */
 
 
-/**
- * Number of available beds for a certain accomoadation type (ex. Cabin, room, tent etc.)
- */
-export interface AccomodationFreeSpaces { 
-    accomodationName?: string;
-    availableBeds?: number | null;
+export interface SubBudget { 
+    id?: number;
+    name?: string;
 }
 

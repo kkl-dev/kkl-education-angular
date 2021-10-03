@@ -375,7 +375,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Area'
- 
+
+  /customer/{customerCode}:
+    get:
+      tags:
+      - user
+      operationId: GetCustomer
+      parameters:
+      - name: customerCode
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BaseCustomer' 
+
   /customers/{custAutoComplete}/{filterParam}:
     get:
       tags:
@@ -400,7 +421,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseCustomer'           
+                  $ref: '#/components/schemas/BaseCustomer' 
+
   
   /budget/expensesAndIncome:
     put:
@@ -1114,6 +1136,7 @@ components:
           example: name
         availableBeds:
           type: integer
+          nullable: true
           example: 20
 
     AvailableSleepingOptionsByDay:
@@ -1139,6 +1162,7 @@ components:
            example: 'בקתה'
          maxOccupancy:
            type: integer
+           nullable: true
            description: Maximum per lodging unit.
            example: 20
          availableUnits:
@@ -1678,6 +1702,10 @@ components:
           example: 2
     BudgetByParams:
       type: object
+      required:
+      - attribute
+      - userId
+      - userName
       properties:
         tripStart:
           type: string
@@ -1698,6 +1726,15 @@ components:
           type: integer
           nullable: true
           example: 123
+    SubBudget:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        name:
+          type: string
+          example: ''
     Budget:
       type: object
       properties:
@@ -1756,6 +1793,14 @@ components:
         expensesName:
           type: string
           example: economy
+        subBudgetIncomeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubBudget'
+        subBudgetExpenseList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubBudget'
     AgeGroup:
       type: object
       properties:

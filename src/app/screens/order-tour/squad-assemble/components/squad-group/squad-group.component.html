@@ -16,7 +16,7 @@
         [$questions]="$questions"
         [hasBottomButton]="true"
         [slots]="{participants, instructors, chaperones, medics}"
-      >
+        (register)="logForm($event)" >
       </app-form-container>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="5" dir="rtl">

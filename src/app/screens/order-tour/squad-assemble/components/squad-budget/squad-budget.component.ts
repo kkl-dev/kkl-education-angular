@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { ListItem } from 'src/app/components/grid/list-item.model';
+import { TripService } from 'src/app/services/trip.service';
 import { BudgetModel } from './squad-budget.model';
 
 @Component({
@@ -50,7 +51,7 @@ export class SquadBudgetComponent implements OnInit {
     },
   ]
 
-  constructor() { }
+  constructor(public tripService: TripService) { }
 
   ngOnInit(): void {
     this.list = this.setList(this.list);

@@ -64,6 +64,7 @@ export class SquadDetailsService {
 
 
 
+
   constructor(
     private formService: FormService,private tripService:TripService
   ) { }
