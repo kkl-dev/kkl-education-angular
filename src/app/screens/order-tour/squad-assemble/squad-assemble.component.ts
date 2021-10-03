@@ -37,10 +37,10 @@ export class SquadAssembleComponent implements OnInit {
       label: 'מרכז שדה',
       inputProps: {
         options: [
-          { key: 'solid', value: '12123' },
-          { key: 'great', value: '23' },
-          { key: 'good', value: '123' },
-          { key: 'unproven', value: '123123123' },
+          { label: 'solid', value: '12123' },
+          { label: 'great', value: '23' },
+          { label: 'good', value: '123' },
+          { label: 'unproven', value: '123123123' },
         ],
       },
       icon: 'keyboard_arrow_down',
@@ -73,10 +73,10 @@ export class SquadAssembleComponent implements OnInit {
       label: 'מי הלקוח',
       inputProps: {
         options: [
-          { key: 'שם נוסף', value: 'שם נוסף' },
-          { key: 'עוד לקוח', value: 'עוד לקוח' },
-          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+          { label: 'שם נוסף', value: 'שם נוסף' },
+          { label: 'עוד לקוח', value: 'עוד לקוח' },
+          { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+          { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
         ],
       },
     }),
@@ -87,10 +87,10 @@ export class SquadAssembleComponent implements OnInit {
       type: 'select',
       inputProps: {
         options: [
-          { key: 'שם נוסף', value: 'שם נוסף' },
-          { key: 'עוד לקוח', value: 'עוד לקוח' },
-          { key: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-          { key: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+          { label: 'שם נוסף', value: 'שם נוסף' },
+          { label: 'עוד לקוח', value: 'עוד לקוח' },
+          { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+          { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
         ],
       },
     }),
@@ -99,7 +99,6 @@ export class SquadAssembleComponent implements OnInit {
       key: 'teamRepresentative',
       label: 'נציג הקבוצה',
       inputProps: {
-        labelLength: 'medium',
       },
     }),
 
@@ -109,7 +108,6 @@ export class SquadAssembleComponent implements OnInit {
       type: 'text',
       validations: [Validators.required],
       inputProps: {
-        labelLength: 'medium',
       },
     }),
     new QuestionTextbox({
@@ -118,7 +116,6 @@ export class SquadAssembleComponent implements OnInit {
       type: 'text',
       validations: [Validators.required],
       inputProps: {
-        labelLength: 'small',
       },
     }),
   ];
@@ -132,10 +129,10 @@ export class SquadAssembleComponent implements OnInit {
       label: 'קבוצת גיל',
       inputProps: {
         options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
+          { label: '1', value: '1' },
+          { label: 'עוד לקוח', value: '10+' },
+          { label: 'לקוח מספר שלוש', value: '20+' },
+          { label: 'לקוח מספר ארבע', value: '30+' },
         ],
       },
     }),
@@ -180,10 +177,10 @@ export class SquadAssembleComponent implements OnInit {
       label: 'קבוצת גיל',
       inputProps: {
         options: [
-          { key: '1', value: '1' },
-          { key: 'עוד לקוח', value: '10+' },
-          { key: 'לקוח מספר שלוש', value: '20+' },
-          { key: 'לקוח מספר ארבע', value: '30+' },
+          { label: '1', value: '1' },
+          { label: 'עוד לקוח', value: '10+' },
+          { label: 'לקוח מספר שלוש', value: '20+' },
+          { label: 'לקוח מספר ארבע', value: '30+' },
         ],
       },
     }),
@@ -276,11 +273,11 @@ export class SquadAssembleComponent implements OnInit {
       inputProps: {
         labelLength: 'small',
         options: [
-          { key: 'פרומלי', value: 'פרומלי' },
-          { key: 'בלתי פורמלי', value: 'בלתי פורמלי' },
-          { key: 'מעוף', value: 'מעוף' },
-          { key: 'חו"ל', value: 'חו"ל' },
-          { key: 'הנהלת אגף', value: 'הנהלת אגף' },
+          { label: 'פרומלי', value: 'פרומלי' },
+          { label: 'בלתי פורמלי', value: 'בלתי פורמלי' },
+          { label: 'מעוף', value: 'מעוף' },
+          { label: 'חו"ל', value: 'חו"ל' },
+          { label: 'הנהלת אגף', value: 'הנהלת אגף' },
         ],
       },
     }),
