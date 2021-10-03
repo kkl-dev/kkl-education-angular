@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit {
           cabins: Math.floor(Math.random() * 8),
           tents: Math.floor(Math.random() * 8),
           campgrounds: Math.floor(Math.random() * 8),
+
         },
       });
     }
@@ -103,13 +104,19 @@ export class HeaderComponent implements OnInit {
       firstCalendarDay: 0,
       format: 'LL/dd/yyyy', 
       closeOnSelected: true, 
-      // minDate: addDays(new Date(), 5),
-      // maxDate: addDays(new Date(), 10),
+      minDate: new Date(2018,3,5),  
+      maxDate: new Date(2022,9,5),    
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
       freeSpacesArray: this.freeSpacesArray1,
     };
   }
+
+  public getNewFreeSpace(){
+    console.log('as');
+    
+  }
+
 
   ngOnInit(): void {}
 }

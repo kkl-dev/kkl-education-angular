@@ -31,9 +31,10 @@
         <input
           class="header__form-group-input"
           airbnb-calendar
+          (newDate)="getNewFreeSpace()"
           type="text"
           [(ngModel)]="date"
-          [options]="options"
+          [options]="options" 
           (ngModelChange)="dateObjChanged($event)"
           name="calendar-input"
           id="calendar-input"

@@ -23,6 +23,7 @@ export class FormContainerComponent implements OnInit {
   @Input() gutter: string = '3';
   @Input() questions!: QuestionBase<string>[];
   @Input() hasButton: boolean = false;
+  @Input() hasBottomButton: boolean = false;
   @Input() slots: {
     button?: ElementRef;
     group?: ElementRef;

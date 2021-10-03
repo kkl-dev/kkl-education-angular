@@ -1,19 +1,79 @@
+// .assemble-tour {
+//   display: flex;
+//   // height: 100%;  width: calc(100% - 80px);
+//   margin: 0 auto;
+//   box-sizing: border-box;
+
+//   &__form:not(:last-child) {
+//     border-left: 1px solid #e8e8e8;
+//     margin-left: 35px;
+//   }
+
+//   &__form {
+//     box-sizing: border-box;
+//     flex: 1;
+//     margin: 0 10px;
+
+//     & * {
+//       width: 80%;
+//     }
+
+//     &-headline {
+//       width: fit-content !important;
+//       position: relative;
+//       margin: 0 !important;
+//       margin-bottom: 0 !important;
+//       border-bottom: 3px solid #448ecd;
+//       padding-left: 10px;
+//       margin-bottom: -3px !important;
+//       &-svg {
+//         position: absolute;
+//         top: 0;
+//         left: -80px;
+//       }
+//       &-container {
+//         position: relative;
+//         margin-bottom: 16px;
+//         border-bottom: 3px solid #dbdbdb;
+//         width: 60% !important;
+//       }
+//     }
+//   }
+// }
+
+// app-form-container {
+//   width: 60% !important;
+// }
+
+// mat-grid-list,
+// mat-grid-tile,
+// app-squad-group {
+//   height: 100%;
+//   width: 100%;
+// }
+
+// .assemble-container {
+//   width: 100%;
+//   // padding-left: 7%;
+//   // padding-right: 7%;
+// }
+
 .assemble-tour {
   display: flex;
-  // height: 100%;  width: calc(100% - 80px);
+  height: 100%; 
+  width: calc(100% - 80px);
   margin: 0 auto;
   box-sizing: border-box;
-
+  flex-direction: row-reverse;
+  
   &__form:not(:last-child) {
     border-left: 1px solid #e8e8e8;
     margin-left: 35px;
   }
-
   &__form {
     box-sizing: border-box;
-    flex: 1;
+    flex: 1; 
     margin: 0 10px;
-
     & * {
       width: 80%;
     }
@@ -26,16 +86,12 @@
       border-bottom: 3px solid #448ecd;
       padding-left: 10px;
       margin-bottom: -3px !important;
-      &-svg {
-        position: absolute;
-        top: 0;
-        left: -80px;
-      }
+
       &-container {
-        position: relative;
         margin-bottom: 16px;
         border-bottom: 3px solid #dbdbdb;
         width: 60% !important;
+        // height: fit-content;
       }
     }
   }
@@ -45,15 +101,3 @@ app-form-container {
   width: 60% !important;
 }
 
-mat-grid-list,
-mat-grid-tile,
-app-squad-group {
-  height: 100%;
-  width: 100%;
-}
-
-.assemble-container {
-  width: 100%;
-  // padding-left: 7%;
-  // padding-right: 7%;
-}

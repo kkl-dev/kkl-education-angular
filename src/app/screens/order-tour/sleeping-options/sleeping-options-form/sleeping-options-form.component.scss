@@ -2,4 +2,8 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
+}
+
+::ng-deep .airbnb-calendar-container{
+    left: 0 !important;
 }   

@@ -18,6 +18,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./squad-assamble.component.scss'],
 })
 export class SquadAssambleComponent implements OnInit, OnDestroy,AfterViewInit {
+  tourDetailsFormCustomQuestion
 
 
 

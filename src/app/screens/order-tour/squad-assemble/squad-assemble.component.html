@@ -1,12 +1,44 @@
-<div class="assemble-container">
-  <mat-grid-list cols="4" rowHeight="60vh" gutterSize="5">
-    <mat-grid-tile *ngFor="let squad of squadForm">
-      <app-squad-group
-        [formCols]="squad.formCols"
-        [title]="squad.title"
-        [questions]="squad.questions"
-      >
-      </app-squad-group>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="assemble-tour">
+  <!-- <button (click)="a(tourDetailsFormCustomQuestionRef.form)">sdfgsdgsfsdf</button> -->
+  <div class="assemble-tour__form">
+    <div class="assemble-tour__form-headline-container">
+      <h3 class="assemble-tour__form-headline">מועד ושם הטיול</h3>
+    </div>
+    <app-form-container
+    [gutter]="'0'"
+      [questions]="timeAndNameFormInputs"
+      #tourDetailsFormCustomQuestionRef
+    ></app-form-container>
+  </div>
+  <div class="assemble-tour__form">
+    <div class="assemble-tour__form-headline-container">
+      <h3 class="assemble-tour__form-headline">לקוח</h3>
+    </div>
+    <app-form-container
+    [gutter]="'0'"
+      [questions]="customerFormInputs"
+      #customerFormInputsRed
+    ></app-form-container>
+  </div>
+  <div class="assemble-tour__form">
+    <div class="assemble-tour__form-headline-container">
+      <h3 class="assemble-tour__form-headline">הרכב הקבוצה</h3>
+    </div>
+    <app-form-container
+    [gutter]="'0'"
+      [questions]="groupAssambleFormMixedInputs"
+      #groupAssambleFormMixedInputs
+    >
+    </app-form-container>
+  </div>
+  <div class="assemble-tour__form">
+    <div class="assemble-tour__form-headline-container">
+      <h3 class="assemble-tour__form-headline">פרטי הטיול</h3>
+    </div>
+    <app-form-container
+    [gutter]="'0'"
+      [questions]="tourDetailsFormInputs"
+      #tourDetailsFormInputs
+    ></app-form-container>
+  </div>
 </div>
