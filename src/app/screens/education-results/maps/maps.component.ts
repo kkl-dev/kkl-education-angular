@@ -23,7 +23,8 @@ export class MapsComponent implements OnInit {
   @Input() day: any = 1;// document.getElementById("mydaySelect").value;
   // @Input() visible: any;
   // @Output() visibleChange: EventEmitter<any> = new EventEmitter<any>();
-
+  // lodgingFacilityListArray: any = [];
+  lodgingFacilityForDay: any;
   url: string = "https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0";
   myMap!: WebMap;
   view!: MapView;
@@ -155,6 +156,12 @@ export class MapsComponent implements OnInit {
       this.layer_queryFeatures(response);
     });
   };
+
+  currentDayHandler(newCurrentDay: number) {
+    console.log('new Current Day: ', newCurrentDay);
+    //    console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
+    this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray[newCurrentDay].lodgingFacilityList;
+  }
 
   onChangeForestCenter() {
     let fullhuts: any = [];

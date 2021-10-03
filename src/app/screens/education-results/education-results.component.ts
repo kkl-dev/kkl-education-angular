@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { TooltipDataModel } from './tooltip/tooltip.component';
@@ -6,6 +6,7 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
+import { MapsComponent } from './maps/maps.component';
 
 export interface InfoCard {
   svgUrl: string;
@@ -21,6 +22,7 @@ export interface InfoCard {
 })
 
 export class EducationResultsComponent implements OnInit {
+  @ViewChild(MapsComponent) child: MapsComponent;
   forestCenter: any | undefined;
   //forestCenter: any | undefined = this.tripService.centerField || {};
   sleepingDates: any;
@@ -270,6 +272,9 @@ export class EducationResultsComponent implements OnInit {
   // }
 
   currentDayHandler(newCurrentDay: number) {
+    //this.emitCurrentDay.emit(newCurrentDay);
+    this.child.currentDayHandler(newCurrentDay);
+
     console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
     //this.facilitiesArray = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day);
     //console.log('facilitiesArray', this.facilitiesArray);
