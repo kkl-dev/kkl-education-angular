@@ -78,8 +78,6 @@ export class MapsComponent implements OnInit {
       });
   
     //}
-
-
   }
 
   ngOnChanges(changes: SimpleChanges) {

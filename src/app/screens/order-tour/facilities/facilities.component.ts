@@ -70,168 +70,168 @@ export class FacilitiesComponent implements OnInit {
     }),
   ];
   public facilitiesArray: InfoCard[] = [
-    {
-      svgUrl: 'assets/images/museum.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'אורנים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/classroom.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 20 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'רתמים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/football.svg',
-      headline: 'מגרש ספורט',
-      subHeadline: '',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'נחלאות',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/leafs.svg',
-      headline: 'סיור במשתלה',
-      availability: [],
-    },
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    // --- length 5 ---
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
-    {
-      svgUrl: 'assets/images/stage.svg',
-      headline: 'תאטרון',
-      subHeadline: 'עד 320 משתתפים',
-      availability: [
-        {
-          startingHour: 14,
-          endingHour: 15.25,
-          totalTime: 1.25,
-          user: 'ירושלים',
-        },
-      ],
-    },
+    // {
+    //   svgUrl: 'assets/images/museum.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'אורנים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/classroom.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 20 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'רתמים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/football.svg',
+    //   headline: 'מגרש ספורט',
+    //   subHeadline: '',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'נחלאות',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/leafs.svg',
+    //   headline: 'סיור במשתלה',
+    //   availability: [],
+    // },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // // --- length 5 ---
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
+    // {
+    //   svgUrl: 'assets/images/stage.svg',
+    //   headline: 'תאטרון',
+    //   subHeadline: 'עד 320 משתתפים',
+    //   availability: [
+    //     {
+    //       startingHour: 14,
+    //       endingHour: 15.25,
+    //       totalTime: 1.25,
+    //       user: 'ירושלים',
+    //     },
+    //   ],
+    // },
   ];
   public activitiesArray: InfoCard[] = [
     {

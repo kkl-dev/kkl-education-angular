@@ -13,11 +13,11 @@ export class FakeService {
 
   constructor(private http: HttpClient) { }
 
-  getForestCenter() {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
-    return this.http.get(`${this.url}forestCenters`, { headers });
-  }
+  // getForestCenter() {
+  //   const headers = new HttpHeaders()
+  //     .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
+  //   return this.http.get(`${this.url}forestCenters`, { headers });
+  // }
 
   getAvailableFacilityDates(day: any) {
     const headers = new HttpHeaders()
