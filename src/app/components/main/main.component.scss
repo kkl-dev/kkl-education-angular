@@ -2,7 +2,6 @@
 
 .sidenav-container {
   height: 100%;
-
 }
 
 
@@ -16,8 +15,6 @@ mat-sidenav-content{
   width: fit-content;
   margin-top: 88px;
   height: calc(100% - 90px);
-  direction: rtl;
-  // overflow: hidden;
 }
 .sidenav-education{
   border-top:  color(primary) solid 3px;

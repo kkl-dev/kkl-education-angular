@@ -1,0 +1,106 @@
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
+    <div fxFlex="10" class="form-title">
+      <app-form-header [slots]="{ newClient}" slot="newClient">
+        <div title fxLayout="row" fxLayoutAlign="start center">
+          <app-typography color="primary" bold="600" size="16">
+            {{ group.header.label }}
+          </app-typography>
+        </div>
+      </app-form-header>
+    </div>
+
+    <div class="form-autocomplete">
+      <app-form-autocomplete
+        [group]="clientQuestions.group"
+        [formGroup]="formGroup.controls.client"
+      ></app-form-autocomplete>
+    </div>
+
+    <div fxFlex="15" class="form-title">
+      <app-form-header [slots]="{ contactButton }" slot="contactButton">
+        <div title fxLayout="row" fxLayoutAlign="start center">
+          <app-typography color="primary" bold="600" size="16">
+            {{ contactQuestions.group.header.label }}
+          </app-typography>
+        </div>
+      </app-form-header>
+    </div>
+
+    <div>
+      <app-form-container
+        [disable]="!editMode"
+        content
+        [cols]="contactQuestions.cols"
+        [questions]="contactQuestions.group.questions"
+        [formGroup]="formGroup.controls.contact"
+      >
+      </app-form-container>
+    </div>
+
+    <div class="form-autocomplete">
+      <app-form-autocomplete
+        [group]="payerQuestions.group"
+        [formGroup]="formGroup.controls.payer"
+      ></app-form-autocomplete>
+    </div>
+  </div>
+
+  <ng-template #newClient let-group="group" let-formGroup="formGroup">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="end center"
+      (click)="onAddClient()"
+      class="button"
+    >
+      <app-typography color="primary" class="underline">
+        הוסף לקוח חדש
+      </app-typography>
+    </div>
+  </ng-template>
+
+  <ng-template #contactButton>
+    <div *ngIf="editMode">
+      <div class="edit-button-container" *ngIf="!($saveMode | async)">
+        <button
+          type="submit"
+          disableRipple="true"
+          (click)="onEdit()"
+          mat-icon-button
+          class="edit-button mat-elevation-z1"
+        >
+          <app-icon
+            scale="0.8"
+            color="primary"
+            key="edit"
+            type="mat"
+          ></app-icon>
+        </button>
+      </div>
+
+      <div
+        class="clear-container underline button"
+        *ngIf="$saveMode | async"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        (click)="onClear()"
+      >
+        <app-typography color="primary"> X בטל </app-typography>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #payerName let-group="group" let-formGroup="formGroup">
+    <app-form-autocomplete
+      [group]="group"
+      [formGroup]="formGroup"
+    ></app-form-autocomplete>
+  </ng-template>
+
+  <ng-template #wantedClient let-group="group" let-formGroup="formGroup">
+    <app-form-autocomplete
+      [group]="group"
+      [formGroup]="formGroup"
+    ></app-form-autocomplete>
+  </ng-template>
+</div>

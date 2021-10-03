@@ -1,0 +1,74 @@
+<div class="summary">
+    <div class="header">
+        <div>
+            <h1>סיכום הזמנה</h1>
+        </div>
+        <div class="header-menu">
+            <p>הצג ביטולים</p>
+            <p (click)='toggleAllItems()'>{{activateIndex.length !== tableBodyTitles.length ? 'פתח הכול' : 'סגור הכול'}}
+            </p>
+        </div>
+    </div>
+    <div class="main">
+        <table>
+            <thead>
+                <tr>
+                    <ng-container *ngFor='let item of tableTitles'>
+                        <th *ngIf='item.name' [ngStyle]="{width: item.width ? item.width : '200px'}">{{item.name}}</th>
+                        <th *ngIf='item.icon' [ngStyle]="{width:'auto'}">
+                            <svg-icon [src]="'assets/images/' + item.icon"></svg-icon>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor='let item of tableBodyTitles;let i = index;'>
+                    <tr id="border">
+                        <td colspan='4'>
+                            <p>{{item.name}}</p>
+                        </td>
+                            <td>{{!activateIndex.includes(i) ? item.amount : null}}</td>
+                            <td>{{!activateIndex.includes(i) ? (item.price | currency:'₪') : null}}</td>
+                            <td>{{!activateIndex.includes(i) ? (item.supplierCharge | currency:'₪') : null}}</td>
+                            <td>{{!activateIndex.includes(i) ? (item.customerBilling | currency:'₪') : null}}</td>
+                        <td (click)="toggleItems(i)">
+                            <svg-icon [src]="!activateIndex.includes(i) ? 'assets/images/down-arrow.svg' : 'assets/images/up-arrow.svg'"></svg-icon>
+                        </td>
+                    </tr>
+                    <ng-container *ngFor='let e of mySwitch(i)'>
+                        <tr *ngIf="activateIndex.includes(i)" class="toggle-table">
+                            <td>{{e.date}}</td>
+                            <td>{{e.supplier}}</td>
+                            <td>{{e.item}}</td>
+                            <td [ngStyle]="{color : e.customerOrder ? 'red' : '#707070'}">{{e.comments}}</td>
+                            <td>{{e.amount}}</td>
+                            <td>{{e.price | currency:'₪'}}</td>s
+                            <td>{{e.supplierCharge | currency:'₪'}}</td>
+                            <td>{{e.customerBilling | currency:'₪'}}</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="activateIndex.includes(i)">
+                        <td colspan='4'>
+                        </td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.price | currency:'₪'}}</td>
+                        <td>{{item.supplierCharge | currency:'₪'}}</td>
+                        <td>{{item.customerBilling | currency:'₪'}}</td>
+                    </tr>
+                </ng-container>
+
+            </tbody>
+        </table>
+        <div class="order-summary">
+            <div>
+                <p><span>{{examplePrice | currency:'₪'}}</span> סה"כ לתשלום</p>
+            </div>
+            <div>
+                <p><span>{{examplePrice | currency:'₪'}}</span> כולל מע"מ</p>
+            </div>
+            <div>
+                <p><span>{{examplePrice | currency:'₪'}}</span> סה"כ לתשלום אחרי סבסוד קקל</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
+    <div class="form-title">
+      <app-form-header [slots]="{ tourId}" slot="tourId">
+        <div title fxLayout="row" fxLayoutAlign="start center">
+          <app-typography color="primary" bold="600" size="16">
+            {{ group.header.label }}
+          </app-typography>
+        </div>
+      </app-form-header>
+    </div>
+
+    <div>
+      <app-form-container
+        [cols]="group.cols"
+        [questions]="group.questions"
+        (valueChange)="logForm($event)"
+      >
+      </app-form-container>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="5" dir="rtl">
+      <ng-container *ngFor="let item of list; let i = index">
+        <div class="list-item">
+          <app-typography class="label-text">
+            {{ item.label }}:
+          </app-typography>
+          <app-typography [bold]="600">
+            {{ item.value }}
+          </app-typography>
+        </div>
+        <div *ngIf="i !== list.length - 1" class="divider" fxFlex="10">|</div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- template components -->
+
+<ng-template #tourId>
+  <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
+</ng-template>

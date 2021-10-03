@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { TooltipDataModel } from './tooltip/tooltip.component';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { UserService } from '../../api/api/user.service';
+import { TripService } from 'src/app/services/trip.service';
 
 export interface InfoCard {
   svgUrl: string;
   headline: string;
   subHeadline?: string;
-  availability: TooltipDataModel[];
+  availability?: TooltipDataModel[];
 }
 
 @Component({
@@ -16,13 +19,84 @@ export interface InfoCard {
   styleUrls: ['./education-results.component.scss'],
 })
 export class EducationResultsComponent implements OnInit {
-  public availabilityItemsArray = [
-    { date: '15.06.21', text: 'זמינות יום 1' },
-    { date: '16.06.21', text: 'זמינות יום 2' },
-    { date: '17.06.21', text: 'זמינות יום 3' },
+  // @ViewChild('child') child!: MapsComponent;
+  centerField: string = 'מרכז שדה - נס הרים';
+  forestCenter: any | undefined;
+  availabilityItemsArray: any = [];
+  dateObj: any;
+
+  ngOnInit() {
+    this.tripService.forestCenter.subscribe((result) => {
+      this.forestCenter = result; // this set's the username to the default observable value
+    });
+
+    this.availabilityItemsArray = [
+      { date: '15.06.21', text: '1' },
+      { date: '16.06.21', text: '2' },
+      { date: '17.06.21', text: '3' },
+    ];
+
+    if (this.tripService.centerField) {
+      this.dateObj = this.tripService.dateObj;
+
+      for (let key in this.dateObj) {
+        let value = this.dateObj[key];
+      }
+    }
+  }
+
+  date1 = new Date('7/13/2010');
+  date2 = new Date('12/15/2010');
+
+  getDifferenceInDays(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60 * 60 * 24);
+  }
+
+  getDifferenceInHours(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60 * 60);
+  }
+
+  getDifferenceInMinutes(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / (1000 * 60);
+  }
+
+  getDifferenceInSeconds(date1: any, date2: any) {
+    const diffInMs = Math.abs(date2 - date1);
+    return diffInMs / 1000;
+  }
+
+  public sleepingOptionsArray = [
+    {
+      svgUrl: 'assets/images/cabin.svg',
+      sleepingAreas: 2,
+      avialableSpaces: 16,
+      type: 'בקתות',
+      singleUnit: 'בבקתה',
+    },
+    {
+      svgUrl: 'assets/images/tent.svg',
+      sleepingAreas: 4,
+      avialableSpaces: 36,
+      type: 'אוהלים',
+      singleUnit: 'באוהל',
+    },
+    {
+      svgUrl: 'assets/images/camp.svg',
+      sleepingAreas: 1,
+      avialableSpaces: 120,
+      type: 'גיחה',
+      singleUnit: 'לנים',
+    },
   ];
 
-  public chosenDate = 0;
+  // changeForestCenter(e: any, visible: any) {
+  //   this.child.changeForestCenter(visible);
+  // }
+
+  public chosenDate: number = 0;
 
   sleepingOptionsByDay: {
     day: string;
@@ -180,26 +254,30 @@ export class EducationResultsComponent implements OnInit {
     );
   }
 
-  changeDatesHandler(newDates: string) { 
-    
+  changeDatesHandler(newDates: string) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
- 
+
+    const dateFormat1 = dates[0].split('/').reverse();
+    dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+    dateFormat1[2] = (+dateFormat1[2]).toString();
+    const dateFormat2 = dates[1].split('/').reverse();
+    dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+    dateFormat2[2] = (+dateFormat2[2]).toString();
+    let date1 = new Date(dateFormat1.join(','));
+    let date2 = new Date(dateFormat2.join(','));
     
-    let date1 = new Date(dates[0]);
-    let date2 = new Date(dates[1]);
-    
-    const utc1 = Date.UTC( 
+
+    const utc1 = Date.UTC(
       date1.getFullYear(),
       date1.getMonth(),
-      date1.getDate(),
-      );
-      console.log(date2);
+      date1.getDate()
+    );
     const utc2 = Date.UTC(
       date2.getFullYear(),
       date2.getMonth(),
-      date2.getDate(),
+      date2.getDate()
     );
 
     const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
@@ -209,7 +287,7 @@ export class EducationResultsComponent implements OnInit {
     for (let i = 0; i <= totalDays; i++) {
       //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
       const newDateString = `${newDate.getDate()}.${
-        newDate.getMonth() + 1
+        (newDate.getMonth() + 2).toString()
       }.${newDate.getFullYear()}`;
       newSleepingOptionsByDay.push({
         day: newDateString,
@@ -246,20 +324,20 @@ export class EducationResultsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private checkAvailabillityService: CheckAvailabilityService
+    private checkAvailabillityService: CheckAvailabilityService,
+    public usersService: UserService,
+    private route: ActivatedRoute,
+    private userDataService: UserDataService,
+    private tripService: TripService
   ) {
     this.facilitiesArray = this.checkAvailabillityService.getNewFacilitiesArray(
       this.sleepingOptionsByDay[0].day
     );
 
-    console.log( this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
-    
     this.changeDatesHandler(
       this.checkAvailabillityService.checkAvailabilltyValues.calendarInput
     );
   }
-
-  ngOnInit(): void {}
 
   public onClick() {
     this.router.navigateByUrl('education/order-tour/squad-assemble');

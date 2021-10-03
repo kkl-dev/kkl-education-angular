@@ -1,31 +1,14 @@
 @import "../../../../styles.scss";
 
-
-
-.table-details {
-  flex-direction: row-reverse;
+mat-grid-list,
+mat-grid-tile,
+app-flex-cell {
+  height: 100%;
+  width: 100%;
 }
 
-.row-item {
-  padding-top: spacing(2);
-  padding-bottom: spacing(2);
-}
-
-.column {
-  padding-top: spacing(2);
-}
-
-.item-label {
-  padding-left: spacing(1);
-
-}
-
-.row-button {
-  padding-bottom: spacing(2);
-}
-
-.label-container {
-  border-bottom: 2px solid color(primary);
+app-typography {
+  height: 100%;
 }
 
 .divider {

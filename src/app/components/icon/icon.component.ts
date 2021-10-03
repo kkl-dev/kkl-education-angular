@@ -12,21 +12,21 @@ export interface IconClasses {
   styleUrls: ['./icon.component.scss'],
 })
 export class IconComponent implements OnInit {
-  
+
   @Input() public size: number = 24;
   @Input() public width: number;
   @Input() public height: number;
-
   @Input() public isActive: boolean;
 
   @Input() public type: string;
   @Input() public key: string = '';
   @Input() public color: string;
-  @Input() public matScale: string;
+  @Input() public backgroundColor: string;
+  @Input() public scale: number | string;
 
-  public default: boolean = true;
+  public matScale: string;
 
-  constructor(private iconsService: IconsService) {}
+  constructor(private iconsService: IconsService) { }
 
   ngOnInit(): void {
     this.setIcon();
@@ -42,16 +42,12 @@ export class IconComponent implements OnInit {
   }
 
   private setIconColor() {
-    if (this.color) {
-      this.default = false;
-    } else {
-      this.default = !this.isActive;
-    }
+    this.color = this.isActive ? 'active' : this.color || 'default';
   }
 
   private setIconSize() {
     this.width = this.size;
     this.height = this.size;
-    this.matScale = this.matScale || 'scale(1)';
+    this.matScale = this.scale ? `scale(${this.scale})` : 'scale(1)';
   }
 }

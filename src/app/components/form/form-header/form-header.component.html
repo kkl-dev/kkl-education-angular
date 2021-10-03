@@ -1,0 +1,8 @@
+<div [ngClass]="[variant, 'underline']" fxLayout="row" fxLayoutAlign="space-between end" fxFill dir="rtl">
+  <div [ngClass]="[variant, 'title']">
+    <ng-content select="[title]"></ng-content>
+  </div>
+  <div>
+    <ng-container *ngTemplateOutlet="slots[slot]"></ng-container>
+  </div>
+</div>

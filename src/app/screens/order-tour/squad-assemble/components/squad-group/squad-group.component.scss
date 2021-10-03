@@ -1,0 +1,29 @@
+@import "../../.././../../../styles.scss";
+
+app-form-container,
+app-form-input,
+app-form-header,
+app-squad-group-gender,
+div {
+  height: 100%;
+  width: 100%;
+}
+
+button.gender-button {
+  height: 2rem !important;
+  width: 2rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: spacing(1);
+  margin-bottom: spacing(1);
+
+  &.mat-icon-button {
+    border-radius: 20% !important;
+  }
+}
+
+div.form-title {
+  margin-bottom: spacing(1);
+}

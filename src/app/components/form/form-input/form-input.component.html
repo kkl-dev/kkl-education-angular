@@ -1,56 +1,91 @@
-<div class="input-container">
-  <div>
-    <mat-form-field
-      [color]="theme"
-      appearance="outline"
-      [ngClass]="[labelLength || 'base']"
+<div>
+  <mat-form-field [color]="theme" [appearance]="disabled ? 'fill' : 'outline'">
+    <mat-label>{{ label }}</mat-label>
+
+    <input
+      *ngIf="
+        controlType !== 'select' &&
+        controlType !== 'textarea' &&
+        controlType !== 'calendar' &&
+        controlType !== 'autocomplete'
+      "
+      matInput
+      [type]="type"
+      [formControl]="control"
+      control="control"
+      autocomplete="off"
+      (input)="handleChange($event.target.value)"
+      [name]="type"
+      (focusout)="validate()"
+      #input
+      [placeholder]="label"
+    />
+
+    <input
+      #dateInput
+      *ngIf="controlType === 'calendar'"
+      matInput
+      type="text"
+      (newDate)="newDateReceived($event)"
+      (sleepingPlace)="newSleepingPlaceReceived($event)"
+      (prevDate)="prevDateReceived($event)"
+      [options]="dateOptions"
+      airbnb-calendar
+      control="control"
+      autocomplete="none"
+      [(ngModel)]="control.value"
+      dir="rtl"
+    />
+
+    <mat-select
+      color="primary"
+      [formControl]="control"
+      *ngIf="controlType === 'select'"
+      (selectionChange)="onSelectChange()"
+      (openedChange)="validate()"
     >
-      <mat-label>{{ label }}</mat-label>
+      <mat-option>{{ label }}</mat-option>
+      <mat-option *ngFor="let option of options" [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+
+    <ng-container *ngIf="controlType === 'autocomplete'">
       <input
-        *ngIf="controlType !== 'select' && controlType !== 'textarea'"
+        type="text"
         matInput
-        [type]="type"
         [formControl]="control"
-        control="control"
-        autocomplete="off"
-        (input)="handleChange($event.target.value)"
-        [name]="type"
-        (focusout)="validate()"
-        #input
-        [placeholder]="label"
+        [matAutocomplete]="auto"
       />
-
-      <mat-select
-        color="primary"
-        [formControl]="control"
-        *ngIf="controlType === 'select'"
-        (change)="handleChange($event.value)"
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="onOptionSelected($event)"
       >
-        <mat-option>{{ label | titlecase }}</mat-option>
         <mat-option *ngFor="let option of options" [value]="option.value">
-          {{ option.key }}
+          {{ option.label }}
         </mat-option>
-      </mat-select>
+      </mat-autocomplete>
+    </ng-container>
 
-      <textarea
-        rows="4"
-        [formControl]="control"
-        *ngIf="controlType === 'textarea'"
-        matInput
-      ></textarea>
+    <textarea
+      matInput
+      *ngIf="controlType === 'textarea'"
+      rows="4"
+      [formControl]="control"
+      (focusout)="validate()"
+      dir="rtl"
+    ></textarea>
 
-      <!-- icons -->
-      <mat-icon matPrefix>{{
-        controlType === "select" ? "keyboard_arrow_down" : icon
-      }}</mat-icon>
+    <!-- icons -->
+    <app-icon
+      matPrefix
+      [color]="color || 'primary'"
+      [key]="controlType === 'select' ? icon || 'keyboard_arrow_down' : icon"
+      [type]="controlType === 'calendar' ? 'svg' : 'mat'"
+    ></app-icon>
 
-      <!-- shred input hint -->
-      <mat-hint *ngIf="hint">{{ "Please enter " + hint }}</mat-hint>
-
-      <!-- shred input error -->
-      <mat-error *ngIf="control.errors">{{ error }}</mat-error>
-    </mat-form-field>
-
-    <div></div>
-  </div>
+    <!-- shred input error -->
+    <mat-error *ngIf="control.errors">{{ error }}</mat-error>
+  </mat-form-field>
 </div>

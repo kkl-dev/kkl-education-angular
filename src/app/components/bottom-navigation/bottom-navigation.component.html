@@ -1,28 +1,50 @@
-<div class="bottom-navigation">
-  <div class="bottom-navigation__back">
-    <button
-      class="bottom-navigation__back-link"
-      (click)="previousPageHandler()"
-    >
-      <app-icon type="mat" key="chevron_right"></app-icon>
-    </button>
-  </div>
-  <div class="button-container">
-    <button mat-raised-button color="primary" (click)="nextPageHandler()">
-      <div
-        fxLayout="row"
-        class="button-content"
-        xLayoutAlign="space-around stretch"
+<mat-toolbar
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  fxFill
+  dir="rtl"
+>
+  <div fxFlex="10">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <button
+        class="prev mat-elevation-z1"
+        mat-icon-button
+        (click)="onPrevious()"
       >
-        <div>
-          {{ title }}
-        </div>
-        <div>
-          <app-icon color="" type="mat" key="chevron_left"></app-icon>
-        </div>
+        <app-icon type="mat" key="chevron_right"></app-icon>
+      </button>
+    </div>
+  </div>
+  <div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
+    <app-icon type="svg" size="220" key="bottom-logo"></app-icon>
+  </div>
+  <div
+    fxFlex="10"
+    fxLayout="row"
+    [fxLayoutAlign]="hasSave ? 'space-between center' : 'end center'"
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="hasSave"
+      (click)="onSave()"
+    >
+      <app-typography color="paper"> שמירה </app-typography>
+    </button>
+    <button
+      mat-raised-button
+      [disabled]="!hasNext"
+      color="primary"
+      (click)="onNext()"
+    >
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <app-typography color="paper"> {{ text }} </app-typography>
+        <app-icon
+          [color]="hasNext ? 'active' : 'disable'"
+          type="mat"
+          key="chevron_left"
+        ></app-icon>
       </div>
     </button>
   </div>
-</div>
-
-<!-- class="bottom-navigation__forward" -->
+</mat-toolbar>

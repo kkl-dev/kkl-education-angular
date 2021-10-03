@@ -1,65 +1,55 @@
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from './question-base';
+import { QuestionGroup } from './question-group';
+import { Subject } from 'rxjs';
 
 export interface FormTemplate {
   label?: string;
-  isGroup?: boolean;
+  hasGroups?: boolean;
   cols?: string | number;
-  formCols?: string | number;
   questions?: QuestionBase<string | Date | number>[];
-  questionsGroup?: QuestionGroup[];
+  questionsGroups?: QuestionGroup[];
 }
 
-export interface QuestionGroup {
-  key?: string;
-  label?: string;
-  cols?: string | number;
-  isGroup?: boolean;
-  questions?: QuestionBase<string | Date | number>[];
-  hasButton?: boolean;
-}
 @Injectable({
   providedIn: 'root',
 })
 export class FormService {
-  constructor(private fb: FormBuilder) {}
 
-  private errorsMessage = {
-    required: (key: string): string => `${key} is required`,
-    pattern: (key: string): string => `${key} is not in  valid format`,
-    'string.empty': (key: string): string => `${key} is required`,
-    'number.base': (key: string): string => `${key} must be a number`,
-  };
+  constructor(private fb: FormBuilder) {
+  }
 
-  private setGroup(questions: QuestionBase<string | Date | number>[]) {
+
+
+  private setGroup(
+    questions: QuestionBase<string | Date | number | QuestionGroup>[]
+  ): { [x: string]: any } {
     return questions
       .map((question) => question)
       .reduce((acc, control) => {
         const { key, value, isGroup, group, validations } = control;
         return {
           ...acc,
-          [key]: isGroup ? this.setGroup(group) : [value || '', validations],
+          [key]: isGroup ? this.setGroup(group.questions) : [value || '', validations],
         };
       }, {});
   }
 
-  private formatForm(questions) {
+  private formatForm(
+    questions: QuestionBase<string | Date | number | QuestionGroup>[]
+  ) {
     return questions.map((question) => {
       const { key, value, isGroup, group, validations } = question;
       return {
         key: key,
         isGroup,
-        template: isGroup ? this.setGroup(group) : [value, validations],
+        template: isGroup ? this.setGroup(group.questions) : [value, validations],
       };
     });
   }
 
-  private setForms(formTemplate) {
-    return formTemplate;
-  }
-
-  public setForm(formTemplate: any[]) {
+  private setForm(formTemplate: any[]) {
     return formTemplate
       .map((question) => question)
       .reduce((acc, control) => {
@@ -73,12 +63,7 @@ export class FormService {
       }, {});
   }
 
-  public buildForm(questions: QuestionBase<string | number | Date>[]) {
-    return this.fb.group(this.setForm(this.formatForm(questions)));
-  }
-
-
-  private ArrayToObject(arr: any[]) {
+  private reduceArrayToObject(arr: any[]) {
     return arr
       .map((item) => item)
       .reduce((acc, control) => {
@@ -89,24 +74,19 @@ export class FormService {
       }, {});
   }
 
-  public setFormBuilder(formTemplate: FormTemplate) {
-    if (formTemplate.isGroup) {
-      const form = formTemplate.questionsGroup.map((group: QuestionGroup) => {
+  public setFormGroup(formTemplate: FormTemplate): FormGroup {
+    if (formTemplate.hasGroups) {
+      const form = formTemplate.questionsGroups.map((group: QuestionGroup) => {
         const { key, questions } = group;
         return {
           [key]: this.fb.group(this.setGroup(questions)),
         };
       });
-
-      console.log(form);
-      console.log(this.ArrayToObject(form));
-      console.log(this.fb.group(this.ArrayToObject(form)));
-
-      return '';
+      return this.fb.group(this.reduceArrayToObject(form));
     } else
-      return this.fb.group(
-        this.setForm(this.formatForm(formTemplate.questions))
-      );
+    return this.fb.group(
+      this.setForm(this.formatForm(formTemplate.questions))
+    );
   }
 
   // handle input error messages

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
+import { StepModel } from 'src/app/utilities/models/step.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,27 +9,27 @@ import { NavigationCardModel } from 'src/app/utilities/models/nav-card-model';
 export class DashboardComponent {
   public activeRoute: string = '';
 
-  public topCards: NavigationCardModel[] = [
+  public topCards: StepModel[] = [
     {
       svgUrl: 'calendar',
-      title: 'בדיקת זמינות',
+      label: 'בדיקת זמינות',
       path: 'search',
     },
     {
       svgUrl: 'button',
-      title: 'טיול חדש',
+      label: 'טיול חדש',
       path: 'search',
     },
   ];
-  public bottomCards: NavigationCardModel[] = [
+  public bottomCards: StepModel[] = [
     {
       svgUrl: 'destination',
-      title: 'הטיולים שלי',
+      label: 'הטיולים שלי',
       path: 'search',
     },
     {
       svgUrl: 'report',
-      title: 'דוחות',
+      label: 'דוחות',
       path: 'search',
     },
   ];

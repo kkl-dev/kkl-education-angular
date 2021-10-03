@@ -3,24 +3,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/earlyaccess/opensanshebrew.css");
 
-
 $primary: #448ecd;
-$primary-dark: #0572BA;
+$primary-dark: #0572ba;
 $accent: #d220ba;
-$default: #bababa;
 $paper: #fff;
 $text: #000000;
-$text-light: #A2A2A2;
+$text-light: #a2a2a2;
 $success: #37c563;
+$danger: #D83020;
+$disable:  rgba(0, 0, 0, 0.26);;
+$default: #bababa;
+$border: #DBDBDB;
 
 $colors: (primary: $primary,
   primary-dark: $primary-dark,
   accent: $accent,
   default: $default,
+  disable: $disable,
+  border: $border,
   paper: $paper,
   text: $text,
   text-light: $text-light,
-  success : $success);
+  success: $success,
+  danger: $danger,
+);
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
@@ -30,12 +36,10 @@ $colors: (primary: $primary,
   @return $spacing * 8px;
 }
 
-
 html,
 body {
   height: 100vh;
   box-sizing: border-box;
-  text-align: right;
 }
 
 body {
@@ -50,26 +54,16 @@ body {
   background-color: color(primary);
 }
 
-:ng-deep mat-grid-list {
-  direction: rtl !important;
-  display: flex !important;
-  flex-direction: row-reverse !important;
-
-}
-
+::ng-deep mat-grid-list,
 mat-grid-tile {
-  &.text>figure.mat-figure {
-    display: flex;
-    flex-direction: column;
-  }
+  height: 100%;
+  width: 100%;
 }
 
 
 ::ng-deep .icon .mat-badge-content {
   font-family: "Material Icons";
 }
-
-
 
 ::ng-deep mat-card-actions,
 mat-card-subtitle,

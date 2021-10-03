@@ -1,0 +1,205 @@
+.SOBD {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  direction: rtl;
+}
+
+.SOBD__days {
+  margin: 0 auto;
+  margin-bottom: 30px;
+  text-align: center;
+  width: 50%;
+}
+
+.SOBD__days-current-day {
+  font-size: 18px;
+}
+
+.SOBD__days-current-day-next {
+  margin-right: 5px;
+}
+
+.SOBD__days-current-day-next::before {
+  border-style: solid;
+  border-width: 0.25em 0.25em 0 0;
+  content: '';
+  display: inline-block;
+  height: 0.45em;
+  left: 0.15em;
+  position: relative;
+  top: 0.15em;
+  -webkit-transform: rotate(-135deg);
+          transform: rotate(-135deg);
+  vertical-align: top;
+  width: 0.45em;
+}
+
+.SOBD__days-current-day-previous {
+  margin-left: 5px;
+}
+
+.SOBD__days-current-day-previous::before {
+  border-style: solid;
+  border-width: 0.25em 0.25em 0 0;
+  content: '';
+  display: inline-block;
+  height: 0.45em;
+  left: 0.15em;
+  position: relative;
+  top: 0.15em;
+  -webkit-transform: rotate(-315deg);
+          transform: rotate(-315deg);
+  vertical-align: top;
+  width: 0.45em;
+}
+
+.SOBD__days-current-day-previous, .SOBD__days-current-day-next {
+  cursor: pointer;
+  color: #448ecd;
+  font-weight: bold;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  background-color: transparent;
+  border: 0;
+  padding-bottom: 3px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.SOBD__days-current-day-text span {
+  color: #37c56b;
+  font-size: 20px;
+}
+
+.SOBD__days-paginatior {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 10px;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.SOBD__days-paginatior span {
+  border-top: 5px solid #dbdbdb;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.SOBD__sleep-areas {
+  padding: 0 100px;
+  direction: rtl;
+  text-align: right;
+}
+
+.SOBD__sleep-areas-headline {
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.SOBD__sleep-areas-options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  text-align: center;
+  border-bottom: 1px solid #f9f9f9;
+  padding-bottom: 40px;
+  margin: 0 auto;
+}
+
+.SOBD__sleep-areas-options-item {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: 0px;
+}
+
+.SOBD__sleep-areas-options-item > * {
+  padding: 0;
+}
+
+.SOBD__sleep-areas-options-item-svg * {
+  width: 32.5px;
+  height: 37.5px;
+  margin-left: 5px;
+  fill: #37c56b;
+}
+
+.SOBD__sleep-areas-options-item-count {
+  margin-right: 5px;
+  -ms-flex-item-align: center;
+      align-self: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 5px;
+}
+
+.SOBD__sleep-areas-options-item-count-number {
+  width: 35px;
+  height: 35px;
+  margin: auto 0;
+  background-color: #f6f6f6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.SOBD__sleep-areas-options-item-count-number > * {
+  margin: auto;
+}
+
+.flex {
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  grid-gap: 50px;
+}
+
+.disabled {
+  cursor: none;
+  color: #eeeeee;
+}
+
+.chosen {
+  border-top: 5px solid #37c56b !important;
+  background-color: transparent !important;
+}
+
+.font-color-blue {
+  color: #448ecd;
+}
+/*# sourceMappingURL=sleeping-options-by-day.component.css.map */

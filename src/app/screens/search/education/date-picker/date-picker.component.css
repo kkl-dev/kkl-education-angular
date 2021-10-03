@@ -1,0 +1,82 @@
+.date-picker {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  align-self: center;
+  position: relative;
+}
+
+.date-picker__starting-date {
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  width: 120%;
+  border: 1px solid blue;
+}
+
+.date-picker__input {
+  border: 1px solid #cdcece;
+  width: 265px;
+  height: 51px;
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.date-picker__input-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 265px;
+  padding: 0 10px;
+  text-align: right;
+  overflow: hidden;
+  padding-bottom: 22.5px;
+}
+
+.date-picker__input-group-text {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.date-picker__input-group-svg * {
+  width: 36px;
+  height: 36px;
+  margin-left: 10px;
+}
+
+.date-picker__input-group-label {
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 15px;
+}
+
+.date-picker__inputs {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.date-picker__inputs-input {
+  border: 2px solid #cdcece;
+  width: 265px;
+  height: 51px;
+  background-color: white;
+}
+/*# sourceMappingURL=date-picker.component.css.map */

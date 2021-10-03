@@ -1,43 +1,41 @@
-
-<div class="order-tour" [ngClass]="{ 'sleeping-width': activeStep === 1 }">
-  <app-drawer *ngIf="activeStep === 0"></app-drawer>
-<div > 
-  <div
-  class="content"
-  fxLayout="column"
-  fxLayoutAlign="space-around stretch"
-  fxLayout.xs="column"
-  fxFlexFill
-  >
-  <div fxFlex="10" fxLayoutAlign="center">
-    <div class="stepper">
-      <app-working-steps
-      [steps]="steps"
-      (changeActiveStep)="changeActiveStep($event)"
-      [activeStep]="activeStep"
-      >
+<div
+  class="order-tour"
+  [ngClass]="{
+    'sleeping-width': activeStep === 1 || currentRoute === 'sleeping'
+  }"
+>
+  <app-drawer *ngIf="currentRoute === 'squad-assemble'"></app-drawer>
+  <div>
+    <div
+      class="content"
+      fxLayout="column"
+      fxLayoutAlign="stretch"
+      fxLayout.xs="column"
+      fxFlexFill
+    >
+      <div fxFlex="16" class="stepper">
+        <app-working-steps
+          [steps]="steps"
+          [divider]="true"
+          (changeActiveStep)="changeActiveStep($event)"
+          (changStep)="onChangeStep($event)"
+        >
         </app-working-steps>
       </div>
-    </div>
-    <div fxFlex="70">
-      <div class="steps-container">
-        <router-outlet></router-outlet>
+      <div fxFlex="65">
+        <div class="steps-container">
+          <ng-content></ng-content>
+        </div>
       </div>
-    </div>
-    <div 
-      fxFlex="15"
-      fxFlex.xs="15"
-      class="bottom-navigation"
-      fxLayoutAlign="center"
-    >
-      <app-bottom-navigation
-        [currentPage]="0"
-        previousUrl="prevPage"
-        nextUrl="nextPage"
-        [lastPage]="steps.length"
-        (changePage)="changeActiveStepBottomNavigation($event)"
-        title="המשך"
-      ></app-bottom-navigation>
+      <div fxFlex="10" fxFlex.xs="15" class="bottom-navigation" dir="rtl">
+        <app-bottom-navigation
+          previousUrl="prevPage"
+          nextUrl="nextPage"
+          (changePage)="changeActiveStepBottomNavigation($event)"
+          [text]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"
+          [hasSave]="hasSave"
+        ></app-bottom-navigation>
+      </div>
     </div>
   </div>
 </div>

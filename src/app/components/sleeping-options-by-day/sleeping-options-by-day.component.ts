@@ -34,7 +34,8 @@ export class SleepingOptionsByDayComponent implements OnInit {
     this.emitCurrentDayHandler();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   emitCurrentDayHandler() {
     this.emitCurrentDay.emit(this.currentDay);
