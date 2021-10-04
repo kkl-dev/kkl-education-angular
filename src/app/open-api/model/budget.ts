@@ -35,4 +35,3 @@ export interface Budget {
     subBudgetExpenseList?: Array<SubBudget>;
 }
 
-  

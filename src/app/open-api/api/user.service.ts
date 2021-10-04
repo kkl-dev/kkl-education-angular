@@ -47,9 +47,9 @@ import { Configuration }                                     from '../configurat
   providedIn: 'root'
 })
 export class UserService {
-    protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
 
     // protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
+    protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -753,6 +753,50 @@ export class UserService {
         }
 
         return this.httpClient.get<Array<BaseCustomer>>(`${this.configuration.basePath}/customers/${encodeURIComponent(String(custAutoComplete))}/${encodeURIComponent(String(filterParam))}`,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param custAutoComplete 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getKKLWorkers(custAutoComplete: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<BaseCustomer>>;
+    public getKKLWorkers(custAutoComplete: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<BaseCustomer>>>;
+    public getKKLWorkers(custAutoComplete: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<BaseCustomer>>>;
+    public getKKLWorkers(custAutoComplete: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        if (custAutoComplete === null || custAutoComplete === undefined) {
+            throw new Error('Required parameter custAutoComplete was null or undefined when calling getKKLWorkers.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.get<Array<BaseCustomer>>(`${this.configuration.basePath}/getKKLWorkers/${encodeURIComponent(String(custAutoComplete))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

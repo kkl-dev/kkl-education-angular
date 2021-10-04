@@ -6,14 +6,15 @@ import { UserService } from 'src/app/open-api/api/user.service';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
 import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer, ActivityType, BudgetByParams, Budget } from '../open-api';
+import { SquadBudgetService } from '../screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
 
-  constructor(public userService: UserService) { }
-
+  constructor(private userService: UserService, private squadBudgetService: SquadBudgetService) { }
+  // 
   //  forestCenters: any = {};
 
   centerField: FieldForestCenter = {
@@ -121,6 +122,8 @@ export class TripService {
         console.log({ error });
       });
   }
+  payerCustomer = {} as BaseCustomer;
+  Customer = {} as BaseCustomer;
   ageGroup = [];//to convert to model of comrax
   ageGroupOriginal: AgeGroup[];
   fieldForestCenters = [];//to convert to model of comrax
@@ -128,7 +131,8 @@ export class TripService {
   activityByAttribute = [];
   activityByAttributeOriginal: ActivityType[]
   customers = [];
-  customersOriginal: BaseCustomer[]
+  customersOriginal: BaseCustomer[];
+  baseCustomer: BaseCustomer;
   areas: Area[];
   attributes = [];
   attributesOriginal: TripAttribute[];
@@ -169,7 +173,12 @@ export class TripService {
       response => {
         console.log('response', response)
         this.budget = response;
-
+        // var list;
+        // this.budget.listCity.forEach(element => {
+        //   list.push({ label: element.name, value: element.id.toString() });
+        // });
+        // var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+        // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.budget.listCity;
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -191,14 +200,39 @@ export class TripService {
       () => console.log('completed')     // complete
     )
   }
-  getCustomersByParameters() {
-    this.userService.getCustomersByParameters('סימינר', 'all').subscribe(
+  getCustomersByParameters(customer, clientPool) {
+    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
       response => {
         console.log('response', response)
         this.customersOriginal = response;
         response.forEach(element => {
           this.customers.push({ label: element.name, value: element.id.toString() });
         });
+        console.log(this.customers)
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+  getKKLWorkers(customer) {
+    this.userService.getKKLWorkers(customer).subscribe(
+      response => {
+        console.log('response', response)
+        this.customersOriginal = response;
+        response.forEach(element => {
+          this.customers.push({ label: element.name, value: element.id.toString() });
+        });
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+  getCustomer(customerId) {
+    this.userService.getCustomer(customerId).subscribe(
+      response => {
+        console.log('response', response)
+        // this.baseCustomer = response.BaseCustomer;
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

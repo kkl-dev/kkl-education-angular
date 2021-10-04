@@ -11,6 +11,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { BudgetByParams } from 'src/app/open-api';
 import { BudgetModel } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.model';
 import { SquadBudgetService } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
+import { SquadGroupService } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.service';
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FormService } from '../logic/form.service';
@@ -52,7 +53,7 @@ export class FormInputComponent implements OnInit {
   @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
-  constructor(private formService: FormService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService,) { }
+  constructor(private formService: FormService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService) { }
 
   ngOnInit(): void {
     this.name = this.getName(this.control);
@@ -163,27 +164,44 @@ export class FormInputComponent implements OnInit {
     }
     if (this.name === 'attribute') {
       this.group.controls['activityType'].setValue(undefined);//איפוס שדה פעילות
-      if (parseInt(this.control.value) === 12) {
-        this.squadAssemble.formsArray[1].controls['ageGroup'].setValue(undefined)
+      if (this.control.value === '12') {
+        var index;
+        for (var i in this.squadAssemble.formsArray) {
+          Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
+            if (key === 'ageGroup') { index = i; }
+          });
+        }
+        this.squadAssemble.formsArray[index].controls['ageGroup'].setValue(undefined)
       }
       var attr = this.tripService.attributesOriginal.filter(el => el.id === parseInt(this.control.value))[0];
       if (attr.autoCustomerId !== null) {// שליפת לקוח והצבתו בלקוח רצוי 
+        this.tripService.getCustomer(attr.autoCustomerId);
       }
       this.tripService.budgetByParam.attribute = attr;
       this.tripService.budgetByParam.userId = "שחר";
-      this.tripService.budgetByParam.userName = "שחר גל"
+      this.tripService.budgetByParam.userName = "שחר גל";
+      //find index 'tripStart'
+      var index;
+      for (var i in this.squadAssemble.formsArray) {
+        Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
+          if (key === 'tripStart') { index = i; }
+        });
+      }
+      let str = this.squadAssemble.formsArray[index].controls['tripStart'].value.split("/");
+      this.tripService.budgetByParam.tripStart = str[2] + '-' + str[1] + '-' + str[0];
       this.tripService.getBudgetKKl(this.tripService.budgetByParam);
+      // index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+      // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.tripService.budget.listCity;
     }
     if (this.name === 'activityType') {
       var act = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(this.control.value))[0];
       this.tripService.budgetByParam.activity = act;
+      this.tripService.budgetByParam.budget = this.tripService.budget;
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
       let index = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
       this.squadBudgetService.questions[index].inputProps.options = this.tripService.budgetIncome;
       index = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
       this.squadBudgetService.questions[index].inputProps.options = this.tripService.budgetExpenses;
-      index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
-      this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.tripService.budget.listCity;
     }
     this.select.emit(this.control);
     this.groupEvent.emit(this.group);

@@ -57,6 +57,6 @@ export class SquadBudgetService {
 
 
   constructor(
-    private formService: FormService, public tripService: TripService
+      private formService: FormService
   ) { }
 }

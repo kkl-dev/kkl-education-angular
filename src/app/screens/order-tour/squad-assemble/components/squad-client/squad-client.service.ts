@@ -33,6 +33,7 @@ export class SquadClientService {
           new QuestionSelect({
             key: 'clientPool',
             type: 'select',
+            value:'all',
             inputProps: {
               options: [
                 { label: 'הכל', value: 'all' },
@@ -107,12 +108,13 @@ export class SquadClientService {
             key: 'payerName',
             type: 'select',
             label: 'הכול',
+            value:'all',
             inputProps: {
               options: [
-                { label: 'שם נוסף', value: 'שם נוסף' },
-                { label: 'עוד לקוח', value: 'עוד לקוח' },
-                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { label: 'הכל', value: 'all' },
+                { label: 'לקוחות כלליים', value: 'global' },
+                { label: 'לקוחות חו"ל', value: 'abroad' },
+                { label: 'עובד קק"ל', value: 'kklWorker' },
               ],
             },
           }),

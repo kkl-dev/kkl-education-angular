@@ -33,6 +33,8 @@ export interface TripInfo {
     areaTrip?: Area;
     budget?: Budget;
     customer?: BaseCustomer;
+    kklWorkerId?: number;
+    kklWorkerName?: string;
     customerType?: string;
     customerRegionName?: string;
     customerPay?: BaseCustomer;
