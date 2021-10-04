@@ -57,6 +57,8 @@ export class BottomNavigationComponent implements OnInit {
 
   createTrip(){
     let tripInfo= this.squadAssembleService.tripInfo;
+    tripInfo.customer.id = 125000010;
+    tripInfo.customer.name= 'צופים לטינים נצרת';
     tripInfo.lodgingReservation= this.squadAssembleService.filledNightsArray;
     
     this.userService.createTrip(tripInfo).subscribe(res=>{

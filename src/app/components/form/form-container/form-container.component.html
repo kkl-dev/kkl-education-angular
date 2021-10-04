@@ -11,7 +11,7 @@
         <mat-grid-tile *ngIf="!question?.isGroup" [colspan]="question.fullWidth ? cols : question.cols"
           [rowspan]="question.rows || 4">
           <app-form-input *ngIf="!question.custom" [disabled]="formGroup.disabled"
-            [control]="formGroup.controls[question.key]" [type]="question.type" [label]="question.label"
+            [control]="formGroup.controls[question.key]" [type]="question.type" [group]="formGroup" [label]="question.label"
             [icon]="question.icon" [options]="question.inputProps?.options"
             [dateOptions]="question.inputProps?.dateOptions" [controlType]="question.controlType"
             (autocomplete)="onAutocomplete($event)"></app-form-input>

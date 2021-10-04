@@ -4,13 +4,15 @@ import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
+import { AccommodationType, ParticipantType } from 'src/app/open-api';
 import { CheckAvailabilityService } from './check-availability.service';
 @Injectable({
   providedIn: 'root',
 })
 export class SleepingServiceService {
   nightsArray: {}[] = [];
-
+  accomodationTypeOptions: AccommodationType[];
+  participantOptions: ParticipantType[];
   checkAvailabilltyValues: {
     sleepingPlace: string;
     calendarInput: string;
@@ -138,8 +140,17 @@ export class SleepingServiceService {
     }),
   ];
 
+  
   constructor(private checkAvailabiltyService: CheckAvailabilityService) {
     this.checkAvailabilltyValues = this.checkAvailabiltyService.checkAvailabilltyValues;
+  }
+
+  setAccomodationByFieldCenter(accomodationTypeOptions){
+      this.accomodationTypeOptions=accomodationTypeOptions;
+  }
+
+  setParticipantsOptions(participants){
+     this.participantOptions= participants;
   }
 
   updateQuestions(

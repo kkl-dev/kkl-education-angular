@@ -16,6 +16,6 @@
  */
 export interface AccomodationFreeSpaces { 
     accomodationName?: string;
-    availableBeds?: number;
+    availableBeds?: number | null;
 }
 

@@ -34,6 +34,7 @@
         [cols]="contactQuestions.cols"
         [questions]="contactQuestions.group.questions"
         [formGroup]="formGroup.controls.contact"
+        (register)="logForm($event)"
       >
       </app-form-container>
     </div>

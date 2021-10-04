@@ -5,12 +5,15 @@ import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
-import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer, ActivityType } from '../open-api';
+
+import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer,ActivityType, Budget } from '../open-api';
+import { SquadBudgetService } from '../screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
+
 
   constructor(public userService: UserService) { }
   
@@ -29,6 +32,7 @@ export class TripService {
   languages: Language[];
   countries: Country[];
 
+
   centerField: FieldForestCenter = {
     id: 0,
     name: ''
@@ -38,6 +42,10 @@ export class TripService {
   formGroupSquadAssembles = [];
   dateRange: any;
   formOptions!: FieldForestCenter[];
+
+  budget: Budget;
+  budgetExpensesAndIncome: Budget;
+ 
   lodgingFacilityListArray: any = [];
   
   centerFieldObj = new BehaviorSubject<any>({
@@ -166,6 +174,41 @@ export class TripService {
     )
   }
 
+
+  getBudgetKKl(budgetByParam: any) {
+    this.userService.getBadgetKKl(budgetByParam).subscribe(
+      response => {
+        console.log('budget by attribute is: ', response)
+        this.budget = response;
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+  getBudgetExpensesAndIncome(budgetByParam: any) {
+    this.userService.getBadgetExpensesAndIncome(budgetByParam).subscribe(
+      response => {
+        console.log('budget by activity is:', response)
+        this.budgetExpensesAndIncome = response;
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+ 
+  // this.userService.getCustomersByParameters('סימינר','all').subscribe(
+  //   response => {
+  //     console.log('response', response)
+  //     this.customersOriginal = response;
+  //     response.forEach(element => {
+  //       this.customers.push({ label: element.name, value: element.id.toString() });
+  //     });
+  //   },
+  //   error => console.log(error),       // error
+  //   () => console.log('completed')     // complete
+  // )
+  
+
   getLookUp() {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {
@@ -187,26 +230,23 @@ export class TripService {
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
-    // this.userService.getCustomersByParams().subscribe(
-    //     response => {
-    //       console.log('response', response)
-    //       this.customersByParams = response;
-    //     },
-    //     error => console.log(error),       // error
-    //     () => console.log('completed')     // complete
-    //   )
-    this.userService.getCustomersByParameters('סימינר', 'all').subscribe(
+  
+
+    getCustomersByParameters(customer, clientPool) {
+    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
       response => {
         console.log('response', response)
         this.customersOriginal = response;
         response.forEach(element => {
           this.customers.push({ label: element.name, value: element.id.toString() });
         });
+        console.log(this.customers)
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
-
+  }
+    
     this.userService.getAreas().subscribe(
       response => {
         console.log('response', response)

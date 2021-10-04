@@ -34,6 +34,7 @@ export * from './orderType';
 export * from './participantType';
 export * from './sleepingOptions';
 export * from './status';
+export * from './subBudget';
 export * from './supplier';
 export * from './tripAttribute';
 export * from './tripInfo';

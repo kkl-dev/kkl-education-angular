@@ -16,11 +16,11 @@ import { Budget } from './budget';
 
 export interface BudgetByParams { 
     tripStart?: string;
-    attribute?: TripAttribute;
+    attribute: TripAttribute;
     activity?: ActivityType;
     budget?: Budget;
-    userName?: string;
-    userId?: string;
+    userName: string;
+    userId: string;
     tripId?: number | null;
 }
 

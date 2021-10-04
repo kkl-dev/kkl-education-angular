@@ -55,7 +55,7 @@ export class FormContainerComponent implements OnInit {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
-      this.register.emit(this.formGroup);
+      //this.register.emit(this.formGroup);
     }
   }
 
@@ -82,7 +82,7 @@ export class FormContainerComponent implements OnInit {
   }
 
   private subscribeToFormValues() {
-    this.formGroup.valueChanges.subscribe(() => {
+    this.formGroup.valueChanges.subscribe(() => {  
       this.register.emit(this.formGroup);
     });
   }

@@ -15,11 +15,12 @@
         content
         [cols]="detailsGroup.cols"
         [questions]="detailsGroup.questions"
+        (register)="logForm($event)"
       >
       </app-form-container>
     </app-expend-panel>
 
-    <app-expend-panel variant="form" [expanded]="!expend">
+    <app-expend-panel  variant="form" [expanded]="!expend">
       <div title fxLayout="row" fxLayoutAlign="space-between center">
         <app-typography color="primary" bold="600" size="16">
           {{ budgetGroup.header.label }}
@@ -33,6 +34,7 @@
         [cols]="budgetGroup.cols"
         [questions]="budgetGroup.questions"
         [slots]="{location}"
+        (register)="logForm($event)"
       >
       </app-form-container>
     </app-expend-panel>
