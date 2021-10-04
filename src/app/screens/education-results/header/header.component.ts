@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
     //this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
     this.options = {
       firstCalendarDay: 0,
-      format: 'dd/LL/yyyy', 
+      format: 'dd/LL/yyyy',
       closeOnSelected: true,
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
@@ -63,35 +63,25 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.forestCenterOptions = this.tripService.formOptions;
-    console.log(this.forestCenterOptions);
-
+    console.log('forestCenterOptions: ', this.forestCenterOptions);
     this.forestCenterOptions = this.forestCenterOptions.filter(aco => aco.accommodationList.length > 0);
-    console.log('this.forestCenterOptions: ' + this.forestCenterOptions);
-
     this.forestCenterId = this.tripService.centerField.id;
     this.forestCenter = this.tripService.centerField;
     this.sleepingDates = this.tripService.sleepingDates;
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
       // localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
       // localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
-     
-    }   
-    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
 
-    //yak del 19-9-21 bug in addDays
-    // let b = this.getDates(this.sleepingDates.from, this.sleepingDates.till);
-    // console.log('b:', b);
-    // let a = this.getDaysArray(this.sleepingDates.from, this.sleepingDates.till);
-    // console.log('a:', a);
+    }
+    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
 
   getAvailableDates(fromDate: string, tillDate: string) {
-    fromDate = fromDate.substring(0, 10)
-    tillDate = tillDate.substring(0, 10)
-    // tillDate = '2021-11-30'
+    fromDate = fromDate.substring(0, 10);
+    tillDate = tillDate.substring(0, 10);
     this.usersService.getAvailableAccomodationDates(this.tripService.centerField.id, fromDate, tillDate).subscribe(
       response => {
-        console.log(response)
+        console.log('get Available Dates:', response)
         this.AvailableDates = response;
         this.AvailableDates.forEach(element => element.freeSpace.forEach(element => { if (element.availableBeds === undefined) { element.availableBeds = 0; } }));
         this.freeSpacesArray = this.freeSpacesArrayGenaratorFromServer(new Date(fromDate), new Date(tillDate));
@@ -119,41 +109,18 @@ export class HeaderComponent implements OnInit {
       freeSpacesArray.push({
         date: start,
         freeSpace: this.AvailableDates[i].freeSpace
-        // [
-        //   {
-        //     accomodationName: this.AvailableDates[i].freeSpace[j].accomodationName,
-        //     availableBeds: this.AvailableDates[i].freeSpace[j].availableBeds
-        //   }
-        // ]
       });
-      // }
       start = new Date(start.setDate(start.getDate() + 1)); i++;
     }
     return freeSpacesArray;
   }
 
-  // addDays(days: any) {
-  //   var date = new Date(days);
-  //   date.setDate(date.getDate() + days);
-  //   return date;
-  // }
-
-  // getDates(startDate: any, stopDate: any) {
-  //   var dateArray = new Array();
-  //   var currentDate = startDate;
-  //   while (currentDate <= stopDate) {
-  //     dateArray.push(new Date(currentDate));
-  //     currentDate = currentDate.this.addDays(1);
-  //   }
-  //   return dateArray;
-  // }
-
   updateForestCenter(id: any) {
     this.forestCenter = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
     this.tripService.centerField = this.forestCenter;
     this.tripService.updateForestCenter(this.forestCenter);
-    console.log('update ForestCenter obj =>', this.forestCenter);
-   this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+    //console.log('update ForestCenter obj =>', this.forestCenter);
+    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
 
   getDaysArray(start: any, end: any) {
@@ -165,6 +132,52 @@ export class HeaderComponent implements OnInit {
       arr.push(new Date(dt));
     }
     return arr;
+  }
+
+  dateObjChanged(e: string) {
+    if (e && e.includes('-')) {
+      console.log('dateObj Changed =>', + e);
+      let tempDateArr: string[] = [];
+      tempDateArr = e.split('-');
+      const dateFormat1 = tempDateArr[0].split('/').reverse();
+      dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+      dateFormat1[2] = (+dateFormat1[2]).toString();
+      const dateFormat2 = tempDateArr[1].split('/').reverse();
+      dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+      dateFormat2[2] = (+dateFormat2[2]).toString();
+
+      if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
+        this.sleepingDates.from = tempDateArr[0];
+        this.sleepingDates.till = tempDateArr[1];
+      } else {
+        // commented by itiel, need tk check the comrax version
+        // this.sleepingDates.from = tempDateArr[1];
+        // this.sleepingDates.till = tempDateArr[0];
+        this.sleepingDates.from = tempDateArr[0];
+        this.sleepingDates.till = tempDateArr[1];
+      }
+      this.tripService.sleepingDates.from = this.sleepingDates.from;
+      this.tripService.sleepingDates.till = this.sleepingDates.till;
+      this.emitNewDates.emit(e);
+
+      this.tripService.getAvailableSleepingOptions();
+    } else {
+      this.sleepingDates.from = e;
+      this.sleepingDates.till = '';
+    }
+  }
+
+  newDateRecived(newDate: any) {
+    console.log('newDate: ' + newDate);
+  }
+
+  prevDateRecived(prevDate: any) {
+    console.log('prevDate: ' + prevDate);
+  }
+
+  newSleepingPlaceRecived(sleepingPlace: any) {
+    console.log('sleepingPlace: ' + sleepingPlace);
+
   }
 
   // freeSpacesArrayGenarator(start: Date, end: Date) {
@@ -204,50 +217,4 @@ export class HeaderComponent implements OnInit {
   //   }
   //   return freeSpacesArrayTemp;
   // }
-
-  dateObjChanged(e: string) {
-    if (e && e.includes('-')) {
-      console.log('dateObjChanged =>', + e);
-      let tempDateArr: string[] = [];
-      tempDateArr = e.split('-');
-      const dateFormat1 = tempDateArr[0].split('/').reverse();
-      dateFormat1[1] = (+dateFormat1[1] - 1).toString();
-      dateFormat1[2] = (+dateFormat1[2]).toString(); 
-      const dateFormat2 = tempDateArr[1].split('/').reverse();
-      dateFormat2[1] = (+dateFormat2[1] - 1).toString();
-      dateFormat2[2] = (+dateFormat2[2]).toString();
-    
-      if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
-        this.sleepingDates.from = tempDateArr[0];
-        this.sleepingDates.till = tempDateArr[1];
-      } else {
-        // commented by itiel, need tk check the comrax version
-        // this.sleepingDates.from = tempDateArr[1];
-        // this.sleepingDates.till = tempDateArr[0];
-        this.sleepingDates.from = tempDateArr[0];
-        this.sleepingDates.till = tempDateArr[1];
-      }
-      this.tripService.sleepingDates.from = this.sleepingDates.from;
-      this.tripService.sleepingDates.till = this.sleepingDates.till;
-      this.emitNewDates.emit(e);
-
-      this.tripService.getAvailableSleepingOptions();
-    } else {
-      this.sleepingDates.from = e;
-      this.sleepingDates.till = '';
-    }
-  }
-
-  newDateRecived(newDate: any) {
-    console.log(newDate);
-  }
-
-  prevDateRecived(prevDate: any) {
-    console.log(prevDate);
-  }
-
-  newSleepingPlaceRecived(sleepingPlace: any) {
-    console.log(sleepingPlace);
-
-  }
 }

@@ -19,6 +19,8 @@ import { FakeService } from 'src/app/services/fake.service';
   styleUrls: ['./maps.component.scss']
 })
 export class MapsComponent implements OnInit {
+
+  lodgingFacilityForDay: any;
   url: string = "https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0";
   myMap!: WebMap;
   view!: MapView;
@@ -30,16 +32,36 @@ export class MapsComponent implements OnInit {
   vtLayer: VectorTileLayer;
   basemap: BaseMap;
 
-  constructor(public tripService: TripService, public fakeApi: FakeService) { }
+  constructor(public tripService: TripService, public fakeApi: FakeService) {
+    this.tripService.forestCenter.subscribe(forestCenter => {
+      this.forestCenter = forestCenter; // this set's the username to the default observable value
+      console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
+      this.onChangeForestCenter();
+    });
+
+  }
 
   popupTrailheads: any = {
     "title": "{SiteName}",
     "content": [
       {
-        type: "text",
-        text: "<span style='direction:rigth; float:right;'><b>שם אתר:</b> {SiteName}<br><b>שימוש המבנה:</b> {Purpose}<br><b>מספר מבנה:</b> {UID}<br></span>"
-      },
-      {
+        type: "fields",
+        fieldInfos: [{
+          fieldName: "SiteName",
+          visible: true,
+          label: "שם אתר:"
+        },
+        {
+          fieldName: "Purpose",
+          visible: true,
+          label: "שימוש המבנה:"
+        },
+        {
+          fieldName: "UID",
+          visible: true,
+          label: "מספר מבנה:"
+        }]
+      }, {
         type: "attachments",
         displayType: "list"
       }
@@ -80,48 +102,52 @@ export class MapsComponent implements OnInit {
     this.loadWebMap();
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField.name;
-
       this.onChangeForestCenter();
     }
 
     this.tripService.forestCenter.subscribe(forestCenter => {
-      this.forestCenter = forestCenter; // this set's the username to the default observable value
-      console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
+      //this.forestCenter = result; // this set's the username to the default observable value
+      console.log('maps --> forestCenter result:', forestCenter);
       this.onChangeForestCenter();
     });
+
 
   }
 
   queryandrender() {
-    if (this.rawservicedata) {
-      let filterex = "SiteName = '" + this.rawservicedata.fieldForestCenterName + "'";
+    let filterex = "SiteName = '" + this.rawservicedata.fieldForestCenterName + "'";
 
-      let queryTask = new QueryTask({
-        url: this.url
-      });
-      let queryextnet = new Query();
-      queryextnet.where = filterex;
-      queryextnet.outSpatialReference = new SpatialReference({
-        wkid: 4326
-      });
+    let queryTask = new QueryTask({
+      url: this.url
+    });
+    let queryextnet = new Query();
+    queryextnet.where = filterex;
+    queryextnet.outSpatialReference = new SpatialReference({
+      wkid: 4326
+    });
 
-      queryTask.executeForExtent(queryextnet).then((response) => {
-        this.queryTask_executeForExtent(response)
-      });
+    queryTask.executeForExtent(queryextnet).then((response) => {
+      this.queryTask_executeForExtent(response)
+    });
 
-      // query for data
-      let query = this.layer.createQuery();
-      query.where = filterex;
-      query.outFields = ["SiteName", "Purpose", "UID"];
-      query.outSpatialReference = new SpatialReference({
-        wkid: 4326
-      });
+    // query for data
+    let query = this.layer.createQuery();
+    query.where = filterex;
+    query.outFields = ["SiteName", "Purpose", "UID"];
+    query.outSpatialReference = new SpatialReference({
+      wkid: 4326
+    });
 
-      this.layer.queryFeatures(query).then((response) => {
-        this.layer_queryFeatures(response);
-      });
-    }
+    this.layer.queryFeatures(query).then((response) => {
+      this.layer_queryFeatures(response);
+    });
   };
+
+  currentDayHandler(newCurrentDay: number) {
+    console.log('new Current Day: ', newCurrentDay);
+    //    console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
+    this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray[newCurrentDay].lodgingFacilityList;
+  }
 
   onChangeForestCenter() {
     this.rawservicedata = this.fakeApi.getLodgingFacilityList(this.forestCenter);
