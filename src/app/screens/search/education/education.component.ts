@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
   ElementRef
-  
+
 } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { NgForm } from '@angular/forms';
@@ -44,7 +44,7 @@ export class EducationComponent implements OnInit {
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[] = [];
 
-  constructor(public usersService: UserService, private router: Router,private _dialog: MatDialog, public tripService: TripService,
+  constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
     private checkAvailabilltyService: CheckAvailabilityService) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
@@ -187,7 +187,7 @@ export class EducationComponent implements OnInit {
   }
 
   public dateObjChanged(e: string) {
- 
+
 
     if (e.includes('-')) {
       let tempDateArr: string[] = [];
@@ -204,7 +204,7 @@ export class EducationComponent implements OnInit {
         this.sleepingDates.till = tempDateArr[1];
       } else {
         this.sleepingDates.from = tempDateArr[1];
-        this.sleepingDates.till= tempDateArr[0];
+        this.sleepingDates.till = tempDateArr[0];
       }
       console.log(this.container);
       this.container.nativeElement.focus();
@@ -218,7 +218,7 @@ export class EducationComponent implements OnInit {
 
   }
 
- 
+
   AvailableDaysChecking() {
     let from= this.sleepingDates.from;
     let till = this.sleepingDates.till;
@@ -229,8 +229,8 @@ export class EducationComponent implements OnInit {
     this.tripService.dateRange = this.getDaysArray(new Date(from), new Date(till))
     var flag = true;
     for (var i in this.tripService.dateRange) {
-      let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationTypes);
-      if (typeAmount.availableBeds === 0) { flag = false; }
+      // let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationTypes);
+      // if (typeAmount.availableBeds === 0) { flag = false; }
       //if (!flag) { console.log('אחד הימים בטווח התאריכים אינו פנוי'); return flag; }
       if (!flag) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
@@ -241,7 +241,7 @@ export class EducationComponent implements OnInit {
     }
     return flag;
   }
-  
+
   hideSelectPlaceholder(sel: MatSelect) {
     sel.placeholder = '';
   }
@@ -271,7 +271,7 @@ export class EducationComponent implements OnInit {
     var thisDate = today.toISOString().split('T')[0].split('-');
     return [thisDate[2], thisDate[1], thisDate[0]].join('-');
   }
-  
+
   //   getDaysArray(start: any, end: any) {
   //   for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) { arr.push(new Date(dt)); }
   //   return arr;

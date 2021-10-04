@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { TooltipDataModel } from './tooltip/tooltip.component';
@@ -6,6 +6,7 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
+import { MapsComponent } from './maps/maps.component';
 
 export interface InfoCard {
   svgUrl: string;
@@ -21,6 +22,7 @@ export interface InfoCard {
 })
 
 export class EducationResultsComponent implements OnInit {
+  @ViewChild(MapsComponent) child: MapsComponent;
   forestCenter: any | undefined;
   //forestCenter: any | undefined = this.tripService.centerField || {};
   sleepingDates: any;
@@ -131,13 +133,12 @@ export class EducationResultsComponent implements OnInit {
     private userDataService: UserDataService, private tripService: TripService, private api: FakeService) {
 
       this.tripService.forestCenter.subscribe(forestCenter => {
-        console.log('edudation result -- > forest Center from server BehaviorSubject:', this.forestCenter);
+        console.log('education result forestCenter' + forestCenter )
         // call api if place changed for dates and facilities;
-        console.log('fromOtherComponent: ' + this.fromOtherComponent);
-         if (!this.fromOtherComponent) {
-          this.forestCenter = forestCenter; // this set's the username to the default observable value
-          console.log('edudation result !fromOtherComponent -- > forest Center from server BehaviorSubject:', this.forestCenter);
-         }
+        //  if (!this.fromOtherComponent) {
+        //   this.forestCenter = forestCenter; // this set's the username to the default observable value
+        //   //console.log('edudation result !fromOtherComponent -- > forest Center from server BehaviorSubject:', this.forestCenter);
+        //  }
         //get Available Facilities
         //getAvailableFacilities is been called from changeDatesHandler;
         //this.getAvailableFacilities();
@@ -185,19 +186,14 @@ export class EducationResultsComponent implements OnInit {
       // }
     //}
 
-    //fix -- on ng init called 3 times 
-    //fix - if changed date called 2 t
     this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {      
       this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
-      console.log('educational -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
+      //console.log('educational -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
       this.getAvailableFacilities();
     });
 
-    console.log('facilities Array in ngOnInit: ', this.facilitiesArray);
+    //console.log('facilities Array in ngOnInit: ', this.facilitiesArray);
     this.facilityForDay = this.facilitiesArray[0].facilitiesList;
-    console.log('facilityForDay: ', this.facilityForDay);
-     //console.log('userDataService:', this.userDataService);
-    //this.centerField = this.tripService.centerField
     this.fromOtherComponent = false;
   }
 
@@ -270,6 +266,9 @@ export class EducationResultsComponent implements OnInit {
   // }
 
   currentDayHandler(newCurrentDay: number) {
+    //this.emitCurrentDay.emit(newCurrentDay);
+    this.child.currentDayHandler(newCurrentDay);
+
     console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
     //this.facilitiesArray = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day);
     //console.log('facilitiesArray', this.facilitiesArray);
@@ -277,19 +276,17 @@ export class EducationResultsComponent implements OnInit {
   }
 
   getAvailableFacilities() {
-    let sleepingDates = this.tripService.convertDatesFromSlashToMinus();
-    //this.tripService.sleepingDates.from, this.tripService.sleepingDates.till
-    
+    let sleepingDates = this.tripService.convertDatesFromSlashToMinus();    
     this.usersService.getAvailableFacilities(this.tripService.centerField.id, sleepingDates.from, sleepingDates.till).subscribe((facilities: any) => {
       console.log('get Available Facilities: ', facilities);
       if (facilities) {
         this.facilityForDay = facilities[0].facilitiesList;
         this.facilitiesArray = facilities;
-        console.log('facility For Day: ', this.facilityForDay);
+        //console.log('facility For Day: ', this.facilityForDay);
       }
     },
       error => {
-        console.log({ error });
+        console.log("error: ", { error });
       });
   }
 

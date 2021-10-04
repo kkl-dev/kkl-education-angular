@@ -19,6 +19,8 @@ import { FakeService } from 'src/app/services/fake.service';
   styleUrls: ['./maps.component.scss']
 })
 export class MapsComponent implements OnInit {
+
+  lodgingFacilityForDay: any;
   url: string = "https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0";
   myMap!: WebMap;
   view!: MapView;
@@ -30,7 +32,14 @@ export class MapsComponent implements OnInit {
   vtLayer: VectorTileLayer;
   basemap: BaseMap;
 
-  constructor(public tripService: TripService, public fakeApi: FakeService) { }
+  constructor(public tripService: TripService, public fakeApi: FakeService) {
+    this.tripService.forestCenter.subscribe(forestCenter => {
+      this.forestCenter = forestCenter; // this set's the username to the default observable value
+      console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
+      this.onChangeForestCenter();
+    });
+
+  }
 
   popupTrailheads: any = {
     "title": "{SiteName}",
@@ -93,15 +102,15 @@ export class MapsComponent implements OnInit {
     this.loadWebMap();
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField.name;
-
       this.onChangeForestCenter();
     }
 
-    // this.tripService.forestCenter.subscribe(forestCenter => {
-    //   this.forestCenter = forestCenter; // this set's the username to the default observable value
-    //   console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
-    //   this.onChangeForestCenter();
-    // });
+    this.tripService.forestCenter.subscribe(forestCenter => {
+      //this.forestCenter = result; // this set's the username to the default observable value
+      console.log('maps --> forestCenter result:', forestCenter);
+      this.onChangeForestCenter();
+    });
+
 
   }
 
@@ -133,6 +142,12 @@ export class MapsComponent implements OnInit {
       this.layer_queryFeatures(response);
     });
   };
+
+  currentDayHandler(newCurrentDay: number) {
+    console.log('new Current Day: ', newCurrentDay);
+    //    console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
+    this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray[newCurrentDay].lodgingFacilityList;
+  }
 
   onChangeForestCenter() {
     this.rawservicedata = this.fakeApi.getLodgingFacilityList(this.forestCenter);
