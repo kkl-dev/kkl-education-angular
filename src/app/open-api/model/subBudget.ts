@@ -11,12 +11,8 @@
  */
 
 
-export interface BaseCustomer { 
-    id: number;
-    name: string;
-    lastName?: string;
-    contactName?: string;
-    contactMobile?: string;
-    contactEmail?: string;
+export interface SubBudget { 
+    id?: number;
+    name?: string;
 }
 

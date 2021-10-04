@@ -220,7 +220,13 @@ export class EducationComponent implements OnInit {
 
  
   AvailableDaysChecking() {
-    this.tripService.dateRange = this.getDaysArray(new Date(this.sleepingDates.from), new Date(this.sleepingDates.till))
+    let from= this.sleepingDates.from;
+    let till = this.sleepingDates.till;
+    let fromArr = from.split("/");
+    let tillArr = till.split("/");
+    from =  fromArr[1] + '-' + fromArr[0] + '-' + fromArr[2];
+    till= tillArr[1] + '-' + tillArr[0] + '-' + tillArr[2],
+    this.tripService.dateRange = this.getDaysArray(new Date(from), new Date(till))
     var flag = true;
     for (var i in this.tripService.dateRange) {
       let typeAmount = this.tripService.dateRange[i].freeSpace.find(element => element.accomodationName === this.AcommodationTypes);

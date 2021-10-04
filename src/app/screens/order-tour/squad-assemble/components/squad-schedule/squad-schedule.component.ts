@@ -35,7 +35,7 @@ export class SquadScheduleComponent implements OnInit {
   }
 
   //log form when valid
-
+  
   public logForm(form) {
     this.squadAssembleService.updateFormArray(form);
   }

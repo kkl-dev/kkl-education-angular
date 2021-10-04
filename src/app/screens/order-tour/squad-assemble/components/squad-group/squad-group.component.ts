@@ -38,6 +38,9 @@ export class SquadGroupComponent {
     // this.onGenderChange()
   }
 
+  public logForm(form) {
+    this.squadAssembleService.updateFormArray(form);
+  }
   // method to change squad assemble form
   public onGenderChange() {
     this.mixed = !this.mixed;

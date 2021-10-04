@@ -17,7 +17,7 @@ export interface SleepingOptions {
     /**
      * Maximum per lodging unit.
      */
-    maxOccupancy?: number;
+    maxOccupancy?: number | null;
     /**
      * Number of avaliable lodging units (not beds!) for a day
      */

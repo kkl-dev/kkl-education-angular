@@ -36,21 +36,23 @@ export class SquadClientService {
             label: 'הכול',
             inputProps: {
               options: [
-                { label: 'שם נוסף', value: 'שם נוסף' },
-                { label: 'עוד לקוח', value: 'עוד לקוח' },
-                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                { label: 'הכל', value: 'all' },
+                { label: 'לקוחות כלליים', value: 'global' },
+                { label: 'לקוחות חו"ל', value: 'abroad' },
+                { label: 'עובד קק"ל', value: 'kklWorker' },
               ],
             },
           }),
           new QuestionAutocomplete({
-            key: 'clientName',
+            // key: 'clientName',
+            key: 'customer',
             label: 'הקלד לקוח רצוי',
             cols: 2,
             value: '',
             validations: [Validators.required],
             inputProps: {
               options: [
+                { value: '125000010', label: '125000010 צופים לטינים נצרת' },
                 { value: '521829121', label: '521829121 בית ספר תמיר' },
                 { value: '320382983', label: '320382983 מתנס אבן יהודה' },
                 { value: '428948934', label: '428948934 הגימנסיה הריאלית' },
@@ -73,18 +75,18 @@ export class SquadClientService {
         rows: 14,
         questions: [
           new QuestionTextbox({
-            key: 'fullName',
+            key: 'contactName',
             label: 'איש קשר',
           }),
 
           new QuestionTextbox({
-            key: 'phone',
+            key: 'contactPhone',
             label: 'נייד איש קשר',
             type: 'text',
             validations: [Validators.required],
           }),
           new QuestionTextbox({
-            key: 'email',
+            key: 'contactEmail',
             label: 'מייל',
             type: 'text',
             validations: [Validators.required],
@@ -123,7 +125,6 @@ export class SquadClientService {
             type: 'autocomplete',
             cols: 2,
             value: '',
-            validations: [Validators.required],
             inputProps: {
               options: [
                 { label: 'שם נוסף', value: 'שם נוסף' },

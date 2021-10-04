@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { City } from './city';
+import { SubBudget } from './subBudget';
 
 
 export interface Budget { 
@@ -30,5 +31,7 @@ export interface Budget {
     incomeName?: string;
     expensesId?: number;
     expensesName?: string;
+    subBudgetIncomeList?: Array<SubBudget>;
+    subBudgetExpenseList?: Array<SubBudget>;
 }
 

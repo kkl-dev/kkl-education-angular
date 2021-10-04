@@ -8,6 +8,9 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { BudgetByParams } from 'src/app/open-api';
+import { SquadBudgetService } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
+import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
@@ -35,19 +38,19 @@ export class FormInputComponent implements OnInit {
   @Input() public icon!: string;
   @Input() public inputProps: {};
   @Input() public disabled: boolean;
-
+  @Input() public group: FormGroup;
   @Input() public serverErrorMode!: boolean;
-
+  
   public color: string;
   public value!: any;
   public error!: string;
   public serverError!: string;
-
+  name: any;
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter()
   @Output() select: EventEmitter<FormControl> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
-
-  constructor(private formService: FormService, private tripService:TripService) { }
+  @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
+  constructor(private formService: FormService, private tripService:TripService, private squadAssemble: SquadAssembleService,private squadB: SquadBudgetService) { }
 
   ngOnInit(): void {
    
@@ -163,9 +166,11 @@ export class FormInputComponent implements OnInit {
   public onSelectChange() {
     console.log('this.control is: ',this.control);
     if(this.control.parent.value.attribute){
-      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute,'itiel');
+      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute,'שחר גל');
     }
+     
     this.select.emit(this.control);
+    this.groupEvent.emit(this.group);
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {

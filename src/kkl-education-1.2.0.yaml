@@ -361,6 +361,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Language'
+  /tripActivities:
+    get:
+      tags:
+      - user
+      operationId: GetTripActivities
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Charuz'
+  /activityCategories:
+    get:
+      tags:
+      - user
+      operationId: GetActivityCategories
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Charuz'
+
+
   /areas:
     get:
       tags:
@@ -375,7 +405,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Area'
- 
+
+  /customer/{customerCode}:
+    get:
+      tags:
+      - user
+      operationId: GetCustomer
+      parameters:
+      - name: customerCode
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BaseCustomer' 
+
   /customers/{custAutoComplete}/{filterParam}:
     get:
       tags:
@@ -400,7 +451,29 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseCustomer'           
+                  $ref: '#/components/schemas/BaseCustomer' 
+
+  /getKKLWorkers/{custAutoComplete}:
+    get:
+      tags:
+      - user
+      operationId: GetKKLWorkers
+      parameters:
+      - name: custAutoComplete
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BaseCustomer'
+
   
   /budget/expensesAndIncome:
     put:
@@ -1114,6 +1187,7 @@ components:
           example: name
         availableBeds:
           type: integer
+          nullable: true
           example: 20
 
     AvailableSleepingOptionsByDay:
@@ -1139,6 +1213,7 @@ components:
            example: 'בקתה'
          maxOccupancy:
            type: integer
+           nullable: true
            description: Maximum per lodging unit.
            example: 20
          availableUnits:
@@ -1350,8 +1425,17 @@ components:
           example: סמינר הקיבוצים
         lastName:
           type: string
-          nullable: true
           example: kkl
+        contactName:
+          type: string
+          example: דן
+        contactMobile:
+          type: string
+          example: "613566756"
+        contactEmail:
+          type: string
+          example: test@gmail.com
+        
     Customer:
       type: object
       properties:
@@ -1494,6 +1578,12 @@ components:
           $ref: '#/components/schemas/Budget'
         customer:
           $ref: '#/components/schemas/BaseCustomer'
+        kklWorkerId:
+          type: integer
+          example: 12
+        kklWorkerName:
+          type: string
+          example: 'yaniv'
         # customerId:
         #   type: integer
         #   example: 124
@@ -1678,6 +1768,10 @@ components:
           example: 2
     BudgetByParams:
       type: object
+      required:
+      - attribute
+      - userId
+      - userName
       properties:
         tripStart:
           type: string
@@ -1698,6 +1792,15 @@ components:
           type: integer
           nullable: true
           example: 123
+    SubBudget:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        name:
+          type: string
+          example: ''
     Budget:
       type: object
       properties:
@@ -1756,6 +1859,14 @@ components:
         expensesName:
           type: string
           example: economy
+        subBudgetIncomeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubBudget'
+        subBudgetExpenseList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubBudget'
     AgeGroup:
       type: object
       properties:

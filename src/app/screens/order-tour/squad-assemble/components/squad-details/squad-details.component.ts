@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { Subject } from 'rxjs';
+import { SquadAssembleService } from '../../services/squad-assemble.service';
 
 @Component({
   selector: 'app-squad-details',
@@ -19,9 +20,13 @@ export class SquadDetailsComponent implements OnInit {
 
   public $questions = new Subject<QuestionBase<string | number | Date>[]>();
 
-  constructor() { }
+  constructor(private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
+  }
+
+  public logForm(form) {
+    this.squadAssembleService.updateFormArray(form);
   }
 
   public onBudget() {
