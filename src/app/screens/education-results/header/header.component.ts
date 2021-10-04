@@ -63,6 +63,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.forestCenterOptions = this.tripService.formOptions;
+    console.log(this.forestCenterOptions);
+
+    this.forestCenterOptions = this.forestCenterOptions.filter(aco => aco.accommodationList.length > 0);
+    console.log('this.forestCenterOptions: ' + this.forestCenterOptions);
+
     this.forestCenterId = this.tripService.centerField.id;
     this.forestCenter = this.tripService.centerField;
     this.sleepingDates = this.tripService.sleepingDates;
@@ -147,7 +152,8 @@ export class HeaderComponent implements OnInit {
     this.forestCenter = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
     this.tripService.centerField = this.forestCenter;
     this.tripService.updateForestCenter(this.forestCenter);
-    console.log('updateForestCenter obj =>', this.forestCenter);
+    console.log('update ForestCenter obj =>', this.forestCenter);
+   this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
 
   getDaysArray(start: any, end: any) {

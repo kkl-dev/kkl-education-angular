@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CheckAvailabilityService} from 'src/app/utilities/services/check-availability.service';
-import {TooltipDataModel} from './tooltip/tooltip.component';
-import {UserDataService} from 'src/app/services/user-data.service';
-import {UserService} from 'src/app/open-api';
-import {TripService} from 'src/app/services/trip.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
+import { TooltipDataModel } from './tooltip/tooltip.component';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { UserService } from 'src/app/open-api/api/user.service';
+import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 
 export interface InfoCard {
@@ -26,143 +26,122 @@ export class EducationResultsComponent implements OnInit {
   sleepingDates: any;
   fromOtherComponent: boolean = true;
   //public facilitiesArray: InfoCard[] = [];
-  public facilitiesArray: any = [{
+  facilitiesArray: any = [{
     "date": "2021-09-10T:00:00:00",
-    "facilitiesList": [
-      {
-        "id": 8,
-        "name": "כיתה קטנה",
-        "maxOccupancy": 20,
-        "occupiedHours": [
-          {
-            "fromHour": "2021-09-10T09:00:00",
-            "tillHour": "2021-09-10T11:00:00",
-            "customerName": "סימינר הקיבוצים"
-          },
-          {
-            "fromHour": "2021-09-10T14:00:00",
-            "tillHour": "2021-09-10T15:00:00",
-            "customerName": "קיבוץ לביא"
-          }
-        ]
-      },
-      {
-        "id": 8,
-        "name": "כיתה dgfghdfg",
-        "maxOccupancy": 20,
-        "occupiedHours": [
-          {
-            "fromHour": "2021-09-10T09:00:00",
-            "tillHour": "2021-09-10T11:00:00",
-            "customerName": "סימינר ffff"
-          },
-          {
-            "fromHour": "2021-09-10T14:00:00",
-            "tillHour": "2021-09-10T15:00:00",
-            "customerName": "קיבddddd ץ לביא"
-          }
-        ]
-      }
-    ]
+    "facilitiesList": []
   }];
 
   facilityForDay: any;
 
-  sleepingOptionsByDay: {
-    day: string;
-    options: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
-    }[];
-  }[] = [
-      {
-        day: '01.9.21',
-        options: [
-          {
-            svgUrl: 'assets/images/cabin.svg',
-            sleepingAreas: 42,
-            avialableSpaces: 146,
-            type: 'בקתות',
-            singleUnit: 'בבקתה',
-          },
-          {
-            svgUrl: 'assets/images/tent.svg',
-            sleepingAreas: 44,
-            avialableSpaces: 46,
-            type: 'אוהלים',
-            singleUnit: 'באוהל',
-          },
-          {
-            svgUrl: 'assets/images/camp.svg',
-            sleepingAreas: 41,
-            avialableSpaces: 1670,
-            type: 'גיחה',
-            singleUnit: 'לנים',
-          },
-        ],
-      },
-      {
-        day: '02.9.21',
-        options: [
-          {
-            svgUrl: 'assets/images/cabin.svg',
-            sleepingAreas: 5,
-            avialableSpaces: 166,
-            type: 'בקתות',
-            singleUnit: 'בבקתה',
-          },
-          {
-            svgUrl: 'assets/images/tent.svg',
-            sleepingAreas: 64,
-            avialableSpaces: 636,
-            type: 'אוהלים',
-            singleUnit: 'באוהל',
-          },
-          {
-            svgUrl: 'assets/images/camp.svg',
-            sleepingAreas: 1,
-            avialableSpaces: 670,
-            type: 'גיחה',
-            singleUnit: 'לנים',
-          },
-        ],
-      },
-      {
-        day: '03.9.21',
-        options: [
-          {
-            svgUrl: 'assets/images/cabin.svg',
-            sleepingAreas: 72,
-            avialableSpaces: 476,
-            type: 'בקתות',
-            singleUnit: 'בבקתה',
-          },
-          {
-            svgUrl: 'assets/images/tent.svg',
-            sleepingAreas: 4,
-            avialableSpaces: 372,
-            type: 'אוהלים',
-            singleUnit: 'באוהל',
-          },
-          {
-            svgUrl: 'assets/images/camp.svg',
-            sleepingAreas: 1,
-            avialableSpaces: 10,
-            type: 'גיחה',
-            singleUnit: 'לנים',
-          },
-        ],
-      },
-    ];
+  ////yak del 19-9-21
+  // sleepingOptionsByDay: {
+  //   day: string;
+  //   options: {
+  //     svgUrl: string;
+  //     sleepingAreas: number;
+  //     avialableSpaces: number;
+  //     type: string;
+  //     singleUnit: string;
+  //   }[];
+  // }[] = [
+  //     {
+  //       day: '01.9.21',
+  //       options: [
+  //         {
+  //           svgUrl: 'assets/images/cabin.svg',
+  //           sleepingAreas: 42,
+  //           avialableSpaces: 146,
+  //           type: 'בקתות',
+  //           singleUnit: 'בבקתה',
+  //         },
+  //         {
+  //           svgUrl: 'assets/images/tent.svg',
+  //           sleepingAreas: 44,
+  //           avialableSpaces: 46,
+  //           type: 'אוהלים',
+  //           singleUnit: 'באוהל',
+  //         },
+  //         {
+  //           svgUrl: 'assets/images/camp.svg',
+  //           sleepingAreas: 41,
+  //           avialableSpaces: 1670,
+  //           type: 'גיחה',
+  //           singleUnit: 'לנים',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       day: '02.9.21',
+  //       options: [
+  //         {
+  //           svgUrl: 'assets/images/cabin.svg',
+  //           sleepingAreas: 5,
+  //           avialableSpaces: 166,
+  //           type: 'בקתות',
+  //           singleUnit: 'בבקתה',
+  //         },
+  //         {
+  //           svgUrl: 'assets/images/tent.svg',
+  //           sleepingAreas: 64,
+  //           avialableSpaces: 636,
+  //           type: 'אוהלים',
+  //           singleUnit: 'באוהל',
+  //         },
+  //         {
+  //           svgUrl: 'assets/images/camp.svg',
+  //           sleepingAreas: 1,
+  //           avialableSpaces: 670,
+  //           type: 'גיחה',
+  //           singleUnit: 'לנים',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       day: '03.9.21',
+  //       options: [
+  //         {
+  //           svgUrl: 'assets/images/cabin.svg',
+  //           sleepingAreas: 72,
+  //           avialableSpaces: 476,
+  //           type: 'בקתות',
+  //           singleUnit: 'בבקתה',
+  //         },
+  //         {
+  //           svgUrl: 'assets/images/tent.svg',
+  //           sleepingAreas: 4,
+  //           avialableSpaces: 372,
+  //           type: 'אוהלים',
+  //           singleUnit: 'באוהל',
+  //         },
+  //         {
+  //           svgUrl: 'assets/images/camp.svg',
+  //           sleepingAreas: 1,
+  //           avialableSpaces: 10,
+  //           type: 'גיחה',
+  //           singleUnit: 'לנים',
+  //         },
+  //       ],
+  //     },
+  //   ];
 
   AvailableSleepingOptions: any;
 
   constructor(private router: Router, private checkAvailabilityService: CheckAvailabilityService,
     public usersService: UserService, private route: ActivatedRoute,
     private userDataService: UserDataService, private tripService: TripService, private api: FakeService) {
+
+      this.tripService.forestCenter.subscribe(forestCenter => {
+        console.log('edudation result -- > forest Center from server BehaviorSubject:', this.forestCenter);
+        // call api if place changed for dates and facilities;
+        console.log('fromOtherComponent: ' + this.fromOtherComponent);
+         if (!this.fromOtherComponent) {
+          this.forestCenter = forestCenter; // this set's the username to the default observable value
+          console.log('edudation result !fromOtherComponent -- > forest Center from server BehaviorSubject:', this.forestCenter);
+         }
+        //get Available Facilities
+        //getAvailableFacilities is been called from changeDatesHandler;
+        //this.getAvailableFacilities();
+      });
    
     //deleted temp
     //this.facilitiesArray = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[0].day);
@@ -190,18 +169,10 @@ export class EducationResultsComponent implements OnInit {
     //console.log(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
     // this.changeDatesHandler(this.checkAvailabillityService.checkAvailabilltyValues.calendarInput);
   }
-  //yak del not in use
-  // public changeDate(newDate: number) {
-  //   this.chosenDate = newDate;
-  //   this.checkAvailabillityService.getNewFacilitiesArray(
-  //     this.sleepingOptionsByDay[newDate].day
-  //   );
-  // }
 
   ngOnInit() {
-    //console.log(this.tripService);
-   console.log('sleepingDates is :' + this.tripService.sleepingDates.from)
-    this.changeDatesHandler(this.tripService.sleepingDates.from + "-" + this.tripService.sleepingDates.till);
+    console.log(this.tripService);
+    //this.changeDatesHandler(this.tripService.sleepingDates.from + "-" + this.tripService.sleepingDates.till);
 
    // if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
@@ -214,27 +185,15 @@ export class EducationResultsComponent implements OnInit {
       // }
     //}
 
-    this.tripService.forestCenter.subscribe(forestCenter => {
-      this.forestCenter = forestCenter; // this set's the username to the default observable value
-      console.log('edudation result -- > forest Center from server BehaviorSubject:', this.forestCenter);
-      // call api if place changed for dates and facilities;
-      //console.log('fromOtherComponent: ' + this.fromOtherComponent);
-      if (!this.fromOtherComponent) {
-
-      }
-      //get Available Facilities
-      //getAvailableFacilities is been called from changeDatesHandler;
-      //this.getAvailableFacilities();
-    });
-
+    //fix -- on ng init called 3 times 
+    //fix - if changed date called 2 t
     this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {      
       this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
       console.log('educational -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
-
       this.getAvailableFacilities();
     });
 
-    console.log('facilities Array: ', this.facilitiesArray);
+    console.log('facilities Array in ngOnInit: ', this.facilitiesArray);
     this.facilityForDay = this.facilitiesArray[0].facilitiesList;
     console.log('facilityForDay: ', this.facilityForDay);
      //console.log('userDataService:', this.userDataService);
@@ -242,84 +201,73 @@ export class EducationResultsComponent implements OnInit {
     this.fromOtherComponent = false;
   }
 
+  // changeDatesHandler(newDates: string) {
+  //   console.log('changeDatesHandler: newDates : ' + newDates);
+  //   //console.log('sleepingOptionsByDay : ', this.sleepingOptionsByDay);
+  //  // console.log(this.tripService);
+  //   const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+  //   if (newDates && !newDates.includes('-')) {
+  //     return;
+  //   }
+  //   const dates = newDates.split('-');
+  //   this.getAvailableFacilities();
 
-  changeDatesHandler(newDates: string) {
-    console.log('changeDatesHandler: newDates : ' + newDates);
-    console.log('sleepingOptionsByDay : ', this.sleepingOptionsByDay);
+  //   let date1 = new Date(dates[0]);
+  //   let date2 = new Date(dates[1]);
+  //   // console.log('date 1', date1);
+  //   // console.log('date 2', date2);
 
-   // console.log(this.tripService);
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    if (newDates && !newDates.includes('-')) {
-      return;
-    }
-    const dates = newDates.split('-');
-    this.getAvailableFacilities();
+  //   const utc1 = Date.UTC(
+  //     date1.getFullYear(),
+  //     date1.getMonth(),
+  //     date1.getDate(),
+  //   );
+  //   const utc2 = Date.UTC(
+  //     date2.getFullYear(),
+  //     date2.getMonth(),
+  //     date2.getDate(),
+  //   );
 
-    const dateFormat1 = dates[0].split('/').reverse();
-    dateFormat1[1] = (+dateFormat1[1] - 1).toString();
-    dateFormat1[2] = (+dateFormat1[2]).toString();
-    const dateFormat2 = dates[1].split('/').reverse();
-    dateFormat2[1] = (+dateFormat2[1] - 1).toString();
-    dateFormat2[2] = (+dateFormat2[2]).toString();
-    let date1 = new Date(dateFormat1.join(','));
-    let date2 = new Date(dateFormat2.join(','));
-    console.log(date1.getMonth());
-    console.log(date1.getDate());
-    console.log(date1.getFullYear());
+  //   const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+  //   const newSleepingOptionsByDay = [];
 
-    const utc1 = Date.UTC(
-      date1.getFullYear(),
-      date1.getMonth(),
-      date1.getDate()
-    );
-    const utc2 = Date.UTC(
-      date2.getFullYear(),
-      date2.getMonth(),
-      date2.getDate()
-    );
+  //   let newDate = new Date(date1.setDate(date1.getDate()));
+  //   for (let i = 0; i <= totalDays; i++) {
+  //     //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
+  //     const newDateString = `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
+  //     newSleepingOptionsByDay.push({
+  //       day: newDateString,
+  //       options: [
+  //         {
+  //           svgUrl: 'assets/images/cabin.svg',
+  //           sleepingAreas: 5,
+  //           avialableSpaces: Math.floor(Math.random() * 8),
+  //           type: 'בקתות',
+  //           singleUnit: 'בבקתה',
+  //         },
+  //         {
+  //           svgUrl: 'assets/images/tent.svg',
+  //           sleepingAreas: 1,
+  //           avialableSpaces: Math.floor(Math.random() * 20),
+  //           type: 'אוהלים',
+  //           singleUnit: 'באוהל',
+  //         },
+  //         {
+  //           svgUrl: 'assets/images/camp.svg',
+  //           sleepingAreas: 1,
+  //           avialableSpaces: Math.floor(Math.random() * 90),
+  //           type: 'גיחה',
+  //           singleUnit: 'לנים',
+  //         },
+  //       ],
+  //     });
+  //     newDate = new Date(date1.setDate(date1.getDate() + 1));
+  //   }
+  //   // this.sleepingOptionsByDay = newSleepingOptionsByDay;
+  //   console.log('AvailableSleepingOptions : ', newSleepingOptionsByDay);
 
-    const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
-    const newSleepingOptionsByDay = [];
-
-    let newDate = new Date(date1.setDate(date1.getDate()));
-    for (let i = 0; i <= totalDays; i++) {
-      //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
-      const newDateString = `${newDate.getDate()}.${
-        (newDate.getMonth() + 2).toString()
-      }.${newDate.getFullYear()}`;
-      newSleepingOptionsByDay.push({
-        day: newDateString,
-        options: [
-          {
-            svgUrl: 'assets/images/cabin.svg',
-            sleepingAreas: 5,
-            avialableSpaces: Math.floor(Math.random() * 8),
-            type: 'בקתות',
-            singleUnit: 'בבקתה',
-          },
-          {
-            svgUrl: 'assets/images/tent.svg',
-            sleepingAreas: 1,
-            avialableSpaces: Math.floor(Math.random() * 20),
-            type: 'אוהלים',
-            singleUnit: 'באוהל',
-          },
-          {
-            svgUrl: 'assets/images/camp.svg',
-            sleepingAreas: 1,
-            avialableSpaces: Math.floor(Math.random() * 90),
-            type: 'גיחה',
-            singleUnit: 'לנים',
-          },
-        ],
-      });
-      newDate = new Date(date1.setDate(date1.getDate() + 1));
-    }
-    this.sleepingOptionsByDay = newSleepingOptionsByDay;
-    console.log('sleepingOptionsByDay 2 : ', this.sleepingOptionsByDay);
-
-    this.AvailableSleepingOptions = newSleepingOptionsByDay;
-  }
+  //   this.AvailableSleepingOptions = newSleepingOptionsByDay;
+  // }
 
   currentDayHandler(newCurrentDay: number) {
     console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
@@ -335,8 +283,8 @@ export class EducationResultsComponent implements OnInit {
     this.usersService.getAvailableFacilities(this.tripService.centerField.id, sleepingDates.from, sleepingDates.till).subscribe((facilities: any) => {
       console.log('get Available Facilities: ', facilities);
       if (facilities) {
-        this.facilitiesArray = facilities;
         this.facilityForDay = facilities[0].facilitiesList;
+        this.facilitiesArray = facilities;
         console.log('facility For Day: ', this.facilityForDay);
       }
     },
