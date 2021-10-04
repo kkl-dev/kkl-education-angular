@@ -133,13 +133,12 @@ export class EducationResultsComponent implements OnInit {
     private userDataService: UserDataService, private tripService: TripService, private api: FakeService) {
 
       this.tripService.forestCenter.subscribe(forestCenter => {
-        console.log('edudation result -- > forest Center from server BehaviorSubject:', this.forestCenter);
+        console.log('education result forestCenter' + forestCenter )
         // call api if place changed for dates and facilities;
-        console.log('fromOtherComponent: ' + this.fromOtherComponent);
-         if (!this.fromOtherComponent) {
-          this.forestCenter = forestCenter; // this set's the username to the default observable value
-          console.log('edudation result !fromOtherComponent -- > forest Center from server BehaviorSubject:', this.forestCenter);
-         }
+        //  if (!this.fromOtherComponent) {
+        //   this.forestCenter = forestCenter; // this set's the username to the default observable value
+        //   //console.log('edudation result !fromOtherComponent -- > forest Center from server BehaviorSubject:', this.forestCenter);
+        //  }
         //get Available Facilities
         //getAvailableFacilities is been called from changeDatesHandler;
         //this.getAvailableFacilities();
@@ -187,19 +186,14 @@ export class EducationResultsComponent implements OnInit {
       // }
     //}
 
-    //fix -- on ng init called 3 times 
-    //fix - if changed date called 2 t
     this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {      
       this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
-      console.log('educational -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
+      //console.log('educational -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
       this.getAvailableFacilities();
     });
 
-    console.log('facilities Array in ngOnInit: ', this.facilitiesArray);
+    //console.log('facilities Array in ngOnInit: ', this.facilitiesArray);
     this.facilityForDay = this.facilitiesArray[0].facilitiesList;
-    console.log('facilityForDay: ', this.facilityForDay);
-     //console.log('userDataService:', this.userDataService);
-    //this.centerField = this.tripService.centerField
     this.fromOtherComponent = false;
   }
 
@@ -282,19 +276,17 @@ export class EducationResultsComponent implements OnInit {
   }
 
   getAvailableFacilities() {
-    let sleepingDates = this.tripService.convertDatesFromSlashToMinus();
-    //this.tripService.sleepingDates.from, this.tripService.sleepingDates.till
-    
+    let sleepingDates = this.tripService.convertDatesFromSlashToMinus();    
     this.usersService.getAvailableFacilities(this.tripService.centerField.id, sleepingDates.from, sleepingDates.till).subscribe((facilities: any) => {
       console.log('get Available Facilities: ', facilities);
       if (facilities) {
         this.facilityForDay = facilities[0].facilitiesList;
         this.facilitiesArray = facilities;
-        console.log('facility For Day: ', this.facilityForDay);
+        //console.log('facility For Day: ', this.facilityForDay);
       }
     },
       error => {
-        console.log({ error });
+        console.log("error: ", { error });
       });
   }
 

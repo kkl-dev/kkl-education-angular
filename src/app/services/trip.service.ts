@@ -39,6 +39,7 @@ export class TripService {
   dateRange: any;
   formOptions!: FieldForestCenter[];
   lodgingFacilityListArray: any = [];
+  
   centerFieldObj = new BehaviorSubject<any>({
     "id": 1,
     "name": "נס הרים",
@@ -82,7 +83,7 @@ export class TripService {
 
   updateForestCenter(forestCenter: any) {
     this.centerFieldObj.next(forestCenter);
-    console.log('this. centerFieldObj: ', this.centerFieldObj);
+    console.log('this. center  Field Obj: ', this.centerFieldObj);
     this.getAvailableSleepingOptions();
   }
 
@@ -106,7 +107,6 @@ export class TripService {
     let from = str[2] + '-' + str[1] + '-' + str[0];
     let till = str2[2] + '-' + str2[1] + '-' + str2[0];
 
-    //console.log('this.centerFieldObj.value.id, from, till: ' + this.centerFieldObj.value.id, from, till)
     this.userService.getAvailableSleepingOptionsByDates(this.centerField.id, from, till).subscribe((sleepingAvailability: any) => {
       console.log('sleeping Availability ==>', { sleepingAvailability });
       if (sleepingAvailability) {
@@ -121,17 +121,20 @@ export class TripService {
       this.userService.getMapFacilities(this.centerField.id, from, till).subscribe((lodgingList: any) => {
         console.log('lodging Facility List Array ==>', { lodgingList });
         lodgingList[0].lodgingFacilityList.forEach(element => {
-          if (element.structureId == 705 || element.structureId == 826 || element.structureId == 827 || element.structureId == 828) {
-            this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנות", status: "תפוס" });
+          if (element.structureId > 611) {
+            if (element.structureId > 800) {
+              this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנות", status: "תפוס" });
+            } else {
+              this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
+            }
           } else {
-            this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנים", status: "פנוי" });
+            if (element.structureId > 511) {
+              this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנים", status: "פנוי" });
+            } else {
+              this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנים", status: "תפוס" });
+            }
           }
         });
-
-        //this.lodgingFacilityListArray = lodgingList;
-        // if (lodgingFacilityListArray) {
-        //   this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
-        // }
       },
         error => {
           console.log({ error });

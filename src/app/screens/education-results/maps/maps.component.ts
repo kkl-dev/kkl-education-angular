@@ -19,11 +19,7 @@ import { FakeService } from 'src/app/services/fake.service';
   styleUrls: ['./maps.component.scss']
 })
 export class MapsComponent implements OnInit {
-  // @Input() place: any = "מרכז שדה ציפורי"; //document.getElementById("myplaceSelect").value;
-  // @Input() day: any = 1;// document.getElementById("mydaySelect").value;
-  // @Input() visible: any;
-  // @Output() visibleChange: EventEmitter<any> = new EventEmitter<any>();
-  // lodgingFacilityListArray: any = [];
+
   lodgingFacilityForDay: any;
   url: string = "https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0";
   myMap!: WebMap;
@@ -36,7 +32,14 @@ export class MapsComponent implements OnInit {
   vtLayer: VectorTileLayer;
   basemap: BaseMap;
 
-  constructor(public tripService: TripService, public fakeApi: FakeService) { }
+  constructor(public tripService: TripService, public fakeApi: FakeService) {
+    this.tripService.forestCenter.subscribe(forestCenter => {
+      this.forestCenter = forestCenter; // this set's the username to the default observable value
+      console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
+      this.onChangeForestCenter();
+    });
+
+   }
 
   popupTrailheads: any = {
     "title": "{SiteName}",
@@ -99,15 +102,15 @@ export class MapsComponent implements OnInit {
     this.loadWebMap();
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField.name;
-
       this.onChangeForestCenter();
     }
 
-    // this.tripService.forestCenter.subscribe(forestCenter => {
-    //   this.forestCenter = forestCenter; // this set's the username to the default observable value
-    //   console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
-    //   this.onChangeForestCenter();
-    // });
+    this.tripService.forestCenter.subscribe(forestCenter => {
+      //this.forestCenter = result; // this set's the username to the default observable value
+      console.log('maps --> forestCenter result:', forestCenter);
+      this.onChangeForestCenter();
+    });
+
 
   }
 
