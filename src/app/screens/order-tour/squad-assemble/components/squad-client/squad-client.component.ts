@@ -114,4 +114,8 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.squadAssembleService.emitSaveMode(false);
     this.formGroup.controls.contact.disable();
   }
+  
+  public logForm(form) {
+    this.squadAssembleService.updateFormArray(form);
+  }
 }

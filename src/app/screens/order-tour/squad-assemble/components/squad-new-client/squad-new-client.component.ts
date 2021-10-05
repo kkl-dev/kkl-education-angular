@@ -14,7 +14,7 @@ export class SquadNewClientComponent implements OnInit {
   @Input() public group: QuestionGroup;
   @Input() public questions: QuestionBase<string | number | Date>[];
 
-  constructor(private squadNewClientService: SquadNewClientService, private squadAssembleService: SquadAssembleService) {}
+  constructor(private squadNewClientService: SquadNewClientService,private squadAssembleService: SquadAssembleService) {}
 
   ngOnInit(): void {
   }

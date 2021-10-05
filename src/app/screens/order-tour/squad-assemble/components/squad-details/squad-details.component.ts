@@ -3,6 +3,7 @@ import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { Subject } from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-squad-details',
@@ -19,17 +20,16 @@ export class SquadDetailsComponent implements OnInit {
   public expend: boolean = true;
 
   public $questions = new Subject<QuestionBase<string | number | Date>[]>();
+  constructor(private squadAssembleService: SquadAssembleService,public tripService: TripService) { }
 
-  constructor(private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
-  }
-
-  public logForm(form) {
-    this.squadAssembleService.updateFormArray(form);
   }
 
   public onBudget() {
   }
 
+  public logForm(form) {
+    this.squadAssembleService.updateFormArray(form);
+  }
 }

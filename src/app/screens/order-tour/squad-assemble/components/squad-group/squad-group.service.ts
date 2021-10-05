@@ -37,12 +37,6 @@ export class SquadGroupService {
       rows: 4,
       label: 'קבוצת גיל',
       inputProps: {
-        // options: [
-        //   { label: '1', value: '1' },
-        //   { label: 'עוד לקוח', value: '10+' },
-        //   { label: 'לקוח מספר שלוש', value: '20+' },
-        //   { label: 'לקוח מספר ארבע', value: '30+' },
-        // ],
          options: this.tripService.ageGroup
       },
       validations: [Validators.required],

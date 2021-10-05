@@ -52,6 +52,9 @@ export class SquadGroupComponent {
     );
   }
 
+  public logForm(form) {
+    this.squadAssembleService.updateFormArray(form);
+  }
 
 
 

@@ -2,6 +2,7 @@ import { FormService } from 'src/app/components/form/logic/form.service';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { TripService } from 'src/app/services/trip.service';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,6 @@ export class SquadBudgetService {
 
 
   constructor(
-    private formService: FormService
+      private formService: FormService
   ) { }
 }

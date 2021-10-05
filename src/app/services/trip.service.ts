@@ -5,8 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
-
-import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer,ActivityType, Budget } from '../open-api';
+import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer, ActivityType, BudgetByParams, Budget } from '../open-api';
 import { SquadBudgetService } from '../screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
 
 @Injectable({
@@ -14,24 +13,9 @@ import { SquadBudgetService } from '../screens/order-tour/squad-assemble/compone
 })
 export class TripService {
 
-
-  constructor(public userService: UserService) { }
-  
-  ageGroup = [];//to convert to model of comrax
-  ageGroupOriginal: AgeGroup[];
-  fieldForestCenters = [];//to convert to model of comrax
-  fieldForestCentersOriginal: FieldForestCenter[];
-  activityByAttribute = [];
-  activityByAttributeOriginal: ActivityType[]
-  customers = [];
-  customersOriginal: BaseCustomer[]
-  areas: Area[];
-  attributes = [];
-  attributesOriginal: TripAttribute[];
-  participantTypes: ParticipantType[];
-  languages: Language[];
-  countries: Country[];
-
+  constructor(private userService: UserService, private squadBudgetService: SquadBudgetService) { }
+  // 
+  //  forestCenters: any = {};
 
   centerField: FieldForestCenter = {
     id: 0,
@@ -42,10 +26,6 @@ export class TripService {
   formGroupSquadAssembles = [];
   dateRange: any;
   formOptions!: FieldForestCenter[];
-
-  budget: Budget;
-  budgetExpensesAndIncome: Budget;
- 
   lodgingFacilityListArray: any = [];
   
   centerFieldObj = new BehaviorSubject<any>({
@@ -148,7 +128,28 @@ export class TripService {
           console.log({ error });
         });
   }
-
+  payerCustomer = {} as BaseCustomer;
+  Customer = {} as BaseCustomer;
+  ageGroup = [];//to convert to model of comrax
+  ageGroupOriginal: AgeGroup[];
+  fieldForestCenters = [];//to convert to model of comrax
+  fieldForestCentersOriginal: FieldForestCenter[];
+  activityByAttribute = [];
+  activityByAttributeOriginal: ActivityType[]
+  customers = [];
+  customersOriginal: BaseCustomer[];
+  baseCustomer: BaseCustomer;
+  areas: Area[];
+  attributes = [];
+  attributesOriginal: TripAttribute[];
+  participantTypes: ParticipantType[];
+  languages: Language[];
+  countries: Country[];
+  budget: Budget;
+  budgetExpensesAndIncome: Budget;
+  budgetExpenses = [];
+  budgetIncome = [];
+  budgetByParam = {} as BudgetByParams;
   getLookupFieldForestCenters() {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {
@@ -173,13 +174,17 @@ export class TripService {
       () => console.log('completed')     // complete
     )
   }
-
-
   getBudgetKKl(budgetByParam: any) {
     this.userService.getBadgetKKl(budgetByParam).subscribe(
       response => {
-        console.log('budget by attribute is: ', response)
+        console.log('response', response)
         this.budget = response;
+        // var list;
+        // this.budget.listCity.forEach(element => {
+        //   list.push({ label: element.name, value: element.id.toString() });
+        // });
+        // var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+        // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.budget.listCity;
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -188,15 +193,20 @@ export class TripService {
   getBudgetExpensesAndIncome(budgetByParam: any) {
     this.userService.getBadgetExpensesAndIncome(budgetByParam).subscribe(
       response => {
-        console.log('budget by activity is:', response)
+        console.log('response', response)
         this.budgetExpensesAndIncome = response;
+        response.subBudgetIncomeList.forEach(element => {
+          this.budgetIncome.push({ label: element.name, value: element.id.toString() });
+        });
+        response.subBudgetExpenseList.forEach(element => {
+          this.budgetExpenses.push({ label: element.name, value: element.id.toString() });
+        });
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
- 
-   getCustomersByParameters(customer, clientPool) {
+  getCustomersByParameters(customer, clientPool) {
     this.userService.getCustomersByParameters(customer, clientPool).subscribe(
       response => {
         console.log('response', response)
@@ -210,10 +220,30 @@ export class TripService {
       () => console.log('completed')     // complete
     )
   }
-    
-  
+  getKKLWorkers(customer) {
+    this.userService.getKKLWorkers(customer).subscribe(
+      response => {
+        console.log('response', response)
+        this.customersOriginal = response;
+        response.forEach(element => {
+          this.customers.push({ label: element.name, value: element.id.toString() });
+        });
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+  getCustomer(customerId) {
+    this.userService.getCustomer(customerId).subscribe(
+      response => {
+        console.log('response', response)
+        // this.baseCustomer = response.BaseCustomer;
 
-  
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
   getLookUp() {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {
@@ -235,9 +265,6 @@ export class TripService {
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
-  
-
-   
     this.userService.getAreas().subscribe(
       response => {
         console.log('response', response)

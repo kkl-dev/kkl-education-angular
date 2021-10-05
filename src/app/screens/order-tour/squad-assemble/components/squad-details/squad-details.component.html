@@ -1,16 +1,12 @@
 <div fxFill fxLayout="row" fxLayoutAlign="center center">
   <mat-accordion>
     <app-expend-panel variant="form" [expanded]="expend">
-      <div
-        title
-        fxLayout="row"
-        fxLayoutAlign="space-between center"
-        class="title"
-      >
+      <div title fxLayout="row" fxLayoutAlign="space-between center" class="title">
         <app-typography color="primary" bold="600" size="16">
           {{ detailsGroup.header.label }}
         </app-typography>
       </div>
+<<<<<<< HEAD
       <app-form-container
         content
         [cols]="detailsGroup.cols"
@@ -21,6 +17,14 @@
     </app-expend-panel>
 
     <app-expend-panel  variant="form" [expanded]="!expend">
+=======
+      <app-form-container content [cols]="detailsGroup.cols" [questions]="detailsGroup.questions"
+        (register)="logForm($event)">
+      </app-form-container>
+    </app-expend-panel>
+
+    <app-expend-panel variant="form" [expanded]="!expend" *ngIf="tripService.budget!==undefined">
+>>>>>>> origin/internal-main-dev-yael
       <div title fxLayout="row" fxLayoutAlign="space-between center">
         <app-typography color="primary" bold="600" size="16">
           {{ budgetGroup.header.label }}
@@ -29,6 +33,7 @@
           {{ budgetKKL | currency: "ILS" }}
         </app-typography>
       </div>
+<<<<<<< HEAD
       <app-form-container
         content
         [cols]="budgetGroup.cols"
@@ -36,6 +41,10 @@
         [slots]="{location}"
         (register)="logForm($event)"
       >
+=======
+      <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}"
+        (register)="logForm($event)">
+>>>>>>> origin/internal-main-dev-yael
       </app-form-container>
     </app-expend-panel>
   </mat-accordion>

@@ -17,14 +17,7 @@ export class SquadDetailsService {
       label: 'מאפיין',
       type: 'select',
       inputProps: {
-        // options: [
-        //   { label: 'פרומלי', value: 'פרומלי' },
-        //   { label: 'בלתי פורמלי', value: 'בלתי פורמלי' },
-        //   { label: 'מעוף', value: 'מעוף' },
-        //   { label: 'חו"ל', value: 'חו"ל' },
-        //   { label: 'הנהלת אגף', value: 'הנהלת אגף' },
-        // ],
-        options:  this.tripService.attributes,
+        options: this.tripService.attributes,
       },
       validations: [Validators.required],
     }),
@@ -33,11 +26,7 @@ export class SquadDetailsService {
       label: 'סוג הפעילות',
       type: 'select',
       inputProps: {
-        // options: [
-        //   { label: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
-        //   { label: 'מחזון להגשמה', value: 'מחזון להגשמה' },
-        // ],
-        options:this.tripService.activityByAttribute,
+        options: this.tripService.activityByAttribute,
       },
       validations: [Validators.required],
     }),
@@ -69,7 +58,8 @@ export class SquadDetailsService {
 
 
 
+
   constructor(
-    private formService: FormService,private tripService:TripService
+    private formService: FormService, private tripService: TripService
   ) { }
 }

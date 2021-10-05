@@ -9,7 +9,13 @@ import {
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { BudgetByParams } from 'src/app/open-api';
+<<<<<<< HEAD
 import { SquadBudgetService } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
+=======
+import { BudgetModel } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.model';
+import { SquadBudgetService } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
+import { SquadGroupService } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.service';
+>>>>>>> origin/internal-main-dev-yael
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FormService } from '../logic/form.service';
@@ -26,6 +32,7 @@ export class FormInputComponent implements OnInit {
   @Input() public question!: QuestionBase<string | number | Date>;
 
   @Input() public control: FormControl;
+  @Input() public group: FormGroup;
   @Input() public type: string;
   @Input() public label: string;
   @Input() public hint: string;
@@ -40,7 +47,10 @@ export class FormInputComponent implements OnInit {
   @Input() public disabled: boolean;
   @Input() public group: FormGroup;
   @Input() public serverErrorMode!: boolean;
+<<<<<<< HEAD
   
+=======
+>>>>>>> origin/internal-main-dev-yael
   public color: string;
   public value!: any;
   public error!: string;
@@ -48,23 +58,27 @@ export class FormInputComponent implements OnInit {
   name: any;
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter()
   @Output() select: EventEmitter<FormControl> = new EventEmitter()
+  @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
+<<<<<<< HEAD
   @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   constructor(private formService: FormService, private tripService:TripService, private squadAssemble: SquadAssembleService,private squadB: SquadBudgetService) { }
+=======
+
+  constructor(private formService: FormService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService) { }
+>>>>>>> origin/internal-main-dev-yael
 
   ngOnInit(): void {
-   
+    this.name = this.getName(this.control);
     let name = this.getName(this.control);
-    console.log('control name is :', name);
-    if(name=='tripStart' || name=='tripEnding' || name == 'centerField')
-    this.setDefaultValues(name);
+    if (name == 'tripStart' || name == 'tripEnding' || name == 'centerField')
+      this.setDefaultValues(name);
     this.subscribeToControl();
   }
 
   public handleChange(value: any) {
     this.value = value;
   }
-
 
   // CALENDAR METHODS
   newDateReceived(newDate: any) {
@@ -73,52 +87,49 @@ export class FormInputComponent implements OnInit {
   }
   prevDateReceived(prevDate: any) {
     console.log(prevDate);
-
   }
 
   newSleepingPlaceReceived(sleepingPlace: any) {
     console.log(sleepingPlace);
-
   }
 
-    
-  setDefaultValues(name: string){ 
-    switch(name) { 
+  setDefaultValues(name: string) {
+    switch (name) {
       case 'tripStart':
-        if(this.tripService.sleepingDates.from !=''){
+        if (this.tripService.sleepingDates.from != '') {
           this.control.setValue(this.tripService.sleepingDates.from);
-          if (typeof(Storage) !== "undefined") {
-            localStorage.setItem("sleepingDateStart",this.tripService.sleepingDates.from);
-          }
-        } 
-        else{
-          this.control.setValue(localStorage.getItem("sleepingDateStart"));
-        }     
-       break; 
-      case  'tripEnding':
-        if(this.tripService.sleepingDates.till !=''){
-          this.control.setValue(this.tripService.sleepingDates.till);
-          if (typeof(Storage) !== "undefined") {
-            localStorage.setItem("sleepingDateTill",this.tripService.sleepingDates.till);
-          }      
-        }  
-        else{
-          this.control.setValue(localStorage.getItem("sleepingDateTill"));
-        }  
-        break;
-      case 'centerField':
-        if(this.tripService.centerField.id!=0){
-          this.control.setValue(this.tripService.centerField.id.toString());
-          if (typeof(Storage) !== "undefined") {
-            localStorage.setItem("centerFieldId",this.tripService.centerField.id.toString());
-            localStorage.setItem("centerFieldName",this.tripService.centerField.name);
+          if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("sleepingDateStart", this.tripService.sleepingDates.from);
           }
         }
-        else{
+        else {
+          this.control.setValue(localStorage.getItem("sleepingDateStart"));
+        }
+        break;
+      case 'tripEnding':
+        if (this.tripService.sleepingDates.till != '') {
+          this.control.setValue(this.tripService.sleepingDates.till);
+          if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("sleepingDateTill", this.tripService.sleepingDates.till);
+          }
+        }
+        else {
+          this.control.setValue(localStorage.getItem("sleepingDateTill"));
+        }
+        break;
+      case 'centerField':
+        if (this.tripService.centerField.id != 0) {
+          this.control.setValue(this.tripService.centerField.id.toString());
+          if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
+            localStorage.setItem("centerFieldName", this.tripService.centerField.name);
+          }
+        }
+        else {
           this.control.setValue(localStorage.getItem("centerFieldId"));
-        }         
-    }   
-}
+        }
+    }
+  }
 
   getName(control: AbstractControl): string | null {
     let group = <FormGroup>control.parent;
@@ -129,44 +140,89 @@ export class FormInputComponent implements OnInit {
 
     let name: string;
     Object.keys(group.controls).forEach(key => {
-    let childControl = group.get(key);
+      let childControl = group.get(key);
 
-    if (childControl !== control) {
-      return;
-    }
-     name = key;
-  });
-
+      if (childControl !== control) {
+        return;
+      }
+      name = key;
+    });
     return name;
   }
 
 
-    // END IF CALENDER METHODS
+  // END IF CALENDER METHODS
 
-    // subscription section
-    private subscribeToControl() {
+  // subscription section
+  private subscribeToControl() {
+    if (this.control.disabled) {
+      this.color = 'disable';
+    }
+    this.control.valueChanges.subscribe((value) => {
       if (this.control.disabled) {
         this.color = 'disable';
+      } else if (this.control.errors) {
+        this.color = 'danger';
+      } else {
+        this.color = '';
       }
-
-      this.control.valueChanges.subscribe((value) => {
-        if (this.control.disabled) {
-          this.color = 'disable';
-        } else if (this.control.errors) {
-          this.color = 'danger';
-        } else {
-          this.color = '';
-        }
-        if (this.controlType === 'autocomplete') {
-          this.autocomplete.emit(this.control)
-        }
-      });
+      if (this.controlType === 'autocomplete') {
+        this.autocomplete.emit(this.control)
+      }
+    });
+  }
+  public onSelectChange() {
+    if (this.control.parent.value.attribute) {
+      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'itiel');
     }
+    if (this.name === 'attribute') {
+      this.group.controls['activityType'].setValue(undefined);//איפוס שדה פעילות
+      if (this.control.value === '12') {
+        var index;
+        for (var i in this.squadAssemble.formsArray) {
+          Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
+            if (key === 'ageGroup') { index = i; }
+          });
+        }
+        this.squadAssemble.formsArray[index].controls['ageGroup'].setValue(undefined)
+      }
+      var attr = this.tripService.attributesOriginal.filter(el => el.id === parseInt(this.control.value))[0];
+      if (attr.autoCustomerId !== null) {// שליפת לקוח והצבתו בלקוח רצוי 
+        this.tripService.getCustomer(attr.autoCustomerId);
+      }
+      this.tripService.budgetByParam.attribute = attr;
+      this.tripService.budgetByParam.userId = "שחר";
+      this.tripService.budgetByParam.userName = "שחר גל";
+      //find index 'tripStart'
+      var index;
+      for (var i in this.squadAssemble.formsArray) {
+        Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
+          if (key === 'tripStart') { index = i; }
+        });
+      }
+      let str = this.squadAssemble.formsArray[index].controls['tripStart'].value.split("/");
+      this.tripService.budgetByParam.tripStart = str[2] + '-' + str[1] + '-' + str[0];
+      this.tripService.getBudgetKKl(this.tripService.budgetByParam);
+      // index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+      // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.tripService.budget.listCity;
+    }
+<<<<<<< HEAD
 
   public onSelectChange() {
     console.log('this.control is: ',this.control);
     if(this.control.parent.value.attribute){
       this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute,'שחר גל');
+=======
+    if (this.name === 'activityType') {
+      var act = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(this.control.value))[0];
+      this.tripService.budgetByParam.activity = act;
+      this.tripService.budgetByParam.budget = this.tripService.budget;
+      this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
+      let index = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
+      this.squadBudgetService.questions[index].inputProps.options = this.tripService.budgetIncome;
+      index = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
+      this.squadBudgetService.questions[index].inputProps.options = this.tripService.budgetExpenses;
+>>>>>>> origin/internal-main-dev-yael
     }
      
     this.select.emit(this.control);

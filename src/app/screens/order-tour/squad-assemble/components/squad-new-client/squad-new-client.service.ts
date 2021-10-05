@@ -96,5 +96,6 @@ export class SquadNewClientService {
     return this.$newClient.asObservable();
   }
 
+
   constructor() {}
 }

@@ -20,7 +20,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   public $activeStep = new Subject<number>();
 
-  public nextPage: string = 'education/search'; 
+  public nextPage: string = 'education/search';
   public prevPage: string = 'education/results';
   public hasSave: boolean;
 
@@ -47,7 +47,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.subscribeToNewClient()
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   // SUBSCRIBE SECTION
   private subscribeToCurrentRoute() {
@@ -190,12 +190,12 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
         
       }
      
-      }
-      catch(error){
-        console.log(error);
-      }      
-  
-     console.log(this.squadAssemble.tripInfo);
+     }
+    
+    catch (error) {
+      console.log(error);
+    }
+    console.log(this.squadAssemble.tripInfo);
   }
 
   
@@ -227,3 +227,4 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
 
 }
+
