@@ -26,7 +26,58 @@ export class TripService {
   formGroupSquadAssembles = [];
   dateRange: any;
   formOptions!: FieldForestCenter[];
-  lodgingFacilityListArray: any = [];
+  lodgingFacilityListArrayObservable: any = new BehaviorSubject<any>([
+    {
+      "fieldForestCenterName": "מרכז שדה לביא",
+      "lodgingFacilityList": [
+        {
+          "structureId": 849,
+          "gender": "בנים",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 850,
+          "gender": "מעורב",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 851,
+          "gender": "בנות",
+          "status": "תפוס"
+        },
+        {
+          "structureId": 852,
+          "gender": "בנים",
+          "status": "תפוס"
+        },
+        {
+          "structureId": 853,
+          "gender": "מעורב",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 1195,
+          "gender": "בנות",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 1196,
+          "gender": "בנים",
+          "status": "תפוס"
+        },
+        {
+          "structureId": 1197,
+          "gender": "מעורב",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 1198,
+          "gender": "בנות",
+          "status": "תפוס"
+        }
+      ]
+    }
+  ]);
   
   centerFieldObj = new BehaviorSubject<any>({
     "id": 1,
@@ -63,6 +114,7 @@ export class TripService {
 
   forestCenter = this.centerFieldObj.asObservable();
   AvailableSleepingOptions = this.AvailableSleepingOptionsByDay.asObservable();
+  lodgingFacilityListArray = this.lodgingFacilityListArrayObservable.asObservable();
 
   setFreeSpacesArray(freeSpacesArray: any) {
     this.freeSpacesArray = freeSpacesArray;
@@ -108,21 +160,35 @@ export class TripService {
       //getMapFacilities for sending sleeping id to map
       this.userService.getMapFacilities(this.centerField.id, from, till).subscribe((lodgingList: any) => {
         console.log('lodging Facility List Array ==>', { lodgingList });
+
+        this.lodgingFacilityListArray = [];
+        let temp = []
+        temp.push({"fieldForestCenterName": "מרכז שדה לביא"});
+
+        // a.push({"fieldForestCenterName": "מרכז שדה לביא"});
+
         lodgingList[0].lodgingFacilityList.forEach(element => {
           if (element.structureId > 611) {
             if (element.structureId > 800) {
-              this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנות", status: "תפוס" });
+              
+              temp.push({structureId: element.structureId, gender: "בנות", status: "תפוס" });
             } else {
-              this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
+              temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
             }
           } else {
             if (element.structureId > 511) {
-              this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנים", status: "פנוי" });
+              temp.push({structureId: element.structureId, gender: "בנים", status: "פנוי" });
             } else {
-              this.lodgingFacilityListArray.push({structureId: element.structureId, gender: "בנים", status: "תפוס" });
+              temp.push({structureId: element.structureId, gender: "בנים", status: "תפוס" });
             }
           }
         });
+        this.lodgingFacilityListArray.push({fieldForestCenterName: "מרכז שדה לביא"},{lodgingFacilityList: temp});
+        //console.log(a)
+        console.log("this.lodgingFacilityListArray", this.lodgingFacilityListArray);
+        this.lodgingFacilityListArrayObservable.next(this.lodgingFacilityListArray);
+        
+
       },
         error => {
           console.log({ error });

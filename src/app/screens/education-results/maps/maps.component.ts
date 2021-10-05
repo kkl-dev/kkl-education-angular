@@ -33,12 +33,13 @@ export class MapsComponent implements OnInit {
   basemap: BaseMap;
 
   constructor(public tripService: TripService, public fakeApi: FakeService) {
-    this.tripService.forestCenter.subscribe(forestCenter => {
-      this.forestCenter = forestCenter; // this set's the username to the default observable value
-      console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
-      this.onChangeForestCenter();
-    });
 
+    this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
+    // this.tripService.forestCenter.subscribe(forestCenter => {
+    //   this.forestCenter = forestCenter; // this set's the username to the default observable value
+    //   console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
+    //   this.onChangeForestCenter();
+    // });
   }
 
   popupTrailheads: any = {
@@ -101,21 +102,27 @@ export class MapsComponent implements OnInit {
   ngOnInit() {
     this.loadWebMap();
     if (this.tripService.centerField) {
-      this.forestCenter = this.tripService.centerField.name;
-      this.onChangeForestCenter();
+      this.forestCenter = this.tripService.centerField;
+      //this.onChangeForestCenter();
     }
 
-    this.tripService.forestCenter.subscribe(forestCenter => {
+    // this.tripService.forestCenter.subscribe(forestCenter => {
+    //   //this.forestCenter = result; // this set's the username to the default observable value
+    //   console.log('maps --> forestCenter result:', forestCenter);
+    //   this.forestCenter = forestCenter;
+    //   //this.onChangeForestCenter();
+    // });
+    this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
       //this.forestCenter = result; // this set's the username to the default observable value
-      console.log('maps --> forestCenter result:', forestCenter);
-      this.onChangeForestCenter();
+      console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
+      this.rawservicedata = lodgingFacilityList;
+      this.queryandrender();
+      //this.onChangeForestCenter();
     });
-
-
   }
 
   queryandrender() {
-    let filterex = "SiteName = '" + this.rawservicedata.fieldForestCenterName + "'";
+    let filterex = "SiteName = '" + this.rawservicedata[0].fieldForestCenterName + "'";
 
     let queryTask = new QueryTask({
       url: this.url
@@ -127,7 +134,7 @@ export class MapsComponent implements OnInit {
     });
 
     queryTask.executeForExtent(queryextnet).then((response) => {
-      this.queryTask_executeForExtent(response)
+      this.queryTask_executeForExtent(response);
     });
 
     // query for data
@@ -146,11 +153,16 @@ export class MapsComponent implements OnInit {
   currentDayHandler(newCurrentDay: number) {
     console.log('new Current Day: ', newCurrentDay);
     //    console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
-    this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray[newCurrentDay].lodgingFacilityList;
+    this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
+    //this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray[newCurrentDay].lodgingFacilityList;
+    //this.rawservicedata = this.lodgingFacilityForDay;
+    this.queryandrender();
   }
 
   onChangeForestCenter() {
-    this.rawservicedata = this.fakeApi.getLodgingFacilityList(this.forestCenter);
+    //this.rawservicedata = this.fakeApi.getLodgingFacilityList(this.forestCenter.name);
+    //this.lodgingFacilityForDay
+    //this.rawservicedata = this.lodgingFacilityForDay;
     this.queryandrender();
   };
 
@@ -159,8 +171,8 @@ export class MapsComponent implements OnInit {
   }
 
   layer_queryFeatures(response: any) {
-    this.rawservicedata = this.fakeApi.getLodgingFacilityList(this.forestCenter);
-
+    // this.rawservicedata = this.fakeApi.getLodgingFacilityList(this.forestCenter.name);
+    //this.rawservicedata = this.lodgingFacilityForDay;
     let buldingfeature: any;
 
     for (let i = 0; i < response.features.length; i++) {
@@ -172,7 +184,7 @@ export class MapsComponent implements OnInit {
         y: buldingfeature.geometry.y
       });
 
-      var objBin = this.rawservicedata.lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
+      var objBin = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
 
       if (objBin.length > 0) {
         objBin = objBin[0];
