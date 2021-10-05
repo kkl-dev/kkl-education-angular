@@ -1,10 +1,11 @@
 import { StepperService } from './../../utilities/services/stepper.service';
 import { OrderTourService } from './../../utilities/services/order-tour.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-order-tour',
@@ -29,7 +30,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private orderTourService: OrderTourService
+    private orderTourService: OrderTourService,
+    private location: Location,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +41,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.subscribeToCurrentRoute();
     this.getActiveStep();
     this.setActiveStep();
-    this.subscribeToNewClient()
+    this.subscribeToNewClient();
   }
 
   ngAfterViewInit() {}
@@ -108,5 +111,27 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
     this.activeStep = +newActiveStep;
+  }
+
+  public changeActiveStepNextNavigation(): void {
+    this.activeStep = +this.activeStep++;
+    const routeIndex =
+      this.steps.findIndex(
+        (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
+      ) + 1;
+    if(routeIndex<this.steps.length){
+      this.router.navigateByUrl(
+        `/education/order-tour/${this.steps[routeIndex].path}`
+      );
+   }else{
+     console.log('last route navigate to next page');
+     this.router.navigateByUrl(
+      `/education/search`
+    );
+   }
+  }
+  public changeActiveStepPrevNavigation(): void {
+    this.activeStep = +this.activeStep--;
+    this.location.back();
   }
 }
