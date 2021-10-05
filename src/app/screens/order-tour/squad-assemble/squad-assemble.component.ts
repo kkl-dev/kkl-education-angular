@@ -229,7 +229,7 @@ export class SquadAssembleComponent implements OnInit {
       isGroup: true,
       cols: '2',
       label: 'מדריכים',
-      group: [
+      group:{ questions:[
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
@@ -242,7 +242,7 @@ export class SquadAssembleComponent implements OnInit {
           type: 'number',
           rows: 4,
         }),
-      ],
+      ]},
     }),
     new QuestionBase({
       key: 'medics',
