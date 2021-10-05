@@ -172,6 +172,7 @@ export class FormInputComponent implements OnInit {
           });
         }
         this.squadAssemble.formsArray[index].controls['ageGroup'].setValue(undefined)
+        // this.squadGroupService.mixedQuestions['ageGroup'].setValue(undefined)
       }
       var attr = this.tripService.attributesOriginal.filter(el => el.id === parseInt(this.control.value))[0];
       if (attr.autoCustomerId !== null) {// שליפת לקוח והצבתו בלקוח רצוי 
@@ -198,10 +199,10 @@ export class FormInputComponent implements OnInit {
       this.tripService.budgetByParam.activity = act;
       this.tripService.budgetByParam.budget = this.tripService.budget;
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
-      let index = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
-      this.squadBudgetService.questions[index].inputProps.options = this.tripService.budgetIncome;
-      index = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
-      this.squadBudgetService.questions[index].inputProps.options = this.tripService.budgetExpenses;
+    }
+    if (this.name === 'location') {
+      this.tripService.budgetByParam.budget.cityId = parseInt(this.control.value);
+      this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
     this.select.emit(this.control);
     this.groupEvent.emit(this.group);

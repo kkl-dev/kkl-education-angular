@@ -154,7 +154,6 @@ export class TripService {
       () => console.log('completed')     // complete
     )
   }
-
   getActivityLookupsByAttribute(attributeId: number, userId: string) {
     this.userService.getActivityByAttribute(attributeId, userId).subscribe(
       response => {
@@ -173,12 +172,26 @@ export class TripService {
       response => {
         console.log('response', response)
         this.budget = response;
-        // var list;
-        // this.budget.listCity.forEach(element => {
-        //   list.push({ label: element.name, value: element.id.toString() });
-        // });
-        // var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
-        // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.budget.listCity;
+        if (this.budget.listCity !== null) {
+          var list = [];
+          this.budget.listCity.forEach(element => {
+            list.push({ label: element.name, value: element.id.toString() });
+          });
+          var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+          if (list.length === 1) {
+            this.squadBudgetService.questions[index].group.questions[0].value = list[0].value;
+            this.squadBudgetService.questions[index].group.questions[0].label = list[0].label;
+          }
+          else { this.squadBudgetService.questions[index].group.questions[0].inputProps.options = list; }
+          if (this.budget.type !== undefined) {
+            this.squadBudgetService.budget.type = this.budget.desc;
+            this.squadBudgetService.budget.budget = this.budget.kklAmount;
+            this.squadBudgetService.budget.expense = this.budget.customerAmount;
+            this.squadBudgetService.budget.deliver = this.budget.execution;
+            this.squadBudgetService.budget.overflow = this.budget.balance;
+            this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
+          }
+        }
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -189,12 +202,24 @@ export class TripService {
       response => {
         console.log('response', response)
         this.budgetExpensesAndIncome = response;
-        response.subBudgetIncomeList.forEach(element => {
-          this.budgetIncome.push({ label: element.name, value: element.id.toString() });
-        });
-        response.subBudgetExpenseList.forEach(element => {
-          this.budgetExpenses.push({ label: element.name, value: element.id.toString() });
-        });
+        let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
+        let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
+        if (this.budget.type !== undefined) {
+          response.subBudgetIncomeList.forEach(element => {
+            this.budgetIncome.push({ label: element.name, value: element.id.toString() });
+          });
+          this.squadBudgetService.questions[index1].inputProps.options = this.budgetIncome;
+          response.subBudgetExpenseList.forEach(element => {
+            this.budgetExpenses.push({ label: element.name, value: element.id.toString() });
+            this.squadBudgetService.questions[index2].inputProps.options = this.budgetExpenses;
+          });
+        }
+        else {
+          this.squadBudgetService.questions[index1].value = response.incomeId.toString();
+          this.squadBudgetService.questions[index1].label = response.incomeName;
+          this.squadBudgetService.questions[index2].value = response.expensesId.toString();
+          this.squadBudgetService.questions[index2].label = response.expensesName;
+        }
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -205,6 +230,7 @@ export class TripService {
       response => {
         console.log('response', response)
         this.customersOriginal = response;
+        this.customers = [];
         response.forEach(element => {
           this.customers.push({ label: element.name, value: element.id.toString() });
         });

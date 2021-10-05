@@ -4,6 +4,7 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { ListItem } from 'src/app/components/grid/list-item.model';
 import { TripService } from 'src/app/services/trip.service';
 import { BudgetModel } from './squad-budget.model';
+import { SquadBudgetService } from './squad-budget.service';
 
 @Component({
   selector: 'app-squad-budget',
@@ -15,55 +16,55 @@ export class SquadBudgetComponent implements OnInit {
   @Input() public group: QuestionGroup;
   @Input() public formGroup: FormGroup;
 
-  public budget: BudgetModel = {
-    type: 'מעוף',
-    budget: 0,
-    expense: 1520,
-    deliver: 3204,
-    overflow: 167520
-  }
+  // public budget: BudgetModel = {
+  //   type: 'מעוף',
+  //   budget: 0,
+  //   expense: 1520,
+  //   deliver: 3204,
+  //   overflow: 167520
+  // }
 
-  public list: ListItem[] = [
-    {
-      key: 'type',
-      label: 'סוג תקציב',
-      type: 'text'
-    },
-    {
-      key: 'budget',
-      label: 'תקצוב קק"ל',
-      type: 'number'
-    },
-    {
-      key: 'expense',
-      label: 'עלות לקוח',
-      type: 'number'
-    },
-    {
-      key: 'deliver',
-      label: 'ביצוע',
-      type: 'number'
-    },
-    {
-      key: 'overflow',
-      label: 'יתרה פיננסית',
-      type: 'number'
-    },
-  ]
+  // public list: ListItem[] = [
+  //   {
+  //     key: 'type',
+  //     label: 'סוג תקציב',
+  //     type: 'text'
+  //   },
+  //   {
+  //     key: 'budget',
+  //     label: 'תקצוב קק"ל',
+  //     type: 'number'
+  //   },
+  //   {
+  //     key: 'expense',
+  //     label: 'עלות לקוח',
+  //     type: 'number'
+  //   },
+  //   {
+  //     key: 'deliver',
+  //     label: 'ביצוע',
+  //     type: 'number'
+  //   },
+  //   {
+  //     key: 'overflow',
+  //     label: 'יתרה פיננסית',
+  //     type: 'number'
+  //   },
+  // ]
 
-  constructor(public tripService: TripService) { }
+  constructor(public tripService: TripService, public squadBudgetService: SquadBudgetService) { }
 
   ngOnInit(): void {
-    this.list = this.setList(this.list);
+    this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
   }
 
-  private setList(list: ListItem[]): ListItem[] {
-    return list.map((item: ListItem) => {
-      const listItem = { ...item };
-      listItem.value = this.budget[item.key];
-      return listItem;
-    });
-  }
+  // private setList(list: ListItem[]): ListItem[] {
+  //   return list.map((item: ListItem) => {
+  //     const listItem = { ...item };
+  //     listItem.value = this.budget[item.key];
+  //     return listItem;
+  //   });
+  // }
 
 
   public onClick() {

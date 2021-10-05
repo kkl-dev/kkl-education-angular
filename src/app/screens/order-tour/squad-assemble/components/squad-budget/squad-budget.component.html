@@ -7,16 +7,16 @@
     </div>
   </mat-grid-tile>
   <mat-grid-tile *ngFor="let question of group.questions" [colspan]="question.cols" [rowspan]="question.rows">
-    <app-form-input  *ngIf="tripService.budget?.type!==null"[control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
+    <app-form-input  *ngIf="tripService.budget?.type!==undefined"[control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
       [disabled]="question.disabled" [split]="cols > question.cols" [type]="question.type" [label]="question.label"
       [icon]="question.icon" [options]="question.inputProps?.options" [dateOptions]="question.inputProps?.dateOptions"
-      [controlType]="question.controlType">
+      [controlType]="question.controlType" >
     </app-form-input>
   </mat-grid-tile>
   <mat-grid-tile rowspan="12">
 
-    <mat-list *ngIf="tripService.budget?.type!==null">
-      <mat-list-item fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of list">
+    <mat-list *ngIf="tripService.budget?.type!==undefined">
+      <mat-list-item fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of squadBudgetService.list">
         <div mat-line>
           <app-typography>
             {{ item.label }} :
