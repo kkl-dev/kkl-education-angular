@@ -91,7 +91,8 @@ export class FormAutocompleteComponent implements OnInit {
   public onOptionSelected(event: MatAutocompleteSelectedEvent, question: any) {
     if (question === 'payerPoll') { this.tripService.payerCustomer = this.tripService.customers.filter(el => el.value === event.option.value)[0]; }
     if (question === 'customer') { this.tripService.Customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]; }
-    this.tripService.Customer = this.tripService.customers.filter(el => el.value === event.option.value)[0];
+    // this.tripService.Customer = this.tripService.customers.filter(el => el.value === event.option.value)[0];
+    this.squadAssembleService.Customer = this.tripService.customers.filter(el => el.value === event.option.value)[0];
     this.squadClientService.emitClientSelected(event.option.value);
     this.list.push(event.option.value);
   }

@@ -3,11 +3,20 @@ import { Injectable } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { TripService } from 'src/app/services/trip.service';
+import { BudgetModel } from './squad-budget.model';
+import { ListItem } from 'src/app/components/grid/list-item.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SquadBudgetService {
+  public budget: BudgetModel = {
+    type: '',
+    budget: 0,
+    expense: 0,
+    deliver: 0,
+    overflow: 0
+  }
 
   public questions: QuestionBase<string>[] = [
     new QuestionSelect({
@@ -17,7 +26,7 @@ export class SquadBudgetService {
       rows: 4,
       label: 'תת סעיף תקציב הכנסות',
       inputProps: {
-        options: [{ label: 'לקוח מספר ארבע', value: '30+' }],
+        options: [],
       },
     }),
     new QuestionSelect({
@@ -27,7 +36,7 @@ export class SquadBudgetService {
       rows: 4,
       label: 'תת סעיף תקציב הוצאות',
       inputProps: {
-        options: [{ label: 'לקוח מספר ארבע', value: '30+' }],
+        options: [],
       },
     }),
     new QuestionBase({
@@ -47,16 +56,55 @@ export class SquadBudgetService {
             fullWidth: true,
             rows: 4,
             inputProps: {
-              options: [{ label: 'לקוח מספר ארבע', value: '30+' }],
+              options:
+                [
+                  // { label: 'לקוח מספר ארבע', value: '30+' }
+                ],
             },
           }),
         ],
       },
     }),
   ];
-
+  public list: ListItem[] = [
+    {
+      key: 'type',
+      label: 'סוג תקציב',
+      type: 'text'
+    },
+    {
+      key: 'budget',
+      label: 'תקצוב קק"ל',
+      type: 'number'
+    },
+    {
+      key: 'expense',
+      label: 'עלות לקוח',
+      type: 'number'
+    },
+    {
+      key: 'deliver',
+      label: 'ביצוע',
+      type: 'number'
+    },
+    {
+      key: 'overflow',
+      label: 'יתרה פיננסית',
+      type: 'number'
+    },
+  ]
 
   constructor(
-      private formService: FormService
+    private formService: FormService
   ) { }
+  public setList(list: ListItem[]): ListItem[] {
+    return list.map((item: ListItem) => {
+      const listItem = { ...item };
+      listItem.value = this.budget[item.key];
+      return listItem;
+    });
+  }
+  public setBudgetList(){
+
+  }
 }

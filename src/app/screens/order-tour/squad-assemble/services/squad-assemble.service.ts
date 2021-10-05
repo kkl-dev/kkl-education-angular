@@ -10,7 +10,7 @@ import { QuestionTextarea } from 'src/app/components/form/logic/question-textare
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { TripService } from 'src/app/services/trip.service'
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
-import { TripInfo, UserService } from 'src/app/open-api';
+import { BaseCustomer, TripInfo, UserService } from 'src/app/open-api';
 import { SquadDetailsService } from '../components/squad-details/squad-details.service';
 import { SquadBudgetService } from '../components/squad-budget/squad-budget.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -30,6 +30,7 @@ export class SquadAssembleService {
   tripInfo: TripInfo = {}
   formsArray: FormGroup[] = [];
   filledNightsArray :[];
+  Customer = {} as BaseCustomer;
 
   public freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
