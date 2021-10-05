@@ -54,7 +54,6 @@ export class SquadAssembleComponent implements OnInit {
       rows: 4,
       validations: [Validators.required],
       inputProps: {
-        labelLength: 'medium',
       },
     }),
     new QuestionCalendar({
@@ -190,7 +189,7 @@ export class SquadAssembleComponent implements OnInit {
       cols: 2,
       rows: 4,
       isGroup: true,
-      group: [
+      group:{ questions:[
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
@@ -203,14 +202,14 @@ export class SquadAssembleComponent implements OnInit {
           type: 'number',
           rows: 4,
         }),
-      ],
+      ]},
     }),
     new QuestionBase({
       key: 'escorts',
       cols: 2,
       isGroup: true,
       label: 'מלווים',
-      group: [
+      group:{ questions: [
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
@@ -223,7 +222,7 @@ export class SquadAssembleComponent implements OnInit {
           type: 'number',
           rows: 4,
         }),
-      ],
+      ]},
     }),
     new QuestionBase({
       key: 'guides',
@@ -250,7 +249,7 @@ export class SquadAssembleComponent implements OnInit {
       isGroup: true,
       cols: '2',
       label: 'חובשים',
-      group: [
+      group: {questions:[
         new QuestionNumber({
           key: 'boys',
           label: 'בנים',
@@ -261,7 +260,7 @@ export class SquadAssembleComponent implements OnInit {
           label: 'בנות',
           type: 'number',
         }),
-      ],
+      ]},
     }),
   ];
 
@@ -271,7 +270,7 @@ export class SquadAssembleComponent implements OnInit {
       label: 'מאפיין',
       type: 'select',
       inputProps: {
-        labelLength: 'small',
+       
         options: [
           { label: 'פרומלי', value: 'פרומלי' },
           { label: 'בלתי פורמלי', value: 'בלתי פורמלי' },
@@ -286,10 +285,9 @@ export class SquadAssembleComponent implements OnInit {
       label: 'סוג הפעילות',
       type: 'select',
       inputProps: {
-        labelLength: 'medium',
         options: [
-          { key: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
-          { key: 'מחזון להגשמה', value: 'מחזון להגשמה' },
+          { label: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
+          { label: 'מחזון להגשמה', value: 'מחזון להגשמה' },
         ],
       },
     }),
@@ -302,8 +300,8 @@ export class SquadAssembleComponent implements OnInit {
       rows: 4,
       inputProps: {
         options: [
-          { key: 'ישראל', value: 'ישראל' },
-          { key: 'חו"ל', value: 'חו"ל' },
+          { label: 'ישראל', value: 'ישראל' },
+          { label: 'חו"ל', value: 'חו"ל' },
         ],
       },
     }),
@@ -316,8 +314,8 @@ export class SquadAssembleComponent implements OnInit {
       rows: 4,
       inputProps: {
         options: [
-          { key: 'פנים', value: 'פנים' },
-          { key: 'חוץ', value: 'חוץ' },
+          { label: 'פנים', value: 'פנים' },
+          { label: 'חוץ', value: 'חוץ' },
         ],
       },
     }),
