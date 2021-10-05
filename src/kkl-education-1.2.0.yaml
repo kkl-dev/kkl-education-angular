@@ -374,7 +374,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Charuz'
+                  $ref: '#/components/schemas/TripActivity'
   /activityCategories:
     get:
       tags:
@@ -388,7 +388,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Charuz'
+                  $ref: '#/components/schemas/TripActivity'
 
 
   /areas:
@@ -1130,6 +1130,9 @@ components:
           type: string
           description: gg
           example: http://
+        isActive: 
+          type: boolean
+          example: true
     AccommodationType:
       required:
       - id
@@ -1350,6 +1353,10 @@ components:
           type: integer
           description: 'the id of current structure as defined in the GIS'
           example: 10
+        structureType:
+          type: string
+          description: 'the structure name'
+          example: בקתה
         gender:
           type: string
           description: three possible values - בנים, בנות,מעורב
@@ -2111,7 +2118,7 @@ components:
     #       nullable: true
     #       items:
     #         $ref: '#/components/schemas/Customer'
-    Charuz:
+    TripActivity:
       type: object
       properties:
         activityId:

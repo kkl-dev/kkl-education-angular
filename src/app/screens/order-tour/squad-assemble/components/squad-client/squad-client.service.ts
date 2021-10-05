@@ -44,10 +44,6 @@ export class SquadClientService {
             },
           }),
           new QuestionAutocomplete({
-<<<<<<< HEAD
-            // key: 'clientName',
-=======
->>>>>>> origin/internal-main-dev-yael
             key: 'customer',
             label: 'הקלד לקוח רצוי',
             cols: 2,
@@ -55,16 +51,9 @@ export class SquadClientService {
             validations: [Validators.required],
             inputProps: {
               options: [
-<<<<<<< HEAD
-                { value: '125000010', label: '125000010 צופים לטינים נצרת' },
-                { value: '521829121', label: '521829121 בית ספר תמיר' },
-                { value: '320382983', label: '320382983 מתנס אבן יהודה' },
-                { value: '428948934', label: '428948934 הגימנסיה הריאלית' },
-=======
                 // { value: '521829121', label: '521829121 בית ספר תמיר' },
                 // { value: '320382983', label: '320382983 מתנס אבן יהודה' },
                 // { value: '428948934', label: '428948934 הגימנסיה הריאלית' },
->>>>>>> origin/internal-main-dev-yael
               ],
             },
           }),

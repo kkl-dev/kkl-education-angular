@@ -9,13 +9,9 @@ import {
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { BudgetByParams } from 'src/app/open-api';
-<<<<<<< HEAD
-import { SquadBudgetService } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
-=======
 import { BudgetModel } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.model';
 import { SquadBudgetService } from 'src/app/screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
 import { SquadGroupService } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.service';
->>>>>>> origin/internal-main-dev-yael
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
 import { FormService } from '../logic/form.service';
@@ -32,7 +28,6 @@ export class FormInputComponent implements OnInit {
   @Input() public question!: QuestionBase<string | number | Date>;
 
   @Input() public control: FormControl;
-  @Input() public group: FormGroup;
   @Input() public type: string;
   @Input() public label: string;
   @Input() public hint: string;
@@ -47,10 +42,6 @@ export class FormInputComponent implements OnInit {
   @Input() public disabled: boolean;
   @Input() public group: FormGroup;
   @Input() public serverErrorMode!: boolean;
-<<<<<<< HEAD
-  
-=======
->>>>>>> origin/internal-main-dev-yael
   public color: string;
   public value!: any;
   public error!: string;
@@ -60,13 +51,8 @@ export class FormInputComponent implements OnInit {
   @Output() select: EventEmitter<FormControl> = new EventEmitter()
   @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
-<<<<<<< HEAD
-  @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
-  constructor(private formService: FormService, private tripService:TripService, private squadAssemble: SquadAssembleService,private squadB: SquadBudgetService) { }
-=======
 
   constructor(private formService: FormService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService) { }
->>>>>>> origin/internal-main-dev-yael
 
   ngOnInit(): void {
     this.name = this.getName(this.control);
@@ -206,13 +192,6 @@ export class FormInputComponent implements OnInit {
       // index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
       // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.tripService.budget.listCity;
     }
-<<<<<<< HEAD
-
-  public onSelectChange() {
-    console.log('this.control is: ',this.control);
-    if(this.control.parent.value.attribute){
-      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute,'שחר גל');
-=======
     if (this.name === 'activityType') {
       var act = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(this.control.value))[0];
       this.tripService.budgetByParam.activity = act;
@@ -222,7 +201,6 @@ export class FormInputComponent implements OnInit {
       this.squadBudgetService.questions[index].inputProps.options = this.tripService.budgetIncome;
       index = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
       this.squadBudgetService.questions[index].inputProps.options = this.tripService.budgetExpenses;
->>>>>>> origin/internal-main-dev-yael
     }
      
     this.select.emit(this.control);

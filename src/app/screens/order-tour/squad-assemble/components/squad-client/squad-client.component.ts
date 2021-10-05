@@ -47,10 +47,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.formGroup = this.formService.setFormGroup(this.group);
   }
 
-  public logForm(form) {
-    this.squadAssembleService.updateFormArray(form);
-  }
-
+  
   ngOnDestroy(): void {
     this.unsubscribeToEdit.unsubscribe();
     this.unsubscribeToClient.unsubscribe();
