@@ -196,7 +196,7 @@ export class TripService {
     )
   }
  
-  getCustomersByParameters(customer, clientPool) {
+   getCustomersByParameters(customer, clientPool) {
     this.userService.getCustomersByParameters(customer, clientPool).subscribe(
       response => {
         console.log('response', response)
@@ -211,6 +211,7 @@ export class TripService {
     )
   }
     
+  
 
   
   getLookUp() {
@@ -236,7 +237,7 @@ export class TripService {
     )
   
 
-  
+   
     this.userService.getAreas().subscribe(
       response => {
         console.log('response', response)
