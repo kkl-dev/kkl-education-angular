@@ -187,7 +187,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
           if(this.squadAssemble.formsArray[i].controls.budgetIncome){
             console.log('I am budget');           
           }
-        
+        this.squadAssemble.tripInfo.customer= this.squadAssemble.Customer;
       }
      
      }
