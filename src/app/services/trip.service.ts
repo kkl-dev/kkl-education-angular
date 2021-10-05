@@ -196,17 +196,21 @@ export class TripService {
     )
   }
  
-  // this.userService.getCustomersByParameters('סימינר','all').subscribe(
-  //   response => {
-  //     console.log('response', response)
-  //     this.customersOriginal = response;
-  //     response.forEach(element => {
-  //       this.customers.push({ label: element.name, value: element.id.toString() });
-  //     });
-  //   },
-  //   error => console.log(error),       // error
-  //   () => console.log('completed')     // complete
-  // )
+   getCustomersByParameters(customer, clientPool) {
+    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
+      response => {
+        console.log('response', response)
+        this.customersOriginal = response;
+        response.forEach(element => {
+          this.customers.push({ label: element.name, value: element.id.toString() });
+        });
+        console.log(this.customers)
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+    
   
 
   getLookUp() {
@@ -232,21 +236,7 @@ export class TripService {
     )
   
 
-    getCustomersByParameters(customer, clientPool) {
-    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
-      response => {
-        console.log('response', response)
-        this.customersOriginal = response;
-        response.forEach(element => {
-          this.customers.push({ label: element.name, value: element.id.toString() });
-        });
-        console.log(this.customers)
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
-    
+   
     this.userService.getAreas().subscribe(
       response => {
         console.log('response', response)
