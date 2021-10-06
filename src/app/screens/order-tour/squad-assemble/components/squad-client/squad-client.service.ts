@@ -126,10 +126,10 @@ export class SquadClientService {
             value: '',
             inputProps: {
               options: [
-                { label: 'שם נוסף', value: 'שם נוסף' },
-                { label: 'עוד לקוח', value: 'עוד לקוח' },
-                { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+                // { label: 'שם נוסף', value: 'שם נוסף' },
+                // { label: 'עוד לקוח', value: 'עוד לקוח' },
+                // { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
+                // { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
               ],
             },
           }),
