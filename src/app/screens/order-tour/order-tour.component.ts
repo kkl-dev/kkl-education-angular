@@ -214,11 +214,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
         }
-        if(this.squadAssemble.formsArray[i].controls.budgetIncome){
-          console.log('I am budget');           
+        if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
+          console.log('I am budget');
+          this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget             
         }
-
       }
+      this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
+      this.squadAssemble.tripInfo.userName = 'שחר גל';
     }
     catch (error) {
       console.log(error);
