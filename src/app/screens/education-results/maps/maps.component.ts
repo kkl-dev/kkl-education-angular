@@ -42,32 +42,52 @@ export class MapsComponent implements OnInit {
     // });
   }
 
+  // popupTrailheads: any = {
+  //   "title": "{SiteName}",
+  //   "content": [
+  //     {
+  //       type: "fields",
+  //       fieldInfos: [{
+  //         fieldName: "SiteName",
+  //         visible: true,
+  //         label: "שם אתר:"
+  //       },
+  //       {
+  //         fieldName: "Purpose",
+  //         visible: true,
+  //         label: "שימוש המבנה:"
+  //       },
+  //       {
+  //         fieldName: "UID",
+  //         visible: true,
+  //         label: "מספר מבנה:"
+  //       }]
+  //     }, {
+  //       type: "attachments",
+  //       displayType: "list"
+  //     }
+  //   ]
+  // };
+
   popupTrailheads: any = {
     "title": "{SiteName}",
-    "content": [
-      {
-        type: "fields",
-        fieldInfos: [{
-          fieldName: "SiteName",
-          visible: true,
-          label: "שם אתר:"
-        },
-        {
-          fieldName: "Purpose",
-          visible: true,
-          label: "שימוש המבנה:"
-        },
-        {
-          fieldName: "UID",
-          visible: true,
-          label: "מספר מבנה:"
-        }]
-      }, {
-        type: "attachments",
-        displayType: "list"
-      }
-    ]
+    "content": this.contentPopup
   };
+
+  contentPopup(feature) {
+    var innerHTML = "<b>שם אתר:</b>" + feature.graphic.attributes.SiteName + "<br><b>שימוש המבנה:</b> " + feature.graphic.attributes.Purpose;
+    innerHTML += "<br><b>מספר מבנה:</b> " + feature.graphic.attributes.OBJECTID;
+    innerHTML += "<br><b>מִין:</b> " + feature.graphic.attributes.OBJECTID;
+    innerHTML += "<br><b>סטטוס:</b> " + feature.graphic.attributes.OBJECTID;
+
+    try {
+      var attachments = this.httpClient.get("https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/queryAttachments?objectIds=" + feature.graphic.attributes.OBJECTID + "&f=json");
+    }
+    catch (err) {
+      var a = err;
+    }
+    return innerHTML;
+  }
 
   loadWebMap(): void {
     this.vtLayer = new VectorTileLayer({
