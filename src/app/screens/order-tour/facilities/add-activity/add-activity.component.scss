@@ -1,0 +1,84 @@
+.add-activity {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color:rgba($color: #707070, $alpha: 0.6);
+
+    z-index: 110;
+
+    &__form {
+        width: max-content;
+        &-bottom-input-area,
+        &-input-area {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        &-input-area {
+            &-header {
+                margin-right: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                &-headline {
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+            }
+            &-icon {
+                border-radius: 5px;
+                align-self: flex-start;
+                background: rgb(238, 238, 238);
+                background: linear-gradient(0deg, rgb(194, 194, 194) 0%, rgba(254, 254, 254, 1) 100%);
+                width: 75px;
+                height: 75px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                & svg-icon {
+                    margin: 0;
+                    & > svg {
+                        transform: scale(1.35);
+                        margin: 0%;
+                    }
+                }
+            }
+        }
+        &-bottom-input-area {
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 20px;
+            &-button {
+                background: #37c56b;
+                border: none;
+                box-shadow: 0px 0px 1px 2px #e5e5e5;
+                box-sizing: border-box;
+                padding: 5px 10px;
+                font-size: 18px;
+                color: #ffffff;
+            }
+            & mat-form-field {
+                // transform: scale(0.8);
+                margin: 0 10px !important;
+            }
+        }
+    }
+}
+::ng-deep .mat-form-field-appearance-outline,
+::ng-deep .mat-form-field-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+// ::ng-deep .mat-form-field-infix {
+//     padding: 0 !important;
+// }
+
+
+
+::ng-deep .SOBD__days {
+    width: 100% !important;
+}
