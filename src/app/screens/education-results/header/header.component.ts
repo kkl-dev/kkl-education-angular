@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit {
       firstCalendarDay: 0,
       format: 'dd/LL/yyyy',
       closeOnSelected: true,
-      fromToDate: { from: new Date(2021, 9, 17), to: new Date(2021, 9, 22) },
+  // fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
 
       // add fromto,
       // minDate: addDays(new Date(), 5),
