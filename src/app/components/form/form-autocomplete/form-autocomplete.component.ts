@@ -17,7 +17,7 @@ export class FormAutocompleteComponent implements OnInit {
   @Input() group: QuestionGroup;
   @Input() public formGroup: FormGroup = null;
 
-  public list: string[] = [];
+  public list: any[] = [];
 
   constructor(
     private formService: FormService,
@@ -54,26 +54,24 @@ export class FormAutocompleteComponent implements OnInit {
     if (control.value.length > 1) {
       var name = this.getName(control)
       if (name === 'customer') {//if choose customer
-        if (control.parent.value.clientPool !== 'kklWorker') {
-          this.tripService.getCustomersByParameters(control.value, control.parent.value.clientPool)
-        }
-        else { this.tripService.getKKLWorkers(control.value); }
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === 'customer');
-        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.tripService.customers;
+        if (control.parent.value.clientPool !== 'kklWorker') {
+          this.tripService.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
+        }
+        else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
       }
-    }
-    else {//if choose payer customer
-      if (control.parent.value.payerName !== 'kklWorker') {
-        this.tripService.getCustomersByParameters(control.value, control.parent.value.payerName)
+
+      else {//if choose payer customer
+        var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
+        var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerPoll");
+        if (control.parent.value.payerName !== 'kklWorker') {
+          this.tripService.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
+        }
+        else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
       }
-      else { this.tripService.getKKLWorkers(control.value); }
-      var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
-      var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerPoll");
-      this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.tripService.customers;
     }
   }
-
   public onSelect(control: FormControl) {
     var index;
     for (var i in this.squadAssembleService.formsArray) {
@@ -89,14 +87,28 @@ export class FormAutocompleteComponent implements OnInit {
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent, question: any) {
-    if (question === 'payerPoll') { this.tripService.payerCustomer = this.tripService.customers.filter(el => el.value === event.option.value)[0]; }
-    if (question === 'customer') { this.tripService.Customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]; }
-    // this.tripService.Customer = this.tripService.customers.filter(el => el.value === event.option.value)[0];
-    this.squadAssembleService.Customer = this.tripService.customers.filter(el => el.value === event.option.value)[0];
+    if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customers.filter(el => el.value === event.option.value)[0]; }
+    if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]; }
     this.squadClientService.emitClientSelected(event.option.value);
-    this.list.push(event.option.value);
+    var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
+    this.list.push(customer);
   }
-  public onDelete() {
-    // TODO delete server logic
+  public onDelete(item: any) {
+    this.list = this.list.filter(function (el) { return el.value != item.value; });
+    // if (question === 'payerPoll') {
+    // var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
+    // var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerPoll");
+    // this.squadClientService.questions[indx1].group.questions[indx2].value = '';
+    // this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options =undefined;
+    // console.log(this.squadClientService.questions[indx1].group.questions[indx2])
+    // }
+    // if (question === 'customer') {
+    // var indx3 = this.squadClientService.questions.findIndex(o => o.key === 'client');
+    // var indx4 = this.squadClientService.questions[indx3].group.questions.findIndex(o => o.key === "customer");
+    // this.squadClientService.questions[indx3].group.questions[indx4].value = undefined;
+    // this.squadClientService.questions[indx3].group.questions[indx4].inputProps.options = [];
+    // console.log(this.squadClientService.questions[indx3].group.questions[indx4])
+    // this.tripService.customers=[];
+    // }
   }
 }

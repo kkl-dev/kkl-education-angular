@@ -7,13 +7,14 @@ import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
 import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer, ActivityType, BudgetByParams, Budget } from '../open-api';
 import { SquadBudgetService } from '../screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
+import { SquadClientService } from '../screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
 
-  constructor(private userService: UserService, private squadBudgetService: SquadBudgetService) { }
+  constructor(private userService: UserService, private squadBudgetService: SquadBudgetService, public squadClientService: SquadClientService) { }
   // 
   //  forestCenters: any = {};
 
@@ -225,7 +226,7 @@ export class TripService {
       () => console.log('completed')     // complete
     )
   }
-  getCustomersByParameters(customer, clientPool) {
+  getCustomersByParameters(customer, clientPool, indx1, indx2) {
     this.userService.getCustomersByParameters(customer, clientPool).subscribe(
       response => {
         console.log('response', response)
@@ -234,20 +235,22 @@ export class TripService {
         response.forEach(element => {
           this.customers.push({ label: element.name, value: element.id.toString() });
         });
-        console.log(this.customers)
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.customers;
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
-  getKKLWorkers(customer) {
+  getKKLWorkers(customer, indx1, indx2) {
     this.userService.getKKLWorkers(customer).subscribe(
       response => {
         console.log('response', response)
         this.customersOriginal = response;
+        this.customers = [];
         response.forEach(element => {
           this.customers.push({ label: element.name, value: element.id.toString() });
         });
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.customers;
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

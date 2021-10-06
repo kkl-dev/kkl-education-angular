@@ -31,6 +31,7 @@ export class SquadAssembleService {
   formsArray: FormGroup[] = [];
   filledNightsArray :[];
   Customer = {} as BaseCustomer;
+  payerCustomer = {} as BaseCustomer;
 
   public freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;

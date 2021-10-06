@@ -19,9 +19,9 @@
   <div class="data-container" fxLayout="column" fxLayoutAlign="start center">
     <div *ngFor="let item of list" class="autocomplete" fxLayout="row" fxLayoutAlign="space-between center">
       <app-typography>
-        {{ item }}
+        {{ item.value }}       {{ item.label }}
       </app-typography>
-      <button mat-icon-button (click)="onDelete()">
+      <button mat-icon-button (click)="onDelete(item)">
         <mat-icon color="warn">clear</mat-icon>
       </button>
     </div>
