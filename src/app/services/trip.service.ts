@@ -333,7 +333,6 @@ export class TripService {
       response => {
         console.log('response', response)
         // this.baseCustomer = response.BaseCustomer;
-
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

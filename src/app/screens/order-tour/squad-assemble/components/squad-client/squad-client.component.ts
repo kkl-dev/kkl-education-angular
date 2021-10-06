@@ -7,6 +7,7 @@ import { Subject, Observable, Subscription } from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-squad-client',
@@ -34,8 +35,9 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     private formService: FormService,
     private squadClientService: SquadClientService,
     private squadNewClientService: SquadNewClientService,
-    private squadAssembleService: SquadAssembleService
-  ) {}
+    private squadAssembleService: SquadAssembleService,
+    public tripService: TripService
+  ) { }
 
   ngOnInit(): void {
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
@@ -89,8 +91,11 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   }
 
   private updateClientForm(value?: string): void {
+    var customer = this.tripService.customersOriginal.filter(el => el.id ===  parseInt(value))[0]
     this.formGroup.controls.contact.patchValue({
-      fullName: value || ' שלום אברהם',
+      fullName: customer.contactName || '',
+      email: customer.contactEmail || '',
+      phone: customer.contactMobile || '',
     });
   }
 
@@ -111,7 +116,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.squadAssembleService.emitSaveMode(false);
     this.formGroup.controls.contact.disable();
   }
-  
+
   public logForm(form) {
     this.squadAssembleService.updateFormArray(form);
   }
