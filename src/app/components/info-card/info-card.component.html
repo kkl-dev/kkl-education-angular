@@ -14,7 +14,8 @@
 <div>
   <div class="education-results__right-facilities-items-item-svg-container">
     <ng-content></ng-content>
-    <!-- <svg-icon class="education-results__right-facilities-items-item-svg" src="{{ item.svgUrl }}"></svg-icon> -->
+    <!-- <img [src]="option.iconPath" class="header__select-option-svg" /> -->
+    <svg-icon class="education-results__right-facilities-items-item-svg" src="{{ item.iconPath }}"></svg-icon>
   </div>
   <div class="education-results__right-facilities-items-item-headline">
     {{ item.name }}

@@ -102,7 +102,8 @@ export class EducationComponent implements OnInit {
   freeSpacesArrayGenaratorFromServer(start: Date, end: Date) {
     var i = 0;
     let freeSpacesArray = [];
-    while (start < end && i <= this.AvailableDates.length) {
+     while (start < end && i <= this.AvailableDates.length) {
+     // while (start < end && i < this.AvailableDates.length) {
       // for (var j in this.AvailableDates[i].freeSpace) {
       freeSpacesArray.push({
         date: start,
@@ -115,7 +116,8 @@ export class EducationComponent implements OnInit {
         // ]
       });
       // }
-      start = new Date(start.setDate(start.getDate() + 1)); i++;
+     start = new Date(start.setDate(start.getDate() + 1)); i++;
+     // start = new Date(start.setDate(start.getDate())); i++;
     }
 
     return freeSpacesArray;
@@ -126,6 +128,8 @@ export class EducationComponent implements OnInit {
     let freeSpacesArray = [];
     while (start < end) {
       start = new Date(start.setDate(start.getDate() + 1));
+
+     // start = new Date(start.setDate(start.getDate()));
       freeSpacesArray.push({
         date: start,
         freeSpace: [
