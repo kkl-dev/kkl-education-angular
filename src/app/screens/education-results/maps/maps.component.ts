@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, SimpleChanges, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import MapView from '@arcgis/core/views/MapView';
 import WebMap from '@arcgis/core/WebMap';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -8,11 +9,17 @@ import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import BaseMap from '@arcgis/core/Basemap';
 import QueryTask from '@arcgis/core/tasks/QueryTask';
+import LabelClass from '@arcgis/core/layers/support/LabelClass';
 import SpatialReference from '@arcgis/core/geometry/SpatialReference';
 import Point from '@arcgis/core/geometry/Point';
 import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
+
+import { HttpClient } from '@angular/common/http';
+import { map, shareReplay } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
@@ -32,7 +39,7 @@ export class MapsComponent implements OnInit {
   vtLayer: VectorTileLayer;
   basemap: BaseMap;
 
-  constructor(public tripService: TripService, public fakeApi: FakeService) {
+  constructor(protected httpClient: HttpClient, public tripService: TripService, public fakeApi: FakeService) {
 
     this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
     // this.tripService.forestCenter.subscribe(forestCenter => {
@@ -71,22 +78,47 @@ export class MapsComponent implements OnInit {
 
   popupTrailheads: any = {
     "title": "{SiteName}",
-    "content": this.contentPopup
+    "content": (f) => this.contentPopup(f)
   };
 
-  contentPopup(feature) {
-    var innerHTML = "<b>שם אתר:</b>" + feature.graphic.attributes.SiteName + "<br><b>שימוש המבנה:</b> " + feature.graphic.attributes.Purpose;
+  async contentPopup(feature) {
+
+
+    let innerHTML = "<b>שם אתר:</b>" + feature.graphic.attributes.SiteName + "<br><b>שימוש המבנה:</b> " + feature.graphic.attributes.Purpose;
     innerHTML += "<br><b>מספר מבנה:</b> " + feature.graphic.attributes.OBJECTID;
-    innerHTML += "<br><b>מִין:</b> " + feature.graphic.attributes.OBJECTID;
-    innerHTML += "<br><b>סטטוס:</b> " + feature.graphic.attributes.OBJECTID;
+
+    let buildingInfo = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == 1190);
+    // feature.graphic.attributes.OBJECTID);
+
+    if (buildingInfo.length > 0) {
+      let gender = buildingInfo[0].gender;
+      let status = buildingInfo[0].status;
+      innerHTML += "<br><b>מִין:</b> " + gender;
+      innerHTML += "<br><b>סטטוס:</b> " + status;
+    }
+
+    let attachmentsJSON;
+
+    attachmentsJSON = await this.getAttachments(feature);
 
     try {
-      var attachments = this.httpClient.get("https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/queryAttachments?objectIds=" + feature.graphic.attributes.OBJECTID + "&f=json");
+      if (attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id && attachmentsJSON.attachmentGroups[0].attachmentInfos[0].name) {
+        innerHTML += "<br><br>";
+        innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.OBJECTID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' target='_blank'>";
+        innerHTML += "<img src='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.OBJECTID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' alt='" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].name + "' height='60px'>";
+        innerHTML += "</a>";
+      }
     }
-    catch (err) {
-      var a = err;
-    }
+    catch (er) { }
+
     return innerHTML;
+  }
+
+  async getAttachments(feature) {
+    const response = this.httpClient.get("https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/queryAttachments?objectIds=" + feature.graphic.attributes.OBJECTID + "&f=json")
+      .toPromise();
+
+    return response;
   }
 
   loadWebMap(): void {
@@ -107,9 +139,26 @@ export class MapsComponent implements OnInit {
       center: [35.1, 31.5],
       zoom: 8
     });
+
+    const labelClass = new LabelClass({  // autocasts as new LabelClass()
+      symbol: {
+        type: "text",  // autocasts as new TextSymbol()
+        color: "red",
+        haloColor: "red",
+        haloSize: 5,
+        font: {
+          family: "ariel",
+          size: 48,
+          weight: "bold"
+        }
+      }
+    });
+
     this.layer = new FeatureLayer({
       url: this.url,
-      popupTemplate: this.popupTrailheads
+      popupTemplate: this.popupTrailheads,
+      opacity: 1,
+      // labelingInfo: [labelClass]
       //definitionExpression: filterex
     });
     this.graphicsLayer = new GraphicsLayer({
