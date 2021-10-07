@@ -8,6 +8,7 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
+import { dateOptions } from 'src/mock_data/calendar';
 
 export interface formGroupGrid {
   title: string;
@@ -53,6 +54,7 @@ export class SquadAssembleComponent implements OnInit {
       value: new Date(),
       rows: 4,
       validations: [Validators.required],
+      dateOptions: dateOptions,
       inputProps: {
       },
     }),

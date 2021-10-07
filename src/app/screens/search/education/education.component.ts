@@ -193,10 +193,10 @@ export class EducationComponent implements OnInit {
       tempDateArr = e.split('-');
       //change date from obj to new Date format
       const dateFormat1 = tempDateArr[0].split('/').reverse();
-      dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+      dateFormat1[1] = (+dateFormat1[1] ).toString();
       dateFormat1[2] = (+dateFormat1[2]).toString();
       const dateFormat2 = tempDateArr[1].split('/').reverse();
-      dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+      dateFormat2[1] = (+dateFormat2[1] ).toString();
       dateFormat2[2] = (+dateFormat2[2]).toString();
 
       if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {

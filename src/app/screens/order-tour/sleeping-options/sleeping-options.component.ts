@@ -184,39 +184,42 @@ export class SleepingOptionsComponent implements OnInit {
 
   formCols: number = 12;
   questions: QuestionBase<string | number>[] = [];
-
   changeDatesHandler(newDates: string) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-
     if (newDates && !newDates.includes('-')) return;
     const dates = newDates.split('-');
-    const dateFormat1 = dates[0].split('/').reverse();
-    dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+
+
+    let dateFormat1 = dates[0].split('/').reverse();
+    dateFormat1[1] = (+dateFormat1[1] ).toString();
     dateFormat1[2] = (+dateFormat1[2]).toString();
-    const dateFormat2 = dates[1].split('/').reverse();
-    dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+    let dateFormat2 = dates[1].split('/').reverse();
+    dateFormat2[1] = (+dateFormat2[1] ).toString();
     dateFormat2[2] = (+dateFormat2[2]).toString();
+    let tempDate = [];
+    if (new Date(dateFormat1.join(',')) > new Date(dateFormat2.join(','))) {
+      tempDate = dateFormat1;
+      dateFormat1 = dateFormat2;
+      dateFormat2 = tempDate;
+    }
     let date1 = new Date(dateFormat1.join(','));
     let date2 = new Date(dateFormat2.join(','));
+    let utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    let utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
 
-    const utc1 = Date.UTC(
-      date1.getFullYear(),
-      date1.getMonth(),
-      date1.getDate()
-    );
-    const utc2 = Date.UTC(
-      date2.getFullYear(),
-      date2.getMonth(),
-      date2.getDate()
-    );
+  
+
     const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
     const newSleepingOptionsByDay = [];
 
     let newDate = new Date(date1.setDate(date1.getDate()));
+    console.log(newDate);
+    
     for (let i = 0; i <= totalDays; i++) {
       //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
-      const newDateString = `${newDate.getDate()}.${newDate.getMonth() + 2
-        }.${newDate.getFullYear()}`;
+      const newDateString = `${newDate.getDate()}.${(
+        newDate.getMonth() + 1
+      ).toString()}.${newDate.getFullYear()}`;
       newSleepingOptionsByDay.push({
         day: newDateString,
         options: [
@@ -246,8 +249,9 @@ export class SleepingOptionsComponent implements OnInit {
       newDate = new Date(date1.setDate(date1.getDate() + 1));
     }
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
+    console.log(this.sleepingOptionsByDay);
+    
   }
-
   constructor(
     private checkAvailabilityService: CheckAvailabilityService,
     private sleepingService: SleepingServiceService

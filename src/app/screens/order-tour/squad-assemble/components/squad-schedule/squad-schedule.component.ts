@@ -32,6 +32,8 @@ export class SquadScheduleComponent implements OnInit {
 
   ngOnInit() {
     this.questions = this.group.questions || [];
+    console.log(this.questions);
+    
   }
 
   //log form when valid

@@ -25,16 +25,16 @@
       #dateInput
       *ngIf="controlType === 'calendar'"
       matInput 
-      type="date"
+      type="text"
       (newDate)="newDateReceived($event)"
       (sleepingPlace)="newSleepingPlaceReceived($event)"
       (prevDate)="prevDateReceived($event)"
       [options]="dateOptions"
       airbnb-calendar
-       autocomplete="off"
       control="control"
       [(ngModel)]="control.value"
       dir="rtl"
+      autocomplete="chrome-off"
     />
 
     <mat-select
