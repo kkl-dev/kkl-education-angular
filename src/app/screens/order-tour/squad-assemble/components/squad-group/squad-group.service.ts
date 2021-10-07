@@ -4,6 +4,7 @@ import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { TripService } from 'src/app/services/trip.service';
+import { FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,7 @@ export class SquadGroupService {
       inputProps: {
          options: this.tripService.ageGroup
       },
+      validations: [Validators.required],
     }),
 
     new QuestionNumber({

@@ -28,7 +28,6 @@ export class FormInputComponent implements OnInit {
   @Input() public question!: QuestionBase<string | number | Date>;
 
   @Input() public control: FormControl;
-  @Input() public group: FormGroup;
   @Input() public type: string;
   @Input() public label: string;
   @Input() public hint: string;
@@ -41,7 +40,7 @@ export class FormInputComponent implements OnInit {
   @Input() public icon!: string;
   @Input() public inputProps: {};
   @Input() public disabled: boolean;
-
+  @Input() public group: FormGroup;
   @Input() public serverErrorMode!: boolean;
   public color: string;
   public value!: any;
@@ -204,12 +203,15 @@ export class FormInputComponent implements OnInit {
       this.tripService.budgetByParam.budget.cityId = parseInt(this.control.value);
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
+
     if (this.name === 'budgetIncome') {
       this.tripService.budgetByParam.budget.incomeId = parseInt(this.control.value);
     }
     if (this.name === 'budgetExpense') {
       this.tripService.budgetByParam.budget.expensesId = parseInt(this.control.value);
     }
+
+
     this.select.emit(this.control);
     this.groupEvent.emit(this.group);
   }

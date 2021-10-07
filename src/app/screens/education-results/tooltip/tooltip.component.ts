@@ -2,10 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserDataService } from 'src/app/utilities/services/user-data.service';
 
 export interface TooltipDataModel {
-  startingHour: number;
-  endingHour: number;
-  totalTime: number;
-  user: string;
+  // startingHour: number;
+  // endingHour: number;
+  // totalTime: number;
+  // user: string;
+
+  customerName: string;
+  fromHour: any;
+  tillHour: any;
+  totalTime: any;
 }
 
 @Component({
@@ -15,38 +20,49 @@ export interface TooltipDataModel {
 })
 export class TooltipComponent implements OnInit {
   occupiedHoursArray: { totalTime: number; customerName: string }[] = [];
+
   @Input() hours: TooltipDataModel[];
   username: string = '';
+
   constructor(private userDataService: UserDataService) {
     this.username = this.userDataService.user.name;
   }
 
   ngOnInit(): void {
     this.createOccupiedHoursArray();
-    console.log('this.hours: ' + this.hours)
+    console.log('ngOnInit this.hours: ' + this.hours)
   }
 
   createOccupiedHoursArray() {
-    let startingHour = 0;
+    let fromHour = 0;
 
     this.hours.map((hour) => {
-      if (startingHour < hour.startingHour) {
+      try {
+        hour.fromHour = this.hours[0].fromHour.split(':');
+        hour.fromHour = Number(hour.fromHour[0]);
+        hour.tillHour = this.hours[0].tillHour.split(':');
+        hour.tillHour = Number(hour.tillHour[0]);
+      } catch (error) {
+        console.log(error);
+      }
+
+      if (fromHour < hour.fromHour) {
         this.occupiedHoursArray.push({
-          totalTime: hour.startingHour - startingHour,
+          totalTime: hour.fromHour - fromHour,
           customerName: 'none',
         });
       }
 
       this.occupiedHoursArray.push({
         totalTime: hour.totalTime,
-        customerName: hour.user,
+        customerName: hour.customerName,
       });
-      startingHour = hour.endingHour;
+      fromHour = hour.tillHour;
     });
 
-    if (startingHour < 24) {
+    if (fromHour < 24) {
       this.occupiedHoursArray.push({
-        totalTime: 24 - startingHour,
+        totalTime: 24 - fromHour,
         customerName: 'none',
       });
     }

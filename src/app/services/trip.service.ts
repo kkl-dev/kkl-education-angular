@@ -24,11 +24,63 @@ export class TripService {
   };
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[];
-  // dateObj: any;
   formGroupSquadAssembles = [];
   dateRange: any;
   formOptions!: FieldForestCenter[];
-  public centerFieldObj = new BehaviorSubject<any>({
+  lodgingFacilityListArrayObservable: any = new BehaviorSubject<any>([
+    {
+      "fieldForestCenterName": "מרכז שדה לביא",
+      "lodgingFacilityList": [
+        {
+          "structureId": 849,
+          "gender": "בנים",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 850,
+          "gender": "מעורב",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 851,
+          "gender": "בנות",
+          "status": "תפוס"
+        },
+        {
+          "structureId": 852,
+          "gender": "בנים",
+          "status": "תפוס"
+        },
+        {
+          "structureId": 853,
+          "gender": "מעורב",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 1195,
+          "gender": "בנות",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 1196,
+          "gender": "בנים",
+          "status": "תפוס"
+        },
+        {
+          "structureId": 1197,
+          "gender": "מעורב",
+          "status": "פנוי"
+        },
+        {
+          "structureId": 1198,
+          "gender": "בנות",
+          "status": "תפוס"
+        }
+      ]
+    }
+  ]);
+  
+  centerFieldObj = new BehaviorSubject<any>({
     "id": 1,
     "name": "נס הרים",
     "iconPath": "assets/images/userImage.jpg",
@@ -45,12 +97,7 @@ export class TripService {
     "linkSite": "http://"
   });
 
-  // sleepingDates: any = {
-  //   from: '2021-07-01',
-  //   till: '2021-07-13'
-  // };
-
-  public AvailableSleepingOptionsByDay = new BehaviorSubject<any>([
+  AvailableSleepingOptionsByDay = new BehaviorSubject<any>([
     {
       "date": "2021-09-03T00:00:00",
       "AvailableLodgingList": [
@@ -68,17 +115,16 @@ export class TripService {
 
   forestCenter = this.centerFieldObj.asObservable();
   AvailableSleepingOptions = this.AvailableSleepingOptionsByDay.asObservable();
+  lodgingFacilityListArray = this.lodgingFacilityListArrayObservable.asObservable();
 
   setFreeSpacesArray(freeSpacesArray: any) {
     this.freeSpacesArray = freeSpacesArray;
     console.log('this.freeSpacesArray: ', this.freeSpacesArray);
-
   }
 
   updateForestCenter(forestCenter: any) {
     this.centerFieldObj.next(forestCenter);
-    console.log('this. centerFieldObj: ', this.centerFieldObj);
-
+    console.log('this. center  Field Obj: ', this.centerFieldObj);
     this.getAvailableSleepingOptions();
   }
 
@@ -87,12 +133,8 @@ export class TripService {
   // }
 
   convertDatesFromSlashToMinus() {
-    //for replacing the dash of dates to minus
-    // let from = this.sleepingDates.from.replace(/\//g, '-');
-    // let till = this.sleepingDates.till.replace(/\//g, '-');
     let str = this.sleepingDates.from.split("/");
     let str2 = this.sleepingDates.till.split("/");
-
     let sleepingDateObj = {
       from: str[2] + '-' + str[1] + '-' + str[0],
       till: str2[2] + '-' + str2[1] + '-' + str2[0]
@@ -101,20 +143,13 @@ export class TripService {
   }
 
   getAvailableSleepingOptions() {
-    // this.convertDatesFromSlashToMinus() 
-    // let from = this.sleepingDates.from.replace(/\//g, '-');
-    // let till = this.sleepingDates.till.replace(/\//g, '-');
     let str = this.sleepingDates.from.split("/");
     let str2 = this.sleepingDates.till.split("/");
-
-
     let from = str[2] + '-' + str[1] + '-' + str[0];
     let till = str2[2] + '-' + str2[1] + '-' + str2[0];
 
-
-    //console.log('this.centerFieldObj.value.id, from, till: ' + this.centerFieldObj.value.id, from, till)
     this.userService.getAvailableSleepingOptionsByDates(this.centerField.id, from, till).subscribe((sleepingAvailability: any) => {
-      console.log('sleepingAvailability ==>', { sleepingAvailability });
+      console.log('sleeping Availability ==>', { sleepingAvailability });
       if (sleepingAvailability) {
         this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
       }
@@ -122,6 +157,43 @@ export class TripService {
       error => {
         console.log({ error });
       });
+
+      //getMapFacilities for sending sleeping id to map
+      this.userService.getMapFacilities(this.centerField.id, from, till).subscribe((lodgingList: any) => {
+        console.log('lodging Facility List Array ==>', { lodgingList });
+
+        this.lodgingFacilityListArray = [];
+        let temp = []
+        temp.push({"fieldForestCenterName": "מרכז שדה לביא"});
+
+        // a.push({"fieldForestCenterName": "מרכז שדה לביא"});
+
+        lodgingList[0].lodgingFacilityList.forEach(element => {
+          if (element.structureId > 611) {
+            if (element.structureId > 800) {
+              
+              temp.push({structureId: element.structureId, gender: "בנות", status: "תפוס" });
+            } else {
+              temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
+            }
+          } else {
+            if (element.structureId > 511) {
+              temp.push({structureId: element.structureId, gender: "בנים", status: "פנוי" });
+            } else {
+              temp.push({structureId: element.structureId, gender: "בנים", status: "תפוס" });
+            }
+          }
+        });
+        this.lodgingFacilityListArray.push({fieldForestCenterName: "מרכז שדה לביא"},{lodgingFacilityList: temp});
+        //console.log(a)
+        console.log("this.lodgingFacilityListArray", this.lodgingFacilityListArray);
+        this.lodgingFacilityListArrayObservable.next(this.lodgingFacilityListArray);
+        
+
+      },
+        error => {
+          console.log({ error });
+        });
   }
   payerCustomer = {} as BaseCustomer;
   Customer = {} as BaseCustomer;

@@ -10,6 +10,7 @@ import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { getYear } from 'date-fns';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import {TripService} from '../../../../services/trip.service';
+import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 
 @Component({
   selector: 'app-sleeping-options-form',
@@ -21,6 +22,7 @@ export class SleepingOptionsFormComponent implements OnInit {
  // @Output() emitNewDates: EventEmitter<string> = new EventEmitter();
   date: string = '';
   disableDates = true;
+  tripName: string
   // public formOptions: { imgSrc: string; text: string; value: string }[] = [
   //   { imgSrc: 'assets/images/userImage.jpg', text: 'ציפורי', value: 'ציפורי' },
   //   { imgSrc: 'assets/images/userImage.jpg', text: 'לביא', value: 'לביא' },
@@ -36,7 +38,7 @@ export class SleepingOptionsFormComponent implements OnInit {
   freeSpacesArray: FreeSpace[] = [];
   location: string = '';
 
-  constructor(private checkAvailabilityService: CheckAvailabilityService,private _tripService:TripService) {
+  constructor(private checkAvailabilityService: CheckAvailabilityService,private _tripService:TripService, private _squadService: SquadAssembleService ) {
     // this.location =
     //   this.checkAvailabilityService.checkAvailabilltyValues.sleepingPlace;
     // this.date =
@@ -119,5 +121,6 @@ export class SleepingOptionsFormComponent implements OnInit {
      this.location=  this._tripService.centerField.name;
      //this.location= ' נס הרים';
      this.date= this._tripService.sleepingDates.from +' - ' + this._tripService.sleepingDates.till;
+     this.tripName= this._squadService.tripInfo.tripDescription;
   }
 }

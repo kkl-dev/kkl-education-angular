@@ -22,7 +22,7 @@ export interface FilledNight1 {
 
 export interface FilledNight {
   nightsCount: any;
-  lodgingPerDay: lodgingPerDay[]
+  lodgingDetailsList: lodgingPerDay[]
 }
 
 
@@ -67,7 +67,7 @@ export class FilledNightComponent implements OnInit {
     console.log('filledNightOptions is :', this.filledNightOptions);
   }
 
-  public arrangeDatesForDisplay(): string {
+  public arrangeDatesForDisplay1(): string {
     let low: Date;
     let hight: Date;
     const arr: any[] = this.filledNight.nightsCount;
@@ -88,6 +88,38 @@ export class FilledNightComponent implements OnInit {
     }
     return `${low}-${hight}.${arr[0].date.getMonth()}.${arr[0].date.getFullYear()}`;
   }
+
+  public arrangeDatesForDisplay(): string {
+    let low: Date;
+    let hight: Date;
+    const arr: any[] = this.filledNight.nightsCount;
+    let dateT= arr[0].date;
+    let subDate= dateT.split("/");
+    let month= subDate[1];
+    let year= subDate[2];
+    if (arr) {
+      arr.map(item => {
+        let date= item.date;
+        let dateArr= date.split("/");
+        date= dateArr[1] + '-' + dateArr[0] + '-' + dateArr[2];
+        date = new Date(date);
+        let day = date.getDate();
+        if (!low && !hight) {
+          hight = day;
+          low = day;
+        }
+        if (day < low) {
+          low = day;
+        }
+        if (day > hight) {
+          hight = day;
+        }
+      });
+    }
+    //return `${low}-${hight}.${arr[0].date.getMonth()}.${arr[0].date.getFullYear()}`;
+    return `${low}-${hight}.${month}.${year}`;
+  }
+
   public arrangeNightCountForDisplay() {
     let first: any, last: any;
     const arr: any[] = this.filledNight.nightsCount;

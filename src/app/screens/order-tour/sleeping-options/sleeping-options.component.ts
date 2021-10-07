@@ -41,7 +41,7 @@ export class SleepingOptionsComponent implements OnInit {
   @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
 
   public indexToPatch: number = -1;
-  filledNightsArray: {
+  filledNightsArray1: {
     sleepingPlace: string;
     nightsCount: string | any;
     saveFor: string;
@@ -51,10 +51,12 @@ export class SleepingOptionsComponent implements OnInit {
     optionsArr: any[];
   }[] = [];
   
-  filledNightsArray1: {
+  filledNightsArray: {
     nightsCount: any[];
-    lodgingPerDay: lodgingPerDay[]
+    lodgingDetailsList: lodgingPerDay[]
   }[] = [];
+
+  
 
   formCols: number = 12;
   questions: QuestionBase<string | number>[] = [];
@@ -69,8 +71,8 @@ export class SleepingOptionsComponent implements OnInit {
   addFilledNight(form: FormGroup) {
     let check = this.checkIfFilledNightExists(form.value);
     if (check !== undefined) {
-      this.setfilledNightsArray1(check,form.value);
-      console.log('filledNightsArray1 is: ',this.filledNightsArray1);
+      this.setfilledNightsOptionsArray(check,form.value);
+      console.log('filledNightsArray is: ',this.filledNightsArray);
       //this.filledNightsArray[check].optionsArr.push(form.value);
       this.addSleepingNightDirty = true;
       this.addSleepingNight = false;
@@ -81,31 +83,32 @@ export class SleepingOptionsComponent implements OnInit {
     } else {
       this.setfilledNightsArray(form.value);
       //this.filledNightsArray.push(form.value);
-      console.log('filledNightsArray1 is: ',this.filledNightsArray1);
+      console.log('filledNightsArray is: ',this.filledNightsArray);
     }
-     this.squadAssembleService.savefilledNightsArray(this.filledNightsArray1);
+    this.squadAssembleService.savefilledNightsArray(this.filledNightsArray);
      console.log('filledNightsArray is: ',this.squadAssembleService.filledNightsArray);
     this.indexToPatch = -1;
     this.addSleepingNightDirty = true;
     this.addSleepingNight = false;
+    //this.createTrip();
   }
 
   deleteFilledNight(index: number) {
     //this.filledNightsArray.splice(index, 1);
-    this.filledNightsArray1.splice(index, 1);
+    this.filledNightsArray.splice(index, 1);
   }
   deleteFilledNightOption(indexOfOption: number, index: number) {
     //this.filledNightsArray[index].optionsArr.splice(indexOfOption, 1);
-    this.filledNightsArray1[index].lodgingPerDay.splice(indexOfOption, 1);
+    this.filledNightsArray[index].lodgingDetailsList.splice(indexOfOption, 1);
   }
-  editFilledNight(index:number) {
+  editFilledNight(index: number) {
     this.editFormObj = [this.filledNightsArray[index], index];
     this.addSleepingNight = true;
     this.addSleepingNightDirty = true;
     this.editMode = true;
   }
   public editFilledNightOption(optionIndex: number, index: number) {
-    const item = this.filledNightsArray[index].optionsArr[optionIndex];
+    const item = this.filledNightsArray1[index].optionsArr[optionIndex];
     this.editFormObj = [item, index, optionIndex];
     this.addSleepingNight = true;
     this.addSleepingNightDirty = true;
@@ -114,14 +117,14 @@ export class SleepingOptionsComponent implements OnInit {
   public updateFilledNightItem(item: any[]): void {
     const index = item[1];
     const newItem = item[0].value;
-    const arr = [... this.filledNightsArray]
+    const arr = [... this.filledNightsArray1]
     if (item.length === 3) {
       const optionIndex = item[2];
       arr[index].optionsArr[optionIndex] = newItem;
-      this.filledNightsArray = arr;
+      this.filledNightsArray1 = arr;
     } else {
       arr[index] = newItem;
-      this.filledNightsArray = arr;
+      this.filledNightsArray1 = arr;
     }
     this.addSleepingNight = false;
     this.editFormObj = null;
@@ -134,8 +137,8 @@ export class SleepingOptionsComponent implements OnInit {
   public checkIfFilledNightExists(form: any): number {
     let check: boolean;
     let index: number;
-    if (this.filledNightsArray1.length >= 1) {
-      this.filledNightsArray1.map((item, i) => {
+    if (this.filledNightsArray.length >= 1) {
+      this.filledNightsArray.map((item, i) => {
         if (form.nightsCount.length === item.nightsCount.length) {
           check = this.compareValues(form.nightsCount, item.nightsCount);
           if (check) {
@@ -159,13 +162,9 @@ export class SleepingOptionsComponent implements OnInit {
   }
   //added by itiel
   setfilledNightsArray(form: any){
-    //  let obj :{
-    //   nightsCount: any[],
-    //   lodgingPerDay: lodgingPerDay[]
-    //  }
+
      let nightsCount=[];
      let lodgingPerDay1=[];
-     //obj.nightsCount=form.controls['nightsCount'].value;   
      nightsCount=form.nightsCount;   
      let lodgingPerDayArray=[];
      let lodgingPerDay={} as lodgingPerDay;
@@ -178,24 +177,24 @@ export class SleepingOptionsComponent implements OnInit {
      lodgingPerDay1= lodgingPerDayArray;
      let obj={
       nightsCount: nightsCount,
-      lodgingPerDay: lodgingPerDay1
+      lodgingDetailsList: lodgingPerDay1
      }
-     this.filledNightsArray1.push(obj);
+     this.filledNightsArray.push(obj);
 
   }
 
-  setfilledNightsArray1(check,form: any){
-    //let lodgingPerDayArray: lodgingPerDay[]=[];
+  setfilledNightsOptionsArray(check,form: any){
     let lodgingPerDay={} as lodgingPerDay;
     lodgingPerDay.accomodationType= form.accomodationType
     lodgingPerDay.participant= form.participant;
     lodgingPerDay.lodgersNumber= form.lodgersNumber;
     lodgingPerDay.comments= form.comments;
     lodgingPerDay.unitsNumber= form.unitsNumber;
-    //lodgingPerDayArray.push(lodgingPerDay);
-    this.filledNightsArray1[check].lodgingPerDay.push(lodgingPerDay);
+    this.filledNightsArray[check].lodgingDetailsList.push(lodgingPerDay);
     
   }
+
+
 
   ngOnInit(): void { }
 }

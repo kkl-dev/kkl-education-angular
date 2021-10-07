@@ -73,18 +73,18 @@ export class SquadClientService {
         rows: 14,
         questions: [
           new QuestionTextbox({
-            key: 'fullName',
+            key: 'contactName',
             label: 'איש קשר',
           }),
 
           new QuestionTextbox({
-            key: 'phone',
+            key: 'contactPhone',
             label: 'נייד איש קשר',
             type: 'text',
             validations: [Validators.required],
           }),
           new QuestionTextbox({
-            key: 'email',
+            key: 'contactEmail',
             label: 'מייל',
             type: 'text',
             validations: [Validators.required],
@@ -124,7 +124,6 @@ export class SquadClientService {
             type: 'autocomplete',
             cols: 2,
             value: '',
-            validations: [Validators.required],
             inputProps: {
               options: [
                 // { label: 'שם נוסף', value: 'שם נוסף' },
