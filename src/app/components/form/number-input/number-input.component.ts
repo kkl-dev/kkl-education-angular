@@ -20,14 +20,14 @@ export class NumberInputComponent implements OnInit {
   incrementValue() {
     if (typeof this.value === 'number') {
       this.value = this.value++;
-      console.log(this.value);
+      // console.log(this.value);
     }
   }
 
   decrementValue() {
     if (typeof this.value === 'number') {
       this.value = this.value--;
-      console.log(this.value);
+      // console.log(this.value);
     }
   }
 }

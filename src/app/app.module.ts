@@ -122,6 +122,10 @@ import { SquadDetailsComponent } from './screens/order-tour/squad-assemble/compo
 import { SquadBudgetComponent } from './screens/order-tour/squad-assemble/components/squad-budget/squad-budget.component';
 import { SquadNewClientComponent } from './screens/order-tour/squad-assemble/components/squad-new-client/squad-new-client.component';
 import { SquadGroupGenderComponent } from './screens/order-tour/squad-assemble/components/squad-group-gender/squad-group-gender.component';
+import { AddFacilityComponent } from './screens/order-tour/facilities/add-facility/add-facility.component';
+import { SaveActivityComponent } from './screens/order-tour/facilities/save-activity/save-activity.component';
+import { AddActivityComponent } from './screens/order-tour/facilities/add-activity/add-activity.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 
 
@@ -169,6 +173,7 @@ FullCalendarModule.registerPlugins([
     FormGroupComponent,
 
     // KKL DESIGN
+    ModalComponent,
     NavbarComponent,
     WizardComponent,
     LinksComponent,
@@ -207,6 +212,9 @@ FullCalendarModule.registerPlugins([
     // FACILITIES COMPS
     FacilitiesComponent,
     TimelineCardComponent,
+    AddFacilityComponent,
+    SaveActivityComponent,
+    AddActivityComponent,
 
     // ADDITIONS COMPONENTS
     AdditionsComponent,

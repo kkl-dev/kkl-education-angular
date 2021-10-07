@@ -1,13 +1,14 @@
 import { StepperService } from './../../utilities/services/stepper.service';
 import { OrderTourService } from './../../utilities/services/order-tour.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { SquadAssembleService } from './squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
 import { UserService } from 'src/app/open-api';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-order-tour',
@@ -35,7 +36,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     private orderTourService: OrderTourService,
     private squadAssemble: SquadAssembleService,
     private tripService: TripService,
-    private userService:UserService
+    private userService:UserService,
+    private location: Location,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +47,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     this.subscribeToCurrentRoute();
     this.getActiveStep();
     this.setActiveStep();
-    this.subscribeToNewClient()
+    this.subscribeToNewClient();
   }
 
   ngAfterViewInit() { }
@@ -226,5 +229,26 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
 
 
+  public changeActiveStepNextNavigation(): void {
+    this.activeStep = +this.activeStep++;
+    const routeIndex =
+      this.steps.findIndex(
+        (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
+      ) + 1;
+    if(routeIndex<this.steps.length){
+      this.router.navigateByUrl(
+        `/education/order-tour/${this.steps[routeIndex].path}`
+      );
+   }else{
+     console.log('last route navigate to next page');
+     this.router.navigateByUrl(
+      `/education/search`
+    );
+   }
+  }
+  public changeActiveStepPrevNavigation(): void {
+    this.activeStep = +this.activeStep--;
+    this.location.back();
+  }
 }
 

@@ -1,0 +1,16 @@
+<div class="select-group">
+  <label class="select-group__label">{{ label }}</label>
+  <div class="select-group__svg">
+
+      <svg-icon src="assets/images/down-arrow.svg"></svg-icon>
+    </div>
+  <select class="select-group__input">
+
+    <option value="blank"></option>
+    <option value="option" *ngFor="let option of options">
+      {{ option }}
+    </option>
+  </select>
+
+</div>
+ 

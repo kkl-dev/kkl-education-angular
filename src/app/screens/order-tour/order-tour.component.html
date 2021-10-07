@@ -35,8 +35,11 @@
           (changePage)="changeActiveStepBottomNavigation($event)"
           [text]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"
           [hasSave]="hasSave"
+          [hasNext]="true"
+          (next)="changeActiveStepNextNavigation()"
+          (previous)="changeActiveStepPrevNavigation()"
         ></app-bottom-navigation>
-      </div>
+      </div> 
     </div>
   </div>
 </div>

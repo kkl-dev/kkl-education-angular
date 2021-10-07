@@ -1,4 +1,4 @@
-<div fxFill fxLayout="row" fxLayoutAlign="center center">
+<div fxFill fxLayout="row" fxLayoutAlign="center center" >
   <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
     <div class="form-title">
       <app-form-header [slots]="{ tourId}" slot="tourId">
@@ -12,10 +12,16 @@
 
     <div>
       <app-form-container
+      class="container"
         [cols]="group.cols"
         [questions]="group.questions"
+<<<<<<< HEAD
         (register)="logForm($event)"
       >
+=======
+        (valueChange)="logForm($event)"
+      > 
+>>>>>>> main-dev
       </app-form-container>
     </div>
 

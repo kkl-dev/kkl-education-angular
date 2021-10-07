@@ -24,11 +24,21 @@
         <label class="education__form-group-label">מתאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
 
-        <label class="header__form-group-pseudo-input label-input" for="calendarInput">
-          <input class="header__form-group-input" airbnb-calendar (newDate)='newDateRecived($event)'
-            [disabled]="disableDates" (sleepingPlace)='newSleepingPlaceRecived($event)'
-            (prevDate)='prevDateRecived($event)' type="text" [(ngModel)]="date" [options]="options"
-            (ngModelChange)="dateObjChanged($event)" name="calendarInput" id="calendarInput" />
+       
+          <input
+            class="header__form-group-input"
+            airbnb-calendar
+            (newDate)='newDateRecived($event)'
+            (sleepingPlace)='newSleepingPlaceRecived($event)'
+            (prevDate)='prevDateRecived($event)'
+            (closeCalendar)="closeCalendarHandler($event)"
+            type="text"
+            [(ngModel)]="date"
+            [options]="options"
+            (ngModelChange)="dateObjChanged($event)"
+            name="calendar-input"
+            id="calendar-input"
+          />
           <span class="header__form-group-pseudo-input-value">
             {{ sleepingDates.from }}</span>
         </label>

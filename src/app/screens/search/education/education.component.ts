@@ -219,8 +219,10 @@ export class EducationComponent implements OnInit {
     this.tripService.sleepingDates = this.sleepingDates;
 
   }
-
-
+  closeCalendarHandler(event: any){
+    console.log('asd'); 
+    
+  }
   AvailableDaysChecking() {
     let from= this.sleepingDates.from;
     let till = this.sleepingDates.till;
