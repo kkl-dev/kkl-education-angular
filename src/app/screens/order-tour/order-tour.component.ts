@@ -175,23 +175,23 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
             this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[i].get('numGuides').value;
             if(this.squadAssemble.formsArray[i].get('numAccompaniedAndGuide').value)
             this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[i].get('numAccompaniedAndGuide').value;
-          }
-          if(this.squadAssemble.formsArray[i].controls.contactPhone){
-            console.log('I am contact');
-            this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
-           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
-           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
-           
-          }
 
-          if(this.squadAssemble.formsArray[i].controls.budgetIncome){
-            console.log('I am budget');           
-          }
-        this.squadAssemble.tripInfo.customer= this.squadAssemble.Customer;
+        }
+        if (this.squadAssemble.formsArray[i].controls.contactPhone) {
+          console.log('I am contact');
+          this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
+          this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
+          this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
+        }
+        if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
+          console.log('I am budget');
+          this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget             
+        }
       }
-     
-     }
-    
+      this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
+      this.squadAssemble.tripInfo.userName = 'שחר גל';
+    }
+
     catch (error) {
       console.log(error);
     }

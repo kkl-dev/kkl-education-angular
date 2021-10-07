@@ -203,7 +203,15 @@ export class FormInputComponent implements OnInit {
       this.tripService.budgetByParam.budget.cityId = parseInt(this.control.value);
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
-     
+
+    if (this.name === 'budgetIncome') {
+      this.tripService.budgetByParam.budget.incomeId = parseInt(this.control.value);
+    }
+    if (this.name === 'budgetExpense') {
+      this.tripService.budgetByParam.budget.expensesId = parseInt(this.control.value);
+    }
+
+
     this.select.emit(this.control);
     this.groupEvent.emit(this.group);
   }

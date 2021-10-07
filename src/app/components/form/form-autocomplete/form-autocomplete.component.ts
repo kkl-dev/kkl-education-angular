@@ -108,7 +108,7 @@ export class FormAutocompleteComponent implements OnInit {
     // this.squadClientService.questions[indx3].group.questions[indx4].value = undefined;
     // this.squadClientService.questions[indx3].group.questions[indx4].inputProps.options = [];
     // console.log(this.squadClientService.questions[indx3].group.questions[indx4])
-    // this.tripService.customers=[];
+     this.tripService.customers=[];
     // }
   }
 }
