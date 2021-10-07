@@ -116,7 +116,7 @@ export class EducationComponent implements OnInit {
         // ]
       });
       // }
-     start = new Date(start.setDate(start.getDate() + 1)); i++;
+       start = new Date(start.setDate(start.getDate() + 1)); i++;
      // start = new Date(start.setDate(start.getDate())); i++;
     }
 
@@ -128,8 +128,6 @@ export class EducationComponent implements OnInit {
     let freeSpacesArray = [];
     while (start < end) {
       start = new Date(start.setDate(start.getDate() + 1));
-
-     // start = new Date(start.setDate(start.getDate()));
       freeSpacesArray.push({
         date: start,
         freeSpace: [
