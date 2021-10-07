@@ -104,13 +104,14 @@ export class HeaderComponent implements OnInit {
   freeSpacesArrayGenaratorFromServer(start: Date, end: Date) {
     var i = 0;
     let freeSpacesArray = [];
-    while (start < end && i < this.AvailableDates.length) {
+    while (start < end && i <= this.AvailableDates.length) {
+
       // for (var j in this.AvailableDates[i].freeSpace) {
       freeSpacesArray.push({
         date: start,
         freeSpace: this.AvailableDates[i].freeSpace
       });
-      start = new Date(start.setDate(start.getDate())); i++;
+      start = new Date(start.setDate(start.getDate() + 1)); i++;
     }
     return freeSpacesArray;
   }
@@ -123,16 +124,16 @@ export class HeaderComponent implements OnInit {
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
 
-  getDaysArray(start: any, end: any) {
-    for (
-      var arr = [], dt = new Date(start);
-      dt <= end;
-      dt.setDate(dt.getDate() + 1)
-    ) {
-      arr.push(new Date(dt));
-    }
-    return arr;
-  }
+  // getDaysArray(start: any, end: any) {
+  //   for (
+  //     var arr = [], dt = new Date(start);
+  //     dt <= end;
+  //     dt.setDate(dt.getDate() + 1)
+  //   ) {
+  //     arr.push(new Date(dt));
+  //   }
+  //   return arr;
+  // }
 
   dateObjChanged(e: string) {
     if (e && e.includes('-')) {
