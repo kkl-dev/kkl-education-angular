@@ -395,12 +395,12 @@ export class TripService {
             this.squadBudgetService.questions[index2].inputProps.options = this.budgetExpenses;
           });
         }
-        else {
+        
           this.squadBudgetService.questions[index1].value = response.incomeId.toString();
           this.squadBudgetService.questions[index1].label = response.incomeName;
           this.squadBudgetService.questions[index2].value = response.expensesId.toString();
           this.squadBudgetService.questions[index2].label = response.expensesName;
-        }
+        
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

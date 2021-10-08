@@ -205,11 +205,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   createTrip(){
     let tripInfo= this.squadAssemble.tripInfo;
-    let customer={
-      id: 125000010,
-      name:'צופים לטינים נצרת'
-    }
-    tripInfo.customer=customer;
+   
     let obj= this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation= obj;
     for (let i= 0; i < tripInfo.lodgingReservation.length; i++) {

@@ -28,27 +28,23 @@ export class HeaderComponent implements OnInit {
   forestCenterOptions: any | undefined;
   forestCenterId: number = 1;
   formOptions: any;
-<<<<<<< HEAD
   AvailableDates!: AvailableAccomodationDate[];
   // AcommodationType = 'בקתה';
   //disableDates = true;
-=======
   location = '';
   options!: CalendarOptions;
->>>>>>> main-dev
 
   freeSpacesArray: FreeSpace[] = [];
-  options: CalendarOptions = {
-    firstCalendarDay: 0,
-    format: 'LL/dd/yyyy',
-    closeOnSelected: true,
-    maxDate: new Date(2022, 11, 15),
-    minYear: 2019,
-    maxYear: 2021,
-    freeSpacesArray: this.freeSpacesArray,
-  };
+  // options: CalendarOptions = {
+  //   firstCalendarDay: 0,
+  //   format: 'LL/dd/yyyy',
+  //   closeOnSelected: true,
+  //   maxDate: new Date(2022, 11, 15),
+  //   minYear: 2019,
+  //   maxYear: 2021,
+  //   freeSpacesArray: this.freeSpacesArray,
+  // };
 
-<<<<<<< HEAD
   constructor(public usersService: UserService, private userDataService: UserDataService,
     private checkAvailabilityService: CheckAvailabilityService, public tripService: TripService, public fakeApi: FakeService) {
 
@@ -56,42 +52,10 @@ export class HeaderComponent implements OnInit {
     this.tripService.getAvailableSleepingOptions();
     // this.dateObjChanged(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
     //this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
-=======
-  constructor(
-    public usersService: UserService,
-    private userDataService: UserDataService,
-    private checkAvailabillityService: CheckAvailabilityService,
-    public tripService: TripService,
-    public fakeApi: FakeService
-  ) {
-    this.freeSpacesArray = this.freeSpacesArrayGenarator(
-      new Date(),
-      new Date(2022, 11, 17)
-    );
-
-    this.dateObjChanged(
-      this.checkAvailabillityService.checkAvailabilltyValues.calendarInput
-    );
-
-    this.location =
-      this.checkAvailabillityService.checkAvailabilltyValues.sleepingPlace;
-    this.freeSpacesArray = this.freeSpacesArrayGenarator(
-      new Date(),
-      new Date(2022, 11, 17)
-    );
->>>>>>> main-dev
     this.options = {
       firstCalendarDay: 0,
       format: 'dd/LL/yyyy',
       closeOnSelected: true,
-<<<<<<< HEAD
-=======
-  // fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
-
-      // add fromto,
-      // minDate: addDays(new Date(), 5),
-      // maxDate: addDays(new Date(), 10),
->>>>>>> main-dev
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
       maxDate: new Date(2022, 11, 15),
@@ -101,7 +65,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
     this.forestCenterOptions = this.tripService.formOptions;
     console.log('forestCenterOptions: ', this.forestCenterOptions);
     this.forestCenterOptions = this.forestCenterOptions.filter(aco => aco.accommodationList.length > 0);
@@ -112,62 +75,6 @@ export class HeaderComponent implements OnInit {
       // localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
       // localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
 
-=======
-    this.tripService.forestCenter.subscribe((result) => {
-      //this.forestCenter = result; // this set's the username to the default observable value
-    });
-
-    //get forest center fake
-    this.fakeApi.getForestCenter().subscribe(
-      (forestCenters) => {
-        if (forestCenters) {
-          console.log('forestCenter', { forestCenters });
-          // this.formOptions = forestCenter;
-          this.forestCenterOptions = forestCenters;
-          if (this.tripService.centerField) {
-            this.forestCenterId = this.tripService.centerField.id;
-            this.forestCenter = this.tripService.centerField;
-            this.dateObj = this.tripService.dateObj;
-
-            let b = this.getDates(this.dateObj.from, this.dateObj.to);
-            console.log('b:', b);
-
-            let a = this.getDaysArray(this.dateObj.from, this.dateObj.to);
-            console.log('a:', a);
-          }
-        } else {
-          console.log('no data in forestCenter');
-        }
-      },
-      (error) => {
-        console.log({ error });
-      }
-    );
-
-    // this.usersService.getLookupFieldForestCenters().subscribe(
-    //   response => {
-    //     this.formOptions = response;
-    //     //this.tripService.centerField = this.formOptions[0];
-    //   },
-    // )
-
-    //  this.dateObj = this.tripService.dateObj;
-    //  this.forestCenter = this.tripService.centerField;
-  }
-
-  addDays(days: any) {
-    var date = new Date(days);
-    date.setDate(date.getDate() + days);
-    return date;
-  }
-
-  getDates(startDate: any, stopDate: any) {
-    var dateArray = new Array();
-    var currentDate = startDate;
-    while (currentDate <= stopDate) {
-      dateArray.push(new Date(currentDate));
-      currentDate = currentDate.this.addDays(1);
->>>>>>> main-dev
     }
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
@@ -202,51 +109,15 @@ export class HeaderComponent implements OnInit {
     let freeSpacesArray = [];
     while (start < end && i <= this.AvailableDates.length) {
 
-<<<<<<< HEAD
       // for (var j in this.AvailableDates[i].freeSpace) {
       freeSpacesArray.push({
         date: start,
         freeSpace: this.AvailableDates[i].freeSpace
-=======
-  newDateRecived(newDate: any) {
-    console.log(newDate);
-  }
-  prevDateRecived(prevDate: any) {
-    console.log(prevDate);
-  }
-
-  newSleepingPlaceRecived(sleepingPlace: any) {
-    console.log(sleepingPlace);
-  }
-
-  freeSpacesArrayGenarator(start: Date, end: Date) {
-    let i = 0;
-    let freeSpacesArrayTemp: FreeSpace[] = [];
-    while (start < end) {
-      start = new Date(start.setDate(start.getDate() + 1));
-      freeSpacesArrayTemp.push({
-        date: start,
-        freeSpace: [
-          {
-            accomodationName: 'cabin',
-            availableBeds: +Math.floor(Math.random() * 8).toString(),
-          },
-          {
-            accomodationName: 'tent',
-            availableBeds: +Math.floor(Math.random() * 8).toString(),
-          },
-          {
-            accomodationName: 'room',
-            availableBeds: +Math.floor(Math.random() * 8).toString(),
-          },
-        ],
->>>>>>> main-dev
       });
       start = new Date(start.setDate(start.getDate() + 1)); i++;
     }
     return freeSpacesArray;
   }
-<<<<<<< HEAD
 
   updateForestCenter(id: any) {
     this.forestCenter = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
@@ -255,8 +126,6 @@ export class HeaderComponent implements OnInit {
     //console.log('update ForestCenter obj =>', this.forestCenter);
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
-=======
->>>>>>> main-dev
 
   // getDaysArray(start: any, end: any) {
   //   for (
@@ -285,15 +154,13 @@ export class HeaderComponent implements OnInit {
         this.sleepingDates.from = tempDateArr[0];
         this.sleepingDates.till = tempDateArr[1];
       } else {
-        // commented by itiel, need tk check the comrax version
-        // this.sleepingDates.from = tempDateArr[1];
-        // this.sleepingDates.till = tempDateArr[0];
-        this.sleepingDates.from = tempDateArr[0];
-        this.sleepingDates.till = tempDateArr[1];
+      
+        this.sleepingDates.from = tempDateArr[1];
+        this.sleepingDates.till = tempDateArr[0];
       }
       this.tripService.sleepingDates.from = this.sleepingDates.from;
       this.tripService.sleepingDates.till = this.sleepingDates.till;
-      this.emitNewDates.emit(e);
+      //this.emitNewDates.emit(e);
 
       this.tripService.getAvailableSleepingOptions();
     } else {
@@ -302,7 +169,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
   newDateRecived(newDate: any) {
     console.log('newDate: ' + newDate);
   }
@@ -354,17 +220,3 @@ export class HeaderComponent implements OnInit {
   //   return freeSpacesArrayTemp;
   // }
 }
-=======
-
-
-
-
-
-
-
-
-
-
-
-}
->>>>>>> main-dev

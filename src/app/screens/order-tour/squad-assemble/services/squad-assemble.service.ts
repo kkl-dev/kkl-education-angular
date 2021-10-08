@@ -115,37 +115,16 @@ export class SquadAssembleService {
     //   { key: 'good', value: '123' },
     //   { key: 'unproven', value: '123123123' },
     // ]
-    // new QuestionCalendar({
-    //   key: 'dates',
-    //   label: 'תאריכי לינה',
-    //   value: null,
-    //   rows: 4,
-    //   validations: [Validators.required],
-    //   inputProps: {
-    //     labelSize: 's3',
-    //   },
-    // }),
-    new QuestionCalendar({
-      key: 'tripStart',
-      type: 'calendar',
-      label: 'תאריך התחלה',
-      value: null,
-      rows: 4,
-      validations: [Validators.required],
-      inputProps: {
-        labelSize: 's3',
-      },
-    }),
 
     new QuestionCalendar({
-      key: 'tripEnding',
-      type: 'calendar',
-      label: 'תאריך סיום',
+      key: 'dates',
+      label: 'תאריכי לינה',
       value: null,
       rows: 4,
       validations: [Validators.required],
       inputProps: {},
     }),
+   
 
     new QuestionTextarea({
       key: 'comments',

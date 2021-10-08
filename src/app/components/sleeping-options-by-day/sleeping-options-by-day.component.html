@@ -18,11 +18,6 @@
     </div>
   </div>
 
-<<<<<<< HEAD
-  <div class="flex">
-    <div class="SOBD__sleep-areas-options-item" *ngFor="let item of sleepingOptionsByDay[currentDay].options; let i = index">
-      <svg-icon class="SOBD__sleep-areas-options-item-svg" src=" {{ item.svgUrl }} "></svg-icon>
-=======
   <div class="flex" *ngIf="showSleepAreas">
     <div
       class="SOBD__sleep-areas-options-item"
@@ -35,7 +30,6 @@
         class="SOBD__sleep-areas-options-item-svg"
         src=" {{ item.svgUrl }} "
       ></svg-icon>
->>>>>>> main-dev
       <p class="SOBD__sleep-areas-options-item-count font-color-blue">
         <span class="SOBD__sleep-areas-options-item-count-number">
           <span>

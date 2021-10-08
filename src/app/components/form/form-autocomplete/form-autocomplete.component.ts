@@ -1,6 +1,6 @@
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormService } from 'src/app/components/form/logic/form.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { QuestionGroup } from '../logic/question-group';
 import { SquadClientService } from 'src/app/screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
@@ -16,6 +16,7 @@ import { SquadDetailsService } from 'src/app/screens/order-tour/squad-assemble/c
 export class FormAutocompleteComponent implements OnInit {
   @Input() group: QuestionGroup;
   @Input() public formGroup: FormGroup = null;
+  @Output() deleteCustomer: EventEmitter<string> = new EventEmitter();
 
   public list: any[] = [];
 
@@ -92,6 +93,7 @@ export class FormAutocompleteComponent implements OnInit {
     this.squadClientService.emitClientSelected(event.option.value);
     var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
     this.list.push(customer);
+   console.log('clientQuestions is:' ,this.squadClientService.questions)
   }
   public onDelete(item: any) {
     this.list = this.list.filter(function (el) { return el.value != item.value; });
@@ -108,7 +110,8 @@ export class FormAutocompleteComponent implements OnInit {
     // this.squadClientService.questions[indx3].group.questions[indx4].value = undefined;
     // this.squadClientService.questions[indx3].group.questions[indx4].inputProps.options = [];
     // console.log(this.squadClientService.questions[indx3].group.questions[indx4])
-     this.tripService.customers=[];
-    // }
+      this.tripService.customers=[];
+        this.deleteCustomer.emit('customer is deleted');
+    
   }
 }

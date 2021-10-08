@@ -14,6 +14,7 @@
       <app-form-autocomplete
         [group]="clientQuestions.group"
         [formGroup]="formGroup.controls.client"
+        (deleteCustomer)="onDelete($event)"
       ></app-form-autocomplete>
     </div>
 

@@ -20,11 +20,10 @@ export class SleepingOptionsByDayComponent implements OnInit {
       singleUnit: string;
     }[];
   }[] = [];
-<<<<<<< HEAD
   //@Input() AvailableSleepingOptions: any;
   AvailableSleepingOptions: any;
   currentDay: number = 0;
-
+  @Input() showSleepAreas:boolean=true
   constructor(public tripService: TripService) { }
 
   ngOnInit() {
@@ -38,10 +37,8 @@ export class SleepingOptionsByDayComponent implements OnInit {
       //console.log('sleeping -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
     });
   }
-=======
-  @Input() showSleepAreas:boolean=true
-  constructor() {}
->>>>>>> main-dev
+  
+ 
 
   previousPage() {
     this.currentDay = this.currentDay - 1;

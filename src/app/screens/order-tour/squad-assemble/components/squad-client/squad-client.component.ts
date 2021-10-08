@@ -93,9 +93,12 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   private updateClientForm(value?: string): void {
     var customer = this.tripService.customersOriginal.filter(el => el.id ===  parseInt(value))[0]
     this.formGroup.controls.contact.patchValue({
-      fullName: customer.contactName || '',
-      email: customer.contactEmail || '',
-      phone: customer.contactMobile || '',
+      // fullName: customer.contactName || '',
+      // email: customer.contactEmail || '',
+      // phone: customer.contactMobile || '',
+      contactName: customer.contactName || '',
+      contactPhone: customer.contactEmail || '',
+      contactEmail: customer.contactMobile || '',
     });
   }
 
@@ -119,5 +122,14 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public logForm(form) {
     this.squadAssembleService.updateFormArray(form);
+  }
+
+  onDelete(event){
+    console.log('I am delete event', event);
+    this.formGroup.controls.contact.patchValue({
+      contactName:  '',
+      contactPhone:  '',
+      contactEmail:  '',
+    });
   }
 }

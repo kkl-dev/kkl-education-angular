@@ -213,7 +213,6 @@ export class EducationResultsComponent implements OnInit {
   //   // console.log('date 1', date1);
   //   // console.log('date 2', date2);
 
-<<<<<<< HEAD
   //   const utc1 = Date.UTC(
   //     date1.getFullYear(),
   //     date1.getMonth(),
@@ -224,17 +223,6 @@ export class EducationResultsComponent implements OnInit {
   //     date2.getMonth(),
   //     date2.getDate(),
   //   );
-=======
-    const dateFormat1 = dates[0].split('/').reverse();
-    dateFormat1[1] = (+dateFormat1[1] - 1).toString();
-    dateFormat1[2] = (+dateFormat1[2]).toString();
-    const dateFormat2 = dates[1].split('/').reverse();
-    dateFormat2[1] = (+dateFormat2[1] - 1).toString();
-    dateFormat2[2] = (+dateFormat2[2]).toString();
-    let date1 = new Date(dateFormat1.join(','));
-    let date2 = new Date(dateFormat2.join(','));
-    
->>>>>>> main-dev
 
   //   const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
   //   const newSleepingOptionsByDay = [];

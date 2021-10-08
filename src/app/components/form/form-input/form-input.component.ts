@@ -58,7 +58,7 @@ export class FormInputComponent implements OnInit {
     this.name = this.getName(this.control);
     let name = this.getName(this.control);
     if (name == 'tripStart' || name == 'tripEnding' || name == 'centerField')
-      this.setDefaultValues(name);
+     // this.setDefaultValues(name);
     this.subscribeToControl();
   }
 
