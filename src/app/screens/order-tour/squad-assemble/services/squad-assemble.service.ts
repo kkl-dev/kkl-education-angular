@@ -163,7 +163,7 @@ export class SquadAssembleService {
       this.formsArray.push(form);
     }
     console.log(' formarray is: ',this.formsArray)
-    console.log('lenth formarray is: ',this.formsArray.length)
+    console.log('formarray length is: ',this.formsArray.length)
   }
 
   public getSaveModeObs(): Observable<boolean> {

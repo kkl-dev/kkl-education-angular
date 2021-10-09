@@ -26,7 +26,7 @@ export class SquadGroupComponent {
   public list: ListItem[] = [
     {
       label: 'מס משתתפים',
-      value: '120',
+      value: '',
     }
   ]
 
@@ -51,6 +51,23 @@ export class SquadGroupComponent {
   }
 
   public logForm(form) {
+     let sum=0;    
+     if ( Number.isInteger(+form.controls.numAdultAndYoung.value)) {
+       sum= +form.controls.numAdultAndYoung.value;
+    }
+    if ( Number.isInteger(+form.controls.numGuides.value)) {
+      sum=sum+ (+form.controls.numGuides.value);
+   }
+   if ( Number.isInteger(+form.controls.numDrivers.value)) {
+     sum=sum+ (+form.controls.numDrivers.value);
+   }
+   if ( Number.isInteger(+form.controls.numAccompanied.value)) {
+    sum=sum+ (+form.controls.numAccompanied.value);
+  }
+  if ( Number.isInteger(+form.controls.medics.value)) {
+    sum=sum+ (+form.controls.medics.value);
+  }
+     this.list[0].value= sum;
     this.squadAssembleService.updateFormArray(form);
   }
 

@@ -134,25 +134,23 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     try{
      
       for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
-          if(this.squadAssemble.formsArray[i].controls.tripEnding){
+          if(this.squadAssemble.formsArray[i].controls.centerField){
              console.log('I am schedule');
              this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[i].get('tripDescription').value;
              var center = this.squadAssemble.formsArray[i].get('centerField').value;
              this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
              this.squadAssemble.tripInfo.centerField.linkSite='';
-             //this.squadAssemble.tripInfo.tripEnding = this.squadAssemble.formsArray[i].get('tripEnding').value;
-             let tripEnding = this.squadAssemble.formsArray[i].get('tripEnding').value;
-             this.tripService.sleepingDates.till= tripEnding;
-             // change date format for sending to server
-             let tripEndingArr = tripEnding.split("/");
-             tripEnding =  tripEndingArr[2] + '-' + tripEndingArr[1] + '-' + tripEndingArr[0];
-             this.squadAssemble.tripInfo.tripEnding=tripEnding;           
-            // this.squadAssemble.tripInfo.tripStart = this.squadAssemble.formsArray[i].get('tripStart').value;
-             let tripStart = this.squadAssemble.formsArray[i].get('tripStart').value;
-             this.tripService.sleepingDates.from= tripStart;
-             let tripStartArr = tripStart.split("/");
-             tripStart =  tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
-             this.squadAssemble.tripInfo.tripStart=tripStart;     
+            let tripDates=  this.squadAssemble.formsArray[i].get('dates').value; 
+            let subTripDates = tripDates.split("-");
+            let startDate= subTripDates[0];
+            let tripStartArr = startDate.split("/");
+            let  tripStart =  tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
+             this.squadAssemble.tripInfo.tripStart=tripStart; 
+             let endDate= subTripDates[1];
+             let tripEndingArr = endDate.split("/");
+             let  tripEnding =  tripEndingArr[2] + '-' + tripEndingArr[1] + '-' + tripEndingArr[0];
+              this.squadAssemble.tripInfo.tripEnding=tripEnding; 
+
           }
           if(this.squadAssemble.formsArray[i].controls.attribute){
             console.log('I am details');
@@ -169,28 +167,29 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
             var ageGroup = this.squadAssemble.formsArray[i].get('ageGroup').value;
             this.squadAssemble.tripInfo.ageGroup = this.tripService.ageGroupOriginal.filter(el => el.id === parseInt(ageGroup))[0];
             if(this.squadAssemble.formsArray[i].get('numAdultAndYoung').value)
-            this.squadAssemble.tripInfo.numAdultAndYoung = +this.squadAssemble.formsArray[2].get('numAdultAndYoung').value;
+            this.squadAssemble.tripInfo.numAdultAndYoung = +this.squadAssemble.formsArray[i].get('numAdultAndYoung').value;
             if (this.squadAssemble.formsArray[i].get('numDrivers').value)
-            this.squadAssemble.tripInfo.numDrivers = +this.squadAssemble.formsArray[2].get('numDrivers').value;
+            this.squadAssemble.tripInfo.numDrivers = +this.squadAssemble.formsArray[i].get('numDrivers').value;
             if(this.squadAssemble.formsArray[i].get('numAccompanied').value)
             this.squadAssemble.tripInfo.numAccompanied = +this.squadAssemble.formsArray[i].get('numAccompanied').value;
             if(this.squadAssemble.formsArray[i].get('numGuides').value)
             this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[i].get('numGuides').value;
-            if(this.squadAssemble.formsArray[i].get('numAccompaniedAndGuide').value)
-            this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[i].get('numAccompaniedAndGuide').value;
+            // if(this.squadAssemble.formsArray[i].get('medics').value)
+            // this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[i].get('medics').value;
 
         }
-        if (this.squadAssemble.formsArray[i].controls.contactPhone) {
+        if (this.squadAssemble.formsArray[i].controls.contactName) {
           console.log('I am contact');
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
         }
-        if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
-          console.log('I am budget');
-          this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget             
-        }
+        // if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
+        //   console.log('I am budget');
+        //   this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget             
+        // }
       }
+      //this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget
       this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
       this.squadAssemble.tripInfo.userName = 'שחר גל';
     }

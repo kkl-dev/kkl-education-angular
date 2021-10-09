@@ -69,7 +69,7 @@ export class SquadGroupService {
       rows: 4,
     }),
     new QuestionNumber({
-      key: 'numAccompaniedAndGuide',
+      key: 'medics',
       label: 'חובשים',
       cols: 2,
       rows: 4,
@@ -79,7 +79,7 @@ export class SquadGroupService {
 
   public groupQuestions: QuestionBase<string>[] = [
     new QuestionSelect({
-      key: 'age',
+      key: 'ageGroup',
       type: 'select',
       fullWidth: true,
       rows: 4,

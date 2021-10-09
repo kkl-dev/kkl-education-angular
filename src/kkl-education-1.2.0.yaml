@@ -374,7 +374,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TripActivity'
+                  $ref: '#/components/schemas/LookupTripActivity'
   /activityCategories:
     get:
       tags:
@@ -388,7 +388,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TripActivity'
+                  $ref: '#/components/schemas/ActivityCategory'
 
 
   /areas:
@@ -1611,12 +1611,12 @@ components:
         # customerPayName:
         #   type: string
         #   example: סימינר הקיבוצים
-        customerPayType:
-          type: string
-          example: חול
-        customerPayRegionName:
-          type: string
-          example: שפלה
+        # customerPayType:
+        #   type: string
+        #   example: חול
+        # customerPayRegionName:
+        #   type: string
+        #   example: שפלה
         centerField:
           $ref: '#/components/schemas/FieldForestCenter'
         commentManager:
@@ -2104,66 +2104,76 @@ components:
           type: string
           example: kkmm
 
-    # CustomerPagination:
-    #   type: object
-    #   properties:
-    #     pageIndex:
-    #       type: integer
-    #     pageSize:
-    #       type: integer
-    #     count:
-    #       type: integer
-    #     data:
-    #       type: array
-    #       nullable: true
-    #       items:
-    #         $ref: '#/components/schemas/Customer'
-    TripActivity:
+   
+    LookupTripActivity:
       type: object
       properties:
         activityId:
           type: integer
+          example: 1
         name:
           type: string
-          nullable: true
+          example: 'education'
         sitePicture:
           type: string
+          example: 'http://'
         linkToDetails:
           type: string
-        hourStart:
-          type: string
-          format: date-time
-          nullable: true
-        hourEnd:
-          type: string
-          format: date-time
-          nullable: true
+          example: 'http://'
         description:
           type: string
-          nullable: true
-        date:
-          type: string
-          format: date-time
-        placeId:
+          example: ''
+        categoryId:
           type: integer
-        placeName:
-          type: string
-        openBy:
-          type: string
-          nullable: true
-        itemId:
+          description: activity by category
+          example: 1
+        regionId:
           type: integer
-          nullable: true
-        status:
+          description: activity by region
+          example: 3
+
+
+        # hourStart:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # hourEnd:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+       
+        # date:
+        #   type: string
+        #   format: date-time
+        # placeId:
+        #   type: integer
+        # placeName:
+        #   type: string
+        # openBy:
+        #   type: string
+        #   nullable: true
+        # itemId:
+        #   type: integer
+        #   nullable: true
+        # status:
+        #   type: integer
+        #   nullable: true
+        # generateTime:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # subItemId:
+        #   type: integer
+        #   nullable: true
+    ActivityCategory:
+       type: object
+       properties:
+        categoryId:
           type: integer
-          nullable: true
-        generateTime:
+          example: 1
+        name:
           type: string
-          format: date-time
-          nullable: true
-        subItemId:
-          type: integer
-          nullable: true
+          example: 'education'
     OrderModel:
       type: object
       properties:

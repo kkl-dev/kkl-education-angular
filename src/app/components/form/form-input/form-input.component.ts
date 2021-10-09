@@ -57,8 +57,8 @@ export class FormInputComponent implements OnInit {
   ngOnInit(): void {
     this.name = this.getName(this.control);
     let name = this.getName(this.control);
-    if (name == 'tripStart' || name == 'tripEnding' || name == 'centerField')
-     // this.setDefaultValues(name);
+    if (name == 'dates' || name == 'centerField')
+      this.setDefaultValues(name);
     this.subscribeToControl();
   }
 
@@ -81,28 +81,18 @@ export class FormInputComponent implements OnInit {
 
   setDefaultValues(name: string) {
     switch (name) {
-      case 'tripStart':
-        if (this.tripService.sleepingDates.from != '') {
-          this.control.setValue(this.tripService.sleepingDates.from);
+      case 'dates':
+        if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
+          this.control.setValue(this.tripService.sleepingDates.from+ '-'+ this.tripService.sleepingDates.till);
           if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("sleepingDateStart", this.tripService.sleepingDates.from);
+            localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
           }
         }
         else {
-          this.control.setValue(localStorage.getItem("sleepingDateStart"));
+          this.control.setValue(localStorage.getItem("sleepingDates"));
         }
         break;
-      case 'tripEnding':
-        if (this.tripService.sleepingDates.till != '') {
-          this.control.setValue(this.tripService.sleepingDates.till);
-          if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("sleepingDateTill", this.tripService.sleepingDates.till);
-          }
-        }
-        else {
-          this.control.setValue(localStorage.getItem("sleepingDateTill"));
-        }
-        break;
+     
       case 'centerField':
         if (this.tripService.centerField.id != 0) {
           this.control.setValue(this.tripService.centerField.id.toString());
@@ -159,7 +149,7 @@ export class FormInputComponent implements OnInit {
   }
   public onSelectChange() {
     if (this.control.parent.value.attribute) {
-      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'itiel');
+      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
     }
     if (this.name === 'attribute') {
       this.group.controls['activityType'].setValue(undefined);//איפוס שדה פעילות
@@ -180,15 +170,20 @@ export class FormInputComponent implements OnInit {
       this.tripService.budgetByParam.attribute = attr;
       this.tripService.budgetByParam.userId = "שחר";
       this.tripService.budgetByParam.userName = "שחר גל";
-      //find index 'tripStart'
+      //find index 'dates'
       var index;
       for (var i in this.squadAssemble.formsArray) {
         Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
-          if (key === 'tripStart') { index = i; }
+          // if (key === 'tripStart') { index = i; }
+          if (key === 'dates') { index = i; }
         });
       }
-      let str = this.squadAssemble.formsArray[index].controls['tripStart'].value.split("/");
-      this.tripService.budgetByParam.tripStart = str[2] + '-' + str[1] + '-' + str[0];
+      //let str = this.squadAssemble.formsArray[index].controls['tripStart'].value.split("/");
+      let tripDatesArr = this.squadAssemble.formsArray[index].controls['dates'].value.split("-");
+      let tripStart= tripDatesArr[0];
+      let tripStartArr= tripStart.split("/");
+      tripStart=  tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
+      this.tripService.budgetByParam.tripStart = tripStart;
       this.tripService.getBudgetKKl(this.tripService.budgetByParam);
       // index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
       // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.tripService.budget.listCity;
