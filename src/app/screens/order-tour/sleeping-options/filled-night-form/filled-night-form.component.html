@@ -44,7 +44,7 @@
     <mat-form-field appearance="outline" class="width-auto" [ngStyle]="{ 'width': 'auto !importent' }">
       <mat-label>מס לנים</mat-label>
       <!-- <input matInput type="number" name="sleepingAmount" formControlName="sleepingAmount" /> -->
-      <input matInput type="number" min="0"  name="lodgersNumber" formControlName="lodgersNumber" />
+      <input matInput type="number" min="0"  name="lodgersNumber" (input)="validateLodgersNumber()" formControlName="lodgersNumber" />
     </mat-form-field>
     <!-- <div *ngIf="this.filledNightForm.value.saveFor" class="save-for-text">
       מתוך {{ totalAmount }} {{ saveForValue }}

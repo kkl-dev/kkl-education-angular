@@ -208,10 +208,21 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
    
 }
 
+    validateLodgersNumber(){
+      let lodgersNumber= this.filledNightForm.get('lodgersNumber').value;
+      if (lodgersNumber> this.totalAmount){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
+          width: '500px',
+          data: { message: 'לתשומת ליבך מספר הלנים שהוזן אינו תואם את המספר שהזנת במסך הקודם' , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+      }
+    }
    validateUnitsNumber(){
      this.IsUnitsNumIsValid=true;
      let unitsNumber=  this.filledNightForm.get('unitsNumber').value;
+     let lodgersNumber= this.filledNightForm.get('lodgersNumber').value;
      let accomodationSelected= this.filledNightForm.get('accomodationType').value.id;
+     let accomodationNameSelected= this.filledNightForm.get('accomodationType').value.name;
      let nightSelected = this.filledNightForm.get('nightsCount').value;
      if(unitsNumber &&  accomodationSelected || !nightSelected){
      console.log('nightSelected is: ', nightSelected)
@@ -236,33 +247,53 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   if (x.availableUnits < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
-                    this.displayMessage(nightSelected[i].date,x.availableUnits)                  
-                  }
-                       
+                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                  
+                  }    
+                     let num= x.availableUnits * x.maxOccupancy
+                     if(num<lodgersNumber){
+                      this.IsUnitsNumIsValid=false;
+                       this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
+                       this.filledNightForm.get('lodgersNumber').setValue('');
+                     }        
                  break;  
                  case 2:
                   if (x.availableUnits<unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
-                    this.displayMessage(nightSelected[i].date,x.availableUnits)
-                  
+                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                   
                   }
+                   num= x.availableUnits * x.maxOccupancy
+                  if(num<lodgersNumber){
+                    this.IsUnitsNumIsValid=false;
+                    this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
+                    this.filledNightForm.get('lodgersNumber').setValue('');
+                  }      
                   break;
                  case 3:
                   if (x.availableUnits<unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
-                    this.displayMessage(nightSelected[i].date,x.availableUnits)
-                   
+                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)          
                   }
+                  num= x.availableUnits * x.maxOccupancy
+                  if(num<lodgersNumber){
+                    this.IsUnitsNumIsValid=false;
+                    this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
+                    this.filledNightForm.get('lodgersNumber').setValue('');
+                  }      
                   break;
                  case 4:  
                   if (x.availableUnits<unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
-                   this.displayMessage(nightSelected[i].date,x.availableUnits)
-                  
+                   this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)  
                   }
+                  num= x.availableUnits * x.maxOccupancy
+                  if(num<lodgersNumber){
+                    this.IsUnitsNumIsValid=false;
+                    this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
+                    this.filledNightForm.get('lodgersNumber').setValue('');
+                  }      
                  break;
 
             }
@@ -273,13 +304,36 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
      
       return  this.IsUnitsNumIsValid;
   }
-    displayMessage(date, avaliableUnits){
+    displayMessage(date,name, avaliableUnits){
+      switch (name) {
+        case 'בקתה':
+          name= 'בקתות'
+          break;
+          case 'חדר':
+            name= 'חדרים'
+            break;
+          case 'אוהל':
+             name= 'אוהלים'
+            break;
+          case 'גיחה':
+            name= 'גיחות'
+             break;
+      }
+    
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '300px',
-        data: { message: ' סך הבקתות הפנויות בתאריך ' +date +' הינו' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        
+        width: '500px',
+        data: { message: ' מספר ה  '+name+" הפנויות בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
       })
      
    }
+   displayMessage2(date,name, num){
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: { message: ' מספר הלנים המקסימלי ב ' +name+" בתאריך "+date +'  הינו  ' + num , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    })
+   
+ }
 
   
   public sumbitUpdatedItem(): void {
