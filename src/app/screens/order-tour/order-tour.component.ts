@@ -192,8 +192,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget;
       
       this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
-     
-     // this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
+      if(this.squadAssemble.payerCustomer.name!= undefined)
+      this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
       this.squadAssemble.tripInfo.generateTime='2021-10-10';
       this.squadAssemble.tripInfo.userName = 'שחר גל';
     }
@@ -201,7 +201,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     catch (error) {
       console.log(error);
     }
-    console.log(this.squadAssemble.tripInfo);
+    console.log('tripInfo obj is: ',this.squadAssemble.tripInfo);
   }
 
   

@@ -242,6 +242,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
              let nightDateFormat1= nightDateFormat[0]+'/'+nightDateFormat[1]+'/'+nightDateFormat[2]
              if(israelFormatDate == nightDateFormat1)   {
               let x= avaliableSleepingOptionsByDates[j].sleepingOptions.find((q: { accomodationTypeId: any }) => q.accomodationTypeId === accomodationSelected)
+              let num;
               switch(accomodationSelected) { 
                 case 1:          
                   if (x.availableUnits < unitsNumber){
@@ -249,7 +250,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                  
                   }    
-                     let num= x.availableUnits * x.maxOccupancy
+                      num= x.availableUnits * x.maxOccupancy
                      if(num<lodgersNumber){
                       this.IsUnitsNumIsValid=false;
                        this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
