@@ -68,9 +68,7 @@ export class MapsComponent implements OnInit {
     innerHTML += "<br><b>מספר מבנה:</b> " + feature.graphic.attributes.OBJECTID;
 
     if (this.arrStruct.indexOf(feature.graphic.attributes.Purpose) != -1) {
-      let buildingInfo = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == 1190);
-     // let buildingInfo = this.rawservicedata.lodgingFacilityList.filter(n => n.structureId == 1190);
-      // feature.graphic.attributes.OBJECTID);
+      let buildingInfo = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == feature.graphic.attributes.OBJECTID);
 
       let gender: string;
       let status: string;
@@ -126,6 +124,8 @@ export class MapsComponent implements OnInit {
       zoom: 8
     });
 
+    this.view.ui.add("nameDiv", "top-trailing");
+
     const labelClass = new LabelClass({
       symbol: {
         type: "text", // autocasts as new TextSymbol()
@@ -143,8 +143,9 @@ export class MapsComponent implements OnInit {
     this.layer = new FeatureLayer({
       url: this.url,
       popupTemplate: this.popupTrailheads,
-      opacity: 1,
-      labelingInfo: [labelClass]
+      opacity: 1
+      // ,
+      // labelingInfo: [labelClass]
       //definitionExpression: filterex
     });
     this.graphicsLayer = new GraphicsLayer({
@@ -180,7 +181,7 @@ export class MapsComponent implements OnInit {
   queryandrender() {
     let filterex = "SiteName = '" + this.rawservicedata[0].fieldForestCenterName + "'";
 
-   // let filterex = "SiteName = '" + this.rawservicedata.fieldForestCenterName + "'";
+    // let filterex = "SiteName = '" + this.rawservicedata.fieldForestCenterName + "'";
 
     let queryTask = new QueryTask({
       url: this.url
@@ -246,7 +247,7 @@ export class MapsComponent implements OnInit {
         });
 
         var objBin = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
-//        var objBin = this.rawservicedata.lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
+        //        var objBin = this.rawservicedata.lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
 
         if (objBin.length > 0)
           objBin = objBin[0];
@@ -266,18 +267,37 @@ export class MapsComponent implements OnInit {
           // style: "square",
           path: svgPath,
           color: "",
-          size: "40px"
+          size: "30px",
+          outline: {
+            color: [255, 255, 0],
+            width: 1
+          }
         };
 
-        stylePoint.color = "grey";
+        // console.log(objBin.structureId);
+        // console.log(objBin.status);
+
+        stylePoint.outline = {
+          color: [196, 196, 196],
+          width: 1
+        };
         if (objBin) {
           if (objBin.status == 'פנוי') {
             if (objBin.gender == 'בנות')
-              stylePoint.color = "red";
+              stylePoint.outline = {
+                color: [55, 197, 107],
+                width: 1
+              };
             else if (objBin.gender == 'בנים')
-              stylePoint.color = "blue";
+              stylePoint.outline = {
+                color: [55, 197, 107],
+                width: 1
+              };
             else if (objBin.gender == 'מעורב')
-              stylePoint.color = "green"
+              stylePoint.outline = {
+                color: [55, 197, 107],
+                width: 1
+              };
           }
         }
 
