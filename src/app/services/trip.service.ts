@@ -118,10 +118,16 @@ export class TripService {
   forestCenter = this.centerFieldObj.asObservable();
   AvailableSleepingOptions = this.AvailableSleepingOptionsByDay.asObservable();
   lodgingFacilityListArray = this.lodgingFacilityListArrayObservable.asObservable();
-
+  facilitiesArray: any = [];
+  
   setFreeSpacesArray(freeSpacesArray: any) {
     this.freeSpacesArray = freeSpacesArray;
     console.log('this.freeSpacesArray: ', this.freeSpacesArray);
+  }
+
+  setfacilitiesArray(facilitiesArray: any) {
+    this.facilitiesArray = facilitiesArray;
+    console.log('facilitiesArray: ', this.facilitiesArray);
   }
 
   updateForestCenter(forestCenter: any) {

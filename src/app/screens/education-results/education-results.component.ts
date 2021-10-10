@@ -282,6 +282,7 @@ export class EducationResultsComponent implements OnInit {
       if (facilities) {
         this.facilityForDay = facilities[0].facilitiesList;
         this.facilitiesArray = facilities;
+        this.tripService.setfacilitiesArray(facilities);
         //console.log('facility For Day: ', this.facilityForDay);
       }
     },
