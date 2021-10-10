@@ -283,7 +283,6 @@ export class EducationResultsComponent implements OnInit {
     const newSleepingOptionsByDay = [];
 
     let newDate = new Date(date1.setDate(date1.getDate()));
-    console.log(newDate);
     
     for (let i = 0; i <= totalDays; i++) {
       //להכניס שורה שמחליפה תאירך לסטרינג של תאריך לתצוגה
@@ -319,7 +318,6 @@ export class EducationResultsComponent implements OnInit {
       newDate = new Date(date1.setDate(date1.getDate() + 1));
     }
     this.sleepingOptionsByDay = newSleepingOptionsByDay;
-    console.log(this.sleepingOptionsArray);
     
   }
 

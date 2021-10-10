@@ -13,7 +13,7 @@ export const dateOptions:CalendarOptions = {
   freeSpacesArray: freeSpacesArray,
 };
 
-console.log(dateOptions);
+// console.log(dateOptions);
 
 function freeSpacesArrayGenarator(start: Date, end: Date) {
   let i = 0;
