@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 export class FakeService {
 
   url = 'http://localhost:3000/';
+  api = 'https://educationapidev.azurewebsites.net/';
+  
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +20,24 @@ export class FakeService {
   //     .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
   //   return this.http.get(`${this.url}forestCenters`, { headers });
   // }
+
+  getActivityCategories() {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    return this.http.get(`${this.api}activityCategories`, { headers });
+  }
+
+  getAreas() {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    return this.http.get(`${this.api}areas`, { headers });
+  }
+
+  getTripActivities() {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*');
+    return this.http.get(`${this.api}tripActivities`, { headers });
+  }
 
   getAvailableFacilityDates(day: any) {
     const headers = new HttpHeaders()
