@@ -13,7 +13,7 @@ import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Lang
 export class TripService {
 
   constructor(public userService: UserService) { }
-  
+
   ageGroup = [];//to convert to model of comrax
   ageGroupOriginal: AgeGroup[];
   fieldForestCenters = [];//to convert to model of comrax
@@ -92,7 +92,7 @@ export class TripService {
   ]);
 
   totalAvailableUnits: any = []
-  
+
   centerFieldObj = new BehaviorSubject<any>({
     "id": 1,
     "name": "נס הרים",
@@ -129,10 +129,15 @@ export class TripService {
   forestCenter = this.centerFieldObj.asObservable();
   AvailableSleepingOptions = this.AvailableSleepingOptionsByDay.asObservable();
   lodgingFacilityListArray = this.lodgingFacilityListArrayObservable.asObservable();
-
+  facilitiesArray: any = [];
   setFreeSpacesArray(freeSpacesArray: any) {
     this.freeSpacesArray = freeSpacesArray;
     console.log('this.freeSpacesArray: ', this.freeSpacesArray);
+  }
+
+  setfacilitiesArray(facilitiesArray: any) {
+    this.facilitiesArray = facilitiesArray;
+    console.log('facilitiesArray: ', this.facilitiesArray);
   }
 
   updateForestCenter(forestCenter: any) {
@@ -156,10 +161,10 @@ export class TripService {
   }
 
 
-         availableCabins = 0;
-         availableRooms = 0;
-         availableTents = 0;
-         availableGicha = 0;
+  availableCabins = 0;
+  availableRooms = 0;
+  availableTents = 0;
+  availableGicha = 0;
 
   getAvailableSleepingOptions() {
     let str = this.sleepingDates.from.split("/");
@@ -176,24 +181,24 @@ export class TripService {
 
         let max = [];
         sleepingAvailability[0].sleepingOptions.forEach(element => {
-          max.push({acoomodationTypeName: element.acoomodationTypeName, availableUnits: element.availableUnits });
+          max.push({ acoomodationTypeName: element.acoomodationTypeName, availableUnits: element.availableUnits });
 
           if (element.acoomodationTypeName == 'בקתה') {
-           // console.log("totalAvailableUnits: " + element.availableUnits);
+            // console.log("totalAvailableUnits: " + element.availableUnits);
             this.availableCabins = element.availableUnits;
-          }     
+          }
           if (element.acoomodationTypeName == 'אוהל') {
-           // console.log("totalAvailableUnits: " + element.availableUnits);
-           this.availableTents = element.availableUnits;
-          }   
+            // console.log("totalAvailableUnits: " + element.availableUnits);
+            this.availableTents = element.availableUnits;
+          }
           if (element.acoomodationTypeName == 'חדר') {  //room
             //console.log("totalAvailableUnits: " + element.availableUnits);
             this.availableRooms = element.availableUnits;
-          }   
+          }
           if (element.acoomodationTypeName == 'גיחה') {
-           // console.log("totalAvailableUnits: " + element.availableUnits);
-           this.availableGicha = element.availableUnits;
-          }      
+            // console.log("totalAvailableUnits: " + element.availableUnits);
+            this.availableGicha = element.availableUnits;
+          }
         });
         this.totalAvailableUnits = max;
         console.log("totalAvailableUnits: ", this.totalAvailableUnits);
@@ -211,108 +216,108 @@ export class TripService {
   }
 
   getMapFacilities(centerField, from, till) {
-          //getMapFacilities for sending sleeping id to map
-          this.userService.getMapFacilities(centerField, from, till).subscribe((lodgingList: any) => {
-            console.log('lodging Facility List Array ==>', { lodgingList });
-    
-            this.lodgingFacilityListArray = [];
-            let temp = []
-            // let totalUnits = {
-            //   cabin: 0,
-            //   room: 0,
-            //   tent: 0,
-            //   camping: 0
-            // };
-            let centerFieldName = '';
-            switch (this.centerField.name) {
-              case 'נס הרים':
-                centerFieldName = 'מרכז שדה נס הרים'
-                break;
-                case 'ציפורי':
-                centerFieldName = 'מרכז שדה ציפורי'
-                break;
-                case 'אילנות':
-                centerFieldName = 'אילנות מערב'
-                break;
-                case 'שוני':
-                centerFieldName = 'מרכז שדה שוני'
-                break;
-                case 'נס הרים':
-                centerFieldName = 'מצפה בית אשל'
-                break;
-                case 'יתיר':
-                  centerFieldName = 'מרכז שדה יתיר'
-                  break;
-              default:
-                centerFieldName = 'מרכז שדה לביא';
-                break;
-            }
-    
-            
-            // for (let index = 0; index < this.totalAvailableUnits.length; index++) {
-            //   if (this.totalAvailableUnits[index].acoomodationTypeName == 'בקתה' ) {
-            //     availableRooms = this.totalAvailableUnits[index].availableUnits;
-            //   }
-              
-            // }
-            console.log("totalAvailableUnits: ", this.totalAvailableUnits);
-            let availableCabins = this.availableCabins;
-            let availableRooms = this.availableRooms;
-            let availableTents = this.availableTents;
-            let availableGicha = this.availableGicha;
-    
-            lodgingList[0].lodgingFacilityList.forEach(element => {
-                //console.log(element.structureType);
-                //get totalAvailableUnits of each accumondation type
-                // for (let index = 0; index < this.totalAvailableUnits[0].availableUnits; index++) {
-                //   temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
-                // }
-              if (element.structureType = 'בקתה') {
-                if (availableCabins > 0) {
-                  availableCabins = availableCabins -1;          
-                  temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
-                } else {
-                  temp.push({structureId: element.structureId, gender: "בנים", status: "תפוס" });
-                }
-              }
-              else if (element.structureType = 'חדר') {
-                if (availableRooms > 0) {
-                  availableRooms = availableRooms -1;   
-                  temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
-                } else {
-                  temp.push({structureId: element.structureId, gender: "בנים", status: "תפוס" });
-                }
-               }
-               else if (element.structureType = 'אוהל') {
-                if (availableTents > 0) {
-                  availableTents = availableTents -1;   
-                  temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
-                } else {
-                  temp.push({structureId: element.structureId, gender: "בנים", status: "תפוס" });
-                }
-               }
-               else if (element.structureType = 'גיחה') {
-                if (availableGicha > 0) {
-                  availableGicha = availableGicha -1;   
-                  temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
-                } else {
-                  temp.push({structureId: element.structureId, gender: "בנים", status: "תפוס" });
-                }
-               }
-               else {
-                temp.push({structureId: element.structureId, gender: "בנות", status: "תפוס" });
-               }
-            });
-            this.lodgingFacilityListArray.push({fieldForestCenterName: centerFieldName},{lodgingFacilityList: temp});
-            //console.log(a)
-            console.log("this.lodgingFacilityListArray", this.lodgingFacilityListArray);
-            this.lodgingFacilityListArrayObservable.next(this.lodgingFacilityListArray);
-            
-    
-          },
-            error => {
-              console.log({ error });
-            });
+    //getMapFacilities for sending sleeping id to map
+    this.userService.getMapFacilities(centerField, from, till).subscribe((lodgingList: any) => {
+      console.log('lodging Facility List Array ==>', { lodgingList });
+
+      this.lodgingFacilityListArray = [];
+      let temp = []
+      // let totalUnits = {
+      //   cabin: 0,
+      //   room: 0,
+      //   tent: 0,
+      //   camping: 0
+      // };
+      let centerFieldName = '';
+      switch (this.centerField.name) {
+        case 'נס הרים':
+          centerFieldName = 'מרכז שדה נס הרים'
+          break;
+        case 'ציפורי':
+          centerFieldName = 'מרכז שדה ציפורי'
+          break;
+        case 'אילנות':
+          centerFieldName = 'אילנות מערב'
+          break;
+        case 'שוני':
+          centerFieldName = 'מרכז שדה שוני'
+          break;
+        case 'נס הרים':
+          centerFieldName = 'מצפה בית אשל'
+          break;
+        case 'יתיר':
+          centerFieldName = 'מרכז שדה יתיר'
+          break;
+        default:
+          centerFieldName = 'מרכז שדה לביא';
+          break;
+      }
+
+
+      // for (let index = 0; index < this.totalAvailableUnits.length; index++) {
+      //   if (this.totalAvailableUnits[index].acoomodationTypeName == 'בקתה' ) {
+      //     availableRooms = this.totalAvailableUnits[index].availableUnits;
+      //   }
+
+      // }
+      console.log("totalAvailableUnits: ", this.totalAvailableUnits);
+      let availableCabins = this.availableCabins;
+      let availableRooms = this.availableRooms;
+      let availableTents = this.availableTents;
+      let availableGicha = this.availableGicha;
+
+      lodgingList[0].lodgingFacilityList.forEach(element => {
+        //console.log(element.structureType);
+        //get totalAvailableUnits of each accumondation type
+        // for (let index = 0; index < this.totalAvailableUnits[0].availableUnits; index++) {
+        //   temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
+        // }
+        if (element.structureType = 'בקתה') {
+          if (availableCabins > 0) {
+            availableCabins = availableCabins - 1;
+            temp.push({ structureId: element.structureId, gender: "בנות", status: "פנוי" });
+          } else {
+            temp.push({ structureId: element.structureId, gender: "בנים", status: "תפוס" });
+          }
+        }
+        else if (element.structureType = 'חדר') {
+          if (availableRooms > 0) {
+            availableRooms = availableRooms - 1;
+            temp.push({ structureId: element.structureId, gender: "בנות", status: "פנוי" });
+          } else {
+            temp.push({ structureId: element.structureId, gender: "בנים", status: "תפוס" });
+          }
+        }
+        else if (element.structureType = 'אוהל') {
+          if (availableTents > 0) {
+            availableTents = availableTents - 1;
+            temp.push({ structureId: element.structureId, gender: "בנות", status: "פנוי" });
+          } else {
+            temp.push({ structureId: element.structureId, gender: "בנים", status: "תפוס" });
+          }
+        }
+        else if (element.structureType = 'גיחה') {
+          if (availableGicha > 0) {
+            availableGicha = availableGicha - 1;
+            temp.push({ structureId: element.structureId, gender: "בנות", status: "פנוי" });
+          } else {
+            temp.push({ structureId: element.structureId, gender: "בנים", status: "תפוס" });
+          }
+        }
+        else {
+          temp.push({ structureId: element.structureId, gender: "בנות", status: "תפוס" });
+        }
+      });
+      this.lodgingFacilityListArray.push({ fieldForestCenterName: centerFieldName }, { lodgingFacilityList: temp });
+      //console.log(a)
+      console.log("this.lodgingFacilityListArray", this.lodgingFacilityListArray);
+      this.lodgingFacilityListArrayObservable.next(this.lodgingFacilityListArray);
+
+
+    },
+      error => {
+        console.log({ error });
+      });
   }
 
   getLookupFieldForestCenters() {

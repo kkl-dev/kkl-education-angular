@@ -9,10 +9,10 @@ import { FakeService } from 'src/app/services/fake.service';
 import { MapsComponent } from './maps/maps.component';
 
 export interface InfoCard {
-  svgUrl: string;
-  headline: string;
+  iconPath: string;
+  name: string;
   subHeadline?: string;
-  availability?: TooltipDataModel[];
+  maxOccupancy?: TooltipDataModel[];
 }
 
 @Component({
@@ -129,7 +129,7 @@ export class EducationResultsComponent implements OnInit {
   AvailableSleepingOptions: any;
 
   constructor(private router: Router, private checkAvailabilityService: CheckAvailabilityService,
-    public usersService: UserService, private route: ActivatedRoute,
+    private usersService: UserService, private route: ActivatedRoute,
     private userDataService: UserDataService, private tripService: TripService, private api: FakeService) {
 
       this.tripService.forestCenter.subscribe(forestCenter => {
@@ -282,6 +282,7 @@ export class EducationResultsComponent implements OnInit {
       if (facilities) {
         this.facilityForDay = facilities[0].facilitiesList;
         this.facilitiesArray = facilities;
+        this.tripService.setfacilitiesArray(facilities);
         //console.log('facility For Day: ', this.facilityForDay);
       }
     },

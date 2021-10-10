@@ -42,16 +42,20 @@
                 <p>מתקני מרכז שדה</p>
             </div>
             <div class="info-card">
-                <ng-container *ngFor="let item of facilitiesArray; let i = index">
+                                    <!-- <app-info-card class="education-results__right-facilities-items-item"
+                    *ngFor="let item of facilityForDay; let i = index" [item]="item">
+                    <app-tooltip class="app-tooltip" [hours]="item.occupiedHours"></app-tooltip>
+                  </app-info-card> -->
+                <ng-container *ngFor="let item of facilityForDay; let i = index">
                     <app-info-card class="facilities-items-item" *ngIf='5 > i' [item]="item">
-                        <app-tooltip class="app-tooltip" [hours]="item.availability">
+                        <app-tooltip class="app-tooltip" [hours]="item.occupiedHours">
                         </app-tooltip>
                     </app-info-card>
                 </ng-container>
-                <ng-container *ngFor="let item of facilitiesArray; let i = index">
+                <ng-container *ngFor="let item of facilityForDay; let i = index">
                     <app-info-card class="facilities-items-item" *ngIf='i >= 5 && hiddenElements.facilities'
                         [item]="item">
-                        <app-tooltip class="app-tooltip" [hours]="item.availability">
+                        <app-tooltip class="app-tooltip" [hours]="item.occupiedHours">
                         </app-tooltip>
                     </app-info-card>
                 </ng-container>
