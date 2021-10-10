@@ -374,7 +374,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LookupTripActivity'
+                  $ref: '#/components/schemas/TripActivityLookup'
   /activityCategories:
     get:
       tags:
@@ -2105,7 +2105,7 @@ components:
           example: kkmm
 
    
-    LookupTripActivity:
+    TripActivityLookup:
       type: object
       properties:
         activityId:
@@ -2168,7 +2168,7 @@ components:
     ActivityCategory:
        type: object
        properties:
-        categoryId:
+        id:
           type: integer
           example: 1
         name:

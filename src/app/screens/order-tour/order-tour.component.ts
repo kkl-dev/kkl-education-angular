@@ -189,8 +189,12 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
         //   this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget             
         // }
       }
-      //this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget
+      this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget;
+      
       this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
+     
+     // this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
+      this.squadAssemble.tripInfo.generateTime='2021-10-10';
       this.squadAssemble.tripInfo.userName = 'שחר גל';
     }
 

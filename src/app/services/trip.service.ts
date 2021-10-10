@@ -392,15 +392,18 @@ export class TripService {
           this.squadBudgetService.questions[index1].inputProps.options = this.budgetIncome;
           response.subBudgetExpenseList.forEach(element => {
             this.budgetExpenses.push({ label: element.name, value: element.id.toString() });
-            this.squadBudgetService.questions[index2].inputProps.options = this.budgetExpenses;
           });
+          this.squadBudgetService.questions[index2].inputProps.options = this.budgetExpenses;
         }
-        
-          this.squadBudgetService.questions[index1].value = response.incomeId.toString();
-          this.squadBudgetService.questions[index1].label = response.incomeName;
-          this.squadBudgetService.questions[index2].value = response.expensesId.toString();
-          this.squadBudgetService.questions[index2].label = response.expensesName;
-        
+        // else {
+        this.squadBudgetService.questions[index1].value = response.incomeId.toString();
+        this.squadBudgetService.questions[index1].label = response.incomeName;
+        this.squadBudgetService.questions[index2].value = response.expensesId.toString();
+        this.squadBudgetService.questions[index2].label = response.expensesName;
+        // }
+        this.budgetByParam.budget.cityId = response.cityId
+        this.budgetByParam.budget.expensesId = response.expensesId
+        this.budgetByParam.budget.incomeId = response.incomeId
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

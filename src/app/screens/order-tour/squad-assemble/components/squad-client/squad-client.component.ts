@@ -97,8 +97,8 @@ export class SquadClientComponent implements OnInit, OnDestroy {
       // email: customer.contactEmail || '',
       // phone: customer.contactMobile || '',
       contactName: customer.contactName || '',
-      contactPhone: customer.contactEmail || '',
-      contactEmail: customer.contactMobile || '',
+      contactPhone: customer.contactMobile || '',
+      contactEmail: customer.contactEmail || '',
     });
   }
 
