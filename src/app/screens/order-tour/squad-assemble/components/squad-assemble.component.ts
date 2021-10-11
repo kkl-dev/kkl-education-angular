@@ -16,7 +16,6 @@ export class SquadAssembleComponent implements OnInit {
 
   constructor(
     private squadAssembleService: SquadAssembleService,
-    private breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +27,7 @@ export class SquadAssembleComponent implements OnInit {
       {
         key: 'schedule',
         header: { label: 'מועד ושם הטיול', slot: 'tourId' },
-        questions: this.squadAssembleService.timeAndNameFormInputs,
+        questions: this.squadAssembleService.scheduleQuestions,
       },
       this.newClientMode
         ? this.squadAssembleService.newClient

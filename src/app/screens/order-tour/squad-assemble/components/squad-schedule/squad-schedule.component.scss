@@ -9,7 +9,7 @@ app-form-header {
 }
 
 div.form-title {
-  height: 40px !important;
+  height: 30px !important;
   margin-bottom: spacing(1);
 }
 
@@ -26,18 +26,16 @@ div.list-item {
   width: fit-content;
 }
 
+.container {
+  ::ng-deep .airbnb-calendar-container {
+    left: -500px !important;
+  }
+}
 
-.container{
-  ::ng-deep .airbnb-calendar-container{
-    left: -500px !important; 
-  } 
-}  
-
-@media screen and(max-width:1024px){
-  .container{
-    ::ng-deep .airbnb-calendar-container{
-      left: -750px !important; 
-      // top: -200px;
-    }  
-  }  
-}  
+@media screen and(max-width:1024px) {
+  .container {
+    ::ng-deep .airbnb-calendar-container {
+      left: -750px !important;
+    }
+  }
+}
