@@ -1,0 +1,180 @@
+.add-facility {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color:rgba($color: #707070, $alpha: 0.6);
+    z-index: 110;
+
+
+    &__header {
+        height: 80px;
+        display: flex;
+        flex-direction: row-reverse;
+        &-icon {
+            border-radius: 5px;
+            align-self: flex-start;
+            background: rgb(238, 238, 238);
+            background: linear-gradient(0deg, rgb(194, 194, 194) 0%, rgba(254, 254, 254, 1) 100%);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & svg-icon {
+                margin: 0;
+                & > svg {
+                    transform: scale(1.35);
+                    margin: 0%;
+                }
+            }
+        }
+        &-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            &-heading {
+                &-constant {
+                    font-size: 20px;
+                }
+                &-input {
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    &__form {
+        padding: 20px 0;
+        margin: 20px 0;
+        border-top: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+        &-button {
+            background: #37c56b;
+            border: none;
+            box-shadow: 0px 0px 1px 2px #e5e5e5;
+            box-sizing: border-box;
+            font-size: 18px;
+            color: #ffffff;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+        &-inputs {
+            display: flex;
+            flex-direction: row-reverse;
+            margin: 0 auto;
+            width: fit-content;
+            gap: 12px;
+        }
+    }
+
+    &__occupied-hours-bar {
+        width: 100%;
+        height: 12px;
+        display: flex;
+        justify-content: stretch;
+        direction: rtl;
+        &-slot {
+            margin-left: auto;
+            height: 5px;
+            &:first-of-type {
+                border-bottom-right-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+            &:last-of-type {
+                border-bottom-left-radius: 10px;
+                border-top-left-radius: 10px;
+            }
+        }
+    }
+
+    &__occupied-hours-table-header {
+        width: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #686868;
+        border-bottom: 1px solid #707070;
+
+        &-left { 
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        &-left-type {
+            margin-left: 10px;
+       
+        }
+    }
+    &__occupied-hours-table-item{
+        direction: rtl;
+        padding: 5px 0;
+        border-bottom: 1px solid #e5e5e5;
+    }
+}
+::ng-deep .mat-form-field-appearance-outline,
+::ng-deep .mat-form-field-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+::ng-deep .mat-form-field-infix {
+    width: fit-content !important;
+    padding: 0 !important;
+}
+::ng-deep mat-checkbox {
+    direction: rtl;
+}
+
+::ng-deep .SOBD__days {
+    width: 100% !important;
+}
+.background-blue {
+    background-color: #448ecd;
+    border-top: 4px solid #448ecd;
+}
+.background-green {
+    border-top: 4px solid #37c56b;
+    background-color: #37c56b;
+}
+.background-grey {
+    background-color: #ededed;
+    border-top: 4px solid #ededed;
+}
+
+.blue {
+    color:#448ecd ;
+    &:after {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin: 0 4px; 
+        background-color: #448ecd;
+    }
+}
+.green {
+    color: #37c56b;
+    &:after {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin: 0 4px; 
+        background-color: #37c56b;
+    }
+}
+.grey {
+    color: #858585;
+    &:after {
+        content: "";
+        display: inline-block; 
+        width: 8px;
+        height: 8px;
+        margin: 0 4px; 
+        background-color: #858585;
+    }
+}

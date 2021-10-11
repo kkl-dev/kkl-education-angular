@@ -24,7 +24,7 @@
         <app-typography color="primary" bold="600" size="16">
           {{ budgetGroup.header.label }}
         </app-typography>
-        <app-typography size="16">
+        <app-typography [size]="(tablet$ | async) ? 12 : 16">
           {{ budgetKKL | currency: "ILS" }}
         </app-typography>
       </div>

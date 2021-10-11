@@ -1,0 +1,38 @@
+<div class="add-activity">
+    <app-modal>
+        <app-sleeping-options-by-day 
+        (emitCurrentDay)="currentDayHandler($event)"
+        [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas'>
+        </app-sleeping-options-by-day>  
+        <form (ngSubmit)="onSubmit($event)" class="add-activity__form" #form="ngForm">
+            <div class="add-activity__form-input-area">
+                <div class="add-activity__form-input-area-icon">
+                    <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
+                </div>
+                <div class="add-activity__form-input-area-header">
+                    <h4 class="add-activity__form-input-area-header-headline">הוספת פעילות חדשה</h4>
+                    <mat-form-field appearance="outline">
+                        <mat-label>שם פעילות</mat-label>
+                        <input matInput ngModel name='activityName' id='activityName'>
+                        <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="add-activity__form-bottom-input-area">
+                <div class="add-activity__form-bottom-input-area-inputs">
+                    <mat-form-field appearance="outline">
+                        <mat-label>משעה</mat-label>
+                        <input matInput type='time' ngModel name='startingTime' id='startingTime'>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline"> 
+                        <mat-label>עד שעה</mat-label>
+                        <input matInput type='time' ngModel name='endingTime' id='endingTime'>
+                    </mat-form-field>
+                </div>
+                    <button class="add-activity__form-bottom-input-area-button">הוסף ללו"ז</button>
+            </div>
+        </form> 
+    </app-modal>
+</div>

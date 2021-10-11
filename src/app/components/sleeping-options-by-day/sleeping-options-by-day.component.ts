@@ -18,6 +18,7 @@ export class SleepingOptionsByDayComponent implements OnInit {
       singleUnit: string;
     }[];
   }[] = [];
+  @Input() showSleepAreas:boolean=true
   constructor() {}
 
   previousPage() {
