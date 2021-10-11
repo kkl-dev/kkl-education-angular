@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
+import { BreakpointService } from 'src/app/utilities/services/breakpoint.service';
 import { SquadAssembleService } from '../services/squad-assemble.service';
 
 @Component({
@@ -13,7 +14,9 @@ export class SquadAssembleComponent implements OnInit {
 
   private newClientMode: boolean;
 
-  constructor(private squadAssembleService: SquadAssembleService) {}
+  constructor(
+    private squadAssembleService: SquadAssembleService,
+  ) {}
 
   ngOnInit(): void {
     this.subscribeToNewClient();
@@ -24,7 +27,7 @@ export class SquadAssembleComponent implements OnInit {
       {
         key: 'schedule',
         header: { label: 'מועד ושם הטיול', slot: 'tourId' },
-        questions: this.squadAssembleService.timeAndNameFormInputs,
+        questions: this.squadAssembleService.scheduleQuestions,
       },
       this.newClientMode
         ? this.squadAssembleService.newClient
@@ -58,7 +61,7 @@ export class SquadAssembleComponent implements OnInit {
   private subscribeToNewClient() {
     this.squadAssembleService.getNewClientObs().subscribe((value: boolean) => {
       this.newClientMode = value;
-      this.setSquads()
+      this.setSquads();
     });
   }
 }
