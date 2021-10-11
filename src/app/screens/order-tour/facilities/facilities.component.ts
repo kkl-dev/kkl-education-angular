@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { FacilitiesService } from 'src/app/services/facilities.service';
 import { InfoCard } from '../../education-results/education-results.component';
 
 @Component({
@@ -13,15 +15,19 @@ import { InfoCard } from '../../education-results/education-results.component';
 })
 
 export class FacilitiesComponent implements OnInit {
+  public closeModal$: Observable<string>;
 
   public timesArray: Array<string | number> = [];
   public hiddenElements: any = { facilities: false, activities: false };
-  constructor() { }
+  constructor(private facilitiesService: FacilitiesService) { }
 
   ngOnInit(): void {
     this.fillTimes();
+    this.closeModal$ = this.facilitiesService.getCloseModalObs();
   }
-
+  public openModal(args: string): void {
+    this.facilitiesService.closeModal(args);
+  }
   public fillTimes(): void {
     for (let i = 0; i < 24; i++) {
       i < 10 ? this.timesArray.push(`0${i}:00`) : this.timesArray.push(`${i}:00`);

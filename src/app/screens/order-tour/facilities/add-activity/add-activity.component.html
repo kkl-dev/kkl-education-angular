@@ -1,5 +1,5 @@
 <div class="add-activity">
-    <app-modal>
+    <app-modal (close)='closeEvent($event)'>
         <app-sleeping-options-by-day 
         (emitCurrentDay)="currentDayHandler($event)"
         [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas'>

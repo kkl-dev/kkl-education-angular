@@ -73,7 +73,9 @@ export class AddActivityComponent implements OnInit {
     console.log(objToEmit);
     this.emitFormValues.emit(objToEmit)
   }
-
+  public closeEvent(event):void {
+    console.log(event)
+  }
   ngOnInit(): void {
   }
 
