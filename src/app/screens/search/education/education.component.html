@@ -147,6 +147,7 @@
             (prevDate)="prevDateRecived($event)"
             (closeCalendar)="closeCalendarHandler($event)"
             type="text"
+            autocomplete="off"
             [(ngModel)]="date"
             [options]="options"
             (ngModelChange)="dateObjChanged($event)"

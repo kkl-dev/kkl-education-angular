@@ -1,22 +1,27 @@
 <div class="sleeping-form">
-  <h3 class="sleeping-form">שם הטיול</h3>
-  <p class="sleeping-form">12121212</p>
+  <h3 class="sleeping-form-name">שם הטיול</h3>
+  <p class="sleeping-form-serial">12121212</p>
   <mat-form-field appearance="outline">
     <mat-select
       #select
+      dir="rtl"
       [(ngModel)]="location"
       name="location"
       class="education__form-group-select"
-    >
+      >
+      <mat-label></mat-label>
       <mat-option value="{{ option.value }}" *ngFor="let option of formOptions">
         <span class="education__select-option-text">{{ option.text }}</span>
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline"
+  >
+    <mat-label>תאריכי הטיול</mat-label>
+    
     <input
-      matInput
+    matInput
       class="header__form-group-input"
       airbnb-calendar
       type="text"
@@ -29,7 +34,7 @@
       autocomplete="chrome-off"
       name="calendar-input"
       id="calendar-input"
-    />
+      />
     
-  </mat-form-field>
+    </mat-form-field>
 </div>

@@ -8,6 +8,11 @@
   display: flex;
   width: 100% !important;
 
+  ::ng-deep .airbnb-calendar-container{
+    left:-45rem
+  }
+  
+
   &__link {
     text-decoration: none;
     height: 5.1rem;
