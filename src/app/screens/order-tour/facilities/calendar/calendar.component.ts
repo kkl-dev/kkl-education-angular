@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { INITIAL_EVENTS } from './event-utils';
+import { EventInput } from '@fullcalendar/angular';
 
- @Component({
+@Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
 
+  @Input() eventsArr!: EventInput[];
 
   calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin],
     initialView: 'timeGridDay',
-    allDaySlot:false,
-    locale:'heb',
-    direction:'rtl',
-    titleFormat:{year:'numeric',month:'numeric',day:'numeric'},
+    allDaySlot: false,
+    locale: 'heb',
+    direction: 'rtl',
+    titleFormat: { year: 'numeric', month: 'numeric', day: 'numeric' },
     eventTimeFormat: {
       hour: 'numeric',
       minute: '2-digit',
@@ -33,12 +34,13 @@ export class CalendarComponent implements OnInit {
       center: 'title',
       right: 'timeGridDay'
     },
-    initialEvents: INITIAL_EVENTS
+    initialEvents: this.eventsArr
   }
 
-constructor() { }
+  constructor() { }
 
-ngOnInit(): void {
-}
+  ngOnInit(): void {
+    console.log(this.eventsArr);
+  }
 
 }

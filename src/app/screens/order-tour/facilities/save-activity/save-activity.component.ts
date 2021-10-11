@@ -79,14 +79,13 @@ export class SaveActivityComponent implements OnInit {
     } else {
       this.addedAdditions.push(value)
     }
-    console.log(this.addedAdditions);
-
   }
   onSubmit(form: NgForm) {
-    const objToEmit = { dayNumber: this.chosenDate, additions:this.addedAdditions,
-      orderingCustomer: this.orderingCustomer, ...this.saveActivityForm.value }
-    console.log(objToEmit);
-    this.emitFormValues.emit(objToEmit)
+    const objToEmit = {
+      dayNumber: this.chosenDate, additions: this.addedAdditions,
+      orderingCustomer: this.orderingCustomer, ...this.saveActivityForm.value
+    }
+    this.emitFormValues.emit(objToEmit.value)
   }
 
   ngOnInit(): void {

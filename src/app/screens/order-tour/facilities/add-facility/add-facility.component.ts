@@ -97,13 +97,14 @@ export class AddFacilityComponent implements OnInit {
   ngOnInit(): void {
     this.createOccupiedHoursArray();
     this.addFacilityForm = new FormGroup({
-      'facility': new FormControl(this.facility),
-      'startingHour': new FormControl(null),
-      'endingHour': new FormControl(null),
+      'title': new FormControl(this.facility),
+      'start': new FormControl(null),
+      'end': new FormControl(null),
+      'backgroundColor': new FormControl('#ECF8EE')
     })
   }
   onSubmit() {
-    this.emitFormValues.emit(this.addFacilityForm);
+    this.emitFormValues.emit(this.addFacilityForm.value);
   }
 
   createOccupiedHoursArray() {
@@ -130,8 +131,6 @@ export class AddFacilityComponent implements OnInit {
         user: 'none',
       });
     }
-    console.log(this.occupiedHoursArray);
-
   }
 
   calculateWidth(totalHours: number): string {

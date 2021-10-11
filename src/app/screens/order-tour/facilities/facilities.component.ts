@@ -7,6 +7,8 @@ import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { InfoCard } from '../../education-results/education-results.component';
+import { INITIAL_EVENTS } from './calendar/event-utils';
+import { EventInput } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-facilities',
@@ -15,18 +17,31 @@ import { InfoCard } from '../../education-results/education-results.component';
 })
 
 export class FacilitiesComponent implements OnInit {
+  public eventsArr: EventInput[] = INITIAL_EVENTS;
   public closeModal$: Observable<string>;
-
   public timesArray: Array<string | number> = [];
   public hiddenElements: any = { facilities: false, activities: false };
+  public TODAY_STR = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
+
   constructor(private facilitiesService: FacilitiesService) { }
 
   ngOnInit(): void {
     this.fillTimes();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
   }
-  public addToCalendar(event:any):void {
-  console.log(event)
+  public addToCalendar(event: any): void {
+    console.log(event)
+    const tmpObj: EventInput = {
+      id: `this.eventsArr.length + 1`,
+      title: event.title,
+      start: this.TODAY_STR + `T${event.start}`,
+      end: this.TODAY_STR + `T${event.end}`,
+      backgroundColor: event.backgroundColor,
+      textColor: 'black',
+      editable: true,
+      className: 'border-activities'
+    }
+    this.eventsArr.push()
   }
   public openModal(args: string): void {
     this.facilitiesService.closeModal(args);

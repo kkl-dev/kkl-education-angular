@@ -21,11 +21,11 @@
             <div class="add-facility__form-inputs">
                 <mat-form-field appearance="outline">
                     <mat-label>משעה</mat-label>
-                    <input matInput type='time' formControlName="startingHour">
+                    <input matInput type='time' formControlName="start">
                 </mat-form-field>
                 <mat-form-field appearance="outline"> 
                     <mat-label>עד שעה</mat-label>
-                    <input matInput type='time' formControlName="endingHour">
+                    <input matInput type='time' formControlName="end">
                 </mat-form-field> 
                 <button class="add-facility__form-button"  [disabled]="!addFacilityForm.valid">שריין</button>
             </div>
