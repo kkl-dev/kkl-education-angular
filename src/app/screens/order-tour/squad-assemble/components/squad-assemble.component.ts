@@ -17,7 +17,6 @@ export class SquadAssembleComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToNewClient();
-    // this.setSquads();
   }
 
   private setSquads() {
