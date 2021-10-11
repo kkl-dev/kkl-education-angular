@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { UserDataService } from 'src/app/utilities/services/user-data.service';
@@ -16,7 +16,7 @@ export interface OccupiedBarModel {
   styleUrls: ['./add-facility.component.scss']
 })
 export class AddFacilityComponent implements OnInit {
-  addFacilityForm:FormGroup
+  addFacilityForm: FormGroup
   @Input() days: {
     day: string;
     options: {
@@ -83,6 +83,8 @@ export class AddFacilityComponent implements OnInit {
   }];
   @Input() startingHour: number = 0
   @Input() endingHour: number = 24;
+  @Input() facility: string = 'כיתה';
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   occupiedHoursArray: { totalHours: number; user: string }[] = [];
 
@@ -95,18 +97,13 @@ export class AddFacilityComponent implements OnInit {
   ngOnInit(): void {
     this.createOccupiedHoursArray();
     this.addFacilityForm = new FormGroup({
-      'startingHour':new FormControl(null, [Validators.required, this.forbiddenTimes],),
-      'endingHour':new FormControl(null, [Validators.required, this.forbiddenTimes],),
+      'facility': new FormControl(this.facility),
+      'startingHour': new FormControl(null),
+      'endingHour': new FormControl(null),
     })
   }
-
-  forbiddenTimes = (control: FormControl): { [s: string]: boolean } => {
-   console.log(control.value);
-   return null
-   
-  }
   onSubmit() {
-    console.log(this.addFacilityForm);
+    this.emitFormValues.emit(this.addFacilityForm);
   }
 
   createOccupiedHoursArray() {
@@ -134,7 +131,7 @@ export class AddFacilityComponent implements OnInit {
       });
     }
     console.log(this.occupiedHoursArray);
-    
+
   }
 
   calculateWidth(totalHours: number): string {

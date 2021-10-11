@@ -56,7 +56,7 @@ export class AddActivityComponent implements OnInit {
   @ViewChild('form') addActivityForm: NgForm
   showSleepAreas: boolean = false
   public chosenDate: number = 0
-  @Output() emitFormValues: EventEmitter<any> = new EventEmitter()
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
 
 

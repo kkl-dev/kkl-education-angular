@@ -8,9 +8,9 @@
                 </select>
                 <p>יום ג' 15.06.21</p>
                 <!--- ** Add Activity **-->
-                <app-add-activity *ngIf="(closeModal$ | async) === 'addActivity'"></app-add-activity>
-                <app-save-activity *ngIf="(closeModal$ | async) === 'activity'"></app-save-activity>
-                <app-add-facility *ngIf="(closeModal$ | async) === 'facilities'"></app-add-facility>
+                <app-add-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'addActivity'"></app-add-activity>
+                <app-save-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'activity'"></app-save-activity>
+                <app-add-facility (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'facilities'"></app-add-facility>
                 <div class="arrows">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                     <mat-icon>keyboard_arrow_right</mat-icon>

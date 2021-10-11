@@ -25,6 +25,9 @@ export class FacilitiesComponent implements OnInit {
     this.fillTimes();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
   }
+  public addToCalendar(event:any):void {
+  console.log(event)
+  }
   public openModal(args: string): void {
     this.facilitiesService.closeModal(args);
   }

@@ -55,7 +55,7 @@ export class SaveActivityComponent implements OnInit {
   }]
   public chosenDate: number = 0
   @ViewChild('form') saveActivityForm: NgForm
-  @Output() emitFormValues: EventEmitter<any> = new EventEmitter()
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   showSleepAreas: boolean = false
   currentDayHandler(newCurrentDay: number) {
