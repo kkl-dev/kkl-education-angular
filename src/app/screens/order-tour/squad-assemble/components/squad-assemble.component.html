@@ -1,5 +1,5 @@
-<div class="assemble-container">
-  <div fxLayout="row" fxLayoutAlign="space-around start">
+<div class="assemble-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="row" fxLayout="row" fxLayoutAlign="space-around start" fxFlex="90">
     <div *ngFor="let squad of squads; let i = index" fxFlex="25">
       <ng-container [ngSwitch]="squad.key">
         <ng-container *ngSwitchCase="'schedule'">
@@ -9,7 +9,7 @@
         <ng-container *ngSwitchCase="'client'">
           <app-squad-client [group]="squad"></app-squad-client>
         </ng-container>
-        
+
         <ng-container *ngSwitchCase="'newClient'">
           <app-squad-new-client
             [group]="squad"

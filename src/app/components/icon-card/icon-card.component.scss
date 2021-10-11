@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-div {
+div.icon-container {
   width: 100%;
   height: 100%;
 }
@@ -16,10 +16,7 @@ div {
   align-items: center;
   justify-content: center;
 
-  .card-svg-container {
-    width: 100%;
-    height: 100%;
-  }
+
 }
 
 mat-card,
@@ -31,16 +28,16 @@ mat-card-content {
   cursor: pointer;
 
   &.stepper {
-    background: linear-gradient(0deg,
-        rgba(238, 238, 238, 1) 0%,
-        rgba(254, 254, 254, 1) 100%);
-
+    background: linear-gradient(
+      0deg,
+      rgba(238, 238, 238, 1) 0%,
+      rgba(254, 254, 254, 1) 100%
+    );
   }
 
   &.square {
     border-radius: spacing(1);
     box-shadow: 0px 0px 1px 2px #e5e5e5 !important;
-
   }
 
   &.circle {
@@ -54,5 +51,5 @@ mat-card-content {
 }
 
 div.label-container {
-  padding-top: spacing(2);
+  padding-top: spacing(1);
 }

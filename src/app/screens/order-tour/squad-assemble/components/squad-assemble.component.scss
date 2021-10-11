@@ -10,15 +10,17 @@ app-squad-details,
   width: 100%;
 }
 
+.row {
+  width: 100%;
+}
+
 .assemble-container {
   padding-left: spacing(3);
-  padding-right: spacing(3);
 }
 
 .divider {
   height: 90%;
   width: 0.5rem;
   margin-right: 0.5rem;
-  border-right : 1px solid color(border);
+  border-right: 1px solid color(border);
 }
-
