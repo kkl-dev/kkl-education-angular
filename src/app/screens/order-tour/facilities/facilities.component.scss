@@ -149,11 +149,13 @@ app-tooltip {
 ::ng-deep :hover > .app-tooltip {
     display: block;
 }
+.cards {
+    text-align: right;
+}
 .info-card {
     display: inline-grid;
     grid-template-columns: auto auto auto auto auto;
     position: relative;
-    left: 40px;
     direction: rtl;
 }
 
@@ -177,7 +179,7 @@ app-tooltip {
     grid-gap: 30px;
     padding: 40px;
     position: relative;
-    left: 40px;
+    float: right;
 }
 ::ng-deep app-pagination {
     direction: rtl;
