@@ -80,7 +80,7 @@ export class SquadAssembleService {
     
   }
 
-  public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
+  public scheduleQuestions: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tourName',
       label: 'שם הטיול',

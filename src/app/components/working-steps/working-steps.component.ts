@@ -28,7 +28,7 @@ export class WorkingStepsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.setStype()
+    this.setStyle()
   }
 
   public onStepClick(index: number) {
@@ -39,8 +39,8 @@ export class WorkingStepsComponent implements OnInit {
     this.changStep.emit(step)
   }
 
-  private setStype() {
-    this.size = this.size || 80
+  private setStyle() {
+    this.size = this.size || 60
     this.divider = this.divider
     this.variant = this.variant || 'circle'
   }
