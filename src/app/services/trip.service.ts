@@ -22,6 +22,7 @@ export class TripService {
     id: 0,
     name: ''
   };
+  
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[];
   formGroupSquadAssembles = [];
@@ -166,6 +167,11 @@ export class TripService {
       console.log('sleeping Availability ==>', { sleepingAvailability });
       if (sleepingAvailability) {
         //for maps
+
+        this.availableCabins = 0;
+        this.availableRooms = 0;
+        this.availableTents = 0;
+        this.availableGicha = 0;
         this.totalAvailableUnits = sleepingAvailability[0].sleepingOptions[0].maxOccupancy;
         console.log("totalAvailableUnits: " + this.totalAvailableUnits)
 
@@ -264,40 +270,48 @@ export class TripService {
         // for (let index = 0; index < this.totalAvailableUnits[0].availableUnits; index++) {
         //   temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
         // }
+        let d = new Date();
+        let num = d.getMilliseconds();
+        let gender = "בנים";
+        if (num % 2 == 0) {
+          gender = "בנים"
+        } else {
+          gender = "בנות"
+        }
         if (element.structureType == 'בקתה') {
           if (availableCabins > 0) {
             availableCabins = availableCabins - 1;
-            temp.push({ structureId: element.structureId, gender: "בנות", status: "פנוי" });
+            temp.push({ structureId: element.structureId, gender: gender, status: "פנוי" });
           } else {
-            temp.push({ structureId: element.structureId, gender: "בנים", status: "תפוס" });
+            temp.push({ structureId: element.structureId, gender: gender, status: "תפוס" });
           }
         }
         else if (element.structureType == 'חדר') {
           if (availableRooms > 0) {
             availableRooms = availableRooms - 1;
-            temp.push({ structureId: element.structureId, gender: "בנות", status: "פנוי" });
+            temp.push({ structureId: element.structureId, gender: gender, status: "פנוי" });
           } else {
-            temp.push({ structureId: element.structureId, gender: "בנים", status: "תפוס" });
+            temp.push({ structureId: element.structureId, gender: gender, status: "תפוס" });
           }
         }
         else if (element.structureType == 'אוהל') {
           if (availableTents > 0) {
             availableTents = availableTents - 1;
-            temp.push({ structureId: element.structureId, gender: "בנות", status: "פנוי" });
+            temp.push({ structureId: element.structureId, gender: gender, status: "פנוי" });
           } else {
-            temp.push({ structureId: element.structureId, gender: "בנים", status: "תפוס" });
+            temp.push({ structureId: element.structureId, gender: gender, status: "תפוס" });
           }
         }
         else if (element.structureType == 'גיחה') {
           if (availableGicha > 0) {
             availableGicha = availableGicha - 1;
-            temp.push({ structureId: element.structureId, gender: "בנות", status: "פנוי" });
+            temp.push({ structureId: element.structureId, gender: gender, status: "פנוי" });
           } else {
-            temp.push({ structureId: element.structureId, gender: "בנים", status: "תפוס" });
+            temp.push({ structureId: element.structureId, gender: gender, status: "תפוס" });
           }
         }
         else {
-          temp.push({ structureId: element.structureId, gender: "בנות", status: "תפוס" });
+          temp.push({ structureId: element.structureId, gender: gender, status: "תפוס" });
         }
       });
       this.lodgingFacilityListArray.push({ fieldForestCenterName: centerFieldName }, { lodgingFacilityList: temp });
@@ -337,8 +351,10 @@ export class TripService {
   getLookupFieldForestCenters() {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {
-        console.log(response)
+        console.log(response);
         this.formOptions = response;
+        //filter for showing only forest center with accommodationList
+        this.formOptions = this.formOptions.filter(aco => aco.accommodationList.length > 0);
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
