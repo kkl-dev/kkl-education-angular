@@ -100,7 +100,7 @@ export class AddFacilityComponent implements OnInit {
       'title': new FormControl(this.facility),
       'start': new FormControl(null),
       'end': new FormControl(null),
-      'backgroundColor': new FormControl('#ECF8EE')
+      'backgroundColor': new FormControl('#F0F6FE')
     })
   }
   onSubmit() {

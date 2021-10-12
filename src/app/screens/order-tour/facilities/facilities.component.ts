@@ -17,31 +17,34 @@ import { EventInput } from '@fullcalendar/angular';
 })
 
 export class FacilitiesComponent implements OnInit {
-  public eventsArr: EventInput[] = INITIAL_EVENTS;
+  public eventsArr: EventInput[] = [ ...INITIAL_EVENTS];
   public closeModal$: Observable<string>;
+  public calendarEventsArr$: Observable<EventInput[]>;
   public timesArray: Array<string | number> = [];
   public hiddenElements: any = { facilities: false, activities: false };
   public TODAY_STR = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
 
   constructor(private facilitiesService: FacilitiesService) { }
 
-  ngOnInit(): void {
+   ngOnInit() {
     this.fillTimes();
+    this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
   }
+
   public addToCalendar(event: any): void {
-    console.log(event)
     const tmpObj: EventInput = {
-      id: `this.eventsArr.length + 1`,
+      id: `${this.eventsArr.length}`,
       title: event.title,
-      start: this.TODAY_STR + `T${event.start}`,
-      end: this.TODAY_STR + `T${event.end}`,
+      start: this.TODAY_STR + `T${event.start}:00`,
+      end: this.TODAY_STR + `T${event.end}:00`,
       backgroundColor: event.backgroundColor,
       textColor: 'black',
       editable: true,
       className: 'border-activities'
     }
-    this.eventsArr.push()
+    this.eventsArr.push(tmpObj);
+    this.facilitiesService.updateCalendarEventsArr(tmpObj);
   }
   public openModal(args: string): void {
     this.facilitiesService.closeModal(args);

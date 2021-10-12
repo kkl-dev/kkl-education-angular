@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventInput } from '@fullcalendar/angular';
+import { Observable, Subscription } from 'rxjs';
+import { FacilitiesService } from 'src/app/services/facilities.service';
 
 @Component({
   selector: 'app-calendar',
@@ -10,9 +12,14 @@ import { EventInput } from '@fullcalendar/angular';
 })
 export class CalendarComponent implements OnInit {
 
-  @Input() eventsArr!: EventInput[];
+  public calendarEventsArr$!: Observable<EventInput[]>;
+  public value!: EventInput[];
+  public valueSub: Subscription;
+  @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
 
-  calendarOptions: CalendarOptions = {
+  constructor(private facilitiesService: FacilitiesService) { }
+
+  public calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin],
     initialView: 'timeGridDay',
     allDaySlot: false,
@@ -34,13 +41,22 @@ export class CalendarComponent implements OnInit {
       center: 'title',
       right: 'timeGridDay'
     },
-    initialEvents: this.eventsArr
+    initialEvents: []
   }
 
-  constructor() { }
+
 
   ngOnInit(): void {
-    console.log(this.eventsArr);
+    this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+        if(this.myCalendarComponent){
+          this.myCalendarComponent.options.events = value;
+        } else {
+          setTimeout(() => {
+            this.myCalendarComponent.options.events = value;
+          }, 500);
+        }
+
+    });
   }
 
 }

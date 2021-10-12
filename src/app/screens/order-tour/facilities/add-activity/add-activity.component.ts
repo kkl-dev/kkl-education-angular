@@ -70,7 +70,6 @@ export class AddActivityComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const objToEmit ={dayNumber: this.chosenDate, ...this.addActivityForm.value}
-    console.log(objToEmit);
     this.emitFormValues.emit(objToEmit)
   }
   public closeEvent(event):void {
