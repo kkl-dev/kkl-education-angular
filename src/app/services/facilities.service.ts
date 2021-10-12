@@ -19,7 +19,6 @@ export class FacilitiesService {
 
   public updateCalendarEventsArr(args: EventInput): void {
     this.calendarEventsArr.next([...this.calendarEventsArr.value,args]);
-    console.log(this.calendarEventsArr)
   }
 
   public closeModal(args: string): void {

@@ -1,11 +1,14 @@
 <div class="facilities">
-    <app-add-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'addActivity'"></app-add-activity>
-    <app-save-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'activity'"></app-save-activity>
-    <app-add-facility (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'facilities'"></app-add-facility>
+    <app-add-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'addActivity'">
+    </app-add-activity>
+    <app-save-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'activity'">
+    </app-save-activity>
+    <app-add-facility [facility]='selectedFacility' (emitFormValues)='addToCalendar($event)'
+        *ngIf="(closeModal$ | async) === 'facilities'"></app-add-facility>
     <div class="content-1">
         <div class="card">
             <div class="header">
-                
+
             </div>
             <div class="description">
                 <div class="square" [ngStyle]="{background: '#448ecd'}"></div>
@@ -25,7 +28,7 @@
         <div class="header">
             <div class="title">
                 <p>הוספת פעילות ללו"ז</p>
-                <button  (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
+                <button (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
             </div>
             <div class="forms">
                 <app-form-container [questions]='formArray' [cols]='4'>
@@ -44,7 +47,8 @@
                         </app-tooltip>
                     </app-info-card>
                 </ng-container>
-                <ng-container *ngFor="let item of facilitiesArray; let i = index" (click)="openModal('facilities')">
+                <ng-container *ngFor="let item of facilitiesArray; let i = index"
+                    (click)="openModal('facilities')">
                     <app-info-card class="facilities-items-item" *ngIf='i >= 5 && hiddenElements.facilities'
                         [item]="item">
                         <app-tooltip class="app-tooltip" [hours]="item.availability">
