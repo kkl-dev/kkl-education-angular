@@ -8,6 +8,7 @@
           <mat-select #select [(ngModel)]="forestCenterId" name="forestCenterId" class="education__form-group-select"
             (selectionChange)="selectChange($event)" (opened)="hideSelectPlaceholder(select)"
             (closed)="showSelectPlaceholder(select)">
+            <!-- <mat-option disabled [value]="null">מרכז שדה</mat-option> -->
             <mat-option *ngFor="let option of tripService.formOptions" [value]="option.id">
               <span class="education__select-option">
                 <img [src]="option.iconPath" class="education__select-option-svg" />

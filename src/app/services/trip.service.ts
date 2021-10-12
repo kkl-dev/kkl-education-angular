@@ -380,7 +380,6 @@ export class TripService {
       response => {
         console.log('response', response)
         this.budget = response;
-        this.budgetByParam.budget = this.budget;
         if (this.budget.listCity !== null) {
           var list = [];
           this.budget.listCity.forEach(element => {
@@ -414,7 +413,7 @@ export class TripService {
         this.budgetExpensesAndIncome = response;
         let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
         let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
-        if (this.budget.type === 1) {
+        if (this.budget.type !== undefined) {
           response.subBudgetIncomeList.forEach(element => {
             this.budgetIncome.push({ label: element.name, value: element.id.toString() });
           });
@@ -430,6 +429,7 @@ export class TripService {
         this.squadBudgetService.questions[index2].value = response.expensesId.toString();
         this.squadBudgetService.questions[index2].label = response.expensesName;
         // }
+        this.budgetByParam.budget.cityId = response.cityId
         this.budgetByParam.budget.expensesId = response.expensesId
         this.budgetByParam.budget.incomeId = response.incomeId
       },
