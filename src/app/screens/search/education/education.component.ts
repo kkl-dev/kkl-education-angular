@@ -25,7 +25,7 @@ export class EducationComponent implements OnInit {
   checked = false;
   //sleepingPlace: any;
   forestCenterId: number = null;
-  disableDates = true;
+  disableDates: boolean = true;
   disableContinueBtn = true;
   checkedSingleDay = false;
   routerLinkContinue = '/education/results'
@@ -35,15 +35,14 @@ export class EducationComponent implements OnInit {
   date: string | null = null;
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[] = [];
-  // options: CalendarOptions = {
-  //   firstCalendarDay: 0,
-  //   format: 'dd/LL/yyyy',
-  //   closeOnSelected: true,
-  //   minYear: 2019,
-  //   maxYear: 2022,
-  //   freeSpacesArray: this.freeSpacesArray,
-  // };
-  options: any = {};
+  options: CalendarOptions = {
+    firstCalendarDay: 0,
+    format: 'dd/LL/yyyy',
+    closeOnSelected: true,
+    minYear: 2019,
+    maxYear: 2022,
+    freeSpacesArray: this.freeSpacesArray,
+  };
 
   constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
     private checkAvailabilltyService: CheckAvailabilityService) {
@@ -61,11 +60,12 @@ export class EducationComponent implements OnInit {
 
   ngOnInit() {
     this.tripService.getLookupFieldForestCenters();
-    this.forestCenterId = this.tripService.centerField.id;
-    if (this.forestCenterId != 0 || this.forestCenterId != null) {
+    this.forestCenterId = this.tripService.centerField.id || null;
+    if (this.forestCenterId != 0 && this.forestCenterId != null) {
       this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+      this.sleepingDates = this.tripService.sleepingDates;
+      this.disableContinueBtn = false;
     }
-    this.sleepingDates = this.tripService.sleepingDates;
   }
 
   selectChange(event: any) {
@@ -75,8 +75,8 @@ export class EducationComponent implements OnInit {
   }
 
   getAvailableDates(fromDate: string, tillDate: string) {
-    fromDate = fromDate.substring(0, 10)
-    tillDate = tillDate.substring(0, 10)
+    fromDate = fromDate.substring(0, 10);
+    tillDate = tillDate.substring(0, 10);
     // tillDate = '2021-11-30'
     this.usersService.getAvailableAccomodationDates(this.tripService.centerField.id, fromDate, tillDate).subscribe(
       response => {
@@ -95,12 +95,12 @@ export class EducationComponent implements OnInit {
           freeSpacesArray: this.freeSpacesArray,
         };
         this.disableDates = false;
-
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
+
   freeSpacesArrayGenaratorFromServer(start: Date, end: Date) {
     let i = 0;
     let freeSpacesArray = [];
@@ -120,7 +120,7 @@ export class EducationComponent implements OnInit {
         // ]
       });
       // }
-      start = new Date(start.setDate(start.getDate() + 1)); 
+      start = new Date(start.setDate(start.getDate() + 1));
       i++;
     }
     return freeSpacesArray;
@@ -184,7 +184,6 @@ export class EducationComponent implements OnInit {
 
   public dateObjChanged(e: string) {
 
-
     if (e.includes('-')) {
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
@@ -205,18 +204,19 @@ export class EducationComponent implements OnInit {
       console.log(this.container);
       this.container.nativeElement.focus();
       //this.closeCalendarHandler(e);
+      this.disableContinueBtn = false;
     } else {
 
       this.sleepingDates.from = e;
       this.sleepingDates.till = '';
     }
-    this.disableContinueBtn = false;
     this.tripService.sleepingDates = this.sleepingDates;
-
   }
+
   closeCalendarHandler(event: any) {
     console.log('asd');
   }
+
   AvailableDaysChecking() {
     let from = this.sleepingDates.from;
     let till = this.sleepingDates.till;

@@ -21,7 +21,7 @@
 
           <input matInput class="header__form-group-input"
           airbnb-calendar type="text" [(ngModel)]="date"
-          readonly
+          [disabled]="disableDates"
           [options]="options"
           (newDate)='newDateRecived($event)'
           (sleepingPlace)='newSleepingPlaceRecived($event)'
