@@ -51,7 +51,7 @@ export class FacilitiesComponent implements OnInit {
       key: 'areas',
       label: 'אזור',
       validations: [Validators.required],
-      inputProps: { options: [{ label: this.areas, value: this.areas }] }
+      inputProps: { options: [{ label: '', value: '' }] }
     }),
     new QuestionSelect({
       key: 'typeOfActivity',
