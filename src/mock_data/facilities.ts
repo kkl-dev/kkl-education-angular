@@ -63,86 +63,74 @@ export const FACILITIES_ARRAY = [
     {
         svgUrl: 'assets/images/museum.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/classroom.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 20 משתתפים',
+        maxParticipants: 'עד 20 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/football.svg',
         headline: 'מגרש ספורט',
-        subHeadline: '',
+        maxParticipants: '',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/leafs.svg',
         headline: 'סיור במשתלה',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     // --- length 5 ---
     {
         svgUrl: 'assets/images/stage.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/stage.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/stage.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/stage.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/stage.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/stage.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/stage.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
     {
         svgUrl: 'assets/images/stage.svg',
         headline: 'תאטרון',
-        subHeadline: 'עד 320 משתתפים',
+        maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
-        days: DAYS
     },
 ];
 

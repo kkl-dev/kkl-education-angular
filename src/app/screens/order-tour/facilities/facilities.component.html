@@ -42,7 +42,7 @@
             <div class="info-card">
                 <ng-container *ngFor="let item of facilitiesArray; let i = index">
                     <app-info-card class="facilities-items-item" *ngIf='5 > i' [item]="item"
-                        (click)="openModal('facilities')">
+                        (click)="updateChoesenFacility(item) ; openModal('facilities')">
                         <app-tooltip class="app-tooltip" [hours]="item.availability">
                         </app-tooltip>
                     </app-info-card>

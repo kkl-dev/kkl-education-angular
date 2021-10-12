@@ -7,7 +7,9 @@
     background-color:rgba($color: #000000, $alpha: 0.6);
     z-index: 110;
 
-
+    svg * {
+        fill:#66a3d6 !important
+    }
     &__header {
         height: 80px;
         display: flex;

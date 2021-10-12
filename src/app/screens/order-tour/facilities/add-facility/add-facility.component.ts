@@ -17,7 +17,7 @@ export interface OccupiedBarModel {
   styleUrls: ['./add-facility.component.scss']
 })
 export class AddFacilityComponent implements OnInit {
-  addFacilityForm: FormGroup
+  addFacilityForm: FormGroup;
   @Input() days: {
     day: string;
     options: {
@@ -28,10 +28,10 @@ export class AddFacilityComponent implements OnInit {
       singleUnit: string;
     }
   }[] = DAYS;
-  @Input() hours: OccupiedBarModel[] = FACILITY_OCCUPANCY;
   @Input() startingHour: number = 0
   @Input() endingHour: number = 24;
-  @Input() facility:InfoCard;
+  @Input() facility: InfoCard;
+  @Input() hours: OccupiedBarModel[];
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
   public selectedDate: number = 0;
   occupiedHoursArray: { totalHours: number; user: string }[] = [];
@@ -43,27 +43,28 @@ export class AddFacilityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.facility);
-    
+    this.hours = this.facility.availability;
     this.createOccupiedHoursArray();
     this.addFacilityForm = new FormGroup({
-      'title': new FormControl(this.facility),
+      'title': new FormControl(this.facility.headline),
       'start': new FormControl(null),
       'end': new FormControl(null),
       'backgroundColor': new FormControl('#F0F6FE'),
-      'date': new FormControl('')
-    })
+      'date': new FormControl(''),
+      'className': new FormControl('border-facilities')
+    });
   }
+
   onSubmit() {
     this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'))
     this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'))
     this.emitFormValues.emit(this.addFacilityForm.value);
   }
-  public arrangeTime(arg: string) :Date{
+  public arrangeTime(arg: string): Date {
     const time = this.timeSplit(this.addFacilityForm.value[arg]);
-    let date:any = this.dateSplit();
+    let date: any = this.dateSplit();
     date.setHours(time[0], time[1], time[2]);
-    date = date.toISOString()
+    date = date.toISOString();
     return date;
   }
   public getDay(event: any): void {

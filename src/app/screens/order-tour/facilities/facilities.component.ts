@@ -22,6 +22,7 @@ export class FacilitiesComponent implements OnInit {
   public hiddenElements: any = { facilities: false, activities: false };
   public colors = { green: '#37C56B', blue: '#448ECD' }
   public selectedFacility: InfoCard;
+  public selectedActivity: InfoCard;
 
   //data 
   public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
@@ -46,7 +47,7 @@ export class FacilitiesComponent implements OnInit {
       backgroundColor: event.backgroundColor,
       textColor: 'black',
       editable: true,
-      className: 'border-activities'
+      className: event.className
     }
     this.eventsArr.push(tmpObj);
     this.facilitiesService.updateCalendarEventsArr(tmpObj);

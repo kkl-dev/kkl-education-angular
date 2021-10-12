@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { DAYS } from 'src/mock_data/facilities';
 
 @Component({
   selector: 'app-save-activity',
@@ -7,6 +8,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./save-activity.component.scss']
 })
 export class SaveActivityComponent implements OnInit {
+  public form: FormGroup;
   @Input() days: {
     day: string;
     options: {
@@ -16,59 +18,23 @@ export class SaveActivityComponent implements OnInit {
       type: string;
       singleUnit: string;
     }
-  }[] = [{
-    day: '15.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '16.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '17.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '18.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }]
-  public chosenDate: number = 0
-  @ViewChild('form') saveActivityForm: NgForm
+  }[] = DAYS;
+  public selectedDate: number = 0;
+  @ViewChild('form') saveActivityForm: NgForm;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   showSleepAreas: boolean = false
   currentDayHandler(newCurrentDay: number) {
-    this.chosenDate = newCurrentDay;
+    this.selectedDate = newCurrentDay;
   }
 
-  public orderingCustomer: boolean = false
+  public orderingCustomer: boolean = false;
 
   orderingCustomerHandler() {
     this.orderingCustomer = !this.orderingCustomer
   }
-  @Input() additonsType: string[] = ['הסעה', 'כלכלה', 'הדרכה', 'אבטחה', 'הפעלה מוסיקלית']
-  public addedAdditions: string[] = []
+  @Input() additonsType: string[] = ['הסעה', 'כלכלה', 'הדרכה', 'אבטחה', 'הפעלה מוסיקלית'];
+  public addedAdditions: string[] = [];
 
   constructor() { }
 
@@ -82,13 +48,21 @@ export class SaveActivityComponent implements OnInit {
   }
   onSubmit(form: NgForm) {
     const objToEmit = {
-      dayNumber: this.chosenDate, additions: this.addedAdditions,
+      dayNumber: this.selectedDate, additions: this.addedAdditions,
       orderingCustomer: this.orderingCustomer, ...this.saveActivityForm.value
     }
     this.emitFormValues.emit(objToEmit.value)
   }
 
   ngOnInit(): void {
+    new FormGroup({
+      'title': new FormControl('test'),
+      'start': new FormControl(null),
+      'end': new FormControl(null),
+      'backgroundColor': new FormControl('#F0F6FE'),
+      'date': new FormControl(''),
+      'className': new FormControl('border-facilities')
+    });
   }
 
 }

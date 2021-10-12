@@ -4,15 +4,15 @@
         </app-sleeping-options-by-day>
         <div class="add-facility__header">
             <div class="add-facility__header-icon">
-                <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
+                <svg-icon [src]="facility.svgUrl" class="header__form-group-svg"></svg-icon>
             </div>
             <div class="add-facility__header-content">
                 <div class="add-facility__header-content-heading">
                     <span class="add-facility__header-content-heading-constant">שריין מתקן:</span>
-                    <span class="add-facility__header-content-heading-input">{{facility}}</span>
+                    <span class="add-facility__header-content-heading-input">{{facility.headline}}</span>
                 </div>
                 <div class="add-facility__header-content-heading-remarks">
-                    <span> עד 20 שמתתפים</span>
+                    <span>{{facility.maxParticipants}}</span>
                 </div>
             </div>
         </div>
