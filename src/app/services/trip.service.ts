@@ -22,7 +22,7 @@ export class TripService {
     id: 0,
     name: ''
   };
-  
+
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[];
   formGroupSquadAssembles = [];
@@ -271,13 +271,17 @@ export class TripService {
         //   temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
         // }
         let d = new Date();
-        let num = d.getMilliseconds();
-        let gender = "בנים";
-        if (num % 2 == 0) {
-          gender = "בנים"
-        } else {
-          gender = "בנות"
-        }
+        // let num = d.getMilliseconds();
+        let gender = "";
+        // if (num % 2 == 0) {
+        const rand = Math.floor(Math.random() * 3)
+        if (rand == 0)
+          gender = "בנים";
+        else if (rand == 1)
+          gender = "בנות";
+        else
+          gender = "מעורב";
+
         if (element.structureType == 'בקתה') {
           if (availableCabins > 0) {
             availableCabins = availableCabins - 1;

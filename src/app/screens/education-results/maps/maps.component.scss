@@ -10,6 +10,13 @@
 .nameDiv{
     display: block;
     background-color: #ffffff;
-    margin: auto;
     padding: 10px;
+}
+
+.genderButtonDiv{
+    display: block;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }
