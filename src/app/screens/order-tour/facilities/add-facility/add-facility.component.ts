@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
+import { FormControl, FormGroup } from '@angular/forms';
 import { UserDataService } from 'src/app/utilities/services/user-data.service';
 
 export interface OccupiedBarModel {
@@ -85,12 +84,12 @@ export class AddFacilityComponent implements OnInit {
   @Input() endingHour: number = 24;
   @Input() facility: string = 'כיתה';
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
-
+  public selectedDate: number = 0;
   occupiedHoursArray: { totalHours: number; user: string }[] = [];
 
   showSleepAreas: boolean = false
   username: string = ''
-  constructor(private userDataService: UserDataService, private checkAvailabillityService: CheckAvailabilityService) {
+  constructor(private userDataService: UserDataService) {
     this.username = this.userDataService.user.name;
   }
 
@@ -100,13 +99,38 @@ export class AddFacilityComponent implements OnInit {
       'title': new FormControl(this.facility),
       'start': new FormControl(null),
       'end': new FormControl(null),
-      'backgroundColor': new FormControl('#F0F6FE')
+      'backgroundColor': new FormControl('#F0F6FE'),
+      'date': new FormControl('')
     })
   }
   onSubmit() {
+    const startTime = this.timeSplit(this.addFacilityForm.value.start)
+    const endTime = this.timeSplit(this.addFacilityForm.value.end);
+    const date = this.dateSplit();
+    date.setHours(startTime[0],startTime[1],startTime[3]);
+    this.addFacilityForm.controls['start'].setValue(date)
+    console.log(this.addFacilityForm);
     this.emitFormValues.emit(this.addFacilityForm.value);
   }
-
+  public arrangeTime(arg:string) {
+    // start Time 
+    const time = this.timeSplit(this.addFacilityForm.value[arg]);
+    const date = this.dateSplit();
+    date.setHours(time[0],time[1],time[3]);
+    return date;
+  }
+  public getDay(event: any): void {
+    this.selectedDate = event;
+  }
+  public timeSplit(time: string):any[] {
+    const split = time.split(':');
+    return [ ...split,0];
+  }
+  public dateSplit():Date {
+    const split = this.days[this.selectedDate].day.split('.');
+    const newDate = new Date(`20${split[2]},${split[1]},${split[0]}`);
+    return newDate;
+  }
   createOccupiedHoursArray() {
     let startingHour = this.startingHour;
 

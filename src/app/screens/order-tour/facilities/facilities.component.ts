@@ -17,7 +17,7 @@ import { EventInput } from '@fullcalendar/angular';
 })
 
 export class FacilitiesComponent implements OnInit {
-  public eventsArr: EventInput[] = [ ...INITIAL_EVENTS];
+  public eventsArr: EventInput[] = [...INITIAL_EVENTS];
   public closeModal$: Observable<string>;
   public calendarEventsArr$: Observable<EventInput[]>;
   public timesArray: Array<string | number> = [];
@@ -26,7 +26,7 @@ export class FacilitiesComponent implements OnInit {
 
   constructor(private facilitiesService: FacilitiesService) { }
 
-   ngOnInit() {
+  ngOnInit() {
     this.fillTimes();
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
