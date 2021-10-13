@@ -1,6 +1,4 @@
-<div class="education" 
-#container
-> 
+<div class="education" #container>
   <div class="education__form-container">
     <p class="education__form-container-headline">בדיקת זמינות</p>
     <form #educationForm="ngForm">
@@ -23,25 +21,13 @@
       <div class="education__form-group">
         <label class="education__form-group-label">מתאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
-        <label
-        class="header__form-group-pseudo-input label-input"
-        for="calendar-input"
-      >
-       
-          <input
-            class="header__form-group-input"
-            airbnb-calendar
-            (newDate)='newDateRecived($event)'
-            (sleepingPlace)='newSleepingPlaceRecived($event)'
-            (prevDate)='prevDateRecived($event)'
-            (closeCalendar)="closeCalendarHandler($event)"
-            type="text"
-            [(ngModel)]="date"
-            [options]="options"
-            (ngModelChange)="dateObjChanged($event)"
-            name="calendar-input"
-            id="calendar-input"
-          />
+        <label class="header__form-group-pseudo-input label-input" for="calendar-input">
+
+          <input class="header__form-group-input" airbnb-calendar (newDate)='newDateRecived($event)'
+            [disabled]="disableDates" (sleepingPlace)='newSleepingPlaceRecived($event)'
+            (prevDate)='prevDateRecived($event)' (closeCalendar)="closeCalendarHandler($event)" type="text"
+            [(ngModel)]="date" [options]="options" (ngModelChange)="dateObjChanged($event)" name="calendar-input"
+            id="calendar-input" />
           <span class="header__form-group-pseudo-input-value">
             {{ sleepingDates.from }}</span>
         </label>
@@ -50,10 +36,7 @@
         <label class="education__form-group-label">עד תאריך</label>
         <svg-icon src="assets/images/calendar.svg" class="education__form-group-svg"></svg-icon>
         <!-- <input class="education__form-group-input" type="text" /> -->
-        <label
-          class="header__form-group-pseudo-input label-input"
-          for="calendar-input"
-        >
+        <label class="header__form-group-pseudo-input label-input" for="calendar-input">
           <span class="header__form-group-pseudo-input-value">
             {{ sleepingDates.till }}</span>
           <!-- <input [ngModelOptions]="{standalone: true}" class="header__form-group-input" /> -->
@@ -66,7 +49,7 @@
           [disabled]="disableContinueBtn"><span>המשך</span></button>
       </div>
     </form>
-   
+
   </div>
-  
+
 </div>

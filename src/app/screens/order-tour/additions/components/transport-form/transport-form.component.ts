@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
+import { TransportOrder } from 'src/app/open-api';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { TransportModel } from '../../models/transport-model';
@@ -13,7 +14,8 @@ import { TransportService } from '../../services/transport.service';
 })
 export class TransportFormComponent implements OnInit {
   @Input() public location: LocationModel;
-  @Input() public transport: TransportModel;
+  // @Input() public transport: TransportModel;
+  @Input() public transport: TransportOrder;
   @Input() public editMode: boolean;
 
   public form: FormGroup;
@@ -24,13 +26,12 @@ export class TransportFormComponent implements OnInit {
     questionsGroups: [],
   };
 
-  constructor(private transportService: TransportService) {}
+  constructor(private transportService: TransportService) { }
 
   ngOnInit(): void {
     if (this.editMode) {
-      this.transportService.setFormValues(this.transport);
+      this.transportService.setFormValues(this.transport.common);
     }
-
     this.formTemplate.questionsGroups = this.transportService.questionGroups;
   }
 

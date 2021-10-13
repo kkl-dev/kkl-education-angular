@@ -370,7 +370,7 @@ export class TripService {
             this.squadBudgetService.budget.budget = this.budget.kklAmount;
             this.squadBudgetService.budget.expense = this.budget.customerAmount;
             this.squadBudgetService.budget.deliver = this.budget.execution;
-            this.squadBudgetService.budget.overflow = this.budget.balance;
+            this.squadBudgetService.budget.overflow = this.budget.balanceFin;
             this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
           }
         }
@@ -386,7 +386,7 @@ export class TripService {
         this.budgetExpensesAndIncome = response;
         let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
         let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
-        if (this.budget.type === 1) {
+        if (this.budget.type == 1) {
           response.subBudgetIncomeList.forEach(element => {
             this.budgetIncome.push({ label: element.name, value: element.id.toString() });
           });

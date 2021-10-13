@@ -11,10 +11,14 @@
  */
 
 
-export interface OrderType { 
-    id?: number | null;
-    name?: string | null;
-    iconPath?: string;
-    finOrderType?: string | null;
+export interface TripActivity { 
+    activityId?: number;
+    activityName?: string;
+    categoryId?: number;
+    date?: string;
+    description?: string;
+    hourStart?: string;
+    hourEnd?: string;
+    tripId?: number;
 }
 

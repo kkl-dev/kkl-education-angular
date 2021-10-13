@@ -4,7 +4,7 @@ import { TourModel } from 'src/app/screens/order-tour/additions/models/tour.mode
 import { TransportDetailsModel, TransportLocationsModel, TransportModel } from 'src/app/screens/order-tour/additions/models/transport-model';
 
 export const tourTransport: TourModel = {
-  id: 3849383,
+  id: 0,
   title: 'טיול שנתי שכבת ו בי"ס תמיר',
   date: new Date(),
   schedule: [

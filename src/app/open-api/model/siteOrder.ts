@@ -9,12 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Order } from './order';
+import { OrderItemCommonDetails } from './orderItemCommonDetails';
+import { OrderEvent } from './orderEvent';
 
 
-export interface OrderType { 
-    id?: number | null;
-    name?: string | null;
-    iconPath?: string;
-    finOrderType?: string | null;
+export interface SiteOrder extends OrderEvent { 
+    totalHours?: number;
+    siteAddress?: string;
+    isCustomerOrder?: boolean;
 }
 

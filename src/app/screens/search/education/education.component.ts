@@ -81,12 +81,13 @@ export class EducationComponent implements OnInit {
         console.log(response)
         this.AvailableDates = response;
         this.AvailableDates.forEach(element => element.freeSpace.forEach(element => { if (element.availableBeds === undefined) { element.availableBeds = 0; } }));
+        // this.freeSpacesArray = this.freeSpacesArrayGenaratorFromServer(new Date(fromDate), new Date(tillDate));
         this.freeSpacesArray = this.freeSpacesArrayGenaratorFromServer(new Date(fromDate), new Date(tillDate));
         this.tripService.setFreeSpacesArray(this.freeSpacesArray);
         this.options = {
           firstCalendarDay: 0,
           format: 'dd/LL/yyyy',
-          maxDate: new Date(tillDate),
+          maxDate: new Date(tillDate), 
           closeOnSelected: true,
           minYear: new Date().getFullYear() - 1,
           maxYear: new Date(tillDate).getFullYear() + 1,

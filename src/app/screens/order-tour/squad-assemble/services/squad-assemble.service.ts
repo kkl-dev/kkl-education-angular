@@ -10,7 +10,7 @@ import { QuestionTextarea } from 'src/app/components/form/logic/question-textare
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { TripService } from 'src/app/services/trip.service'
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
-import { BaseCustomer, TripInfo, UserService } from 'src/app/open-api';
+import { BaseCustomer, TripInfo, TripModel, UserService } from 'src/app/open-api';
 import { SquadDetailsService } from '../components/squad-details/squad-details.service';
 import { SquadBudgetService } from '../components/squad-budget/squad-budget.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -27,12 +27,12 @@ export class SquadAssembleService {
   );
 
   freeSpacesArray: FreeSpace[] = [];
-  tripInfo: TripInfo = {}
+  tripInfo = {} as TripInfo;
   formsArray: FormGroup[] = [];
-  filledNightsArray :[];
+  filledNightsArray: [];
   Customer = {} as BaseCustomer;
   payerCustomer = {} as BaseCustomer;
-
+  tripInfofromService: TripModel;
   public freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
@@ -104,7 +104,7 @@ export class SquadAssembleService {
         //   { label: 'good', value: '123' },
         //   { label: 'unproven', value: '123123123' },
         // ],
-        options: this.tripService.fieldForestCenters       
+        options: this.tripService.fieldForestCenters
       },
       validations: [Validators.required],
     }),
@@ -124,7 +124,7 @@ export class SquadAssembleService {
       validations: [Validators.required],
       inputProps: {},
     }),
-   
+
 
     new QuestionTextarea({
       key: 'comments',
@@ -162,8 +162,8 @@ export class SquadAssembleService {
     } else {
       this.formsArray.push(form);
     }
-    console.log(' formarray is: ',this.formsArray)
-    console.log('formarray length is: ',this.formsArray.length)
+    console.log(' formarray is: ', this.formsArray)
+    console.log('formarray length is: ', this.formsArray.length)
   }
 
   public getSaveModeObs(): Observable<boolean> {
@@ -178,8 +178,8 @@ export class SquadAssembleService {
     return this.squadNewClientService.getNewClientObs();
   }
 
-  savefilledNightsArray(array){
-    this.filledNightsArray= array;
-    console.log('filledNightsArray is: ',this.filledNightsArray);
+  savefilledNightsArray(array) {
+    this.filledNightsArray = array;
+    console.log('filledNightsArray is: ', this.filledNightsArray);
   }
 }

@@ -5,6 +5,7 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { TransportOrder } from 'src/app/open-api';
 import { TransportModel } from '../models/transport-model';
 
 @Injectable({
@@ -83,11 +84,8 @@ export class TransportService {
       value: '',
       validations: [Validators.required],
     }),
-  ].reverse();
-
-  public locations: QuestionBase<string | Date>[] = [
     new QuestionSelect({
-      key: 'pickUpDate',
+      key: 'startDate',
       icon: 'date_range',
       label: 'תאריך איסוף',
       type: 'select',
@@ -101,14 +99,64 @@ export class TransportService {
         ],
       },
     }),
-
+    new QuestionSelect({
+      key: 'endDate',
+      icon: 'date_range',
+      label: 'תאריך פיזור',
+      type: 'select',
+      validations: [Validators.required],
+      inputProps: {
+        options: [
+          { label: 'יום 1', value: '1' },
+          { label: 'יום 2', value: '2' },
+          { label: 'יום 3', value: '3' },
+          { label: 'יום 4', value: '4' },
+        ],
+      },
+    }),
     new QuestionTextbox({
-      key: 'pickUpHour',
+      key: 'startHour',
       label: 'שעת איסוף',
       icon: 'schedule',
       type: 'time',
       validations: [Validators.required],
+      inputProps: {
+        // labelSize: 's5',
+      },
     }),
+    new QuestionTextbox({
+      key: 'endHour',
+      label: 'שעת פיזור',
+      icon: 'schedule',
+      type: 'time',
+      validations: [Validators.required],
+    }),
+  ].reverse();
+
+  public locations: QuestionBase<string | Date>[] = [
+    // new QuestionSelect({
+    //   key: 'pickUpDate',
+    //   icon: 'date_range',
+    //   label: 'תאריך איסוף',
+    //   type: 'select',
+    //   validations: [Validators.required],
+    //   inputProps: {
+    //     options: [
+    //       { label: 'יום 1', value: '1' },
+    //       { label: 'יום 2', value: '2' },
+    //       { label: 'יום 3', value: '3' },
+    //       { label: 'יום 4', value: '4' },
+    //     ],
+    //   },
+    // }),
+
+    // new QuestionTextbox({
+    //   key: 'pickUpHour',
+    //   label: 'שעת איסוף',
+    //   icon: 'schedule',
+    //   type: 'time',
+    //   validations: [Validators.required],
+    // }),
 
     new QuestionTextbox({
       key: 'pickUpLocation',
@@ -132,32 +180,32 @@ export class TransportService {
       },
     }),
 
-    new QuestionSelect({
-      key: 'dropDownDate',
-      label: 'תאריך פיזור',
-      icon: 'date_range',
-      validations: [Validators.required],
-      type: 'select',
-      inputProps: {
-        options: [
-          { label: 'יום 1', value: '1' },
-          { label: 'יום 2', value: '2' },
-          { label: 'יום 3', value: '3' },
-          { label: 'יום 4', value: '4' },
-        ],
-      },
-    }),
+    // new QuestionSelect({
+    //   key: 'dropDownDate',
+    //   label: 'תאריך פיזור',
+    //   icon: 'date_range',
+    //   validations: [Validators.required],
+    //   type: 'select',
+    //   inputProps: {
+    //     options: [
+    //       { label: 'יום 1', value: '1' },
+    //       { label: 'יום 2', value: '2' },
+    //       { label: 'יום 3', value: '3' },
+    //       { label: 'יום 4', value: '4' },
+    //     ],
+    //   },
+    // }),
 
-    new QuestionTextbox({
-      key: 'dropDownHour',
-      label: 'שעת פיזור',
-      icon: 'schedule',
-      type: 'time',
-      validations: [Validators.required],
-      inputProps: {
-        // labelSize: 's5',
-      },
-    }),
+    // new QuestionTextbox({
+    //   key: 'dropDownHour',
+    //   label: 'שעת פיזור',
+    //   icon: 'schedule',
+    //   type: 'time',
+    //   validations: [Validators.required],
+    //   inputProps: {
+    //     // labelSize: 's5',
+    //   },
+    // }),
 
   ].reverse();
 
@@ -207,11 +255,15 @@ export class TransportService {
     });
   }
 
-  public setFormValues(data: TransportModel) {
+  // public setFormValues(data: TransportModel) {
+  //   this.questionGroups.map((group: QuestionGroup) => {
+  //     this.setInitialValues(group.questions, data[group.key]);
+  //   });
+  // }
+  public setFormValues(data: any) {
     this.questionGroups.map((group: QuestionGroup) => {
-      this.setInitialValues(group.questions, data[group.key]);
+      this.setInitialValues(group.questions, data);
     });
   }
-
   constructor() { }
 }

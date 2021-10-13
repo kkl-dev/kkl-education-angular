@@ -11,15 +11,8 @@
  */
 
 
-export interface Attribute { 
-    id?: number | null;
-    name?: string | null;
-    budgetId?: number | null;
-    budgetName?: string | null;
-    /**
-     * subsidization 1 to 25 ratio
-     */
-    subsidization1To25?: number | null;
-    autoCustomerId?: number | null;
+export interface ActivityCategory { 
+    id?: number;
+    name?: string;
 }
 
