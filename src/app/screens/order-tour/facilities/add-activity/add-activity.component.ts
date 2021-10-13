@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { DAYS } from 'src/mock_data/facilities';
 
 @Component({
@@ -18,27 +18,31 @@ export class AddActivityComponent implements OnInit {
       singleUnit: string;
     }
   }[] = DAYS;
-
-  @ViewChild('form') addActivityForm: NgForm
+  public form: FormGroup;
   showSleepAreas: boolean = false;
   public chosenDate: number = 0;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
+
+  public ngOnInit(): void {
+    this.form = new FormGroup({
+      'title': new FormControl(''),
+      'start': new FormControl("08:00"),
+      'end': new FormControl("09:00"),
+      'backgroundColor': new FormControl('#ECF8EE'),
+      'date': new FormControl(''),
+      'className': new FormControl('border-activities'),
+      'invitingCustomer': new FormControl(),
+      'additions': new FormControl()
+    });
+  }
+
   currentDayHandler(newCurrentDay: number) {
     this.chosenDate = newCurrentDay;
   }
 
-  onSubmit(form: NgForm) {
-    const objToEmit = { dayNumber: this.chosenDate, ...this.addActivityForm.value }
-    this.emitFormValues.emit(objToEmit)
+  public onSubmit(): void {
+    this.emitFormValues.emit()
   }
-  public closeEvent(event): void {
-    console.log(event)
-  }
-  ngOnInit(): void {
-  }
-
-  //date functions 
-  
 }
