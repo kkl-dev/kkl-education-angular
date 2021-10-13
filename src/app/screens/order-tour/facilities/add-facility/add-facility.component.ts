@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { InfoCard } from 'src/app/screens/education-results/education-results.component';
+import { FacilitiesService } from 'src/app/services/facilities.service';
 import { UserDataService } from 'src/app/utilities/services/user-data.service';
-import { DAYS, FACILITY_OCCUPANCY } from 'src/mock_data/facilities';
+import { DAYS } from 'src/mock_data/facilities';
 
 export interface OccupiedBarModel {
   startingHour: number;
@@ -38,7 +39,7 @@ export class AddFacilityComponent implements OnInit {
 
   showSleepAreas: boolean = false
   username: string = ''
-  constructor(private userDataService: UserDataService) {
+  constructor(private userDataService: UserDataService, private facilitiesServices: FacilitiesService) {
     this.username = this.userDataService.user.name;
   }
 
@@ -56,9 +57,12 @@ export class AddFacilityComponent implements OnInit {
   }
 
   onSubmit() {
-    this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'))
-    this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'))
-    this.emitFormValues.emit(this.addFacilityForm.value);
+    if (this.addFacilityForm.controls['end'].value && this.addFacilityForm.controls['start'].value) {
+      this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'))
+      this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'))
+      this.emitFormValues.emit(this.addFacilityForm.value);
+      this.facilitiesServices.closeModal('close');
+    }
   }
   public arrangeTime(arg: string): Date {
     const time = this.timeSplit(this.addFacilityForm.value[arg]);
