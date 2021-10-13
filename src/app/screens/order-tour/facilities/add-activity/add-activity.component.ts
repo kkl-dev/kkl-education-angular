@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { DAYS } from 'src/mock_data/facilities';
 
 @Component({
   selector: 'app-add-activity',
@@ -16,65 +17,32 @@ export class AddActivityComponent implements OnInit {
       type: string;
       singleUnit: string;
     }
-  }[] = [{
-    day: '15.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '16.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '17.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '18.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }]
-  @ViewChild('form') addActivityForm: NgForm
-  showSleepAreas: boolean = false
-  public chosenDate: number = 0
-  @Output() emitFormValues: EventEmitter<any> = new EventEmitter()
-
-
-
+  }[] = DAYS;
+  public form: FormGroup;
+  showSleepAreas: boolean = false;
+  public chosenDate: number = 0;
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
+
+  public ngOnInit(): void {
+    this.form = new FormGroup({
+      'title': new FormControl(''),
+      'start': new FormControl("08:00"),
+      'end': new FormControl("09:00"),
+      'backgroundColor': new FormControl('#ECF8EE'),
+      'date': new FormControl(''),
+      'className': new FormControl('border-activities'),
+      'invitingCustomer': new FormControl(),
+      'additions': new FormControl()
+    });
+  }
+
   currentDayHandler(newCurrentDay: number) {
     this.chosenDate = newCurrentDay;
-    console.log(newCurrentDay);
-
   }
 
-  onSubmit(form: NgForm) {
-    const objToEmit ={dayNumber: this.chosenDate, ...this.addActivityForm.value}
-    console.log(objToEmit);
-    this.emitFormValues.emit(objToEmit)
+  public onSubmit(): void {
+    this.emitFormValues.emit()
   }
-
-  ngOnInit(): void {
-  }
-
 }

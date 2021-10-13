@@ -17,6 +17,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { MaterialModule } from './material/material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
@@ -126,6 +127,7 @@ import { AddFacilityComponent } from './screens/order-tour/facilities/add-facili
 import { SaveActivityComponent } from './screens/order-tour/facilities/save-activity/save-activity.component';
 import { AddActivityComponent } from './screens/order-tour/facilities/add-activity/add-activity.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { OutsideDirective } from './utilities/directivs/outside.directive';
 
 
 
@@ -246,7 +248,8 @@ FullCalendarModule.registerPlugins([
     SquadDetailsComponent,
     SquadBudgetComponent,
     SquadNewClientComponent,
-    SquadGroupGenderComponent
+    SquadGroupGenderComponent,
+    OutsideDirective
   ],
   imports: [
     BrowserModule,
@@ -262,6 +265,7 @@ FullCalendarModule.registerPlugins([
     AirbnbCalendarModule,
     ApiModule,
     FullCalendarModule,
+    NgxMaterialTimepickerModule.setLocale('he-IL'),
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

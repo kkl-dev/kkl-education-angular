@@ -1,23 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { INITIAL_EVENTS } from './event-utils';
+import { EventInput } from '@fullcalendar/angular';
+import { Observable, Subscription } from 'rxjs';
+import { FacilitiesService } from 'src/app/services/facilities.service';
 
- @Component({
+@Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
 
+  public calendarEventsArr$!: Observable<EventInput[]>;
+  public value!: EventInput[];
+  public valueSub: Subscription;
+  @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
 
-  calendarOptions: CalendarOptions = {
+  constructor(private facilitiesService: FacilitiesService) { }
+
+  public calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin],
     initialView: 'timeGridDay',
-    allDaySlot:false,
-    locale:'heb',
-    direction:'rtl',
-    titleFormat:{year:'numeric',month:'numeric',day:'numeric'},
+    allDaySlot: false,
+    locale: 'heb',
+    direction: 'rtl',
+    titleFormat: { year: 'numeric', month: 'numeric', day: 'numeric' },
     eventTimeFormat: {
       hour: 'numeric',
       minute: '2-digit',
@@ -33,12 +41,22 @@ export class CalendarComponent implements OnInit {
       center: 'title',
       right: 'timeGridDay'
     },
-    initialEvents: INITIAL_EVENTS
+    initialEvents: []
   }
 
-constructor() { }
 
-ngOnInit(): void {
-}
+
+  ngOnInit(): void {
+    this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+        if(this.myCalendarComponent){
+          this.myCalendarComponent.options.events = value;
+        } else {
+          setTimeout(() => {
+            this.myCalendarComponent.options.events = value;
+          }, 500);
+        }
+
+    });
+  }
 
 }

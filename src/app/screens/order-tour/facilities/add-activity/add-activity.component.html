@@ -4,7 +4,7 @@
         (emitCurrentDay)="currentDayHandler($event)"
         [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas'>
         </app-sleeping-options-by-day>  
-        <form (ngSubmit)="onSubmit($event)" class="add-activity__form" #form="ngForm">
+        <form (ngSubmit)="onSubmit()" class="add-activity__form" #form="ngForm">
             <div class="add-activity__form-input-area">
                 <div class="add-activity__form-input-area-icon">
                     <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
