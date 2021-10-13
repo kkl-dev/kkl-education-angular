@@ -29,8 +29,10 @@
     }
 
   ::ng-deep .mat-form-field {
-    text-align: right;
-  }
+    text-align: left !important;
+  } 
+
+
   ::ng-deep .airbnb-calendar-container {
     left: -500px !important;
   }
@@ -74,6 +76,9 @@
     ::ng-deep .mat-form-field-appearance-outline, ::ng-deep .mat-select-arrow-wrapper{
       transform: translateY(-7%);
     }
+    ::ng-deep airbnb-calendar ~ .mat-form-field-label-wrapper{
+      text-align: left !important; 
+    } 
   }
   .placeholder {
     font-size: 14px !important     ;
