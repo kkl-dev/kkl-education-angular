@@ -1,5 +1,7 @@
+import { BreakpointService } from 'src/app/utilities/services/breakpoint.service';
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { StepModel } from 'src/app/utilities/models/step.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-icon-card',
@@ -19,13 +21,18 @@ export class IconCardComponent implements OnInit {
   public shape: boolean;
   public width: number;
   public height: number;
+  public md$: Observable<boolean>;
+
   public classes: {};
 
-  constructor() { }
+  constructor(
+    private breakpointService : BreakpointService
+  ) { }
 
   ngOnInit(): void {
     this.setSize();
     this.setClasses();
+    this.md$ = this.breakpointService.isTablet()
   }
 
   public onCardClick(): void {

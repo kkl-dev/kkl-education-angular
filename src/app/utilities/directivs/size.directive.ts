@@ -19,11 +19,12 @@ export class SizeDirective implements OnInit, OnDestroy {
   private tablet$: Observable<boolean>;
 
   private subscription: Subscription;
+  private stepperSize: number;
 
   @HostBinding('style.height') public height: string;
   @HostBinding('style.width') public width: string;
 
-  constructor(private breakpointService: BreakpointService) {}
+  constructor(private breakpointService: BreakpointService) { }
 
   ngOnInit(): void {
     this.setSize();
@@ -46,12 +47,12 @@ export class SizeDirective implements OnInit, OnDestroy {
         this.height = `6rem`;
         break;
       case 'stepper':
-        this.width = `21rem`;
+        this.width = `${this.stepperSize}rem`;
         this.height = `10rem`;
         break;
       case 'step':
-        this.width = `7rem !important`;
-        this.height = `7rem !important`;
+        this.width = `6rem !important`;
+        this.height = `6rem !important`;
         break;
       default:
         this.width = `${this.size * (this.divider || 1)}rem`;
@@ -62,6 +63,7 @@ export class SizeDirective implements OnInit, OnDestroy {
   private subscribeToBreakpoint() {
     this.subscription = this.tablet$.subscribe((tablet: boolean) => {
 
+      this.stepperSize = tablet ? 12 : 21
 
 
       this.setSize();

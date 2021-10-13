@@ -1,44 +1,22 @@
 <div class="card" fxLayout="column" fxLayoutAlign="center center">
-  <div
-    appSize
-    type="step"
-    class="card-svg-container"
-    (click)="onCardClick()"
-    [matBadge]="step.badgeValue"
-    matBadgeColor="accent"
-    matBadgeSize="medium"
-  >
-    <mat-card
-      [ngClass]="{
+  <div appSize type="step" class="card-svg-container" (click)="onCardClick()" [matBadge]="step.badgeValue"
+    matBadgeColor="accent" matBadgeSize="medium">
+    <mat-card [ngClass]="{
         stepper: true,
         active: step.isActive,
         circle: shape,
         square: !shape
-      }"
-    >
+      }">
       <mat-card-content>
-        <div
-          class="icon-container"
-          fxLayout="column"
-          fxLayoutAlign="center center"
-        >
-          <app-icon
-            [color]="step.isActive ? 'active' : 'default'"
-            type="svg"
-            [key]="step.svgUrl"
-            scale="1.5"
-          >
+        <div class="icon-container" fxLayout="column" fxLayoutAlign="center center">
+          <app-icon [color]="step.isActive ? 'active' : 'default'" type="svg" [key]="step.svgUrl"
+            [scale]="(md$ | async) ? 1 : 1.5">
           </app-icon>
         </div>
       </mat-card-content>
     </mat-card>
   </div>
-  <div
-    class="label-container"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxFlex="30"
-  >
+  <div class="label-container" fxLayout="column" fxLayoutAlign="center center" fxFlex="30">
     <app-typography [bold]="step.isActive ? 600 : 500" [size]="11">
       {{ step.label }}
     </app-typography>
