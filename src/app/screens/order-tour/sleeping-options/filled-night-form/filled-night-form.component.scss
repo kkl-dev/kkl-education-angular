@@ -1,9 +1,23 @@
 .form {
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   column-gap: 30px;
-}
+  ::ng-deep .mat-form-field-infix {
+    width: auto;
+  }
 
+  ::ng-deep .mat-form-field {
+    text-align: right;
+  }
+  ::ng-deep .airbnb-calendar-container {
+    left: -500px !important;
+  }
+  @media screen and (max-width: 1024px) {
+    ::ng-deep .mat-select-min-line {
+      font-size: 12px;
+    }
+  }
+}
 
 .btn {
   background-color: #fff;
@@ -11,14 +25,14 @@
   border: 3px solid #448ecd;
   outline: none;
   width: fit-content;
-  padding: 10px 25px;
+  padding: 1rem 2.5rem;
   font-weight: bolder;
-  font-size: 18px;
-  border-radius: 5px;
+  font-size: 1.8rem;
+  border-radius: 0.5rem;
   &__container {
     text-align: left;
     grid-column: span 13;
-    padding-top: 15px;
+    padding-top: 1.5rem;
     border-top: 1px solid #f1f1f1;
   }
 }
@@ -31,10 +45,54 @@
   margin-top: -20px;
   color: #448ecd;
 }
-::ng-deep .width-auto > .mat-form-field-infix {
-  width: auto !important;
-}
+// ::ng-deep .width-auto > .mat-form-field-infix {
+//   width: auto !important;
+// }
 
-::ng-deep .width-auto .mat-form-field-infix {
-  width: auto !important;
+// ::ng-deep .width-auto .mat-form-field-infix {
+//   width: auto !important;
+// }
+
+@media screen and (max-width: 1024px) {
+  .form {
+    width: fit-content;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    column-gap: 3rem;
+
+    ::ng-deep .mat-form-field-infix {
+      width: auto;
+    }
+    ::ng-deep .mat-form-field-flex {
+      font-size: 10px;
+    }
+    ::ng-deep .mat-form-field-type-mat-input {
+      font-size: 14px; 
+      ::ng-deep .mat-form-field-flex {
+        font-size: 10px !important;
+      }
+    }
+    .textarea-form-field {
+      grid-column: span 5 !important;
+    }
+    
+    ::ng-deep .textarea-form-field {
+      ::ng-deep .mat-form-field-flex {
+        font-size: 8.2px !important;
+      }
+    }
+  }
+
+  .btn {
+    &__container {
+      grid-column: span 9;
+    }
+  }
+} 
+
+.placeholder {
+  font-size: 15px !important     ;
+  text-align: right !important;
+  margin-right: auto;
+  // color: blueviolet;
 }

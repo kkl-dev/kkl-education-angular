@@ -1,28 +1,39 @@
-<div class="sleeping-form">
-  <h3 class="sleeping-form-name">שם הטיול</h3>
-  <p class="sleeping-form-serial">12121212</p>
-  <mat-form-field appearance="outline">
+<div
+  class="sleeping-form"
+  fxFlex="100"
+  fxLayout="row-reverse"
+  fxLayoutGap="2rem"
+  fxLayoutAlign="space-around center"
+>
+  <h3
+    class="sleeping-form__name"
+    fxFlex="32"
+  >
+    שם הטיול - 12121212
+  </h3>
+  <!-- <p class="sleeping-form-serial"></p>  -->
+  <mat-form-field appearance="outline" [dir]="'rtl'" fxFlex="32" >
+    <mat-label class="placeholder">מרכז שדה</mat-label>
     <mat-select
       #select
-      dir="rtl"
       [(ngModel)]="location"
       name="location"
       class="education__form-group-select"
-      >
-      <mat-label></mat-label>
+    >
       <mat-option value="{{ option.value }}" *ngFor="let option of formOptions">
         <span class="education__select-option-text">{{ option.text }}</span>
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline"
-  >
-    <mat-label>תאריכי הטיול</mat-label>
-    
+  <mat-form-field [dir]="'rtl'" appearance="outline" fxFlex="32"
+  
+  > 
+    <mat-label class="placeholder">תאריכי הטיול</mat-label>
+    <app-icon matSuffix key="calendar" [color]="'success'"></app-icon>
     <input
-    matInput
-      class="header__form-group-input"
+      matInput
+      class="header__form-group-input sleeping-form__calendar"
       airbnb-calendar
       type="text"
       [(ngModel)]="date"
@@ -31,10 +42,9 @@
       (sleepingPlace)="newSleepingPlaceRecived($event)"
       (prevDate)="prevDateRecived($event)"
       (ngModelChange)="dateObjChanged($event)"
-      autocomplete="chrome-off"
+      autocomplete="off"
       name="calendar-input"
       id="calendar-input"
-      />
-    
-    </mat-form-field>
+    />
+  </mat-form-field>
 </div>

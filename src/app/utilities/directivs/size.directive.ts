@@ -20,6 +20,8 @@ export class SizeDirective implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
+  private stepperSize : number
+
   @HostBinding('style.height') public height: string;
   @HostBinding('style.width') public width: string;
 
@@ -62,7 +64,10 @@ export class SizeDirective implements OnInit, OnDestroy {
   private subscribeToBreakpoint() {
     this.subscription = this.tablet$.subscribe((tablet: boolean) => {
 
+      // console.log(tablet) 
 
+      // this.stepperSize = tablet ? 7 : 21
+ 
 
       this.setSize();
     });
