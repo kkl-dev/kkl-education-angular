@@ -20,7 +20,6 @@ export class FacilitiesService {
   public updateCalendarEventsArr(args: EventInput): void {
     this.calendarEventsArr.next([...this.calendarEventsArr.value,args]);
     console.log(this.calendarEventsArr);
-    
   }
 
   public closeModal(args: string): void {
@@ -28,5 +27,10 @@ export class FacilitiesService {
   }
   public getCloseModalObs(): Observable<string> {
     return this.closeModalObs.asObservable();
+  }
+
+  public findObjectInCalendarArray(id:string | number) {
+    const [item] = this.calendarEventsArr.value.filter(item => item.id === id);
+    return item;
   }
 }

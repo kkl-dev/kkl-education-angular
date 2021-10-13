@@ -1,10 +1,9 @@
 <div class="add-activity">
     <app-modal>
-        <app-sleeping-options-by-day 
-        (emitCurrentDay)="currentDayHandler($event)"
-        [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas'>
-        </app-sleeping-options-by-day>  
-        <form (ngSubmit)="onSubmit()" class="add-activity__form" #form="ngForm">
+        <app-sleeping-options-by-day (emitCurrentDay)='getDay($event)' [sleepingOptionsByDay]='days'
+            [showSleepAreas]='showSleepAreas'>
+        </app-sleeping-options-by-day>
+        <form (ngSubmit)="onSubmit()" class="add-activity__form" [formGroup]="form">
             <div class="add-activity__form-input-area">
                 <div class="add-activity__form-input-area-icon">
                     <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
@@ -13,7 +12,7 @@
                     <h4 class="add-activity__form-input-area-header-headline">הוספת פעילות חדשה</h4>
                     <mat-form-field appearance="outline">
                         <mat-label>שם פעילות</mat-label>
-                        <input matInput ngModel name='activityName' id='activityName'>
+                        <input matInput formControlName='title' name='activityName' id='activityName'>
                         <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
                         <!-- <mat-hint>Hint</mat-hint> -->
                     </mat-form-field>
@@ -22,17 +21,19 @@
 
             <div class="add-activity__form-bottom-input-area">
                 <div class="add-activity__form-bottom-input-area-inputs">
-                    <mat-form-field appearance="outline">
-                        <mat-label>משעה</mat-label>
-                        <input matInput type='time' ngModel name='startingTime' id='startingTime'>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline"> 
-                        <mat-label>עד שעה</mat-label>
-                        <input matInput type='time' ngModel name='endingTime' id='endingTime'>
-                    </mat-form-field>
+                    <div class="ngx-timepicker-field-example">
+                        <span>משעה</span>
+                        <ngx-timepicker-field [format]="24" defaultTime="08:00" controlOnly='false'
+                            (timeChanged)='startTimeChanged($event)'></ngx-timepicker-field>
+                    </div>
+                    <div class="ngx-timepicker-field-example">
+                        <span>עד שעה</span>
+                        <ngx-timepicker-field [format]="24" defaultTime="09:00" controlOnly='false'
+                            (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
+                    </div>
                 </div>
-                    <button class="add-activity__form-bottom-input-area-button">הוסף ללו"ז</button>
+                <button class="add-activity__form-bottom-input-area-button">הוסף ללו"ז</button>
             </div>
-        </form> 
+        </form>
     </app-modal>
 </div>

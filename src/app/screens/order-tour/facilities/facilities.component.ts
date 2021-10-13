@@ -45,9 +45,13 @@ export class FacilitiesComponent implements OnInit {
       start: event.start,
       end: event.end,
       backgroundColor: event.backgroundColor,
+      borderColor:event.backgroundColor,
       textColor: 'black',
       editable: true,
-      className: event.className
+      className: event.className,
+      invitingCustomer:event.invitingCustomer,
+      additions:event.additions,
+      type: event.type
     }
     this.eventsArr.push(tmpObj);
     this.facilitiesService.updateCalendarEventsArr(tmpObj);

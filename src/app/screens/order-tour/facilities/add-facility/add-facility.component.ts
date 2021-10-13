@@ -52,7 +52,8 @@ export class AddFacilityComponent implements OnInit {
       'end': new FormControl('09:00'),
       'backgroundColor': new FormControl('#F0F6FE'),
       'date': new FormControl(''),
-      'className': new FormControl('border-facilities')
+      'className': new FormControl('border-facilities'),
+      'type': new FormControl('facility')
     });
   }
 

@@ -41,7 +41,8 @@ export class SaveActivityComponent implements OnInit {
       'date': new FormControl(''),
       'className': new FormControl('border-activities'),
       'invitingCustomer': new FormControl(),
-      'additions': new FormControl()
+      'additions': new FormControl(),
+      'type': new FormControl('activity')
     });
   }
   public startTimeChanged(event: string) {

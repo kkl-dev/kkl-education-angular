@@ -4,6 +4,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventInput } from '@fullcalendar/angular';
 import { Observable, Subscription } from 'rxjs';
 import { FacilitiesService } from 'src/app/services/facilities.service';
+import heLocale from '@fullcalendar/core/locales/he';
+import interactionPlugin from '@fullcalendar/interaction'; 
 
 @Component({
   selector: 'app-calendar',
@@ -20,12 +22,12 @@ export class CalendarComponent implements OnInit {
   constructor(private facilitiesService: FacilitiesService) { }
 
   public calendarOptions: CalendarOptions = {
-    plugins: [timeGridPlugin],
+    plugins: [timeGridPlugin,interactionPlugin],
     initialView: 'timeGridDay',
     allDaySlot: false,
-    locale: 'heb',
-    direction: 'rtl',
-    titleFormat: { year: 'numeric', month: 'numeric', day: 'numeric' },
+    locales: [heLocale],
+    selectable: true,
+    titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
     eventTimeFormat: {
       hour: 'numeric',
       minute: '2-digit',
@@ -39,22 +41,30 @@ export class CalendarComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next',
       center: 'title',
-      right: 'timeGridDay'
+      right: 'timeGridDay,timeGridWeek,dayGridMonth'
     },
-    initialEvents: []
+    initialEvents: [],
+    eventClick:(info) => {
+      // this.facilitiesService.closeModal()
+      console.log(info.event);
+      const item = this.facilitiesService.findObjectInCalendarArray(info.event.id);
+      console.log(item);
+      
+      
+    }
   }
 
 
 
   ngOnInit(): void {
     this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
-        if(this.myCalendarComponent){
+      if (this.myCalendarComponent) {
+        this.myCalendarComponent.options.events = value;
+      } else {
+        setTimeout(() => {
           this.myCalendarComponent.options.events = value;
-        } else {
-          setTimeout(() => {
-            this.myCalendarComponent.options.events = value;
-          }, 500);
-        }
+        }, 500);
+      }
 
     });
   }
