@@ -262,7 +262,7 @@ FullCalendarModule.registerPlugins([
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    // AirbnbCalendarModule,
+    AirbnbCalendarModule,
     ApiModule,
     FullCalendarModule,
     NgxMaterialTimepickerModule.setLocale('he-IL'),

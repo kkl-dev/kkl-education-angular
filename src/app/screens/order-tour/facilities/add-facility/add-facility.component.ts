@@ -49,7 +49,7 @@ export class AddFacilityComponent implements OnInit {
     this.addFacilityForm = new FormGroup({
       'title': new FormControl(this.facility.headline),
       'start': new FormControl('08:00'),
-      'end': new FormControl('08:00'),
+      'end': new FormControl('09:00'),
       'backgroundColor': new FormControl('#F0F6FE'),
       'date': new FormControl(''),
       'className': new FormControl('border-facilities')
@@ -62,9 +62,18 @@ export class AddFacilityComponent implements OnInit {
     this.emitFormValues.emit(this.addFacilityForm.value);
     this.closeModal();
   }
+  public startTimeChanged(event: string) {
+    this.addFacilityForm.controls['start'].setValue(event);
+  }
+  public endTimeChanged(event: string) {
+    this.addFacilityForm.controls['end'].setValue(event);
+  }
   public arrangeTime(arg: string): any {
     const [day, month, year] = this.days[this.selectedDate].day.split(".");
-    const [hours, minutes] = this.addFacilityForm.value[arg].split(':');
+    let [hours, minutes] = this.addFacilityForm.value[arg].split(':');
+    if (hours.length == 1) {
+      hours = `0${hours}`;
+    }
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
   public getDay(event: any): void {

@@ -17,7 +17,7 @@ export class SaveActivityComponent implements OnInit {
   public showSleepAreas: boolean = false;
   public addedAdditions: string[] = [];
   @Input() public activity: ActivitiesCardInterface;
-  @Input() type:string;
+  @Input() type: string;
   @Input() additonsType: string[] = ['הסעה', 'כלכלה', 'הדרכה', 'אבטחה', 'הפעלה מוסיקלית'];
   @Input() days: {
     day: string;
@@ -35,8 +35,8 @@ export class SaveActivityComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       'title': new FormControl(this.activity.title),
-      'start': new FormControl('08:00'),
-      'end': new FormControl('08:00'),
+      'start': new FormControl("08:00"),
+      'end': new FormControl("09:00"),
       'backgroundColor': new FormControl('#ECF8EE'),
       'date': new FormControl(''),
       'className': new FormControl('border-activities'),
@@ -44,9 +44,14 @@ export class SaveActivityComponent implements OnInit {
       'additions': new FormControl()
     });
   }
-
+  public startTimeChanged(event: string) {
+    this.form.controls['start'].setValue(event);
+  }
+  public endTimeChanged(event: string) {
+    this.form.controls['end'].setValue(event);
+  }
   onSubmit() {
-    if(this.type){
+    if (this.type) {
       this.form.controls['invitingCustomer'].setValue(this.orderingCustomer);
     }
     this.form.controls['additions'].setValue(this.addedAdditions);
@@ -70,7 +75,10 @@ export class SaveActivityComponent implements OnInit {
   // date && time functions // 
   public arrangeTime(arg: string): any {
     const [day, month, year] = this.days[this.selectedDate].day.split(".");
-    const [hours, minutes] = this.form.value[arg].split(':');
+    let [hours, minutes] = this.form.value[arg].split(':');
+    if (hours.length == 1) {
+      hours = `0${hours}`;
+    }
     return `${year}-${month}-${day}T${hours}:${minutes}`;
 
   }

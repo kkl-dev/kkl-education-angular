@@ -19,14 +19,14 @@
         </div>
         <form class="add-facility__form" [formGroup]="addFacilityForm" (ngSubmit)='onSubmit()'>
             <div class="add-facility__form-inputs">
-                <mat-form-field appearance="outline">
-                    <mat-label>משעה</mat-label>
-                    <input matInput type='time' formControlName="start">
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>עד שעה</mat-label>
-                    <input matInput type='time' formControlName="end">
-                </mat-form-field>
+                <div class="ngx-timepicker-field-example">
+                    <span>משעה</span>
+                    <ngx-timepicker-field [format]="24" defaultTime="08:00" controlOnly='false' (timeChanged)='startTimeChanged($event)'></ngx-timepicker-field>
+                </div>
+                <div class="ngx-timepicker-field-example">
+                    <span>עד שעה</span>
+                    <ngx-timepicker-field [format]="24" defaultTime="09:00" controlOnly='false' (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
+                </div>
                 <button class="add-facility__form-button" [disabled]="!addFacilityForm.valid">שריין</button>
             </div>
         </form>
