@@ -22,7 +22,7 @@ export class FacilitiesComponent implements OnInit {
   public hiddenElements: any = { facilities: false, activities: false };
   public colors = { green: '#37C56B', blue: '#448ECD' }
   public selectedFacility: InfoCard;
-  public selectedActivity: InfoCard;
+  public selectedUpComingActivity: ActivitiesCardInterface;
 
   //data 
   public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
@@ -60,8 +60,11 @@ export class FacilitiesComponent implements OnInit {
       i < 10 ? this.timesArray.push(`0${i}:00`) : this.timesArray.push(`${i}:00`);
     }
   }
-  public updateChoesenFacility(args: InfoCard) {
+  public updateChosenFacility(args: InfoCard) {
     this.selectedFacility = args;
+  }
+  public updateChosenUpComingActivity(args: ActivitiesCardInterface) {
+    this.selectedUpComingActivity = args;
   }
   // arrays
   public timeLineArray: Array<object> = [

@@ -48,8 +48,8 @@ export class AddFacilityComponent implements OnInit {
     this.createOccupiedHoursArray();
     this.addFacilityForm = new FormGroup({
       'title': new FormControl(this.facility.headline),
-      'start': new FormControl(null),
-      'end': new FormControl(null),
+      'start': new FormControl('08:00'),
+      'end': new FormControl('08:00'),
       'backgroundColor': new FormControl('#F0F6FE'),
       'date': new FormControl(''),
       'className': new FormControl('border-facilities')
@@ -57,12 +57,10 @@ export class AddFacilityComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.addFacilityForm.controls['end'].value && this.addFacilityForm.controls['start'].value) {
-      this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'))
-      this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'))
-      this.emitFormValues.emit(this.addFacilityForm.value);
-      this.facilitiesServices.closeModal('close');
-    }
+    this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'))
+    this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'))
+    this.emitFormValues.emit(this.addFacilityForm.value);
+    this.closeModal();
   }
   public arrangeTime(arg: string): Date {
     const time = this.timeSplit(this.addFacilityForm.value[arg]);
@@ -84,6 +82,9 @@ export class AddFacilityComponent implements OnInit {
     const split = this.days[this.selectedDate].day.split('.');
     const newDate = new Date(`20${split[2]},${split[1]},${split[0]}`);
     return newDate;
+  }
+  public closeModal():void {
+    this.facilitiesServices.closeModal('close');
   }
   createOccupiedHoursArray() {
     let startingHour = this.startingHour;

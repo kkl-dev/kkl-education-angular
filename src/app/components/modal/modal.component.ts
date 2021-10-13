@@ -15,4 +15,5 @@ export class ModalComponent implements OnInit {
   public onClick(): void {
     this.facilitiesService.closeModal('clear');
   }
+
 }

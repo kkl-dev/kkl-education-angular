@@ -1,7 +1,7 @@
 <div class="facilities">
     <app-add-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'addActivity'">
     </app-add-activity>
-    <app-save-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'activity'">
+    <app-save-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'activity'"  [activity]='selectedUpComingActivity'>
     </app-save-activity>
     <app-add-facility [facility]='selectedFacility' (emitFormValues)='addToCalendar($event)'
         *ngIf="(closeModal$ | async) === 'facilities'"></app-add-facility>
@@ -42,13 +42,13 @@
             <div class="info-card">
                 <ng-container *ngFor="let item of facilitiesArray; let i = index">
                     <app-info-card class="facilities-items-item" *ngIf='5 > i' [item]="item"
-                        (click)="updateChoesenFacility(item) ; openModal('facilities')">
+                        (click)="updateChosenFacility(item) ; openModal('facilities')">
                         <app-tooltip class="app-tooltip" [hours]="item.availability">
                         </app-tooltip>
                     </app-info-card>
                 </ng-container>
                 <ng-container *ngFor="let item of facilitiesArray; let i = index"
-                    (click)="openModal('facilities')">
+                    (click)="updateChosenFacility(item) ; openModal('facilities')">
                     <app-info-card class="facilities-items-item" *ngIf='i >= 5 && hiddenElements.facilities'
                         [item]="item">
                         <app-tooltip class="app-tooltip" [hours]="item.availability">
@@ -84,8 +84,8 @@
                 <p>פעילויות קרובות</p>
             </div>
             <div class="card-container">
-                <app-activities-card *ngFor="let card of upComingActivitiesArray" [obj]='card'
-                    (click)="openModal('activity')"></app-activities-card>
+                <app-activities-card *ngFor="let activity of upComingActivitiesArray" [obj]='activity'
+                    (click)="updateChosenUpComingActivity(activity) ; openModal('activity')"></app-activities-card>
             </div>
             <app-pagination pagesCount='5' currentPage='1'></app-pagination>
         </div>

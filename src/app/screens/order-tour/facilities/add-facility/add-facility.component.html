@@ -1,6 +1,7 @@
 <div class="add-facility">
     <app-modal>
-        <app-sleeping-options-by-day [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas' (emitCurrentDay)='getDay($event)'>
+        <app-sleeping-options-by-day [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas'
+            (emitCurrentDay)='getDay($event)'>
         </app-sleeping-options-by-day>
         <div class="add-facility__header">
             <div class="add-facility__header-icon">
@@ -16,25 +17,24 @@
                 </div>
             </div>
         </div>
-        <form class="add-facility__form"
-        [formGroup]="addFacilityForm" (ngSubmit)='onSubmit()'>
+        <form class="add-facility__form" [formGroup]="addFacilityForm" (ngSubmit)='onSubmit()'>
             <div class="add-facility__form-inputs">
                 <mat-form-field appearance="outline">
                     <mat-label>משעה</mat-label>
                     <input matInput type='time' formControlName="start">
                 </mat-form-field>
-                <mat-form-field appearance="outline"> 
+                <mat-form-field appearance="outline">
                     <mat-label>עד שעה</mat-label>
                     <input matInput type='time' formControlName="end">
-                </mat-form-field> 
-                <button class="add-facility__form-button"  [disabled]="!addFacilityForm.valid">שריין</button>
+                </mat-form-field>
+                <button class="add-facility__form-button" [disabled]="!addFacilityForm.valid">שריין</button>
             </div>
         </form>
 
         <div class="add-facility__occupied-hours-bar">
             <span class="add-facility__occupied-hours-bar-slot" *ngFor="let item of occupiedHoursArray" [ngClass]="{'background-green':item.user =='none',
-      'background-grey':(item.user !=='none' && item.user !== username), 
-      'background-blue':(item.user === username) }" [ngStyle]="{'width': calculateWidth(item.totalHours) }"></span>
+        'background-grey':(item.user !=='none' && item.user !== username), 
+        'background-blue':(item.user === username) }" [ngStyle]="{'width': calculateWidth(item.totalHours) }"></span>
         </div>
         <div class="add-facility__occupied-hours-table">
             <div class="add-facility__occupied-hours-table-header">

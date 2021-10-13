@@ -126,6 +126,7 @@ import { AddFacilityComponent } from './screens/order-tour/facilities/add-facili
 import { SaveActivityComponent } from './screens/order-tour/facilities/save-activity/save-activity.component';
 import { AddActivityComponent } from './screens/order-tour/facilities/add-activity/add-activity.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { OutsideDirective } from './utilities/directivs/outside.directive';
 
 
 
@@ -246,7 +247,8 @@ FullCalendarModule.registerPlugins([
     SquadDetailsComponent,
     SquadBudgetComponent,
     SquadNewClientComponent,
-    SquadGroupGenderComponent
+    SquadGroupGenderComponent,
+    OutsideDirective
   ],
   imports: [
     BrowserModule,
