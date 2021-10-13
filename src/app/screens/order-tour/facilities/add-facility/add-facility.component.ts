@@ -57,33 +57,21 @@ export class AddFacilityComponent implements OnInit {
   }
 
   onSubmit() {
-    this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'))
-    this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'))
+    this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'));
+    this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'));
     this.emitFormValues.emit(this.addFacilityForm.value);
     this.closeModal();
   }
-  public arrangeTime(arg: string): Date {
-    const time = this.timeSplit(this.addFacilityForm.value[arg]);
-    let date: any = this.dateSplit();
-    date.setHours(time[0], time[1], time[2]);
-    date = date.toISOString();
-    return date;
+  public arrangeTime(arg: string): any {
+    const [day, month, year] = this.days[this.selectedDate].day.split(".");
+    const [hours, minutes] = this.addFacilityForm.value[arg].split(':');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
   public getDay(event: any): void {
     this.selectedDate = event;
   }
-  public timeSplit(time: any): any[] {
-    const split = time.split(':');
-    split[0] = +split[0];
-    split[1] = +split[1];
-    return [...split, 0];
-  }
-  public dateSplit(): Date {
-    const split = this.days[this.selectedDate].day.split('.');
-    const newDate = new Date(`20${split[2]},${split[1]},${split[0]}`);
-    return newDate;
-  }
-  public closeModal():void {
+
+  public closeModal(): void {
     this.facilitiesServices.closeModal('close');
   }
   createOccupiedHoursArray() {

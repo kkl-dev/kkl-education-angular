@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
+import { FacilitiesService } from 'src/app/services/facilities.service';
 import { DAYS } from 'src/mock_data/facilities';
 
 @Component({
@@ -9,11 +10,14 @@ import { DAYS } from 'src/mock_data/facilities';
   styleUrls: ['./save-activity.component.scss']
 })
 export class SaveActivityComponent implements OnInit {
+  constructor(private facilitiesServices: FacilitiesService) { }
+
   public form: FormGroup;
   public orderingCustomer: boolean = false;
   public showSleepAreas: boolean = false;
   public addedAdditions: string[] = [];
   @Input() public activity: ActivitiesCardInterface;
+  @Input() type:string;
   @Input() additonsType: string[] = ['הסעה', 'כלכלה', 'הדרכה', 'אבטחה', 'הפעלה מוסיקלית'];
   @Input() days: {
     day: string;
@@ -29,25 +33,31 @@ export class SaveActivityComponent implements OnInit {
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
-    new FormGroup({
+    this.form = new FormGroup({
       'title': new FormControl(this.activity.title),
       'start': new FormControl('08:00'),
       'end': new FormControl('08:00'),
-      'backgroundColor': new FormControl('#F0F6FE'),
+      'backgroundColor': new FormControl('#ECF8EE'),
       'date': new FormControl(''),
-      'className': new FormControl('border-facilities')
+      'className': new FormControl('border-activities'),
+      'invitingCustomer': new FormControl(),
+      'additions': new FormControl()
     });
   }
 
-  currentDayHandler(newCurrentDay: number) {
-    this.selectedDate = newCurrentDay;
+  onSubmit() {
+    if(this.type){
+      this.form.controls['invitingCustomer'].setValue(this.orderingCustomer);
+    }
+    this.form.controls['additions'].setValue(this.addedAdditions);
+    this.form.controls['start'].setValue(this.arrangeTime('start'));
+    this.form.controls['end'].setValue(this.arrangeTime('end'));
+    this.emitFormValues.emit(this.form.value);
+    this.facilitiesServices.closeModal('close');
   }
-
   orderingCustomerHandler() {
     this.orderingCustomer = !this.orderingCustomer;
   }
-
-  constructor() { }
 
   updateAddedAdditions(value: string) {
     const index = this.addedAdditions.findIndex(addition => addition === value);
@@ -57,9 +67,15 @@ export class SaveActivityComponent implements OnInit {
       this.addedAdditions.push(value);
     }
   }
-  onSubmit(form: NgForm) {
-    this.emitFormValues.emit();
-  }
+  // date && time functions // 
+  public arrangeTime(arg: string): any {
+    const [day, month, year] = this.days[this.selectedDate].day.split(".");
+    const [hours, minutes] = this.form.value[arg].split(':');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
 
+  }
+  public getDay(event: any): void {
+    this.selectedDate = event;
+  }
 
 }

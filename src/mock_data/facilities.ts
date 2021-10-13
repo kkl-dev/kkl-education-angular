@@ -3,7 +3,7 @@ import { QuestionSelect } from "src/app/components/form/logic/question-select";
 import { QuestionTextbox } from "src/app/components/form/logic/question-textbox";
 
 export const DAYS = [{
-    day: '15.10.21',
+    day: '15.10.2021',
     options: {
         svgUrl: '',
         sleepingAreas: 0,
@@ -12,7 +12,7 @@ export const DAYS = [{
         singleUnit: '',
     }
 }, {
-    day: '16.10.21',
+    day: '16.10.2021',
     options: {
         svgUrl: '',
         sleepingAreas: 0,
@@ -21,7 +21,7 @@ export const DAYS = [{
         singleUnit: '',
     }
 }, {
-    day: '17.10.21',
+    day: '17.10.2021',
     options: {
         svgUrl: '',
         sleepingAreas: 0,
@@ -30,7 +30,7 @@ export const DAYS = [{
         singleUnit: '',
     }
 }, {
-    day: '18.10.21',
+    day: '18.10.2021',
     options: {
         svgUrl: '',
         sleepingAreas: 0,
@@ -137,31 +137,31 @@ export const FACILITIES_ARRAY = [
 export const ACTIVITIES_ARRAY = [
     {
       svgUrl: 'assets/images/fruits.svg',
-      headline: 'ארוחת ערב',
+      title: 'ארוחת ערב',
     },
     {
       svgUrl: 'assets/images/roast-chicken.svg',
-      headline: 'ארוחת צהריים',
+      title: 'ארוחת צהריים',
     },
     {
       svgUrl: 'assets/images/restaurant.svg',
-      headline: 'ארוחת בוקר',
+      title: 'ארוחת בוקר',
     },
     {
       svgUrl: 'assets/images/alarm.svg',
-      headline: 'השכמה',
+      title: 'השכמה',
     },
     {
       svgUrl: 'assets/images/bus-with-flag.svg',
-      headline: 'התייצבות',
+      title: 'התייצבות',
     },
     {
       svgUrl: 'assets/images/fruits.svg',
-      headline: 'ארוחת ערב',
+      title: 'ארוחת ערב',
     },
     {
       svgUrl: 'assets/images/alarm.svg',
-      headline: 'השכמה',
+      title: 'השכמה',
     },
   ];
 

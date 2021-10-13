@@ -22,12 +22,12 @@ export class FacilitiesComponent implements OnInit {
   public hiddenElements: any = { facilities: false, activities: false };
   public colors = { green: '#37C56B', blue: '#448ECD' }
   public selectedFacility: InfoCard;
-  public selectedUpComingActivity: ActivitiesCardInterface;
-
+  public activityIsUpComing:boolean = false;
+  public selectedActivity:ActivitiesCardInterface;
   //data 
   public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
   public facilitiesArray: InfoCard[] = FACILITIES_ARRAY;
-  public activitiesArray: InfoCard[] = ACTIVITIES_ARRAY;
+  public activitiesArray: ActivitiesCardInterface[] = ACTIVITIES_ARRAY;
   public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
 
   constructor(private facilitiesService: FacilitiesService) { }
@@ -64,7 +64,12 @@ export class FacilitiesComponent implements OnInit {
     this.selectedFacility = args;
   }
   public updateChosenUpComingActivity(args: ActivitiesCardInterface) {
-    this.selectedUpComingActivity = args;
+    this.selectedActivity = args;
+    this.activityIsUpComing = true;
+  }
+  public updateChosenActivity(args:ActivitiesCardInterface) {
+    this.activityIsUpComing = false;
+    this.selectedActivity = args;
   }
   // arrays
   public timeLineArray: Array<object> = [
