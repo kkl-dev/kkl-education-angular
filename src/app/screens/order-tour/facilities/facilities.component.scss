@@ -13,6 +13,26 @@
     margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
+    ::ng-deep app-pagination {
+        direction: rtl;
+        color: color(primary) !important;
+        .pagination-next,
+        .pagination-prev {
+            color: color(primary) !important;
+        }
+        .disabled {
+            color: #9f9f9f !important;
+        }
+        .pagination-pages {
+            color: black;
+        }
+        span > .chosen {
+            border: 2px solid color(primary) !important;
+            color: color(primary) !important;
+            background-color: transparent !important;
+            border-radius: 6px;
+        }
+    }
     .card {
         width: 95%;
         height: 600px;
@@ -184,23 +204,4 @@ app-tooltip {
     position: relative;
     float: right;
 }
-::ng-deep app-pagination {
-    direction: rtl;
-    color: color(primary) !important;
-    .pagination-next,
-    .pagination-prev {
-        color: color(primary) !important;
-    }
-    .disabled {
-        color: #9f9f9f !important;
-    }
-    .pagination-pages {
-        color: black;
-    }
-    span > .chosen {
-        border: 2px solid color(primary) !important;
-        color: color(primary) !important;
-        background-color: transparent !important;
-        border-radius: 6px;
-    }
-}
+

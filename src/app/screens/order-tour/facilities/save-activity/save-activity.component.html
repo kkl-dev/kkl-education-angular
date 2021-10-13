@@ -34,12 +34,15 @@
             <form [formGroup]="form" (ngSubmit)='onSubmit()' class="save-activity__form-bottom-input-area-inputs">
                 <mat-form-field appearance="outline">
                     <mat-label>משעה</mat-label>
-                    <input matInput type='time' formControlName="start" name='startingTime' id='startingTime'>
+                    <input matInput type='time-24' formControlName="start" name='startingTime' id='startingTime'>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
                     <mat-label>עד שעה</mat-label>
-                    <input matInput type='time' formControlName="end" name='endingTime' id='endingTime'>
+                    <!-- <input matInput type='time' formControlName="end" name='endingTime' id='endingTime'> -->
+                    <div class="ngx-timepicker-field-example">
+                        <ngx-timepicker-field [format]="24" [defaultTime]="'23:11'"></ngx-timepicker-field>
+                    </div>
                 </mat-form-field>
                 <button class="save-activity__form-bottom-input-area-button">שריין</button>
             </form>

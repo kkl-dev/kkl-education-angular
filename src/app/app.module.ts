@@ -17,6 +17,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { MaterialModule } from './material/material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
@@ -261,9 +262,10 @@ FullCalendarModule.registerPlugins([
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    AirbnbCalendarModule,
+    // AirbnbCalendarModule,
     ApiModule,
     FullCalendarModule,
+    NgxMaterialTimepickerModule.setLocale('he-IL'),
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
