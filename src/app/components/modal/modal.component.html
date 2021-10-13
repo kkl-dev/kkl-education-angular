@@ -1,4 +1,4 @@
-<div class="modal">
-    <span class="modal__close"><span>&times;</span></span>
-    <ng-content></ng-content>
+<div class="modal"  appOutside>
+        <span class="modal__close" (click)='onClick()'><span>&times;</span></span>
+        <ng-content></ng-content>
 </div>

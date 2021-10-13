@@ -11,6 +11,8 @@ export interface InfoCard {
   headline: string;
   subHeadline?: string;
   availability?: TooltipDataModel[];
+  maxParticipants?:string;
+  days?:any[];
 }
 
 @Component({

@@ -47,7 +47,7 @@ export class BottomNavigationComponent implements OnInit {
   public onNext(): void {
     this.next.emit();
   }
-
+  
   public onSave(): void {
     this.save.emit();
   }

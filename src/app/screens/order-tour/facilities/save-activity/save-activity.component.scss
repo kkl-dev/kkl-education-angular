@@ -25,7 +25,23 @@
 }
 
     z-index: 110;
-
+    ::ng-deep .mat-form-field-appearance-outline,
+    ::ng-deep .mat-form-field-wrapper {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    ::ng-deep .mat-form-field-infix {
+        width: fit-content !important;
+        padding: 0 !important;
+    }
+    ::ng-deep mat-checkbox {
+        direction: rtl;
+    }
+    
+    ::ng-deep .SOBD__days {
+        width: 100% !important;
+    }
     &__header {
         height: 80px;
         display: flex;
