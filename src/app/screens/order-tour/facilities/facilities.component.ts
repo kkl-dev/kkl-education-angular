@@ -17,13 +17,13 @@ import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_AR
 export class FacilitiesComponent implements OnInit {
   public eventsArr: EventInput[] = [...INITIAL_EVENTS];
   public closeModal$: Observable<string>;
+  public selectedFacility$: Observable<InfoCard>;
+  public selectedActivity$: Observable<ActivitiesCardInterface>;
   public calendarEventsArr$: Observable<EventInput[]>;
   public timesArray: Array<string | number> = [];
   public hiddenElements: any = { facilities: false, activities: false };
   public colors = { green: '#37C56B', blue: '#448ECD' }
-  public selectedFacility: InfoCard;
-  public activityIsUpComing:boolean = false;
-  public selectedActivity:ActivitiesCardInterface;
+  public activityIsUpComing: boolean = false;
   //data 
   public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
   public facilitiesArray: InfoCard[] = FACILITIES_ARRAY;
@@ -36,6 +36,8 @@ export class FacilitiesComponent implements OnInit {
     this.fillTimes();
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
+    this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
+    this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
   }
 
   public addToCalendar(event: any): void {
@@ -45,12 +47,12 @@ export class FacilitiesComponent implements OnInit {
       start: event.start,
       end: event.end,
       backgroundColor: event.backgroundColor,
-      borderColor:event.backgroundColor,
+      borderColor: event.backgroundColor,
       textColor: 'black',
       editable: true,
       className: event.className,
-      invitingCustomer:event.invitingCustomer,
-      additions:event.additions,
+      invitingCustomer: event.invitingCustomer,
+      additions: event.additions,
       type: event.type
     }
     this.eventsArr.push(tmpObj);
@@ -65,15 +67,15 @@ export class FacilitiesComponent implements OnInit {
     }
   }
   public updateChosenFacility(args: InfoCard) {
-    this.selectedFacility = args;
+    this.facilitiesService.updateSelectedFacility(args);
   }
   public updateChosenUpComingActivity(args: ActivitiesCardInterface) {
-    this.selectedActivity = args;
+    this.facilitiesService.updateSelectedActivity(args);
     this.activityIsUpComing = true;
   }
-  public updateChosenActivity(args:ActivitiesCardInterface) {
+  public updateChosenActivity(args: ActivitiesCardInterface) {
     this.activityIsUpComing = false;
-    this.selectedActivity = args;
+    this.facilitiesService.updateSelectedActivity(args);
   }
   // arrays
   public timeLineArray: Array<object> = [

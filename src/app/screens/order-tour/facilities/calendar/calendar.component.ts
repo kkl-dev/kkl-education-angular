@@ -45,12 +45,8 @@ export class CalendarComponent implements OnInit {
     },
     initialEvents: [],
     eventClick:(info) => {
-      // this.facilitiesService.closeModal()
       console.log(info.event);
-      const item = this.facilitiesService.findObjectInCalendarArray(info.event.id);
-      console.log(item);
-      
-      
+      this.facilitiesService.findObjectInCalendarArray(info.event.id);
     }
   }
 
