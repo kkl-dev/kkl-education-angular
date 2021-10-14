@@ -24,3 +24,13 @@ app-squad-details,
   margin-right: 0.5rem;
   border-right: 1px solid color(border);
 }
+
+@media only screen and (max-width : 1024px) {
+
+  .client,
+  .schedule,
+  .newClient {
+    margin-top: 2rem;
+  }
+
+}

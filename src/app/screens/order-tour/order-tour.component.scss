@@ -51,12 +51,10 @@ div.steps-container {
   overflow: auto;
 }
 
-@media screen and (max-width: 1024px) {
-  ::ng-deep .step {
-    width: 10.5rem !important;
-    height: 5rem !important;
-  }
-  ::ng-deep .backstroke {
-    transform: translateX(-50%) translateY(100%) !important;
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  div.steps-container {
+    padding-left: 9%;
   }
 }
+

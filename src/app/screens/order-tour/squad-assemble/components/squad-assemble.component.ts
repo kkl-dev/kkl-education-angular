@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { BreakpointService } from 'src/app/utilities/services/breakpoint.service';
 import { SquadAssembleService } from '../services/squad-assemble.service';
@@ -14,12 +15,17 @@ export class SquadAssembleComponent implements OnInit {
 
   private newClientMode: boolean;
 
+  public md$ : Observable<boolean>
+
   constructor(
     private squadAssembleService: SquadAssembleService,
+    private breakpointService : BreakpointService
   ) {}
 
   ngOnInit(): void {
     this.subscribeToNewClient();
+    this.md$ = this.breakpointService.isTablet()
+
   }
 
   private setSquads() {
