@@ -10,7 +10,7 @@
       <mat-card-content>
         <div class="icon-container" fxLayout="column" fxLayoutAlign="center center">
           <app-icon [color]="step.isActive ? 'active' : 'default'" type="svg" [key]="step.svgUrl"
-            [scale]="(md$ | async) ? 1 : 1.5">
+            [scale]="(md$ | async) ? 1 : 1.5" [md$]="md$">
           </app-icon>
         </div>
       </mat-card-content>
