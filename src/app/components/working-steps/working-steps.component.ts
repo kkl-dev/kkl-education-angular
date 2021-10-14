@@ -40,8 +40,6 @@ export class WorkingStepsComponent implements OnInit {
   public onCardClick(step: StepModel) {
 
     this.isSleep = step.path === 'sleeping'
-    console.log(step.path)
-    console.log(this.isSleep)
     this.changStep.emit(step)
   }
 

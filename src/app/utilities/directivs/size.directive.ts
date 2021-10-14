@@ -31,7 +31,6 @@ export class SizeDirective implements OnInit, OnDestroy {
     this.setSize();
     this.tablet$ = this.breakpointService.isTablet();
     this.subscribeToBreakpoint();
-    this.stepperSize = this.isSleep ? 14 : 21
   }
 
   ngOnDestroy(): void {
@@ -48,13 +47,9 @@ export class SizeDirective implements OnInit, OnDestroy {
         this.width = `6rem`;
         this.height = `6rem`;
         break;
-      case 'stepper':
-        this.width = `${this.stepperSize}rem`;
-        this.height = `10rem`;
-        break;
       case 'step':
-        this.width = `6rem !important`;
-        this.height = `6rem !important`;
+        this.width = `${this.size}rem !important`;
+        this.height = `12rem !important`;
         break;
       default:
         this.width = `${this.size * (this.divider || 1)}rem`;
@@ -64,10 +59,6 @@ export class SizeDirective implements OnInit, OnDestroy {
 
   private subscribeToBreakpoint() {
     this.subscription = this.tablet$.subscribe((tablet: boolean) => {
-      console.log(this.isSleep)
-      this.stepperSize = tablet ? 12 : this.isSleep ? 14 : 21
-
-
       this.setSize();
     });
   }

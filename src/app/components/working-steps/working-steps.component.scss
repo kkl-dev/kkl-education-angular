@@ -6,13 +6,13 @@
   direction: rtl;
 
   .backstroke-container {
-    width: 110%;
+    width: 105%;
 
     .backstroke {
       width: inherit;
       height: 8px;
       background-color: #E4E4E4;
-      transform: translateY(-50%);
+      transform: translateY(.5rem);
     }
   }
 

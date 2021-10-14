@@ -15,6 +15,7 @@
     >
       <div fxFlex="15"  class="stepper">
         <app-working-steps
+        [isSleep]="currentRoute === 'sleeping'"
           [steps]="steps"
           [divider]="true"
           (changeActiveStep)="changeActiveStep($event)"
