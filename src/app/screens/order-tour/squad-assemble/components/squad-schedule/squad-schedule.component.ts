@@ -38,6 +38,8 @@ export class SquadScheduleComponent implements OnInit {
   ngOnInit() {
     this.tablet$ = this.breakpoints.isTablet();
     this.questions = this.group.questions || [];
+    console.log(this.questions);
+    
   }
 
   //log form when valid

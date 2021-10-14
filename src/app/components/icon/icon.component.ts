@@ -1,5 +1,6 @@
 import { IconsService } from './../../utilities/icons/icons.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export interface IconClasses {
   default: boolean;
@@ -24,6 +25,9 @@ export class IconComponent implements OnInit {
   @Input() public backgroundColor: string;
   @Input() public scale: number | string;
 
+  @Input() public md$: Observable<boolean>;
+
+
   public matScale: string;
 
   constructor(private iconsService: IconsService) { }
@@ -32,6 +36,7 @@ export class IconComponent implements OnInit {
     this.setIcon();
     this.setIconColor();
     this.setIconSize();
+    this.subscribeToMd()
   }
 
   private setIcon() {
@@ -49,5 +54,18 @@ export class IconComponent implements OnInit {
     this.width = this.size;
     this.height = this.size;
     this.matScale = this.scale ? `scale(${this.scale})` : 'scale(1)';
+  }
+
+  private subscribeToMd() {
+
+    if (this.md$) {
+
+      this.md$.subscribe(
+        (value) => {
+          this.scale = value ? 1 : 1.5
+          this.setIconSize()
+        }
+      )
+    }
   }
 }

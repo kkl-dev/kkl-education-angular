@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { CalendarOptions } from 'comrax-alex-airbnb-calendar';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -27,8 +28,8 @@ export class FormInputComponent implements OnInit {
   @Input() public hint: string;
   @Input() public controlType: string;
   @Input() public options!: [];
-  @Input() public dateOptions!: [];
-
+  @Input() public dateOptions!:CalendarOptions;
+ 
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
@@ -46,7 +47,10 @@ export class FormInputComponent implements OnInit {
   @Output() select: EventEmitter<FormControl> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
-  constructor(private formService: FormService) { }
+  constructor(private formService: FormService) { 
+    console.log(this.dateOptions);
+    
+  }
 
   ngOnInit(): void {
     this.subscribeToControl();

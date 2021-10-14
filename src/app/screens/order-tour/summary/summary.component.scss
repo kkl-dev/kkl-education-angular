@@ -95,3 +95,11 @@ table {
         font-weight: 600;
     }
 }
+
+
+@media only screen and (max-width: 1024px)  {
+    .header, table{
+        margin-left: auto;
+        width:90% !important; 
+    }
+} 

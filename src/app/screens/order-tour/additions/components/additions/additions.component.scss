@@ -12,3 +12,11 @@ app-navigation-grid {
 .tour-title-container {
   direction: rtl;
 }
+
+@media  screen and (max-width:1024px) {
+  
+  .additions-container{
+    padding-left: spacing(7);
+
+  }
+}
