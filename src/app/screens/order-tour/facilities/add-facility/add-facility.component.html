@@ -1,19 +1,19 @@
-<div class="add-facility">
+<div class="add-facility" *ngrxLet='selectedFacility$ as item'>
     <app-modal>
         <app-sleeping-options-by-day [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas'
-            (emitCurrentDay)='getDay($event)'>
+            (emitCurrentDay)='getDay($event)' [currentDay]='selectedDay'>
         </app-sleeping-options-by-day>
         <div class="add-facility__header">
             <div class="add-facility__header-icon">
-                <svg-icon [src]="facility.svgUrl" class="header__form-group-svg"></svg-icon>
+                <svg-icon [src]="item.svgUrl" class="header__form-group-svg"></svg-icon>
             </div>
             <div class="add-facility__header-content">
                 <div class="add-facility__header-content-heading">
                     <span class="add-facility__header-content-heading-constant">שריין מתקן:</span>
-                    <span class="add-facility__header-content-heading-input">{{facility.headline}}</span>
+                    <span class="add-facility__header-content-heading-input">{{item.title}}</span>
                 </div>
                 <div class="add-facility__header-content-heading-remarks">
-                    <span>{{facility.maxParticipants}}</span>
+                    <span>{{item.maxParticipants}}</span>
                 </div>
             </div>
         </div>
@@ -21,11 +21,11 @@
             <div class="add-facility__form-inputs">
                 <div class="ngx-timepicker-field-example">
                     <span>משעה</span>
-                    <ngx-timepicker-field [format]="24" defaultTime="08:00" controlOnly='false' (timeChanged)='startTimeChanged($event)'></ngx-timepicker-field>
+                    <ngx-timepicker-field [format]="24" [defaultTime]="addFacilityForm.value.start" controlOnly='false' (timeChanged)='startTimeChanged($event)'></ngx-timepicker-field>
                 </div>
                 <div class="ngx-timepicker-field-example">
                     <span>עד שעה</span>
-                    <ngx-timepicker-field [format]="24" defaultTime="09:00" controlOnly='false' (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
+                    <ngx-timepicker-field [format]="24" [defaultTime]="addFacilityForm.value.end" controlOnly='false' (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
                 </div>
                 <button class="add-facility__form-button" [disabled]="!addFacilityForm.valid">שריין</button>
             </div>

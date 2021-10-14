@@ -3,6 +3,9 @@
 ::ng-deep .border-activities{
     border-right: 9px solid #37C56B!important;
     border-radius: 0px 4px 4px 0px!important;
+    .fc-v-event {
+        border-color: #37C56B!important;
+    }
   }
   ::ng-deep .border-facilities{
     border-right: 9px solid #448ECD!important;
