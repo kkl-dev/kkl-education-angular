@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { InfoCard } from 'src/app/screens/education-results/education-results.component';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { UserDataService } from 'src/app/utilities/services/user-data.service';
@@ -87,7 +86,7 @@ export class AddFacilityComponent implements OnInit {
   onSubmit() {
     this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'));
     this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'));
-    
+
     if(this.updateForm){
       this.facilitiesServices.updateItemInArrayOfCalendar(this.addFacilityForm.value);
       this.closeModal();

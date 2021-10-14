@@ -1,4 +1,4 @@
-<div class="save-activity">
+<div class="save-activity" *ngrxLet='selectedActivity$ as activity'>
     <app-modal>
         <app-sleeping-options-by-day (emitCurrentDay)='getDay($event)' [sleepingOptionsByDay]='days'
             [showSleepAreas]='showSleepAreas'>
@@ -27,18 +27,20 @@
         </div>
         <div class="save-activity__additions">
             <div class="save-activity__additions-text"> :תוספות</div>
-            <mat-checkbox class="save-activity__additions-checkbox" (click)="updateAddedAdditions(addition)"
-                *ngFor='let addition of additonsType'>{{addition}}</mat-checkbox>
+            <mat-checkbox class="save-activity__additions-checkbox"  *ngFor='let addition of additonsType;let index=index' 
+            [(ngModel)]="additonsType[index].completed" >{{addition.name}}</mat-checkbox>
         </div>
         <div class="save-activity__form-bottom-input-area">
             <form [formGroup]="form" (ngSubmit)='onSubmit()' class="save-activity__form-bottom-input-area-inputs">
                 <div class="ngx-timepicker-field-example">
                     <span>משעה</span>
-                    <ngx-timepicker-field [format]="24" defaultTime="08:00" controlOnly='false' (timeChanged)='startTimeChanged($event)'></ngx-timepicker-field>
+                    <ngx-timepicker-field [format]="24" [defaultTime]="form.value.start" controlOnly='false'
+                        (timeChanged)='startTimeChanged($event)'></ngx-timepicker-field>
                 </div>
                 <div class="ngx-timepicker-field-example">
                     <span>עד שעה</span>
-                    <ngx-timepicker-field [format]="24" defaultTime="09:00" controlOnly='false' (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
+                    <ngx-timepicker-field [format]="24" [defaultTime]="form.value.end" controlOnly='false'
+                        (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
                 </div>
 
                 <button class="save-activity__form-bottom-input-area-button">שריין</button>
