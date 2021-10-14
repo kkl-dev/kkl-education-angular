@@ -5,12 +5,13 @@
       <div class="education__form-group" disableOptionCentering="false">
         <label class="education__form-group-label">איפה ישנים</label>
         <mat-form-field>
-          <mat-select #select [(ngModel)]="sleepingPlace" name="sleepingPlace" class="education__form-group-select"
+          <mat-select #select [(ngModel)]="forestCenterId" name="forestCenterId" class="education__form-group-select"
             (selectionChange)="selectChange($event)" (opened)="hideSelectPlaceholder(select)"
             (closed)="showSelectPlaceholder(select)">
-            <mat-option value="{{ option.id }}" *ngFor="let option of tripService.formOptions">
+            <!-- <mat-option disabled [value]="null">מרכז שדה</mat-option> -->
+            <mat-option *ngFor="let option of tripService.formOptions" [value]="option.id">
               <span class="education__select-option">
-                <img [src]="option.linkSite" class="education__select-option-svg" />
+                <img [src]="option.iconPath" class="education__select-option-svg" />
                 <span class="education__select-option-text">{{option.name}}</span>
               </span>
             </mat-option>

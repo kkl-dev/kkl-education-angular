@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   forestCenter: FieldForestCenter | undefined;
   tripDates: any | undefined;
   forestCenterOptions: any | undefined;
-  forestCenterId: number = 1;
+  forestCenterId: number;
   formOptions: any;
   AvailableDates!: AvailableAccomodationDate[];
   // AcommodationType = 'בקתה';
@@ -51,7 +51,6 @@ export class HeaderComponent implements OnInit {
     this.freeSpacesArray = this.tripService.freeSpacesArray;
     this.tripService.getAvailableSleepingOptions();
     // this.dateObjChanged(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
-    //this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(2022, 11, 17));
     this.options = {
       firstCalendarDay: 0,
       format: 'dd/LL/yyyy',
@@ -107,7 +106,9 @@ export class HeaderComponent implements OnInit {
   freeSpacesArrayGenaratorFromServer(start: Date, end: Date) {
     var i = 0;
     let freeSpacesArray = [];
+    start.setDate(start.getDate() - 1);
     while (start < end && i <= this.AvailableDates.length) {
+     // while (start < end && i < this.AvailableDates.length) {
 
       // for (var j in this.AvailableDates[i].freeSpace) {
       freeSpacesArray.push({
@@ -115,6 +116,8 @@ export class HeaderComponent implements OnInit {
         freeSpace: this.AvailableDates[i].freeSpace
       });
       start = new Date(start.setDate(start.getDate() + 1)); i++;
+
+     // start = new Date(start.setDate(start.getDate())); i++;
     }
     return freeSpacesArray;
   }
@@ -181,42 +184,4 @@ export class HeaderComponent implements OnInit {
     console.log('sleepingPlace: ' + sleepingPlace);
 
   }
-
-  // freeSpacesArrayGenarator(start: Date, end: Date) {
-  //   let i = 0;
-  //   let freeSpacesArrayTemp: FreeSpace[] = [];
-  //   while (start < end) {
-  //     start = new Date(start.setDate(start.getDate() + 1));
-  //     freeSpacesArrayTemp.push({
-  //       date: start,
-  //       freeSpace:
-  //         [
-  //           {
-  //             accomodationName: "cabin",
-  //             availableBeds: +Math.floor(Math.random() * 8).toString()
-  //           },
-  //           {
-  //             accomodationName: "tent",
-  //             availableBeds: +Math.floor(Math.random() * 8).toString()
-  //           },
-  //           {
-  //             accomodationName: "room",
-  //             availableBeds: +Math.floor(Math.random() * 8).toString()
-  //           },
-  //         ]
-
-  //       // {
-  //       //   "date": "2015-07-20T15:49:04-07:00",
-  //       //   "freeSpace": [
-  //       //     {
-  //       //       "accomodationName": "name",
-  //       //       "availableBeds": 20
-  //       //     }
-  //       //   ]
-  //       // }
-  //     });
-  //     i++;
-  //   }
-  //   return freeSpacesArrayTemp;
-  // }
 }
