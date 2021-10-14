@@ -22,7 +22,6 @@ export class SizeDirective implements OnInit, OnDestroy {
   private subscription: Subscription;
   private stepperSize: number;
 
-  private stepperSize : number
 
   @HostBinding('style.height') public height: string;
   @HostBinding('style.width') public width: string;
