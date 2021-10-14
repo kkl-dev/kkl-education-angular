@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./sleeping-options-by-day.component.scss'],
 })
 export class SleepingOptionsByDayComponent implements OnInit {
-  currentDay: number = 0;
+  @Input() currentDay: number = 0;
   @Output() emitCurrentDay: EventEmitter<number> = new EventEmitter();
   @Input() sleepingOptionsByDay: {
     day: string;

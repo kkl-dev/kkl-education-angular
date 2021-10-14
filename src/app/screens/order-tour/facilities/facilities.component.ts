@@ -43,22 +43,12 @@ export class FacilitiesComponent implements OnInit {
   public addToCalendar(event: any): void {
     const tmpObj: EventInput = {
       id: `${this.eventsArr.length}`,
-      title: event.title,
-      start: event.start,
-      end: event.end,
-      backgroundColor: event.backgroundColor,
-      borderColor: event.backgroundColor,
       textColor: 'black',
       editable: true,
-      className: event.className,
-      invitingCustomer: event.invitingCustomer,
-      additions: event.additions,
-      type: event.type,
-      maxParticipants:event.maxParticipants,
-      availability:event.availability,
-      svgUrl:event.svgUrl,
-      img:event.img
     }
+    for (const property in event) {
+      tmpObj[property] = event[property];
+    }    
     this.eventsArr.push(tmpObj);
     this.facilitiesService.updateCalendarEventsArr(tmpObj);
   }

@@ -35,7 +35,7 @@ export class AddFacilityComponent implements OnInit {
   @Input() endingHour: number = 24;
   @Input() hours: OccupiedBarModel[];
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
-  public selectedDate: number = 0;
+  public selectedDay: number = 0;
   public subscribeToFacility: Subscription;
   public updateForm:boolean = false;
   occupiedHoursArray: { totalHours: number; user: string }[] = [];
@@ -58,6 +58,7 @@ export class AddFacilityComponent implements OnInit {
     if(!data.start){
       this.addFacilityForm = new FormGroup({
         'title': new FormControl(data.title),
+        'selectedDay': new FormControl(this.selectedDay),
         'start': new FormControl('08:00'),
         'end': new FormControl('09:00'),
         'backgroundColor': new FormControl('#F0F6FE'),
@@ -70,6 +71,7 @@ export class AddFacilityComponent implements OnInit {
       });
     } else {
       this.updateForm = true;
+      this.selectedDay = data.selectedDay;
       data.start = this.separateTimeFromDate(data.start);
       data.end = this.separateTimeFromDate(data.end);
       this.addFacilityForm = new FormGroup({});
@@ -86,6 +88,7 @@ export class AddFacilityComponent implements OnInit {
   onSubmit() {
     this.addFacilityForm.controls['start'].setValue(this.arrangeTime('start'));
     this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'));
+    this.addFacilityForm.controls['selectedDay'].setValue(this.selectedDay);
 
     if(this.updateForm){
       this.facilitiesServices.updateItemInArrayOfCalendar(this.addFacilityForm.value);
@@ -103,7 +106,7 @@ export class AddFacilityComponent implements OnInit {
     this.addFacilityForm.controls['end'].setValue(event);
   }
   public arrangeTime(arg: string): any {
-    const [day, month, year] = this.days[this.selectedDate].day.split(".");
+    const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let [hours, minutes] = this.addFacilityForm.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;
@@ -111,7 +114,7 @@ export class AddFacilityComponent implements OnInit {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
   public getDay(event: any): void {
-    this.selectedDate = event;
+    this.selectedDay = event;
   }
 
   public closeModal(): void {

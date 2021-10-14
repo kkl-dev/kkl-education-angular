@@ -1,7 +1,7 @@
 <div class="add-activity">
     <app-modal>
         <app-sleeping-options-by-day (emitCurrentDay)='getDay($event)' [sleepingOptionsByDay]='days'
-            [showSleepAreas]='showSleepAreas'>
+            [showSleepAreas]='showSleepAreas' [currentDay]='selectedDay'>
         </app-sleeping-options-by-day>
         <form (ngSubmit)="onSubmit()" class="add-activity__form" [formGroup]="form">
             <div class="add-activity__form-input-area">

@@ -21,12 +21,13 @@ export class AddActivityComponent implements OnInit {
   }[] = DAYS;
   public form: FormGroup;
   public showSleepAreas: boolean = false;
-  public selectedDate: number = 0;
+  public selectedDay: number = 0;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   constructor(private facilitiesServices: FacilitiesService) { }
 
   public onSubmit(): void {
+    this.form.controls['selectedDay'].setValue(this.selectedDay);
     this.form.controls['start'].setValue(this.arrangeTime('start'));
     this.form.controls['end'].setValue(this.arrangeTime('end'));
     this.emitFormValues.emit(this.form.value);
@@ -35,6 +36,7 @@ export class AddActivityComponent implements OnInit {
   public ngOnInit(): void {
     this.form = new FormGroup({
       'title': new FormControl(''),
+      'selectedDay': new FormControl(this.selectedDay),
       'start': new FormControl("08:00"),
       'end': new FormControl("09:00"),
       'backgroundColor': new FormControl('#ECF8EE'),
@@ -44,7 +46,7 @@ export class AddActivityComponent implements OnInit {
     });
   }
   public getDay(event: any): void {
-    this.selectedDate = event;
+    this.selectedDay = event;
   }
   public startTimeChanged(event: string) {
     this.form.controls['start'].setValue(event);
@@ -53,7 +55,7 @@ export class AddActivityComponent implements OnInit {
     this.form.controls['end'].setValue(event);
   }
   public arrangeTime(arg: string): any {
-    const [day, month, year] = this.days[this.selectedDate].day.split(".");
+    const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let [hours, minutes] = this.form.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;

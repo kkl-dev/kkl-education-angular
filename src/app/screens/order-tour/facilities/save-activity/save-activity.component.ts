@@ -36,14 +36,14 @@ export class SaveActivityComponent implements OnInit {
       singleUnit: string;
     }
   }[] = DAYS;
-  public selectedDate: number = 0;
+  public selectedDay: number = 0;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.selectedActivity$ = this.facilitiesServices.getSelectedActivity();
-    console.log(this.selectedActivity$);
     this.subscribeToActivity = this.selectedActivity$.subscribe(data => this.createForm(data));
-    console.log(this.additonsType);
+    console.log(this.selectedActivity$);
+    
   }
   public ngOnDestroy(): void {
     this.subscribeToActivity.unsubscribe();
@@ -58,7 +58,10 @@ export class SaveActivityComponent implements OnInit {
     if (this.type) {
       this.form.controls['invitingCustomer'].setValue(this.orderingCustomer);
     }
-    this.form.controls['additions'].setValue(this.additonsType);
+    if(this.form.controls['additions'] ){
+      this.form.controls['additions'].setValue(this.additonsType);
+    }
+    this.form.controls['selectedDay'].setValue(this.selectedDay);
     this.form.controls['start'].setValue(this.arrangeTime('start'));
     this.form.controls['end'].setValue(this.arrangeTime('end'));
     if (this.updateForm) {
@@ -67,8 +70,6 @@ export class SaveActivityComponent implements OnInit {
       return;
     }
     this.emitFormValues.emit(this.form.value);
-    console.log(this.form.value);
-
     this.facilitiesServices.closeModal('close');
   }
   orderingCustomerHandler() {
@@ -77,7 +78,7 @@ export class SaveActivityComponent implements OnInit {
 
   // date && time functions // 
   public arrangeTime(arg: string): any {
-    const [day, month, year] = this.days[this.selectedDate].day.split(".");
+    const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let [hours, minutes] = this.form.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;
@@ -86,7 +87,7 @@ export class SaveActivityComponent implements OnInit {
 
   }
   public getDay(event: any): void {
-    this.selectedDate = event;
+    this.selectedDay = event;
   }
   public separateTimeFromDate(args: string): string {
     const [date, time] = args.split('T');
@@ -96,6 +97,7 @@ export class SaveActivityComponent implements OnInit {
     if (!data.start) {
       this.form = new FormGroup({
         'title': new FormControl(data.title),
+        'selectedDay': new FormControl(this.selectedDay),
         'start': new FormControl('08:00'),
         'end': new FormControl('09:00'),
         'backgroundColor': new FormControl('#F0F6FE'),
@@ -104,6 +106,7 @@ export class SaveActivityComponent implements OnInit {
         'type': new FormControl('activity'),
         'invitingCustomer': new FormControl(false),
         'additions': new FormControl(),
+        'haveAdditions' : new FormControl(true),
         'svgUrl': new FormControl(data.svgUrl),
         'img': new FormControl(data.img)
       });
@@ -111,8 +114,13 @@ export class SaveActivityComponent implements OnInit {
       this.updateForm = true;
       data.start = this.separateTimeFromDate(data.start);
       data.end = this.separateTimeFromDate(data.end);
-      this.orderingCustomer = data.invitingCustomer;
-      this.additonsType = data.additions;
+      this.selectedDay = data.selectedDay;
+      if(data.invitingCustomer){
+        this.orderingCustomer = data.invitingCustomer;
+      }
+      if(data.additions && data.additions.length !== 0){
+        this.additonsType = data.additions;
+      }
       this.form = new FormGroup({});
       for (const property in data) {
         this.form.addControl(property, new FormControl(data[property]));

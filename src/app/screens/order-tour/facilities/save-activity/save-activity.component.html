@@ -1,7 +1,7 @@
 <div class="save-activity" *ngrxLet='selectedActivity$ as activity'>
     <app-modal>
         <app-sleeping-options-by-day (emitCurrentDay)='getDay($event)' [sleepingOptionsByDay]='days'
-            [showSleepAreas]='showSleepAreas'>
+            [showSleepAreas]='showSleepAreas' [currentDay]='selectedDay'>
         </app-sleeping-options-by-day>
         <div class="save-activity__header">
             <div class="save-activity__header-icon">
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="save-activity__additions">
+        <div class="save-activity__additions" *ngIf='form.value.haveAdditions'>
             <div class="save-activity__additions-text"> :תוספות</div>
             <mat-checkbox class="save-activity__additions-checkbox"  *ngFor='let addition of additonsType;let index=index' 
             [(ngModel)]="additonsType[index].completed" >{{addition.name}}</mat-checkbox>
