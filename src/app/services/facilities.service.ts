@@ -35,10 +35,6 @@ export class FacilitiesService {
 
   public findObjectInCalendarArray(id: string | number) {
     const [item] = this.calendarEventsArr.value.filter((item:any) => item.id === id);
-    console.log('item:');
-    console.log(item);
-    
-    
     if (item.type === 'activity') {
       this.updateSelectedActivity(item);
     }
@@ -59,5 +55,14 @@ export class FacilitiesService {
   }
   public getSelectedActivity(): Observable<ActivitiesCardInterface> {
     return this.selectedActivity.asObservable();
+  }
+
+  public updateItemInArrayOfCalendar(args):void {
+    const index = this.calendarEventsArr.value.findIndex((item:any) => item.id === args.id);
+    const arr = [ ...this.calendarEventsArr.value];
+    arr[index] = args;
+    this.calendarEventsArr.next(arr);
+    console.log(this.calendarEventsArr.value);
+    
   }
 }

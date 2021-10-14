@@ -53,7 +53,11 @@ export class FacilitiesComponent implements OnInit {
       className: event.className,
       invitingCustomer: event.invitingCustomer,
       additions: event.additions,
-      type: event.type
+      type: event.type,
+      maxParticipants:event.maxParticipants,
+      availability:event.availability,
+      svgUrl:event.svgUrl,
+      img:event.img
     }
     this.eventsArr.push(tmpObj);
     this.facilitiesService.updateCalendarEventsArr(tmpObj);

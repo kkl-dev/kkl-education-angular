@@ -42,7 +42,8 @@ export class SaveActivityComponent implements OnInit {
       'className': new FormControl('border-activities'),
       'invitingCustomer': new FormControl(),
       'additions': new FormControl(),
-      'type': new FormControl('activity')
+      'type': new FormControl('activity'),
+      'img' : new FormControl(this.activity.img)
     });
   }
   public startTimeChanged(event: string) {
