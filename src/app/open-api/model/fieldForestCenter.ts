@@ -33,5 +33,6 @@ export interface FieldForestCenter {
      * gg
      */
     linkSite?: string;
+    isActive?: boolean;
 }
 

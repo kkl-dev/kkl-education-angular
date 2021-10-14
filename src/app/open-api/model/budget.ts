@@ -15,18 +15,15 @@ import { SubBudget } from './subBudget';
 
 export interface Budget { 
     desc?: string | null;
-    kklAmount?: number;
-    customerAmount?: number;
-    type?: number;
+    kklAmount?: number | null;
+    customerAmount?: number | null;
+    type?: number | null;
     isByCity?: number | null;
     listCity?: Array<City> | null;
-    cityId?: number;
-    incomeBudget?: number;
-    execution?: number;
-    balance?: number;
-    maofBalanceFin?: number;
+    cityId?: number | null;
+    execution?: number | null;
+    balanceFin?: number | null;
     isNeedCalculate?: number | null;
-    budget?: number;
     incomeId?: number;
     incomeName?: string;
     expensesId?: number;

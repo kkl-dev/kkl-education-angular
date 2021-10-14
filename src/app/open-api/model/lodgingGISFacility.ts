@@ -17,6 +17,10 @@ export interface LodgingGISFacility {
      */
     structureId?: number;
     /**
+     * the structure name
+     */
+    structureType?: string;
+    /**
      * three possible values - בנים, בנות,מעורב
      */
     gender?: string;

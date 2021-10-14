@@ -60,7 +60,6 @@ export class HeaderComponent implements OnInit {
       maxDate: new Date(2022, 11, 15),
       freeSpacesArray: this.freeSpacesArray,
     };
-
   }
 
   ngOnInit() {
@@ -182,6 +181,5 @@ export class HeaderComponent implements OnInit {
 
   newSleepingPlaceRecived(sleepingPlace: any) {
     console.log('sleepingPlace: ' + sleepingPlace);
-
   }
 }

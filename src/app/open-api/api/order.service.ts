@@ -23,6 +23,7 @@ import { OrderModel } from '../model/models';
 import { OrderType } from '../model/models';
 import { Status } from '../model/models';
 import { Supplier } from '../model/models';
+import { TempOrder } from '../model/models';
 import { TripModel } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -202,7 +203,7 @@ export class OrderService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Status>(`${this.configuration.basePath}/Order/CancelOrder/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(orderId))}/${encodeURIComponent(String(cause))}/${encodeURIComponent(String(userName))}`,
+        return this.httpClient.get<Status>(`${this.configuration.basePath}/order/CancelOrder/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(orderId))}/${encodeURIComponent(String(cause))}/${encodeURIComponent(String(userName))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -432,7 +433,7 @@ export class OrderService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<OrderType>>(`${this.configuration.basePath}/Order/orderType`,
+        return this.httpClient.get<Array<OrderType>>(`${this.configuration.basePath}/order/orderType`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -548,18 +549,18 @@ export class OrderService {
     }
 
     /**
-     * @param supplierType 
+     * @param orderTypeId 
      * @param tripId 
      * @param orderId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSupplierList(supplierType: number, tripId: number, orderId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Supplier>>;
-    public getSupplierList(supplierType: number, tripId: number, orderId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Supplier>>>;
-    public getSupplierList(supplierType: number, tripId: number, orderId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Supplier>>>;
-    public getSupplierList(supplierType: number, tripId: number, orderId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (supplierType === null || supplierType === undefined) {
-            throw new Error('Required parameter supplierType was null or undefined when calling getSupplierList.');
+    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Supplier>>;
+    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Supplier>>>;
+    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Supplier>>>;
+    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        if (orderTypeId === null || orderTypeId === undefined) {
+            throw new Error('Required parameter orderTypeId was null or undefined when calling getSupplierList.');
         }
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling getSupplierList.');
@@ -588,7 +589,51 @@ export class OrderService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<Supplier>>(`${this.configuration.basePath}/supplier/GetListSupplier/${encodeURIComponent(String(supplierType))}/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(orderId))}`,
+        return this.httpClient.get<Array<Supplier>>(`${this.configuration.basePath}/supplier/getSupplierList/${encodeURIComponent(String(orderTypeId))}/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(orderId))}`,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param tripId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getTempOrders(tripId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<TempOrder>>;
+    public getTempOrders(tripId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<TempOrder>>>;
+    public getTempOrders(tripId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<TempOrder>>>;
+    public getTempOrders(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        if (tripId === null || tripId === undefined) {
+            throw new Error('Required parameter tripId was null or undefined when calling getTempOrders.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.get<Array<TempOrder>>(`${this.configuration.basePath}/tempOrder/${encodeURIComponent(String(tripId))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

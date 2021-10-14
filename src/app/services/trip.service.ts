@@ -4,7 +4,7 @@ import { FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/open-api/api/user.service';
 import { SelectOption } from '../components/form/logic/question-base';
-import { ForestCenter } from '../models/forest-center.model';
+// import { ForestCenter } from '../models/forest-center.model';
 import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer, ActivityType, BudgetByParams, Budget } from '../open-api';
 import { SquadBudgetService } from '../screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
 import { SquadClientService } from '../screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
@@ -396,7 +396,7 @@ export class TripService {
             this.squadBudgetService.budget.budget = this.budget.kklAmount;
             this.squadBudgetService.budget.expense = this.budget.customerAmount;
             this.squadBudgetService.budget.deliver = this.budget.execution;
-            this.squadBudgetService.budget.overflow = this.budget.balance;
+            //this.squadBudgetService.budget.overflow = this.budget.balance;
             this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
           }
         }

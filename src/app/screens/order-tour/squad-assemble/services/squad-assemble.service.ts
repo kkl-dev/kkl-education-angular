@@ -27,7 +27,7 @@ export class SquadAssembleService {
   );
 
   freeSpacesArray: FreeSpace[] = [];
-  tripInfo: TripInfo = {}
+  tripInfo: TripInfo;
   formsArray: FormGroup[] = [];
   filledNightsArray :[];
   Customer = {} as BaseCustomer;

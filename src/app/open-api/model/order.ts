@@ -16,25 +16,22 @@ import { Supplier } from './supplier';
 
 export interface Order { 
     tripId?: number;
-    indx?: number;
+    orderId?: number;
     status?: Status;
     orderType?: OrderType;
     supplier?: Supplier;
-    comment?: string | null;
-    guideId?: number | null;
-    atarId?: number | null;
+    comment?: string;
+    siteId?: number | null;
     sentToSupplier?: string | null;
     sentBy?: string | null;
     voucherNum?: number | null;
     cancelDate?: string | null;
     causeCancellation?: string | null;
     cancelBy?: string | null;
-    billId?: number | null;
-    paid?: number | null;
+    paidToSupplier?: number | null;
     userName?: string | null;
     openDate?: string | null;
     finOrderType?: string | null;
-    sentByUser?: string | null;
     budgetItem?: number | null;
     confirmDate?: string | null;
     confirmBy?: string | null;
@@ -45,6 +42,5 @@ export interface Order {
     confirmCancelDate?: string | null;
     confirmCancelUserTz?: number | null;
     supplierProcedureNum?: string | null;
-    numGuide?: number | null;
 }
 

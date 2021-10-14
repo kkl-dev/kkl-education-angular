@@ -23,110 +23,16 @@ export interface InfoCard {
 
 export class EducationResultsComponent implements OnInit {
   @ViewChild(MapsComponent) child: MapsComponent;
+
   forestCenter: any | undefined;
-  //forestCenter: any | undefined = this.tripService.centerField || {};
   sleepingDates: any;
   fromOtherComponent: boolean = true;
-  //public facilitiesArray: InfoCard[] = [];
+  facilityForDay: any;
+  AvailableSleepingOptions: any;
   facilitiesArray: any = [{
     "date": "2021-09-10T:00:00:00",
     "facilitiesList": []
   }];
-
-  facilityForDay: any;
-
-  ////yak del 19-9-21
-  // sleepingOptionsByDay: {
-  //   day: string;
-  //   options: {
-  //     svgUrl: string;
-  //     sleepingAreas: number;
-  //     avialableSpaces: number;
-  //     type: string;
-  //     singleUnit: string;
-  //   }[];
-  // }[] = [
-  //     {
-  //       day: '01.9.21',
-  //       options: [
-  //         {
-  //           svgUrl: 'assets/images/cabin.svg',
-  //           sleepingAreas: 42,
-  //           avialableSpaces: 146,
-  //           type: 'בקתות',
-  //           singleUnit: 'בבקתה',
-  //         },
-  //         {
-  //           svgUrl: 'assets/images/tent.svg',
-  //           sleepingAreas: 44,
-  //           avialableSpaces: 46,
-  //           type: 'אוהלים',
-  //           singleUnit: 'באוהל',
-  //         },
-  //         {
-  //           svgUrl: 'assets/images/camp.svg',
-  //           sleepingAreas: 41,
-  //           avialableSpaces: 1670,
-  //           type: 'גיחה',
-  //           singleUnit: 'לנים',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       day: '02.9.21',
-  //       options: [
-  //         {
-  //           svgUrl: 'assets/images/cabin.svg',
-  //           sleepingAreas: 5,
-  //           avialableSpaces: 166,
-  //           type: 'בקתות',
-  //           singleUnit: 'בבקתה',
-  //         },
-  //         {
-  //           svgUrl: 'assets/images/tent.svg',
-  //           sleepingAreas: 64,
-  //           avialableSpaces: 636,
-  //           type: 'אוהלים',
-  //           singleUnit: 'באוהל',
-  //         },
-  //         {
-  //           svgUrl: 'assets/images/camp.svg',
-  //           sleepingAreas: 1,
-  //           avialableSpaces: 670,
-  //           type: 'גיחה',
-  //           singleUnit: 'לנים',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       day: '03.9.21',
-  //       options: [
-  //         {
-  //           svgUrl: 'assets/images/cabin.svg',
-  //           sleepingAreas: 72,
-  //           avialableSpaces: 476,
-  //           type: 'בקתות',
-  //           singleUnit: 'בבקתה',
-  //         },
-  //         {
-  //           svgUrl: 'assets/images/tent.svg',
-  //           sleepingAreas: 4,
-  //           avialableSpaces: 372,
-  //           type: 'אוהלים',
-  //           singleUnit: 'באוהל',
-  //         },
-  //         {
-  //           svgUrl: 'assets/images/camp.svg',
-  //           sleepingAreas: 1,
-  //           avialableSpaces: 10,
-  //           type: 'גיחה',
-  //           singleUnit: 'לנים',
-  //         },
-  //       ],
-  //     },
-  //   ];
-
-  AvailableSleepingOptions: any;
 
   constructor(private router: Router, private checkAvailabilityService: CheckAvailabilityService,
     public usersService: UserService, private route: ActivatedRoute,
@@ -175,16 +81,8 @@ export class EducationResultsComponent implements OnInit {
     console.log(this.tripService);
     //this.changeDatesHandler(this.tripService.sleepingDates.from + "-" + this.tripService.sleepingDates.till);
 
-   // if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
       this.sleepingDates = this.tripService.sleepingDates;
-      // for (let key in this.sleepingDates) {
-      //   let value = this.sleepingDates[key];
-      //   // Use `key` and `value`
-      //   console.log('key :' + key);
-      //   console.log('value :' + value);
-      // }
-    //}
 
     this.tripService.AvailableSleepingOptions.subscribe(AvailableSleepingOptions => {      
       this.AvailableSleepingOptions = AvailableSleepingOptions; // this set's the username to the default observable value
