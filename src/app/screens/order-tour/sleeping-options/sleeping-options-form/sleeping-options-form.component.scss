@@ -2,9 +2,18 @@
   // display: flex;
   // justify-content: space-evenly;
   // align-items: baseline;
-  flex-direction: row-reverse;
+  // flex-direction: row-reverse;
   margin-top: 15px;
   padding: 10px;
+
+  &__form{
+    display: flex;
+    justify-content: space-around; 
+    width: 100%; 
+    & *{
+      flex: 1 1 100%; 
+    }
+  }
 
   &__name {
     margin: 0 !important;
@@ -17,15 +26,15 @@
   mat-label,
   ::ng-deep .mat-form-field-outline,
   ::ng-deep .mat-form-field-outline-thick {
-    flex-direction: row-reverse;
+    // flex-direction: row-reverse;
   }
 
-  // ::ng-deep .mat-form-field-label {
-  //   text-align: left !important;
-  // }
-  ::ng-deep .mat-empty {
+  ::ng-deep .mat-form-field-label {
     text-align: right !important;
   }
+  // ::ng-deep .mat-empty {
+  //   text-align: right !important;
+  // }
 
   // ::ng-deep .mat-form-field {
   //   text-align: left !important;
@@ -67,17 +76,22 @@
       max-width: 40% !important;
       margin: 0 2rem !important;
     }
-
+    &__form{
+      display: block;
+      width: 100%; 
+      max-width: 100% !important;
+    }
     ::ng-deep .mat-form-field-appearance-outline,
     ::ng-deep .mat-select-arrow-wrapper {
       transform: translateY(-7%);
     }
-    ::ng-deep
-      airbnb-calendar
-      ~ .mat-form-field-label-wrapper
-      > .mat-form-field-label {
-      text-align: right !important;
-    }
+    // ::ng-deep
+    //   airbnb-calendar
+    //   ~ .mat-form-field-label-wrapper
+    //   >
+    //    .mat-form-field-label {
+    //   text-align: left !important;
+    // }
   }
   .placeholder {
     font-size: 14px !important     ;
