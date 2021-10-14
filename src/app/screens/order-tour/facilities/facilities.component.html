@@ -1,4 +1,4 @@
-<div class="facilities">
+<div class="facilities" div fxLayout="row" fxLayoutAlign="space-evenly none" fxFlex='100'>
     <app-add-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'addActivity'">
     </app-add-activity>
     <app-save-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'activity'"
@@ -6,7 +6,8 @@
     </app-save-activity>
     <app-add-facility [facility]='(selectedFacility$ | async)' (emitFormValues)='addToCalendar($event)'
         *ngIf="(closeModal$ | async) === 'facility'"></app-add-facility>
-    <div class="content-1">
+
+    <div class="content-1" fxFlex='45'>
         <div class="card">
             <div class="header">
             </div>
@@ -24,13 +25,13 @@
 
         </div>
     </div>
-    <div class="content-2">
-        <div class="header">
-            <div class="title">
-                <p>הוספת מתקנים ופעילויות ללו"ז</p>
-                <button (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
+    <div class="content-2" fxFlex='45'>
+        <div class="header"  fxLayout="column" > 
+            <div class="title" fxLayoutAlign="space-between baseline" dir='rtl'>
+                <p fxFlex='50'>הוספת מתקנים ופעילויות ללו"ז</p>
+                <button fxFlex='25' (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
             </div>
-            <div class="forms">
+            <div class="forms" fxFlex='100'>
                 <app-form-container [questions]='formArray' [cols]='4'>
                 </app-form-container>
             </div>

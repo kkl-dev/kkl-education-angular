@@ -13,9 +13,7 @@
   }
 
 .facilities {
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-evenly;
+ 
     ::ng-deep app-pagination {
         direction: rtl;
         color: color(primary) !important;
@@ -55,11 +53,8 @@
             background: #8dc5f5;
         }
         .header {
-            display: flex;
-            flex-direction: row-reverse;
-            align-items: center;
+
             background: #f3f3f3;
-            justify-content: space-between;
             p {
                 background: #ffffff;
                 padding: 10px;
@@ -91,15 +86,7 @@
         }
     }
 }
-.content-1 {
-    justify-content: center;
-    margin-right: 20px;
-}
-.content-1,
-.content-2 {
-    display: flex;
-    flex: 1;
-}
+
 .square {
     height: 12px;
     width: 12px;
@@ -118,10 +105,6 @@
 
 .content-2 {
     display: block;
-    border-left: 1px solid #d1d1d1;
-    .header {
-        width: 90%;
-    }
     .titles {
         width: 90%;
         float: right;
@@ -134,12 +117,6 @@
         }
     }
     .title {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row-reverse;
-        margin: 0 auto;
-        position: relative;
-        left: 90px;
         p {
             font-size: 24px;
             font-weight: 600;
@@ -162,12 +139,10 @@
     .forms {
         width: 100%;
         padding: 20px;
-        margin-left: 70px;
     }
 }
 app-info-card {
     text-align: center;
-    margin: 50px;
 }
 app-tooltip {
     display: none;
@@ -180,9 +155,11 @@ app-tooltip {
 }
 .info-card {
     display: inline-grid;
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: repeat(5,1fr);
     position: relative;
     direction: rtl;
+    row-gap: 5rem;
+    width: 100%;
 }
 
 #activities {
