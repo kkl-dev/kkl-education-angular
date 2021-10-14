@@ -49,7 +49,7 @@ export class SizeDirective implements OnInit, OnDestroy {
         break;
       case 'step':
         this.width = `${this.size}rem !important`;
-        this.height = `12rem !important`;
+        this.height = `8rem !important`;
         break;
       default:
         this.width = `${this.size * (this.divider || 1)}rem`;
