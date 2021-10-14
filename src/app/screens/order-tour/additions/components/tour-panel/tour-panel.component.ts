@@ -12,6 +12,7 @@ export class TourPanelComponent implements OnInit {
 
   @Input() editMode: boolean;
   @Input() schedule: ScheduleModel;
+  @Input() item: any;
   @Input() i: number;
 
   ngOnInit(): void {

@@ -9,10 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { FacilityOrder } from './facilityOrder';
+import { TempOrder } from './tempOrder';
+import { TripActivity } from './tripActivity';
 
 
-export interface Status { 
-    id?: number;
-    name?: string;
+export interface TripCalendar { 
+    tempOrderList?: Array<TempOrder>;
+    activityList?: Array<TripActivity>;
+    facilityOrderList?: Array<FacilityOrder>;
 }
 

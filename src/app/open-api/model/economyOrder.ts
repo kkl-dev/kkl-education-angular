@@ -9,13 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Order } from './order';
+import { OrderItemCommonDetails } from './orderItemCommonDetails';
 import { OrderEvent } from './orderEvent';
 
 
-export interface OrderModel { 
-    orderList?: Array<OrderEvent>;
-    totalPayCustomer?: number | null;
-    totalPaySupplier?: number | null;
-    totalPayAfterKklSubsidy?: number | null;
+export interface EconomyOrder extends OrderEvent { 
+    servingTime?: string;
+    location?: string;
+    regularDishesNumber?: number;
+    vegetarianDishesNumber?: number;
+    veganDishesNumber?: number;
 }
 

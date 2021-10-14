@@ -4,49 +4,53 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LocationModel } from '../models/location.model';
 import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
+import { OrderEvent, OrderModel, OrderType, TempOrder, TransportOrder } from 'src/app/open-api';
+import { TripService } from 'src/app/services/trip.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdditionsService {
-
+  item = {} as TransportOrder;
+  orderTypes: OrderType[];
+  tempOrder: TempOrder[];
   private steps: StepModel[] = [
-    {
-      label: 'היסעים',
-      isActive: true,
-      svgUrl: 'bus',
-      badgeValue: 3,
-    },
-    {
-      label: 'אבטחה',
-      isActive: false,
-      svgUrl: 'shield',
-    },
-    {
-      label: 'אתרים',
-      isActive: false,
-      svgUrl: 'site',
-    },
-    {
-      label: 'כלכלה',
-      isActive: false,
-      svgUrl: 'dinner',
-    },
-    {
-      label: 'אירוח',
-      isActive: false,
-      svgUrl: 'tent',
-    },
-    {
-      label: 'הדרכה',
-      isActive: false,
-      svgUrl: 'guide',
-    },
-    {
-      label: 'הפעלה מוסיקלית',
-      isActive: false,
-      svgUrl: 'music',
-    },
+    // {
+    //   label: 'היסעים',
+    //   isActive: true,
+    //   svgUrl: 'bus',
+    //   badgeValue: 3,
+    // },
+    // {
+    //   label: 'אבטחה',
+    //   isActive: false,
+    //   svgUrl: 'shield',
+    // },
+    // {
+    //   label: 'אתרים',
+    //   isActive: false,
+    //   svgUrl: 'site',
+    // },
+    // {
+    //   label: 'כלכלה',
+    //   isActive: false,
+    //   svgUrl: 'dinner',
+    // },
+    // {
+    //   label: 'אירוח',
+    //   isActive: false,
+    //   svgUrl: 'tent',
+    // },
+    // {
+    //   label: 'הדרכה',
+    //   isActive: false,
+    //   svgUrl: 'guide',
+    // },
+    // {
+    //   label: 'הפעלה מוסיקלית',
+    //   isActive: false,
+    //   svgUrl: 'music',
+    // },
   ];
 
   private locationsSubject = new BehaviorSubject<LocationModel[]>([])
@@ -55,8 +59,14 @@ export class AdditionsService {
   private scheduleSubject = new BehaviorSubject<ScheduleModel[]>([])
   public schedule$: Observable<ScheduleModel[]> = this.scheduleSubject.asObservable();
 
+  private itemSubject = new BehaviorSubject<TransportOrder[]>([])
+  public item$: Observable<TransportOrder[]> = this.itemSubject.asObservable();
+
+  public emitItem(item: TransportOrder[]) {
+    this.itemSubject.next(item)
+  }
   constructor(
-    private stepperService: StepperService
+    private stepperService: StepperService, tripService: TripService
   ) { }
 
   public getSteps(): StepModel[] {
@@ -75,4 +85,12 @@ export class AdditionsService {
     this.locationsSubject.next(locations)
   }
 
+
+  public orderList: OrderEvent[] = []
+  public orderToServer = {} as OrderModel
+  addOrderItems(item: any) {
+    // this.item$.subscribe(response => this.orderList = response);
+    this.orderList.push(item);
+    console.log(this.orderList);
+  }
 }

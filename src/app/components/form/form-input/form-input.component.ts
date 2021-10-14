@@ -83,7 +83,7 @@ export class FormInputComponent implements OnInit {
     switch (name) {
       case 'dates':
         if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
-          this.control.setValue(this.tripService.sleepingDates.from+ '-'+ this.tripService.sleepingDates.till);
+          this.control.setValue(this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
           if (typeof (Storage) !== "undefined") {
             localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
           }
@@ -92,7 +92,7 @@ export class FormInputComponent implements OnInit {
           this.control.setValue(localStorage.getItem("sleepingDates"));
         }
         break;
-     
+
       case 'centerField':
         if (this.tripService.centerField.id != 0) {
           this.control.setValue(this.tripService.centerField.id.toString());
@@ -180,9 +180,9 @@ export class FormInputComponent implements OnInit {
       }
       //let str = this.squadAssemble.formsArray[index].controls['tripStart'].value.split("/");
       let tripDatesArr = this.squadAssemble.formsArray[index].controls['dates'].value.split("-");
-      let tripStart= tripDatesArr[0];
-      let tripStartArr= tripStart.split("/");
-      tripStart=  tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
+      let tripStart = tripDatesArr[0];
+      let tripStartArr = tripStart.split("/");
+      tripStart = tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
       this.tripService.budgetByParam.tripStart = tripStart;
       this.tripService.getBudgetKKl(this.tripService.budgetByParam);
       // index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
@@ -194,7 +194,6 @@ export class FormInputComponent implements OnInit {
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
     if (this.name === 'location') {
-      this.tripService.budgetByParam.budget.cityId = parseInt(this.control.value);
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
 

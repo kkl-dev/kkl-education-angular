@@ -1,6 +1,10 @@
 import { AdditionsService } from './../../services/additions.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { StepModel } from 'src/app/utilities/models/step.model';
+import { UserService } from 'src/app/open-api';
+import { OrderService } from 'src/app/open-api';
+import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
+import { tourTransport } from 'src/mock_data/transport';
 
 
 @Component({
@@ -13,18 +17,46 @@ export class NavigationGridComponent implements OnInit {
   @Input() public steps: StepModel[];
 
   public title: string = "תוספות"
+  public tempOrderReduce: any;
 
   constructor(
-    private additionsService: AdditionsService
-  ) { }
+    private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private userService: UserService, private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.steps = this.additionsService.getSteps()
+    this.getOrderTypes()
+    // this.steps = this.additionsService.getSteps()
   }
-
-  public onChangeStep(step: StepModel) {
+  convertStepsModel() {
+    this.steps = [];
+    for (var i in this.additionsService.orderTypes) {
+      var step = {} as StepModel;
+      step.label = this.additionsService.orderTypes[i].name
+      // step.svgUrl = this.additionsService.orderTypes[i].iconPath
+      for (var j in this.tempOrderReduce) {
+        if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) { step.badgeValue = this.tempOrderReduce[j].length; }
+      }
+      this.steps.push(step)
+    }
+  }
+  getOrderTypes() {
+    this.orderService.getOrderTypes().subscribe(
+      response => {
+        console.log(response)
+        this.additionsService.orderTypes = response;
+        this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
+          let key = obj['orderTypeCode']
+          if (!acc[key]) { acc[key] = [] }
+          acc[key].push(obj)
+          return acc
+        }, {})
+        // this.convertStepsModel();
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+  onChangeStep(step: StepModel) {
     this.additionsService.updateStepStatus(step, 'label')
     this.steps = this.additionsService.getSteps()
   }
-
 }

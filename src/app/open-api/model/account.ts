@@ -13,13 +13,13 @@
 
 export interface Account { 
     userId?: string;
-    userName?: string | null;
-    userNameEng?: string | null;
+    userName?: string;
+    userNameEng?: string;
     password?: string;
-    email?: string | null;
-    phone?: string | null;
+    email?: string;
+    phone?: string;
     currentPermissionId?: number | null;
-    currentPermissionName?: string | null;
+    currentPermissionName?: string;
     fromRegion?: number | null;
     toRegion?: number | null;
     isCanSendConfirmation?: number | null;

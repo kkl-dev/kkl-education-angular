@@ -21,68 +21,61 @@ import { Country } from './country';
 import { Budget } from './budget';
 
 
-/**
- * describes the all trip details
- */
 export interface TripInfo { 
     id?: number | null;
-    tripDescription?: string | null;
-    activity?: ActivityType;
-    ageGroup?: AgeGroup;
-    attribute?: TripAttribute;
+    tripDescription: string;
+    tripStart: string;
+    tripEnding: string;
+    centerField: FieldForestCenter;
+    activity: ActivityType;
+    ageGroup: AgeGroup;
+    attribute: TripAttribute;
     areaTrip?: Area;
     budget?: Budget;
-    customer?: BaseCustomer;
+    customer: BaseCustomer;
     kklWorkerId?: number;
     kklWorkerName?: string;
-    customerType?: string;
-    customerRegionName?: string;
     customerPay?: BaseCustomer;
-    customerPayType?: string;
-    customerPayRegionName?: string;
-    centerField?: FieldForestCenter;
-    commentManager?: string | null;
-    contactName?: string | null;
-    contactPhone?: string | null;
-    contactEmail?: string | null;
-    confirm?: string | null;
-    customerSignatureDate?: string | null;
-    confirmBy?: string | null;
+    commentManager?: string;
+    contactName: string;
+    contactPhone: string;
+    contactEmail: string;
+    confirm?: string;
+    customerSignatureDate?: string;
+    confirmBy?: string;
     country?: Country;
     /**
      * 1= Israel, 8= Abroad
      */
-    departmentId?: number;
+    departmentId: number;
     lodgingReservation?: Array<LodgingReservation>;
-    tripEnding?: string;
     /**
      * Trip creation date
      */
     generateTime?: string;
     language?: Language;
     numAccompanied?: number;
-    numAdultAndYoung?: number;
+    numAdultAndYoung: number;
     numAccompaniedAndGuide?: number;
     numGuides?: number;
     numDrivers?: number;
     numShtilim?: number;
     noPayment?: number | null;
-    tripStart?: string;
     tripStatusId?: number;
     tripStatusName?: string;
-    userMobile?: string | null;
-    userId?: string | null;
-    userName?: string | null;
-    reasonUnConfirm?: string | null;
+    userMobile?: string;
+    userId?: string;
+    userName: string;
+    reasonUnConfirm?: string;
     /**
      * 1=Inside center, 2=Outside center
      */
-    insideCenterFieldId?: number;
-    addressCasualCustomer?: string | null;
-    cityCasualCustomer?: string | null;
+    insideCenterFieldId: number;
+    addressCasualCustomer?: string;
+    cityCasualCustomer?: string;
     zipCasualCustomer?: number | null;
-    phoneCasualCustomer?: string | null;
-    nameCasualCustomer?: string | null;
+    phoneCasualCustomer?: string;
+    nameCasualCustomer?: string;
     isSalKKlGroup?: number | null;
     isOccupancyProblematic?: number | null;
 }

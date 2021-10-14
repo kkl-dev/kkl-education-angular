@@ -11,15 +11,18 @@
  */
 
 
-export interface TripAttribute { 
-    id?: number;
-    name?: string;
-    budgetId?: number | null;
-    budgetName?: string;
+export interface TripActivity { 
+    activityId?: number;
+    activityName?: string;
     /**
-     * subsidization 1 to 25 ratio
+     * refers to indentity record on data base
      */
-    subsidization1To25?: number | null;
-    autoCustomerId?: number | null;
+    tripActivityIdentity?: number;
+    categoryId?: number;
+    date?: string;
+    description?: string;
+    hourStart?: string;
+    hourEnd?: string;
+    tripId?: number;
 }
 

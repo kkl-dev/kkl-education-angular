@@ -9,10 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Order } from './order';
+import { OrderItemCommonDetails } from './orderItemCommonDetails';
+import { OrderEvent } from './orderEvent';
 
 
-export interface Status { 
-    id?: number;
-    name?: string;
+export interface TransportOrder extends OrderEvent { 
+    pickUpLocation?: string;
+    pickUpAddress?: string;
 }
 

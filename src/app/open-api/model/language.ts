@@ -12,8 +12,8 @@
 
 
 export interface Language { 
-    id?: number | null;
-    name?: string | null;
-    countryId?: number | null;
+    id?: number;
+    name?: string;
+    countryId?: number;
 }
 

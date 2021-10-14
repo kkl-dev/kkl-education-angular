@@ -12,10 +12,10 @@
 
 
 export interface ItemsByTypeOrder { 
-    id?: number | null;
-    name?: string | null;
+    id?: number;
+    name?: string;
     cost?: number;
-    title?: string | null;
+    title?: string;
     type?: number;
     costCustomer?: number;
     costSupplier?: number;
@@ -28,7 +28,7 @@ export interface ItemsByTypeOrder {
     orderType?: number | null;
     isSumPeopleOrAmount?: number | null;
     groupTypeId?: number | null;
-    weekPart?: string | null;
+    weekPart?: string;
     typeSleepId?: number | null;
     customerId?: string | null;
     supplierId?: number | null;

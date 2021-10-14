@@ -12,8 +12,8 @@
 
 
 export interface ActivityType { 
-    id: number | null;
-    name: string | null;
+    id: number;
+    name: string;
     attributeId?: number | null;
     isCustomerSignature?: number | null;
     isOnDay?: number | null;

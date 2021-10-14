@@ -12,9 +12,9 @@
 
 
 export interface Country { 
-    id?: number | null;
-    name?: string | null;
+    id?: number;
+    name?: string;
     currencyId?: number | null;
-    nameEng?: string | null;
+    nameEng?: string;
 }
 
