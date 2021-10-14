@@ -7,8 +7,9 @@ import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { SquadAssembleService } from './squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
-import { UserService } from 'src/app/open-api';
+import { OrderService, UserService } from 'src/app/open-api';
 import { Location } from '@angular/common';
+import { AdditionsService } from './additions/services/additions.service';
 
 @Component({
   selector: 'app-order-tour',
@@ -37,8 +38,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     private squadAssemble: SquadAssembleService,
     private tripService: TripService,
     private userService: UserService,
+    private orderService: OrderService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private additionsService: AdditionsService
   ) { }
 
   ngOnInit(): void {
@@ -120,6 +123,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     }
     this.router.navigateByUrl(`/education/order-tour/${step.path}`);
     this.updateStepsStatus(step);
+    this.additionsService.orderToServer.orderList = this.additionsService.orderList;
+    // this.orderService.addOrder(this.additionsService.orderToServer)
   }
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
@@ -208,7 +213,6 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   createTrip() {
     let tripInfo = this.squadAssemble.tripInfo;
-
     let obj = this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation = obj;
     for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {

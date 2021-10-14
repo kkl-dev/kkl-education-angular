@@ -14,7 +14,7 @@ import { SubBudget } from './subBudget';
 
 
 export interface Budget { 
-    desc?: string | null;
+    desc?: string;
     kklAmount?: number | null;
     customerAmount?: number | null;
     type?: number | null;

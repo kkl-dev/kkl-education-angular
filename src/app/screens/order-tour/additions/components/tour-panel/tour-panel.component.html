@@ -1,7 +1,7 @@
 <div class="tour-container">
   <div class="tour-header">
-    <app-typography [size]="18" [bold]="600" color="primary" *ngIf="item.common.startDate">
-      יום {{ i }} : {{ item.common.startDate | date: "M/d/yy" }}
+    <app-typography [size]="18" [bold]="600" color="primary" *ngIf="item.globalParameters?.startDate">
+      יום {{ i }} : {{ item.globalParameters.startDate | date: "M/d/yy" }}
     </app-typography>
   </div>
   <div class="tour-days">
@@ -17,8 +17,7 @@
           </div> -->
 
           <div description></div>
-          <!-- <app-transport-form [transport]="schedule.transport" [location]="location" [editMode]="editMode" content>
-          </app-transport-form> [location]="location"-->
+         <!-- [location]="location" -->
           <app-transport-form [transport]="item"  [editMode]="editMode" content>
           </app-transport-form>
           <app-transport-details *ngIf="editMode" content></app-transport-details>

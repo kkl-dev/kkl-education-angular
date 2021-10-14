@@ -15,6 +15,6 @@ import { OrderItemCommonDetails } from './orderItemCommonDetails';
 
 export interface OrderEvent { 
     order?: Order;
-    common?: OrderItemCommonDetails;
+    globalParameters?: OrderItemCommonDetails;
 }
 

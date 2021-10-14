@@ -15,9 +15,9 @@ export interface Movements {
     tripId?: number;
     id?: number;
     typeId?: number;
-    typeName?: string | null;
-    description?: string | null;
-    userName?: string | null;
-    openDate?: string | null;
+    typeName?: string;
+    description?: string;
+    userName?: string;
+    openDate?: string;
 }
 

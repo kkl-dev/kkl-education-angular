@@ -12,9 +12,9 @@
 
 
 export interface OrderType { 
-    id?: number | null;
-    name?: string | null;
+    id?: number;
+    name?: string;
     iconPath?: string;
-    finOrderType?: string | null;
+    finOrderType?: string;
 }
 

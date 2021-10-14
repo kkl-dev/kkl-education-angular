@@ -612,6 +612,7 @@ paths:
       tags:
       - activities
       operationId: CreateTripActivities
+      description:  adding activities ,orderFacilities, and Start an order
       parameters:
       - name: userName
         in: path
@@ -630,7 +631,57 @@ paths:
           description: internal server error
         "400": 
           description: invalid data
- 
+
+  /updateTrip/{userName}:
+    put:
+      tags:
+        - activities
+      operationId: UpdateTripActivities
+      description:  update activities ,orderFacilities, and Start an order
+      parameters:
+        - name: userName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: a tripCalendar to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripCalendar'
+      responses:
+        "200":
+          description: seker object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripCalendar'
+        "400":
+          description: invalid data
+        "500":
+          description: internal server error
+
+
+  /tripCalendar/{tripId}:
+     get:
+      tags:
+      - activities
+      operationId: GetTripCalendar
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer   
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripCalendar' 
 
   /QueueTasks/SearchQueTasks/{tripId}:
     get:
@@ -1341,7 +1392,6 @@ components:
           example: 6
         typeName:
           type: string
-          nullable: true
           example: חול
         identificationTypeId:
           type: integer
@@ -1368,15 +1418,12 @@ components:
           example: 30
         regionName:
           type: string
-          nullable: true
           example: צפון
         cityIdHebName:
           type: string
-          nullable: true
           example: תל אביב
         streetNameHeb:
           type: string
-          nullable: true
           example: מעון
         zipId:
           type: integer
@@ -1384,40 +1431,31 @@ components:
           example: 30
         phone:
           type: string
-          nullable: true
           example: "95869805"
         phoneWorks:
           type: string
-          nullable: true
           example: 00-3333333
         fax:
           type: string
-          nullable: true
           example: 00-4444444
         email:
           type: string
-          nullable: true
           example: test@gmail.com
         contactName:
           type: string
-          nullable: true
           example: דן
         contactPhone:
           type: string
-          nullable: true
           example: 00-9999999
         contactMobile:
           type: string
-          nullable: true
           example: "613566756"
         userName:
           type: string
-          nullable: true
           example: dan
         generateDate:
           type: string
           format: date-time
-          nullable: true
         appId:
           type: integer
           nullable: true
@@ -1456,7 +1494,6 @@ components:
           example: 88887777
         tripDescription:
           type: string
-          nullable: true
           example: school education
         tripStart:
           type: string
@@ -1488,31 +1525,24 @@ components:
           $ref: '#/components/schemas/BaseCustomer'
         commentManager:
           type: string
-          nullable: true
           example: checked well
         contactName:
           type: string
-          nullable: true
           example: dan
         contactPhone:
           type: string
-          nullable: true
           example: "38347922"
         contactEmail:
           type: string
-          nullable: true
           example: test@gmail.com
         confirm:
           type: string
-          nullable: true
           example: confirmed
         customerSignatureDate:
           type: string
           format: date-time
-          nullable: true
         confirmBy:
           type: string
-          nullable: true
           example: dan
         country:
           $ref: '#/components/schemas/Country'
@@ -1560,19 +1590,15 @@ components:
           example: חדש
         userMobile:
           type: string
-          nullable: true
           example: "2222222222"
         userId:
           type: string
-          nullable: true
           example: gadiId
         userName:
           type: string
-          nullable: true
           example: gadi
         reasonUnConfirm:
           type: string
-          nullable: true
           example: not checked
         insideCenterFieldId:
           type: integer
@@ -1580,11 +1606,9 @@ components:
           example: 0
         addressCasualCustomer:
           type: string
-          nullable: true
           example: tel 18
         cityCasualCustomer:
           type: string
-          nullable: true
           example: tel-aviv
         zipCasualCustomer:
           type: integer
@@ -1593,11 +1617,9 @@ components:
           example: 9999
         phoneCasualCustomer:
           type: string
-          nullable: true
           example: "88888"
         nameCasualCustomer:
           type: string
-          nullable: true
           example: eyal
         isSalKKlGroup:
           type: integer
@@ -1615,11 +1637,9 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 8
         name:
           type: string
-          nullable: true
           example: education
         attributeId:
           type: integer
@@ -1673,7 +1693,6 @@ components:
       properties:
         desc:
           type: string
-          nullable: true
           example: education budget
         kklAmount:
           type: integer
@@ -1745,22 +1764,18 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 3
         name:
           type: string
-          nullable: true
           example: מבוגרים
     TripAttribute:
       type: object
       properties:
         id:
           type: integer
-          nullable: true
           example: 2
         name:
           type: string
-          nullable: true
           example: פורמלי
         budgetId:
           type: integer
@@ -1768,7 +1783,6 @@ components:
           example: 5
         budgetName:
           type: string
-          nullable: true
           example: education budget
         subsidization1To25:
           type: integer
@@ -1784,11 +1798,9 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 7
         name:
           type: string
-          nullable: true
           example: desert
         regionId:
           type: integer
@@ -1799,11 +1811,9 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 9
         name:
           type: string
-          nullable: true
           example: tel-aviv
         typeId:
           type: integer
@@ -1813,11 +1823,9 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 15
         name:
           type: string
-          nullable: true
           example: ישראל
         currencyId:
           type: integer
@@ -1825,7 +1833,6 @@ components:
           example: 2
         nameEng:
           type: string
-          nullable: true
           example: Israel
     ParticipantType:
       type: object
@@ -1841,26 +1848,21 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 4
         name:
           type: string
-          nullable: true
           example: hebrew
         countryId:
           type: integer
-          nullable: true
           example: 12
     Status:
       type: object
       properties:
         id:
           type: integer
-          nullable: true
           example: 3
         name:
           type: string
-          nullable: true
           example: active
       
     Movements:
@@ -1877,20 +1879,16 @@ components:
           example: 54
         typeName:
           type: string
-          nullable: true
           example: עדכון
         description:
           type: string
-          nullable: true
           example: update trip
         userName:
           type: string
-          nullable: true
           example: daniId
         openDate:
           type: string
           format: date-time
-          nullable: true
     Account:
       type: object
       properties:
@@ -1899,22 +1897,18 @@ components:
           example: danId
         userName:
           type: string
-          nullable: true
           example: דן
         userNameEng:
           type: string
-          nullable: true
           example: dan
         password:
           type: string
           example: kkkk
         email:
           type: string
-          nullable: true
           example: test@gmail.com
         phone:
           type: string
-          nullable: true
           example: "6666666666"
         currentPermissionId:
           type: integer
@@ -1922,7 +1916,6 @@ components:
           example: 6
         currentPermissionName:
           type: string
-          nullable: true
           example: readonly
         fromRegion:
           type: integer
@@ -2011,6 +2004,10 @@ components:
         activityName: 
           type: string
           example: 'חינוך'
+        tripActivityIdentity :
+          type: integer
+          description: refers to indentity record on data base
+          example: 56
         categoryId:
           type: integer
           example: 2
@@ -2081,7 +2078,20 @@ components:
        orderTypeName:
         type: string
         example : 'היסעים'
-       date: 
+       orderId: 
+         type: integer
+         example : 12345
+       orderItemId:
+         type: integer
+         example : 123
+       orderItemName:
+         type: string
+         example: אוטובוס
+       startDate: 
+          type: string
+          format: date-time
+          example: '2021-11-12T00:00:00'
+       endDate: 
           type: string
           format: date-time
           example: '2021-11-12T00:00:00'
@@ -2136,23 +2146,18 @@ components:
         sentToSupplier:
           type: string
           format: date-time
-          nullable: true
         sentBy:
           type: string
-          nullable: true
         voucherNum:
           type: integer
           nullable: true
         cancelDate:
           type: string
           format: date-time
-          nullable: true
         causeCancellation:
           type: string
-          nullable: true
         cancelBy:
           type: string
-          nullable: true
         # billId:
         #   type: integer
         #   nullable: true
@@ -2161,49 +2166,38 @@ components:
           nullable: true
         userName:
           type: string
-          nullable: true
         openDate:
           type: string
           format: date-time
-          nullable: true
         finOrderType:
           type: string
-          nullable: true
         # sentByUser:
         #   type: string
         #   nullable: true
         budgetItem:
           type: integer
-          nullable: true
         confirmDate:
           type: string
           format: date-time
-          nullable: true
         confirmBy:
           type: string
-          nullable: true
         confirmUserTz:
           type: integer
           nullable: true
         confirmByUser:
           type: string
-          nullable: true
         confirmCancelBy:
           type: string
-          nullable: true
         confirmCancelByUser:
           type: string
-          nullable: true
         confirmCancelDate:
           type: string
           format: date-time
-          nullable: true
         confirmCancelUserTz:
           type: integer
           nullable: true
         supplierProcedureNum:
           type: string
-          nullable: true
         # numGuide:
         #   type: integer
         #   nullable: true
@@ -2455,17 +2449,16 @@ components:
       properties:
         itemId:
           type: integer
-          nullable: true
         itemIndex:
           type: integer
         orderItemDetails:
           $ref: '#/components/schemas/ItemsByTypeOrder'
-        amount:
-          type: integer
-          nullable: true
+        # amount:
+        #   type: integer
+        quantity:
+         type: integer
         itemCost:
           type: number
-          nullable: true
         billingSupplier:
           type: number
           nullable: true
@@ -2478,19 +2471,18 @@ components:
         startDate:
           type: string
           format: date-time
-          nullable: true
         endDate:
           type: string
           format: date-time
-          nullable: true
         startHour:
           type: string
           format: date-time
-          nullable: true
         endHour:
           type: string
           format: date-time
-          nullable: true
+        userName:
+          type: string
+           
 
     OrderEvent:
       discriminator:  
@@ -2499,7 +2491,8 @@ components:
       properties:
        order:
            $ref: '#/components/schemas/Order' 
-       common: 
+       globalParameters: 
+           description: Common parameters for all types of orders
            $ref: '#/components/schemas/OrderItemCommonDetails'
     
     TransportOrder:
@@ -2507,15 +2500,12 @@ components:
       allOf: 
         - $ref: '#/components/schemas/OrderEvent'
       properties:
-        exitPoint:
-          type: integer
-          nullable: true
-        endPlace:
+        pickUpLocation:
           type: string
-          nullable: true
-        exitPlace:
+        pickUpAddress:
           type: string
-          nullable: true
+        # scatterAddress:
+        #   type: string
     
     SiteOrder:
         type: object
@@ -2590,25 +2580,20 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
         name:
           type: string
-          nullable: true
         iconPath:
           type: string
           example: 'http://'
         finOrderType:
           type: string
-          nullable: true
     Supplier:
       type: object
       properties:
         id:
           type: integer
-          nullable: true
         name:
           type: string
-          nullable: true
         finId:
           type: number
           nullable: true
@@ -2617,7 +2602,6 @@ components:
           nullable: true
         address:
           type: string
-          nullable: true
         supplierType:
           type: integer
           nullable: true
@@ -2626,19 +2610,14 @@ components:
           nullable: true
         phone:
           type: string
-          nullable: true
         email:
           type: string
-          nullable: true
         fax:
           type: string
-          nullable: true
         contact:
           type: string
-          nullable: true
         registrationNum:
           type: string
-          nullable: true
         supplierFinId:
           type: integer
         isGuideSupplier:
@@ -2649,15 +2628,12 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
         name:
           type: string
-          nullable: true
         cost:
           type: number
         title:
           type: string
-          nullable: true
         type:
           type: integer
         costCustomer:
@@ -2691,7 +2667,6 @@ components:
           nullable: true
         weekPart:
           type: string
-          nullable: true
         typeSleepId:
           type: integer
           nullable: true

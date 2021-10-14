@@ -48,9 +48,9 @@ export class AdditionsComponent implements OnInit {
   }
 
   public onAdd() {
-    this.schedule = new ScheduleModel();
+    // this.schedule = new ScheduleModel();
     // this.addSchedule = true;
-    // this.item = new TransportOrder();
+    this.item = {} as TransportOrder;
     this.addItem = true;
   }
   getTempOrder() {
@@ -63,22 +63,21 @@ export class AdditionsComponent implements OnInit {
         var TransportOrderList = [];
         for (var i in response) {
           var t = {} as TransportOrder;
-          t.common = {} as OrderItemCommonDetails;
+          t.globalParameters = {} as OrderItemCommonDetails;
           t.order = {} as Order;
           t.order.orderType = {} as OrderType;
-          t.common.startDate = response[i].date;
-          t.common.endDate = response[i].date;
-          t.common.startHour = response[i].fromHour;
-          t.common.endHour = response[i].tillHour;
+          t.globalParameters.startDate = response[i].startDate;
+          t.globalParameters.endDate = response[i].endDate;
+          t.globalParameters.startHour = response[i].fromHour;
+          t.globalParameters.endHour = response[i].tillHour;
           t.order.tripId = response[i].tripId;
           t.order.orderType.name = response[i].orderTypeName;
           t.order.orderType.id = response[i].orderTypeCode;
-          t.common.endHour
+          t.globalParameters.endHour
           TransportOrderList.push(t);
         }
         this.additionsService.emitItem(TransportOrderList);
         this.item$ = this.additionsService.item$;
-        // this.item = this.item$[0]
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

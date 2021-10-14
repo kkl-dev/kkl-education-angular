@@ -15,7 +15,11 @@ export interface TempOrder {
     tripId?: number;
     orderTypeCode?: number;
     orderTypeName?: string;
-    date?: string;
+    orderId?: number;
+    orderItemId?: number;
+    orderItemName?: string;
+    startDate?: string;
+    endDate?: string;
     fromHour?: string;
     tillHour?: string;
 }

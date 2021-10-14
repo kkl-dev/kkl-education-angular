@@ -120,9 +120,9 @@ export class TransportService {
       icon: 'schedule',
       type: 'time',
       validations: [Validators.required],
-      inputProps: {
-        // labelSize: 's5',
-      },
+      // inputProps: {
+      //   // labelSize: 's5',
+      // },
     }),
     new QuestionTextbox({
       key: 'endHour',
@@ -130,6 +130,27 @@ export class TransportService {
       icon: 'schedule',
       type: 'time',
       validations: [Validators.required],
+    }),
+    new QuestionTextbox({
+      key: 'pickUpLocation',
+      label: 'מקום איסוף',
+      value: '',
+      icon: 'place',
+      validations: [Validators.required],
+      inputProps: {
+        // labelSize: 's5',
+      },
+    }),
+
+    new QuestionTextbox({
+      key: 'pickUpAddress',
+      label: 'כתובת איסוף',
+      value: '',
+      validations: [Validators.required],
+      icon: 'place',
+      inputProps: {
+        // labelSize: 's5',
+      },
     }),
   ].reverse();
 
@@ -158,27 +179,27 @@ export class TransportService {
     //   validations: [Validators.required],
     // }),
 
-    new QuestionTextbox({
-      key: 'pickUpLocation',
-      label: 'מקום איסוף',
-      value: '',
-      icon: 'place',
-      validations: [Validators.required],
-      inputProps: {
-        // labelSize: 's5',
-      },
-    }),
+    // new QuestionTextbox({
+    //   key: 'pickUpLocation',
+    //   label: 'מקום איסוף',
+    //   value: '',
+    //   icon: 'place',
+    //   validations: [Validators.required],
+    //   inputProps: {
+    //     // labelSize: 's5',
+    //   },
+    // }),
 
-    new QuestionTextbox({
-      key: 'pickUpAddress',
-      label: 'כתובת איסוף',
-      value: '',
-      validations: [Validators.required],
-      icon: 'place',
-      inputProps: {
-        // labelSize: 's5',
-      },
-    }),
+    // new QuestionTextbox({
+    //   key: 'pickUpAddress',
+    //   label: 'כתובת איסוף',
+    //   value: '',
+    //   validations: [Validators.required],
+    //   icon: 'place',
+    //   inputProps: {
+    //     // labelSize: 's5',
+    //   },
+    // }),
 
     // new QuestionSelect({
     //   key: 'dropDownDate',
@@ -226,11 +247,11 @@ export class TransportService {
       questions: this.details,
       cols: 8,
     },
-    {
-      key: 'locations',
-      questions: this.locations,
-      cols: 6,
-    },
+    // {
+    //   key: 'locations',
+    //   questions: this.locations,
+    //   cols: 6,
+    // },
     {
       key: 'comments',
       questions: this.comments,
@@ -248,10 +269,15 @@ export class TransportService {
     data: any
   ) {
     questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
-      control.value = data[control.key];
+      control.value = data[control.key]
       if (control.key === 'comments') {
         control.value = data;
       }
+      // if (control.key === 'endHour') {
+      //   var time = new Date(data[control.key]);
+      //   control.value = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+      //   // control.value = time;
+      // }
     });
   }
 

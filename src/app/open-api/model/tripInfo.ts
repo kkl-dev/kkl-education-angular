@@ -23,7 +23,7 @@ import { Budget } from './budget';
 
 export interface TripInfo { 
     id?: number | null;
-    tripDescription: string | null;
+    tripDescription: string;
     tripStart: string;
     tripEnding: string;
     centerField: FieldForestCenter;
@@ -36,13 +36,13 @@ export interface TripInfo {
     kklWorkerId?: number;
     kklWorkerName?: string;
     customerPay?: BaseCustomer;
-    commentManager?: string | null;
-    contactName: string | null;
-    contactPhone: string | null;
-    contactEmail: string | null;
-    confirm?: string | null;
-    customerSignatureDate?: string | null;
-    confirmBy?: string | null;
+    commentManager?: string;
+    contactName: string;
+    contactPhone: string;
+    contactEmail: string;
+    confirm?: string;
+    customerSignatureDate?: string;
+    confirmBy?: string;
     country?: Country;
     /**
      * 1= Israel, 8= Abroad
@@ -63,19 +63,19 @@ export interface TripInfo {
     noPayment?: number | null;
     tripStatusId?: number;
     tripStatusName?: string;
-    userMobile?: string | null;
-    userId?: string | null;
-    userName: string | null;
-    reasonUnConfirm?: string | null;
+    userMobile?: string;
+    userId?: string;
+    userName: string;
+    reasonUnConfirm?: string;
     /**
      * 1=Inside center, 2=Outside center
      */
     insideCenterFieldId: number;
-    addressCasualCustomer?: string | null;
-    cityCasualCustomer?: string | null;
+    addressCasualCustomer?: string;
+    cityCasualCustomer?: string;
     zipCasualCustomer?: number | null;
-    phoneCasualCustomer?: string | null;
-    nameCasualCustomer?: string | null;
+    phoneCasualCustomer?: string;
+    nameCasualCustomer?: string;
     isSalKKlGroup?: number | null;
     isOccupancyProblematic?: number | null;
 }

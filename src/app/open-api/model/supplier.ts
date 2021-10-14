@@ -12,18 +12,18 @@
 
 
 export interface Supplier { 
-    id?: number | null;
-    name?: string | null;
+    id?: number;
+    name?: string;
     finId?: number | null;
     cityId?: number | null;
-    address?: string | null;
+    address?: string;
     supplierType?: number | null;
     isValid?: number | null;
-    phone?: string | null;
-    email?: string | null;
-    fax?: string | null;
-    contact?: string | null;
-    registrationNum?: string | null;
+    phone?: string;
+    email?: string;
+    fax?: string;
+    contact?: string;
+    registrationNum?: string;
     supplierFinId?: number;
     isGuideSupplier?: number | null;
 }

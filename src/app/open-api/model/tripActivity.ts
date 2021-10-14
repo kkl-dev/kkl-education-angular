@@ -14,6 +14,10 @@
 export interface TripActivity { 
     activityId?: number;
     activityName?: string;
+    /**
+     * refers to indentity record on data base
+     */
+    tripActivityIdentity?: number;
     categoryId?: number;
     date?: string;
     description?: string;

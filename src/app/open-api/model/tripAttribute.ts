@@ -12,10 +12,10 @@
 
 
 export interface TripAttribute { 
-    id?: number | null;
-    name?: string | null;
+    id?: number;
+    name?: string;
     budgetId?: number | null;
-    budgetName?: string | null;
+    budgetName?: string;
     /**
      * subsidization 1 to 25 ratio
      */

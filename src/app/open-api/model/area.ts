@@ -12,8 +12,8 @@
 
 
 export interface Area { 
-    id?: number | null;
-    name?: string | null;
+    id?: number;
+    name?: string;
     regionId?: number | null;
 }
 

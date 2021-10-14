@@ -314,7 +314,8 @@ export class TripService {
   customers = [];
   customersOriginal: BaseCustomer[];
   baseCustomer: BaseCustomer;
-  areas: Area[];
+  areasOriginal: Area[];
+  areas: any[];
   attributes = [];
   attributesOriginal: TripAttribute[];
   participantTypes: ParticipantType[];
@@ -473,7 +474,10 @@ export class TripService {
     this.userService.getAreas().subscribe(
       response => {
         console.log('response', response)
-        this.areas = response;
+        this.areasOriginal = response;
+        response.forEach(element => {
+          this.areas.push({ label: element.name, value: element.id.toString() });
+        });
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

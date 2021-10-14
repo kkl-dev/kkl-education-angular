@@ -13,17 +13,18 @@ import { ItemsByTypeOrder } from './itemsByTypeOrder';
 
 
 export interface OrderItemCommonDetails { 
-    itemId?: number | null;
+    itemId?: number;
     itemIndex?: number;
     orderItemDetails?: ItemsByTypeOrder;
-    amount?: number | null;
-    itemCost?: number | null;
+    quantity?: number;
+    itemCost?: number;
     billingSupplier?: number | null;
     billingCustomer?: number | null;
     peopleInTrip?: number | null;
-    startDate?: string | null;
-    endDate?: string | null;
-    startHour?: string | null;
-    endHour?: string | null;
+    startDate?: string;
+    endDate?: string;
+    startHour?: string;
+    endHour?: string;
+    userName?: string;
 }
 
