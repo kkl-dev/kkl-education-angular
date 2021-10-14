@@ -22,6 +22,8 @@ export class WorkingStepsComponent implements OnInit {
   @Input() iconSize: number;
   @Input() divider: boolean;
 
+  @Input() isSleep: boolean;
+
   @Output() changeActiveStep = new EventEmitter<number>();
   @Output() changStep = new EventEmitter<StepModel>();
 
@@ -36,6 +38,10 @@ export class WorkingStepsComponent implements OnInit {
   }
 
   public onCardClick(step: StepModel) {
+
+    this.isSleep = step.path === 'sleeping'
+    console.log(step.path)
+    console.log(this.isSleep)
     this.changStep.emit(step)
   }
 

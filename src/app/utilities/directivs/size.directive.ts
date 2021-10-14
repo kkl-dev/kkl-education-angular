@@ -15,6 +15,7 @@ export class SizeDirective implements OnInit, OnDestroy {
   @Input() size: number;
   @Input() type: string;
   @Input() divider: number;
+  @Input() isSleep: boolean;
 
   private tablet$: Observable<boolean>;
 
@@ -30,6 +31,7 @@ export class SizeDirective implements OnInit, OnDestroy {
     this.setSize();
     this.tablet$ = this.breakpointService.isTablet();
     this.subscribeToBreakpoint();
+    this.stepperSize = this.isSleep ? 14 : 21
   }
 
   ngOnDestroy(): void {
@@ -62,8 +64,8 @@ export class SizeDirective implements OnInit, OnDestroy {
 
   private subscribeToBreakpoint() {
     this.subscription = this.tablet$.subscribe((tablet: boolean) => {
-
-      this.stepperSize = tablet ? 12 : 21
+      console.log(this.isSleep)
+      this.stepperSize = tablet ? 12 : this.isSleep ? 14 : 21
 
 
       this.setSize();

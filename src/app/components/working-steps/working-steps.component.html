@@ -1,10 +1,10 @@
 <div fxLayout="row" class="steps-container" fxLayoutAlign="center center">
   <div *ngFor="let step of steps; let i = index" fxLayout="row">
-    <div [appSize] [size]="size" type="stepper" (click)="onStepClick(i)">
+    <div [appSize] [size]="size" [isSleep]="isSleep" type="stepper" (click)="onStepClick(i)">
       <app-icon-card [step]="step" [variant]="variant" (onClick)="onCardClick(step)"></app-icon-card>
     </div>
     <div class="backstroke-container" fxLayout="column" fxLayoutAlign="center center">
-      <div class="backstroke" *ngIf="divider && i !== (steps.length -1)"></div>
+      <div *ngIf="divider && i !== (steps.length -1)" class="backstroke"></div>
     </div>
   </div>
 </div>
