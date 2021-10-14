@@ -72,6 +72,5 @@ export class FacilitiesService {
     arr[index].start = start;
     arr[index].end = end;
     this.calendarEventsArr.next(arr);    
-    console.log(this.calendarEventsArr);
   }
 }
