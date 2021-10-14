@@ -67,11 +67,6 @@ export class HeaderComponent implements OnInit {
       firstCalendarDay: 0,
       format: 'dd/LL/yyyy',
       closeOnSelected: true,
-  // fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
-
-      // add fromto,
-      // minDate: addDays(new Date(), 5),
-      // maxDate: addDays(new Date(), 10),
       minYear: getYear(new Date()) - 1,
       maxYear: getYear(new Date()) + 1,
       freeSpacesArray: this.freeSpacesArray,
@@ -196,16 +191,20 @@ export class HeaderComponent implements OnInit {
   public dateObjChanged(e: string) {
     if (e && e.includes('-')) {
       this.emitNewDates.emit(e);
+      
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       const dateFormat1 = tempDateArr[0].split('/').reverse();
-      dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+      console.log(dateFormat1[1]);
+      dateFormat1[1] = (+dateFormat1[1]).toString();
       dateFormat1[2] = (+dateFormat1[2]).toString();
       const dateFormat2 = tempDateArr[1].split('/').reverse();
-      dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+      dateFormat2[1] = (+dateFormat2[1]).toString();
       dateFormat2[2] = (+dateFormat2[2]).toString();
 
+
       if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
+        
         this.dateObj.from = tempDateArr[0];
         this.dateObj.to = tempDateArr[1];
       } else {

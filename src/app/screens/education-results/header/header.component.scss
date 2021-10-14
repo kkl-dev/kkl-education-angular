@@ -17,28 +17,18 @@
     height: fit-content;
     &-svg {
       margin-left: 25px;
+      margin-left: 10px;
       border-radius: 50%;
       height: 50px;
       width: 50px;
     }
     &-text {
       align-self: center;
-    }
-  }
-  &__select-option {
-    display: flex;
-    height: 100%;
-    &-svg {
-      margin-left: 10px;
-      border-radius: 100px;
-      width: 50px;
-      height: 50px;
-    }
-    &-text {
-      align-self: center;
       margin-left: auto;
+
     }
   }
+
 
   &__form {
     margin: auto;
@@ -54,6 +44,7 @@
       align-items: flex-start;
       flex: 30%;
       display: flex;
+      // border: 1px solid black;
       flex-direction: column;
       position: relative;
       justify-content: space-evenly;
@@ -85,7 +76,7 @@
 
       &-input {
         opacity: 0;
-        visibility: none;
+       width: 0;
         cursor: pointer;
       }
 
@@ -117,19 +108,11 @@
           height: 20px !important;
         }
       }
-
     }
   }
 }
 
 .header {
-  // ::ng-deep .mat-select-value,
-  // ::ng-deep .mat-select-value-text,
-  // ::ng-deep .mat-select-min-line {
-  //   height: 51px !important;
-  //   vertical-align: middle;
-  //   padding-right: 5px;
-  // }
 
   ::ng-deep .mat-select-value-text {
     margin: auto;
@@ -140,7 +123,7 @@
   ::ng-deep .mat-select-min-line {
     height: 40px !important;
     padding-right: 5px;
-    margin-top:10px;
+    margin-top: 10px;
   }
 
   ::ng-deep .mat-select-value-text {
@@ -152,9 +135,9 @@
   ::ng-deep .mat-select-panel {
     text-align: right;
     margin-left: auto;
-    width: 100% !important;
-    min-width: 100% !important;
-    max-width: 100% !important;
+    // width: 100% !important;
+    // min-width: 100% !important;
+    // max-width: 100% !important;
   }
 
   ::ng-deep .cdk-overlay-pane {
@@ -164,16 +147,15 @@
   }
 
   ::ng-deep .mat-select-panel {
-    // min-width: 261px !important;
     text-align: right;
     margin-left: auto;
-    width: 100%;
-    max-width: 100% !important;
+    // width: 100%;
+    // max-width: 100% !important;
     max-height: fit-content !important;
   }
 
   ::ng-deep .mat-form-field {
-    width: 100%;
+    // width: 100%;
   }
 
   ::ng-deep .mat-form-field-underline {
@@ -200,6 +182,7 @@
 
   ::ng-deep .mat-form-field-infix,
   .mat-form-field-appearance-legacy .mat-form-field-infix {
+    width: auto;
     padding: 0 !important;
     border-top: 0;
   }
@@ -215,9 +198,13 @@
     height: 100%;
   }
 
-   ::ng-deep .airbnb-calendar-container {
-    left: -350px !important;
+  ::ng-deep .airbnb-calendar-container {
+    left: -550px !important;
   }
+  
+::ng-deep mat-form-field{
+  width: 100% !important;
+}
 }
 
 .mat-select-panel .mat-primary {

@@ -1,19 +1,25 @@
 .education-results {
   position: relative;
-  height: calc(100% - 90px);
+  height: calc(100vh - 90px);
   z-index: 100;
   box-sizing: border-box;
-  display: flex;
   overflow-y: scroll;
+  background-color: white;
 
   &__left {
     width: 50%;
+    height: 100vh;
     background-color: white;
     background-size: contain;
     background-image: url("../../../assets/images/education-results-back.png");
+    float: left;  
+    & *{
+      height: inherit;
+    }
   }
-
+ 
   &__right {
+    float: right; 
     height: 100%;
     display: flex;
     flex-direction: column;

@@ -13,7 +13,7 @@
           <app-form-input *ngIf="!question.custom" [disabled]="formGroup.disabled"
             [control]="formGroup.controls[question.key]" [type]="question.type" [label]="question.label"
             [icon]="question.icon" [options]="question.inputProps?.options"
-            [dateOptions]="question.inputProps?.dateOptions" [controlType]="question.controlType"
+            [dateOptions]="question.dateOptions" [controlType]="question.controlType"
             (autocomplete)="onAutocomplete($event)"></app-form-input>
 
           <app-input-radio [control]="formGroup.controls[question.key]" [question]="question"
