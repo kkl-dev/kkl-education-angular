@@ -12,7 +12,6 @@
     padding-bottom: 1.34375em;
     box-sizing: border-box;
     text-align: center;
-
   }
 
   mat-label,
@@ -21,17 +20,16 @@
     flex-direction: row-reverse;
   }
 
-  ::ng-deep .mat-form-field-label{
-  text-align: left !important;
-}
+  // ::ng-deep .mat-form-field-label {
+  //   text-align: left !important;
+  // }
   ::ng-deep .mat-empty {
     text-align: right !important;
-    }
+  }
 
-  ::ng-deep .mat-form-field {
-    text-align: left !important;
-  } 
-
+  // ::ng-deep .mat-form-field {
+  //   text-align: left !important;
+  // }
 
   ::ng-deep .airbnb-calendar-container {
     left: -500px !important;
@@ -48,37 +46,39 @@
 }
 
 @media screen and (max-width: 1024px) {
-
-  .sleeping-form{
+  .sleeping-form {
     display: block !important;
     text-align: center;
     &__name {
-     max-width: 100% !important;
-    padding-bottom: 10px !important;
-
-    } 
+      max-width: 100% !important;
+      padding-bottom: 10px !important;
+    }
   }
-  
-  
+
   .sleeping-form__calendar {
     font-size: 10px !important;
   }
-  .sleeping-form{
+  .sleeping-form {
     ::ng-deep .mat-form-field-flex {
       font-size: 12px;
-      width: 100%; 
+      width: 100%;
     }
-    .mat-form-field{
+    .mat-form-field {
       max-width: 40% !important;
       margin: 0 2rem !important;
     }
 
-    ::ng-deep .mat-form-field-appearance-outline, ::ng-deep .mat-select-arrow-wrapper{
+    ::ng-deep .mat-form-field-appearance-outline,
+    ::ng-deep .mat-select-arrow-wrapper {
       transform: translateY(-7%);
     }
-    ::ng-deep airbnb-calendar ~ .mat-form-field-label-wrapper{
-      text-align: left !important; 
-    } 
+    ::ng-deep
+      airbnb-calendar
+      ~ .mat-form-field-label-wrapper
+      > .mat-form-field-label {
+      text-align: right !important;
+      border: 1px solid black;
+    }
   }
   .placeholder {
     font-size: 14px !important     ;
