@@ -23,7 +23,8 @@ export class FacilitiesService {
 
   public updateCalendarEventsArr(args: EventInput): void {
     this.calendarEventsArr.next([...this.calendarEventsArr.value, args]);
-    console.log(this.calendarEventsArr);
+    console.log(args);
+
   }
 
   public closeModal(args: string): void {
@@ -44,7 +45,7 @@ export class FacilitiesService {
     this.closeModal(item.type);
   }
 
-  public updateSelectedFacility(args: InfoCard): void {
+  public updateSelectedFacility(args: InfoCard): void {    
     this.selectedFacility.next(args);
   }
   public getSelectedFacility(): Observable<InfoCard> {
@@ -61,8 +62,16 @@ export class FacilitiesService {
     const index = this.calendarEventsArr.value.findIndex((item:any) => item.id === args.id);
     const arr = [ ...this.calendarEventsArr.value];
     arr[index] = args;
-    this.calendarEventsArr.next(arr);
-    console.log(this.calendarEventsArr.value);
-    
+    this.calendarEventsArr.next(arr);    
+  }
+
+  public updateTimesInArray(id:string | number ,dates:string[]):void {
+    const index = this.calendarEventsArr.value.findIndex((item:any) => item.id === id);
+    const arr = [ ...this.calendarEventsArr.value];
+    const [start,end] = dates;
+    arr[index].start = start;
+    arr[index].end = end;
+    this.calendarEventsArr.next(arr);    
+    console.log(this.calendarEventsArr);
   }
 }

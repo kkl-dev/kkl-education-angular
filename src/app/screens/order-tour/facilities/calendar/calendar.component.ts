@@ -45,12 +45,20 @@ export class CalendarComponent implements OnInit {
     },
     initialEvents: [],
     eventClick:(info) => {
-      console.log(info.event);
       this.facilitiesService.findObjectInCalendarArray(info.event.id);
+    },
+    eventDrop:(info) => {
+      this.facilitiesService.updateTimesInArray(info.event.id,[this.arrangeDate(info.event.start),this.arrangeDate(info.event.end)])
     }
+    
   }
 
-
+  public arrangeDate(date){
+    // 2021-10-15T08:00
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${date.getFullYear()}-${date.getMonth() +1}-${date.getDate()}T${hours <= 9 ? '0'+hours : hours}:${minutes <= 9 ? '0'+minutes : minutes}`
+  }
 
   ngOnInit(): void {
     this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
