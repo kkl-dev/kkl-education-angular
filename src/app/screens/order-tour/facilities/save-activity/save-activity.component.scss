@@ -55,11 +55,23 @@
     ::ng-deep .SOBD__days {
         width: 100% !important;
     }
+    &__header-icon {
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    &__header-content {
+        div{
+            margin:5px;
+        }
+    }
     &__header {
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-evenly;
         padding: 1rem;
+        direction: rtl;
         &-icon {
             // border-radius: 5px;
             // align-self: flex-start;
@@ -93,10 +105,10 @@
                 }
                 &-customer-type {
                     font-size: 16px;
-                    margin-right: 10px;
                     display: flex;
-                    flex-direction: row-reverse;
-
+                    &-customer-type > span {
+                        margin:5px;
+                    }
                     &-toggle {
                         border-radius: 20px;
                         position: relative;

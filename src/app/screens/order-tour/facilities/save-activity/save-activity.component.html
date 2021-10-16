@@ -8,13 +8,13 @@
                 <img *ngIf="type" [src]='activity.img' />
                 <svg-icon  *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
             </div>
-            <div class="save-activity__header-content" fxFlex='70'>
+            <div class="save-activity__header-content" fxFlex='70' >
                 <div class="save-activity__header-content-heading">
                     <span class="save-activity__header-content-heading-constant">שריין פעילות:</span>
                     <span class="save-activity__header-content-heading-input">{{activity.title}}</span>
                 </div>
                 <div class="save-activity__header-content-heading-customer-type" *ngIf="type">
-                    <span> :לקוח מזמין </span>
+                    <span>לקוח מזמין :</span>
                     <span class="save-activity__header-content-heading-customer-type-toggle"
                         (click)="orderingCustomerHandler()">
                         <span class="save-activity__header-content-heading-customer-type-toggle-text">כן</span>
