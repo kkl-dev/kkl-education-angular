@@ -106,7 +106,7 @@
 .content-2 {
     display: block;
     .titles {
-        width: 90%;
+        // width: 90%;
         float: right;
         border-bottom: 1px solid #daeaf5;
         p {
@@ -160,6 +160,7 @@ app-tooltip {
     direction: rtl;
     row-gap: 5rem;
     width: 100%;
+    padding: 20px;
 }
 
 #activities {
@@ -169,7 +170,7 @@ app-tooltip {
 }
 .full-list {
     display: flex;
-    margin-left: 95px;
+    padding: 1rem;
     color: #707070;
     text-decoration: underline;
 }
@@ -180,8 +181,13 @@ app-tooltip {
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap: 30px;
-    padding: 40px;
     position: relative;
+    padding: 1rem;
     float: right;
 }
 
+@media screen and (max-width: 1024px){
+    .card-container {
+        grid-template-columns: auto;
+    }
+}
