@@ -1,9 +1,29 @@
-<div class="activities-card">
-  <img [src]='obj.img' />
-  <p id="title">{{obj.title}}</p>
+<!-- <div class="activities-card" fxFlex='100' fxLayout="column" fxLayoutAlign="space-evenly none" >
+  <img [src]='obj.img'/>
+  <p id="title" >{{obj.title}}</p>
   <p id="content">{{obj.content}}</p>
   <div class="bottom">
     <p>{{obj.hours}} שעות</p>
     <button>שריין</button>
   </div>
+</div> -->
+
+<div class="activities-card">
+  <mat-card >
+    <mat-card-title-group>
+      <img mat-card-lg-image [src]='obj.img' />
+    </mat-card-title-group>
+    <mat-card-header>
+      <mat-card-title>{{obj.title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{obj.content}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <p>{{obj.hours}} שעות</p>
+      <button mat-button (click)='buttonClicked.emit()'>שריין</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

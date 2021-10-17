@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit ,Output ,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-activities-card',
@@ -8,7 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 
 
 export class ActivitiesCardComponent implements OnInit {
-  @Input() obj:ActivitiesCardInterface;
+  @Input() public obj:ActivitiesCardInterface;
+  @Output() public buttonClicked:EventEmitter<any> =  new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {

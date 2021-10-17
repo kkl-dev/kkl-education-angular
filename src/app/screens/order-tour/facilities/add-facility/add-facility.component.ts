@@ -99,6 +99,13 @@ export class AddFacilityComponent implements OnInit {
     this.emitFormValues.emit(this.addFacilityForm.value);
     this.closeModal();
   }
+  public deleteItem(event): void {
+    event.preventDefault();
+    const id = this.addFacilityForm.controls['id'].value;
+    this.facilitiesServices.deleteItemFromArray(id);
+    this.facilitiesServices.closeModal('close');
+  }
+
   public startTimeChanged(event: string) {
     this.addFacilityForm.controls['start'].setValue(event);
   }
