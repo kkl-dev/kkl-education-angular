@@ -5,6 +5,9 @@
     height: 100%;
     width: 100%;
     background-color: rgba($color: #707070, $alpha: 0.6);
+    .delete-button{
+        background: red;
+    }
     .ngx-timepicker-field-example {
         display: flex;
         flex-direction: column;
@@ -169,9 +172,9 @@
         &-inputs {
             display: flex;
             flex-direction: row-reverse;
-            margin: 0 auto;
-            width: fit-content;
-            gap: 12px;
+            width: 100%;
+            align-items: center;
+            justify-content: space-around;
         }
     }
 }

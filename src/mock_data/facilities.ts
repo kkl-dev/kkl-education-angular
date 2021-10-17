@@ -3,34 +3,34 @@ import { QuestionSelect } from "src/app/components/form/logic/question-select";
 import { QuestionTextbox } from "src/app/components/form/logic/question-textbox";
 
 export const DAYS = [{
-    day: '15.10.2021',
-    options: {
-        svgUrl: '',
-        sleepingAreas: 0,
-        avialableSpaces: 0,
-        type: '',
-        singleUnit: '',
-    }
-}, {
-    day: '16.10.2021',
-    options: {
-        svgUrl: '',
-        sleepingAreas: 0,
-        avialableSpaces: 0,
-        type: '',
-        singleUnit: '',
-    }
-}, {
-    day: '17.10.2021',
-    options: {
-        svgUrl: '',
-        sleepingAreas: 0,
-        avialableSpaces: 0,
-        type: '',
-        singleUnit: '',
-    }
-}, {
     day: '18.10.2021',
+    options: {
+        svgUrl: '',
+        sleepingAreas: 0,
+        avialableSpaces: 0,
+        type: '',
+        singleUnit: '',
+    }
+}, {
+    day: '19.10.2021',
+    options: {
+        svgUrl: '',
+        sleepingAreas: 0,
+        avialableSpaces: 0,
+        type: '',
+        singleUnit: '',
+    }
+}, {
+    day: '20.10.2021',
+    options: {
+        svgUrl: '',
+        sleepingAreas: 0,
+        avialableSpaces: 0,
+        type: '',
+        singleUnit: '',
+    }
+}, {
+    day: '21.10.2021',
     options: {
         svgUrl: '',
         sleepingAreas: 0,

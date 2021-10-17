@@ -27,9 +27,11 @@
         fill:#66a3d6 !important
     }
     &__header {
-        height: 80px;
         display: flex;
         flex-direction: row-reverse;
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
         &-icon {
             border-radius: 5px;
             align-self: flex-start;

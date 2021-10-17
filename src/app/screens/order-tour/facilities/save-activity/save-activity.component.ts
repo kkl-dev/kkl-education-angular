@@ -39,26 +39,30 @@ export class SaveActivityComponent implements OnInit {
   public selectedDay: number = 0;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.selectedActivity$ = this.facilitiesServices.getSelectedActivity();
     this.subscribeToActivity = this.selectedActivity$.subscribe(data => this.createForm(data));
-    console.log(this.selectedActivity$);
-    
   }
   public ngOnDestroy(): void {
     this.subscribeToActivity.unsubscribe();
   }
-  public startTimeChanged(event: string) {
+  public startTimeChanged(event: string): void {
     this.form.controls['start'].setValue(event);
   }
-  public endTimeChanged(event: string) {
+  public endTimeChanged(event: string): void {
     this.form.controls['end'].setValue(event);
+  }
+  public deleteItem(event): void {
+    event.preventDefault();
+    const id = this.form.controls['id'].value;
+    this.facilitiesServices.deleteItemFromArray(id);
+    this.facilitiesServices.closeModal('close');
   }
   onSubmit() {
     if (this.type) {
       this.form.controls['invitingCustomer'].setValue(this.orderingCustomer);
     }
-    if(this.form.controls['additions'] ){
+    if (this.form.controls['additions']) {
       this.form.controls['additions'].setValue(this.additonsType);
     }
     this.form.controls['selectedDay'].setValue(this.selectedDay);
@@ -106,7 +110,7 @@ export class SaveActivityComponent implements OnInit {
         'type': new FormControl('activity'),
         'invitingCustomer': new FormControl(false),
         'additions': new FormControl(),
-        'haveAdditions' : new FormControl(true),
+        'haveAdditions': new FormControl(true),
         'svgUrl': new FormControl(data.svgUrl),
         'img': new FormControl(data.img)
       });
@@ -115,10 +119,10 @@ export class SaveActivityComponent implements OnInit {
       data.start = this.separateTimeFromDate(data.start);
       data.end = this.separateTimeFromDate(data.end);
       this.selectedDay = data.selectedDay;
-      if(data.invitingCustomer){
+      if (data.invitingCustomer) {
         this.orderingCustomer = data.invitingCustomer;
       }
-      if(data.additions && data.additions.length !== 0){
+      if (data.additions && data.additions.length !== 0) {
         this.additonsType = data.additions;
       }
       this.form = new FormGroup({});
