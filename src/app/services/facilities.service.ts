@@ -33,7 +33,7 @@ export class FacilitiesService {
   }
 
   public findObjectInCalendarArray(id: string | number) {
-    const [item] = this.calendarEventsArr.value.filter((item:any) => item.id === id);
+    const [item] = this.calendarEventsArr.value.filter((item: any) => item.id === id);
     if (item.type === 'activity') {
       this.updateSelectedActivity(item);
     }
@@ -43,7 +43,7 @@ export class FacilitiesService {
     this.closeModal(item.type);
   }
 
-  public updateSelectedFacility(args: InfoCard): void {    
+  public updateSelectedFacility(args: InfoCard): void {
     this.selectedFacility.next(args);
   }
   public getSelectedFacility(): Observable<InfoCard> {
@@ -56,19 +56,24 @@ export class FacilitiesService {
     return this.selectedActivity.asObservable();
   }
 
-  public updateItemInArrayOfCalendar(args):void {
-    const index = this.calendarEventsArr.value.findIndex((item:any) => item.id === args.id);
-    const arr = [ ...this.calendarEventsArr.value];
+  public updateItemInArrayOfCalendar(args): void {
+    const index = this.calendarEventsArr.value.findIndex((item: any) => item.id === args.id);
+    const arr = [...this.calendarEventsArr.value];
     arr[index] = args;
-    this.calendarEventsArr.next(arr);    
+    this.calendarEventsArr.next(arr);
   }
-
-  public updateTimesInArray(id:string | number ,dates:string[]):void {
-    const index = this.calendarEventsArr.value.findIndex((item:any) => item.id === id);
-    const arr = [ ...this.calendarEventsArr.value];
-    const [start,end] = dates;
+  public deleteItemFromArray(id: string | number): void {
+    const index = this.calendarEventsArr.value.findIndex((item: any) => item.id === id);
+    const arr = [...this.calendarEventsArr.value];
+    arr.splice(index, 1);
+    this.calendarEventsArr.next(arr);
+  }
+  public updateTimesInArray(id: string | number, dates: string[]): void {
+    const index = this.calendarEventsArr.value.findIndex((item: any) => item.id === id);
+    const arr = [...this.calendarEventsArr.value];
+    const [start, end] = dates;
     arr[index].start = start;
     arr[index].end = end;
-    this.calendarEventsArr.next(arr);    
+    this.calendarEventsArr.next(arr);
   }
 }

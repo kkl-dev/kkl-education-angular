@@ -8,6 +8,8 @@
     min-width: max-content; 
     padding: 20px ;
     min-width: 600px;
+    flex-direction: column!important;
+
     &__close{
         height: 20px;
         width: 20px;
