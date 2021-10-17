@@ -49,11 +49,27 @@ export class MapsComponent implements OnInit {
   constructor(protected httpClient: HttpClient, public tripService: TripService, public fakeApi: FakeService) {
     this.loadWebMap();
     this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
+
+    this.loadWebMap();
+    if (this.tripService.centerField) {
+      this.forestCenter = this.tripService.centerField;
+    }
+
     // this.tripService.forestCenter.subscribe(forestCenter => {
-    //   this.forestCenter = forestCenter; // this set's the username to the default observable value
-    //   console.log('maps -- > forest Center from server BehaviorSubject:', this.forestCenter);
-    //   this.onChangeForestCenter();
+    //   //this.forestCenter = result; // this set's the username to the default observable value
+    //   console.log('maps --> forestCenter result:', forestCenter);
+    //   this.forestCenter = forestCenter;
+    //   //this.onChangeForestCenter();
     // });
+    this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
+      //this.forestCenter = result; // this set's the username to the default observable value
+      console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
+      this.viewGenderIcons = false;
+      this.lodgingFacilityList = lodgingFacilityList;
+      this.rawservicedata = lodgingFacilityList;
+      this.queryandrender();
+      //this.onChangeForestCenter();
+    });
     // this.onChangeForestCenter();
   }
 
@@ -161,22 +177,6 @@ export class MapsComponent implements OnInit {
       this.forestCenter = this.tripService.centerField;
     }
 
-    // this.tripService.forestCenter.subscribe(forestCenter => {
-    //   //this.forestCenter = result; // this set's the username to the default observable value
-    //   console.log('maps --> forestCenter result:', forestCenter);
-    //   this.forestCenter = forestCenter;
-    //   //this.onChangeForestCenter();
-    // });
-    this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
-      //this.forestCenter = result; // this set's the username to the default observable value
-      console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
-      this.viewGenderIcons = false;
-      this.lodgingFacilityList = lodgingFacilityList;
-      this.rawservicedata = lodgingFacilityList;
-      this.queryandrender();
-      //this.onChangeForestCenter();
-    });
-    // this.onChangeForestCenter();
   }
 
   genderButtonDivClick() {
