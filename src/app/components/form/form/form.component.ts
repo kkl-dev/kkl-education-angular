@@ -51,6 +51,7 @@ export class FormComponent implements OnInit {
 
   private subscribeToFormValues() {
     this.form.valueChanges.subscribe(() => {
+      console.log(this.form);
       this.valueChange.emit(this.form);
     });
   }

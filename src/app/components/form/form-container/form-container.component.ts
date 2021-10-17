@@ -83,6 +83,7 @@ export class FormContainerComponent implements OnInit {
 
   private subscribeToFormValues() {
     this.formGroup.valueChanges.subscribe(() => {  
+      console.log(this.formGroup);
       this.register.emit(this.formGroup);
     });
   }

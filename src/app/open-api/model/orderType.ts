@@ -14,6 +14,7 @@
 export interface OrderType { 
     id?: number | null;
     name?: string | null;
+    iconPath?: string;
     finOrderType?: string | null;
 }
 

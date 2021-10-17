@@ -8,7 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 
 
 export class ActivitiesCardComponent implements OnInit {
-  @Input() obj:ActivitiesCardInterface;
+  // @Input() obj:ActivitiesCardInterface;
+  @Input() obj:any;
+
   constructor() { }
 
   ngOnInit(): void {

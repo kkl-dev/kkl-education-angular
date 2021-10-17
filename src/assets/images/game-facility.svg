@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45.001" viewBox="0 0 45 45.001">
+  <g id="מתקני_משחק" data-name="מתקני משחק" transform="translate(-0.003)">
+    <g id="Group_1437" data-name="Group 1437" transform="translate(0.003 0)">
+      <g id="Group_1436" data-name="Group 1436" transform="translate(0)">
+        <path id="Path_948" data-name="Path 948" d="M25.927,10.969,14.062.334a1.314,1.314,0,0,0-1.751,0L.446,10.969a1.32,1.32,0,0,0,.875,2.3h23.73A1.32,1.32,0,0,0,25.927,10.969Z" transform="translate(-0.003 0)" fill="#448ecd"/>
+      </g>
+    </g>
+    <g id="Group_1439" data-name="Group 1439" transform="translate(0.003 15.909)">
+      <g id="Group_1438" data-name="Group 1438" transform="translate(0)">
+        <path id="Path_949" data-name="Path 949" d="M25.053,207.459H23.734V181H2.641v26.455H1.322a1.318,1.318,0,1,0,0,2.637H3.959a1.318,1.318,0,0,0,1.318-1.318v-6.592H7.914v6.592a1.318,1.318,0,0,0,2.637,0v-1.318h5.273v1.318a1.318,1.318,0,0,0,2.637,0v-6.592H21.1v6.592a1.318,1.318,0,0,0,1.318,1.318h2.637a1.318,1.318,0,1,0,0-2.637Zm-17.139-7.91H5.277v-2.637H7.914Zm7.91,5.273H10.551v-2.637h5.273Zm0-5.273H10.551v-2.637h5.273Zm-2.637-5.361a5.273,5.273,0,1,1,5.273-5.273A5.279,5.279,0,0,1,13.188,194.188Zm7.91,5.361H18.461v-2.637H21.1Z" transform="translate(-0.004 -181.004)" fill="#448ecd"/>
+      </g>
+    </g>
+    <g id="Group_1441" data-name="Group 1441" transform="translate(26.37 23.926)">
+      <g id="Group_1440" data-name="Group 1440">
+        <path id="Path_950" data-name="Path 950" d="M316,288.018h-4.652a2.628,2.628,0,0,1-2.423-1.6l-2.911-9.516a7.9,7.9,0,0,0-6.01-4.688v5.294a2.762,2.762,0,0,1,1.626,1.558l3.6,11.026a5.269,5.269,0,0,0,4.847,3.2H316a2.637,2.637,0,1,0,0-5.273Z" transform="translate(-299.999 -272.216)" fill="#448ecd"/>
+      </g>
+    </g>
+  </g>
+</svg>

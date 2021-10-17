@@ -12,10 +12,12 @@
 import { TripInfo } from './tripInfo';
 import { Movements } from './movements';
 import { OrderModel } from './orderModel';
+import { TripActivity } from './tripActivity';
 
 
 export interface TripModel { 
     trip?: TripInfo;
+    activitiesList?: Array<TripActivity> | null;
     orderList?: Array<OrderModel> | null;
     movementsList?: Array<Movements> | null;
 }

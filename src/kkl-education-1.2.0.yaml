@@ -14,6 +14,7 @@ tags:
   description: Users functions
 - name: admin
   description: Admin functions only
+
 paths:
   /loginPB/{permissionId}/{permissionName}/{userId}:
     get:
@@ -24,22 +25,16 @@ paths:
       - name: permissionId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: permissionName
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
       - name: userId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
       responses:
@@ -84,8 +79,6 @@ paths:
       - name: fieldForestCenterId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       responses:
@@ -107,23 +100,17 @@ paths:
       - name: fieldForestCenterId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: fromDate
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
       - name: tillDate
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
@@ -149,23 +136,17 @@ paths:
       - name: fieldForestCenterId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: fromDate
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
       - name: tillDate
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
@@ -189,23 +170,17 @@ paths:
       - name: fieldForestCenterId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: fromDate
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
       - name: tillDate
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
@@ -228,23 +203,17 @@ paths:
       - name: fieldForestCenterId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: fromDate
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
       - name: tillDate
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
@@ -311,15 +280,11 @@ paths:
       - name: attributeId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: userId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           nullable: true
@@ -364,7 +329,7 @@ paths:
   /tripActivities:
     get:
       tags:
-      - user
+      - activities
       operationId: GetTripActivities
       responses:
         "200":
@@ -378,7 +343,7 @@ paths:
   /activityCategories:
     get:
       tags:
-      - user
+      - activities
       operationId: GetActivityCategories
       responses:
         "200":
@@ -518,8 +483,6 @@ paths:
       - name: tripId
         in: path
         required: true
-        # style: simple
-        # explode: false
         schema:
           type: integer
       responses:
@@ -539,12 +502,9 @@ paths:
       - name: start
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: date-time
-          nullable: true
       requestBody:
         content:
           application/json:
@@ -586,15 +546,11 @@ paths:
         in: path
         description: the unique trip Id
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: userNmae
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
       requestBody:
@@ -651,6 +607,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TripModel' 
+  /createTripActivities/{userName}:
+    post:
+      tags:
+      - activities
+      operationId: CreateTripActivities
+      description:  adding activities ,orderFacilities, and Start an order
+      parameters:
+      - name: userName
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripCalendar'
+      responses:
+        "201":
+          description: successful operation
+        "500":
+          description: internal server error
+        "400": 
+          description: invalid data
+
+  /updateTrip/{userName}:
+    put:
+      tags:
+        - activities
+      operationId: UpdateTripActivities
+      description:  update activities ,orderFacilities, and Start an order
+      parameters:
+        - name: userName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: a tripCalendar to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripCalendar'
+      responses:
+        "200":
+          description: seker object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripCalendar'
+        "400":
+          description: invalid data
+        "500":
+          description: internal server error
+
+
+  /tripCalendar/{tripId}:
+     get:
+      tags:
+      - activities
+      operationId: GetTripCalendar
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer   
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripCalendar' 
 
   /QueueTasks/SearchQueTasks/{tripId}:
     get:
@@ -661,8 +692,6 @@ paths:
       - name: tripId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       responses:
@@ -683,8 +712,6 @@ paths:
       - name: tripId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       responses:
@@ -713,40 +740,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Movements'
-  /Order/AddOrder/{userName}/{permissionId}/{isOccupancyProblemFromSp}/{ibRemoveOccProb}:
+  /tempOrder/{tripId}:
+    get:
+      tags:
+      - order
+      operationId: GetTempOrders
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer    
+      responses:
+        "200":
+          description: list of tempOrder
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TempOrder'
+  /Order/AddOrder/{permissionId}/{isOccupancyProblemFromSp}/{ibRemoveOccProb}:
     post:
       tags:
       - order
       operationId: AddOrder
       parameters:
-      - name: userName
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          nullable: true
       - name: permissionId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: isOccupancyProblemFromSp
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           nullable: true
       - name: ibRemoveOccProb
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       requestBody:
@@ -761,47 +794,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TripModel'
-  /Order/EditOrder/{tripId}/{userName}/{permId}/{descOccupancyProbFromSp}/{isRemoveOccProb}:
+  /Order/EditOrder/{userName}/{permId}/{descOccupancyProbFromSp}/{isRemoveOccProb}:
     put:
       tags:
       - order
       operationId: EditOrder
       parameters:
-      - name: tripId
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
+      # - name: tripId
+      #   in: path
+      #   required: true
+      #   schema:
+      #     type: integer
       - name: userName
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           nullable: true
       - name: permId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: descOccupancyProbFromSp
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           nullable: true
       - name: isRemoveOccProb
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       requestBody:
@@ -816,7 +839,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TripModel'
-  /Order/orderType:
+  /order/orderType:
     get:
       tags:
       - order
@@ -830,7 +853,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OrderType'
-  /Order/CancelOrder/{tripId}/{orderId}/{cause}/{userName}:
+  /order/CancelOrder/{tripId}/{orderId}/{cause}/{userName}:
     get:
       tags:
       - order
@@ -839,40 +862,30 @@ paths:
       - name: tripId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: orderId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
       - name: cause
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           nullable: true
       - name: userName
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           nullable: true
       responses:
         "200":
           description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Status'
+          
+          
   /orderItems/OrdersItemBySupplierID/{supplierId}/{centerFieldId}/{isOneDay}:
     get:
       tags:
@@ -882,24 +895,18 @@ paths:
       - name: supplierId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
           format: int32
       - name: centerFieldId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
           format: int32
       - name: isOneDay
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: boolean
       responses:
@@ -920,52 +927,33 @@ paths:
       - name: tripId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       - name: orderId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       - name: itemIndex
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       - name: userName
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: string
           nullable: true
       - name: permId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       responses:
         "200":
           description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OrderItem'
+           
   /orderItems/CheckItemsExistInDateTime/{tripId}/{centerFieldId}:
     post:
       tags:
@@ -975,16 +963,12 @@ paths:
       - name: tripId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
           format: int32
       - name: centerFieldId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
           format: int32
@@ -992,7 +976,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderModel'
+              $ref: '#/components/schemas/OrderItemCommonDetails'
       responses:
         "200":
           description: Success
@@ -1009,8 +993,6 @@ paths:
       - name: orderItemId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
           format: int32
@@ -1022,36 +1004,28 @@ paths:
               schema:
                 type: integer
                 format: int32
-  /supplier/GetListSupplier/{supplierType}/{tripId}/{orderId}:
+  /supplier/getSupplierList/{orderTypeId}/{tripId}/{orderId}:
     get:
       tags:
       - order
       operationId: GetSupplierList
       parameters:
-      - name: supplierType
+      - name: orderTypeId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       - name: tripId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       - name: orderId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
+          nullable: true
       responses:
         "200":
           description: Success
@@ -1070,27 +1044,18 @@ paths:
       - name: orderTypeId
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       - name: centerField
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       - name: permissionUser
         in: path
         required: true
-        style: simple
-        explode: false
         schema:
           type: integer
-          format: int32
       responses:
         "200":
           description: Success
@@ -1287,39 +1252,7 @@ components:
           type: string
           example: סימינר הקיבוצים
       description: 'decribes ... '
-    # LodgingDaysList:
-    #   type: object
-    #   properties:
-    #     date:
-    #       type: string
-    #       format: date
-    #       example: 0032-04-12
-    #     structuresList:
-    #       type: array
-    #       items:
-    #         $ref: '#/components/schemas/Lodging'
-    #   description: describe ...
-    # Lodging:
-    #   type: object
-    #   properties:
-    #     uid:
-    #       type: integer
-    #       example: 84
-    #     type:
-    #       type: string
-    #       description: Have four types - Cabin, tent, camping, room
-    #       example: tent
-    #     gender:
-    #       type: string
-    #       description: Two possible values - בנים, בנות
-    #       example: בנים
-    #     vacancy:
-    #       type: string
-    #       description: Possible values - פנוי, תפוס, בניקיון, בשיפוץ
-    #       example: תפוס
-    #     date:
-    #       type: string
-    #       format: date
+   
 
     FacilityMapByDates:
       type: object
@@ -1423,6 +1356,8 @@ components:
       - id
       - name
       type: object
+      discriminator:  
+        propertyName: baseCustomer
       properties:
         id:
           type: integer
@@ -1457,7 +1392,6 @@ components:
           example: 6
         typeName:
           type: string
-          nullable: true
           example: חול
         identificationTypeId:
           type: integer
@@ -1484,15 +1418,12 @@ components:
           example: 30
         regionName:
           type: string
-          nullable: true
           example: צפון
         cityIdHebName:
           type: string
-          nullable: true
           example: תל אביב
         streetNameHeb:
           type: string
-          nullable: true
           example: מעון
         zipId:
           type: integer
@@ -1500,40 +1431,31 @@ components:
           example: 30
         phone:
           type: string
-          nullable: true
           example: "95869805"
         phoneWorks:
           type: string
-          nullable: true
           example: 00-3333333
         fax:
           type: string
-          nullable: true
           example: 00-4444444
         email:
           type: string
-          nullable: true
           example: test@gmail.com
         contactName:
           type: string
-          nullable: true
           example: דן
         contactPhone:
           type: string
-          nullable: true
           example: 00-9999999
         contactMobile:
           type: string
-          nullable: true
           example: "613566756"
         userName:
           type: string
-          nullable: true
           example: dan
         generateDate:
           type: string
           format: date-time
-          nullable: true
         appId:
           type: integer
           nullable: true
@@ -1546,23 +1468,24 @@ components:
           type: integer
           nullable: true
           example: 15
-    # PaginationSpecParams:
-    #   type: object
-    #   properties:
-    #     pageIndex:
-    #       type: integer
-    #       example: 1
-    #     pageSize:
-    #       type: integer
-    #       example: 3
-    #     sort:
-    #       type: string
-    #       example: ""
-    #     search:
-    #       type: string
-    #       nullable: true
-    #       example: dan
+ 
     TripInfo:
+      required:
+       - tripDescription
+       - tripStart
+       - tripEnding
+       - centerField
+       - activity
+       - ageGroup
+       - attribute
+       - customer
+       - contactName
+       - contactPhone
+       - contactEmail
+       - numAdultAndYoung
+       - departmentId
+       - userName
+       - insideCenterFieldId
       type: object
       properties:
         id:
@@ -1571,8 +1494,15 @@ components:
           example: 88887777
         tripDescription:
           type: string
-          nullable: true
           example: school education
+        tripStart:
+          type: string
+          format: date-time
+        tripEnding:
+          type: string
+          format: date-time
+        centerField:
+          $ref: '#/components/schemas/FieldForestCenter'
         activity:
           $ref: '#/components/schemas/ActivityType'
         ageGroup:
@@ -1591,61 +1521,28 @@ components:
         kklWorkerName:
           type: string
           example: 'yaniv'
-        # customerId:
-        #   type: integer
-        #   example: 124
-        # customerName:
-        #   type: string
-        #   example: סימינר הקיבוצים
-        customerType:
-          type: string
-          example: חול
-        customerRegionName:
-          type: string
-          example: גליל
         customerPay:
           $ref: '#/components/schemas/BaseCustomer'
-        # customerPayId:
-        #   type: integer
-        #   example: 124
-        # customerPayName:
-        #   type: string
-        #   example: סימינר הקיבוצים
-        # customerPayType:
-        #   type: string
-        #   example: חול
-        # customerPayRegionName:
-        #   type: string
-        #   example: שפלה
-        centerField:
-          $ref: '#/components/schemas/FieldForestCenter'
         commentManager:
           type: string
-          nullable: true
           example: checked well
         contactName:
           type: string
-          nullable: true
           example: dan
         contactPhone:
           type: string
-          nullable: true
           example: "38347922"
         contactEmail:
           type: string
-          nullable: true
           example: test@gmail.com
         confirm:
           type: string
-          nullable: true
           example: confirmed
         customerSignatureDate:
           type: string
           format: date-time
-          nullable: true
         confirmBy:
           type: string
-          nullable: true
           example: dan
         country:
           $ref: '#/components/schemas/Country'
@@ -1657,9 +1554,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LodgingReservation'
-        tripEnding:
-          type: string
-          format: date-time
         generateTime:
           type: string
           description: Trip creation date
@@ -1688,9 +1582,6 @@ components:
           type: integer
           nullable: true
           example: 1
-        tripStart:
-          type: string
-          format: date-time
         tripStatusId:
           type: integer
           example: 3
@@ -1699,19 +1590,15 @@ components:
           example: חדש
         userMobile:
           type: string
-          nullable: true
           example: "2222222222"
         userId:
           type: string
-          nullable: true
           example: gadiId
         userName:
           type: string
-          nullable: true
           example: gadi
         reasonUnConfirm:
           type: string
-          nullable: true
           example: not checked
         insideCenterFieldId:
           type: integer
@@ -1719,11 +1606,9 @@ components:
           example: 0
         addressCasualCustomer:
           type: string
-          nullable: true
           example: tel 18
         cityCasualCustomer:
           type: string
-          nullable: true
           example: tel-aviv
         zipCasualCustomer:
           type: integer
@@ -1732,11 +1617,9 @@ components:
           example: 9999
         phoneCasualCustomer:
           type: string
-          nullable: true
           example: "88888"
         nameCasualCustomer:
           type: string
-          nullable: true
           example: eyal
         isSalKKlGroup:
           type: integer
@@ -1746,7 +1629,6 @@ components:
           type: integer
           nullable: true
           example: 5
-      description: describes the all trip details
     ActivityType:
       required:
       - id
@@ -1755,11 +1637,9 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 8
         name:
           type: string
-          nullable: true
           example: education
         attributeId:
           type: integer
@@ -1813,16 +1693,18 @@ components:
       properties:
         desc:
           type: string
-          nullable: true
           example: education budget
         kklAmount:
           type: integer
+          nullable: true
           example: 2000
         customerAmount:
           type: integer
+          nullable: true
           example: 1000
         type:
           type: integer
+          nullable: true
           example: 4
         isByCity:
           type: integer
@@ -1834,26 +1716,29 @@ components:
             $ref: '#/components/schemas/City'
         cityId:
           type: integer
+          nullable: true
           example: 4
-        incomeBudget:
-          type: integer
-          example: 500
+        # incomeBudget:
+        #   type: integer
+        #   example: 500
         execution:
           type: integer
+          nullable: true
           example: 5
-        balance:
+        # balance:
+        #   type: integer
+        #   example: 2
+        balanceFin:
           type: integer
-          example: 2
-        maofBalanceFin:
-          type: integer
+          nullable: true
           example: 1
         isNeedCalculate:
           type: integer
           nullable: true
           example: 2
-        budget:
-          type: integer
-          example: 5000
+        # budget:
+        #   type: integer
+        #   example: 5000
         incomeId:
           type: integer
           example: 6
@@ -1879,22 +1764,18 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 3
         name:
           type: string
-          nullable: true
           example: מבוגרים
     TripAttribute:
       type: object
       properties:
         id:
           type: integer
-          nullable: true
           example: 2
         name:
           type: string
-          nullable: true
           example: פורמלי
         budgetId:
           type: integer
@@ -1902,7 +1783,6 @@ components:
           example: 5
         budgetName:
           type: string
-          nullable: true
           example: education budget
         subsidization1To25:
           type: integer
@@ -1918,11 +1798,9 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 7
         name:
           type: string
-          nullable: true
           example: desert
         regionId:
           type: integer
@@ -1933,11 +1811,9 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 9
         name:
           type: string
-          nullable: true
           example: tel-aviv
         typeId:
           type: integer
@@ -1947,11 +1823,9 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 15
         name:
           type: string
-          nullable: true
           example: ישראל
         currencyId:
           type: integer
@@ -1959,7 +1833,6 @@ components:
           example: 2
         nameEng:
           type: string
-          nullable: true
           example: Israel
     ParticipantType:
       type: object
@@ -1975,35 +1848,23 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
           example: 4
         name:
           type: string
-          nullable: true
           example: hebrew
         countryId:
           type: integer
-          nullable: true
           example: 12
     Status:
       type: object
       properties:
         id:
           type: integer
-          nullable: true
           example: 3
         name:
           type: string
-          nullable: true
           example: active
-        # secureId:
-        #   type: integer
-        #   nullable: true
-        #   example: 3
-        # percent:
-        #   type: integer
-        #   nullable: true
-        #   example: 10
+      
     Movements:
       type: object
       properties:
@@ -2018,20 +1879,16 @@ components:
           example: 54
         typeName:
           type: string
-          nullable: true
           example: עדכון
         description:
           type: string
-          nullable: true
           example: update trip
         userName:
           type: string
-          nullable: true
           example: daniId
         openDate:
           type: string
           format: date-time
-          nullable: true
     Account:
       type: object
       properties:
@@ -2040,22 +1897,18 @@ components:
           example: danId
         userName:
           type: string
-          nullable: true
           example: דן
         userNameEng:
           type: string
-          nullable: true
           example: dan
         password:
           type: string
           example: kkkk
         email:
           type: string
-          nullable: true
           example: test@gmail.com
         phone:
           type: string
-          nullable: true
           example: "6666666666"
         currentPermissionId:
           type: integer
@@ -2063,7 +1916,6 @@ components:
           example: 6
         currentPermissionName:
           type: string
-          nullable: true
           example: readonly
         fromRegion:
           type: integer
@@ -2103,8 +1955,81 @@ components:
         userNameEng:
           type: string
           example: kkmm
+    
+    TripCalendar:
+      type: object
+      properties:
+        tempOrderList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TempOrder'
+        activityList:
+           type: array
+           items:
+            $ref: '#/components/schemas/TripActivity'
+        facilityOrderList:
+           type: array
+           items:
+            $ref: '#/components/schemas/FacilityOrder'
 
-   
+    FacilityOrder:
+       type: object
+       properties:
+        tripId:
+         type: integer
+         example: 1
+        facilityId:
+          type: integer
+          example: 1
+        date: 
+          type: string
+          format: date-time
+        startHour:
+          type: string
+          format: date-time
+        endHour:
+          type: string
+          format: date-time
+        openBy: 
+          type: string
+          example: 'שחר גל'
+
+          
+    TripActivity:
+      type: object
+      properties:
+        activityId:
+          type: integer
+          example: 1
+        activityName: 
+          type: string
+          example: 'חינוך'
+        tripActivityIdentity :
+          type: integer
+          description: refers to indentity record on data base
+          example: 56
+        categoryId:
+          type: integer
+          example: 2
+        date:
+           type: string
+           format: date-time
+           example: '2021-11-12T00:00:00'
+        description:
+           type: string
+           example: 'students education'
+        hourStart:
+          type: string
+          format: date-time
+          example: '2021-11-12T10:00:00'
+        hourEnd:
+          type: string
+          format: date-time
+          example: '2021-11-12T12:00:00'
+        tripId:
+          type: integer
+          example: 2
+        
     TripActivityLookup:
       type: object
       properties:
@@ -2125,46 +2050,14 @@ components:
           example: ''
         categoryId:
           type: integer
+          nullable: true
           description: activity by category
           example: 1
         regionId:
           type: integer
+          nullable: true
           description: activity by region
           example: 3
-
-
-        # hourStart:
-        #   type: string
-        #   format: date-time
-        #   nullable: true
-        # hourEnd:
-        #   type: string
-        #   format: date-time
-        #   nullable: true
-       
-        # date:
-        #   type: string
-        #   format: date-time
-        # placeId:
-        #   type: integer
-        # placeName:
-        #   type: string
-        # openBy:
-        #   type: string
-        #   nullable: true
-        # itemId:
-        #   type: integer
-        #   nullable: true
-        # status:
-        #   type: integer
-        #   nullable: true
-        # generateTime:
-        #   type: string
-        #   format: date-time
-        #   nullable: true
-        # subItemId:
-        #   type: integer
-        #   nullable: true
     ActivityCategory:
        type: object
        properties:
@@ -2174,31 +2067,67 @@ components:
         name:
           type: string
           example: 'education'
-    OrderModel:
+    TempOrder:
       type: object
       properties:
-        order:
-          $ref: '#/components/schemas/Order'
-        listItems:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/OrderItem'
-        totalPayCustomer:
-          type: number
-          nullable: true
-        totalPaySupplier:
-          type: number
-          nullable: true
-        totalPayAfterKklSubsidy:
-          type: number
-          nullable: true
+       tripId:
+        type: integer
+        example: 12
+       orderTypeCode:
+        type: integer
+       orderTypeName:
+        type: string
+        example : 'היסעים'
+       orderId: 
+         type: integer
+         example : 12345
+       orderItemId:
+         type: integer
+         example : 123
+       orderItemName:
+         type: string
+         example: אוטובוס
+       startDate: 
+          type: string
+          format: date-time
+          example: '2021-11-12T00:00:00'
+       endDate: 
+          type: string
+          format: date-time
+          example: '2021-11-12T00:00:00'
+       fromHour:
+          type: string
+          format: date-time
+          example: '2021-11-12T13:00:00'
+       tillHour:
+          type: string
+          format: date-time
+          example: '2021-11-12T15:00:00'
+    # OrderModel:
+    #   type: object
+    #   properties:
+    #     order:
+    #       $ref: '#/components/schemas/Order'
+    #     listItems:
+    #       type: array
+    #       nullable: true
+    #       items:
+    #         $ref: '#/components/schemas/OrderItem'
+    #     totalPayCustomer:
+    #       type: number
+    #       nullable: true
+    #     totalPaySupplier:
+    #       type: number
+    #       nullable: true
+    #     totalPayAfterKklSubsidy:
+    #       type: number
+    #       nullable: true
     Order:
       type: object
       properties:
         tripId:
           type: integer
-        indx:
+        orderId:
           type: integer
         status:
           $ref: '#/components/schemas/Status'
@@ -2208,333 +2137,463 @@ components:
           $ref: '#/components/schemas/Supplier'
         comment:
           type: string
-          nullable: true
-        guideId:
-          type: integer
-          nullable: true
-        atarId:
+        # guideId:
+        #   type: integer
+        #   nullable: true
+        siteId:
           type: integer
           nullable: true
         sentToSupplier:
           type: string
           format: date-time
-          nullable: true
         sentBy:
           type: string
-          nullable: true
         voucherNum:
           type: integer
           nullable: true
         cancelDate:
           type: string
           format: date-time
-          nullable: true
         causeCancellation:
           type: string
-          nullable: true
         cancelBy:
           type: string
-          nullable: true
-        billId:
-          type: integer
-          nullable: true
-        paid:
+        # billId:
+        #   type: integer
+        #   nullable: true
+        paidToSupplier:
           type: number
           nullable: true
         userName:
           type: string
-          nullable: true
         openDate:
           type: string
           format: date-time
-          nullable: true
         finOrderType:
           type: string
-          nullable: true
-        sentByUser:
-          type: string
-          nullable: true
+        # sentByUser:
+        #   type: string
+        #   nullable: true
         budgetItem:
           type: integer
-          nullable: true
         confirmDate:
           type: string
           format: date-time
-          nullable: true
         confirmBy:
           type: string
-          nullable: true
         confirmUserTz:
           type: integer
           nullable: true
         confirmByUser:
           type: string
-          nullable: true
         confirmCancelBy:
           type: string
-          nullable: true
         confirmCancelByUser:
           type: string
-          nullable: true
         confirmCancelDate:
           type: string
           format: date-time
-          nullable: true
         confirmCancelUserTz:
           type: integer
           nullable: true
         supplierProcedureNum:
           type: string
-          nullable: true
-        numGuide:
-          type: integer
-          nullable: true
-    OrderItem:
+        # numGuide:
+        #   type: integer
+        #   nullable: true
+    
+    # OrderItem:
+    #   type: object
+    #   allOf: 
+    #     - $ref: '#/components/schemas/OrderItemCommonDetails'
+    #   properties:
+    #     tripId:
+    #       type: integer
+    #     orderId:
+    #       type: integer
+    #     itemIndx:
+    #       type: integer
+    #     comment:
+    #       type: string
+    #       nullable: true
+    #     internalComment:
+    #       type: string
+    #       nullable: true
+    #     isVat:
+    #       type: integer
+    #       nullable: true 
+    #     userName:
+    #       type: string
+    #       nullable: true
+    #     generateDate:
+    #       type: string
+    #       format: date-time
+    #       nullable: true
+    #     approvedDate:
+    #       type: string
+    #       format: date-time
+    #       nullable: true
+    #     approvalTraining:
+    #       type: integer
+    #       nullable: true
+    #     approvalTrainingUser:
+    #       type: string
+    #       nullable: true
+    #     approvalTrainingDate:
+    #       type: string
+    #       format: date-time
+    #       nullable: true
+    #     explainComment:
+    #       type: string
+    #       nullable: true  
+    #     paymentApproval:
+    #       type: integer
+    #       nullable: true
+    #     paymentApprovalUser:
+    #       type: string
+    #       nullable: true
+    #     paymentApprovalDate:
+    #       type: string
+    #       format: date-time
+    #       nullable: true
+    #     approvalAccountant:
+    #       type: integer
+    #       nullable: true
+    #     approvalAccountantZikuyDate:
+    #       type: string
+    #       format: date-time
+    #       nullable: true
+    #     attributeManagerApproval:
+    #       type: integer
+    #       nullable: true
+    #     attributeManagerApprovalDate:
+    #       type: string
+    #       format: date-time
+    #       nullable: true
+    #     guideTz:
+    #       type: integer
+    #       nullable: true
+    #     guideType:
+    #       type: integer
+    #       nullable: true
+    #     guideName:
+    #       type: string
+    #       nullable: true
+    #     rakazApproval:
+    #       type: integer
+    #       nullable: true
+    #     rakazApprovalDate:
+    #       type: string
+    #       format: date-time
+    #       nullable: true
+    #     rakazApprovalUser:
+    #       type: string
+    #       nullable: true
+    #     guideId:
+    #       type: integer
+    #       nullable: true
+        # start:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # end:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # startHour:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # endHour:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # exitPoint:
+        #   type: integer
+        #   nullable: true
+        # endPlace:
+        #   type: string
+        #   nullable: true
+        # startPlace:
+        #   type: string
+        #   nullable: true
+        # itemId:
+        #   type: integer
+        #   nullable: true
+        # itemCost:
+        #   type: number
+        #   nullable: true
+        # billingSupplier:
+        #   type: number
+        #   nullable: true
+        # billingCustomer:
+        #   type: number
+        #   nullable: true
+        # amount:
+        #   type: integer
+        #   nullable: true
+        # peopleInTrip:
+        #   type: integer
+        #   nullable: true
+        # retroSendChilan:
+        #   type: integer
+        #   nullable: true
+        # isSlaraySection:
+        #   type: integer
+        #   nullable: true
+        # slaraySectionUser:
+        #   type: string
+        #   nullable: true
+        # slaraySectionDate:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # receiptFromGuideDate:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # includeInvoice:
+        #   type: integer
+        #   nullable: true
+        # emailSentDate:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # approvedCancelBy:
+        #   type: string
+        #   nullable: true
+        # approvedCancelDate:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # approvedCancelIdno:
+        #   type: integer
+        #   nullable: true
+        # sentChilan:
+        #   type: integer
+        #   nullable: true
+        # sentChilanDate:
+        #   type: string
+        #   format: date-time
+        #   nullable: true
+        # placeForCalculation:
+        #   type: string
+        #   nullable: true
+        # paymentMonth:
+        #   type: integer
+        #   nullable: true
+        # paymentYear:
+        #   type: integer
+        #   nullable: true
+        # status:
+        #   $ref: '#/components/schemas/Status'
+        # sentBy:
+        #   type: string
+        #   nullable: true
+        # approvedBy:
+        #   type: string
+        #   nullable: true
+        # itemBeforeChange:
+        #   type: integer
+        #   nullable: true
+        # datesTemp:
+        #   type: array
+        #   items:
+        #     type: string
+        #     format: date-time
+        #     nullable: true
+        # isGuideSleep:
+        #   type: integer
+        #   nullable: true
+        # isCopyRow:
+        #   type: boolean
+    
+    # OrderModel1:
+    #   type: object
+    #   properties:
+    #     transportOrder:
+    #       $ref: '#/components/schemas/TransportOrder'
+    #     siteOrder:
+    #       $ref: '#/components/schemas/SiteOrder'
+    #     totalPayCustomer:
+    #       type: number
+    #       nullable: true
+    #     totalPaySupplier:
+    #       type: number
+    #       nullable: true
+    #     totalPayAfterKklSubsidy:
+    #       type: number
+    #       nullable: true
+
+    OrderModel:
+       type: object
+       properties:
+          orderList:
+            type: array
+            items:
+             $ref: '#/components/schemas/OrderEvent'
+          totalPayCustomer:
+            type: number
+            nullable: true
+          totalPaySupplier:
+            type: number
+            nullable: true
+          totalPayAfterKklSubsidy:
+           type: number
+           nullable: true
+
+    OrderItemCommonDetails:
+      #  discriminator:  
+      #   propertyName: orderCommonDetails
       type: object
       properties:
-        supplierOrder:
-          $ref: '#/components/schemas/Supplier'
-        statusOrder:
-          $ref: '#/components/schemas/Status'
-        tripId:
+        itemId:
           type: integer
-        orderId:
-          type: integer
-        itemIndx:
+        itemIndex:
           type: integer
         orderItemDetails:
           $ref: '#/components/schemas/ItemsByTypeOrder'
-        itemId:
-          type: integer
-          nullable: true
+        # amount:
+        #   type: integer
+        quantity:
+         type: integer
         itemCost:
           type: number
-          nullable: true
         billingSupplier:
           type: number
           nullable: true
         billingCustomer:
           type: number
           nullable: true
-        isVat:
-          type: integer
-          nullable: true
-        start:
-          type: string
-          format: date-time
-          nullable: true
-        end:
-          type: string
-          format: date-time
-          nullable: true
-        amount:
-          type: integer
-          nullable: true
-        startHour:
-          type: string
-          format: date-time
-          nullable: true
-        endHour:
-          type: string
-          format: date-time
-          nullable: true
-        exitPoint:
-          type: integer
-          nullable: true
-        endPlace:
-          type: string
-          nullable: true
-        startPlace:
-          type: string
-          nullable: true
-        placeForCalculation:
-          type: string
-          nullable: true
-        comment:
-          type: string
-          nullable: true
-        internalComment:
-          type: string
-          nullable: true
         peopleInTrip:
           type: integer
           nullable: true
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        startHour:
+          type: string
+          format: date-time
+        endHour:
+          type: string
+          format: date-time
         userName:
           type: string
-          nullable: true
-        generateDate:
+           
+
+    OrderEvent:
+      discriminator:  
+       propertyName: orderEvent
+      type: object
+      properties:
+       order:
+           $ref: '#/components/schemas/Order' 
+       globalParameters: 
+           description: Common parameters for all types of orders
+           $ref: '#/components/schemas/OrderItemCommonDetails'
+    
+    TransportOrder:
+      type: object
+      allOf: 
+        - $ref: '#/components/schemas/OrderEvent'
+      properties:
+        pickUpLocation:
           type: string
-          format: date-time
-          nullable: true
-        paymentMonth:
-          type: integer
-          nullable: true
-        paymentYear:
-          type: integer
-          nullable: true
-        status:
-          $ref: '#/components/schemas/Status'
-        sentBy:
+        pickUpAddress:
           type: string
-          nullable: true
-        approvedBy:
-          type: string
-          nullable: true
-        approvedDate:
-          type: string
-          format: date-time
-          nullable: true
-        approvedByIdno:
-          type: integer
-          nullable: true
-        approvedByUser:
-          type: string
-          nullable: true
-        cancelDate:
-          type: string
-          format: date-time
-          nullable: true
-        causeCancellation:
-          type: string
-          nullable: true
-        cancelBy:
-          type: string
-          nullable: true
-        approvalTraining:
-          type: integer
-          nullable: true
-        approvalTrainingUser:
-          type: string
-          nullable: true
-        approvalTrainingDate:
-          type: string
-          format: date-time
-          nullable: true
-        emailSentDate:
-          type: string
-          format: date-time
-          nullable: true
-        approvedCancelBy:
-          type: string
-          nullable: true
-        approvedCancelDate:
-          type: string
-          format: date-time
-          nullable: true
-        approvedCancelIdno:
-          type: integer
-          nullable: true
-        sentChilan:
-          type: integer
-          nullable: true
-        sentChilanDate:
-          type: string
-          format: date-time
-          nullable: true
-        explainComment:
-          type: string
-          nullable: true
-        retroSendChilan:
-          type: integer
-          nullable: true
-        paymentApproval:
-          type: integer
-          nullable: true
-        paymentApprovalUser:
-          type: string
-          nullable: true
-        paymentApprovalDate:
-          type: string
-          format: date-time
-          nullable: true
-        isSlaraySection:
-          type: integer
-          nullable: true
-        slaraySectionUser:
-          type: string
-          nullable: true
-        slaraySectionDate:
-          type: string
-          format: date-time
-          nullable: true
-        receiptFromGuideDate:
-          type: string
-          format: date-time
-          nullable: true
-        includeInvoice:
-          type: integer
-          nullable: true
-        approvalAccountant:
-          type: integer
-          nullable: true
-        approvalAccountantZikuyDate:
-          type: string
-          format: date-time
-          nullable: true
-        attributeManagerApproval:
-          type: integer
-          nullable: true
-        attributeManagerApprovalDate:
-          type: string
-          format: date-time
-          nullable: true
-        guideTz:
-          type: integer
-          nullable: true
-        guideType:
-          type: integer
-          nullable: true
-        guideName:
-          type: string
-          nullable: true
-        rakazApproval:
-          type: integer
-          nullable: true
-        rakazApprovalDate:
-          type: string
-          format: date-time
-          nullable: true
-        rakazApprovalUser:
-          type: string
-          nullable: true
-        guideId:
-          type: integer
-          nullable: true
-        itemBeforeChange:
-          type: integer
-          nullable: true
-        datesTemp:
-          type: array
-          items:
-            type: string
-            format: date-time
-            nullable: true
-        isGuideSleep:
-          type: integer
-          nullable: true
-        isCopyRow:
-          type: boolean
+        # scatterAddress:
+        #   type: string
+    
+    SiteOrder:
+        type: object
+        allOf: 
+        - $ref: '#/components/schemas/OrderEvent'
+        properties:
+         totalHours :
+             type: number
+             example: 5
+         siteAddress:
+             type: string
+             example: http://
+         isCustomerOrder:
+              type: boolean
+              example: true
+    EconomyOrder :
+        type: object
+        allOf: 
+        - $ref: '#/components/schemas/OrderEvent'
+        properties:
+           servingTime:
+              type: string
+              example: 15:00
+           location:
+              type: string
+              example: חדר אוכל ציפורי
+           regularDishesNumber:
+              type: integer
+              example: 100
+           vegetarianDishesNumber: 
+              type: integer
+              example: 20
+           veganDishesNumber: 
+              type: integer
+              example: 20
+    GuidanceOrder :
+         type: object
+         allOf: 
+         - $ref: '#/components/schemas/OrderEvent'
+         properties:
+            location:
+              type: string
+              example: חדר אוכל ציפורי
+            guideName:
+              type: string
+              example: dan
+            languageGide:
+              type: string
+              example: english
+            guideInstructions:
+              type: string
+              example: 'kk'
+            
+
+    # SecuringOrder:    
+    #      type: object
+    #      allOf: 
+    #      - $ref: '#/components/schemas/TransportOrder'
+    #      properties:
+    #        guardName:
+    #          type: string
+    #          example : dan
+        
+   
+    
+    # MusicActivation:
+    #      type: object
+    #      properties:
+    
     OrderType:
       type: object
       properties:
         id:
           type: integer
-          nullable: true
         name:
           type: string
-          nullable: true
+        iconPath:
+          type: string
+          example: 'http://'
         finOrderType:
           type: string
-          nullable: true
     Supplier:
       type: object
       properties:
         id:
           type: integer
-          nullable: true
         name:
           type: string
-          nullable: true
         finId:
           type: number
           nullable: true
@@ -2543,7 +2602,6 @@ components:
           nullable: true
         address:
           type: string
-          nullable: true
         supplierType:
           type: integer
           nullable: true
@@ -2552,19 +2610,14 @@ components:
           nullable: true
         phone:
           type: string
-          nullable: true
         email:
           type: string
-          nullable: true
         fax:
           type: string
-          nullable: true
         contact:
           type: string
-          nullable: true
         registrationNum:
           type: string
-          nullable: true
         supplierFinId:
           type: integer
         isGuideSupplier:
@@ -2575,15 +2628,12 @@ components:
       properties:
         id:
           type: integer
-          nullable: true
         name:
           type: string
-          nullable: true
         cost:
           type: number
         title:
           type: string
-          nullable: true
         type:
           type: integer
         costCustomer:
@@ -2617,7 +2667,6 @@ components:
           nullable: true
         weekPart:
           type: string
-          nullable: true
         typeSleepId:
           type: integer
           nullable: true
@@ -2656,10 +2705,10 @@ components:
       properties:
         trip:
           $ref: '#/components/schemas/TripInfo'
-        # listCharuzim:
-        #   type: array
-        #   items:
-        #     $ref: '#/components/schemas/CharuzimByDateModel'
+        activitiesList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripActivity'
           nullable: true
         orderList:
           type: array

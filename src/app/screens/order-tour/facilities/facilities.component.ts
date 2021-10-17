@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Validators, FormControl } from '@angular/forms';
 import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
@@ -8,6 +8,10 @@ import { InfoCard } from '../../education-results/education-results.component';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { UserService } from 'src/app/open-api/api/user.service';
+import { ActivitiesService } from 'src/app/open-api/api/activities.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { FacilitiesService } from './services/facilities.service';
+
 
 @Component({
   selector: 'app-facilities',
@@ -15,13 +19,18 @@ import { UserService } from 'src/app/open-api/api/user.service';
   styleUrls: ['./facilities.component.scss']
 })
 
-export class FacilitiesComponent implements OnInit {
+export class FacilitiesComponent implements OnInit, AfterViewInit {
+
+  @Input() public control: FormControl;
+
 
   timesArray: Array<string | number> = [];
-  hiddenElements: any = { facilities: false, activities: false };  
+  hiddenElements: any = { facilities: false, activities: false };
   facilityForDay: any;
   tripActivities?: any;
-  areas?: any;
+  areas?: any = [{
+    "lable": 11,
+    "value": "גולן, עמק החולה"  }];
   activityCategories?: any;
 
   colors = { green: '#37C56B', blue: '#448ECD' }
@@ -40,154 +49,18 @@ export class FacilitiesComponent implements OnInit {
       iconSrc: 'assets/images/finish-flag-1.svg', color: this.colors.green, secondIcon: 'bus'
     },
   ];
-  formArray: QuestionBase<string | number>[] = [
-    new QuestionSelect({
-      key: 'durationOfActivity',
-      label: 'משך פעילות',
-      validations: [Validators.required],
-      inputProps: { options: [{ label: '', value: '' }] }
-    }),
-    new QuestionSelect({
-      key: 'areas',
-      label: 'אזור',
-      validations: [Validators.required],
-      inputProps: { options: [{ label: '', value: '' }] }
-    }),
-    new QuestionSelect({
-      key: 'typeOfActivity',
-      label: 'סוג פעילות',
-      validations: [Validators.required],
-      inputProps: { options: [{ label: '', value: '' }] }
-    }),
-    new QuestionTextbox({
-      key: 'search',
-      label: 'חפש פעילות',
-      value: '',
-      validations: [Validators.required]
-    }),
-  ];
+  // formArray: any = this.facilitiesService.formArray;
+  formArray?: QuestionBase<string | number>[] = []
+
+
+
   facilitiesArray: any = [{
     "date": "2021-09-10T:00:00:00",
     "facilitiesList": []
   }];
-  // facilitiesArray: InfoCard[] = [
-  //   facilitiesArray: any[] = [
-  //   {
-  //     iconPath: 'assets/images/museum.svg',
-  //     name: 'תאטרון',
-  //     maxOccupancy: 320,
-  //     availability: [
-  //       {
-  //         fromHour: 14,
-  //         tillHour: 15.25,
-  //         totalTime: 1.25,
-  //         customerName: 'אורנים',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     iconPath: 'assets/images/classroom.svg',
-  //     headline: 'תאטרון',
-  //     subHeadline: 'עד 20 משתתפים',
-  //     availability: [
-  //       {
-  //         fromHour: 14,
-  //         tillHour: 15.25,
-  //         totalTime: 1.25,
-  //         customerName: 'רתמים',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     iconPath: 'assets/images/football.svg',
-  //     headline: 'מגרש ספורט',
-  //     subHeadline: '',
-  //     availability: [
-  //       {
-  //         fromHour: 14,
-  //         tillHour: 15.25,
-  //         totalTime: 1.25,
-  //         customerName: 'נחלאות',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     iconPath: 'assets/images/leafs.svg',
-  //     headline: 'סיור במשתלה',
-  //     availability: [],
-  //   },
-  //   {
-  //     iconPath: 'assets/images/stage.svg',
-  //     headline: 'תאטרון',
-  //     subHeadline: 'עד 320 משתתפים',
-  //     availability: [
-  //       {
-  //         fromHour: 14,
-  //         tillHour: 15.25,
-  //         totalTime: 1.25,
-  //         customerName: 'ירושלים',
-  //       },
-  //     ],
-  //   },
-  //   // --- length 5 ---
-  //   {
-  //     iconPath: 'assets/images/stage.svg',
-  //     headline: 'תאטרון',
-  //     subHeadline: 'עד 320 משתתפים',
-  //     availability: [
-  //       {
-  //         fromHour: 14,
-  //         tillHour: 15.25,
-  //         totalTime: 1.25,
-  //         customerName: 'ירושלים',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     iconPath: 'assets/images/stage.svg',
-  //     headline: 'תאטרון',
-  //     subHeadline: 'עד 320 משתתפים',
-  //     availability: [
-  //       {
-  //         fromHour: 14,
-  //         tillHour: 15.25,
-  //         totalTime: 1.25,
-  //         customerName: 'ירושלים',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     iconPath: 'assets/images/stage.svg',
-  //     headline: 'תאטרון',
-  //     subHeadline: 'עד 320 משתתפים',
-  //     availability: [
-  //       {
-  //         fromHour: 14,
-  //         tillHour: 15.25,
-  //         totalTime: 1.25,
-  //         customerName: 'ירושלים',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     iconPath: 'assets/images/stage.svg',
-  //     headline: 'תאטרון',
-  //     subHeadline: 'עד 320 משתתפים',
-  //     availability: [
-  //       {
-  //         fromHour: 14,
-  //         tillHour: 15.25,
-  //         totalTime: 1.25,
-  //         customerName: 'ירושלים',
-  //       },
-  //     ],
-  //   },
-  // ];
-
 
   // activitiesArray: InfoCard[] = [
-    activitiesArray: any[] = [
-
+  activitiesArray: any[] = [
     {
       iconPath: 'assets/images/fruits.svg',
       name: 'ארוחת ערב',
@@ -226,9 +99,41 @@ export class FacilitiesComponent implements OnInit {
     { img: "assets/images/img-3.png", title: "יום עיון והשתלמות", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 5 },
   ];
 
-  constructor(private usersService: UserService, private tripService: TripService, private api: FakeService) { }
+  constructor(private usersService: UserService, private tripService: TripService, private api: FakeService,
+    private activitiesService: ActivitiesService, private facilitiesService: FacilitiesService) { }
 
+  ngAfterViewInit(): void {}
   ngOnInit(): void {
+
+    this.formArray = [
+      new QuestionSelect({
+        key: 'durationOfActivity',
+        label: 'משך פעילות',
+        validations: [Validators.required],
+        inputProps: { options: [{ label: 'גולן, עמק החולה', value: '11' }, { label: 'גjsdfk df', value: '12' }] }
+      }),
+      new QuestionSelect({
+        key: 'areas',
+        label: 'אזור',
+        inputProps: { options: this.areas },
+        validations: [Validators.required]
+      }),
+      new QuestionSelect({
+        key: 'typeOfActivity',
+        label: 'סוג פעילות',
+        validations: [Validators.required],
+        inputProps: { options: [{ label: '', value: '' }] }
+      }),
+      new QuestionTextbox({
+        key: 'search',
+        label: 'חפש פעילות',
+        value: '',
+        validations: [Validators.required]
+      }),
+    ];
+    
+    console.log("trip service: ", this.tripService);
+
     // del temp fixed dates and place
     // this.facilitiesArray = this.tripService.facilitiesArray;
     // this.facilityForDay = this.facilitiesArray[0].facilitiesList;
@@ -237,15 +142,24 @@ export class FacilitiesComponent implements OnInit {
     this.getAreas();
     this.getActivityCategories();
     this.getTripActivities();
+  }
 
-  }  
 
   getAreas() {
-    this.api.getAreas().subscribe((areas: any) => {
-      console.log('getAreas: ', areas);
-      if (areas) {
-        this.areas = areas;
-      }
+    this.usersService.getAreas().subscribe((areas: any) => {
+      console.log('get areas: ', areas);
+      this.areas = [];
+      areas.forEach(element => {
+        this.areas.push({ label: element.name, value: element.id });
+      });
+      console.log('get areas 2: ', this.areas);
+
+      //this.facilitiesService.formArray[1].inputProps = this.areas;
+      //this.formArray = this.facilitiesService.formArray[1].inputProps;
+       this.formArray[1].inputProps = this.areas;
+
+
+      // console.log(this.formArray)
     },
       error => {
         console.log("error: ", { error });
@@ -253,11 +167,14 @@ export class FacilitiesComponent implements OnInit {
   }
 
   getActivityCategories() {
-    this.api.getActivityCategories().subscribe((activityCategories: any) => {
-      console.log('activityCategories: ', activityCategories);
-      if (activityCategories) {
-        this.activityCategories = activityCategories;
-      }
+    this.activitiesService.getActivityCategories().subscribe((activityCategories: any) => {
+      console.log('get activity Categories: ', activityCategories);
+      this.activityCategories = [];
+      activityCategories.forEach(element => {
+        this.activityCategories.push({ label: element.name, value: element.id });
+      });
+      console.log('get activity Categories 2: ', activityCategories);
+
     },
       error => {
         console.log("error: ", { error });
@@ -265,11 +182,14 @@ export class FacilitiesComponent implements OnInit {
   }
 
   getTripActivities() {
-    this.api.getTripActivities().subscribe((tripActivities: any) => {
-      console.log('tripActivities: ', tripActivities);
-      if (tripActivities) {
-        this.tripActivities = tripActivities;
-      }
+    this.activitiesService.getTripActivities().subscribe((tripActivities: any) => {
+      console.log('get tripActivities: ', tripActivities);
+      this.tripActivities = [];
+      tripActivities.forEach(element => {
+        this.tripActivities.push({ label: element.name, value: element.id });
+      });
+      console.log('get tripActivities2: ', tripActivities);
+
     },
       error => {
         console.log("error: ", { error });
@@ -292,6 +212,12 @@ export class FacilitiesComponent implements OnInit {
         console.log("error: ", { error });
       });
   }
+
+  onOptionSelected(event: MatAutocompleteSelectedEvent) {
+    //this.optionSelected.emit(event)
+    console.log({ event })
+  }
+
 
   fillTimes(): void {
     for (let i = 0; i < 24; i++) {

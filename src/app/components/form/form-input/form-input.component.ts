@@ -219,8 +219,10 @@ export class FormInputComponent implements OnInit {
   // method to handle validation messages
   public validate() {
     this.error = this.formService.getErrorMessage(this.control, this.label);
+    console.log(this.error);
     this.control.valueChanges.subscribe(() => {
       this.error = this.formService.getErrorMessage(this.control, this.label);
+      console.log(this.error);
     });
   }
 }

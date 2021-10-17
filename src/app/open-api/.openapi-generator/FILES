@@ -1,6 +1,8 @@
 .gitignore
+.openapi-generator-ignore
 README.md
 api.module.ts
+api/activities.service.ts
 api/api.ts
 api/movements.service.ts
 api/order.service.ts
@@ -13,6 +15,7 @@ index.ts
 model/accommodationType.ts
 model/accomodationFreeSpaces.ts
 model/account.ts
+model/activityCategory.ts
 model/activityType.ts
 model/ageGroup.ts
 model/area.ts
@@ -23,12 +26,12 @@ model/baseCustomer.ts
 model/budget.ts
 model/budgetByParams.ts
 model/cancelTrip.ts
-model/charuz.ts
 model/city.ts
 model/country.ts
 model/customer.ts
 model/facilityDate.ts
 model/facilityMapByDates.ts
+model/facilityOrder.ts
 model/fieldForestCenter.ts
 model/itemsByTypeOrder.ts
 model/language.ts
@@ -49,7 +52,11 @@ model/sleepingOptions.ts
 model/status.ts
 model/subBudget.ts
 model/supplier.ts
+model/tempOrder.ts
+model/tripActivity.ts
+model/tripActivityLookup.ts
 model/tripAttribute.ts
+model/tripCalendar.ts
 model/tripInfo.ts
 model/tripModel.ts
 variables.ts

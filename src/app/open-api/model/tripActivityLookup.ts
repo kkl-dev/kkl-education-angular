@@ -11,21 +11,19 @@
  */
 
 
-export interface Charuz { 
+export interface TripActivityLookup { 
     activityId?: number;
-    name?: string | null;
+    name?: string;
     sitePicture?: string;
     linkToDetails?: string;
-    hourStart?: string | null;
-    hourEnd?: string | null;
-    description?: string | null;
-    date?: string;
-    placeId?: number;
-    placeName?: string;
-    openBy?: string | null;
-    itemId?: number | null;
-    status?: number | null;
-    generateTime?: string | null;
-    subItemId?: number | null;
+    description?: string;
+    /**
+     * activity by category
+     */
+    categoryId?: number | null;
+    /**
+     * activity by region
+     */
+    regionId?: number | null;
 }
 

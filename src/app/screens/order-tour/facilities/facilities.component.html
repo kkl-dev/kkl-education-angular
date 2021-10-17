@@ -10,7 +10,7 @@
                 <!-- <app-add-activity></app-add-activity> -->
                 <!-- <app-save-activity></app-save-activity> -->
                 <!-- <app-add-facility></app-add-facility>  -->
-                <div class="arrows"> 
+                <div class="arrows">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
@@ -24,7 +24,7 @@
                 <p>תוספות בתשלום</p>
             </div>
             <div class="timeline">
-            <app-calendar></app-calendar>
+                <app-calendar></app-calendar>
             </div>
 
         </div>
@@ -35,9 +35,55 @@
                 <p>הוספת פעילות ללו"ז</p>
                 <button>הוספת פעילות חדשה +</button>
             </div>
+            <!-- right side starts here -->
             <div class="forms">
-                <app-form-container [questions]='formArray' [cols]='4'>
-                </app-form-container>
+                <!-- <mat-grid-list cols="4" rowHeight="2vh" [gutterSize]="3">
+
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <ng-container>
+                            <input type="text" matInput [matAutocomplete]="auto" />
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                                (optionSelected)="onOptionSelected($event)">
+                                <mat-option *ngFor="let activity of tripActivities" [value]="activity.id">
+                                    {{ activity.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </ng-container>
+
+                    </mat-grid-tile>
+
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-select color="primary">
+                            <mat-option>ezor</mat-option>
+                            <mat-option *ngFor="let area of areas" [value]="area.id">
+                                {{ area.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-select color="primary">
+                            <mat-option>ezor</mat-option>
+                            <mat-option *ngFor="let area of areas" [value]="area.id">
+                                {{ area.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-select color="primary">
+                            <mat-option>ezor</mat-option>
+                            <mat-option *ngFor="let area of areas" [value]="area.id">
+                                {{ area.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-grid-tile>
+
+                </mat-grid-list> -->
+
+
+              
+                <app-form-container [questions]='formArray' [cols]='4'></app-form-container>
             </div>
         </div>
         <div class="cards">
@@ -45,10 +91,6 @@
                 <p>מתקני מרכז שדה</p>
             </div>
             <div class="info-card">
-                                    <!-- <app-info-card class="education-results__right-facilities-items-item"
-                    *ngFor="let item of facilityForDay; let i = index" [item]="item">
-                    <app-tooltip class="app-tooltip" [hours]="item.occupiedHours"></app-tooltip>
-                  </app-info-card> -->
                 <ng-container *ngFor="let item of facilityForDay; let i = index">
                     <app-info-card class="facilities-items-item" *ngIf='5 > i' [item]="item">
                         <app-tooltip class="app-tooltip" [hours]="item.occupiedHours">
@@ -67,6 +109,7 @@
                 (click)="hiddenElements.facilities ? hiddenElements.facilities = false : hiddenElements.facilities = true">
                 {{hiddenElements.facilities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p>
         </div>
+        
         <div class="cards">
             <div class="titles">
                 <p>פעילויות קבועות</p>
@@ -77,7 +120,8 @@
                     </app-info-card>
                 </ng-container>
                 <ng-container *ngFor="let item of activitiesArray; let i = index">
-                    <app-info-card class="facilities-items-item" [item]="item" *ngIf='i >= 5 && hiddenElements.activities'>
+                    <app-info-card class="facilities-items-item" [item]="item"
+                        *ngIf='i >= 5 && hiddenElements.activities'>
                     </app-info-card>
                 </ng-container>
             </div>
@@ -85,12 +129,14 @@
                 (click)="hiddenElements.activities ? hiddenElements.activities = false : hiddenElements.activities = true">
                 {{hiddenElements.activities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p>
         </div>
+
         <div class="cards">
             <div class="titles">
                 <p>פעילויות קרובות</p>
             </div>
             <div class="card-container">
-                <app-activities-card *ngFor="let card of upComingActivitiesArray" [obj]='card'></app-activities-card>
+                <!-- <app-activities-card *ngFor="let card of upComingActivitiesArray" [obj]='card'></app-activities-card> -->
+                <app-activities-card *ngFor="let card of tripActivities" [obj]='card'></app-activities-card>
             </div>
             <app-pagination pagesCount='5' currentPage='1'></app-pagination>
         </div>
