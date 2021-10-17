@@ -4,6 +4,22 @@ import { EventInput } from '@fullcalendar/angular';
 import { INITIAL_EVENTS } from '../screens/order-tour/facilities/calendar/event-utils';
 import { InfoCard } from '../screens/education-results/education-results.component';
 import { ActivitiesCardInterface } from '../components/activities-card/activities-card.component';
+export interface InfoCard1 {
+  svgUrl: string;
+  title?: string;
+  headline?: string;
+  subHeadline?: string;
+  availability?: TooltipDataModel1[];
+  maxParticipants?: string;
+  days?: any[];
+}
+
+export interface TooltipDataModel1 {
+  startingHour: number;
+  endingHour: number;
+  totalTime: number;
+  user: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -43,12 +59,13 @@ export class FacilitiesService {
     this.closeModal(item.type);
   }
 
-  public updateSelectedFacility(args: InfoCard): void {
+  public updateSelectedFacility(args: InfoCard1): void {
     this.selectedFacility.next(args);
   }
-  public getSelectedFacility(): Observable<InfoCard> {
+  public getSelectedFacility(): Observable<InfoCard1> {
     return this.selectedFacility.asObservable();
   }
+  
   public updateSelectedActivity(args: ActivitiesCardInterface): void {
     this.selectedActivity.next(args);
   }

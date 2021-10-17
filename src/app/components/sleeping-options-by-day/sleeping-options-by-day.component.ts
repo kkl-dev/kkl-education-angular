@@ -8,7 +8,7 @@ import { TripService } from 'src/app/services/trip.service';
 })
 
 export class SleepingOptionsByDayComponent implements OnInit {
-  @Input() currentDay1: number = 0;
+  @Input() currentDay: number = 0;
   @Output() emitCurrentDay: EventEmitter<number> = new EventEmitter();
   @Input() sleepingOptionsByDay: {
     day: string;
@@ -22,7 +22,7 @@ export class SleepingOptionsByDayComponent implements OnInit {
   }[] = [];
   //@Input() AvailableSleepingOptions: any;
   AvailableSleepingOptions: any;
-  currentDay: number = 0;
+  //currentDay: number = 0;
   @Input() showSleepAreas:boolean=true
   constructor(public tripService: TripService) { }
 

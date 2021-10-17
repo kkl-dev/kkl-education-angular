@@ -6,6 +6,22 @@ import { FacilitiesService } from 'src/app/services/facilities.service';
 import { UserDataService } from 'src/app/utilities/services/user-data.service';
 import { DAYS } from 'src/mock_data/facilities';
 
+export interface InfoCard1 {
+  svgUrl: string;
+  title?: string;
+  headline?: string;
+  subHeadline?: string;
+  availability?: TooltipDataModel1[];
+  maxParticipants?: string;
+  days?: any[];
+}
+
+export interface TooltipDataModel1 {
+  startingHour: number;
+  endingHour: number;
+  totalTime: number;
+  user: string;
+}
 export interface OccupiedBarModel {
   startingHour: number;
   endingHour: number;
@@ -30,7 +46,7 @@ export class AddFacilityComponent implements OnInit {
       singleUnit: string;
     }
   }[] = DAYS;
-  public selectedFacility$: Observable<InfoCard>;
+  public selectedFacility$: Observable<InfoCard1>;
   @Input() startingHour: number = 0
   @Input() endingHour: number = 24;
   @Input() hours: OccupiedBarModel[];
@@ -49,7 +65,7 @@ export class AddFacilityComponent implements OnInit {
    public ngOnInit(): void {
     this.selectedFacility$ = this.facilitiesServices.getSelectedFacility();
     this.subscribeToFacility = this.selectedFacility$.subscribe(data => {
-      //this.hours = data.availability;
+      this.hours = data.availability;
       this.createOccupiedHoursArray();
       this.createForm(data);
     });

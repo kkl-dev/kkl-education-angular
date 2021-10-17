@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { BreakpointService } from 'src/app/utilities/services/breakpoint.service';
 import { SquadAssembleService } from '../services/squad-assemble.service';
 import { SquadGroupComponent } from './squad-group/squad-group.component';
+import { SquadClientService } from './squad-client/squad-client.service';
 
 @Component({
   selector: 'app-squad-assemble',
@@ -17,13 +18,14 @@ export class SquadAssembleComponent implements OnInit {
 
   private newClientMode: boolean;
   public md$ : Observable<boolean>
-  constructor(private squadAssembleService: SquadAssembleService,private tripService:TripService, private breakpointService : BreakpointService) {}
+  constructor(private squadAssembleService: SquadAssembleService,private tripService:TripService, private breakpointService : BreakpointService,
+    private squadClientService: SquadClientService) {}
   
   ngOnInit(): void {
     this.tripService.getLookUp();
     this.subscribeToNewClient();
     this.md$ = this.breakpointService.isTablet()
-
+    this.setSchedulAndClientSquadValues();
   }
 
   private setSquads() {
@@ -62,6 +64,36 @@ export class SquadAssembleComponent implements OnInit {
     };
   }
 
+  setSchedulAndClientSquadValues(){
+    if(this.squadAssembleService.tripInfo.tripStart!=undefined){
+      console.log('trip info is full');
+      let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
+      this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
+      let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
+      this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
+      // set client and contact form values
+      let custObj={
+        label: this.squadAssembleService.tripInfo.customer.name,
+        value : this.squadAssembleService.tripInfo.customer.id.toString()
+      }
+      let custArr= [];
+      custArr.push(custObj);
+      this.squadClientService.questions[0].group.questions[0].inputProps.options=custArr;
+      this.squadClientService.questions[0].group.questions[0].value=custObj.value;
+      //this.squadClientService.emitClientSelected(this.squadAssembleService.tripInfo.customer.id.toString())
+      let contactGroupIndex=  this.squadClientService.questions.findIndex(i => i.key=='contact');
+      let contactGroup = this.squadClientService.questions.find(i => i.key=='contact');
+      let contactNameIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactName');
+      this.squadClientService.questions[contactGroupIndex].group.questions[contactNameIndex].value= this.squadAssembleService.tripInfo.contactName;
+      let contactPhoneIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactPhone');
+      this.squadClientService.questions[contactGroupIndex].group.questions[contactPhoneIndex].value= this.squadAssembleService.tripInfo.contactPhone;
+      let contactImailIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactEmail');
+      this.squadClientService.questions[contactGroupIndex].group.questions[contactImailIndex].value= this.squadAssembleService.tripInfo.contactEmail;
+    }
+    else{
+     console.log('trip info is undefined');
+    }
+ }
   private subscribeToNewClient() {
     this.squadAssembleService.getNewClientObs().subscribe((value: boolean) => {
       this.newClientMode = value;

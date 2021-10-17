@@ -1,35 +1,30 @@
-<div class="sleeping-form">
-  <h3 class="sleeping-form">שם הטיול</h3>
-  <p class="sleeping-form">{{tripName}}</p>
-  <mat-form-field appearance="outline">
-      <!-- <mat-select
-      #select
-      [(ngModel)]="location"
-      name="location"
-      [disabled]
-      class="education__form-group-select"
-    >
-      <mat-option value="{{ option.value }}" *ngFor="let option of formOptions">
+<div
+  class="sleeping-form"
+  fxFlex="100"
+  fxLayout="row-reverse"
+  fxLayoutGap="2rem"
+  fxLayoutAlign="space-around center"
+>
+  <h3 class="sleeping-form__name" fxFlex="32">{{tripName}} - שם הטיול  </h3>
+  <!-- <p class="sleeping-form-serial"></p>  -->
+  <form [dir]="'rtl'" class="sleeping-form__form" fxFlex="64" fxLayout="row">
+    <mat-form-field appearance="outline" fxFlex="45">
+      <mat-label class="placeholder">מרכז שדה</mat-label>
+      <mat-select
+        #select
+        [(ngModel)]="location"
+        name="location"
+        class="education__form-group-select"
+        
+      >
+        <mat-option
+          value="{{ option.value }}"
+          *ngFor="let option of formOptions"
+        >
           <span class="education__select-option-text">{{ option.text }}</span>
         </mat-option>
-    </mat-select> -->
-    <input matInput  [(ngModel)]="location" style="text-align: center;" readonly>
-</mat-form-field>
-
-<!-- [disabled]="disableDates" -->
-      <mat-form-field appearance="outline">
-
-          <input matInput class="header__form-group-input"
-          airbnb-calendar type="text" [(ngModel)]="date"
-          [disabled]="disableDates"
-          [options]="options"
-          (newDate)='newDateRecived($event)'
-          (sleepingPlace)='newSleepingPlaceRecived($event)'
-          (prevDate)='prevDateRecived($event)'
-          (ngModelChange)="dateObjChanged($event)"
-          name="calendar-input" id="calendar-input" />
-
-          
+      </mat-select>
+      <!-- <input matInput  [(ngModel)]="location" style="text-align: center;" readonly> -->
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex="45">
@@ -41,6 +36,7 @@
         airbnb-calendar
         type="text"
         [(ngModel)]="date"
+        [disabled]="disableDates"
         [options]="options"
         (newDate)="newDateRecived($event)"
         (sleepingPlace)="newSleepingPlaceRecived($event)"
@@ -51,5 +47,5 @@
         id="calendar-input"
       />
     </mat-form-field>
- 
+  </form>
 </div>

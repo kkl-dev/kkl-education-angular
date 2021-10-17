@@ -9,7 +9,7 @@ export const dateOptions:CalendarOptions = {
   firstCalendarDay: 0,
   format: 'dd/LL/yyyy',
   closeOnSelected: true,
-// fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
+  //  fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
   freeSpacesArray: freeSpacesArray,
 };
 

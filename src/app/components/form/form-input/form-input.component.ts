@@ -152,10 +152,11 @@ export class FormInputComponent implements OnInit {
     });
   }
   public onSelectChange() {
-    if (this.control.parent.value.attribute) {
-      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
-    }
+    // if (this.control.parent.value.attribute) {
+    //   this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
+    // }
     if (this.name === 'attribute') {
+      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
       this.group.controls['activityType'].setValue(undefined);//איפוס שדה פעילות
       if (this.control.value === '12') {
         var index;

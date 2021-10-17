@@ -119,7 +119,7 @@ export class SquadAssembleService {
     // ]
 
     new QuestionCalendar({
-      key: 'scheduleDates',
+      key: 'dates',
       label: 'תאריכי לינה',
       value: null,
       rows: 4,

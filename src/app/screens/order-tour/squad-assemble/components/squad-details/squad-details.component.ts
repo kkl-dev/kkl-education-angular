@@ -5,6 +5,7 @@ import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
 import { Observable, Subject } from 'rxjs';
 import { BreakpointService } from 'src/app/utilities/services/breakpoint.service';
+import { SquadDetailsService } from './squad-details.service';
 
 @Component({
   selector: 'app-squad-details',
@@ -20,10 +21,29 @@ export class SquadDetailsComponent implements OnInit {
 
   public $questions = new Subject<QuestionBase<string | number | Date>[]>();
   public tablet$: Observable<boolean>;
-  constructor(private squadAssembleService: SquadAssembleService,public tripService: TripService, private breakpoints: BreakpointService) { }
+  constructor(private squadAssembleService: SquadAssembleService,public tripService: TripService, private breakpoints: BreakpointService,
+    private squadDetailsService: SquadDetailsService) { }
 
   ngOnInit(): void {
     this.tablet$ = this.breakpoints.isTablet();
+    this.setSquadDetails();
+  }
+
+  setSquadDetails(){
+    if(this.squadAssembleService.tripInfo.tripStart!=undefined){
+      console.log('trip info is full');
+      let attributeIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='attribute');
+      this.squadDetailsService.questions[attributeIndex].value= this.squadAssembleService.tripInfo.attribute.id.toString();
+      let activityIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='activityType');
+      this.squadDetailsService.questions[activityIndex].value= this.squadAssembleService.tripInfo.activity.id.toString();
+      let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='departmentId');
+      this.squadDetailsService.questions[departmentIdIndex].value= this.squadAssembleService.tripInfo.departmentId.toString();
+      let insideCenterFieldIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='insideCenterFieldId');
+      this.squadDetailsService.questions[insideCenterFieldIdIndex].value= this.squadAssembleService.tripInfo.insideCenterFieldId.toString();
+    }
+    else{
+     console.log('trip info is undefined');
+    }
   }
 
   public onBudget() {

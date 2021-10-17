@@ -5,6 +5,7 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { Subject } from 'rxjs';
 import { ListItem } from 'src/app/components/grid/list-item.model';
+import { SquadGroupService } from './squad-group.service';
 
 export interface FormHeader {
   label: string;
@@ -31,11 +32,32 @@ export class SquadGroupComponent {
   ]
 
   constructor(
-    private squadAssembleService: SquadAssembleService
+    private squadAssembleService: SquadAssembleService, private squadGroupService:SquadGroupService
   ) { }
 
   ngOnInit(): void {
     // this.onGenderChange()
+    this.setSquadGroupDetails();
+  }
+
+  setSquadGroupDetails(){
+    if(this.squadAssembleService.tripInfo.tripStart!=undefined){
+      console.log('trip info is full');
+      let ageGroupIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='ageGroup');
+      this.squadGroupService.mixedQuestions[ageGroupIndex].value= this.squadAssembleService.tripInfo.ageGroup.id.toString();
+      let numAccompaniedIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAccompanied');
+      this.squadGroupService.mixedQuestions[numAccompaniedIndex].value= this.squadAssembleService.tripInfo.numAccompanied;
+      let numAdultAndYoungIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAdultAndYoung');
+      this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value= this.squadAssembleService.tripInfo.numAdultAndYoung;
+      let numDriversIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numDrivers');
+      this.squadGroupService.mixedQuestions[numDriversIndex].value= this.squadAssembleService.tripInfo.numDrivers;
+      let numGuidesIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numGuides');
+      this.squadGroupService.mixedQuestions[numGuidesIndex].value= this.squadAssembleService.tripInfo.numGuides;
+
+    }
+    else{
+     console.log('trip info is undefined');
+    }
   }
 
  
@@ -64,9 +86,9 @@ export class SquadGroupComponent {
    if ( Number.isInteger(+form.controls.numAccompanied.value)) {
     sum=sum+ (+form.controls.numAccompanied.value);
   }
-  if ( Number.isInteger(+form.controls.medics.value)) {
-    sum=sum+ (+form.controls.medics.value);
-  }
+  // if ( Number.isInteger(+form.controls.medics.value)) {
+  //   sum=sum+ (+form.controls.medics.value);
+  // }
      this.list[0].value= sum;
     this.squadAssembleService.updateFormArray(form);
   }

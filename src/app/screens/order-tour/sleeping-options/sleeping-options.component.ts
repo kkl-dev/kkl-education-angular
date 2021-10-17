@@ -159,7 +159,7 @@ export class SleepingOptionsComponent implements OnInit {
       return true;
     } else { return false; }
   }
-  //added by itiel
+  
   setfilledNightsArray(form: any){
 
      let nightsCount=[];
@@ -193,7 +193,19 @@ export class SleepingOptionsComponent implements OnInit {
     
   }
 
+  setValues(){
+    if(this.squadAssembleService.filledNightsArray!= undefined){
+      console.log('filledNightsArray is full');
+      this.filledNightsArray= this.squadAssembleService.filledNightsArray;
+      this.addSleepingNightDirty = true;
+      this.addSleepingNight = false;
+    }
+    else{
+      console.log('filledNightsArray is empty');
+    }
+ }
 
-
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.setValues();
+   }
 }

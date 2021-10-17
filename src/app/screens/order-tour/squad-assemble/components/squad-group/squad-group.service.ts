@@ -68,13 +68,13 @@ export class SquadGroupService {
       cols: 2,
       rows: 4,
     }),
-    new QuestionNumber({
-      key: 'medics',
-      label: 'חובשים',
-      cols: 2,
-      rows: 4,
-      offset: 3,
-    }),
+    // new QuestionNumber({
+    //   key: 'medics',
+    //   label: 'חובשים',
+    //   cols: 2,
+    //   rows: 4,
+    //   offset: 3,
+    // }),
   ];
 
   public groupQuestions: QuestionBase<string>[] = [

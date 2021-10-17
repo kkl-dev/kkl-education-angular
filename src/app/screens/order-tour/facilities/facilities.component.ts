@@ -8,6 +8,23 @@ import { INITIAL_EVENTS } from './calendar/event-utils';
 import { EventInput } from '@fullcalendar/angular';
 import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_ARRAY } from 'src/mock_data/facilities';
 
+export interface InfoCard1 {
+  svgUrl: string;
+  title?: string;
+  headline?: string;
+  subHeadline?: string;
+  availability?: TooltipDataModel1[];
+  maxParticipants?: string;
+  days?: any[];
+}
+
+export interface TooltipDataModel1 {
+  startingHour: number;
+  endingHour: number;
+  totalTime: number;
+  user: string;
+}
+
 @Component({
   selector: 'app-facilities',
   templateUrl: './facilities.component.html',
@@ -17,7 +34,7 @@ import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_AR
 export class FacilitiesComponent implements OnInit {
   public eventsArr: EventInput[] = [...INITIAL_EVENTS];
   public closeModal$: Observable<string>;
-  public selectedFacility$: Observable<InfoCard>;
+  public selectedFacility$: Observable<InfoCard1>;
   public selectedActivity$: Observable<ActivitiesCardInterface>;
   public calendarEventsArr$: Observable<EventInput[]>;
   public timesArray: Array<string | number> = [];
@@ -26,11 +43,7 @@ export class FacilitiesComponent implements OnInit {
   public activityIsUpComing: boolean = false;
   //data 
   public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
- // public facilitiesArray: InfoCard[] = FACILITIES_ARRAY;
-  facilitiesArray: any = [{
-    "date": "2021-09-10T:00:00:00",
-    "facilitiesList": []
-  }];
+  public facilitiesArray: InfoCard1[] = FACILITIES_ARRAY;
   public activitiesArray: ActivitiesCardInterface[] = ACTIVITIES_ARRAY;
   public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
 
@@ -64,7 +77,7 @@ export class FacilitiesComponent implements OnInit {
       i < 10 ? this.timesArray.push(`0${i}:00`) : this.timesArray.push(`${i}:00`);
     }
   }
-  public updateChosenFacility(args: InfoCard) {
+  public updateChosenFacility(args: InfoCard1) {
     this.facilitiesService.updateSelectedFacility(args);
   }
   public updateChosenUpComingActivity(args: ActivitiesCardInterface) {

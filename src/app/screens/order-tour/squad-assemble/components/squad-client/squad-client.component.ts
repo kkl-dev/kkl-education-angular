@@ -93,9 +93,6 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   private updateClientForm(value?: string): void {
     var customer = this.tripService.customersOriginal.filter(el => el.id ===  parseInt(value))[0]
     this.formGroup.controls.contact.patchValue({
-      // fullName: customer.contactName || '',
-      // email: customer.contactEmail || '',
-      // phone: customer.contactMobile || '',
       contactName: customer.contactName || '',
       contactPhone: customer.contactMobile || '',
       contactEmail: customer.contactEmail || '',
