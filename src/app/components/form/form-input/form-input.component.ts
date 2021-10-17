@@ -195,6 +195,7 @@ export class FormInputComponent implements OnInit {
     if (this.name === 'activityType') {
       var act = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(this.control.value))[0];
       this.tripService.budgetByParam.activity = act;
+       this.tripService.budgetByParam.budget = this.tripService.budget;
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
     if (this.name === 'location') {
