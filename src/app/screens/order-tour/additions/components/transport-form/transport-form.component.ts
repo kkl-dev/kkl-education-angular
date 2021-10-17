@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
-import { TransportModel } from '../../models/transport-model';
+import { TransportModel } from '../../models/transport.model';
 import { TransportService } from '../../services/transport.service';
 
 @Component({

@@ -5,7 +5,7 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { TransportModel } from '../models/transport-model';
+import { TransportModel } from '../models/transport.model';
 
 @Injectable({
   providedIn: 'root',

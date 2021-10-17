@@ -1,5 +1,5 @@
 import { LocationModel } from "./location.model";
-import { TransportModel } from "./transport-model";
+import { TransportModel } from "./transport.model";
 
 export class ScheduleModel {
 

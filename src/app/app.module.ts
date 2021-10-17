@@ -107,7 +107,7 @@ import { TransportDetailsComponent } from './screens/order-tour/additions/compon
 import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.component';
 import { TransportFormComponent } from './screens/order-tour/additions/components/transport-form/transport-form.component';
 import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
-import { TransportModel } from './screens/order-tour/additions/models/transport-model';
+import { TransportModel } from './screens/order-tour/additions/models/transport.model';
 
 
 import { SummaryComponent } from './screens/order-tour/summary/summary.component';
