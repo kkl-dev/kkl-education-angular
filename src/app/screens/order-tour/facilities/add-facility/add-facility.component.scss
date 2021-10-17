@@ -6,6 +6,30 @@
     width: 100%;
     background-color:rgba($color: #000000, $alpha: 0.6);
     z-index: 110;
+    .delete-button{
+        background: red;
+    }
+    ::ng-deep .ngx-timepicker {
+        border-bottom: none!important;
+    }
+    ::ng-deep ngx-timepicker-field {
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+        padding: 0.3rem;
+    }
+    .ngx-timepicker-field-example {
+        display: flex;
+        flex-direction: column;
+        span{
+            text-align: right;
+        }
+        ::ng-deep .ngx-timepicker-control__input {
+            font-size: 1.3rem;
+        }
+        ::ng-deep .ngx-timepicker-control__arrows {
+            top:-5px;
+        }
+    }
     ::ng-deep .mat-form-field-appearance-outline,
     ::ng-deep .mat-form-field-wrapper {
         margin: 0 !important;
@@ -56,6 +80,9 @@
             justify-content: space-around;
 
             &-heading {
+                &-remarks {
+                    text-align: right;
+                }
                 &-constant {
                     font-size: 20px;
                 }
@@ -85,9 +112,9 @@
         &-inputs {
             display: flex;
             flex-direction: row-reverse;
-            margin: 0 auto;
-            width: fit-content;
-            gap: 12px;
+            width: 100%;
+            align-items: flex-end;
+            justify-content: space-around;
         }
     }
 

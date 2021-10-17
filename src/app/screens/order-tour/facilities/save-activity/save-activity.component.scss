@@ -5,6 +5,14 @@
     height: 100%;
     width: 100%;
     background-color: rgba($color: #707070, $alpha: 0.6);
+    ::ng-deep .ngx-timepicker {
+        border-bottom: none!important;
+    }
+    ::ng-deep ngx-timepicker-field {
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+        padding: 0.3rem;
+    }
     .delete-button{
         background: red;
     }
