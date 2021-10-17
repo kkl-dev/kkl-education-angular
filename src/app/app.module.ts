@@ -130,6 +130,7 @@ import { AddActivityComponent } from './screens/order-tour/facilities/add-activi
 import { ModalComponent } from './components/modal/modal.component';
 import { OutsideDirective } from './utilities/directivs/outside.directive';
 import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping-map.component';
+import { CalendarCardComponent } from './screens/order-tour/facilities/calendar/calendar-card/calendar-card.component';
 
 
 
@@ -252,7 +253,8 @@ FullCalendarModule.registerPlugins([
     SquadNewClientComponent,
     SquadGroupGenderComponent,
     OutsideDirective,
-    SleepingMapComponent
+    SleepingMapComponent,
+    CalendarCardComponent
   ],
   imports: [
     BrowserModule,
