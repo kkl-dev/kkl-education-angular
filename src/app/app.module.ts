@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveComponentModule } from '@ngrx/component';
 
 // FULL CALENDER PLUGIN
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -256,6 +257,7 @@ FullCalendarModule.registerPlugins([
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveComponentModule,
     BrowserAnimationsModule,
     MaterialModule,
     FontAwesomeModule,

@@ -2,10 +2,10 @@
     <app-add-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'addActivity'">
     </app-add-activity>
     <app-save-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'activity'"
-        [activity]='selectedActivity' [type]='activityIsUpComing'>
+        [activity]='(selectedActivity$ | async)' [type]='activityIsUpComing'>
     </app-save-activity>
-    <app-add-facility [facility]='selectedFacility' (emitFormValues)='addToCalendar($event)'
-        *ngIf="(closeModal$ | async) === 'facilities'"></app-add-facility>
+    <app-add-facility [facility]='(selectedFacility$ | async)' (emitFormValues)='addToCalendar($event)'
+        *ngIf="(closeModal$ | async) === 'facility'"></app-add-facility>
     <div class="content-1">
         <div class="card">
             <div class="header">
@@ -42,7 +42,7 @@
             <div class="info-card">
                 <ng-container *ngFor="let item of facilitiesArray; let i = index">
                     <app-info-card class="facilities-items-item" *ngIf='5 > i' [item]="item"
-                        (click)="updateChosenFacility(item) ; openModal('facilities')">
+                        (click)="updateChosenFacility(item) ; openModal('facility')">
                         <app-tooltip class="app-tooltip" [hours]="item.availability">
                         </app-tooltip>
                     </app-info-card>
@@ -65,13 +65,14 @@
             </div>
             <div class="info-card" id="activities">
                 <ng-container *ngFor="let item of activitiesArray; let i = index">
-                    <app-info-card class="facilities-items-item" [item]="item" *ngIf='5 > i' 
+                    <app-info-card class="facilities-items-item" [item]="item" *ngIf='5 > i'
                         (click)="updateChosenActivity(item) ; openModal('activity')">
                     </app-info-card>
                 </ng-container>
                 <ng-container *ngFor="let item of activitiesArray; let i = index">
                     <app-info-card class="facilities-items-item" [item]="item"
-                        *ngIf='i >= 5 && hiddenElements.activities'  (click)="updateChosenActivity(item) ; openModal('activity')">
+                        *ngIf='i >= 5 && hiddenElements.activities'
+                        (click)="updateChosenActivity(item) ; openModal('activity')">
                     </app-info-card>
                 </ng-container>
             </div>

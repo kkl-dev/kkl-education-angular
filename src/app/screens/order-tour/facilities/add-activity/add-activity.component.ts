@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FacilitiesService } from 'src/app/services/facilities.service';
 import { DAYS } from 'src/mock_data/facilities';
 
 @Component({
@@ -19,30 +20,47 @@ export class AddActivityComponent implements OnInit {
     }
   }[] = DAYS;
   public form: FormGroup;
-  showSleepAreas: boolean = false;
-  public chosenDate: number = 0;
+  public showSleepAreas: boolean = false;
+  public selectedDay: number = 0;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private facilitiesServices: FacilitiesService) { }
 
+  public onSubmit(): void {
+    this.form.controls['selectedDay'].setValue(this.selectedDay);
+    this.form.controls['start'].setValue(this.arrangeTime('start'));
+    this.form.controls['end'].setValue(this.arrangeTime('end'));
+    this.emitFormValues.emit(this.form.value);
+    this.facilitiesServices.closeModal('close');
+  }
   public ngOnInit(): void {
     this.form = new FormGroup({
       'title': new FormControl(''),
+      'selectedDay': new FormControl(this.selectedDay),
       'start': new FormControl("08:00"),
       'end': new FormControl("09:00"),
       'backgroundColor': new FormControl('#ECF8EE'),
       'date': new FormControl(''),
       'className': new FormControl('border-activities'),
-      'invitingCustomer': new FormControl(),
-      'additions': new FormControl()
+      'type': new FormControl('activity')
     });
   }
-
-  currentDayHandler(newCurrentDay: number) {
-    this.chosenDate = newCurrentDay;
+  public getDay(event: any): void {
+    this.selectedDay = event;
+  }
+  public startTimeChanged(event: string) {
+    this.form.controls['start'].setValue(event);
+  }
+  public endTimeChanged(event: string) {
+    this.form.controls['end'].setValue(event);
+  }
+  public arrangeTime(arg: string): any {
+    const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    let [hours, minutes] = this.form.value[arg].split(':');
+    if (hours.length == 1) {
+      hours = `0${hours}`;
+    }
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
-  public onSubmit(): void {
-    this.emitFormValues.emit()
-  }
 }
