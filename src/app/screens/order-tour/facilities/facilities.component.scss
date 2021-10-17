@@ -195,4 +195,8 @@ app-tooltip {
     .card-container {
         grid-template-columns: auto;
     }
+    ::ng-deep .facilities .activities-card {
+        width: 80%;
+        margin: 0 auto;
+    }
 }
