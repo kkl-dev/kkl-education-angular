@@ -61,7 +61,7 @@ export class FilledNightComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.filledNight)
+    (this.filledNight)
     this.nightsCountForDisplay = this.arrangeNightCountForDisplay();
     this.datesForDisplay = this.arrangeDatesForDisplay();
     console.log('filledNightOptions is :', this.filledNightOptions);

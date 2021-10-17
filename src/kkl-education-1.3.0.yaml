@@ -786,7 +786,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderModel'
+              type: array
+              items:
+               type: object
+               $ref: '#/components/schemas/OrderEvent'
       responses:
         "200":
           description: Success
@@ -830,8 +833,11 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/OrderModel'
+             schema:
+              type: array
+              items:
+               type: object
+               $ref: '#/components/schemas/OrderEvent'
       responses:
         "200":
           description: Success
@@ -1456,6 +1462,7 @@ components:
         generateDate:
           type: string
           format: date-time
+          nullable: true
         appId:
           type: integer
           nullable: true
@@ -1541,6 +1548,7 @@ components:
         customerSignatureDate:
           type: string
           format: date-time
+          nullable: true
         confirmBy:
           type: string
           example: dan
@@ -1855,6 +1863,7 @@ components:
         countryId:
           type: integer
           example: 12
+          nullable: true
     Status:
       type: object
       properties:
@@ -1959,6 +1968,9 @@ components:
     TripCalendar:
       type: object
       properties:
+        tripId:
+         type: integer
+         example: 1
         tempOrderList:
           type: array
           items:
@@ -1981,7 +1993,21 @@ components:
         facilityId:
           type: integer
           example: 1
-        date: 
+        orderId: 
+         type: integer
+         example : 12345
+         nullable: true
+        orderItemIdentity:
+         type: integer
+         description: refers to indentity record on data base
+         example : 12345
+         nullable: true
+        facilityName:
+         type: string
+        startDate: 
+          type: string
+          format: date-time
+        endDate:
           type: string
           format: date-time
         startHour:
@@ -2011,6 +2037,7 @@ components:
         categoryId:
           type: integer
           example: 2
+          nullable: true
         date:
            type: string
            format: date-time
@@ -2029,6 +2056,9 @@ components:
         tripId:
           type: integer
           example: 2
+        userName:
+          type: string
+          example: dan
         
     TripActivityLookup:
       type: object
@@ -2081,9 +2111,16 @@ components:
        orderId: 
          type: integer
          example : 12345
+         nullable: true
+       orderItemIdentity:
+         type: integer
+         description: refers to indentity record on data base
+         example : 12345
+         nullable: true
        orderItemId:
          type: integer
          example : 123
+         nullable: true
        orderItemName:
          type: string
          example: אוטובוס
@@ -2103,6 +2140,9 @@ components:
           type: string
           format: date-time
           example: '2021-11-12T15:00:00'
+       userName: 
+          type: string
+
     # OrderModel:
     #   type: object
     #   properties:
@@ -2146,6 +2186,7 @@ components:
         sentToSupplier:
           type: string
           format: date-time
+          nullable: true
         sentBy:
           type: string
         voucherNum:
@@ -2154,6 +2195,7 @@ components:
         cancelDate:
           type: string
           format: date-time
+          nullable: true
         causeCancellation:
           type: string
         cancelBy:
@@ -2169,6 +2211,7 @@ components:
         openDate:
           type: string
           format: date-time
+          nullable: true
         finOrderType:
           type: string
         # sentByUser:
@@ -2176,9 +2219,11 @@ components:
         #   nullable: true
         budgetItem:
           type: integer
+          nullable: true
         confirmDate:
           type: string
           format: date-time
+          nullable: true
         confirmBy:
           type: string
         confirmUserTz:
@@ -2193,11 +2238,21 @@ components:
         confirmCancelDate:
           type: string
           format: date-time
+          nullable: true
         confirmCancelUserTz:
           type: integer
           nullable: true
         supplierProcedureNum:
           type: string
+        totalPayCustomer:
+            type: number
+            nullable: true
+        totalPaySupplier:
+            type: number
+            nullable: true
+        totalPayAfterKklSubsidy:
+           type: number
+           nullable: true
         # numGuide:
         #   type: integer
         #   nullable: true
@@ -2425,22 +2480,22 @@ components:
     #       type: number
     #       nullable: true
 
-    OrderModel:
-       type: object
-       properties:
-          orderList:
-            type: array
-            items:
-             $ref: '#/components/schemas/OrderEvent'
-          totalPayCustomer:
-            type: number
-            nullable: true
-          totalPaySupplier:
-            type: number
-            nullable: true
-          totalPayAfterKklSubsidy:
-           type: number
-           nullable: true
+    # OrderModel:
+    #    type: object
+    #    properties:
+    #       orderList:
+    #         type: array
+    #         items:
+    #          $ref: '#/components/schemas/OrderEvent'
+    #       totalPayCustomer:
+    #         type: number
+    #         nullable: true
+    #       totalPaySupplier:
+    #         type: number
+    #         nullable: true
+    #       totalPayAfterKklSubsidy:
+    #        type: number
+    #        nullable: true
 
     OrderItemCommonDetails:
       #  discriminator:  
@@ -2449,12 +2504,11 @@ components:
       properties:
         itemId:
           type: integer
-        itemIndex:
+        itemIdentity:
           type: integer
+          description: refers to indentity record on data base
         orderItemDetails:
           $ref: '#/components/schemas/ItemsByTypeOrder'
-        # amount:
-        #   type: integer
         quantity:
          type: integer
         itemCost:
@@ -2482,6 +2536,10 @@ components:
           format: date-time
         userName:
           type: string
+        comment: 
+          type: string
+       
+          
            
 
     OrderEvent:
@@ -2713,7 +2771,7 @@ components:
         orderList:
           type: array
           items:
-            $ref: '#/components/schemas/OrderModel'
+            $ref: '#/components/schemas/OrderEvent'
           nullable: true
         movementsList:
           type: array

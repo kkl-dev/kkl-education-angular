@@ -20,14 +20,20 @@ const routes: Routes = [
     path: 'education',
     children: [
       {
+        path: '',
+        component: DashboardComponent,
+      },
+      { path: 'search', component: SearchComponent },
+
+      {
         path: 'results',
         component: EducationResultsComponent,
       },
       {
         path: 'my-tours',
         component: MyToursComponent,
-      }
-    ]
+      },
+    ],
   },
   {
     path: 'education/order-tour',
@@ -51,12 +57,10 @@ const routes: Routes = [
       },
       {
         path: 'summary',
-        component: SummaryComponent
+        component: SummaryComponent,
       },
     ],
   },
-  { path: ':type', component: DashboardComponent },
-  { path: ':type/search', component: SearchComponent },
   { path: '**', component: LoginBackdropComponent, pathMatch: 'full' },
 ];
 
@@ -68,4 +72,4 @@ const routes: Routes = [
  ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

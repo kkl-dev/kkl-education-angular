@@ -3,6 +3,9 @@
 ::ng-deep .border-activities{
     border-right: 9px solid #37C56B!important;
     border-radius: 0px 4px 4px 0px!important;
+    .fc-v-event {
+        border-color: #37C56B!important;
+    }
   }
   ::ng-deep .border-facilities{
     border-right: 9px solid #448ECD!important;
@@ -13,6 +16,26 @@
     margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
+    ::ng-deep app-pagination {
+        direction: rtl;
+        color: color(primary) !important;
+        .pagination-next,
+        .pagination-prev {
+            color: color(primary) !important;
+        }
+        .disabled {
+            color: #9f9f9f !important;
+        }
+        .pagination-pages {
+            color: black;
+        }
+        span > .chosen {
+            border: 2px solid color(primary) !important;
+            color: color(primary) !important;
+            background-color: transparent !important;
+            border-radius: 6px;
+        }
+    }
     .card {
         width: 95%;
         height: 600px;
@@ -132,6 +155,9 @@
             font-size: 18px;
             font-weight: 400;
         }
+        button:hover {
+            cursor: pointer;
+        }
     }
     .forms {
         width: 100%;
@@ -149,11 +175,13 @@ app-tooltip {
 ::ng-deep :hover > .app-tooltip {
     display: block;
 }
+.cards {
+    text-align: right;
+}
 .info-card {
     display: inline-grid;
     grid-template-columns: auto auto auto auto auto;
     position: relative;
-    left: 40px;
     direction: rtl;
 }
 
@@ -177,25 +205,6 @@ app-tooltip {
     grid-gap: 30px;
     padding: 40px;
     position: relative;
-    left: 40px;
+    float: right;
 }
-::ng-deep app-pagination {
-    direction: rtl;
-    color: color(primary) !important;
-    .pagination-next,
-    .pagination-prev {
-        color: color(primary) !important;
-    }
-    .disabled {
-        color: #9f9f9f !important;
-    }
-    .pagination-pages {
-        color: black;
-    }
-    span > .chosen {
-        border: 2px solid color(primary) !important;
-        color: color(primary) !important;
-        background-color: transparent !important;
-        border-radius: 6px;
-    }
-}
+

@@ -1,6 +1,6 @@
-<div class="assemble-container">
-  <div fxLayout="row" fxLayoutAlign="space-around start">
-    <div *ngFor="let squad of squads; let i = index" fxFlex="25">
+<div class="assemble-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="row" fxLayout="row wrap" fxLayoutAlign="space-around start" fxFlex="90">
+    <div [ngClass]=[squad.key] *ngFor="let squad of squads; let i = index" [fxFlex]="(md$ | async) ? 50 : 25">
       <ng-container [ngSwitch]="squad.key">
         <ng-container *ngSwitchCase="'schedule'">
           <app-squad-schedule [group]="squad"></app-squad-schedule>
@@ -9,12 +9,9 @@
         <ng-container *ngSwitchCase="'client'">
           <app-squad-client [group]="squad"></app-squad-client>
         </ng-container>
-        
+
         <ng-container *ngSwitchCase="'newClient'">
-          <app-squad-new-client
-            [group]="squad"
-            [questions]="squad.questions"
-          ></app-squad-new-client>
+          <app-squad-new-client [group]="squad" [questions]="squad.questions"></app-squad-new-client>
         </ng-container>
 
         <ng-container *ngSwitchCase="'group'">
@@ -22,10 +19,7 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="'details'">
-          <app-squad-details
-            [detailsGroup]="squad"
-            [budgetGroup]="budgetGroup"
-          ></app-squad-details>
+          <app-squad-details [detailsGroup]="squad" [budgetGroup]="budgetGroup"></app-squad-details>
         </ng-container>
 
         <div *ngIf="i !== squads.length - 1" class="divider"></div>

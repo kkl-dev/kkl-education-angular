@@ -1,40 +1,40 @@
-<div class="add-facility">
+<div class="add-facility" *ngrxLet='selectedFacility$ as item'>
     <app-modal>
-        <app-sleeping-options-by-day [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas'>
+        <app-sleeping-options-by-day [sleepingOptionsByDay]='days' [showSleepAreas]='showSleepAreas'
+            (emitCurrentDay)='getDay($event)' [currentDay]='selectedDay'>
         </app-sleeping-options-by-day>
         <div class="add-facility__header">
             <div class="add-facility__header-icon">
-                <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
+                <svg-icon [src]="item.svgUrl" class="header__form-group-svg"></svg-icon>
             </div>
             <div class="add-facility__header-content">
                 <div class="add-facility__header-content-heading">
                     <span class="add-facility__header-content-heading-constant">שריין מתקן:</span>
-                    <span class="add-facility__header-content-heading-input">כיתה</span>
+                    <span class="add-facility__header-content-heading-input">{{item.title}}</span>
                 </div>
                 <div class="add-facility__header-content-heading-remarks">
-                    <span> עד 20 שמתתפים</span>
+                    <span>{{item.maxParticipants}}</span>
                 </div>
             </div>
         </div>
-        <form class="add-facility__form"
-        [formGroup]="addFacilityForm" (ngSubmit)='onSubmit()'>
+        <form class="add-facility__form" [formGroup]="addFacilityForm" (ngSubmit)='onSubmit()'>
             <div class="add-facility__form-inputs">
-                <mat-form-field appearance="outline">
-                    <mat-label>משעה</mat-label>
-                    <input matInput type='time' formControlName="startingHour">
-                </mat-form-field>
-                <mat-form-field appearance="outline"> 
-                    <mat-label>עד שעה</mat-label>
-                    <input matInput type='time' formControlName="endingHour">
-                </mat-form-field> 
-                <button class="add-facility__form-button"  [disabled]="!addFacilityForm.valid">שריין</button>
+                <div class="ngx-timepicker-field-example">
+                    <span>משעה</span>
+                    <ngx-timepicker-field [format]="24" [defaultTime]="addFacilityForm.value.start" controlOnly='false' (timeChanged)='startTimeChanged($event)'></ngx-timepicker-field>
+                </div>
+                <div class="ngx-timepicker-field-example">
+                    <span>עד שעה</span>
+                    <ngx-timepicker-field [format]="24" [defaultTime]="addFacilityForm.value.end" controlOnly='false' (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
+                </div>
+                <button class="add-facility__form-button" [disabled]="!addFacilityForm.valid">שריין</button>
             </div>
         </form>
 
         <div class="add-facility__occupied-hours-bar">
             <span class="add-facility__occupied-hours-bar-slot" *ngFor="let item of occupiedHoursArray" [ngClass]="{'background-green':item.user =='none',
-      'background-grey':(item.user !=='none' && item.user !== username), 
-      'background-blue':(item.user === username) }" [ngStyle]="{'width': calculateWidth(item.totalHours) }"></span>
+        'background-grey':(item.user !=='none' && item.user !== username), 
+        'background-blue':(item.user === username) }" [ngStyle]="{'width': calculateWidth(item.totalHours) }"></span>
         </div>
         <div class="add-facility__occupied-hours-table">
             <div class="add-facility__occupied-hours-table-header">

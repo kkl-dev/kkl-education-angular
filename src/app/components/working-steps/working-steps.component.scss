@@ -1,18 +1,18 @@
 @import "../../../styles.scss";
 
 .steps-container {
-  width: 100%;
+  width: 90%;
   height: 100%;
   direction: rtl;
 
   .backstroke-container {
-    width: 100%;
+    width: 105%;
 
     .backstroke {
-      width: 100%;
+      width: inherit;
       height: 8px;
       background-color: #E4E4E4;
-      transform: translateY(-50%);
+      transform: translateY(.5rem);
     }
   }
 

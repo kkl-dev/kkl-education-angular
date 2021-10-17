@@ -14,6 +14,7 @@ import { SquadBudgetService } from 'src/app/screens/order-tour/squad-assemble/co
 import { SquadGroupService } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.service';
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
+import { CalendarOptions } from 'comrax-alex-airbnb-calendar';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 
@@ -33,8 +34,8 @@ export class FormInputComponent implements OnInit {
   @Input() public hint: string;
   @Input() public controlType: string;
   @Input() public options!: [];
-  @Input() public dateOptions!: [];
-
+  @Input() public dateOptions!:CalendarOptions;
+ 
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
@@ -52,7 +53,10 @@ export class FormInputComponent implements OnInit {
   @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
-  constructor(private formService: FormService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService) { }
+  constructor(private formService: FormService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService) {
+    console.log(this.dateOptions);
+   }
+  
 
   ngOnInit(): void {
     this.name = this.getName(this.control);

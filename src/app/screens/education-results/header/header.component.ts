@@ -144,14 +144,18 @@ export class HeaderComponent implements OnInit {
   dateObjChanged(e: string) {
     if (e && e.includes('-')) {
       console.log('dateObj Changed =>', + e);
+      this.emitNewDates.emit(e);
+      
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
       const dateFormat1 = tempDateArr[0].split('/').reverse();
-      dateFormat1[1] = (+dateFormat1[1] - 1).toString();
+      console.log(dateFormat1[1]);
+      dateFormat1[1] = (+dateFormat1[1]).toString();
       dateFormat1[2] = (+dateFormat1[2]).toString();
       const dateFormat2 = tempDateArr[1].split('/').reverse();
-      dateFormat2[1] = (+dateFormat2[1] - 1).toString();
+      dateFormat2[1] = (+dateFormat2[1]).toString();
       dateFormat2[2] = (+dateFormat2[2]).toString();
+
 
       if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
         this.sleepingDates.from = tempDateArr[0];

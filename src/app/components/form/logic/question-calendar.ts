@@ -4,4 +4,5 @@ export class QuestionCalendar extends QuestionBase<Date> {
   controlType = 'calendar';
   type = 'date';
   icon = 'calendar';
+  
 }

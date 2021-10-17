@@ -9,7 +9,7 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
-    <mat-label>בחר לילות</mat-label>
+    <mat-label class="placeholder">בחר לילות</mat-label>
     <mat-select name="nightsCount" formControlName="nightsCount">
       <!-- <mat-option *ngFor="let option of nightNumberOptions; let i =index" [value]="{option.value"}>
             <mat-checkbox [checked]="selected === i" (change)="onChange(option.text );selected = i"> {{option.text }}</mat-checkbox>
@@ -28,7 +28,6 @@
           </div>
         </mat-checkbox>
       </mat-option>
-
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 3' }">
@@ -58,12 +57,18 @@
     <!-- <input matInput type="number" name="amount" formControlName="amount" /> -->
     <input matInput type="number" min="0" name="unitsNumber" (input)="validateUnitsNumber()"  formControlName="unitsNumber" />
   </mat-form-field>
-  <mat-form-field appearance="outline" [ngStyle]="{ 'grid-column': 'span 6' }">
-    <mat-label>הערות</mat-label>
+  <mat-form-field appearance="outline" class="textarea-form-field"
+   [ngStyle]="{ 'grid-column': 'span 6' }">
+    <mat-label class="placeholder">הערות</mat-label>
     <textarea matInput name="comments" formControlName="comments"></textarea>
   </mat-form-field>
   <div class="btn__container">
-    <button *ngIf='!editMode' [disabled]="!filledNightForm.valid" class="btn" (click)='onSubmit()'>
+    <button
+      *ngIf="!editMode"
+      [disabled]="!filledNightForm.valid"
+      class="btn"
+      (click)="onSubmit()"
+    >
       הוסף
     </button>
     <button *ngIf='editMode' class="btn" (click)='sumbitUpdatedItem()'>שמירה</button>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FacilitiesService } from 'src/app/services/facilities.service';
 
 @Component({
   selector: 'app-modal',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
-
-  constructor() { }
+  constructor(private facilitiesService:FacilitiesService) { }
 
   ngOnInit(): void {
+  }
+
+  public onClick(): void {
+    this.facilitiesService.closeModal('clear');
   }
 
 }

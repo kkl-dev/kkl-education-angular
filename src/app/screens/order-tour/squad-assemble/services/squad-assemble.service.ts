@@ -17,6 +17,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { SquadClientService } from '../components/squad-client/squad-client.service';
 import { SquadNewClientService } from '../components/squad-new-client/squad-new-client.service';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
+import { dateOptions } from 'src/mock_data/calendar';
 
 @Injectable({
   providedIn: 'root',
@@ -80,10 +81,11 @@ export class SquadAssembleService {
       new Date(),
       new Date(2021, 11, 17)
     );
+    console.log(this.options);
+    
   }
 
-  //public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
-  public timeAndNameFormInputs: QuestionBase<string | Date>[] = [
+  public scheduleQuestions: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tripDescription',
       label: 'שם הטיול',
@@ -117,11 +119,12 @@ export class SquadAssembleService {
     // ]
 
     new QuestionCalendar({
-      key: 'dates',
+      key: 'scheduleDates',
       label: 'תאריכי לינה',
       value: null,
       rows: 4,
       validations: [Validators.required],
+      dateOptions: dateOptions,
       inputProps: {},
     }),
 

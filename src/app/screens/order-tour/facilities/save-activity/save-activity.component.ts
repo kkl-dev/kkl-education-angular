@@ -1,5 +1,9 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
+import { FacilitiesService } from 'src/app/services/facilities.service';
+import { DAYS } from 'src/mock_data/facilities';
 
 @Component({
   selector: 'app-save-activity',
@@ -7,6 +11,21 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./save-activity.component.scss']
 })
 export class SaveActivityComponent implements OnInit {
+  constructor(private facilitiesServices: FacilitiesService) { }
+  public selectedActivity$: Observable<ActivitiesCardInterface>;
+  public subscribeToActivity: Subscription;
+  public updateForm: boolean = false;
+  public form: FormGroup;
+  public orderingCustomer: boolean = false;
+  public showSleepAreas: boolean = false;
+  @Input() type: string;
+  @Input() public additonsType: any[] = [
+    { name: 'הסעה', completed: false },
+    { name: 'אבטחה', completed: false },
+    { name: 'הדרכה', completed: false },
+    { name: 'כלכלה', completed: false },
+    { name: 'הפעלה מוסיקלית', completed: false },
+  ];
   @Input() days: {
     day: string;
     options: {
@@ -16,80 +35,97 @@ export class SaveActivityComponent implements OnInit {
       type: string;
       singleUnit: string;
     }
-  }[] = [{
-    day: '15.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '16.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '17.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }, {
-    day: '18.06.21',
-    options: {
-      svgUrl: '',
-      sleepingAreas: 0,
-      avialableSpaces: 0,
-      type: '',
-      singleUnit: '',
-    }
-  }]
-  public chosenDate: number = 0
-  @ViewChild('form') saveActivityForm: NgForm
-  @Output() emitFormValues: EventEmitter<any> = new EventEmitter()
+  }[] = DAYS;
+  public selectedDay: number = 0;
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
-  showSleepAreas: boolean = false
-  currentDayHandler(newCurrentDay: number) {
-    this.chosenDate = newCurrentDay;
+  ngOnInit(): void {    
+    this.selectedActivity$ = this.facilitiesServices.getSelectedActivity();
+    this.subscribeToActivity = this.selectedActivity$.subscribe(data => this.createForm(data));
+    console.log(this.selectedActivity$);
+    
   }
-
-  public orderingCustomer: boolean = false
-
+  public ngOnDestroy(): void {
+    this.subscribeToActivity.unsubscribe();
+  }
+  public startTimeChanged(event: string) {
+    this.form.controls['start'].setValue(event);
+  }
+  public endTimeChanged(event: string) {
+    this.form.controls['end'].setValue(event);
+  }
+  onSubmit() {
+    if (this.type) {
+      this.form.controls['invitingCustomer'].setValue(this.orderingCustomer);
+    }
+    if(this.form.controls['additions'] ){
+      this.form.controls['additions'].setValue(this.additonsType);
+    }
+    this.form.controls['selectedDay'].setValue(this.selectedDay);
+    this.form.controls['start'].setValue(this.arrangeTime('start'));
+    this.form.controls['end'].setValue(this.arrangeTime('end'));
+    if (this.updateForm) {
+      this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
+      this.facilitiesServices.closeModal('close');
+      return;
+    }
+    this.emitFormValues.emit(this.form.value);
+    this.facilitiesServices.closeModal('close');
+  }
   orderingCustomerHandler() {
-    this.orderingCustomer = !this.orderingCustomer
+    this.orderingCustomer = !this.orderingCustomer;
   }
-  @Input() additonsType: string[] = ['הסעה', 'כלכלה', 'הדרכה', 'אבטחה', 'הפעלה מוסיקלית']
-  public addedAdditions: string[] = []
 
-  constructor() { }
-
-  updateAddedAdditions(value: string) {
-    const index = this.addedAdditions.findIndex(addition => addition === value)
-    if (index >= 0) {
-      this.addedAdditions.splice(index, 1)
-    } else {
-      this.addedAdditions.push(value)
+  // date && time functions // 
+  public arrangeTime(arg: string): any {
+    const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    let [hours, minutes] = this.form.value[arg].split(':');
+    if (hours.length == 1) {
+      hours = `0${hours}`;
     }
-    console.log(this.addedAdditions);
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
 
   }
-  onSubmit(form: NgForm) {
-    const objToEmit = { dayNumber: this.chosenDate, additions:this.addedAdditions,
-      orderingCustomer: this.orderingCustomer, ...this.saveActivityForm.value }
-    console.log(objToEmit);
-    this.emitFormValues.emit(objToEmit)
+  public getDay(event: any): void {
+    this.selectedDay = event;
   }
-
-  ngOnInit(): void {
+  public separateTimeFromDate(args: string): string {
+    const [date, time] = args.split('T');
+    return time;
+  }
+  public createForm(data): void {
+    if (!data.start) {
+      this.form = new FormGroup({
+        'title': new FormControl(data.title),
+        'selectedDay': new FormControl(this.selectedDay),
+        'start': new FormControl('08:00'),
+        'end': new FormControl('09:00'),
+        'backgroundColor': new FormControl('#F0F6FE'),
+        'date': new FormControl(''),
+        'className': new FormControl('border-facilities'),
+        'type': new FormControl('activity'),
+        'invitingCustomer': new FormControl(false),
+        'additions': new FormControl(),
+        'haveAdditions' : new FormControl(true),
+        'svgUrl': new FormControl(data.svgUrl),
+        'img': new FormControl(data.img)
+      });
+    } else {
+      this.updateForm = true;
+      data.start = this.separateTimeFromDate(data.start);
+      data.end = this.separateTimeFromDate(data.end);
+      this.selectedDay = data.selectedDay;
+      if(data.invitingCustomer){
+        this.orderingCustomer = data.invitingCustomer;
+      }
+      if(data.additions && data.additions.length !== 0){
+        this.additonsType = data.additions;
+      }
+      this.form = new FormGroup({});
+      for (const property in data) {
+        this.form.addControl(property, new FormControl(data[property]));
+      }
+    }
   }
 
 }

@@ -8,7 +8,7 @@
       name="location"
       [disabled]
       class="education__form-group-select"
-      >
+    >
       <mat-option value="{{ option.value }}" *ngFor="let option of formOptions">
           <span class="education__select-option-text">{{ option.text }}</span>
         </mat-option>
@@ -32,4 +32,25 @@
           
     </mat-form-field>
 
+  <mat-form-field [dir]="'rtl'" appearance="outline" fxFlex="32"
+  
+  > 
+    <mat-label class="placeholder">תאריכי הטיול</mat-label>
+    <app-icon matSuffix key="calendar" [color]="'success'"></app-icon>
+    <input
+      matInput
+      class="header__form-group-input sleeping-form__calendar"
+      airbnb-calendar
+      type="text"
+      [(ngModel)]="date"
+      [options]="options"
+      (newDate)="newDateRecived($event)"
+      (sleepingPlace)="newSleepingPlaceRecived($event)"
+      (prevDate)="prevDateRecived($event)"
+      (ngModelChange)="dateObjChanged($event)"
+      autocomplete="off"
+      name="calendar-input"
+      id="calendar-input"
+    />
+  </mat-form-field>
 </div>

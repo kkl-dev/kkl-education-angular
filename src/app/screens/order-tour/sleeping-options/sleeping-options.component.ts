@@ -60,7 +60,6 @@ export class SleepingOptionsComponent implements OnInit {
 
   formCols: number = 12;
   questions: QuestionBase<string | number>[] = [];
-
   constructor(
     private checkAvailabilityService: CheckAvailabilityService, private sleepingService: SleepingServiceService, private squadAssembleService:SquadAssembleService ,private userService:UserService ) {
     //this.questions = this.sleepingService.questions;

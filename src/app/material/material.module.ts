@@ -19,6 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatSliderModule} from '@angular/material/slider';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -27,6 +28,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
+    MatSliderModule,
     MatButtonModule,
     MatToolbarModule,
     MatGridListModule,
@@ -57,6 +59,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
   ],
   exports: [
+    MatSliderModule,
     MatButtonModule,
     MatToolbarModule,
     MatGridListModule,

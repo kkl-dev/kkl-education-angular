@@ -17,8 +17,9 @@ export class ActivitiesCardComponent implements OnInit {
 }
 
 export interface ActivitiesCardInterface{
-  img:string;
+  svgUrl?:string;
+  img?:string;
   title:string;
-  content:string;
-  hours:number;
+  content?:string;
+  hours?:number;
 }

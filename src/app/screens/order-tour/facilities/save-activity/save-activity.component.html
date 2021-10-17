@@ -1,48 +1,48 @@
-<div class="save-activity">
+<div class="save-activity" *ngrxLet='selectedActivity$ as activity'>
     <app-modal>
-        <app-sleeping-options-by-day 
-        (emitCurrentDay)="currentDayHandler($event)"
-        [sleepingOptionsByDay]='days'
-         [showSleepAreas]='showSleepAreas'>
+        <app-sleeping-options-by-day (emitCurrentDay)='getDay($event)' [sleepingOptionsByDay]='days'
+            [showSleepAreas]='showSleepAreas' [currentDay]='selectedDay'>
         </app-sleeping-options-by-day>
         <div class="save-activity__header">
             <div class="save-activity__header-icon">
-                <svg-icon src="assets/images/calendar.svg" class="header__form-group-svg"></svg-icon>
+                <img *ngIf="type" [src]='activity.img' />
+                <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
             </div>
             <div class="save-activity__header-content">
                 <div class="save-activity__header-content-heading">
                     <span class="save-activity__header-content-heading-constant">שריין פעילות:</span>
-                    <span class="save-activity__header-content-heading-input">ניווט ביער מחטני</span>
+                    <span class="save-activity__header-content-heading-input">{{activity.title}}</span>
                 </div>
-                <div class="save-activity__header-content-heading-customer-type" >
+                <div class="save-activity__header-content-heading-customer-type" *ngIf="type">
                     <span> :לקוח מזמין </span>
-                    <span class="save-activity__header-content-heading-customer-type-toggle" (click)="orderingCustomerHandler()">
+                    <span class="save-activity__header-content-heading-customer-type-toggle"
+                        (click)="orderingCustomerHandler()">
                         <span class="save-activity__header-content-heading-customer-type-toggle-text">כן</span>
                         <span class="save-activity__header-content-heading-customer-type-toggle-text">לא</span>
                         <span class="save-activity__header-content-heading-customer-type-toggle-indicator"
-                        [ngClass]="{toggle: orderingCustomer}"></span>
+                            [ngClass]="{toggle: orderingCustomer}"></span>
                     </span>
                 </div>
             </div>
         </div>
-        <div class="save-activity__additions">
+        <div class="save-activity__additions" *ngIf='form.value.haveAdditions'>
             <div class="save-activity__additions-text"> :תוספות</div>
-            <mat-checkbox class="save-activity__additions-checkbox" (click)="updateAddedAdditions(addition)" *ngFor='let addition of additonsType'>{{addition}}</mat-checkbox>
+            <mat-checkbox class="save-activity__additions-checkbox"  *ngFor='let addition of additonsType;let index=index' 
+            [(ngModel)]="additonsType[index].completed" >{{addition.name}}</mat-checkbox>
         </div>
         <div class="save-activity__form-bottom-input-area">
-            <form
-            (ngSubmit)="onSubmit($event)"
-            #form="ngForm"
-            class="save-activity__form-bottom-input-area-inputs"> 
-                <mat-form-field appearance="outline">
-                    <mat-label>משעה</mat-label>
-                    <input matInput type='time'  ngModel name='startingTime' id='startingTime'>
-                </mat-form-field> 
-              
-                <mat-form-field appearance="outline">
-                    <mat-label>עד שעה</mat-label>
-                    <input matInput type='time' ngModel name='endingTime' id='endingTime'>
-                </mat-form-field>
+            <form [formGroup]="form" (ngSubmit)='onSubmit()' class="save-activity__form-bottom-input-area-inputs">
+                <div class="ngx-timepicker-field-example">
+                    <span>משעה</span>
+                    <ngx-timepicker-field [format]="24" [defaultTime]="form.value.start" controlOnly='false'
+                        (timeChanged)='startTimeChanged($event)'></ngx-timepicker-field>
+                </div>
+                <div class="ngx-timepicker-field-example">
+                    <span>עד שעה</span>
+                    <ngx-timepicker-field [format]="24" [defaultTime]="form.value.end" controlOnly='false'
+                        (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
+                </div>
+
                 <button class="save-activity__form-bottom-input-area-button">שריין</button>
             </form>
         </div>

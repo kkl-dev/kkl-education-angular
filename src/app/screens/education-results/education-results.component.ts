@@ -8,11 +8,21 @@ import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { MapsComponent } from './maps/maps.component';
 
+// export interface InfoCard {
+//   svgUrl: string;
+//   title?: string;
+//   headline?: string;
+//   subHeadline?: string;
+//   availability?: TooltipDataModel[];
+//   maxParticipants?: string;
+//   days?: any[];
+// }
+
 export interface InfoCard {
-  svgUrl: string;
-  headline: string;
+  iconPath: string;
+  name: string;
   subHeadline?: string;
-  availability?: TooltipDataModel[];
+  maxOccupancy?: TooltipDataModel[];
 }
 
 @Component({

@@ -1,4 +1,4 @@
-<div fxFill fxLayout="row" fxLayoutAlign="center center" >
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
   <div fxFlex="90" fxLayout="column" fxLayoutAlign=" center">
     <div class="form-title">
       <app-form-header [slots]="{ tourId}" slot="tourId">
@@ -12,7 +12,7 @@
 
     <div>
       <app-form-container
-      class="container"
+        class="container"
         [cols]="group.cols"
         [questions]="group.questions"
         (register)="logForm($event)"
@@ -36,8 +36,12 @@
   </div>
 </div>
 
-<!-- template components -->
+<!-- Template components -->
 
 <ng-template #tourId>
-  <app-typography fxLayoutAlign="end"> קוד טיול : {{ tripId }} </app-typography>
+  <div fxLayout="row" fxLayoutAlign="center end">
+    <app-typography [size]="(tablet$ | async) ? 12 : 14">
+      קוד טיול : {{ tripId }}
+    </app-typography>
+  </div>
 </ng-template>

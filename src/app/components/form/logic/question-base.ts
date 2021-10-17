@@ -1,4 +1,5 @@
 import { ValidatorFn } from '@angular/forms';
+import { CalendarOptions } from 'comrax-alex-airbnb-calendar';
 import { FormHeader } from 'src/app/screens/order-tour/squad-assemble/components/squad-group/squad-group.component';
 import { QuestionGroup } from './question-group';
 
@@ -23,12 +24,13 @@ export class QuestionBase<T> {
   controlType: string;
   cols: string | number;
   rows: string | number;
-  offset : number | string
+  offset: number | string;
   custom: boolean;
   fullWidth: boolean;
   validations: ValidatorFn[];
   isGroup: boolean;
   group?: QuestionGroup;
+  dateOptions?: CalendarOptions;
   inputProps: {
     options?: SelectOption[];
     labelLength?: string;
@@ -47,12 +49,14 @@ export class QuestionBase<T> {
       controlType?: string;
       cols?: string | number;
       rows?: string | number;
-      offset? : number | string
+      offset?: number | string;
       custom?: boolean;
       fullWidth?: boolean;
       validations?: ValidatorFn[];
       isGroup?: boolean;
       group?: QuestionGroup;
+      dateOptions?: CalendarOptions;
+
       inputProps?: {
         options?: SelectOption[];
         labelSize?: string;
@@ -60,6 +64,7 @@ export class QuestionBase<T> {
     } = {}
   ) {
     this.value = options.value;
+    this.dateOptions = options.dateOptions;
     this.key = options.key || '';
     this.label = options.label || '';
     this.header = options.header || null;
