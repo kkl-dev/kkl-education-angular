@@ -4,6 +4,12 @@
     'sleeping-width': activeStep === 1 || currentRoute === 'sleeping'
   }"
 >
+<app-sleeping-map class="app-sleeping-map"
+[ngClass]="{
+  'display-none': activeStep !== 1 && currentRoute !== 'sleeping' 
+}"
+
+></app-sleeping-map>
   <app-drawer *ngIf="currentRoute === 'squad-assemble'"></app-drawer>
   <div>
     <div
