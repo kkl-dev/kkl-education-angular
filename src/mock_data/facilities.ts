@@ -3,34 +3,34 @@ import { QuestionSelect } from "src/app/components/form/logic/question-select";
 import { QuestionTextbox } from "src/app/components/form/logic/question-textbox";
 
 export const DAYS = [{
-    day: '15.10.2021',
-    options: {
-        svgUrl: '',
-        sleepingAreas: 0,
-        avialableSpaces: 0,
-        type: '',
-        singleUnit: '',
-    }
-}, {
-    day: '16.10.2021',
-    options: {
-        svgUrl: '',
-        sleepingAreas: 0,
-        avialableSpaces: 0,
-        type: '',
-        singleUnit: '',
-    }
-}, {
-    day: '17.10.2021',
-    options: {
-        svgUrl: '',
-        sleepingAreas: 0,
-        avialableSpaces: 0,
-        type: '',
-        singleUnit: '',
-    }
-}, {
     day: '18.10.2021',
+    options: {
+        svgUrl: '',
+        sleepingAreas: 0,
+        avialableSpaces: 0,
+        type: '',
+        singleUnit: '',
+    }
+}, {
+    day: '19.10.2021',
+    options: {
+        svgUrl: '',
+        sleepingAreas: 0,
+        avialableSpaces: 0,
+        type: '',
+        singleUnit: '',
+    }
+}, {
+    day: '20.10.2021',
+    options: {
+        svgUrl: '',
+        sleepingAreas: 0,
+        avialableSpaces: 0,
+        type: '',
+        singleUnit: '',
+    }
+}, {
+    day: '21.10.2021',
     options: {
         svgUrl: '',
         sleepingAreas: 0,
@@ -62,73 +62,73 @@ export const FACILITY_OCCUPANCY = [{
 export const FACILITIES_ARRAY = [
     {
         svgUrl: 'assets/images/museum.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/classroom.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 20 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/football.svg',
-        headline: 'מגרש ספורט',
+        title: 'מגרש ספורט',
         maxParticipants: '',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/leafs.svg',
-        headline: 'סיור במשתלה',
+        title: 'סיור במשתלה',
         availability: FACILITY_OCCUPANCY,
     },
     // --- length 5 ---
     {
         svgUrl: 'assets/images/stage.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/stage.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/stage.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/stage.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/stage.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/stage.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/stage.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },
     {
         svgUrl: 'assets/images/stage.svg',
-        headline: 'תאטרון',
+        title: 'תאטרון',
         maxParticipants: 'עד 320 משתתפים',
         availability: FACILITY_OCCUPANCY,
     },

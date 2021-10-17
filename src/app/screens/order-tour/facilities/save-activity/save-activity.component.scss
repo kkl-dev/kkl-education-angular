@@ -5,6 +5,30 @@
     height: 100%;
     width: 100%;
     background-color: rgba($color: #707070, $alpha: 0.6);
+    ::ng-deep .ngx-timepicker {
+        border-bottom: none!important;
+    }
+    ::ng-deep ngx-timepicker-field {
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+        padding: 0.3rem;
+    }
+    .delete-button{
+        background: red;
+    }
+    .ngx-timepicker-field-example {
+        display: flex;
+        flex-direction: column;
+        span{
+            text-align: right;
+        }
+        ::ng-deep .ngx-timepicker-control__input {
+            font-size: 1.3rem;
+        }
+        ::ng-deep .ngx-timepicker-control__arrows {
+            top:-5px;
+        }
+    }
 
     ::ng-deep .mat-form-field-appearance-outline,
 ::ng-deep .mat-form-field-wrapper {
@@ -42,20 +66,33 @@
     ::ng-deep .SOBD__days {
         width: 100% !important;
     }
+    &__header-icon {
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    &__header-content {
+        div{
+            margin:5px;
+        }
+    }
     &__header {
-        height: 80px;
         display: flex;
         flex-direction: row-reverse;
+        justify-content: space-evenly;
+        padding: 1rem;
+        direction: rtl;
         &-icon {
-            border-radius: 5px;
-            align-self: flex-start;
-            background: rgb(238, 238, 238);
-            background: linear-gradient(0deg, rgb(194, 194, 194) 0%, rgba(254, 254, 254, 1) 100%);
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            // border-radius: 5px;
+            // align-self: flex-start;
+            // background: rgb(238, 238, 238);
+            // background: linear-gradient(0deg, rgb(194, 194, 194) 0%, rgba(254, 254, 254, 1) 100%);
+            // width: 80px;
+            // height: 80px;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
             & svg-icon {
                 margin: 0;
                 & > svg {
@@ -79,10 +116,10 @@
                 }
                 &-customer-type {
                     font-size: 16px;
-                    margin-right: 10px;
                     display: flex;
-                    flex-direction: row-reverse;
-
+                    &-customer-type > span {
+                        margin:5px;
+                    }
                     &-toggle {
                         border-radius: 20px;
                         position: relative;
@@ -118,7 +155,12 @@
         border-bottom: 1px solid #e5e5e5;
         padding: 20px 0;
         margin: 20px 0;
-
+        ::ng-deep .mat-checkbox-layout .mat-checkbox-label{
+            margin:5px;
+        }
+        &-text{
+            margin:5px;
+        }
         &-checkbox {
             margin: 0 10px;
         }
@@ -138,9 +180,9 @@
         &-inputs {
             display: flex;
             flex-direction: row-reverse;
-            margin: 0 auto;
-            width: fit-content;
-            gap: 12px;
+            width: 100%;
+            align-items: center;
+            justify-content: space-around;
         }
     }
 }

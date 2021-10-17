@@ -11,25 +11,6 @@ export const INITIAL_EVENTS: EventInput[] = [
     title: 'All-day event',
     start: TODAY_STR
   },
-  {
-    id: createEventId(),
-    title: 'Timed event',
-    start: TODAY_STR + 'T12:00',
-    end: TODAY_STR + 'T14:30',
-    backgroundColor: '#ECF8EE',
-    textColor: 'black',
-    editable: true,
-    className:'border-activities'
-  },
-  {
-    id: createEventId(),
-    title: 'Timed event',
-    start: TODAY_STR + 'T12:00:00',
-    end: TODAY_STR + 'T14:30:00',
-    backgroundColor: '#F0F6FE',
-    textColor: 'black',
-    className: 'border-facilities',
-  }
 ];
 
 export function createEventId() {
