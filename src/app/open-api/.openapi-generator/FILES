@@ -47,7 +47,6 @@ model/occupiedHours.ts
 model/order.ts
 model/orderEvent.ts
 model/orderItemCommonDetails.ts
-model/orderModel.ts
 model/orderType.ts
 model/participantType.ts
 model/siteOrder.ts

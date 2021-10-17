@@ -22,25 +22,28 @@ export interface Order {
     supplier?: Supplier;
     comment?: string;
     siteId?: number | null;
-    sentToSupplier?: string;
+    sentToSupplier?: string | null;
     sentBy?: string;
     voucherNum?: number | null;
-    cancelDate?: string;
+    cancelDate?: string | null;
     causeCancellation?: string;
     cancelBy?: string;
     paidToSupplier?: number | null;
     userName?: string;
-    openDate?: string;
+    openDate?: string | null;
     finOrderType?: string;
-    budgetItem?: number;
-    confirmDate?: string;
+    budgetItem?: number | null;
+    confirmDate?: string | null;
     confirmBy?: string;
     confirmUserTz?: number | null;
     confirmByUser?: string;
     confirmCancelBy?: string;
     confirmCancelByUser?: string;
-    confirmCancelDate?: string;
+    confirmCancelDate?: string | null;
     confirmCancelUserTz?: number | null;
     supplierProcedureNum?: string;
+    totalPayCustomer?: number | null;
+    totalPaySupplier?: number | null;
+    totalPayAfterKklSubsidy?: number | null;
 }
 

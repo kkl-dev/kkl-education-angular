@@ -14,7 +14,14 @@
 export interface FacilityOrder { 
     tripId?: number;
     facilityId?: number;
-    date?: string;
+    orderId?: number | null;
+    /**
+     * refers to indentity record on data base
+     */
+    orderItemIdentity?: number | null;
+    facilityName?: string;
+    startDate?: string;
+    endDate?: string;
     startHour?: string;
     endHour?: string;
     openBy?: string;

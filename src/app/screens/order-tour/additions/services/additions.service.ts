@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LocationModel } from '../models/location.model';
 import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
-import { OrderEvent, OrderModel, OrderType, TempOrder, TransportOrder } from 'src/app/open-api';
+import { OrderEvent, OrderType, TempOrder, TransportOrder } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 
 @Injectable({
@@ -87,7 +87,7 @@ export class AdditionsService {
 
 
   public orderList: OrderEvent[] = []
-  public orderToServer = {} as OrderModel
+  //public orderToServer = {} as OrderModel
   addOrderItems(item: any) {
     // this.item$.subscribe(response => this.orderList = response);
     this.orderList.push(item);

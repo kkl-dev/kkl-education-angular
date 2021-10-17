@@ -7,7 +7,7 @@ import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { SquadAssembleService } from './squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
-import { OrderService, UserService } from 'src/app/open-api';
+import { OrderEvent, OrderService, UserService } from 'src/app/open-api';
 import { Location } from '@angular/common';
 import { AdditionsService } from './additions/services/additions.service';
 
@@ -123,7 +123,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     }
     this.router.navigateByUrl(`/education/order-tour/${step.path}`);
     this.updateStepsStatus(step);
-    this.additionsService.orderToServer.orderList = this.additionsService.orderList;
+    this.additionsService.orderList = this.additionsService.orderList;
     // this.orderService.addOrder(this.additionsService.orderToServer)
   }
 
@@ -231,6 +231,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       console.log(err);
     })
   }
+
+    AddOrder(orderList: OrderEvent[]){
+
+   }
 
 
 

@@ -107,7 +107,7 @@ import { TransportDetailsComponent } from './screens/order-tour/additions/compon
 import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.component';
 import { TransportFormComponent } from './screens/order-tour/additions/components/transport-form/transport-form.component';
 import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
-import { TransportModel } from './screens/order-tour/additions/models/transport-model';
+import { TransportModel } from './screens/order-tour/additions/models/transport.model';
 
 
 import { SummaryComponent } from './screens/order-tour/summary/summary.component';
@@ -129,6 +129,7 @@ import { SaveActivityComponent } from './screens/order-tour/facilities/save-acti
 import { AddActivityComponent } from './screens/order-tour/facilities/add-activity/add-activity.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { OutsideDirective } from './utilities/directivs/outside.directive';
+import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping-map.component';
 
 
 
@@ -249,7 +250,8 @@ FullCalendarModule.registerPlugins([
     SquadBudgetComponent,
     SquadNewClientComponent,
     SquadGroupGenderComponent,
-    OutsideDirective
+    OutsideDirective,
+    SleepingMapComponent
   ],
   imports: [
     BrowserModule,

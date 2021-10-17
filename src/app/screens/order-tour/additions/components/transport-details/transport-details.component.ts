@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
-import { columns, details, summery, supplier } from 'src/mock_data/additions';
+import { transportColumns, details, summery, supplier } from 'src/mock_data/additions';
 
 export interface TableData {
   columns?: TableCellModel[];
@@ -15,8 +15,7 @@ export interface TableData {
 })
 export class TransportDetailsComponent implements OnInit {
 
-  @Input() columns: TableCellModel[] = [];
-
+  public columns: TableCellModel[] = transportColumns;
 
   public title: string = 'פרטים נוספים';
   public editMode: boolean = false;

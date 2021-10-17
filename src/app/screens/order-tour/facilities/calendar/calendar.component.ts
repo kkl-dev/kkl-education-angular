@@ -5,7 +5,7 @@ import { EventInput } from '@fullcalendar/angular';
 import { Observable, Subscription } from 'rxjs';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import heLocale from '@fullcalendar/core/locales/he';
-import interactionPlugin from '@fullcalendar/interaction'; 
+import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
   selector: 'app-calendar',
@@ -22,7 +22,7 @@ export class CalendarComponent implements OnInit {
   constructor(private facilitiesService: FacilitiesService) { }
 
   public calendarOptions: CalendarOptions = {
-    plugins: [timeGridPlugin,interactionPlugin],
+    plugins: [timeGridPlugin, interactionPlugin],
     initialView: 'timeGridDay',
     allDaySlot: false,
     locales: [heLocale],
@@ -44,20 +44,23 @@ export class CalendarComponent implements OnInit {
       right: 'timeGridDay,timeGridWeek,dayGridMonth'
     },
     initialEvents: [],
-    eventClick:(info) => {
+    eventClick: (info) => {
       this.facilitiesService.findObjectInCalendarArray(info.event.id);
     },
-    eventDrop:(info) => {
-      this.facilitiesService.updateTimesInArray(info.event.id,[this.arrangeDate(info.event.start),this.arrangeDate(info.event.end)])
+    eventDrop: (info) => {
+      this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
+    },
+    eventResize: (info) => {
+      this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
     }
-    
+
   }
 
-  public arrangeDate(date){
+  public arrangeDate(date) {
     // 2021-10-15T08:00
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    return `${date.getFullYear()}-${date.getMonth() +1}-${date.getDate()}T${hours <= 9 ? '0'+hours : hours}:${minutes <= 9 ? '0'+minutes : minutes}`
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}T${hours <= 9 ? '0' + hours : hours}:${minutes <= 9 ? '0' + minutes : minutes}`
   }
 
   ngOnInit(): void {

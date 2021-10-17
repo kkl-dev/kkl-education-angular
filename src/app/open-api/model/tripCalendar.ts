@@ -15,6 +15,7 @@ import { TripActivity } from './tripActivity';
 
 
 export interface TripCalendar { 
+    tripId?: number;
     tempOrderList?: Array<TempOrder>;
     activityList?: Array<TripActivity>;
     facilityOrderList?: Array<FacilityOrder>;

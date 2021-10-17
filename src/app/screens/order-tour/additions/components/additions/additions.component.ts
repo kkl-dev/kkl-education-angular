@@ -7,7 +7,7 @@ import { TourModel } from '../../models/tour.model';
 import { tourTransport } from 'src/mock_data/transport';
 import { TourService } from '../../services/tour.service';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
-import { OrderService, Order, OrderModel, OrderEvent, TransportOrder, OrderItemCommonDetails, OrderType } from 'src/app/open-api';
+import { OrderService, Order, OrderEvent, TransportOrder, OrderItemCommonDetails, OrderType } from 'src/app/open-api';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 export interface TourDayModel {
@@ -25,7 +25,7 @@ export class AdditionsComponent implements OnInit {
   public schedule$: Observable<ScheduleModel[]>;
   public schedule: ScheduleModel;
   public addSchedule: boolean = false;
-  public orderModel = {} as OrderModel;
+  //public orderModel = {} as OrderModel;
   public item$: Observable<TransportOrder[]>;
   public item: TransportOrder;
   public addItem: boolean = false;

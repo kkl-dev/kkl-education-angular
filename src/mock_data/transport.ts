@@ -1,7 +1,7 @@
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
 import { TourModel } from 'src/app/screens/order-tour/additions/models/tour.model';
-import { TransportDetailsModel, TransportLocationsModel, TransportModel } from 'src/app/screens/order-tour/additions/models/transport-model';
+import { TransportDetailsModel, TransportLocationsModel, TransportModel } from 'src/app/screens/order-tour/additions/models/transport.model';
 
 export const tourTransport: TourModel = {
   id: 0,

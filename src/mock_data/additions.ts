@@ -1,6 +1,6 @@
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 
-export const columns: TableCellModel[] = [
+export const transportColumns: TableCellModel[] = [
   {
     key: 'tourId',
     label: 'מספר טיול',

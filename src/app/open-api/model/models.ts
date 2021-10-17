@@ -33,7 +33,6 @@ export * from './occupiedHours';
 export * from './order';
 export * from './orderEvent';
 export * from './orderItemCommonDetails';
-export * from './orderModel';
 export * from './orderType';
 export * from './participantType';
 export * from './siteOrder';

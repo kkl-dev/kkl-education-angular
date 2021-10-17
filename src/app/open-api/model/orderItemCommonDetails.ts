@@ -14,7 +14,10 @@ import { ItemsByTypeOrder } from './itemsByTypeOrder';
 
 export interface OrderItemCommonDetails { 
     itemId?: number;
-    itemIndex?: number;
+    /**
+     * refers to indentity record on data base
+     */
+    itemIdentity?: number;
     orderItemDetails?: ItemsByTypeOrder;
     quantity?: number;
     itemCost?: number;
@@ -26,5 +29,6 @@ export interface OrderItemCommonDetails {
     startHour?: string;
     endHour?: string;
     userName?: string;
+    comment?: string;
 }
 

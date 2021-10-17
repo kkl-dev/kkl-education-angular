@@ -44,6 +44,7 @@ export class FlexTableComponent implements OnInit {
       .subscribe((data: TableData) => {
         this.data = data.rows;
         this.columns = data.columns
+        console.log(this.columns)
       });
   }
 

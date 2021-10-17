@@ -27,7 +27,8 @@
                     <span>עד שעה</span>
                     <ngx-timepicker-field [format]="24" [defaultTime]="addFacilityForm.value.end" controlOnly='false' (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
                 </div>
-                <button class="add-facility__form-button" [disabled]="!addFacilityForm.valid">שריין</button>
+                <button class="add-facility__form-button delete-button" *ngIf='updateForm' (click)="deleteItem($event)">מחיקה</button>
+                <button class="add-facility__form-button">{{updateForm ? 'שמירה' : 'שריין'}}</button>
             </div>
         </form>
 

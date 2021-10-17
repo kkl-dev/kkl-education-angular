@@ -11,14 +11,14 @@
  */
 import { TripInfo } from './tripInfo';
 import { Movements } from './movements';
-import { OrderModel } from './orderModel';
+import { OrderEvent } from './orderEvent';
 import { TripActivity } from './tripActivity';
 
 
 export interface TripModel { 
     trip?: TripInfo;
     activitiesList?: Array<TripActivity> | null;
-    orderList?: Array<OrderModel> | null;
+    orderList?: Array<OrderEvent> | null;
     movementsList?: Array<Movements> | null;
 }
 

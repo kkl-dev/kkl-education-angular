@@ -1,20 +1,21 @@
-<div class="save-activity" *ngrxLet='selectedActivity$ as activity'>
+<div class="save-activity" *ngrxLet='selectedActivity$ as activity' fxFlex='100' fxLayout="column"
+    fxLayoutAlign="space-evenly none">
     <app-modal>
         <app-sleeping-options-by-day (emitCurrentDay)='getDay($event)' [sleepingOptionsByDay]='days'
-            [showSleepAreas]='showSleepAreas' [currentDay]='selectedDay'>
+            [showSleepAreas]='showSleepAreas' [currentDay]='selectedDay' fxFlex='100'>
         </app-sleeping-options-by-day>
-        <div class="save-activity__header">
-            <div class="save-activity__header-icon">
+        <div class="save-activity__header" fxFlex='100' fxLayout="row" >
+            <div class="save-activity__header-icon" [fxFlex]="activity.img ? '30' : '10' ">
                 <img *ngIf="type" [src]='activity.img' />
                 <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
             </div>
-            <div class="save-activity__header-content">
+            <div class="save-activity__header-content" fxFlex='70'>
                 <div class="save-activity__header-content-heading">
                     <span class="save-activity__header-content-heading-constant">שריין פעילות:</span>
                     <span class="save-activity__header-content-heading-input">{{activity.title}}</span>
                 </div>
                 <div class="save-activity__header-content-heading-customer-type" *ngIf="type">
-                    <span> :לקוח מזמין </span>
+                    <span>לקוח מזמין :</span>
                     <span class="save-activity__header-content-heading-customer-type-toggle"
                         (click)="orderingCustomerHandler()">
                         <span class="save-activity__header-content-heading-customer-type-toggle-text">כן</span>
@@ -27,10 +28,12 @@
         </div>
         <div class="save-activity__additions" *ngIf='form.value.haveAdditions'>
             <div class="save-activity__additions-text"> :תוספות</div>
-            <mat-checkbox class="save-activity__additions-checkbox"  *ngFor='let addition of additonsType;let index=index' 
-            [(ngModel)]="additonsType[index].completed" >{{addition.name}}</mat-checkbox>
+            <mat-checkbox class="save-activity__additions-checkbox"
+                *ngFor='let addition of additonsType;let index=index' [(ngModel)]="additonsType[index].completed">
+                {{addition.name}}</mat-checkbox>
         </div>
-        <div class="save-activity__form-bottom-input-area">
+        <div class="save-activity__form-bottom-input-area" fxFlex='100' fxLayout="row"
+            fxLayoutAlign="space-between none">
             <form [formGroup]="form" (ngSubmit)='onSubmit()' class="save-activity__form-bottom-input-area-inputs">
                 <div class="ngx-timepicker-field-example">
                     <span>משעה</span>
@@ -42,8 +45,8 @@
                     <ngx-timepicker-field [format]="24" [defaultTime]="form.value.end" controlOnly='false'
                         (timeChanged)='endTimeChanged($event)'></ngx-timepicker-field>
                 </div>
-
-                <button class="save-activity__form-bottom-input-area-button">שריין</button>
+                <button class="save-activity__form-bottom-input-area-button delete-button" *ngIf='updateForm' (click)="deleteItem($event)">מחיקה</button>
+                <button class="save-activity__form-bottom-input-area-button">{{updateForm ? 'שמירה' : 'שריין'}}</button>
             </form>
         </div>
     </app-modal>

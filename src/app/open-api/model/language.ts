@@ -14,6 +14,6 @@
 export interface Language { 
     id?: number;
     name?: string;
-    countryId?: number;
+    countryId?: number | null;
 }
 

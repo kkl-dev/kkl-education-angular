@@ -1,4 +1,4 @@
-<div class="facilities">
+<div class="facilities" div fxLayout="row" fxLayoutAlign="space-evenly none" fxFlex='100'>
     <app-add-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'addActivity'">
     </app-add-activity>
     <app-save-activity (emitFormValues)='addToCalendar($event)' *ngIf="(closeModal$ | async) === 'activity'"
@@ -6,7 +6,8 @@
     </app-save-activity>
     <app-add-facility [facility]='(selectedFacility$ | async)' (emitFormValues)='addToCalendar($event)'
         *ngIf="(closeModal$ | async) === 'facility'"></app-add-facility>
-    <div class="content-1">
+
+    <div class="content-1" fxFlex='50'>
         <div class="card">
             <div class="header">
             </div>
@@ -24,31 +25,31 @@
 
         </div>
     </div>
-    <div class="content-2">
-        <div class="header">
-            <div class="title">
-                <p>הוספת מתקנים ופעילויות ללו"ז</p>
-                <button (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
+    <div class="content-2" fxFlex='45' fxLayout="column">
+        <div class="header"  fxLayout="column" > 
+            <div class="title" fxLayoutAlign="space-between baseline" dir='rtl'>
+                <p fxFlex='80'>הוספת מתקנים ופעילויות ללו"ז</p>
+                <button fxFlex='20' (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
             </div>
-            <div class="forms">
+            <div class="forms" fxFlex='100'>
                 <app-form-container [questions]='formArray' [cols]='4'>
                 </app-form-container>
             </div>
         </div>
-        <div class="cards">
+        <div class="cards" fxFlex='100' fxLayout="column">
             <div class="titles">
                 <p>מתקני מרכז שדה</p>
             </div>
-            <div class="info-card">
+            <div class="info-card" >
                 <ng-container *ngFor="let item of facilitiesArray; let i = index">
-                    <app-info-card class="facilities-items-item" *ngIf='5 > i' [item]="item"
+                    <app-info-card  class="facilities-items-item" *ngIf='5 > i' [item]="item"
                         (click)="updateChosenFacility(item) ; openModal('facility')">
                         <app-tooltip class="app-tooltip" [hours]="item.availability">
                         </app-tooltip>
                     </app-info-card>
                 </ng-container>
                 <ng-container *ngFor="let item of facilitiesArray; let i = index">
-                    <app-info-card class="facilities-items-item" *ngIf='i >= 5 && hiddenElements.facilities'
+                    <app-info-card  class="facilities-items-item" *ngIf='i >= 5 && hiddenElements.facilities'
                         [item]="item" (click)="updateChosenFacility(item) ; openModal('facilities')">
                         <app-tooltip class="app-tooltip" [hours]="item.availability">
                         </app-tooltip>
@@ -59,7 +60,7 @@
                 (click)="hiddenElements.facilities ? hiddenElements.facilities = false : hiddenElements.facilities = true">
                 {{hiddenElements.facilities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p>
         </div>
-        <div class="cards">
+        <div class="cards" fxFlex='100' fxLayout="column">
             <div class="titles">
                 <p>פעילויות קבועות</p>
             </div>
@@ -80,13 +81,13 @@
                 (click)="hiddenElements.activities ? hiddenElements.activities = false : hiddenElements.activities = true">
                 {{hiddenElements.activities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p>
         </div>
-        <div class="cards">
+        <div class="cards"  fxFlex='100' fxLayout="column">
             <div class="titles">
                 <p>פעילויות קרובות</p>
             </div>
             <div class="card-container">
                 <app-activities-card *ngFor="let activity of upComingActivitiesArray" [obj]='activity'
-                    (click)="updateChosenUpComingActivity(activity) ; openModal('activity')"></app-activities-card>
+                 (buttonClicked)="updateChosenUpComingActivity(activity) ; openModal('activity')"></app-activities-card>
             </div>
             <app-pagination pagesCount='5' currentPage='1'></app-pagination>
         </div>

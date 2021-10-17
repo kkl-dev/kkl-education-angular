@@ -34,7 +34,7 @@ export interface Customer {
     contactPhone?: string;
     contactMobile?: string;
     userName?: string;
-    generateDate?: string;
+    generateDate?: string | null;
     appId?: number | null;
     noPayment?: number | null;
     internalCustomer?: number | null;

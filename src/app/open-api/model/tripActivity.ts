@@ -18,11 +18,12 @@ export interface TripActivity {
      * refers to indentity record on data base
      */
     tripActivityIdentity?: number;
-    categoryId?: number;
+    categoryId?: number | null;
     date?: string;
     description?: string;
     hourStart?: string;
     hourEnd?: string;
     tripId?: number;
+    userName?: string;
 }
 

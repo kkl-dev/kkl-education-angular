@@ -4,7 +4,7 @@ import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { OrderItemCommonDetails, TransportOrder } from 'src/app/open-api';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
-import { TransportModel } from '../../models/transport-model';
+//import { TransportModel } from '../../models/transport-model';
 import { AdditionsService } from '../../services/additions.service';
 import { TransportService } from '../../services/transport.service';
 

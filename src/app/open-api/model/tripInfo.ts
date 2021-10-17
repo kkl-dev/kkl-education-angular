@@ -41,7 +41,7 @@ export interface TripInfo {
     contactPhone: string;
     contactEmail: string;
     confirm?: string;
-    customerSignatureDate?: string;
+    customerSignatureDate?: string | null;
     confirmBy?: string;
     country?: Country;
     /**
