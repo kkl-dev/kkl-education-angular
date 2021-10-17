@@ -8,8 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 
 
 export class ActivitiesCardComponent implements OnInit {
-  // @Input() obj:ActivitiesCardInterface;
-  @Input() obj:any;
+  @Input() obj:ActivitiesCardInterface;
+ // @Input() obj:any;
 
   constructor() { }
 
@@ -19,8 +19,12 @@ export class ActivitiesCardComponent implements OnInit {
 }
 
 export interface ActivitiesCardInterface{
-  img:string;
-  title:string;
-  content:string;
-  hours:number;
+  // img:string;
+  // title:string;
+  // content:string;
+  // hours:number;  
+    name:string;
+    description:string;
+    sitePicture:string;
+    hours:number;
 }

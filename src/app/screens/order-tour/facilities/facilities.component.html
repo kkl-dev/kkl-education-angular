@@ -26,64 +26,17 @@
             <div class="timeline">
                 <app-calendar></app-calendar>
             </div>
-
         </div>
     </div>
+    <!-- right side starts here -->
     <div class="content-2">
         <div class="header">
             <div class="title">
                 <p>הוספת פעילות ללו"ז</p>
                 <button>הוספת פעילות חדשה +</button>
             </div>
-            <!-- right side starts here -->
             <div class="forms">
-                <!-- <mat-grid-list cols="4" rowHeight="2vh" [gutterSize]="3">
-
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <ng-container>
-                            <input type="text" matInput [matAutocomplete]="auto" />
-                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
-                                (optionSelected)="onOptionSelected($event)">
-                                <mat-option *ngFor="let activity of tripActivities" [value]="activity.id">
-                                    {{ activity.name }}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </ng-container>
-
-                    </mat-grid-tile>
-
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-select color="primary">
-                            <mat-option>ezor</mat-option>
-                            <mat-option *ngFor="let area of areas" [value]="area.id">
-                                {{ area.name }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-grid-tile>
-
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-select color="primary">
-                            <mat-option>ezor</mat-option>
-                            <mat-option *ngFor="let area of areas" [value]="area.id">
-                                {{ area.name }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-grid-tile>
-
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-select color="primary">
-                            <mat-option>ezor</mat-option>
-                            <mat-option *ngFor="let area of areas" [value]="area.id">
-                                {{ area.name }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-grid-tile>
-
-                </mat-grid-list> -->
-
-
-              
-                <app-form-container [questions]='formArray' [cols]='4'></app-form-container>
+                <app-form-container [questions]='formArray' [cols]='4' (register)="logForm($event)"></app-form-container>
             </div>
         </div>
         <div class="cards">
@@ -109,7 +62,7 @@
                 (click)="hiddenElements.facilities ? hiddenElements.facilities = false : hiddenElements.facilities = true">
                 {{hiddenElements.facilities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p>
         </div>
-        
+
         <div class="cards">
             <div class="titles">
                 <p>פעילויות קבועות</p>
@@ -129,16 +82,17 @@
                 (click)="hiddenElements.activities ? hiddenElements.activities = false : hiddenElements.activities = true">
                 {{hiddenElements.activities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p>
         </div>
-
         <div class="cards">
             <div class="titles">
                 <p>פעילויות קרובות</p>
             </div>
             <div class="card-container">
                 <!-- <app-activities-card *ngFor="let card of upComingActivitiesArray" [obj]='card'></app-activities-card> -->
-                <app-activities-card *ngFor="let card of tripActivities" [obj]='card'></app-activities-card>
+                <app-activities-card *ngFor="let card of tripActivitiesInfo" [obj]='card'></app-activities-card>
+                <!-- <app-pagination [pagesCount]={{pagesAmount}} currentPage='1'></app-pagination> -->
             </div>
-            <app-pagination pagesCount='5' currentPage='1'></app-pagination>
+            <!-- <app-pagination pagesCount='5' currentPage='1'></app-pagination> -->
+            <app-pagination [pagesCount]="pagesAmount" currentPage='1' (newPage)="newPageEmit($event)"></app-pagination>
         </div>
     </div>
 </div>

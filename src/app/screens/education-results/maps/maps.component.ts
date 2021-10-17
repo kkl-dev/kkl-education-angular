@@ -47,6 +47,7 @@ export class MapsComponent implements OnInit {
   viewGenderIcons: boolean = false;
 
   constructor(protected httpClient: HttpClient, public tripService: TripService, public fakeApi: FakeService) {
+    this.loadWebMap();
     this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
     // this.tripService.forestCenter.subscribe(forestCenter => {
     //   this.forestCenter = forestCenter; // this set's the username to the default observable value
@@ -156,7 +157,6 @@ export class MapsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadWebMap();
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
     }

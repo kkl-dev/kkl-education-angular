@@ -151,6 +151,8 @@ export class FormInputComponent implements OnInit {
     if (this.control.parent.value.attribute) {
       this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
     }
+    console.log('onSelectChange');
+
     if (this.name === 'attribute') {
       this.group.controls['activityType'].setValue(undefined);//איפוס שדה פעילות
       if (this.control.value === '12') {
@@ -211,7 +213,8 @@ export class FormInputComponent implements OnInit {
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
-    this.optionSelected.emit(event)
+    console.log(event);
+    this.optionSelected.emit(event);
   }
 
   // LOGIC SECTION

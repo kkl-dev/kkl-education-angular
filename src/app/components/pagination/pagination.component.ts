@@ -16,6 +16,7 @@ export class PaginationComponent implements OnInit,OnChanges {
   constructor() {}
 
   ngOnChanges():void{
+    console.log("ngOnChanges")
     this.currentPage =1;
     this.newPage.emit(this.currentPage);
 
@@ -30,6 +31,8 @@ export class PaginationComponent implements OnInit,OnChanges {
   }
 
   ngOnInit(): void {
+    console.log("ngOnInit")
+
     
     this.pagesCount = Math.floor(+this.pagesCount + 0.99999);
 
@@ -41,11 +44,11 @@ export class PaginationComponent implements OnInit,OnChanges {
         ? (this.pagesToShow = this.pagesToShow.slice(0, index))
         : (this.pagesToShow[index] = +this.currentPage + index);
     });
-    
-   
   }
 
   nextPage() {
+    console.log("nextPage: " + this.currentPage)
+
     if (this.currentPage < this.pageNumberArray.length) {
       this.currentPage++;
       this.proceed();
@@ -87,7 +90,9 @@ export class PaginationComponent implements OnInit,OnChanges {
     }
   }
 
-  newPagesToShow(startingPosition:number, endingPosition:number, currentPage:number) {
+  newPagesToShow(startingPosition: number, endingPosition: number, currentPage: number) {
+    console.log("newPagesToShow: ")
+
     this.pagesToShow.map((item, index) => {
       if (startingPosition + index > endingPosition) {
         this.pagesToShow[index] = -1;
@@ -99,6 +104,7 @@ export class PaginationComponent implements OnInit,OnChanges {
   }
 
   public proceed() {
+    console.log("proceed: " + this.currentPage)
     this.newPage.emit(this.currentPage);
   }
 }
