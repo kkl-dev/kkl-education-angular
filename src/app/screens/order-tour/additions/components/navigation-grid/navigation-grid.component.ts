@@ -15,9 +15,10 @@ import { tourTransport } from 'src/mock_data/transport';
 export class NavigationGridComponent implements OnInit {
 
   @Input() public steps: StepModel[];
+  @Input() public tempOrderReduce: any;
 
   public title: string = "תוספות"
-  public tempOrderReduce: any;
+  // public tempOrderReduce: any;
 
   constructor(
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private userService: UserService, private orderService: OrderService) { }
@@ -43,12 +44,7 @@ export class NavigationGridComponent implements OnInit {
       response => {
         console.log(response)
         this.additionsService.orderTypes = response;
-        this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
-          let key = obj['orderTypeCode']
-          if (!acc[key]) { acc[key] = [] }
-          acc[key].push(obj)
-          return acc
-        }, {})
+
         // this.convertStepsModel();
       },
       error => console.log(error),       // error

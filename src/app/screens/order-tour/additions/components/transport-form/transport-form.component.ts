@@ -50,6 +50,7 @@ export class TransportFormComponent implements OnInit {
         }
       });
       t.globalParameters['comments'] = this.form.value.comments.comments;
+      //change hard coded
       t.order.tripId = this.additionsService.tempOrder[0].tripId;
       t.order.orderType.name = this.additionsService.tempOrder[0].orderTypeName;
       t.order.orderType.id = this.additionsService.tempOrder[0].orderTypeCode;

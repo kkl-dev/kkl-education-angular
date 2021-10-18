@@ -6,20 +6,13 @@
   </mat-card-header>
   <mat-card-content>
 
-    <app-flex-table
-      [data$]="data$"
-      [slots]="{ button: tableButton, custom: input }"
-    ></app-flex-table>
-    
+    <app-flex-table [data$]="data$" [slots]="{ button: tableButton, custom: input }"></app-flex-table>
+
   </mat-card-content>
 
   <mat-card-actions>
     <div fxFill fxLayout="row" fxLayoutAlign="end center" *ngIf="!editMode">
-      <button
-        class="cancel-button"
-        mat-raised-button
-        (click)="openCancelForm()"
-      >
+      <button class="cancel-button" mat-raised-button (click)="openCancelForm()">
         ביטול הזמנה
       </button>
     </div>
@@ -27,17 +20,8 @@
 </mat-card>
 
 <ng-template #tableButton>
-  <div
-    class="button-container"
-    fxFill
-    fxLayout="row"
-    fxLayoutAlign="start center"
-  >
-    <button
-      class="cancel-button"
-      mat-raised-button
-      (click)="updateCancelForm()"
-    >
+  <div class="button-container" fxFill fxLayout="row" fxLayoutAlign="start center">
+    <button class="cancel-button" mat-raised-button (click)="updateCancelForm()">
       בטל הזמנה
     </button>
   </div>

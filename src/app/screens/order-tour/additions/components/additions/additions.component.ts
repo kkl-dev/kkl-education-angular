@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ScheduleModel } from '../../models/schedule.model';
 import { AdditionsService } from '../../services/additions.service';
@@ -30,6 +30,8 @@ export class AdditionsComponent implements OnInit {
   public item: TransportOrder;
   public addItem: boolean = false;
 
+  public tempOrderReduce: any;
+
   constructor(
     private tourService: TourService,
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private orderService: OrderService,
@@ -60,6 +62,13 @@ export class AdditionsComponent implements OnInit {
       response => {
         console.log(response)
         this.additionsService.tempOrder = response;
+        this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
+          let key = obj['orderTypeCode']
+          if (!acc[key]) { acc[key] = [] }
+          acc[key].push(obj)
+          return acc
+        }, {})
+
         var TransportOrderList = [];
         for (var i in response) {
           var t = {} as TransportOrder;
