@@ -54,13 +54,13 @@ export class CalendarComponent implements OnInit {
     eventResize: (info) => {
       this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
     },
-    eventContent: (props, createElement) => {
-      console.log(props.event._def);
-      let html = `
-      <ng-template #${props.event.id}>kfosdo</ng-template>
-      `
-      return { html: `<app-calendar-card svgUrl="sad"></app-calendar-card>` }
-    },
+    // eventContent: (props, createElement) => {
+    //   console.log(props.event._def);
+    //   let html = `
+    //   <ng-template #${props.event.id}>kfosdo</ng-template>
+    //   `
+    //   return { html: `<app-calendar-card svgUrl="sad"></app-calendar-card>` }
+    // },
 
   }
 
