@@ -10,7 +10,7 @@ import { TransportModel } from '../../models/transport.model';
 export class TourPanelComponent implements OnInit {
   constructor() { }
 
-  @Input() editMode: boolean;
+  @Input() editMode: boolean=true;
   @Input() schedule: ScheduleModel;
   @Input() item: any;
   @Input() i: number;

@@ -4,8 +4,9 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LocationModel } from '../models/location.model';
 import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
-import { OrderEvent, OrderType, TempOrder, TransportOrder } from 'src/app/open-api';
+import { OrderEvent, OrderService, OrderType, TempOrder, TransportOrder } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
+import { TransportService } from './transport.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AdditionsService {
   item = {} as TransportOrder;
   orderTypes: OrderType[];
   tempOrder: TempOrder[];
+  supplierList = [];
   private steps: StepModel[] = [
     // {
     //   label: 'היסעים',
@@ -66,8 +68,7 @@ export class AdditionsService {
     this.itemSubject.next(item)
   }
   constructor(
-    private stepperService: StepperService, tripService: TripService
-  ) { }
+    private stepperService: StepperService, private tripService: TripService, private orderService: OrderService, public transportService: TransportService) { }
 
   public getSteps(): StepModel[] {
     return [... this.steps]
@@ -93,4 +94,29 @@ export class AdditionsService {
     this.orderList.push(item);
     console.log(this.orderList);
   }
+  // index;
+  // getSupplierByOrderType() {
+  //   this.orderService.getSupplierByOrderType(7, 1, 4).subscribe(
+  //     response => {
+  //       console.log(response);
+  //       this.index = this.transportService.details.findIndex(el => el.key === "supplier");
+  //       this.transportService.details[this.index].setValue(response.id.toString());
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
+  // getOrderItemBySupplierId() {
+  //   var supplierId = parseInt(this.transportService.details[this.index].value);
+  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
+  //     response => {
+  //       console.log(response)
+  //       response.forEach(element => {
+  //         this.transportService.itemsList.push({ label: element.name, value: element.id.toString() });
+  //       });
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 }

@@ -15,12 +15,14 @@
             <app-typography [size]="18">{{ location.pickupLocation }} -
               {{ location.dropdownLocation }}</app-typography>
           </div> -->
-
-          <div description></div>
-         <!-- [location]="location" -->
-          <app-transport-form [transport]="item"  [editMode]="editMode" content>
-          </app-transport-form>
-          <app-transport-details *ngIf="editMode" content></app-transport-details>
+        <div description></div>
+        <!-- [location]="location" -->
+        <!-- <app-transport-form [transport]="item" [editMode]="editMode" content>
+        </app-transport-form> -->
+        <app-order-form [order]="item" [editMode]="editMode" content>
+        </app-order-form>
+        <!-- <app-transport-details *ngIf="editMode" content></app-transport-details> -->
+        <app-form-details *ngIf="editMode" content></app-form-details>
         <!-- </app-expend-panel> -->
       </ng-container>
     </mat-accordion>

@@ -34,9 +34,9 @@ import { Configuration }                                     from '../configurat
   providedIn: 'root'
 })
 export class OrderService {
-
-    //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
+
+    // protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -93,24 +93,16 @@ export class OrderService {
 
     /**
      * @param permissionId 
-     * @param isOccupancyProblemFromSp 
-     * @param ibRemoveOccProb 
      * @param requestBody 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addOrder(permissionId: number, isOccupancyProblemFromSp: string, ibRemoveOccProb: number, requestBody?: Array<OrderEvent>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripModel>;
-    public addOrder(permissionId: number, isOccupancyProblemFromSp: string, ibRemoveOccProb: number, requestBody?: Array<OrderEvent>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripModel>>;
-    public addOrder(permissionId: number, isOccupancyProblemFromSp: string, ibRemoveOccProb: number, requestBody?: Array<OrderEvent>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripModel>>;
-    public addOrder(permissionId: number, isOccupancyProblemFromSp: string, ibRemoveOccProb: number, requestBody?: Array<OrderEvent>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public addOrder(permissionId: number, requestBody?: Array<OrderEvent>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripModel>;
+    public addOrder(permissionId: number, requestBody?: Array<OrderEvent>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripModel>>;
+    public addOrder(permissionId: number, requestBody?: Array<OrderEvent>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripModel>>;
+    public addOrder(permissionId: number, requestBody?: Array<OrderEvent>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (permissionId === null || permissionId === undefined) {
             throw new Error('Required parameter permissionId was null or undefined when calling addOrder.');
-        }
-        if (isOccupancyProblemFromSp === null || isOccupancyProblemFromSp === undefined) {
-            throw new Error('Required parameter isOccupancyProblemFromSp was null or undefined when calling addOrder.');
-        }
-        if (ibRemoveOccProb === null || ibRemoveOccProb === undefined) {
-            throw new Error('Required parameter ibRemoveOccProb was null or undefined when calling addOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -142,7 +134,7 @@ export class OrderService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<TripModel>(`${this.configuration.basePath}/Order/AddOrder/${encodeURIComponent(String(permissionId))}/${encodeURIComponent(String(isOccupancyProblemFromSp))}/${encodeURIComponent(String(ibRemoveOccProb))}`,
+        return this.httpClient.post<TripModel>(`${this.configuration.basePath}/Order/AddOrder/${encodeURIComponent(String(permissionId))}`,
             requestBody,
             {
                 responseType: <any>responseType_,

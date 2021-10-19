@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ScheduleModel } from '../../models/schedule.model';
 import { AdditionsService } from '../../services/additions.service';
@@ -30,19 +30,21 @@ export class AdditionsComponent implements OnInit {
   public item: TransportOrder;
   public addItem: boolean = false;
 
+  public tempOrderReduce: any;
+
   constructor(
     private tourService: TourService,
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private orderService: OrderService,
   ) { }
 
   ngOnInit(): void {
-    this.getTempOrder();
+   // this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
-    // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
-    // this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
-    this.tour.id = 5555;
-    this.tour.title = 'טיול נסיון';
+    this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
+    this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
+    // this.tour.id = 5555;
+    // this.tour.title = 'טיול נסיון';
     // this.additionsService.emitSchedule(this.tour.schedule);
     this.onAdd();
   }
@@ -60,6 +62,13 @@ export class AdditionsComponent implements OnInit {
       response => {
         console.log(response)
         this.additionsService.tempOrder = response;
+        this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
+          let key = obj['orderTypeCode']
+          if (!acc[key]) { acc[key] = [] }
+          acc[key].push(obj)
+          return acc
+        }, {})
+
         var TransportOrderList = [];
         for (var i in response) {
           var t = {} as TransportOrder;
