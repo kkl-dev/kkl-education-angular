@@ -106,6 +106,12 @@ export class FacilitiesComponent implements OnInit {
     this.getActivityCategories();
     this.getTripActivities();
     this.setFormArray();
+
+    this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();	
+    this.closeModal$ = this.facilitiesService.getCloseModalObs();	
+    this.selectedFacility$ = this.facilitiesService.getSelectedFacility();	
+    this.selectedActivity$ = this.facilitiesService.getSelectedActivity();	
+
   }
 
   private setFormArray() {
