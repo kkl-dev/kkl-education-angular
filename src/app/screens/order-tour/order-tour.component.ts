@@ -1,8 +1,8 @@
 import { StepperService } from './../../utilities/services/stepper.service';
 import { OrderTourService } from './../../utilities/services/order-tour.service';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { SquadAssembleService } from './squad-assemble/services/squad-assemble.service';
@@ -10,6 +10,8 @@ import { TripService } from 'src/app/services/trip.service';
 import { OrderEvent, OrderService, UserService } from 'src/app/open-api';
 import { Location } from '@angular/common';
 import { AdditionsService } from './additions/services/additions.service';
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-order-tour',
@@ -17,7 +19,7 @@ import { AdditionsService } from './additions/services/additions.service';
   styleUrls: ['./order-tour.component.scss'],
   providers: [StepperService],
 })
-export class OrderTourComponent implements OnInit, AfterViewInit {
+export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   public activeStep: number;
 
   public $activeStep = new Subject<number>();
@@ -31,6 +33,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
   public steps: StepModel[];
   public currentStep: StepModel;
+  addOrderSub: Subscription;
 
   constructor(
     private router: Router,
@@ -41,7 +44,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     private orderService: OrderService,
     private location: Location,
     private route: ActivatedRoute,
-    private additionsService: AdditionsService
+    private additionsService: AdditionsService,
+    private _dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -198,16 +202,16 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
 
       this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
 
-      if(this.squadAssemble.payerCustomer.name!= undefined)
-      this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
-      this.squadAssemble.tripInfo.generateTime='2021-10-10';
+      if (this.squadAssemble.payerCustomer.name != undefined)
+        this.squadAssemble.tripInfo.customerPay = this.squadAssemble.payerCustomer;
+      this.squadAssemble.tripInfo.generateTime = '2021-10-10';
       this.squadAssemble.tripInfo.userName = 'שחר גל';
     }
 
     catch (error) {
       console.log(error);
     }
-    console.log('tripInfo obj is: ',this.squadAssemble.tripInfo);
+    console.log('tripInfo obj is: ', this.squadAssemble.tripInfo);
   }
 
 
@@ -232,9 +236,20 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
     })
   }
 
-    AddOrder(orderList: OrderEvent[]){
+  AddOrder() {
+    if (this.additionsService.orderList.length > 0) {
+      this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
+        console.log(res);
+      }, (err) => {
+        console.log(err);
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+      })
+    }
 
-   }
+  }
 
 
 
@@ -245,6 +260,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
     if (routeIndex < this.steps.length) {
+      if (routeIndex === 4) this.AddOrder();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
       );
@@ -258,6 +274,11 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   public changeActiveStepPrevNavigation(): void {
     this.activeStep = +this.activeStep--;
     this.location.back();
+  }
+
+
+  ngOnDestroy() {
+    if (this.addOrderSub) { this.addOrderSub.unsubscribe(); }
   }
 }
 

@@ -6,7 +6,7 @@
     <div class="button-container" fxLayout="row" fxLayoutAlign="start">
       <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="addItem">
         <!-- addSchedule -->
-        הוספה
+        הוספת פריט
       </button>
     </div>
     <app-tour-title [value]="tour.title" [id]="tour.id"></app-tour-title>
@@ -14,7 +14,6 @@
       <!-- addSchedule -->
       <app-tour-panel [editMode]="false" [item]="item"></app-tour-panel>
     </div>
-    הזמנות קודמות
     <div *ngFor="let item of item$ | async; index as i">
       <app-tour-panel [editMode]="true" [item]="item" [i]="i + 1"></app-tour-panel>
     </div>

@@ -14,6 +14,9 @@ export interface SelectOption {
 // }
 
 export class QuestionBase<T> {
+  setValue(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   value: T | undefined;
   type?: string;
   key: string;
