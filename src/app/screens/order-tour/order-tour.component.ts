@@ -125,54 +125,94 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     if (step.path == 'facilities') {
       this.createTrip();
     }
+    if (step.label == 'לינה') {
+      let flag= this.syncToTripInfo();
+      if(flag==false){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
+          width: '500px',
+          data: { message: 'נא מלא את שדות החובה בטופס' , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })  
+        step.path= 'squad-assemble';
+        this.router.navigateByUrl(`/education/order-tour/${step.path}`)
+         return;
+      } 
+      else{
+        if(this.tripService.isOneDayTrip){
+          step.path="facilities";
+        }
+      } 
+    }
     this.router.navigateByUrl(`/education/order-tour/${step.path}`);
     this.updateStepsStatus(step);
-    this.additionsService.orderList = this.additionsService.orderList;
-    // this.orderService.addOrder(this.additionsService.orderToServer)
+   
   }
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
-    //this.syncToTripInfo2();
-    //this.router.navigate([this.routerLinkContinue]);
     this.activeStep = +newActiveStep;
   }
 
 
 
   syncToTripInfo() {
+    let flag= false;
+    // let scheduleForm;
+    // let detalisForm;
+    // let ageGroupForm;
+    // let ContactForm;
+    let budgetFlag;
+    let customerFlag;
     try {
-
+      let startDate;
+      let endDate;
       for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
         if (this.squadAssemble.formsArray[i].controls.centerField) {
           console.log('I am schedule');
+          if(this.squadAssemble.formsArray[i].status== 'INVALID'){
+            console.log('schedule is invalid');
+            return flag;
+          }
           this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[i].get('tripDescription').value;
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
           this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
           this.squadAssemble.tripInfo.centerField.linkSite = '';
           let tripDates = this.squadAssemble.formsArray[i].get('dates').value;
           let subTripDates = tripDates.split("-");
-          let startDate = subTripDates[0];
+           startDate = subTripDates[0];
           let tripStartArr = startDate.split("/");
           let tripStart = tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
           this.squadAssemble.tripInfo.tripStart = tripStart;
-          let endDate = subTripDates[1];
+           endDate = subTripDates[1];
           let tripEndingArr = endDate.split("/");
           let tripEnding = tripEndingArr[2] + '-' + tripEndingArr[1] + '-' + tripEndingArr[0];
           this.squadAssemble.tripInfo.tripEnding = tripEnding;
-
+          this.squadAssemble.tripInfo.commentManager= this.squadAssemble.formsArray[i].get('commentManager').value;
+          let dates= { from : startDate, till: endDate}
+          this.tripService.sleepingDates=dates;
+           console.log('sleppingDates from orderTour is:',dates);
+           //scheduleForm= true;
         }
         if (this.squadAssemble.formsArray[i].controls.attribute) {
+
           console.log('I am details');
+          if(this.squadAssemble.formsArray[i].status== 'INVALID'){
+            console.log('schedule is invalid');
+            return flag;
+          }
           this.squadAssemble.tripInfo.insideCenterFieldId = parseInt(this.squadAssemble.formsArray[i].get('insideCenterFieldId').value);
           this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
           var attribute = this.squadAssemble.formsArray[i].get('attribute').value;
           this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
           var activityType = this.squadAssemble.formsArray[i].get('activityType').value;
           this.squadAssemble.tripInfo.activity = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(activityType))[0];
+          
         }
 
         if (this.squadAssemble.formsArray[i].controls.ageGroup) {
           console.log('I am ageGroup');
+          if(this.squadAssemble.formsArray[i].status== 'INVALID'){
+            console.log('schedule is invalid');
+             return flag;
+          }
           var ageGroup = this.squadAssemble.formsArray[i].get('ageGroup').value;
           this.squadAssemble.tripInfo.ageGroup = this.tripService.ageGroupOriginal.filter(el => el.id === parseInt(ageGroup))[0];
           if (this.squadAssemble.formsArray[i].get('numAdultAndYoung').value)
@@ -185,34 +225,56 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[i].get('numGuides').value;
           // if(this.squadAssemble.formsArray[i].get('medics').value)
           // this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[i].get('medics').value;
-
+          return flag;
         }
         if (this.squadAssemble.formsArray[i].controls.contactName) {
           console.log('I am contact');
+          if(this.squadAssemble.formsArray[i].status== 'INVALID'){
+            console.log('schedule is invalid');
+            return flag;
+          }
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
+         
         }
         // if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
         //   console.log('I am budget');
         //   this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget             
         // }
       }
+      
       this.squadAssemble.tripInfo.budget = this.tripService.budgetByParam.budget;
-
-      this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
-
-      if (this.squadAssemble.payerCustomer.name != undefined)
-        this.squadAssemble.tripInfo.customerPay = this.squadAssemble.payerCustomer;
-      this.squadAssemble.tripInfo.generateTime = '2021-10-10';
+      if(this.squadAssemble.tripInfo.budget!= undefined)
+      budgetFlag=true;
+     
+       this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
+       if (this.squadAssemble.tripInfo.customer.id != undefined)
+       customerFlag= true;
+      
+       if(  customerFlag==true && budgetFlag==true)
+       flag=true
+       else
+       return flag;
+      if(this.squadAssemble.payerCustomer.name!= undefined)
+      this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
+      this.squadAssemble.tripInfo.generateTime='2021-10-10';
       this.squadAssemble.tripInfo.userName = 'שחר גל';
+       if(startDate==endDate ){
+          this.tripService.isOneDayTrip=true;
+           this.createTrip();
+       }
     }
 
     catch (error) {
       console.log(error);
+      flag=false;
+      return flag;
     }
-    console.log('tripInfo obj is: ', this.squadAssemble.tripInfo);
+    console.log('tripInfo obj is: ',this.squadAssemble.tripInfo);
+    return flag;
   }
+
 
 
 
@@ -220,13 +282,19 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     let tripInfo = this.squadAssemble.tripInfo;
     let obj = this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation = obj;
-    for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
-      for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
-        let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
-        let dateArray = dateFormat.split("/");
-        dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
-        tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
+    if(!this.tripService.isOneDayTrip){
+      tripInfo.lodgingReservation = obj;
+      for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
+        for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
+          let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
+          let dateArray = dateFormat.split("/");
+          dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+          tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
+        }
       }
+    }
+    else{
+      tripInfo.lodgingReservation= [];
     }
     this.userService.createTrip(tripInfo).subscribe(res => {
       console.log('tripInfo from server is :', res);
@@ -260,6 +328,19 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
     if (routeIndex < this.steps.length) {
+      if(routeIndex==1){
+        let flag= this.syncToTripInfo();
+        if(flag==false){ 
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
+            width: '500px',
+            data: { message: 'נא מלא את שדות החובה בטופס' , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          })      
+          this.router.navigateByUrl(
+            `/education/order-tour/${this.steps[0].path}`
+          );
+           return;
+        }    
+      }
       if (routeIndex === 4) this.AddOrder();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
