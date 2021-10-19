@@ -15,9 +15,10 @@ import { tourTransport } from 'src/mock_data/transport';
 export class NavigationGridComponent implements OnInit {
 
   @Input() public steps: StepModel[];
+  @Input() public tempOrderReduce: any;
 
   public title: string = "תוספות"
-  public tempOrderReduce: any;
+  // public tempOrderReduce: any;
 
   constructor(
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private userService: UserService, private orderService: OrderService) { }
@@ -31,6 +32,29 @@ export class NavigationGridComponent implements OnInit {
     for (var i in this.additionsService.orderTypes) {
       var step = {} as StepModel;
       step.label = this.additionsService.orderTypes[i].name
+      switch (step.label) {
+        case 'היסעים':
+          step.svgUrl = 'bus';
+          break;
+        case 'אבטחה':
+          step.svgUrl = 'shield';
+          break;
+        case 'אתרים':
+          step.svgUrl = 'site';
+          break;
+        case 'כלכלה':
+          step.svgUrl = 'dinner';
+          break;
+        case 'אירוח/פעילות':
+          step.svgUrl = 'tent';
+          break;
+        case 'הדרכה':
+          step.svgUrl = 'guide';
+          break;
+        case 'מפעיל מוסיקלי':
+          step.svgUrl = 'music';
+          break;
+      }
       // step.svgUrl = this.additionsService.orderTypes[i].iconPath
       for (var j in this.tempOrderReduce) {
         if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) { step.badgeValue = this.tempOrderReduce[j].length; }
@@ -43,13 +67,8 @@ export class NavigationGridComponent implements OnInit {
       response => {
         console.log(response)
         this.additionsService.orderTypes = response;
-        this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
-          let key = obj['orderTypeCode']
-          if (!acc[key]) { acc[key] = [] }
-          acc[key].push(obj)
-          return acc
-        }, {})
-        // this.convertStepsModel();
+
+        this.convertStepsModel();
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

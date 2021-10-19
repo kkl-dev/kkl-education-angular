@@ -5,13 +5,17 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { TransportOrder } from 'src/app/open-api';
+import { OrderService, TransportOrder, OrderEvent } from 'src/app/open-api';
+import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 //import { TransportModel } from '../models/transport-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransportService {
+  supplierList = [];
+  itemsList = [];
+  r: TransportOrder
   public details: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'supplier',
@@ -19,26 +23,18 @@ export class TransportService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        options: [
-          { label: 'solid', value: '12123' },
-          { label: 'great', value: '23' },
-          { label: 'good', value: '123' },
-          { label: 'unproven', value: '123123123' },
-        ],
+        options: this.supplierList,
+
       },
     }),
     new QuestionSelect({
-      key: 'item',
+      key: 'itemId',
       label: 'בחר פריט',
       type: 'select',
+      value: '',
       validations: [Validators.required],
       inputProps: {
-        options: [
-          { label: 'solid', value: '12123' },
-          { label: 'great', value: '23' },
-          { label: 'good', value: '123' },
-          { label: 'unproven', value: '123123123' },
-        ],
+        options: this.itemsList,
       },
     }),
 
@@ -50,14 +46,13 @@ export class TransportService {
     }),
 
     new QuestionTextbox({
-      key: 'participants',
+      key: 'peopleInTrip',
       label: 'משתתפים',
-      value: '',
+      value: this.squadAssembleService.peopleInTrip,
       validations: [Validators.required],
     }),
-
     new QuestionTextbox({
-      key: 'price',
+      key: 'itemCost',
       label: 'מחיר',
       value: '',
       type: 'number',
@@ -65,14 +60,14 @@ export class TransportService {
     }),
 
     new QuestionTextbox({
-      key: 'supplierCost',
+      key: 'billingSupplier',
       label: 'חיוב ספק',
       value: '',
       validations: [Validators.required],
     }),
 
     new QuestionTextbox({
-      key: 'customerCost',
+      key: 'billingCustomer',
       label: 'חיוב לקוח',
       value: '',
       validations: [Validators.required],
@@ -84,6 +79,7 @@ export class TransportService {
       value: '',
       validations: [Validators.required],
     }),
+
     new QuestionSelect({
       key: 'startDate',
       icon: 'date_range',
@@ -152,7 +148,9 @@ export class TransportService {
         // labelSize: 's5',
       },
     }),
-  ].reverse();
+  ]
+
+
 
   public locations: QuestionBase<string | Date>[] = [
     // new QuestionSelect({
@@ -291,5 +289,21 @@ export class TransportService {
       this.setInitialValues(group.questions, data);
     });
   }
-  constructor() { }
+  originalItemList = [];
+  getOrderItemBySupplierId() {
+    let index = this.details.findIndex(el => el.key === "supplier");
+    var supplierId = parseInt(this.details[index].value);
+    this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
+      response => {
+        console.log(response)
+        this.originalItemList = response;
+        response.forEach(element => {
+          this.itemsList.push({ label: element.name, value: element.id.toString() });
+        });
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+  constructor(private orderService: OrderService,private squadAssembleService:SquadAssembleService) { }
 }

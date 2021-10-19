@@ -90,6 +90,7 @@ export class SquadGroupComponent {
   //   sum=sum+ (+form.controls.medics.value);
   // }
      this.list[0].value= sum;
+     this.squadAssembleService.peopleInTrip=sum;
     this.squadAssembleService.updateFormArray(form);
   }
 

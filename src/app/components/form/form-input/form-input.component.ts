@@ -17,6 +17,8 @@ import { TripService } from 'src/app/services/trip.service';
 import { CalendarOptions } from 'comrax-alex-airbnb-calendar';
 import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
+import { AdditionsService } from 'src/app/screens/order-tour/additions/services/additions.service';
+import { TransportService } from 'src/app/screens/order-tour/additions/services/transport.service';
 
 @Component({
   selector: 'app-form-input',
@@ -34,8 +36,8 @@ export class FormInputComponent implements OnInit {
   @Input() public hint: string;
   @Input() public controlType: string;
   @Input() public options!: [];
-  @Input() public dateOptions!:CalendarOptions;
- 
+  @Input() public dateOptions!: CalendarOptions;
+
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
@@ -53,10 +55,10 @@ export class FormInputComponent implements OnInit {
   @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
-  constructor(private formService: FormService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService) {
+  constructor(private formService: FormService, public additionsService: AdditionsService, public transportService: TransportService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService) {
     console.log(this.dateOptions);
-   }
-  
+  }
+
 
   ngOnInit(): void {
     this.name = this.getName(this.control);
@@ -196,18 +198,27 @@ export class FormInputComponent implements OnInit {
     if (this.name === 'activityType') {
       var act = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(this.control.value))[0];
       this.tripService.budgetByParam.activity = act;
-       this.tripService.budgetByParam.budget = this.tripService.budget;
+      this.tripService.budgetByParam.budget = this.tripService.budget;
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
     if (this.name === 'location') {
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
-
     if (this.name === 'budgetIncome') {
       this.tripService.budgetByParam.budget.incomeId = parseInt(this.control.value);
     }
     if (this.name === 'budgetExpense') {
       this.tripService.budgetByParam.budget.expensesId = parseInt(this.control.value);
+    }
+    if (this.name === 'supplier') {
+      this.transportService.getOrderItemBySupplierId();
+    }
+    if (this.name === 'itemId') {
+      let index = this.transportService.details.findIndex(el => el.key === "itemCost");
+      let item = this.transportService.originalItemList.find(el => el.id === parseInt(this.control.value))
+      var x = Math.floor(item.cost)
+      this.transportService.details[index].value = x.toString();
+
     }
 
 

@@ -34,6 +34,7 @@ export class SquadAssembleService {
   Customer = {} as BaseCustomer;
   payerCustomer = {} as BaseCustomer;
   tripInfofromService: TripModel;
+  peopleInTrip ;
   public freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
@@ -82,7 +83,7 @@ export class SquadAssembleService {
       new Date(2021, 11, 17)
     );
     console.log(this.options);
-    
+
   }
 
   public scheduleQuestions: QuestionBase<string | Date>[] = [

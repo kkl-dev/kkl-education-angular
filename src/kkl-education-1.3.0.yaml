@@ -760,7 +760,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TempOrder'
-  /Order/AddOrder/{permissionId}/{isOccupancyProblemFromSp}/{ibRemoveOccProb}:
+  /Order/AddOrder/{permissionId}:
     post:
       tags:
       - order
@@ -771,17 +771,17 @@ paths:
         required: true
         schema:
           type: integer
-      - name: isOccupancyProblemFromSp
-        in: path
-        required: true
-        schema:
-          type: string
-          nullable: true
-      - name: ibRemoveOccProb
-        in: path
-        required: true
-        schema:
-          type: integer
+      # - name: isOccupancyProblemFromSp
+      #   in: path
+      #   required: true
+      #   schema:
+      #     type: string
+      #     nullable: true
+      # - name: ibRemoveOccProb
+      #   in: path
+      #   required: true
+      #   schema:
+      #     type: integer
       requestBody:
         content:
           application/json:

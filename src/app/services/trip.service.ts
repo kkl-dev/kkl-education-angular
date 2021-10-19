@@ -25,6 +25,7 @@ export class TripService {
   
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[];
+  isOneDayTrip: boolean;
   formGroupSquadAssembles = [];
   dateRange: any;
   formOptions!: FieldForestCenter[];
