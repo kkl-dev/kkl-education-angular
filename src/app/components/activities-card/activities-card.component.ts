@@ -11,17 +11,20 @@ export class ActivitiesCardComponent implements OnInit {
   @Input() public obj:ActivitiesCardInterface;
   @Output() public buttonClicked:EventEmitter<any> =  new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }
 
 export interface ActivitiesCardInterface{
-  svgUrl?:string;
-  img?:string;
-  title:string;
-  content?:string;
-  hours?:number;
+  // svgUrl?:string;
+  // img?:string;
+  // title:string;
+  // content?:string;
+  // hours?:number;
+    name:string;
+    description:string;
+    sitePicture:string;
+    hours:number;
 }

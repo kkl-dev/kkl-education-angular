@@ -22,6 +22,7 @@ export class SleepingOptionsByDayComponent implements OnInit {
   }[] = [];
   //@Input() AvailableSleepingOptions: any;
   AvailableSleepingOptions: any;
+  default: number = 0;
   //currentDay: number = 0;
   @Input() showSleepAreas:boolean=true
   constructor(public tripService: TripService) { }

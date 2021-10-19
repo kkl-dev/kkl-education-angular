@@ -87,7 +87,7 @@
       <p class="SOBD__sleep-areas-options-item-count font-color-blue">
         <span class="SOBD__sleep-areas-options-item-count-number">
           <span>
-            {{ item.availableUnits }}
+            {{ item.availableUnits || default }}
           </span></span>
         <span>
           {{ item.acoomodationTypeName }}
@@ -101,7 +101,7 @@
       </p>
       <p class="SOBD__sleep-areas-options-item-count">
         <span class="SOBD__sleep-areas-options-item-count-number"><span>
-            {{ item.availableUnits * item.maxOccupancy }}
+            {{ item.availableUnits * item.maxOccupancy || default  }}
           </span></span>
         <span>לנים</span>
       </p>
