@@ -3,6 +3,6 @@
   <span class="pagination-pages"><span class="pagination-pages-page" *ngFor="let item of pagesToShow; let i = index"
       [ngClass]="{ chosen: item === +currentPage }">
 
-      <span *ngIf="pagesCount  >= +item">{{ item }}</span></span></span>
+      <span class="pagination-next" *ngIf="pagesCount  >= +item" (click)="selectPage(item)">{{ item }}</span></span></span>
   <span class="pagination-next" [ngClass]="{ disabled: +pagesCount === +currentPage }" (click)="nextPage()">הבא</span>
 </div>

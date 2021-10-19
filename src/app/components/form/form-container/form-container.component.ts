@@ -66,6 +66,7 @@ export class FormContainerComponent implements OnInit {
   }
 
   public onSubmit() {
+    console.log("onSubmit");
     this.register.emit(this.formGroup);
   }
 
@@ -92,6 +93,7 @@ export class FormContainerComponent implements OnInit {
   }
 
   public onAutocomplete(control) {
-    this.autocomplete.emit(control)
+    console.log("onAutocomplete: ", control);
+    this.autocomplete.emit(control);
   }
 }

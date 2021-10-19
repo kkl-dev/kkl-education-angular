@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class InfoCardComponent implements OnInit {
 
   @Input() public item : any
+
   defaultImage : string ='path270.svg';
   constructor() { }
 
