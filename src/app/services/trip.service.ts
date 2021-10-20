@@ -22,7 +22,7 @@ export class TripService {
     id: 0,
     name: ''
   };
-  
+
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[];
   isOneDayTrip: boolean;
@@ -179,11 +179,11 @@ export class TripService {
         // this.availableGicha = 0;
         // this.totalAvailableUnits = sleepingAvailability[0].sleepingOptions[0].maxOccupancy;
         // console.log("totalAvailableUnits: " + this.totalAvailableUnits)
-    
+
         // let max = [];
         // sleepingAvailability[0].sleepingOptions.forEach(element => {
         //   max.push({ acoomodationTypeName: element.acoomodationTypeName, availableUnits: element.availableUnits });
-    
+
         //   if (element.acoomodationTypeName == 'בקתה') {
         //     // console.log("totalAvailableUnits: " + element.availableUnits);
         //     this.availableCabins = element.availableUnits;
@@ -203,9 +203,9 @@ export class TripService {
         // });
         // this.totalAvailableUnits = max;
         // console.log("totalAvailableUnits: ", this.totalAvailableUnits);
-    
+
         // this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
-    
+
         // this.getMapFacilities(this.centerField.id, from, till);
       }
     },
@@ -312,14 +312,16 @@ export class TripService {
         // for (let index = 0; index < this.totalAvailableUnits[0].availableUnits; index++) {
         //   temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
         // }
-        let d = new Date();
-        let num = d.getMilliseconds();
-        let gender = "בנים";
-        if (num % 2 == 0) {
-          gender = "בנים"
-        } else {
-          gender = "בנות"
-        }
+
+        let gender: string;
+        const rand = Math.floor(Math.random() * 3)
+        if (rand == 0)
+          gender = "בנים";
+        else if (rand == 1)
+          gender = "בנות";
+        else
+          gender = "מעורב";
+
         if (element.structureType == 'בקתה') {
           if (availableCabins > 0) {
             availableCabins = availableCabins - 1;
