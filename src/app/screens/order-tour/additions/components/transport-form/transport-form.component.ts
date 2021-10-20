@@ -7,6 +7,7 @@ import { TableCellModel } from 'src/app/utilities/models/TableCell';
 //import { TransportModel } from '../../models/transport-model';
 import { AdditionsService } from '../../services/additions.service';
 import { TransportService } from '../../services/transport.service';
+import { GeneralFormService } from '../../services/general-form.service';
 
 @Component({
   selector: 'app-transport-form',
@@ -26,13 +27,15 @@ export class TransportFormComponent implements OnInit {
     questionsGroups: [],
   };
 
-  constructor(private transportService: TransportService, private additionsService: AdditionsService) { }
+  constructor(private generalFormService: GeneralFormService, private transportService: TransportService, private additionsService: AdditionsService) { }
 
   ngOnInit(): void {
     if (this.editMode) {
       this.transportService.setFormValues(this.transport);
     }
-    this.formTemplate.questionsGroups = this.transportService.questionGroups;
+    let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
+    this.formTemplate.questionsGroups = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
+    // this.formTemplate.questionsGroups = this.transportService.questionGroups;
   }
 
   public onSave(): void {
@@ -48,7 +51,7 @@ export class TransportFormComponent implements OnInit {
         else {
           t[key] = this.form.value.details[key]
         }
-            });
+      });
       t.globalParameters['comments'] = this.form.value.comments.comments;
       //change hard coded
       t.order.supplier.id = this.form.value.details['supplier'];
