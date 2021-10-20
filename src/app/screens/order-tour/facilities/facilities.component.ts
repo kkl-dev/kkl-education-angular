@@ -191,18 +191,19 @@ export class FacilitiesComponent implements OnInit {
   getAvailableFacilities() {
     //let sleepingDates = this.tripService.convertDatesFromSlashToMinus();  
     //temp fixed dates and place
-    this.usersService.getAvailableFacilities(1, '2021-10-20', '2021-10-21').subscribe((facilities: any) => {
-      console.log('get Available Facilities: ', facilities);
-      if (facilities) {
-        //this.activitiesArray = facilities;
-        this.facilitiesArray = facilities[0].facilitiesList;
-        //this.tripService.setfacilitiesArray(facilities);
-        console.log('facility For Day: ', this.facilitiesArray);
-      }
-    },
-      error => {
-        console.log("error: ", error);
-      });
+    this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
+    // this.usersService.getAvailableFacilities(1, '2021-10-20', '2021-10-21').subscribe((facilities: any) => {
+    //   console.log('get Available Facilities: ', facilities);
+    //   if (facilities) {
+    //     //this.activitiesArray = facilities;
+    //     this.facilitiesArray = facilities[0].facilitiesList;
+    //     //this.tripService.setfacilitiesArray(facilities);
+    //     console.log('facility For Day: ', this.facilitiesArray);
+    //   }
+    // },
+    //   error => {
+    //     console.log("error: ", error);
+    //   });
   }
 
   logForm(form) {
