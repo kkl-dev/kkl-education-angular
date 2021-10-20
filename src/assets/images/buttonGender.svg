@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46" height="46" viewBox="0 0 46 46">
+  <defs>
+    <filter id="Rectangle_202" x="0" y="0" width="46" height="46" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_1054" data-name="Group 1054" transform="translate(-19 -821.175)">
+    <g transform="matrix(1, 0, 0, 1, 19, 821.18)" filter="url(#Rectangle_202)">
+      <rect id="Rectangle_202-2" data-name="Rectangle 202" width="28" height="28" rx="5" transform="translate(9 6)" fill="#fff" opacity="0.74"/>
+    </g>
+    <g id="Group_1055" data-name="Group 1055" transform="translate(34.331 833.183)">
+      <rect id="Rectangle_203" data-name="Rectangle 203" width="4" height="4" transform="translate(0.669 0.993)" fill="#009eee"/>
+      <rect id="Rectangle_206" data-name="Rectangle 206" width="4" height="4" transform="translate(5.669 0.993)" fill="#d220ba"/>
+      <rect id="Rectangle_209" data-name="Rectangle 209" width="4" height="4" transform="translate(10.669 0.993)" fill="#d220ba"/>
+      <rect id="Rectangle_204" data-name="Rectangle 204" width="4" height="4" transform="translate(0.669 5.993)" fill="#009eee"/>
+      <rect id="Rectangle_207" data-name="Rectangle 207" width="4" height="4" transform="translate(5.669 5.993)" fill="#009eee"/>
+      <rect id="Rectangle_210" data-name="Rectangle 210" width="4" height="4" transform="translate(10.669 5.993)" fill="#d220ba"/>
+      <rect id="Rectangle_205" data-name="Rectangle 205" width="4" height="4" transform="translate(0.669 10.993)" fill="#009eee"/>
+      <rect id="Rectangle_208" data-name="Rectangle 208" width="4" height="4" transform="translate(5.669 10.993)" fill="#009eee"/>
+      <rect id="Rectangle_211" data-name="Rectangle 211" width="4" height="4" transform="translate(10.669 10.993)" fill="#d220ba"/>
+    </g>
+  </g>
+</svg>
