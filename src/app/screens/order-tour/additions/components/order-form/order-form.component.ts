@@ -27,7 +27,7 @@ export class OrderFormComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.orderService.getSupplierList(7, 52275, 0).subscribe(
+    this.orderService.getSupplierList(1, 52275, 0).subscribe(
       response => {
         console.log(response)
         response.forEach(element => {
@@ -47,7 +47,7 @@ export class OrderFormComponent implements OnInit {
 
   index;
   getSupplierByOrderType() {
-    this.orderService.getSupplierByOrderType(7, 1, 4).subscribe(
+    this.orderService.getSupplierByOrderType(1, 1, 4).subscribe(
       response => {
         console.log(response);
         this.index = this.transportService.details.findIndex(el => el.key === "supplier");

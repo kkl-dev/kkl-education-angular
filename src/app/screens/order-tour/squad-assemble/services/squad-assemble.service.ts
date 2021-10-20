@@ -131,7 +131,7 @@ export class SquadAssembleService {
 
 
     new QuestionTextarea({
-      key: 'comments',
+      key: 'commentManager',
       label: 'הערות מנהליות',
       rows: 6,
     }),

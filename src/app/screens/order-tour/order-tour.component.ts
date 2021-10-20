@@ -153,12 +153,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+ 
   syncToTripInfo() {
     let flag= false;
-    // let scheduleForm;
-    // let detalisForm;
-    // let ageGroupForm;
-    // let ContactForm;
+    let scheduleForm;
+    let detalisForm;
+    let ageGroupForm;
+    let ContactForm;
     let budgetFlag;
     let customerFlag;
     try {
@@ -169,7 +170,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('I am schedule');
           if(this.squadAssemble.formsArray[i].status== 'INVALID'){
             console.log('schedule is invalid');
-            return flag;
+            scheduleForm =false
           }
           this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[i].get('tripDescription').value;
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
@@ -189,14 +190,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           let dates= { from : startDate, till: endDate}
           this.tripService.sleepingDates=dates;
            console.log('sleppingDates from orderTour is:',dates);
-           //scheduleForm= true;
+           scheduleForm= true;
         }
         if (this.squadAssemble.formsArray[i].controls.attribute) {
 
           console.log('I am details');
           if(this.squadAssemble.formsArray[i].status== 'INVALID'){
             console.log('schedule is invalid');
-            return flag;
+            detalisForm=false
           }
           this.squadAssemble.tripInfo.insideCenterFieldId = parseInt(this.squadAssemble.formsArray[i].get('insideCenterFieldId').value);
           this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
@@ -204,14 +205,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
           var activityType = this.squadAssemble.formsArray[i].get('activityType').value;
           this.squadAssemble.tripInfo.activity = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(activityType))[0];
-          
+          detalisForm= true;
         }
 
         if (this.squadAssemble.formsArray[i].controls.ageGroup) {
           console.log('I am ageGroup');
           if(this.squadAssemble.formsArray[i].status== 'INVALID'){
             console.log('schedule is invalid');
-             return flag;
+            ageGroupForm=false
           }
           var ageGroup = this.squadAssemble.formsArray[i].get('ageGroup').value;
           this.squadAssemble.tripInfo.ageGroup = this.tripService.ageGroupOriginal.filter(el => el.id === parseInt(ageGroup))[0];
@@ -225,18 +226,18 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[i].get('numGuides').value;
           // if(this.squadAssemble.formsArray[i].get('medics').value)
           // this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[i].get('medics').value;
-          return flag;
+          ageGroupForm= true;
         }
         if (this.squadAssemble.formsArray[i].controls.contactName) {
           console.log('I am contact');
           if(this.squadAssemble.formsArray[i].status== 'INVALID'){
             console.log('schedule is invalid');
-            return flag;
+            ContactForm=false
           }
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
-         
+          ContactForm= true
         }
         // if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
         //   console.log('I am budget');
@@ -245,14 +246,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       
       this.squadAssemble.tripInfo.budget = this.tripService.budgetByParam.budget;
-      if(this.squadAssemble.tripInfo.budget!= undefined)
+      //if(this.squadAssemble.tripInfo.budget!= undefined)
       budgetFlag=true;
      
        this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
        if (this.squadAssemble.tripInfo.customer.id != undefined)
        customerFlag= true;
       
-       if(  customerFlag==true && budgetFlag==true)
+       if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
        flag=true
        else
        return flag;
@@ -274,6 +275,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log('tripInfo obj is: ',this.squadAssemble.tripInfo);
     return flag;
   }
+
 
 
 
@@ -340,6 +342,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           );
            return;
         }    
+      }
+      if(routeIndex==2){
+        this.createTrip();
       }
       if (routeIndex === 4) this.AddOrder();
       this.router.navigateByUrl(
