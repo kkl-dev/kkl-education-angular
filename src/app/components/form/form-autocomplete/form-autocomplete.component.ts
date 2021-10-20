@@ -52,6 +52,7 @@ export class FormAutocompleteComponent implements OnInit {
   }
 
   public onAutocomplete(control: FormControl) {
+    console.log("onAutocomplete: ", control);
     if (control.value.length > 1) {
       var name = this.getName(control)
       if (name === 'customer') {//if choose customer

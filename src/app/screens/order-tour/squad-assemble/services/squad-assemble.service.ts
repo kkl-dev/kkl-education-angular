@@ -34,7 +34,7 @@ export class SquadAssembleService {
   Customer = {} as BaseCustomer;
   payerCustomer = {} as BaseCustomer;
   tripInfofromService: TripModel;
-  peopleInTrip = 1;
+  peopleInTrip ;
   public freeSpacesArrayGenarator(start: Date, end: Date) {
     const i = 0;
     let freeSpacesArray = [];
@@ -131,7 +131,7 @@ export class SquadAssembleService {
 
 
     new QuestionTextarea({
-      key: 'comments',
+      key: 'commentManager',
       label: 'הערות מנהליות',
       rows: 6,
     }),

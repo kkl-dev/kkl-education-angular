@@ -28,7 +28,8 @@ export class EducationComponent implements OnInit {
   disableDates: boolean = true;
   disableContinueBtn = true;
   checkedSingleDay = false;
-  routerLinkContinue = '/education/results'
+  routerLinkContinue = '/education/results';
+  routerLinkContinueForOneDayTrip = '/education/order-tour/squad-assemble';
   AvailableDates!: AvailableAccomodationDate[];
   AcommodationTypes!: AccommodationType[];
   AcommodationType = 'בקתה';
@@ -257,6 +258,14 @@ export class EducationComponent implements OnInit {
       this.checkAvailabilltyService.saveCheackAvailabilltyValues(
         this.signupForm
       );
+      if(this.sleepingDates.from != this.sleepingDates.till){
+        this.tripService.isOneDayTrip=false
+        this.router.navigate([this.routerLinkContinue])
+      }   
+      else{
+        this.tripService.isOneDayTrip=true;
+        this.router.navigate([this.routerLinkContinueForOneDayTrip])
+      }
       this.router.navigate([this.routerLinkContinue])
     }
   }

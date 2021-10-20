@@ -52,11 +52,9 @@ export class HeaderComponent implements OnInit {
     this.tripService.getAvailableSleepingOptions();
     let str = this.sleepingDates.from.split("/");
     let str2 = this.sleepingDates.till.split("/");
-    //let from = str[2] + '-' + str[1] + '-' + str[0];
     let yearFrom= +str[2];
     let monthFrom = (+str[1])-1
     let dayFrom = + str[0];
-    //let till = str2[2] + '-' + str2[1] + '-' + str2[0];
     let yearEnd= +str2[2];
     let monthEnd = (+str2[1])-1
     let dayEnd=  +str2[0];

@@ -47,8 +47,8 @@ export class TransportService {
 
     new QuestionTextbox({
       key: 'peopleInTrip',
-      label: 'משתתפים',
-      value: this.squadAssembleService.peopleInTrip.toString(),
+      label: 'משתתפים',   
+      value: this.squadAssembleService.peopleInTrip ,
       validations: [Validators.required],
     }),
     new QuestionTextbox({

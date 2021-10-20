@@ -17,7 +17,7 @@ export class PaginationComponent implements OnInit,OnChanges {
 
   ngOnChanges():void{
     this.currentPage =1;
-    this.newPage.emit(this.currentPage);
+    //this.newPage.emit(this.currentPage);
 
     this.pagesCount = Math.floor(+this.pagesCount + 0.99999);
 
@@ -96,6 +96,12 @@ export class PaginationComponent implements OnInit,OnChanges {
         this.pagesToShow[index] = startingPosition + index;
       }
     });
+  }
+
+  selectPage(page) {
+    console.log("selectPage: " + page);
+    this.currentPage = page;
+    this.proceed();
   }
 
   public proceed() {
