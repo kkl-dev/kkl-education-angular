@@ -62,10 +62,10 @@ export class MapsComponent implements OnInit {
   async contentPopup(feature) {
     let innerHTML = "<b>שם אתר:</b>" + feature.graphic.attributes.SiteName + "<br>";
     innerHTML += "<b>שימוש המבנה:</b> " + feature.graphic.attributes.Purpose;
-    innerHTML += "<br><b>מספר מבנה:</b> " + feature.graphic.attributes.OBJECTID;
+    innerHTML += "<br><b>מספר מבנה:</b> " + feature.graphic.attributes.UID;
 
     if (this.arrStruct.indexOf(feature.graphic.attributes.Purpose) != -1) {
-      let buildingInfo = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == feature.graphic.attributes.OBJECTID);
+      let buildingInfo = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == feature.graphic.attributes.UID);
 
       let gender: string;
       let status: string;
@@ -85,8 +85,8 @@ export class MapsComponent implements OnInit {
     try {
       if (attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id && attachmentsJSON.attachmentGroups[0].attachmentInfos[0].name) {
         innerHTML += "<br><br>";
-        innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.OBJECTID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' target='_blank'>";
-        innerHTML += "<img src='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.OBJECTID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' alt='" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].name + "' height='60px'>";
+        innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.UID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' target='_blank'>";
+        innerHTML += "<img src='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.UID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' alt='" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].name + "' height='60px'>";
         innerHTML += "</a>";
       }
     }
@@ -96,7 +96,7 @@ export class MapsComponent implements OnInit {
   }
 
   async getAttachments(feature) {
-    const response = this.httpClient.get("https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/queryAttachments?objectIds=" + feature.graphic.attributes.OBJECTID + "&f=json")
+    const response = this.httpClient.get("https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/queryAttachments?objectIds=" + feature.graphic.attributes.UID + "&f=json")
       .toPromise();
 
     return response;
@@ -124,27 +124,11 @@ export class MapsComponent implements OnInit {
     this.view.ui.add("nameDiv", "top-trailing");
     this.view.ui.add("genderButtonDiv", "bottom-left");
 
-    const labelClass = new LabelClass({
-      symbol: {
-        type: "text", // autocasts as new TextSymbol()
-        color: "black",
-        font: {
-          // autocast as new Font()
-          family: "Playfair Display",
-          size: 0,
-          weight: "bold"
-        }
-      },
-      labelPlacement: "above-center",
-    });
-
     this.layer = new FeatureLayer({
       url: this.url,
       popupTemplate: this.popupTrailheads,
-      opacity: 1
-      // ,
-      // labelingInfo: [labelClass]
-      //definitionExpression: filterex
+      opacity: 1,
+      definitionExpression: "Purpose <> 'אוהל' and Purpose <> 'בקתה' and Purpose <> 'חדר'"
     });
     this.graphicsLayer = new GraphicsLayer({
       opacity: 1
@@ -285,7 +269,6 @@ export class MapsComponent implements OnInit {
         });
 
         var objBin = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
-        //        var objBin = this.rawservicedata.lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
 
         if (objBin.length > 0)
           objBin = objBin[0];
@@ -306,7 +289,9 @@ export class MapsComponent implements OnInit {
 
         let pointGraphic = new Graphic({
           geometry: point,
-          symbol: sym
+          symbol: sym,
+          attributes: buldingfeature.attributes,
+          popupTemplate: this.popupTrailheads
         });
 
         this.graphicsLayer.add(pointGraphic);
