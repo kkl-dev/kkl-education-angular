@@ -7,15 +7,14 @@ import { QuestionTextarea } from 'src/app/components/form/logic/question-textare
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
 import { OrderService, TransportOrder, OrderEvent } from 'src/app/open-api';
 import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
-//import { TransportModel } from '../models/transport-model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class TransportService {
+export class GeneralFormService {
   supplierList = [];
   itemsList = [];
-  r: TransportOrder
+  constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService) { }
   public details: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'supplier',
@@ -127,6 +126,18 @@ export class TransportService {
       type: 'time',
       validations: [Validators.required],
     }),
+  ]
+  public comments: QuestionBase<string>[] = [
+    new QuestionTextarea({
+      key: 'comments',
+      label: 'הערות',
+      cols: 6,
+      rows: 6,
+      offset: 1,
+      value: '',
+    }),
+  ];
+  public transport: QuestionBase<string>[] = [
     new QuestionTextbox({
       key: 'pickUpLocation',
       label: 'מקום איסוף',
@@ -149,93 +160,50 @@ export class TransportService {
       },
     }),
   ]
-
-  public locations: QuestionBase<string | Date>[] = [
-    // new QuestionSelect({
-    //   key: 'pickUpDate',
-    //   icon: 'date_range',
-    //   label: 'תאריך איסוף',
-    //   type: 'select',
-    //   validations: [Validators.required],
-    //   inputProps: {
-    //     options: [
-    //       { label: 'יום 1', value: '1' },
-    //       { label: 'יום 2', value: '2' },
-    //       { label: 'יום 3', value: '3' },
-    //       { label: 'יום 4', value: '4' },
-    //     ],
-    //   },
-    // }),
-
-    // new QuestionTextbox({
-    //   key: 'pickUpHour',
-    //   label: 'שעת איסוף',
-    //   icon: 'schedule',
-    //   type: 'time',
-    //   validations: [Validators.required],
-    // }),
-
-    // new QuestionTextbox({
-    //   key: 'pickUpLocation',
-    //   label: 'מקום איסוף',
-    //   value: '',
-    //   icon: 'place',
-    //   validations: [Validators.required],
-    //   inputProps: {
-    //     // labelSize: 's5',
-    //   },
-    // }),
-
-    // new QuestionTextbox({
-    //   key: 'pickUpAddress',
-    //   label: 'כתובת איסוף',
-    //   value: '',
-    //   validations: [Validators.required],
-    //   icon: 'place',
-    //   inputProps: {
-    //     // labelSize: 's5',
-    //   },
-    // }),
-
-    // new QuestionSelect({
-    //   key: 'dropDownDate',
-    //   label: 'תאריך פיזור',
-    //   icon: 'date_range',
-    //   validations: [Validators.required],
-    //   type: 'select',
-    //   inputProps: {
-    //     options: [
-    //       { label: 'יום 1', value: '1' },
-    //       { label: 'יום 2', value: '2' },
-    //       { label: 'יום 3', value: '3' },
-    //       { label: 'יום 4', value: '4' },
-    //     ],
-    //   },
-    // }),
-
-    // new QuestionTextbox({
-    //   key: 'dropDownHour',
-    //   label: 'שעת פיזור',
-    //   icon: 'schedule',
-    //   type: 'time',
-    //   validations: [Validators.required],
-    //   inputProps: {
-    //     // labelSize: 's5',
-    //   },
-    // }),
-
-  ].reverse();
-
-  public comments: QuestionBase<string>[] = [
-    new QuestionTextarea({
-      key: 'comments',
-      label: 'הערות',
-      cols: 6,
-      rows: 6,
-      offset: 1,
+  public economy: QuestionBase<string>[] = [
+    new QuestionTextbox({
+      key: 'servingTime',
+      label: 'שעת הגשה',
       value: '',
+      icon: 'schedule',
+      type: 'time',
+      validations: [Validators.required],
+      inputProps: {
+        // labelSize: 's5',
+      },
     }),
-  ];
+    new QuestionTextbox({
+      key: 'location',
+      label: 'מיקום',
+      value: '',
+      icon: 'place',
+      validations: [Validators.required],
+      inputProps: {
+        // labelSize: 's5',
+      },
+    }),
+    new QuestionTextbox({
+      key: 'regularDishesNumber',
+      label: 'מספר מנות רגילות',
+      value: '',
+      validations: [Validators.required],
+    }),
+    new QuestionTextbox({
+      key: 'vegetarianDishesNumber',
+      label: 'מספר מנות צמחוניות',
+      value: '',
+      validations: [Validators.required],
+    }),
+    new QuestionTextbox({
+      key: 'veganDishesNumber',
+      label: 'מספר מנות טבעוניות',
+      value: '',
+      validations: [Validators.required],
+    }),
+  ]
+
+
+
 
   public questionGroups: QuestionGroup[] = [
     {
@@ -243,11 +211,6 @@ export class TransportService {
       questions: this.details,
       cols: 8,
     },
-    // {
-    //   key: 'locations',
-    //   questions: this.locations,
-    //   cols: 6,
-    // },
     {
       key: 'comments',
       questions: this.comments,
@@ -255,11 +218,7 @@ export class TransportService {
       cols: 8,
     },
   ];
-
-  private findItemIndex(arr: any, key: string, value: any): number {
-    return arr.findIndex((item) => item[key] === value);
-  }
-
+  
   public setInitialValues(
     questions: QuestionBase<string | number | Date | QuestionGroup>[],
     data: any
@@ -277,31 +236,9 @@ export class TransportService {
     });
   }
 
-  // public setFormValues(data: TransportModel) {
-  //   this.questionGroups.map((group: QuestionGroup) => {
-  //     this.setInitialValues(group.questions, data[group.key]);
-  //   });
-  // }
   public setFormValues(data: any) {
     this.questionGroups.map((group: QuestionGroup) => {
       this.setInitialValues(group.questions, data);
     });
   }
-  originalItemList = [];
-  getOrderItemBySupplierId() {
-    let index = this.details.findIndex(el => el.key === "supplier");
-    var supplierId = parseInt(this.details[index].value);
-    this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-      response => {
-        console.log(response)
-        this.originalItemList = response;
-        response.forEach(element => {
-          this.itemsList.push({ label: element.name, value: element.id.toString() });
-        });
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
-  constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService) { }
 }

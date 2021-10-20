@@ -41,11 +41,11 @@ export class AdditionsComponent implements OnInit {
    // this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
-    this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
-    this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
-    console.log('this.squadAssembleService.peopleInTrip:', this.squadAssembleService.peopleInTrip)
-    // this.tour.id = 5555;
-    // this.tour.title = 'טיול נסיון';
+    // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
+    // this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
+    // console.log('this.squadAssembleService.peopleInTrip:', this.squadAssembleService.peopleInTrip)
+    this.tour.id = 5555;
+    this.tour.title = 'טיול נסיון';
     // this.additionsService.emitSchedule(this.tour.schedule);
     this.onAdd();
   }
