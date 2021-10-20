@@ -132,6 +132,7 @@ import { OutsideDirective } from './utilities/directivs/outside.directive';
 import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping-map.component';
 import { FormDetailsComponent } from './screens/order-tour/additions/components/form-details/form-details.component';
 import { OrderFormComponent } from './screens/order-tour/additions/components/order-form/order-form.component';
+import { EconomyFormComponent } from './screens/order-tour/additions/components/economy-form/economy-form.component';
 
 
 
@@ -255,7 +256,8 @@ FullCalendarModule.registerPlugins([
     OutsideDirective,
     SleepingMapComponent,
     FormDetailsComponent,
-    OrderFormComponent
+    OrderFormComponent,
+    EconomyFormComponent
   ],
   imports: [
     BrowserModule,
