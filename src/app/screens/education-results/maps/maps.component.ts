@@ -19,7 +19,11 @@ import { FakeService } from 'src/app/services/fake.service';
 import { HttpClient } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
+<<<<<<< HEAD
 import { analyzeAndValidateNgModules, NullTemplateVisitor } from '@angular/compiler';
+=======
+import { NullTemplateVisitor } from '@angular/compiler';
+>>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
 import PictureMarkerSymbol from '@arcgis/core/symbols/PictureMarkerSymbol';
 
 @Component({
@@ -43,12 +47,19 @@ export class MapsComponent implements OnInit {
   arrStruct = ["בקתה", "אוהל", "חדר"];
 
   lodgingFacilityList: any = [];
+<<<<<<< HEAD
 
+=======
+>>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
   viewGenderIcons: boolean = false;
 
   constructor(protected httpClient: HttpClient, public tripService: TripService, public fakeApi: FakeService) {
 
     this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
     }
@@ -62,10 +73,10 @@ export class MapsComponent implements OnInit {
   async contentPopup(feature) {
     let innerHTML = "<b>שם אתר:</b>" + feature.graphic.attributes.SiteName + "<br>";
     innerHTML += "<b>שימוש המבנה:</b> " + feature.graphic.attributes.Purpose;
-    innerHTML += "<br><b>מספר מבנה:</b> " + feature.graphic.attributes.OBJECTID;
+    innerHTML += "<br><b>מספר מבנה:</b> " + feature.graphic.attributes.UID;
 
     if (this.arrStruct.indexOf(feature.graphic.attributes.Purpose) != -1) {
-      let buildingInfo = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == feature.graphic.attributes.OBJECTID);
+      let buildingInfo = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == feature.graphic.attributes.UID);
 
       let gender: string;
       let status: string;
@@ -85,8 +96,8 @@ export class MapsComponent implements OnInit {
     try {
       if (attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id && attachmentsJSON.attachmentGroups[0].attachmentInfos[0].name) {
         innerHTML += "<br><br>";
-        innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.OBJECTID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' target='_blank'>";
-        innerHTML += "<img src='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.OBJECTID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' alt='" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].name + "' height='60px'>";
+        innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.UID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' target='_blank'>";
+        innerHTML += "<img src='https://services2.arcgis.com/utNNrmXb4IZOLXXs/ArcGIS/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/" + feature.graphic.attributes.UID + "/attachments/" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].id + "' alt='" + attachmentsJSON.attachmentGroups[0].attachmentInfos[0].name + "' height='60px'>";
         innerHTML += "</a>";
       }
     }
@@ -96,7 +107,7 @@ export class MapsComponent implements OnInit {
   }
 
   async getAttachments(feature) {
-    const response = this.httpClient.get("https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/queryAttachments?objectIds=" + feature.graphic.attributes.OBJECTID + "&f=json")
+    const response = this.httpClient.get("https://services2.arcgis.com/utNNrmXb4IZOLXXs/arcgis/rest/services/JNFFieldCenterBuildingsPublicView/FeatureServer/0/queryAttachments?objectIds=" + feature.graphic.attributes.UID + "&f=json")
       .toPromise();
 
     return response;
@@ -123,6 +134,7 @@ export class MapsComponent implements OnInit {
 
     this.view.ui.add("nameDiv", "top-trailing");
     this.view.ui.add("genderButtonDiv", "bottom-left");
+<<<<<<< HEAD
 
     const labelClass = new LabelClass({
       symbol: {
@@ -137,14 +149,21 @@ export class MapsComponent implements OnInit {
       },
       labelPlacement: "above-center",
     });
+=======
+>>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
 
     this.layer = new FeatureLayer({
       url: this.url,
       popupTemplate: this.popupTrailheads,
+<<<<<<< HEAD
       opacity: 0.9
       // ,
       // labelingInfo: [labelClass]
       //definitionExpression: filterex
+=======
+      opacity: 1,
+      definitionExpression: "Purpose <> 'אוהל' and Purpose <> 'בקתה' and Purpose <> 'חדר'"
+>>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
     });
     this.graphicsLayer = new GraphicsLayer({
       opacity: 2
@@ -154,11 +173,15 @@ export class MapsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadWebMap();
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
     }
 
+<<<<<<< HEAD
+=======
+    this.loadWebMap();
+
+>>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
     this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
 
       console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
@@ -168,8 +191,11 @@ export class MapsComponent implements OnInit {
       this.queryandrender();
 
     });
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
   }
 
   genderButtonDivClick() {
@@ -286,7 +312,6 @@ export class MapsComponent implements OnInit {
         });
 
         var objBin = this.rawservicedata[1].lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
-        //        var objBin = this.rawservicedata.lodgingFacilityList.filter(n => n.structureId == buldingfeature.attributes.UID);
 
         if (objBin.length > 0)
           objBin = objBin[0];
@@ -307,7 +332,13 @@ export class MapsComponent implements OnInit {
 
         let pointGraphic = new Graphic({
           geometry: point,
+<<<<<<< HEAD
           symbol: sym
+=======
+          symbol: sym,
+          attributes: buldingfeature.attributes,
+          popupTemplate: this.popupTrailheads
+>>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
         });
 
         this.graphicsLayer.add(pointGraphic);
