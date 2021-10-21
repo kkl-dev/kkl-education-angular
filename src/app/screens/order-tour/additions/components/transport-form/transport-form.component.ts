@@ -17,7 +17,8 @@ import { GeneralFormService } from '../../services/general-form.service';
 export class TransportFormComponent implements OnInit {
   // @Input() public location: LocationModel;
   // @Input() public transport: TransportModel;
-  @Input() public transport: TransportOrder;
+  //@Input() public transport: TransportOrder;
+  @Input() public order: any;
   @Input() public editMode: boolean;
   public form: FormGroup;
   public columns: TableCellModel[];
@@ -31,10 +32,18 @@ export class TransportFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.editMode) {
-      this.transportService.setFormValues(this.transport);
+      //this.transportService.setFormValues(this.order);
     }
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    this.formTemplate.questionsGroups = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
+    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
+    this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
+    
+    let transportQuestions = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
+    
+    this.generalFormService.questionGroups[index].questions=transportQuestions;
+    this.formTemplate.questionsGroups=this.generalFormService.questionGroups;
+    console.log('group transport is: ',this.formTemplate.questionsGroups);
+    
     // this.formTemplate.questionsGroups = this.transportService.questionGroups;
   }
 

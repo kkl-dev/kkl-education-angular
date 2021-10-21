@@ -17,12 +17,23 @@
           </div> -->
         <div description></div>
         <!-- [location]="location" -->
-        <!-- <app-transport-form [transport]="item" [editMode]="editMode" content>
+        <!-- <app-transport-form [order]="item" [editMode]="editMode" content>
         </app-transport-form> -->
-        <app-order-form [order]="item" [editMode]="editMode" content>
-        </app-order-form>
-        <app-economy-form [order]="item" [editMode]="editMode" content>
-        </app-economy-form>
+        <ng-container [ngSwitch]="orderType">
+          <ng-container *ngSwitchCase="1">
+            <app-transport-form [order]="item" [editMode]="editMode" content>
+            </app-transport-form>
+          </ng-container>
+  
+          <ng-container *ngSwitchCase="4">
+            <app-economy-form [order]="item" [editMode]="editMode" content>
+            </app-economy-form>
+          </ng-container>
+        </ng-container>
+        <!-- <app-order-form [order]="item" [editMode]="editMode" content>
+        </app-order-form> -->
+        <!-- <app-economy-form [order]="item" [editMode]="editMode" content>
+        </app-economy-form> -->
         <!-- <app-transport-details *ngIf="editMode" content></app-transport-details> -->
         <app-form-details *ngIf="editMode" content></app-form-details>
         <!-- </app-expend-panel> -->
