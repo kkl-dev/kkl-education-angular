@@ -45,13 +45,12 @@ export class OrderFormComponent implements OnInit {
     this.formTemplate.questionsGroups = this.transportService.questionGroups;
   }
 
-  index;
   getSupplierByOrderType() {
     this.orderService.getSupplierByOrderType(1, 1, 4).subscribe(
       response => {
         console.log(response);
-        this.index = this.transportService.details.findIndex(el => el.key === "supplier");
-        this.transportService.details[this.index].value = response.id.toString();
+        let index = this.transportService.details.findIndex(el => el.key === "supplier");
+        this.transportService.details[index].value = response.id.toString();
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

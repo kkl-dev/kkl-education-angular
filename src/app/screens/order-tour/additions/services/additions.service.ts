@@ -55,17 +55,17 @@ export class AdditionsService {
     // },
   ];
 
-  private locationsSubject = new BehaviorSubject<LocationModel[]>([])
-  public locations$: Observable<LocationModel[]> = this.locationsSubject.asObservable();
+  // private locationsSubject = new BehaviorSubject<LocationModel[]>([])
+  // public locations$: Observable<LocationModel[]> = this.locationsSubject.asObservable();
 
-  private scheduleSubject = new BehaviorSubject<ScheduleModel[]>([])
-  public schedule$: Observable<ScheduleModel[]> = this.scheduleSubject.asObservable();
+  // private scheduleSubject = new BehaviorSubject<ScheduleModel[]>([])
+  // public schedule$: Observable<ScheduleModel[]> = this.scheduleSubject.asObservable();
   
-  private itemSubject = new BehaviorSubject<TransportOrder[]>([])
-  public item$: Observable<TransportOrder[]> = this.itemSubject.asObservable();
-  public tempOrderReduce1 = new BehaviorSubject<any>(null)
+  private itemSubject = new BehaviorSubject<any[]>([])
+  public item$: Observable<any[]> = this.itemSubject.asObservable();
+  public tempOrderReduce = new BehaviorSubject<any>(null)
 
-  public emitItem(item: TransportOrder[]) {
+  public emitItem(item: any[]) {
     this.itemSubject.next(item)
   }
   constructor(
@@ -79,15 +79,15 @@ export class AdditionsService {
     this.steps = this.stepperService.updateStepStatus(this.steps, step, key)
   }
 
-  public emitSchedule(schedule: ScheduleModel[]) {
-    this.scheduleSubject.next(schedule)
-  }
+  // public emitSchedule(schedule: ScheduleModel[]) {
+  //   this.scheduleSubject.next(schedule)
+  // }
 
-  public emitLocations(locations: LocationModel[]) {
-    this.locationsSubject.next(locations)
-  }
+  // public emitLocations(locations: LocationModel[]) {
+  //   this.locationsSubject.next(locations)
+  // }
   public sendtempOrderReduce(temp){
-       this.tempOrderReduce1.next(temp);
+       this.tempOrderReduce.next(temp);
   }
 
 

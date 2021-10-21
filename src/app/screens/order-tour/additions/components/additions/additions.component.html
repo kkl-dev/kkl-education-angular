@@ -1,17 +1,17 @@
 <div fxLayout="column" fxFlexFill class="additions-container" fxLayoutGap="80px">
   <div class="nav-grid" fxFlex="50">
     <!-- <app-navigation-grid [tempOrderReduce]="tempOrderReduce"  (changeStep)="change($event)"></app-navigation-grid> -->
-    <app-navigation-grid   (changeStep)="change($event)"></app-navigation-grid>
+    <app-navigation-grid (changeStep)="change($event)"></app-navigation-grid>
   </div>
   <div class="additions-content">
     <div class="button-container" fxLayout="row" fxLayoutAlign="start">
       <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="addItem">
         <!-- addSchedule -->
-         הוסף פריט
+        הוסף פריט
       </button>
     </div>
     <app-tour-title [value]="tour.title" [id]="tour.id"></app-tour-title>
-    <div *ngIf="addItem">
+    <div *ngIf="!item$">
       <!-- addSchedule -->
       <app-tour-panel [editMode]="false" [orderType]="orderType" [item]="item"></app-tour-panel>
     </div>

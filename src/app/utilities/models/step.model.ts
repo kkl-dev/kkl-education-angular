@@ -7,7 +7,7 @@ export interface StepModel {
   badgeValue? : number,
 }
 
-export interface StepModel1 {
+export interface StepModelNavigation {
   label? : string,
   path? : string,
   svgUrl? : string,

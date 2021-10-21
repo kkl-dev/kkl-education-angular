@@ -32,7 +32,7 @@ export class TransportFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.editMode) {
-      //this.transportService.setFormValues(this.order);
+      this.transportService.setFormValues(this.order);
     }
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
     //this.formTemplate.questionsGroups = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
