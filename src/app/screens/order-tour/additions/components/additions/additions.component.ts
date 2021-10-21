@@ -29,6 +29,7 @@ export class AdditionsComponent implements OnInit {
   public item$: Observable<TransportOrder[]>;
   public item: TransportOrder;
   public addItem: boolean = false;
+  orderType: number=1;
 
   public tempOrderReduce: any;
 
@@ -69,7 +70,7 @@ export class AdditionsComponent implements OnInit {
           acc[key].push(obj)
           return acc
         }, {})
-
+        this.additionsService.sendtempOrderReduce(this.tempOrderReduce);
         var TransportOrderList = [];
         for (var i in response) {
           var t = {} as TransportOrder;
@@ -93,4 +94,10 @@ export class AdditionsComponent implements OnInit {
       () => console.log('completed')     // complete
     )
   }
+
+   change(event){
+      console.log(event);
+      this.orderType=event;
+
+   }
 }

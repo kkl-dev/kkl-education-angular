@@ -28,8 +28,9 @@ export class EconomyFormComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    this.formTemplate.questionsGroups = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.economy);
+    //let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
+    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.economy);
+    //let economyQuestions = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.economy);
 
     this.orderService.getSupplierList(1, 52275, 0).subscribe(
       response => {
@@ -45,8 +46,14 @@ export class EconomyFormComponent implements OnInit {
     if (this.editMode) {
       this.transportService.setFormValues(this.order);
     }
-    this.setDatesValues();
-    this.formTemplate.questionsGroups = this.generalFormService.questionGroups.keys['details'].concat(this.generalFormService.economy);
+    //this.setDatesValues();
+    let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
+    this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
+    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.economy);
+    let economyQuestions = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.economy);
+    this.generalFormService.questionGroups[index].questions = economyQuestions;
+    this.formTemplate.questionsGroups=this.generalFormService.questionGroups;
+    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups.keys['details'].concat(this.generalFormService.economy);
   }
 
   index;
