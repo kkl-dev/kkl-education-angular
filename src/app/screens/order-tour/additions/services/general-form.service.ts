@@ -203,7 +203,7 @@ export class GeneralFormService {
   ]
 
 
-   public detailsTemp=[];
+  public detailsTemp = [];
 
   public questionGroups: QuestionGroup[] = [
     {
@@ -218,7 +218,7 @@ export class GeneralFormService {
       cols: 8,
     },
   ];
-  
+
   public setInitialValues(
     questions: QuestionBase<string | number | Date | QuestionGroup>[],
     data: any
@@ -240,5 +240,30 @@ export class GeneralFormService {
     this.questionGroups.map((group: QuestionGroup) => {
       this.setInitialValues(group.questions, data);
     });
+  }
+  getSupplierList() {
+    this.orderService.getSupplierList(1, 52275, 0).subscribe(
+      response => {
+        console.log(response)
+        response.forEach(element => {
+          this.supplierList.push({ label: element.name, value: element.id.toString() });
+        });
+        this.getSupplierByOrderType();
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+  getSupplierByOrderType() {
+    this.orderService.getSupplierByOrderType(1, 1, 4).subscribe(
+      response => {
+        console.log(response);
+        let index = this.details.findIndex(el => el.key === "supplier");
+        this.details[index].value = response.id.toString();
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
   }
 }

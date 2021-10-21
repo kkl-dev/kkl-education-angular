@@ -26,10 +26,10 @@ export class AdditionsComponent implements OnInit {
   public schedule: ScheduleModel;
   public addSchedule: boolean = false;
   //public orderModel = {} as OrderModel;
-  public item$: Observable<TransportOrder[]>;
-  public item: TransportOrder;
+  public item$: Observable<any[]>;
+  public item: any;
   public addItem: boolean = false;
-  orderType: number=1;
+  orderType: number = 1;
 
   public tempOrderReduce: any;
 
@@ -39,7 +39,7 @@ export class AdditionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-   // this.getTempOrder();
+    this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
     // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
@@ -54,7 +54,7 @@ export class AdditionsComponent implements OnInit {
   public onAdd() {
     // this.schedule = new ScheduleModel();
     // this.addSchedule = true;
-    this.item = {} as TransportOrder;
+    this.item = {} as OrderEvent;
     this.addItem = true;
   }
   getTempOrder() {
@@ -71,33 +71,33 @@ export class AdditionsComponent implements OnInit {
           return acc
         }, {})
         this.additionsService.sendtempOrderReduce(this.tempOrderReduce);
-        var TransportOrderList = [];
-        for (var i in response) {
-          var t = {} as TransportOrder;
-          t.globalParameters = {} as OrderItemCommonDetails;
-          t.order = {} as Order;
-          t.order.orderType = {} as OrderType;
-          t.globalParameters.startDate = response[i].startDate;
-          t.globalParameters.endDate = response[i].endDate;
-          t.globalParameters.startHour = response[i].fromHour;
-          t.globalParameters.endHour = response[i].tillHour;
-          t.order.tripId = response[i].tripId;
-          t.order.orderType.name = response[i].orderTypeName;
-          t.order.orderType.id = response[i].orderTypeCode;
-          t.globalParameters.endHour
-          TransportOrderList.push(t);
-        }
-        this.additionsService.emitItem(TransportOrderList);
-        this.item$ = this.additionsService.item$;
+        this.mapTempOrder(1);
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
+  mapTempOrder(orderTypId: number) {
+    if (this.tempOrderReduce !== undefined && this.tempOrderReduce !== null) {
+      var OrderList = [];
+      if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
+      for (var i in this.tempOrderReduce[orderTypId]) {
+        var order = {} as OrderEvent;
+        order.globalParameters = {} as OrderItemCommonDetails;
+        order.globalParameters.peopleInTrip = this.tempOrderReduce[orderTypId][i].startDate;
+        order.globalParameters.startDate = this.tempOrderReduce[orderTypId][i].startDate;
+        order.globalParameters.endDate = this.tempOrderReduce[orderTypId][i].endDate;
+        order.globalParameters.startHour = this.tempOrderReduce[orderTypId][i].fromHour;
+        order.globalParameters.endHour = this.tempOrderReduce[orderTypId][i].tillHour;
+        OrderList.push(order);
+      }
+      this.additionsService.emitItem(OrderList);
+      this.item$ = this.additionsService.item$;
+    }
+  }
+  change(event) {
+    this.mapTempOrder(event);
+    this.orderType = event;
 
-   change(event){
-      console.log(event);
-      this.orderType=event;
-
-   }
+  }
 }

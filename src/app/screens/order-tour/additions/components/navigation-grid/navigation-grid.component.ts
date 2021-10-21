@@ -1,11 +1,11 @@
 import { AdditionsService } from './../../services/additions.service';
-import { Component, OnInit, Input,Output, EventEmitter } from '@angular/core';
-import { StepModel } from 'src/app/utilities/models/step.model';
-import { StepModel1 } from 'src/app/utilities/models/step.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { StepModel, StepModelNavigation } from 'src/app/utilities/models/step.model';
 import { OrderType, UserService } from 'src/app/open-api';
 import { OrderService } from 'src/app/open-api';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { tourTransport } from 'src/mock_data/transport';
+import { GeneralFormService } from '../../services/general-form.service';
 
 
 
@@ -17,14 +17,14 @@ import { tourTransport } from 'src/mock_data/transport';
 export class NavigationGridComponent implements OnInit {
 
   //@Input() public steps: StepModel[];
-  public steps: StepModel1[];
- // @Input() public tempOrderReduce: any;
-   tempOrderReduce: any;
+  public steps: StepModelNavigation[];
+  // @Input() public tempOrderReduce: any;
+  tempOrderReduce: any;
   @Output() changeStep: EventEmitter<number> = new EventEmitter();
   public title: string = "תוספות"
   // public tempOrderReduce: any;
 
-  constructor(
+  constructor(private generalFormService: GeneralFormService,
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private userService: UserService, private orderService: OrderService) { }
 
   ngOnInit(): void {
@@ -34,37 +34,37 @@ export class NavigationGridComponent implements OnInit {
   convertStepsModel() {
     this.steps = [];
     for (var i in this.additionsService.orderTypes) {
-      var step = {} as StepModel1;
+      var step = {} as StepModelNavigation;
       step.label = this.additionsService.orderTypes[i].name
       switch (step.label) {
         case 'היסעים':
           step.svgUrl = 'bus';
-          step.value=1;
-         
+          step.value = 1;
+
           break;
         case 'אבטחה':
           step.svgUrl = 'shield';
-          step.value=2;
+          step.value = 2;
           break;
         case 'אתרים':
           step.svgUrl = 'site';
-          step.value=3;
+          step.value = 3;
           break;
         case 'כלכלה':
           step.svgUrl = 'dinner';
-          step.value=4;
+          step.value = 4;
           break;
         case 'אירוח/פעילות':
           step.svgUrl = 'tent';
-          step.value=7;
+          step.value = 7;
           break;
         case 'הדרכה':
           step.svgUrl = 'guide';
-          step.value=6;
+          step.value = 6;
           break;
         case 'מפעיל מוסיקלי':
           step.svgUrl = 'music';
-          step.value=10;
+          step.value = 10;
           break;
       }
       // step.svgUrl = this.additionsService.orderTypes[i].iconPath
@@ -79,17 +79,22 @@ export class NavigationGridComponent implements OnInit {
       response => {
         console.log(response)
         this.additionsService.orderTypes = response;
-        this.additionsService.tempOrderReduce1.subscribe(res=>{
-          this.tempOrderReduce=res;
+        this.additionsService.tempOrderReduce.subscribe(res => {
+          this.tempOrderReduce = res;
           this.convertStepsModel();
+          var indx = this.steps.findIndex(step => step.value === 1);
+          this.steps[indx].isActive = true;
         })
-        
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
-  onChangeStep(step: StepModel1) {
+
+  onChangeStep(step: StepModelNavigation) {
+    this.steps.forEach(el => el.isActive = false);
+    var indx = this.steps.findIndex(el => el.value === step.value);
+    this.steps[indx].isActive = true;
     this.changeStep.emit(step.value);
     //this.additionsService.updateStepStatus(step, 'label')
     //this.steps = this.additionsService.getSteps()
