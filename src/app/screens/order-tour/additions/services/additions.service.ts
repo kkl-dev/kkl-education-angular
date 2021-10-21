@@ -60,9 +60,10 @@ export class AdditionsService {
 
   private scheduleSubject = new BehaviorSubject<ScheduleModel[]>([])
   public schedule$: Observable<ScheduleModel[]> = this.scheduleSubject.asObservable();
-
+  
   private itemSubject = new BehaviorSubject<TransportOrder[]>([])
   public item$: Observable<TransportOrder[]> = this.itemSubject.asObservable();
+  public tempOrderReduce1 = new BehaviorSubject<any>(null)
 
   public emitItem(item: TransportOrder[]) {
     this.itemSubject.next(item)
@@ -84,6 +85,9 @@ export class AdditionsService {
 
   public emitLocations(locations: LocationModel[]) {
     this.locationsSubject.next(locations)
+  }
+  public sendtempOrderReduce(temp){
+       this.tempOrderReduce1.next(temp);
   }
 
 

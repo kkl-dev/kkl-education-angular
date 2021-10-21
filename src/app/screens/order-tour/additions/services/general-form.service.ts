@@ -203,7 +203,7 @@ export class GeneralFormService {
   ]
 
 
-
+   public detailsTemp=[];
 
   public questionGroups: QuestionGroup[] = [
     {
