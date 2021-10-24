@@ -14,6 +14,7 @@ import { SquadAssembleService } from '../../squad-assemble/services/squad-assemb
 export class GeneralFormService {
   supplierList = [];
   itemsList = [];
+  //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
   constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService) { }
   public details: QuestionBase<string>[] = [
     new QuestionSelect({
@@ -86,12 +87,12 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        options: [
-          { label: 'יום 1', value: '1' },
-          { label: 'יום 2', value: '2' },
-          { label: 'יום 3', value: '3' },
-          { label: 'יום 4', value: '4' },
-        ],
+        // options: [
+        //   { label: 'יום 1', value: '1' },
+        //   { label: 'יום 2', value: '2' },
+        //   { label: 'יום 3', value: '3' },
+        //   { label: 'יום 4', value: '4' },
+        // ],
       },
     }),
     new QuestionSelect({
@@ -101,12 +102,12 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        options: [
-          { label: 'יום 1', value: '1' },
-          { label: 'יום 2', value: '2' },
-          { label: 'יום 3', value: '3' },
-          { label: 'יום 4', value: '4' },
-        ],
+        // options: [
+        //   { label: 'יום 1', value: '1' },
+        //   { label: 'יום 2', value: '2' },
+        //   { label: 'יום 3', value: '3' },
+        //   { label: 'יום 4', value: '4' },
+        // ],
       },
     }),
     new QuestionTextbox({
@@ -119,6 +120,8 @@ export class GeneralFormService {
       //   // labelSize: 's5',
       // },
     }),
+  
+   
     new QuestionTextbox({
       key: 'endHour',
       label: 'שעת פיזור',
@@ -159,19 +162,29 @@ export class GeneralFormService {
         // labelSize: 's5',
       },
     }),
-  ]
-  public economy: QuestionBase<string>[] = [
     new QuestionTextbox({
-      key: 'servingTime',
-      label: 'שעת הגשה',
+      key: 'scatterAddress',
+      label: 'כתובת פיזור',
       value: '',
-      icon: 'schedule',
-      type: 'time',
       validations: [Validators.required],
+      icon: 'place',
       inputProps: {
         // labelSize: 's5',
       },
     }),
+  ]
+  public economy: QuestionBase<string>[] = [
+    // new QuestionTextbox({
+    //   key: 'servingTime',
+    //   label: 'שעת הגשה',
+    //   value: '',
+    //   icon: 'schedule',
+    //   type: 'time',
+    //   validations: [Validators.required],
+    //   inputProps: {
+    //     // labelSize: 's5',
+    //   },
+    // }),
     new QuestionTextbox({
       key: 'location',
       label: 'מיקום',
@@ -203,7 +216,7 @@ export class GeneralFormService {
   ]
 
 
-  public detailsTemp = [];
+   //public tempDetails = this.details;
 
   public questionGroups: QuestionGroup[] = [
     {
@@ -224,10 +237,11 @@ export class GeneralFormService {
     data: any
   ) {
     questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
-      control.value = data[control.key]
-      if (control.key === 'comments') {
-        control.value = data;
-      }
+     // control.value = data[control.key]
+      control.value = data.globalParameters[control.key];
+      // if (control.key === 'comments') {
+      //   control.value = data;
+      // }
       // if (control.key === 'endHour') {
       //   var time = new Date(data[control.key]);
       //   control.value = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -241,22 +255,69 @@ export class GeneralFormService {
       this.setInitialValues(group.questions, data);
     });
   }
-  getSupplierList() {
-    this.orderService.getSupplierList(1, 52275, 0).subscribe(
+
+  setDatesValues() {
+    let tripDetails = this.squadAssembleService.tripInfofromService.trip;
+    let startDate = tripDetails.tripStart;
+    let endDate = tripDetails.tripEnding;
+    let str = startDate.split("T");
+    let str2 = endDate.split("T");
+    let from = str[0]
+    let till = str2[0];
+    let date1 = new Date(from);
+    let date2 = new Date(till);
+
+    const utc1 = Date.UTC(
+      date1.getFullYear(),
+      date1.getMonth(),
+      date1.getDate()
+    );
+    const utc2 = Date.UTC(
+      date2.getFullYear(),
+      date2.getMonth(),
+      date2.getDate()
+    );
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    const totalDays = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    console.log(totalDays);
+    let newDate = new Date(date1.setDate(date1.getDate()));
+    let datesArr = [];
+    for (let i = 0; i <= totalDays; i++) {
+       const newDateString = `${newDate.getDate()}/${
+         (newDate.getMonth()+1).toString()
+       }/${newDate.getFullYear()}`;
+      // const newDateString = `${newDate.getFullYear()}-${(newDate.getMonth() + 1).toString()
+      //   }-${newDate.getDate()}`;
+
+      datesArr.push({
+        label: newDateString,
+        value: newDateString
+      });
+      newDate = new Date(date1.setDate(date1.getDate() + 1));
+    }
+    console.log('datesArr is : ', datesArr);
+    let startDateindex = this.details.findIndex(i => i.key == 'startDate');
+    let endDateIndex = this.details.findIndex(i => i.key == 'endDate');
+    this.details[startDateindex].inputProps.options = datesArr;
+    this.details[endDateIndex].inputProps.options = datesArr;
+  }
+
+  getSupplierList(orderTypeId,tripId,orderId) {
+    this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
         console.log(response)
         response.forEach(element => {
           this.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        this.getSupplierByOrderType();
+        this.getSupplierByOrderType(orderTypeId);
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
 
-  getSupplierByOrderType() {
-    this.orderService.getSupplierByOrderType(1, 1, 4).subscribe(
+  getSupplierByOrderType(orderTypeId) {
+    this.orderService.getSupplierByOrderType(orderTypeId,1, 4).subscribe(
       response => {
         console.log(response);
         let index = this.details.findIndex(el => el.key === "supplier");
@@ -266,4 +327,41 @@ export class GeneralFormService {
       () => console.log('completed')     // complete
     )
   }
+
+  originalItemList = [];
+  getOrderItemBySupplierId() {
+    let index = this.details.findIndex(el => el.key === "supplier");
+    var supplierId = parseInt(this.details[index].value);
+    this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
+      response => {
+        console.log(response)
+        this.originalItemList = response;
+        response.forEach(element => {
+          this.itemsList.push({ label: element.name, value: element.id.toString() });
+        });
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+
+    changeDateFormat(date,format){
+       let dateFormat;
+       let subDate;
+       if(format=='israel'){
+           let subDateArr= date.split('T');
+           let subDate1= subDateArr[0];
+           subDate= subDate1.split('-');
+          dateFormat= subDate[2] + '/' + subDate[1] +  '/'+ subDate[0]
+       }
+       else{
+        subDate = date.split("/");
+        dateFormat= subDate[2] + '-' + subDate[1] + '-' +subDate[0]; //UTC format
+       }
+      return dateFormat;
+   }
+
+     
+
 }

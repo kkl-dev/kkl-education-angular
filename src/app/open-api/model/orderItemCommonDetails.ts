@@ -29,6 +29,6 @@ export interface OrderItemCommonDetails {
     startHour?: string;
     endHour?: string;
     userName?: string;
-    comment?: string;
+    comments?: string;
 }
 

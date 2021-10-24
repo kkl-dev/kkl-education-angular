@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LocationModel } from '../models/location.model';
 import { ScheduleModel } from 'src/app/screens/order-tour/additions/models/schedule.model';
-import { OrderEvent, OrderService, OrderType, TempOrder, TransportOrder } from 'src/app/open-api';
+import { EconomyOrder, OrderEvent, OrderService, OrderType, TempOrder, TransportOrder } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 import { TransportService } from './transport.service';
 
@@ -90,7 +90,8 @@ export class AdditionsService {
        this.tempOrderReduce.next(temp);
   }
 
-
+  
+ 
   public orderList: OrderEvent[] = []
   //public orderToServer = {} as OrderModel
   addOrderItems(item: any) {

@@ -17,5 +17,6 @@ import { OrderEvent } from './orderEvent';
 export interface TransportOrder extends OrderEvent { 
     pickUpLocation?: string;
     pickUpAddress?: string;
+    scatterAddress?: string;
 }
 

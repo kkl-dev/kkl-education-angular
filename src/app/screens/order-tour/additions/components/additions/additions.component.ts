@@ -9,6 +9,7 @@ import { TourService } from '../../services/tour.service';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { OrderService, Order, OrderEvent, TransportOrder, OrderItemCommonDetails, OrderType } from 'src/app/open-api';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { GeneralFormService } from '../../services/general-form.service';
 
 export interface TourDayModel {
   date: Date;
@@ -22,9 +23,9 @@ export interface TourDayModel {
 })
 export class AdditionsComponent implements OnInit {
   public tour = {} as TourModel;
-  public schedule$: Observable<ScheduleModel[]>;
-  public schedule: ScheduleModel;
-  public addSchedule: boolean = false;
+  // public schedule$: Observable<ScheduleModel[]>;
+  // public schedule: ScheduleModel;
+  // public addSchedule: boolean = false;
   //public orderModel = {} as OrderModel;
   public item$: Observable<any[]>;
   public item: any;
@@ -36,7 +37,7 @@ export class AdditionsComponent implements OnInit {
   constructor(
     private tourService: TourService,
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private orderService: OrderService,
-  ) { }
+   private generalFormService: GeneralFormService ) { }
 
   ngOnInit(): void {
     this.getTempOrder();
@@ -44,7 +45,7 @@ export class AdditionsComponent implements OnInit {
     // this.tour = this.tourService.getTour();
     // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
     // this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
-    // console.log('this.squadAssembleService.peopleInTrip:', this.squadAssembleService.peopleInTrip)
+     console.log('this.squadAssembleService.peopleInTrip:', this.squadAssembleService.peopleInTrip)
     this.tour.id = 5555;
     this.tour.title = 'טיול נסיון';
     // this.additionsService.emitSchedule(this.tour.schedule);
@@ -54,7 +55,7 @@ export class AdditionsComponent implements OnInit {
   public onAdd() {
     // this.schedule = new ScheduleModel();
     // this.addSchedule = true;
-    this.item = {} as OrderEvent;
+   // this.item = {} as OrderEvent;
     this.addItem = true;
   }
   getTempOrder() {
@@ -84,11 +85,15 @@ export class AdditionsComponent implements OnInit {
       for (var i in this.tempOrderReduce[orderTypId]) {
         var order = {} as OrderEvent;
         order.globalParameters = {} as OrderItemCommonDetails;
-        order.globalParameters.peopleInTrip = this.tempOrderReduce[orderTypId][i].startDate;
-        order.globalParameters.startDate = this.tempOrderReduce[orderTypId][i].startDate;
-        order.globalParameters.endDate = this.tempOrderReduce[orderTypId][i].endDate;
-        order.globalParameters.startHour = this.tempOrderReduce[orderTypId][i].fromHour;
-        order.globalParameters.endHour = this.tempOrderReduce[orderTypId][i].tillHour;
+        let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate,'israel');
+        order.globalParameters.startDate = startDate;
+        let endDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].endDate,'israel');
+        order.globalParameters.endDate = endDate;
+        let startHour = (this.tempOrderReduce[orderTypId][i].fromHour).split('T');
+        order.globalParameters.startHour = startHour[1];
+        let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
+        order.globalParameters.endHour = tillHour[1];
+      
         OrderList.push(order);
       }
       this.additionsService.emitItem(OrderList);
