@@ -28,7 +28,7 @@ export class SaveActivityComponent implements OnInit {
   ];
   @Input() days: {
     day: string;
-    options: {
+    options?: {
       svgUrl: string;
       sleepingAreas: number;
       avialableSpaces: number;
