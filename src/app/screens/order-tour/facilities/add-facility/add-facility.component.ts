@@ -22,7 +22,7 @@ export class AddFacilityComponent implements OnInit {
   addFacilityForm: FormGroup;
   @Input() days: {
     day: string;
-    options: {
+    options?: {
       svgUrl: string;
       sleepingAreas: number;
       avialableSpaces: number;

@@ -12,7 +12,7 @@ export class AddActivityComponent implements OnInit {
   @Input() test:any;
   days: {
     day: string;
-    options: {
+    options?: {
       svgUrl: string;
       sleepingAreas: number;
       avialableSpaces: number;
