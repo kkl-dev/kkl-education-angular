@@ -19,6 +19,7 @@ import { FormService } from '../logic/form.service';
 import { QuestionBase } from '../logic/question-base';
 import { AdditionsService } from 'src/app/screens/order-tour/additions/services/additions.service';
 import { TransportService } from 'src/app/screens/order-tour/additions/services/transport.service';
+import { GeneralFormService } from 'src/app/screens/order-tour/additions/services/general-form.service';
 
 @Component({
   selector: 'app-form-input',
@@ -55,7 +56,8 @@ export class FormInputComponent implements OnInit {
   @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
-  constructor(private formService: FormService, public additionsService: AdditionsService, public transportService: TransportService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService) {
+  constructor(private formService: FormService, public additionsService: AdditionsService, public transportService: TransportService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService
+    ,private generalFormService: GeneralFormService) {
     console.log(this.dateOptions);
   }
 
@@ -211,13 +213,13 @@ export class FormInputComponent implements OnInit {
       this.tripService.budgetByParam.budget.expensesId = parseInt(this.control.value);
     }
     if (this.name === 'supplier') {
-      this.transportService.getOrderItemBySupplierId();
+      this.generalFormService.getOrderItemBySupplierId();
     }
     if (this.name === 'itemId') {
-      let index = this.transportService.details.findIndex(el => el.key === "itemCost");
-      let item = this.transportService.originalItemList.find(el => el.id === parseInt(this.control.value))
+      let index = this.generalFormService.details.findIndex(el => el.key === "itemCost");
+      let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(this.control.value))
       var x = Math.floor(item.cost)
-      this.transportService.details[index].value = x.toString();
+      this.generalFormService.details[index].value = x.toString();
 
     }
 

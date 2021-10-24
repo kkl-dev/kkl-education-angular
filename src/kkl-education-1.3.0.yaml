@@ -2536,7 +2536,7 @@ components:
           format: date-time
         userName:
           type: string
-        comment: 
+        comments: 
           type: string
        
           
@@ -2562,8 +2562,8 @@ components:
           type: string
         pickUpAddress:
           type: string
-        # scatterAddress:
-        #   type: string
+        scatterAddress:
+          type: string
     
     SiteOrder:
         type: object

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
-import { OrderItemCommonDetails, TransportOrder } from 'src/app/open-api';
+import { OrderItemCommonDetails, OrderService, TransportOrder } from 'src/app/open-api';
 import { LocationModel } from 'src/app/screens/order-tour/additions/models/location.model';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 //import { TransportModel } from '../../models/transport-model';
@@ -28,23 +28,43 @@ export class TransportFormComponent implements OnInit {
     questionsGroups: [],
   };
 
-  constructor(private generalFormService: GeneralFormService, private transportService: TransportService, private additionsService: AdditionsService) { }
+  constructor(private generalFormService: GeneralFormService, private transportService: TransportService, private additionsService: AdditionsService,
+    private orderService: OrderService) { }
 
   ngOnInit(): void {
-    if (this.editMode) {
-      this.transportService.setFormValues(this.order);
+    this.generalFormService.getSupplierList(1, 52275, 0);
+    // if (this.editMode) {
+    //   this.generalFormService.setFormValues(this.order);
+    // }
+    this.generalFormService.setDatesValues();
+    if (this.order!= undefined && this.order!= null) {
+      this.generalFormService.setFormValues(this.order);
     }
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
-    this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
-    
-    let transportQuestions = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
-    
-    this.generalFormService.questionGroups[index].questions=transportQuestions;
+    // this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
+    // let transportQuestions = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
+    // this.generalFormService.questionGroups[index].questions=transportQuestions;
+    //option2
+    let detailsArr= this.generalFormService.details;
+    detailsArr= this.changeLabels(detailsArr);
+    let transportQuestions = detailsArr.concat(this.generalFormService.transport);
+     this.generalFormService.questionGroups[index].questions = transportQuestions;
     this.formTemplate.questionsGroups=this.generalFormService.questionGroups;
     console.log('group transport is: ',this.formTemplate.questionsGroups);
     
-    // this.formTemplate.questionsGroups = this.transportService.questionGroups;
+  }
+
+  changeLabels(tempArr){
+    console.log('tempArr is :',tempArr);
+     let startDateIndex = tempArr.findIndex(el=> el.key === 'startDate');
+     tempArr[startDateIndex].label= 'תאריך איסוף';
+     let endDateIndex = tempArr.findIndex(el=> el.key === 'endDate');
+     tempArr[endDateIndex].label= 'תאריך פיזור';
+     let startHourIndex = tempArr.findIndex(el=> el.key === 'startHour');
+     tempArr[startHourIndex].label= 'שעת איסוף';
+     let endHourIndex = tempArr.findIndex(el=> el.key === 'endHour');
+     tempArr[endHourIndex].label= 'שעת פיזור';
+     return tempArr;
   }
 
   public onSave(): void {

@@ -300,6 +300,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.userService.createTrip(tripInfo).subscribe(res => {
       console.log('tripInfo from server is :', res);
+  
       this.squadAssemble.tripInfofromService = res;
     }, (err) => {
       console.log(err);
