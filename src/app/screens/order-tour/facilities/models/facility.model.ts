@@ -8,7 +8,7 @@ export interface FacilityModel {
        name:string;
        maxOccupancy:number | string;
        iconPath:string;
-       occupiedHours:OccupiedHours[]
+       occupiedHours:OccupiedHours[];
    }
    
    export interface OccupiedHours {
