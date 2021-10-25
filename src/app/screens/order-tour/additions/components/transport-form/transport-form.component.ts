@@ -15,7 +15,7 @@ import { GeneralFormService } from '../../services/general-form.service';
   styleUrls: ['./transport-form.component.scss'],
 })
 export class TransportFormComponent implements OnInit {
-  // @Input() public location: LocationModel;
+  
   // @Input() public transport: TransportModel;
   //@Input() public transport: TransportOrder;
   @Input() public order: any;
@@ -36,7 +36,7 @@ export class TransportFormComponent implements OnInit {
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-    this.generalFormService.setDatesValues();
+   // this.generalFormService.setDatesValues();
     if (this.order!= undefined && this.order!= null) {
       this.generalFormService.setFormValues(this.order);
     }
@@ -51,7 +51,10 @@ export class TransportFormComponent implements OnInit {
      this.generalFormService.questionGroups[index].questions = transportQuestions;
     this.formTemplate.questionsGroups=this.generalFormService.questionGroups;
     console.log('group transport is: ',this.formTemplate.questionsGroups);
-    
+   
+  //   this.form.controls["details"].get('supplier').valueChanges.subscribe(value => {
+  //     this.onselect(value);
+  //  });
   }
 
   changeLabels(tempArr){
@@ -103,4 +106,10 @@ export class TransportFormComponent implements OnInit {
     this.form = event;
     console.log(this.form)
   }
+
+  onselect(value){
+    console.log('value change :', value);
+  }
+
+  
 }
