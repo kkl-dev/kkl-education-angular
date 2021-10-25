@@ -5,53 +5,7 @@ import { FacilityModel } from '../screens/order-tour/facilities/models/facility.
   providedIn: 'root'
 })
 export class FacilitiesConvertingService {
-  // public days: any[] = [];
-  // public facilities: FacilityModel[] = [
-  //   {
-  //     date: "2021-10-24",
-  //     facilitiesList: [
-  //       {
-  //         id: 8,
-  //         name: 'כיתה גדולה',
-  //         maxOccupancy: 40,
-  //         iconPath: 'assets/images/museum.svg',
-  //         occupiedHours: [
-  //           {
-  //             fromHour: '13:00',
-  //             tillHour: '15:00',
-  //             totalTime: 1.25,
-  //             customerName: 'סימינר הקיבוצים'
-  //           },
-  //           {
-  //             fromHour: '18:00',
-  //             tillHour: '20:00',
-  //             totalTime: 1.25,
-  //             customerName: 'סימינר הקיבוצים'
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     date: "2021-10-25",
-  //     facilitiesList: [
-  //       {
-  //         id: 8,
-  //         name: 'כיתה גדולה',
-  //         maxOccupancy: 40,
-  //         iconPath: 'assets/images/museum.svg',
-  //         occupiedHours: [
-  //           {
-  //             fromHour: '13:00',
-  //             tillHour: '15:00',
-  //             totalTime: 1.25,
-  //             customerName: 'סימינר הקיבוצים'
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ];
+ 
   public tripActivities = [
     {
       "activityId": 1,
@@ -99,16 +53,6 @@ export class FacilitiesConvertingService {
     });
     return arr;
   }
-  //   {
-  //     "activityId": 1,
-  //     "name": "education",
-  //     "sitePicture": "http://",
-  //     "linkToDetails": "http://",
-  //     "description": "",
-  //     "categoryId": 1,
-  //     "regionId": 3
-  // }
-  // { img: "assets/images/img-1.png", title: "ניווט יערני במחנה", content: "על הפעילות הסבר על הפעילות הסבר על הפעילות הסבר על הפעילות", hours: 1.5 },
 
   public convertTripActivities(arr: any[]) {
     let tmpArr: any[] = [];
