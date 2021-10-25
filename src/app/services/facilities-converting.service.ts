@@ -55,19 +55,18 @@ export class FacilitiesConvertingService {
 
   constructor() { }
 
-  public getFacilitiesDays(): void {
-    this.facilities.map(item => this.days.push(item.date));
-    console.log(this.days);
-    console.log(this.convertFacility());
-    
+  public getFacilitiesDays(arr:any[]): any[] {
+    const datesArr:any[] = [];
+    arr.map(item => datesArr.push(item.date));
+    return datesArr;
   }
 
-  public convertFacility(): any[] {
-    const facilities = [];
-    this.facilities.map(item => {
-      item.facilitiesList.map(facility => {
-        const { id , name , maxOccupancy , iconPath , occupiedHours} = facility;        
-        const newFacility = {
+  public convertFacilityNactivity(arrToConvert:any[]): any[] {
+    const arr = [];
+    arrToConvert.map(item => {
+      item.facilitiesList.map(obj => {
+        const { id , name , maxOccupancy , iconPath , occupiedHours} = obj;        
+        const newObj = {
           id:id,
           svgUrl:iconPath,
           title:name,
@@ -84,9 +83,9 @@ export class FacilitiesConvertingService {
             })
           ]
         };
-        facilities.push(newFacility);
+        arr.push(newObj);
       });
     });
-    return facilities;
+    return arr;
   }
 }
