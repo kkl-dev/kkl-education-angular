@@ -34,7 +34,6 @@ export class FacilitiesComponent implements OnInit {
   constructor(private facilitiesService: FacilitiesService,private facilitiesConvertingService:FacilitiesConvertingService) { }
 
   ngOnInit() {
-    this.facilitiesConvertingService.getFacilitiesDays()
     this.fillTimes();
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();

@@ -20,16 +20,7 @@ export interface OccupiedBarModel {
 })
 export class AddFacilityComponent implements OnInit {
   addFacilityForm: FormGroup;
-  @Input() days: {
-    day: string;
-    options?: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
-    }
-  }[] = DAYS;
+  @Input() days: any[] = DAYS;
   public selectedFacility$: Observable<InfoCard>;
   @Input() startingHour: number = 0
   @Input() endingHour: number = 24;
