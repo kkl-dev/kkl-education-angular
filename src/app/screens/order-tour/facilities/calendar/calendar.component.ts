@@ -25,6 +25,10 @@ export class CalendarComponent implements OnInit {
   public calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin, interactionPlugin],
     initialView: 'timeGridDay',
+    validRange: {
+      start: '2021-10-20',
+      end: '2021-10-25'
+    },
     allDaySlot: false,
     locales: [heLocale],
     selectable: true,
