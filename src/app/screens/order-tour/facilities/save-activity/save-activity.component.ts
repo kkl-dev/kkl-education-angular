@@ -11,13 +11,17 @@ import { DAYS } from 'src/mock_data/facilities';
   styleUrls: ['./save-activity.component.scss']
 })
 export class SaveActivityComponent implements OnInit {
+
   constructor(private facilitiesServices: FacilitiesService) { }
+
   public selectedActivity$: Observable<ActivitiesCardInterface>;
   public subscribeToActivity: Subscription;
   public updateForm: boolean = false;
   public form: FormGroup;
   public orderingCustomer: boolean = false;
   public showSleepAreas: boolean = false;
+  public selectedDay: number = 0;
+
   @Input() type: string;
   @Input() public additonsType: any[] = [
     { name: 'הסעה', completed: false },
@@ -26,17 +30,7 @@ export class SaveActivityComponent implements OnInit {
     { name: 'כלכלה', completed: false },
     { name: 'הפעלה מוסיקלית', completed: false },
   ];
-  @Input() days: {
-    day: string;
-    options?: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
-    }
-  }[] = DAYS;
-  public selectedDay: number = 0;
+  @Input() days: any[] = DAYS;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {

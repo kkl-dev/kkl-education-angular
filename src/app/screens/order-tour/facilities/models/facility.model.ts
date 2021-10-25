@@ -1,5 +1,5 @@
 export interface FacilityModel {
-    date?:string | Date;
+    date:string | Date;
     facilitiesList:FacilitiesList[];   
    }
    
