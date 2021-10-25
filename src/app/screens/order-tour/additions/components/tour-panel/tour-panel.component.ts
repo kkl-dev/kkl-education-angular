@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { LocationModel } from '../../models/location.model';
 import { ScheduleModel } from '../../models/schedule.model';
 import { TransportModel } from '../../models/transport.model';
 
@@ -15,7 +16,7 @@ export class TourPanelComponent implements OnInit {
   @Input() item: any;
   @Input() i: number;
   @Input() orderType: number;
-
+  locations =  [new LocationModel(new Date(), new Date(), 'נס-הרים', 'ציפורי')]
   ngOnInit(): void {
 
   }

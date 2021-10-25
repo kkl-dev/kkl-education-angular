@@ -786,17 +786,22 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-               type: object
-               $ref: '#/components/schemas/OrderEvent'
+              # type: array
+              # items:
+              #  type: object
+              #  $ref: '#/components/schemas/OrderEvent'
+                $ref: '#/components/schemas/OrderEvent'
       responses:
         "200":
           description: Success
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/TripModel'
+              # schema:
+              #   $ref: '#/components/schemas/TripModel'
+               schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderEvent'
   /Order/EditOrder/{userName}/{permId}/{descOccupancyProbFromSp}/{isRemoveOccProb}:
     put:
       tags:
