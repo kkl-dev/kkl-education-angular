@@ -47,7 +47,9 @@ export class TransportFormComponent implements OnInit {
     this.form.enable();
   }
 
-  public onValueChange(event) {
-    this.form = event;
+
+  public onRegister(form : FormGroup) {
+    console.log(form.value)
+
   }
 }

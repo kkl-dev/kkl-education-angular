@@ -19,10 +19,8 @@ export class TransportService {
       validations: [Validators.required],
       inputProps: {
         options: [
-          { label: 'solid', value: '12123' },
-          { label: 'great', value: '23' },
-          { label: 'good', value: '123' },
-          { label: 'unproven', value: '123123123' },
+          { label: 'solid', value: 'solid' },
+          { label: 'great', value: 'great' },
         ],
       },
     }),
