@@ -31,7 +31,7 @@ export class FacilitiesComponent implements OnInit {
   public activitiesArray: ActivitiesCardInterface[] = ACTIVITIES_ARRAY;
   public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
 
-  constructor(private facilitiesService: FacilitiesService,private facilitiesConvertingService:FacilitiesConvertingService) { }
+  constructor(private facilitiesService: FacilitiesService) { }
 
   ngOnInit() {
     this.fillTimes();
