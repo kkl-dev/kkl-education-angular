@@ -5,19 +5,7 @@ import { FacilityModel } from '../screens/order-tour/facilities/models/facility.
   providedIn: 'root'
 })
 export class FacilitiesConvertingService {
- 
-  public tripActivities = [
-    {
-      "activityId": 1,
-      "name": "education",
-      "sitePicture": "http://",
-      "linkToDetails": "http://",
-      "description": "",
-      "categoryId": 1,
-      "regionId": 3
-    }
 
-  ]
   constructor() { }
 
   public getFacilitiesDays(arr: any[]): any[] {
@@ -56,7 +44,7 @@ export class FacilitiesConvertingService {
 
   public convertTripActivities(arr: any[]) {
     let tmpArr: any[] = [];
-    this.tripActivities.map(obj => {
+    arr.map(obj => {
       console.log(obj);
       const newObj = {
         activityId: obj.activityId,
