@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventInput } from '@fullcalendar/angular';
@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import heLocale from '@fullcalendar/core/locales/he';
 import interactionPlugin from '@fullcalendar/interaction';
+import { h, render } from 'preact';
 
 @Component({
   selector: 'app-calendar',
@@ -18,13 +19,17 @@ export class CalendarComponent implements OnInit {
   public value!: EventInput[];
   public valueSub: Subscription;
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
+  @ViewChild('calendarEventCard', { read: TemplateRef }) eventCard: TemplateRef<any>;
 
-
-  constructor(private facilitiesService: FacilitiesService) { }
+  constructor(private facilitiesService: FacilitiesService, private vref: ViewContainerRef) { }
 
   public calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin, interactionPlugin],
     initialView: 'timeGridDay',
+    validRange: {
+      start: '2021-10-18',
+      end: '2021-10-21'
+    },
     allDaySlot: false,
     locales: [heLocale],
     selectable: true,
@@ -54,14 +59,9 @@ export class CalendarComponent implements OnInit {
     eventResize: (info) => {
       this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
     },
-    // eventContent: (props, createElement) => {
-    //   console.log(props.event._def);
-    //   let html = `
-    //   <ng-template #${props.event.id}>kfosdo</ng-template>
-    //   `
-    //   return { html: `<app-calendar-card svgUrl="sad"></app-calendar-card>` }
-    // },
-
+    eventContent: (props,createElement) => {
+      
+    }
   }
 
   public arrangeDate(date) {
@@ -72,7 +72,6 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
       if (this.myCalendarComponent) {
         this.myCalendarComponent.options.events = value;
@@ -83,18 +82,7 @@ export class CalendarComponent implements OnInit {
       }
 
     });
+
   }
 
-}
-
-@Component({
-  selector: 'your-component-1',
-  template: `
-      <div>This is your component 1.</div>
-      <div >My name is: {{ name }}</div>
-  `,
-})
-export class YourComponent1 {
-  @Input() name: string = '';
-  @Input() status: string = 'green';
 }

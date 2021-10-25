@@ -7,6 +7,7 @@ import { InfoCard } from '../../education-results/education-results.component';
 import { INITIAL_EVENTS } from './calendar/event-utils';
 import { EventInput } from '@fullcalendar/angular';
 import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_ARRAY } from 'src/mock_data/facilities';
+import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
 
 @Component({
   selector: 'app-facilities',
@@ -71,20 +72,5 @@ export class FacilitiesComponent implements OnInit {
     this.activityIsUpComing = false;
     this.facilitiesService.updateSelectedActivity(args);
   }
-  // arrays
-  public timeLineArray: Array<object> = [
-    {
-      title: 'ארוחת צהריים', startTime: '12:00', endTime: '13:00',
-      iconSrc: 'assets/images/roast-chicken.svg', color: this.colors.green
-    },
-    {
-      title: 'מטבח שדה', startTime: '12:00', endTime: '13:00',
-      iconSrc: 'assets/images/kitchen.svg', color: this.colors.blue
-    },
-    {
-      title: 'התייצבות', startTime: '10:00', endTime: '11:00',
-      iconSrc: 'assets/images/finish-flag-1.svg', color: this.colors.green, secondIcon: 'bus'
-    },
-  ];
 
 }
