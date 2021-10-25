@@ -9,17 +9,7 @@ import { DAYS } from 'src/mock_data/facilities';
   styleUrls: ['./add-activity.component.scss']
 })
 export class AddActivityComponent implements OnInit {
-  @Input() test:any;
-  days: {
-    day: string;
-    options: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
-    }
-  }[] = DAYS;
+  @Input() days: any[] = DAYS;
   public form: FormGroup;
   public showSleepAreas: boolean = false;
   public selectedDay: number = 0;
@@ -35,8 +25,6 @@ export class AddActivityComponent implements OnInit {
     this.facilitiesServices.closeModal('close');
   }
   public ngOnInit(): void {
-    console.log(this.test);
-    
     this.form = new FormGroup({
       'title': new FormControl(''),
       'selectedDay': new FormControl(this.selectedDay),
