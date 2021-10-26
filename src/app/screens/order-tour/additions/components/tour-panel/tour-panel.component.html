@@ -9,36 +9,38 @@
   <div class="tour-days">
     <mat-accordion [displayMode]="'gutter'">
       <ng-container>
-        <!-- <app-expend-panel *ngFor="let location of schedule.locations" class="small" matBadge="!" matBadgeSize="small"
+        <app-expend-panel *ngFor="let location of locations" class="small" matBadge="!" matBadgeSize="small"
           matBadgeColor="warn" variant="tour">
           <div title fxLayout="row" fxLayoutAlign="start center">
             <app-typography color="text-light" [bold]="600" [size]="12" fxFlex="6" *ngIf="location.pickUpDate">{{
               location.pickUpDate | date: "HH:mm" }}</app-typography>
             <app-typography [size]="18">{{ location.pickupLocation }} -
               {{ location.dropdownLocation }}</app-typography>
-          </div> -->
+          </div>
         <div description></div>
         <!-- [location]="location" -->
         <!-- <app-transport-form [order]="item" [editMode]="editMode" content>
         </app-transport-form> -->
-        <ng-container [ngSwitch]="orderType">
+        <!-- <ng-container [ngSwitch]="orderType">
           <ng-container *ngSwitchCase="1">
-            <app-transport-form [order]="item" [editMode]="editMode" content>
-            </app-transport-form>
+           
           </ng-container>
   
           <ng-container *ngSwitchCase="4">
-            <app-economy-form [order]="item" [editMode]="editMode" content>
-            </app-economy-form>
+           
           </ng-container>
-        </ng-container>
+        </ng-container> -->
+        <app-transport-form *ngIf="orderType===1" [order]="item" [editMode]="editMode" content>
+        </app-transport-form>
+        <app-economy-form *ngIf="orderType===4" [order]="item" [editMode]="editMode" content>
+        </app-economy-form>
         <!-- <app-order-form [order]="item" [editMode]="editMode" content>
         </app-order-form> -->
         <!-- <app-economy-form [order]="item" [editMode]="editMode" content>
         </app-economy-form> -->
         <!-- <app-transport-details *ngIf="editMode" content></app-transport-details> -->
         <app-form-details *ngIf="editMode" content></app-form-details>
-        <!-- </app-expend-panel> -->
+        </app-expend-panel>
       </ng-container>
     </mat-accordion>
   </div>

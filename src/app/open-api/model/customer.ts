@@ -9,11 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { BaseCustomer } from './baseCustomer';
 
 
-export interface Customer { 
-    customerId?: number;
-    customerName?: string;
+export interface Customer extends BaseCustomer { 
     typeId?: number;
     typeName?: string;
     identificationTypeId?: number | null;
@@ -30,9 +29,6 @@ export interface Customer {
     phoneWorks?: string;
     fax?: string;
     email?: string;
-    contactName?: string;
-    contactPhone?: string;
-    contactMobile?: string;
     userName?: string;
     generateDate?: string | null;
     appId?: number | null;

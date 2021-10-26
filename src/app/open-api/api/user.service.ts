@@ -47,9 +47,9 @@ import { Configuration }                                     from '../configurat
   providedIn: 'root'
 })
 export class UserService {
-
-    //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
+
+    // protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -568,7 +568,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.put<Budget>(`${this.configuration.basePath}/budget/expensesAndIncome`,
+        return this.httpClient.post<Budget>(`${this.configuration.basePath}/budget/expensesAndIncome`,
             budgetByParams,
             {
                 responseType: <any>responseType_,
@@ -619,7 +619,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.put<Budget>(`${this.configuration.basePath}/budget/budgetKkl`,
+        return this.httpClient.post<Budget>(`${this.configuration.basePath}/budget/budgetKkl`,
             budgetByParams,
             {
                 responseType: <any>responseType_,
@@ -840,7 +840,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<number>(`${this.configuration.basePath}/budget/GetKKlAmount/${encodeURIComponent(String(tripId))}'`,
+        return this.httpClient.get<number>(`${this.configuration.basePath}/budget/GetKKlAmount/${encodeURIComponent(String(tripId))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -1112,17 +1112,24 @@ export class UserService {
     }
 
     /**
-     * @param start 
-     * @param budget 
+     * @param startDate 
+     * @param cityId 
+     * @param budgetType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<boolean>;
-    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<boolean>>;
-    public isExistBudgetToYishuv(start: string, budget?: Budget, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<boolean>>;
-    public isExistBudgetToYishuv(start: string, budget?: Budget, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
-        if (start === null || start === undefined) {
-            throw new Error('Required parameter start was null or undefined when calling isExistBudgetToYishuv.');
+    public isExistBudgetToYishuv(startDate: string, cityId: number, budgetType: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<boolean>;
+    public isExistBudgetToYishuv(startDate: string, cityId: number, budgetType: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<boolean>>;
+    public isExistBudgetToYishuv(startDate: string, cityId: number, budgetType: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<boolean>>;
+    public isExistBudgetToYishuv(startDate: string, cityId: number, budgetType: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+        if (startDate === null || startDate === undefined) {
+            throw new Error('Required parameter startDate was null or undefined when calling isExistBudgetToYishuv.');
+        }
+        if (cityId === null || cityId === undefined) {
+            throw new Error('Required parameter cityId was null or undefined when calling isExistBudgetToYishuv.');
+        }
+        if (budgetType === null || budgetType === undefined) {
+            throw new Error('Required parameter budgetType was null or undefined when calling isExistBudgetToYishuv.');
         }
 
         let headers = this.defaultHeaders;
@@ -1140,22 +1147,12 @@ export class UserService {
         }
 
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
         let responseType_: 'text' | 'json' = 'json';
         if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<boolean>(`${this.configuration.basePath}/budget/IsExistBudgetToYishuv/${encodeURIComponent(String(start))}`,
-            budget,
+        return this.httpClient.get<boolean>(`${this.configuration.basePath}/budget/IsExistBudgetToYishuv/${encodeURIComponent(String(startDate))}/${encodeURIComponent(String(cityId))}/${encodeURIComponent(String(budgetType))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

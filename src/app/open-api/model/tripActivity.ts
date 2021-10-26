@@ -12,12 +12,15 @@
 
 
 export interface TripActivity { 
-    activityId?: number;
+    /**
+     * the unique activity Id
+     */
+    activityId?: number | null;
     activityName?: string;
     /**
-     * refers to indentity record on data base
+     * refers to indentity record on trip activities table in data base
      */
-    tripActivityIdentity?: number;
+    tripActivityIdentity?: number | null;
     categoryId?: number | null;
     date?: string;
     description?: string;

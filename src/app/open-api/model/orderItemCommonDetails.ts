@@ -13,22 +13,29 @@ import { ItemsByTypeOrder } from './itemsByTypeOrder';
 
 
 export interface OrderItemCommonDetails { 
+    /**
+     * the unique item id
+     */
     itemId?: number;
     /**
-     * refers to indentity record on data base
+     * refers to indentity record on order table in data base
      */
-    itemIdentity?: number;
+    itemOrderRecordId?: number;
+    orderId?: number;
     orderItemDetails?: ItemsByTypeOrder;
     quantity?: number;
     itemCost?: number;
     billingSupplier?: number | null;
     billingCustomer?: number | null;
     peopleInTrip?: number | null;
+    location?: string;
     startDate?: string;
     endDate?: string;
     startHour?: string;
     endHour?: string;
     userName?: string;
     comments?: string;
+    internalComment?: string;
+    openDate?: string;
 }
 

@@ -12,15 +12,19 @@
 
 
 export interface TempOrder { 
+    orderTempId?: number;
     tripId?: number;
     orderTypeCode?: number;
     orderTypeName?: string;
     orderId?: number | null;
     /**
-     * refers to indentity record on data base
+     * refers to indentity record on the order table
      */
     orderItemIdentity?: number | null;
-    orderItemId?: number | null;
+    /**
+     * the unique item id;
+     */
+    itemId?: number | null;
     orderItemName?: string;
     startDate?: string;
     endDate?: string;

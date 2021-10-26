@@ -14,8 +14,7 @@ import { OrderItemCommonDetails } from './orderItemCommonDetails';
 import { OrderEvent } from './orderEvent';
 
 
-export interface TransportOrder extends OrderEvent { 
-    pickUpAddress?: string;
-    scatterAddress?: string;
+export interface MusicActivationOrder extends OrderEvent { 
+    totalHours?: number;
 }
 

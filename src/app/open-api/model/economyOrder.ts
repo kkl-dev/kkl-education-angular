@@ -15,8 +15,6 @@ import { OrderEvent } from './orderEvent';
 
 
 export interface EconomyOrder extends OrderEvent { 
-    servingTime?: string;
-    location?: string;
     regularDishesNumber?: number;
     vegetarianDishesNumber?: number;
     veganDishesNumber?: number;

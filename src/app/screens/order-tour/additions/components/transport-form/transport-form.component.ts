@@ -36,8 +36,8 @@ export class TransportFormComponent implements OnInit {
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-    this.generalFormService.setDatesValues();
-    if (this.order!= undefined && this.order!= null) {
+    // this.generalFormService.setDatesValues();
+    if (this.order != undefined && this.order != null) {
       this.generalFormService.setFormValues(this.order);
     }
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
@@ -45,26 +45,26 @@ export class TransportFormComponent implements OnInit {
     // let transportQuestions = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
     // this.generalFormService.questionGroups[index].questions=transportQuestions;
     //option2
-    let detailsArr= this.generalFormService.details;
-    detailsArr= this.changeLabels(detailsArr);
+    let detailsArr = this.generalFormService.details;
+    detailsArr = this.changeLabels(detailsArr);
     let transportQuestions = detailsArr.concat(this.generalFormService.transport);
-     this.generalFormService.questionGroups[index].questions = transportQuestions;
-    this.formTemplate.questionsGroups=this.generalFormService.questionGroups;
-    console.log('group transport is: ',this.formTemplate.questionsGroups);
-    
+    this.generalFormService.questionGroups[index].questions = transportQuestions;
+    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
+    console.log('group transport is: ', this.formTemplate.questionsGroups);
+
   }
 
-  changeLabels(tempArr){
-    console.log('tempArr is :',tempArr);
-     let startDateIndex = tempArr.findIndex(el=> el.key === 'startDate');
-     tempArr[startDateIndex].label= 'תאריך איסוף';
-     let endDateIndex = tempArr.findIndex(el=> el.key === 'endDate');
-     tempArr[endDateIndex].label= 'תאריך פיזור';
-     let startHourIndex = tempArr.findIndex(el=> el.key === 'startHour');
-     tempArr[startHourIndex].label= 'שעת איסוף';
-     let endHourIndex = tempArr.findIndex(el=> el.key === 'endHour');
-     tempArr[endHourIndex].label= 'שעת פיזור';
-     return tempArr;
+  changeLabels(tempArr) {
+    console.log('tempArr is :', tempArr);
+    let startDateIndex = tempArr.findIndex(el => el.key === 'startDate');
+    tempArr[startDateIndex].label = 'תאריך איסוף';
+    let endDateIndex = tempArr.findIndex(el => el.key === 'endDate');
+    tempArr[endDateIndex].label = 'תאריך פיזור';
+    let startHourIndex = tempArr.findIndex(el => el.key === 'startHour');
+    tempArr[startHourIndex].label = 'שעת איסוף';
+    let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
+    tempArr[endHourIndex].label = 'שעת פיזור';
+    return tempArr;
   }
 
   public onSave(): void {
@@ -102,5 +102,16 @@ export class TransportFormComponent implements OnInit {
   public onValueChange(event) {
     this.form = event;
     console.log(this.form)
+    this.form.controls["details"].get('supplier').valueChanges.subscribe(value => {
+      console.log(value)
+    });
+    this.form.controls["details"].get('itemId').valueChanges.subscribe(value => {
+      console.log(value)
+      this.form.value.details.itemId = value;
+      this.additionsService.calculateBillings(this.form.value.details)
+
+    });
+
+
   }
 }

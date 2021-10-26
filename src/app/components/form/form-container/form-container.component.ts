@@ -55,7 +55,7 @@ export class FormContainerComponent implements OnInit {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
-      //this.register.emit(this.formGroup);
+      this.register.emit(this.formGroup);
     }
   }
 

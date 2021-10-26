@@ -15,7 +15,6 @@ import { OrderEvent } from './orderEvent';
 
 
 export interface GuidanceOrder extends OrderEvent { 
-    location?: string;
     guideName?: string;
     languageGide?: string;
     guideInstructions?: string;

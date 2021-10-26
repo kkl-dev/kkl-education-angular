@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Status } from './status';
 import { Area } from './area';
 import { BaseCustomer } from './baseCustomer';
 import { Language } from './language';
@@ -61,8 +62,7 @@ export interface TripInfo {
     numDrivers?: number;
     numShtilim?: number;
     noPayment?: number | null;
-    tripStatusId?: number;
-    tripStatusName?: string;
+    tripStatus?: Status;
     userMobile?: string;
     userId?: string;
     userName: string;

@@ -37,7 +37,7 @@ export class AdditionsComponent implements OnInit {
   constructor(
     private tourService: TourService,
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private orderService: OrderService,
-   private generalFormService: GeneralFormService ) { }
+    private generalFormService: GeneralFormService) { }
 
   ngOnInit(): void {
     this.getTempOrder();
@@ -45,7 +45,7 @@ export class AdditionsComponent implements OnInit {
     // this.tour = this.tourService.getTour();
     // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
     // this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
-     console.log('this.squadAssembleService.peopleInTrip:', this.squadAssembleService.peopleInTrip)
+    console.log('this.squadAssembleService.peopleInTrip:', this.squadAssembleService.peopleInTrip)
     this.tour.id = 5555;
     this.tour.title = 'טיול נסיון';
     // this.additionsService.emitSchedule(this.tour.schedule);
@@ -55,7 +55,7 @@ export class AdditionsComponent implements OnInit {
   public onAdd() {
     // this.schedule = new ScheduleModel();
     // this.addSchedule = true;
-   // this.item = {} as OrderEvent;
+    // this.item = {} as OrderEvent;
     this.addItem = true;
   }
   getTempOrder() {
@@ -85,15 +85,15 @@ export class AdditionsComponent implements OnInit {
       for (var i in this.tempOrderReduce[orderTypId]) {
         var order = {} as OrderEvent;
         order.globalParameters = {} as OrderItemCommonDetails;
-        let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate,'israel');
+        let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate, 'israel');
         order.globalParameters.startDate = startDate;
-        let endDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].endDate,'israel');
+        let endDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].endDate, 'israel');
         order.globalParameters.endDate = endDate;
         let startHour = (this.tempOrderReduce[orderTypId][i].fromHour).split('T');
         order.globalParameters.startHour = startHour[1];
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
-      
+
         OrderList.push(order);
       }
       this.additionsService.emitItem(OrderList);
@@ -103,6 +103,5 @@ export class AdditionsComponent implements OnInit {
   change(event) {
     this.mapTempOrder(event);
     this.orderType = event;
-
+    }
   }
-}

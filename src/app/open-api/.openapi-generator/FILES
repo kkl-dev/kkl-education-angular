@@ -31,7 +31,6 @@ model/customer.ts
 model/economyOrder.ts
 model/facilityDate.ts
 model/facilityMapByDates.ts
-model/facilityOrder.ts
 model/fieldForestCenter.ts
 model/guidanceOrder.ts
 model/itemsByTypeOrder.ts
@@ -42,6 +41,7 @@ model/lodgingReservation.ts
 model/mapParameters.ts
 model/models.ts
 model/movements.ts
+model/musicActivationOrder.ts
 model/nightNumberOptions.ts
 model/occupiedHours.ts
 model/order.ts
