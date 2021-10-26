@@ -5,7 +5,7 @@ import { LocationModel } from 'src/app/screens/order-tour/additions/models/locat
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { TransportModel } from '../../models/transport.model';
 import { TransportService } from '../../services/transport.service';
-
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-transport-form',
   templateUrl: './transport-form.component.html',
@@ -47,9 +47,14 @@ export class TransportFormComponent implements OnInit {
     this.form.enable();
   }
 
+  public onRegister(form: FormGroup) {
+    this.form = form;
+    this.registerToSupplier();
+  }
 
-  public onRegister(form : FormGroup) {
-    console.log(form.value)
-
+  private registerToSupplier() {
+    this.form.controls['details']
+      .get('supplier')
+      .valueChanges.pipe(map((value) => console.log(value)));
   }
 }
