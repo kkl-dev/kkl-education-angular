@@ -29,7 +29,7 @@ export class FormInputComponent implements OnInit {
   @Input() public controlType: string;
   @Input() public options!: [];
   @Input() public dateOptions!:CalendarOptions;
- 
+
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
@@ -47,9 +47,8 @@ export class FormInputComponent implements OnInit {
   @Output() select: EventEmitter<FormControl> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
-  constructor(private formService: FormService) { 
-    console.log(this.dateOptions);
-    
+  constructor(private formService: FormService) {
+
   }
 
   ngOnInit(): void {
@@ -100,6 +99,7 @@ export class FormInputComponent implements OnInit {
 
   public onSelectChange() {
     this.select.emit(this.control)
+    console.log(this.control.value)
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
