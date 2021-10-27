@@ -19,11 +19,7 @@ import { FakeService } from 'src/app/services/fake.service';
 import { HttpClient } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
-<<<<<<< HEAD
 import { analyzeAndValidateNgModules, NullTemplateVisitor } from '@angular/compiler';
-=======
-import { NullTemplateVisitor } from '@angular/compiler';
->>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
 import PictureMarkerSymbol from '@arcgis/core/symbols/PictureMarkerSymbol';
 
 @Component({
@@ -47,19 +43,11 @@ export class MapsComponent implements OnInit {
   arrStruct = ["בקתה", "אוהל", "חדר"];
 
   lodgingFacilityList: any = [];
-<<<<<<< HEAD
-
-=======
->>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
   viewGenderIcons: boolean = false;
 
   constructor(protected httpClient: HttpClient, public tripService: TripService, public fakeApi: FakeService) {
 
     this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
-<<<<<<< HEAD
-=======
-
->>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
     }
@@ -134,7 +122,6 @@ export class MapsComponent implements OnInit {
 
     this.view.ui.add("nameDiv", "top-trailing");
     this.view.ui.add("genderButtonDiv", "bottom-left");
-<<<<<<< HEAD
 
     const labelClass = new LabelClass({
       symbol: {
@@ -149,21 +136,14 @@ export class MapsComponent implements OnInit {
       },
       labelPlacement: "above-center",
     });
-=======
->>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
 
     this.layer = new FeatureLayer({
       url: this.url,
       popupTemplate: this.popupTrailheads,
-<<<<<<< HEAD
       opacity: 0.9
       // ,
       // labelingInfo: [labelClass]
       //definitionExpression: filterex
-=======
-      opacity: 1,
-      definitionExpression: "Purpose <> 'אוהל' and Purpose <> 'בקתה' and Purpose <> 'חדר'"
->>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
     });
     this.graphicsLayer = new GraphicsLayer({
       opacity: 2
@@ -177,11 +157,6 @@ export class MapsComponent implements OnInit {
       this.forestCenter = this.tripService.centerField;
     }
 
-<<<<<<< HEAD
-=======
-    this.loadWebMap();
-
->>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
     this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
 
       console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
@@ -191,11 +166,8 @@ export class MapsComponent implements OnInit {
       this.queryandrender();
 
     });
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
   }
 
   genderButtonDivClick() {
@@ -332,13 +304,7 @@ export class MapsComponent implements OnInit {
 
         let pointGraphic = new Graphic({
           geometry: point,
-<<<<<<< HEAD
           symbol: sym
-=======
-          symbol: sym,
-          attributes: buldingfeature.attributes,
-          popupTemplate: this.popupTrailheads
->>>>>>> 38bf6692532b6a365a4644e583c0171cacc07760
         });
 
         this.graphicsLayer.add(pointGraphic);

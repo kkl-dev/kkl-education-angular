@@ -7,28 +7,13 @@ import { InfoCard } from '../../education-results/education-results.component';
 import { INITIAL_EVENTS } from './calendar/event-utils';
 import { EventInput } from '@fullcalendar/angular';
 import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_ARRAY } from 'src/mock_data/facilities';
-import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
-import { Validators } from '@angular/forms';
-import { ActivitiesService, Area, UserService } from 'src/app/open-api';
+import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
+import { ActivitiesService, UserService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
-
-export interface InfoCard1 {
-  svgUrl: string;
-  title?: string;
-  headline?: string;
-  subHeadline?: string;
-  availability?: TooltipDataModel1[];
-  maxParticipants?: string;
-  days?: any[];
-}
-
-export interface TooltipDataModel1 {
-  startingHour: number;
-  endingHour: number;
-  totalTime: number;
-  user: string;
-}
+import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { Validators } from '@angular/forms';
+import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-facilities',
@@ -39,7 +24,7 @@ export interface TooltipDataModel1 {
 export class FacilitiesComponent implements OnInit {
   public eventsArr: EventInput[] = [...INITIAL_EVENTS];
   public closeModal$: Observable<string>;
-  public selectedFacility$: Observable<InfoCard1>;
+  public selectedFacility$: Observable<any>;
   public selectedActivity$: Observable<ActivitiesCardInterface>;
   public calendarEventsArr$: Observable<EventInput[]>;
   public timesArray: Array<string | number> = [];
@@ -50,11 +35,10 @@ export class FacilitiesComponent implements OnInit {
   formArray: QuestionBase<string | number>[];
   // public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
   // public facilitiesArray: InfoCard1[] = FACILITIES_ARRAY;
-  // public activitiesArray: ActivitiesCardInterface[] = ACTIVITIES_ARRAY;
   // public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
-  // public activitiesArray: any[];
   // public upComingActivitiesArray: any[];
 
+  createForm: any;
   facilityForDay: any;
   facilitiesArray: any;
   tripActivities: any = [];
@@ -97,7 +81,7 @@ export class FacilitiesComponent implements OnInit {
   ];
 
   constructor(private facilitiesService: FacilitiesService, private usersService: UserService, private tripService: TripService,
-    private activitiyService: ActivitiesService) { }
+    private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService, private userDataService: UserDataService) { }
 
   ngOnInit(): void {
     this.getAvailableFacilities();
@@ -107,22 +91,23 @@ export class FacilitiesComponent implements OnInit {
     this.getTripActivities();
     this.setFormArray();
 
-    this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();	
-    this.closeModal$ = this.facilitiesService.getCloseModalObs();	
-    this.selectedFacility$ = this.facilitiesService.getSelectedFacility();	
-    this.selectedActivity$ = this.facilitiesService.getSelectedActivity();	
+    this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
+    this.closeModal$ = this.facilitiesService.getCloseModalObs();
+    this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
+    this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
 
   }
 
   private setFormArray() {
-   // console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
+    // console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
     this.formArray = [
-      new QuestionSelect({
-        key: 'durationOfActivity',
-        label: 'משך פעילות',
-        validations: [Validators.required],
-        inputProps: { options: [{ label: 'אירוח', value: '2' }] }
-      }),
+      //// not in use for now
+      // new QuestionSelect({
+      //   key: 'durationOfActivity',
+      //   label: 'משך פעילות',
+      //   validations: [Validators.required],
+      //   inputProps: { options: [{ label: 'אירוח', value: '2' }] }
+      // }),
       new QuestionSelect({
         key: 'areas',
         label: 'אזור',
@@ -177,6 +162,7 @@ export class FacilitiesComponent implements OnInit {
     this.activitiyService.getTripActivities().subscribe(res => {
       console.log("get Trip Activities res: ", { res });
       this.calculatePages(res.length);
+      let a = this.facilitiesConvertingService.convertTripActivities(res);
       this.tripActivitiesInfoTotal = res;
       this.tripActivitiesFilter = res;
       this.pagesToShow(1);
@@ -194,9 +180,12 @@ export class FacilitiesComponent implements OnInit {
     this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
     // this.usersService.getAvailableFacilities(1, '2021-10-20', '2021-10-21').subscribe((facilities: any) => {
     //   console.log('get Available Facilities: ', facilities);
+    //   let a = this.facilitiesConvertingService.convertFacilityActivity(facilities);
     //   if (facilities) {
-    //     //this.activitiesArray = facilities;
     //     this.facilitiesArray = facilities[0].facilitiesList;
+    //     this.selectedFacility$ = a[0].facilitiesList;
+
+    //     // this.facilitiesArray = facilities[0].facilitiesList;
     //     //this.tripService.setfacilitiesArray(facilities);
     //     console.log('facility For Day: ', this.facilitiesArray);
     //   }
@@ -213,7 +202,7 @@ export class FacilitiesComponent implements OnInit {
     if (obj.areas) {
       tripActivities = tripActivities.filter(a =>
         a.regionId == obj.areas);
-    } 
+    }
     if (obj.typeOfActivity) {
       tripActivities = tripActivities.filter((a: { activityId: any; }) =>
         a.activityId == obj.typeOfActivity);
@@ -243,7 +232,6 @@ export class FacilitiesComponent implements OnInit {
   }
 
   pagesToShow(page: any) {
-    // this.tripActivitiesInfo = this.tripActivitiesInfoTotal.slice(page - 1, page + 5);
     if (this.tripActivitiesFilter.length > 6) {
       this.tripActivitiesInfo = this.tripActivitiesFilter.slice(page - 1, page + 5);
     } else {
@@ -287,7 +275,7 @@ export class FacilitiesComponent implements OnInit {
     }
   }
 
-  public updateChosenFacility(args: InfoCard1) {
+  public updateChosenFacility(args: any) {
     this.facilitiesService.updateSelectedFacility(args);
   }
 
@@ -300,19 +288,73 @@ export class FacilitiesComponent implements OnInit {
     this.activityIsUpComing = false;
     this.facilitiesService.updateSelectedActivity(args);
   }
-  // arrays
-  public timeLineArray: Array<object> = [
-    {
-      title: 'ארוחת צהריים', startTime: '12:00', endTime: '13:00',
-      iconSrc: 'assets/images/roast-chicken.svg', color: this.colors.green
-    },
-    {
-      title: 'מטבח שדה', startTime: '12:00', endTime: '13:00',
-      iconSrc: 'assets/images/kitchen.svg', color: this.colors.blue
-    },
-    {
-      title: 'התייצבות', startTime: '10:00', endTime: '11:00',
-      iconSrc: 'assets/images/finish-flag-1.svg', color: this.colors.green, secondIcon: 'bus'
-    },
-  ];
+
+  onTest() {
+    console.log('this.calendarEventsArr$: ', this.calendarEventsArr$);
+    //let s = this.calendarEventsArr$.source._subscribe;
+    //let a = this.calendarEventsArr$.subscribe(data => this.createForm(data));
+    let a = this.calendarEventsArr$.subscribe(data => {
+      console.log('events Arr data => : ', data);
+      this.createForm(data);
+    });
+
+    // let a = this.facilitiesService.getCalendarEventsArr();
+    console.log('events Arr: ', this.eventsArr);
+    let b: any = this.eventsArr
+    //calendarEventsArr.value
+    let userName = this.userDataService.user.name;
+
+    this.activitiyService.createTripActivities(userName, b).subscribe(res => {
+      console.log("create Trip Activities: ", { res });
+    })
+
+    // {
+    //   "tripId": 1,
+    //   "tempOrderList": [
+    //     {
+    //       "tripId": 12,
+    //       "orderTypeCode": 0,
+    //       "orderTypeName": "היסעים",
+    //       "orderId": 12345,
+    //       "orderItemIdentity": 12345,
+    //       "orderItemId": 123,
+    //       "orderItemName": "אוטובוס",
+    //       "startDate": "2021-11-12T00:00:00",
+    //       "endDate": "2021-11-12T00:00:00",
+    //       "fromHour": "2021-11-12T13:00:00",
+    //       "tillHour": "2021-11-12T15:00:00",
+    //       "userName": "string"
+    //     }
+    //   ],
+    //   "activityList": [
+    //     {
+    //       "activityId": 1,
+    //       "activityName": "חינוך",
+    //       "tripActivityIdentity": 56,
+    //       "categoryId": 2,
+    //       "date": "2021-11-12T00:00:00",
+    //       "description": "students education",
+    //       "hourStart": "2021-11-12T10:00:00",
+    //       "hourEnd": "2021-11-12T12:00:00",
+    //       "tripId": 2,
+    //       "userName": "dan"
+    //     }
+    //   ],
+    //   "facilityOrderList": [
+    //     {
+    //       "tripId": 1,
+    //       "facilityId": 1,
+    //       "orderId": 12345,
+    //       "orderItemIdentity": 12345,
+    //       "facilityName": "string",
+    //       "startDate": "2021-10-26T16:41:17.023Z",
+    //       "endDate": "2021-10-26T16:41:17.023Z",
+    //       "startHour": "2021-10-26T16:41:17.023Z",
+    //       "endHour": "2021-10-26T16:41:17.023Z",
+    //       "openBy": "שחר גל"
+    //     }
+    //   ]
+    // }
+  }
+
 }

@@ -4,23 +4,7 @@ import { EventInput } from '@fullcalendar/angular';
 import { INITIAL_EVENTS } from '../screens/order-tour/facilities/calendar/event-utils';
 import { InfoCard } from '../screens/education-results/education-results.component';
 import { ActivitiesCardInterface } from '../components/activities-card/activities-card.component';
-export interface InfoCard1 {
-  svgUrl: string;
-  title?: string;
-  headline?: string;
-  subHeadline?: string;
-  availability?: TooltipDataModel1[];
-  maxParticipants?: string;
-  days?: any[];
-}
-
-export interface TooltipDataModel1 {
-  startingHour: number;
-  endingHour: number;
-  totalTime: number;
-  user: string;
-}
-
+import { FacilityModel } from '../screens/order-tour/facilities/models/facility.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -59,10 +43,10 @@ export class FacilitiesService {
     this.closeModal(item.type);
   }
 
-  public updateSelectedFacility(args: InfoCard1): void {
+  public updateSelectedFacility(args: FacilityModel): void {
     this.selectedFacility.next(args);
   }
-  public getSelectedFacility(): Observable<InfoCard1> {
+  public getSelectedFacility(): Observable<FacilityModel> {
     return this.selectedFacility.asObservable();
   }
   

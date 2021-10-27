@@ -62,21 +62,6 @@ export class TripService {
           "structureId": 1195,
           "gender": "בנות",
           "status": "פנוי"
-        },
-        {
-          "structureId": 1196,
-          "gender": "בנים",
-          "status": "תפוס"
-        },
-        {
-          "structureId": 1197,
-          "gender": "מעורב",
-          "status": "פנוי"
-        },
-        {
-          "structureId": 1198,
-          "gender": "בנות",
-          "status": "תפוס"
         }
       ]
     }

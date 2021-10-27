@@ -9,7 +9,7 @@ export class InfoCardComponent implements OnInit {
 
   @Input() public item : any
 
-  defaultImage : string ='path270.svg';
+  defaultImage : string ='defaultFacility.svg';
   constructor() { }
 
   ngOnInit(): void {
