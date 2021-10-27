@@ -130,6 +130,7 @@ import { AddActivityComponent } from './screens/order-tour/facilities/add-activi
 import { ModalComponent } from './components/modal/modal.component';
 import { OutsideDirective } from './utilities/directivs/outside.directive';
 import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping-map.component';
+import { DynamicComponent } from './components/dynamic/dynamic.component';
 import { CalendarCardComponent } from './screens/order-tour/facilities/calendar/calendar-card/calendar-card.component';
 
 
@@ -142,6 +143,7 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [
+    CalendarCardComponent,
     AppComponent,
     MainComponent,
     DashboardComponent,
@@ -254,7 +256,8 @@ FullCalendarModule.registerPlugins([
     SquadGroupGenderComponent,
     OutsideDirective,
     SleepingMapComponent,
-    CalendarCardComponent
+  
+    DynamicComponent
   ],
   imports: [
     BrowserModule,

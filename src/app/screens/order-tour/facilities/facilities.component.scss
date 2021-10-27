@@ -6,10 +6,22 @@
     .fc-v-event {
         border-color: #37c56b !important;
     }
+    ::ng-deep svg *{
+        fill: #37c56b;
+    }
+    .timeText{
+        color: #37c56b;
+    }
 }
 ::ng-deep .border-facilities {
     border-right: 9px solid #448ecd !important;
     border-radius: 0px 4px 4px 0px !important;
+    ::ng-deep svg *{
+        fill: #448ecd;
+    }
+    .timeText{
+        color: #448ecd;
+    }
 }
 
 .facilities {
