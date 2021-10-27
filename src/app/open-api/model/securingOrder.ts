@@ -9,11 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Order } from './order';
+import { OrderItemCommonDetails } from './orderItemCommonDetails';
+import { OrderEvent } from './orderEvent';
 
 
-export interface City { 
-    id?: number;
-    name?: string;
-    typeId?: number;
+export interface SecuringOrder extends OrderEvent { 
+    scatterLocation?: string;
 }
 
