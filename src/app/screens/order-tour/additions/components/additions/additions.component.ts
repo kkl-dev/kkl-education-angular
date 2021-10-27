@@ -28,8 +28,10 @@ export class AdditionsComponent implements OnInit {
   // public addSchedule: boolean = false;
   //public orderModel = {} as OrderModel;
   public item$: Observable<any[]>;
-  public item: any;
+  public items: any [];
+  public item: any[];
   public addItem: boolean = false;
+  tripId : number;
   orderType: number = 1;
 
   public tempOrderReduce: any;
@@ -40,16 +42,19 @@ export class AdditionsComponent implements OnInit {
    private generalFormService: GeneralFormService ) { }
 
   ngOnInit(): void {
+    //this.getOrders();
+    //this.items=[];
     this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
     // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
     // this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
-     console.log('this.squadAssembleService.peopleInTrip:', this.squadAssembleService.peopleInTrip)
+  
     this.tour.id = 5555;
     this.tour.title = 'טיול נסיון';
     // this.additionsService.emitSchedule(this.tour.schedule);
     this.onAdd();
+    
   }
 
   public onAdd() {
@@ -58,10 +63,18 @@ export class AdditionsComponent implements OnInit {
    // this.item = {} as OrderEvent;
     this.addItem = true;
   }
+  // getOrders(){
+  //  this.orderService.getOrdersList(this.tripId).subscribe(res=>{
+  //    console.log(res);
+  //  },(err)=>{
+  //   console.log(err);
+  //  })
+  // }
   getTempOrder() {
-    // var tripId =tourTransport.id= this.squadAssembleService.tripInfofromService.trip.id
-    var tripId = 52573;
-    this.orderService.getTempOrders(tripId).subscribe(
+    
+    this.tripId =this.squadAssembleService.tripInfofromService.trip.id
+     //this.tripId= 52910;
+    this.orderService.getTempOrders(this.tripId).subscribe(
       response => {
         console.log(response)
         this.additionsService.tempOrder = response;
@@ -80,9 +93,12 @@ export class AdditionsComponent implements OnInit {
   }
   mapTempOrder(orderTypId: number) {
     if (this.tempOrderReduce !== undefined && this.tempOrderReduce !== null) {
-      var OrderList = [];
-      if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
+      var orderList = [];
+      // if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
+      if (this.tempOrderReduce[orderTypId] === undefined) { return; }
       for (var i in this.tempOrderReduce[orderTypId]) {
+        if(this.tempOrderReduce[orderTypId][i].orderId  != undefined)
+        continue;
         var order = {} as OrderEvent;
         order.globalParameters = {} as OrderItemCommonDetails;
         let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate,'israel');
@@ -94,15 +110,37 @@ export class AdditionsComponent implements OnInit {
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
       
-        OrderList.push(order);
+        orderList.push(order);
       }
-      this.additionsService.emitItem(OrderList);
-      this.item$ = this.additionsService.item$;
+      // this.additionsService.emitItem(OrderList);
+      // this.item$ = this.additionsService.item$;
+      if(this.items!= undefined && this.items.length != 0 ){
+        if (this.items.length>0){
+          let tempArr= this.items.concat(orderList);
+          this.items=[];
+          this.items= tempArr;
+        }        
+      }     
+      else{
+        this.items= orderList;
+      }
     }
   }
   change(event) {
+    switch (event) {
+      case 1:
+        if(this.generalFormService.transportOrderList.length>0)
+          this.items=this.generalFormService.transportOrderList;
+        break;
+      case 4:
+        if(this.generalFormService.economyOrderList.length>0)
+        this.items=this.generalFormService.economyOrderList;
+        else{
+          this.items=[];
+        }
+        break;
+   }
     this.mapTempOrder(event);
     this.orderType = event;
-
   }
 }

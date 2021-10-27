@@ -29,7 +29,7 @@ export class EconomyFormComponent implements OnInit {
 
   ngOnInit(): void {
   
-     //this.generalFormService.setDatesValues();
+     this.generalFormService.setDatesValues();
     this.orderService.getSupplierList(1, 52275, 0);
      
     // if (this.editMode) {
@@ -72,29 +72,42 @@ export class EconomyFormComponent implements OnInit {
     if (this.form) {
       this.editMode = true;
       this.form.disable();
+      let orderId;
+      if(this.generalFormService.economyOrderList.length>0){
+        orderId= this.generalFormService.economyOrderList[0].order.orderId
+     }
       var t = {} as EconomyOrder;
       t.globalParameters = {} as OrderItemCommonDetails;
       t.order = {} as Order;
+      t.order.orderId = orderId;
       t.order.supplier = {} as Supplier;
       t.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
-        if (key !== 'pickUpAddress' && key !== 'pickUpLocation' && key !== 'supplier') {
-          t.globalParameters[key] = this.form.value.details[key]
+        if (key !== 'regularDishesNumber' && key !== 'vegetarianDishesNumber' && key !== 'veganDishesNumber' && key !== 'supplier') {
+          if( key !='startDate' && key!='endDate'){
+            t.globalParameters[key] = this.form.value.details[key]
+          } else{
+            if(key=='startDate'){
+              t.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
+             }
+             if(key=='endDate'){
+              t.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
+             }
+          }
         }
         else if (key !== "supplier") {
           t[key] = this.form.value.details[key]
         }
       });
-      t.globalParameters['endHour'] = '2021-11-21T14:00:00';
-      t.globalParameters['startHour'] = '2021-11-21T15:00:00';
+      //t.globalParameters['endHour'] = '2021-11-21T14:00:00';
+     // t.globalParameters['startHour'] = '2021-11-21T15:00:00';
       t.globalParameters['comments'] = this.form.value.comments.comments;
-      //change hard coded
+      t.globalParameters.orderId=orderId;
       t.order.supplier.id = +this.form.value.details.supplier;
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      // t.order.tripId = 99;
       t.order.orderType.name = 'כלכלה';
-      t.order.orderType.id = 1;
-      this.additionsService.addOrderItems(t);
+      t.order.orderType.id = 4;
+      this.generalFormService.addOrder(t,'כלכלה');
     }
   }
 
