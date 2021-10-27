@@ -212,16 +212,16 @@ export class FormInputComponent implements OnInit {
     if (this.name === 'budgetExpense') {
       this.tripService.budgetByParam.budget.expensesId = parseInt(this.control.value);
     }
-    if (this.name === 'supplier') {
-      this.generalFormService.getOrderItemBySupplierId();
-    }
-    if (this.name === 'itemId') {
-      let index = this.generalFormService.details.findIndex(el => el.key === "itemCost");
-      let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(this.control.value))
-      var x = Math.floor(item.cost)
-      this.generalFormService.details[index].value = x.toString();
+    // if (this.name === 'supplier') {
+    //   this.generalFormService.getOrderItemBySupplierId();
+    // }
+    // if (this.name === 'itemId') {
+    //   let index = this.generalFormService.details.findIndex(el => el.key === "itemCost");
+    //   let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(this.control.value))
+    //   var x = Math.floor(item.cost)
+    //   this.generalFormService.details[index].value = x.toString();
 
-    }
+    // }
 
 
     this.select.emit(this.control);

@@ -99,29 +99,5 @@ export class AdditionsService {
     this.orderList.push(item);
     console.log(this.orderList);
   }
-  // index;
-  // getSupplierByOrderType() {
-  //   this.orderService.getSupplierByOrderType(7, 1, 4).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       this.index = this.transportService.details.findIndex(el => el.key === "supplier");
-  //       this.transportService.details[this.index].setValue(response.id.toString());
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
-  // getOrderItemBySupplierId() {
-  //   var supplierId = parseInt(this.transportService.details[this.index].value);
-  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-  //     response => {
-  //       console.log(response)
-  //       response.forEach(element => {
-  //         this.transportService.itemsList.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
+  
 }

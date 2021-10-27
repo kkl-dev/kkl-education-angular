@@ -47,7 +47,7 @@ export class FormContainerComponent implements OnInit {
     this.initFormGroup();
     this.subscribeToQuestions();
     this.subscribeToFormValues();
-    this.dissableForm()
+    this.dissableForm();
   }
 
   private initFormGroup() {
@@ -55,7 +55,7 @@ export class FormContainerComponent implements OnInit {
       this.formGroup = this.formService.setFormGroup({
         questions: this.questions,
       });
-      //this.register.emit(this.formGroup);
+      this.register.emit(this.formGroup);
     }
   }
 
@@ -91,6 +91,8 @@ export class FormContainerComponent implements OnInit {
   public onEdit() {
     this.form.enable();
   }
+
+ 
 
   public onAutocomplete(control) {
     console.log("onAutocomplete: ", control);
