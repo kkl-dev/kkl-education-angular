@@ -307,6 +307,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
+
   // AddOrder() {
   //   if (this.additionsService.orderList.length > 0) {
   //     this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
@@ -319,6 +320,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   //       })
   //     })
   //   }
+
 
   // }
 

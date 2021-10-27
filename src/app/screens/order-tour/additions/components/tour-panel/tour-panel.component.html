@@ -9,8 +9,7 @@
   <div class="tour-days">
     <mat-accordion [displayMode]="'gutter'">
       <ng-container>
-        <!-- <app-expend-panel *ngFor="let location of schedule.locations" class="small" matBadge="!" matBadgeSize="small"
-          matBadgeColor="warn" variant="tour"> -->
+
           <app-expend-panel *ngFor="let location of locations" class="small" matBadge="!" matBadgeSize="small"
           matBadgeColor="warn" variant="tour">
           <div title fxLayout="row" fxLayoutAlign="start center">
@@ -18,7 +17,7 @@
               location.pickUpDate | date: "HH:mm" }}</app-typography>
             <app-typography [size]="18">{{ location.pickupLocation }} -
               {{ location.dropdownLocation }}</app-typography>
-             
+
           </div>
         <div description></div>
         <!-- [location]="location" -->
@@ -26,15 +25,17 @@
         </app-transport-form> -->
         <!-- <ng-container [ngSwitch]="orderType">
           <ng-container *ngSwitchCase="1">
+
             <app-transport-form [order]="item" [editMode]="editMode"  content>
             </app-transport-form>
+
           </ng-container>
   
           <ng-container *ngSwitchCase="4">
-            <app-economy-form [order]="item" [editMode]="editMode" content>
-            </app-economy-form>
+           
           </ng-container>
         </ng-container> -->
+
       
         <app-transport-form *ngIf="orderType==1" [order]="item" [editMode]="editMode"  content>
         </app-transport-form>

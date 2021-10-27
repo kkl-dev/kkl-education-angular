@@ -124,9 +124,7 @@ export class GeneralFormService {
       //   // labelSize: 's5',
       // },
     }),
-  
-    
-   
+
     new QuestionTextbox({
       key: 'endHour',
       label: 'שעת פיזור',
@@ -232,7 +230,7 @@ export class GeneralFormService {
   ]
 
 
-   //public tempDetails = this.details;
+  //public tempDetails = this.details;
 
   public questionGroups: QuestionGroup[] = [
     {
@@ -253,7 +251,7 @@ export class GeneralFormService {
     data: any
   ) {
     questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
-     // control.value = data[control.key]
+      // control.value = data[control.key]
       control.value = data.globalParameters[control.key];
       // if (control.key === 'comments') {
       //   control.value = data;
@@ -299,9 +297,8 @@ export class GeneralFormService {
     let newDate = new Date(date1.setDate(date1.getDate()));
     let datesArr = [];
     for (let i = 0; i <= totalDays; i++) {
-       const newDateString = `${newDate.getDate()}/${
-         (newDate.getMonth()+1).toString()
-       }/${newDate.getFullYear()}`;
+      const newDateString = `${newDate.getDate()}/${(newDate.getMonth() + 1).toString()
+        }/${newDate.getFullYear()}`;
       // const newDateString = `${newDate.getFullYear()}-${(newDate.getMonth() + 1).toString()
       //   }-${newDate.getDate()}`;
 
@@ -317,6 +314,7 @@ export class GeneralFormService {
     this.details[startDateindex].inputProps.options = datesArr;
     this.details[endDateIndex].inputProps.options = datesArr;
   }
+
 
   // getSupplierList(orderTypeId,tripId,orderId) {
   //   this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
@@ -345,6 +343,7 @@ export class GeneralFormService {
    
   // }
 
+
   // originalItemList = [];
   // getOrderItemBySupplierId() {
   //   let index = this.details.findIndex(el => el.key === "supplier");
@@ -363,21 +362,23 @@ export class GeneralFormService {
   // }
 
 
-    changeDateFormat(date,format){
-       let dateFormat;
-       let subDate;
-       if(format=='israel'){
-           let subDateArr= date.split('T');
-           let subDate1= subDateArr[0];
-           subDate= subDate1.split('-');
-          dateFormat= subDate[2] + '/' + subDate[1] +  '/'+ subDate[0]
-       }
-       else{
-        subDate = date.split("/");
-        dateFormat= subDate[2] + '-' + subDate[1] + '-' +subDate[0]; //UTC format
-       }
-      return dateFormat;
-   }
+  changeDateFormat(date, format) {
+    let dateFormat;
+    let subDate;
+    if (format == 'israel') {
+      let subDateArr = date.split('T');
+      let subDate1 = subDateArr[0];
+      subDate = subDate1.split('-');
+      dateFormat = subDate[2] + '/' + subDate[1] + '/' + subDate[0]
+    }
+    else {
+      subDate = date.split("/");
+      dateFormat = subDate[2] + '-' + subDate[1] + '-' + subDate[0]; //UTC format
+    }
+    return dateFormat;
+  }
+
+
 
    addOrder(item: any,orderType) {  
       this.orderService.addOrder(4, item).subscribe(res => {
@@ -406,5 +407,6 @@ export class GeneralFormService {
   }
 
      
+
 
 }

@@ -40,9 +40,11 @@ export class TransportFormComponent implements OnInit {
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
+
     //this.generalFormService.setDatesValues();
     if (this.order!= undefined && this.order!= null) {
        this.generalFormService.setFormValues(this.order);
+
     }
     this.setformTemplate();
     
@@ -68,19 +70,20 @@ export class TransportFormComponent implements OnInit {
      this.generalFormService.questionGroups[index].questions = transportQuestions;
     this.formTemplate.questionsGroups=this.generalFormService.questionGroups;
     console.log('group transport is: ',this.formTemplate.questionsGroups);
+    
   }
 
-  changeLabels(tempArr){
-    console.log('tempArr is :',tempArr);
-     let startDateIndex = tempArr.findIndex(el=> el.key === 'startDate');
-     tempArr[startDateIndex].label= 'תאריך איסוף';
-     let endDateIndex = tempArr.findIndex(el=> el.key === 'endDate');
-     tempArr[endDateIndex].label= 'תאריך פיזור';
-     let startHourIndex = tempArr.findIndex(el=> el.key === 'startHour');
-     tempArr[startHourIndex].label= 'שעת איסוף';
-     let endHourIndex = tempArr.findIndex(el=> el.key === 'endHour');
-     tempArr[endHourIndex].label= 'שעת פיזור';
-     return tempArr;
+  changeLabels(tempArr) {
+    console.log('tempArr is :', tempArr);
+    let startDateIndex = tempArr.findIndex(el => el.key === 'startDate');
+    tempArr[startDateIndex].label = 'תאריך איסוף';
+    let endDateIndex = tempArr.findIndex(el => el.key === 'endDate');
+    tempArr[endDateIndex].label = 'תאריך פיזור';
+    let startHourIndex = tempArr.findIndex(el => el.key === 'startHour');
+    tempArr[startHourIndex].label = 'שעת איסוף';
+    let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
+    tempArr[endHourIndex].label = 'שעת פיזור';
+    return tempArr;
   }
 
    getSupplierList(orderTypeId,tripId,orderId){
@@ -181,6 +184,17 @@ export class TransportFormComponent implements OnInit {
     });
    
     console.log(this.form)
+    this.form.controls["details"].get('supplier').valueChanges.subscribe(value => {
+      console.log(value)
+    });
+    this.form.controls["details"].get('itemId').valueChanges.subscribe(value => {
+      console.log(value)
+      this.form.value.details.itemId = value;
+      this.additionsService.calculateBillings(this.form.value.details)
+
+    });
+
+
   }
   
  

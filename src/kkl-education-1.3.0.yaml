@@ -2078,8 +2078,8 @@ components:
          example : 12345
          nullable: true
        itemId:
-         type: integer
-         description: the unique item order id;
+         type: intege
+         description: the unique item order id
          example : 123
          nullable: true
        orderItemName:
@@ -2657,9 +2657,6 @@ components:
          allOf: 
          - $ref: '#/components/schemas/OrderEvent'
          properties:
-            # location:
-            #   type: string
-            #   example: חדר אוכל ציפורי
             scatterLocation:
               type: string
               example: tel aviv
@@ -2673,7 +2670,7 @@ components:
               type: string
               example: 'kk'
             
-    HostingOrder:
+
          type: object
          allOf: 
          - $ref: '#/components/schemas/OrderEvent'
@@ -2688,6 +2685,7 @@ components:
           #  guardName:
           #    type: string
           #    example : dan
+
       
     MusicActivationOrder:
          type: object
