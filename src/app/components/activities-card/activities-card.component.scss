@@ -63,8 +63,12 @@
     //     direction: rtl;
     // }
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1280px) {
     ::ng-deep .activities-card .mat-card-lg-image {
-        width: 90% !important;
+        width: 90% !important; 
     }
+    .activities-card img {
+        height: 100%!important;
+    }
+
 }
