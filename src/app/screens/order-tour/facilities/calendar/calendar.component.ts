@@ -19,6 +19,7 @@ export class CalendarComponent implements OnInit {
   public calendarEventsArr$!: Observable<EventInput[]>;
   public value!: EventInput[];
   public valueSub: Subscription;
+  public hideComponent:boolean = false;
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
   @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
 
@@ -61,8 +62,9 @@ export class CalendarComponent implements OnInit {
       this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
     },
     eventContent: (props) => {
-      this.myDynamicComponent.viewContainerRef.clear();
+      console.log(this.myDynamicComponent);
       const factory = this.resolver.resolveComponentFactory(CalendarCardComponent);
+      this.myDynamicComponent.viewContainerRef.clear();
       const componentRef = this.myDynamicComponent.viewContainerRef.createComponent(factory, 0);
       componentRef.instance.props = props;
       componentRef.changeDetectorRef.detectChanges();
@@ -70,9 +72,12 @@ export class CalendarComponent implements OnInit {
       
       return { html: html.innerHTML };
     },
+    eventDidMount: () => {
+      
+    }
   }
 
-  public arrangeDate(date) {
+  public arrangeDate(date:Date) {
     // 2021-10-15T08:00
     const hours = date.getHours();
     const minutes = date.getMinutes();

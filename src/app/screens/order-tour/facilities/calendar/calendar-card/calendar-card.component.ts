@@ -13,7 +13,6 @@ export class CalendarCardComponent implements OnInit {
   @Input() public props!: any;
 
   ngOnInit(): void {
-    console.log(this.props);
   }
 
 
