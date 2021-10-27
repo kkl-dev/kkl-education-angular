@@ -1,4 +1,4 @@
-import { Component, ComponentRef, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventInput } from '@fullcalendar/angular';
@@ -7,6 +7,8 @@ import { FacilitiesService } from 'src/app/services/facilities.service';
 import heLocale from '@fullcalendar/core/locales/he';
 import interactionPlugin from '@fullcalendar/interaction';
 import { h, render } from 'preact';
+import { CalendarCardComponent } from './calendar-card/calendar-card.component';
+import { DynamicComponent } from 'src/app/components/dynamic/dynamic.component';
 
 @Component({
   selector: 'app-calendar',
@@ -19,9 +21,9 @@ export class CalendarComponent implements OnInit {
   public value!: EventInput[];
   public valueSub: Subscription;
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
-  @ViewChild('calendarEventCard', { read: TemplateRef }) eventCard: TemplateRef<any>;
+  @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
 
-  constructor(private facilitiesService: FacilitiesService, private vref: ViewContainerRef) { }
+  constructor(private facilitiesService: FacilitiesService, private vref: ViewContainerRef, private resolver: ComponentFactoryResolver) { }
 
   public calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin, interactionPlugin],
@@ -59,8 +61,15 @@ export class CalendarComponent implements OnInit {
     eventResize: (info) => {
       this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
     },
-    eventContent: (props,createElement) => {
-      
+    eventContent: (props) => {
+      this.myDynamicComponent.viewContainerRef.clear();
+      const factory = this.resolver.resolveComponentFactory(CalendarCardComponent);
+      const componentRef = this.myDynamicComponent.viewContainerRef.createComponent(factory, 0, undefined, [[]]);
+      componentRef.instance.props = props;
+      console.log({ componentRef });
+      const html = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+
+      return { html : html.innerHTML};
     }
   }
 

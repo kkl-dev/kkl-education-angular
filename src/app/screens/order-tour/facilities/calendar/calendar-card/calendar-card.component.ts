@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewContainerRef } from '@angular/core';
 
 @Component({
   selector: 'app-calendar-card',
@@ -6,12 +6,11 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./calendar-card.component.scss']
 })
 export class CalendarCardComponent implements OnInit {
-  @Input() svgUrl:string ;
-  constructor() { }
+  @Input() public props:any;
+  constructor(public viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
-    console.log(this.svgUrl);
-    
+    console.log(this.props);
   }
 
 }
