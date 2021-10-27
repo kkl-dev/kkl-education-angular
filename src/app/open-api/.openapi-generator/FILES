@@ -33,6 +33,7 @@ model/facilityDate.ts
 model/facilityMapByDates.ts
 model/fieldForestCenter.ts
 model/guidanceOrder.ts
+model/hostingOrder.ts
 model/itemsByTypeOrder.ts
 model/language.ts
 model/lodgingDetailsPerDay.ts
@@ -49,6 +50,7 @@ model/orderEvent.ts
 model/orderItemCommonDetails.ts
 model/orderType.ts
 model/participantType.ts
+model/securingOrder.ts
 model/siteOrder.ts
 model/sleepingOptions.ts
 model/status.ts

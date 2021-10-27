@@ -5,7 +5,7 @@ info:
   description: Education new project|
   contact:
     email: yochai@one1.co.il
-  version: 1.2.0
+  version: 1.3.0
 servers:
 - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
   description: SwaggerHub API Auto Mocking
@@ -2078,8 +2078,8 @@ components:
          example : 12345
          nullable: true
        itemId:
-         type: integer
-         description: the unique item id;
+         type: intege
+         description: the unique item order id
          example : 123
          nullable: true
        orderItemName:
@@ -2122,10 +2122,10 @@ components:
           description: refers to indentity record on trip activities table in data base
           example: 56
           nullable: true
-        categoryId:
-          type: integer
-          example: 2
-          nullable: true
+        # categoryId:
+        #   type: integer
+        #   example: 2
+        #   nullable: true
         date:
            type: string
            format: date-time
@@ -2133,11 +2133,11 @@ components:
         description:
            type: string
            example: 'students education'
-        hourStart:
+        fromHour:
           type: string
           format: date-time
           example: '2021-11-12T10:00:00'
-        hourEnd:
+        tillHour:
           type: string
           format: date-time
           example: '2021-11-12T12:00:00'
@@ -2553,8 +2553,11 @@ components:
           description: refers to indentity record on order table in data base
         orderId:
           type: integer
+        tempOrderIdentity:
+          type: integer
+          nullable: true
         orderItemDetails:
-          $ref: '#/components/schemas/ItemsByTypeOrder'
+          $ref: '#/components/schemas/ItemsByTypeOrder'    
         quantity:
          type: integer
         itemCost:
@@ -2609,11 +2612,10 @@ components:
       allOf: 
         - $ref: '#/components/schemas/OrderEvent'
       properties:
-        # pickUpLocation:
-        #   type: string
-        pickUpAddress:
+        exitPoint:
           type: string
-        scatterAddress:
+          description: exit point of transport for calculate price
+        scatterLocation:
           type: string
     
     SiteOrder:
@@ -2626,7 +2628,7 @@ components:
              example: 5
          siteAddress:
              type: string
-             example: http://
+             example: 'http://'
          isCustomerOrder:
               type: boolean
               example: true
@@ -2655,9 +2657,9 @@ components:
          allOf: 
          - $ref: '#/components/schemas/OrderEvent'
          properties:
-            # location:
-            #   type: string
-            #   example: חדר אוכל ציפורי
+            scatterLocation:
+              type: string
+              example: tel aviv
             guideName:
               type: string
               example: dan
@@ -2669,14 +2671,21 @@ components:
               example: 'kk'
             
 
-    # SecuringOrder:    
-    #      type: object
-    #      allOf: 
-    #      - $ref: '#/components/schemas/TransportOrder'
-    #      properties:
-    #        guardName:
-    #          type: string
-    #          example : dan
+         type: object
+         allOf: 
+         - $ref: '#/components/schemas/OrderEvent'
+    SecuringOrder:    
+         type: object
+         allOf: 
+         - $ref: '#/components/schemas/OrderEvent'
+         properties:
+           scatterLocation:
+            type: string
+            example: ramat-gan
+          #  guardName:
+          #    type: string
+          #    example : dan
+
       
     MusicActivationOrder:
          type: object

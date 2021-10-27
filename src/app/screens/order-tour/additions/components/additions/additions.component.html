@@ -11,12 +11,15 @@
       </button>
     </div>
     <app-tour-title [value]="tour.title" [id]="tour.id"></app-tour-title>
-    <div *ngIf="!item$">
+    <div *ngIf="!items">
       <!-- addSchedule -->
       <!-- <app-tour-panel [editMode]="false" [orderType]="orderType" [item]="item"></app-tour-panel> -->
       <app-tour-panel [editMode]="false" [orderType]="orderType" ></app-tour-panel>
     </div>
-    <div *ngFor="let item of item$ | async; index as i">
+    <!-- <div *ngFor="let item of item$ | async; index as i">
+      <app-tour-panel [editMode]="false" [orderType]="orderType" [item]="item" [i]="i + 1"></app-tour-panel>
+    </div> -->
+    <div *ngFor="let item of items ; index as i">
       <app-tour-panel [editMode]="false" [orderType]="orderType" [item]="item" [i]="i + 1"></app-tour-panel>
     </div>
   </div>
