@@ -34,17 +34,21 @@ export class FacilitiesService {
   private selectedActivity = new BehaviorSubject(null);
 
   public getCalendarEventsArr(): Observable<EventInput[]> {
+    console.log("getCalendarEventsArr: ");
     return this.calendarEventsArr.asObservable();
   }
 
   public updateCalendarEventsArr(args: EventInput): void {
+    console.log("updateCalendarEventsArr: args ", args);
     this.calendarEventsArr.next([...this.calendarEventsArr.value, args]);
   }
 
   public closeModal(args: string): void {
+    console.log("closeModal: args ", args);
     this.closeModalObs.next(args);
   }
   public getCloseModalObs(): Observable<string> {
+    console.log("getCloseModalObs: ");
     return this.closeModalObs.asObservable();
   }
 
@@ -59,14 +63,17 @@ export class FacilitiesService {
     this.closeModal(item.type);
   }
 
-  public updateSelectedFacility(args: InfoCard1): void {
+  public updateSelectedFacility(args: InfoCard): void {
+    console.log("updateSelectedFacility: args ", args);
     this.selectedFacility.next(args);
   }
-  public getSelectedFacility(): Observable<InfoCard1> {
+  public getSelectedFacility(): Observable<InfoCard> {
+    console.log("updateSelectedFacility: ");
     return this.selectedFacility.asObservable();
   }
   
   public updateSelectedActivity(args: ActivitiesCardInterface): void {
+    console.log("updateSelectedActivity: args ", args);
     this.selectedActivity.next(args);
   }
   public getSelectedActivity(): Observable<ActivitiesCardInterface> {

@@ -27,15 +27,17 @@ export class SaveActivityComponent implements OnInit {
     { name: 'הפעלה מוסיקלית', completed: false },
   ];
   @Input() days: {
-    day: string;
-    options: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
+    date: string;
+    sleepingOptions: {
+      img: string;
+      availableUnits: number;
+      maxOccupancy: number;
+      nameEng: string;
+      acoomodationTypeName: string;
+      accomodationTypeId: number
     }
   }[] = DAYS;
+    
   public selectedDay: number = 0;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
@@ -82,7 +84,8 @@ export class SaveActivityComponent implements OnInit {
 
   // date && time functions // 
   public arrangeTime(arg: string): any {
-    const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    // const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    const [day, month, year] = this.days[this.selectedDay].date.split(".");
     let [hours, minutes] = this.form.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;
@@ -131,5 +134,4 @@ export class SaveActivityComponent implements OnInit {
       }
     }
   }
-
 }

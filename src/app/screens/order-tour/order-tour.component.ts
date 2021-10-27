@@ -307,17 +307,17 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   AddOrder() {
-    if (this.additionsService.orderList.length > 0) {
-      this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
-        console.log(res);
-      }, (err) => {
-        console.log(err);
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
-      })
-    }
+    // if (this.additionsService.orderList.length > 0) {
+    //   this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
+    //     console.log(res);
+    //   }, (err) => {
+    //     console.log(err);
+    //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //       width: '500px',
+    //       data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //     })
+    //   })
+    // }
 
   }
 

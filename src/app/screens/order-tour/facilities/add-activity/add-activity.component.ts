@@ -9,16 +9,29 @@ import { DAYS } from 'src/mock_data/facilities';
   styleUrls: ['./add-activity.component.scss']
 })
 export class AddActivityComponent implements OnInit {
+
   days: {
-    day: string;
-    options: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
+    date: string;
+    sleepingOptions: {
+      img: string;
+      availableUnits: number;
+      maxOccupancy: number;
+      nameEng: string;
+      acoomodationTypeName: string;
+      accomodationTypeId: number
     }
   }[] = DAYS;
+    
+  // days: {
+  //   day: string;
+  //   options: {
+  //     svgUrl: string;
+  //     sleepingAreas: number;
+  //     avialableSpaces: number;
+  //     type: string;
+  //     singleUnit: string;
+  //   }
+  // }[] = DAYS;
   public form: FormGroup;
   public showSleepAreas: boolean = false;
   public selectedDay: number = 0;
@@ -55,7 +68,8 @@ export class AddActivityComponent implements OnInit {
     this.form.controls['end'].setValue(event);
   }
   public arrangeTime(arg: string): any {
-    const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    // const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    const [day, month, year] = this.days[this.selectedDay].date.split(".");
     let [hours, minutes] = this.form.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { FacilitiesService } from 'src/app/services/facilities.service';
-import { InfoCard } from '../../education-results/education-results.component';
+//import { InfoCard } from '../../education-results/education-results.component';
 import { INITIAL_EVENTS } from './calendar/event-utils';
 import { EventInput } from '@fullcalendar/angular';
 import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_ARRAY } from 'src/mock_data/facilities';
@@ -13,22 +13,40 @@ import { Validators } from '@angular/forms';
 import { ActivitiesService, Area, UserService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 
-export interface InfoCard1 {
-  svgUrl: string;
+// export interface InfoCard1 {
+//   svgUrl: string;
+//   title?: string;
+//   headline?: string;
+//   subHeadline?: string;
+//   availability?: TooltipDataModel1[];
+//   maxParticipants?: string;
+//   days?: any[];
+// }
+
+// export interface TooltipDataModel1 {
+//   startingHour: number;
+//   endingHour: number;
+//   totalTime: number;
+//   user: string;
+// }
+
+export interface InfoCard {
+  iconPath: string;
   title?: string;
   headline?: string;
   subHeadline?: string;
-  availability?: TooltipDataModel1[];
+  availability?: TooltipDataModel[];
   maxParticipants?: string;
   days?: any[];
 }
 
-export interface TooltipDataModel1 {
+export interface TooltipDataModel {
   startingHour: number;
   endingHour: number;
   totalTime: number;
   user: string;
 }
+
 
 @Component({
   selector: 'app-facilities',
@@ -39,7 +57,7 @@ export interface TooltipDataModel1 {
 export class FacilitiesComponent implements OnInit {
   public eventsArr: EventInput[] = [...INITIAL_EVENTS];
   public closeModal$: Observable<string>;
-  public selectedFacility$: Observable<InfoCard1>;
+  public selectedFacility$: Observable<InfoCard>;
   public selectedActivity$: Observable<ActivitiesCardInterface>;
   public calendarEventsArr$: Observable<EventInput[]>;
   public timesArray: Array<string | number> = [];
@@ -54,9 +72,9 @@ export class FacilitiesComponent implements OnInit {
   // public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
   // public activitiesArray: any[];
   // public upComingActivitiesArray: any[];
-
+  public facilitiesArray: any = FACILITIES_ARRAY;
   facilityForDay: any;
-  facilitiesArray: any;
+  //facilitiesArray: any;
   tripActivities: any = [];
   tripActivitiesShow: any = [];
   tripActivitiesFilter: any = [];
@@ -115,7 +133,7 @@ export class FacilitiesComponent implements OnInit {
   }
 
   private setFormArray() {
-   // console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
+   // console.log('this.tripActivitiesShow: ', this.tripActivitiesShow);
     this.formArray = [
       new QuestionSelect({
         key: 'durationOfActivity',
@@ -191,19 +209,19 @@ export class FacilitiesComponent implements OnInit {
   getAvailableFacilities() {
     //let sleepingDates = this.tripService.convertDatesFromSlashToMinus();  
     //temp fixed dates and place
-    this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
-    // this.usersService.getAvailableFacilities(1, '2021-10-20', '2021-10-21').subscribe((facilities: any) => {
-    //   console.log('get Available Facilities: ', facilities);
-    //   if (facilities) {
-    //     //this.activitiesArray = facilities;
-    //     this.facilitiesArray = facilities[0].facilitiesList;
-    //     //this.tripService.setfacilitiesArray(facilities);
-    //     console.log('facility For Day: ', this.facilitiesArray);
-    //   }
-    // },
-    //   error => {
-    //     console.log("error: ", error);
-    //   });
+    //this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
+    this.usersService.getAvailableFacilities(1, '2021-10-20', '2021-10-22').subscribe((facilities: any) => {
+      console.log('get Available Facilities: ', facilities);
+      if (facilities) {
+        //this.activitiesArray = facilities;
+        this.facilitiesArray = facilities[0].facilitiesList;
+        //this.tripService.setfacilitiesArray(facilities);
+        console.log('facility For Day: ', this.facilitiesArray);
+      }
+    },
+      error => {
+        console.log("error: ", error);
+      });
   }
 
   logForm(form) {
@@ -279,6 +297,7 @@ export class FacilitiesComponent implements OnInit {
 
   public openModal(args: string): void {
     this.facilitiesService.closeModal(args);
+    console.log('openModal args: ' + args)
   }
 
   public fillTimes(): void {
@@ -287,16 +306,19 @@ export class FacilitiesComponent implements OnInit {
     }
   }
 
-  public updateChosenFacility(args: InfoCard1) {
+  public updateChosenFacility(args: any) {
+    console.log('updateChosenFacility args' + args)
     this.facilitiesService.updateSelectedFacility(args);
   }
 
   public updateChosenUpComingActivity(args: ActivitiesCardInterface) {
+    console.log('updateChosenUpComingActivity args' + args)
     this.facilitiesService.updateSelectedActivity(args);
     this.activityIsUpComing = true;
   }
 
   public updateChosenActivity(args: ActivitiesCardInterface) {
+    console.log('updateChosenActivity args' + args)
     this.activityIsUpComing = false;
     this.facilitiesService.updateSelectedActivity(args);
   }

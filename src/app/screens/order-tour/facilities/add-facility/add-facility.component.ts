@@ -1,33 +1,57 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { InfoCard } from 'src/app/screens/education-results/education-results.component';
+//import { InfoCard } from 'src/app/screens/education-results/education-results.component';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { UserDataService } from 'src/app/utilities/services/user-data.service';
 import { DAYS } from 'src/mock_data/facilities';
 
-export interface InfoCard1 {
-  svgUrl: string;
-  title?: string;
-  headline?: string;
+export interface InfoCard {
+  iconPath: string;
+  name: string;
   subHeadline?: string;
-  availability?: TooltipDataModel1[];
-  maxParticipants?: string;
-  days?: any[];
+  maxOccupancy?: any[];
+  occupiedHours?: TooltipDataModel[];
 }
 
-export interface TooltipDataModel1 {
-  startingHour: number;
-  endingHour: number;
+export interface TooltipDataModel {
+  fromHour: number;
+  tillHour: number;
   totalTime: number;
-  user: string;
+  customerName: string;
 }
 export interface OccupiedBarModel {
-  startingHour: number;
-  endingHour: number;
+  fromHour: number;
+  tillHour: number;
   totalTime: number;
-  user: string;
+  customerName: string;
 }
+
+
+
+
+// export interface InfoCard1 {
+//   svgUrl: string;
+//   title?: string;
+//   headline?: string;
+//   subHeadline?: string;
+//   availability?: TooltipDataModel1[];
+//   maxParticipants?: string;
+//   days?: any[];
+// }
+// export interface TooltipDataModel {
+//   startingHour: number;
+//   endingHour: number;
+//   totalTime: number;
+//   user: string;
+// }
+// export interface OccupiedBarModel {
+//   startingHour: number;
+//   endingHour: number;
+//   totalTime: number;
+//   user: string;
+// }
+
 
 @Component({
   selector: 'app-add-facility',
@@ -37,19 +61,24 @@ export interface OccupiedBarModel {
 export class AddFacilityComponent implements OnInit {
   addFacilityForm: FormGroup;
   @Input() days: {
-    day: string;
-    options: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
+    date: string;
+    sleepingOptions: {
+      img: string;
+      availableUnits: number;
+      maxOccupancy: number;
+      nameEng: string;
+      acoomodationTypeName: string;
+      accomodationTypeId: number
     }
   }[] = DAYS;
-  public selectedFacility$: Observable<InfoCard1>;
+    
+  public selectedFacility$: Observable<InfoCard>;
   @Input() startingHour: number = 0
   @Input() endingHour: number = 24;
-  @Input() hours: OccupiedBarModel[];
+  // @Input() hours: OccupiedBarModel[];
+  @Input() totalTime: OccupiedBarModel[];
+
+  
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
   public selectedDay: number = 0;
   public subscribeToFacility: Subscription;
@@ -61,11 +90,13 @@ export class AddFacilityComponent implements OnInit {
   constructor(private userDataService: UserDataService, private facilitiesServices: FacilitiesService) {
     this.username = this.userDataService.user.name;
   }
+  defaultImage : string ='path270.svg';
 
    public ngOnInit(): void {
     this.selectedFacility$ = this.facilitiesServices.getSelectedFacility();
     this.subscribeToFacility = this.selectedFacility$.subscribe(data => {
-      this.hours = data.availability;
+      console.log('data in add facility', data)
+      this.totalTime = data.occupiedHours;
       this.createOccupiedHoursArray();
       this.createForm(data);
     });
@@ -129,7 +160,9 @@ export class AddFacilityComponent implements OnInit {
     this.addFacilityForm.controls['end'].setValue(event);
   }
   public arrangeTime(arg: string): any {
-    const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    // const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    const [day, month, year] = this.days[this.selectedDay].date.split(".");
+
     let [hours, minutes] = this.addFacilityForm.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;
@@ -146,19 +179,19 @@ export class AddFacilityComponent implements OnInit {
   createOccupiedHoursArray() {
     let startingHour = this.startingHour;
 
-    this.hours.map((hour) => {
-      if (startingHour < hour.startingHour) {
+    this.totalTime.map((hour) => {
+      if (startingHour < hour.tillHour) {
         this.occupiedHoursArray.push({
-          totalHours: hour.startingHour - startingHour,
+          totalHours: hour.fromHour - startingHour,
           user: 'none',
         });
       }
 
       this.occupiedHoursArray.push({
         totalHours: hour.totalTime,
-        user: hour.user,
+        user: hour.customerName,
       });
-      startingHour = hour.endingHour;
+      startingHour = hour.tillHour;
     });
 
     if (startingHour < this.endingHour) {

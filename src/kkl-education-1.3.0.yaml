@@ -5,7 +5,7 @@ info:
   description: Education new project|
   contact:
     email: yochai@one1.co.il
-  version: 1.2.0
+  version: 1.3.0
 servers:
 - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
   description: SwaggerHub API Auto Mocking
@@ -441,7 +441,7 @@ paths:
 
   
   /budget/expensesAndIncome:
-    put:
+    post:
       tags:
       - user
       operationId: GetBadgetExpensesAndIncome
@@ -458,7 +458,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Budget'
   /budget/budgetKkl:
-    put:
+    post:
       tags:
       - user
       operationId: GetBadgetKKl
@@ -474,7 +474,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Budget'
-  /budget/GetKKlAmount/{tripId}':
+  /budget/GetKKlAmount/{tripId}:
     get:
       tags:
       - user
@@ -492,24 +492,28 @@ paths:
             text/plain:
               schema:
                 type: number
-                format: double
-  /budget/IsExistBudgetToYishuv/{start}:
-    post:
+  /budget/IsExistBudgetToYishuv/{startDate}/{cityId}/{budgetType}:
+    get:
       tags:
       - user
       operationId: IsExistBudgetToYishuv
       parameters:
-      - name: start
+      - name: startDate
         in: path
         required: true
         schema:
           type: string
           format: date-time
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Budget'
+      - name: cityId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: budgetType
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
         "200":
           description: Success
@@ -760,7 +764,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TempOrder'
-  /Order/AddOrder/{permissionId}:
+  # /Order/AddOrder/{permissionId}/{isOccupancyProblemFromSp}/{ibRemoveOccProb}:
+  /order/getOrders/{tripId}:
+    get:
+      tags:
+      - order
+      operationId: GetOrders
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer    
+      responses:
+        "200":
+          description: list of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderEvent'
+  /order/AddOrder/{permissionId}:
     post:
       tags:
       - order
@@ -786,18 +811,18 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-               type: object
                $ref: '#/components/schemas/OrderEvent'
       responses:
         "200":
           description: Success
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/TripModel'
-  /Order/EditOrder/{userName}/{permId}/{descOccupancyProbFromSp}/{isRemoveOccProb}:
+               schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderEvent'
+  # /order/EditOrder/{userName}/{permId}/{descOccupancyProbFromSp}/{isRemoveOccProb}:
+  /order/EditOrder/{userName}/{permId}:
     put:
       tags:
       - order
@@ -819,32 +844,34 @@ paths:
         required: true
         schema:
           type: integer
-      - name: descOccupancyProbFromSp
-        in: path
-        required: true
-        schema:
-          type: string
-          nullable: true
-      - name: isRemoveOccProb
-        in: path
-        required: true
-        schema:
-          type: integer
+      # - name: descOccupancyProbFromSp
+      #   in: path
+      #   required: true
+      #   schema:
+      #     type: string
+      #     nullable: true
+      # - name: isRemoveOccProb
+      #   in: path
+      #   required: true
+      #   schema:
+      #     type: integer
       requestBody:
         content:
           application/json:
              schema:
-              type: array
-              items:
-               type: object
+              # type: array
+              # items:
+              #  type: object
                $ref: '#/components/schemas/OrderEvent'
       responses:
         "200":
           description: Success
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/TripModel'
+               schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderEvent'
   /order/orderType:
     get:
       tags:
@@ -990,7 +1017,7 @@ paths:
             text/plain:
               schema:
                 type: string
-  /defaultItemByItem/IfAddItemToExistItemByIdOrder/{orderItemId}':
+  /defaultItemByItem/IfAddItemToExistItemByIdOrder/{orderItemId}:
     get:
       tags:
       - order
@@ -1386,13 +1413,15 @@ components:
         
     Customer:
       type: object
+      allOf: 
+        - $ref: '#/components/schemas/BaseCustomer'
       properties:
-        customerId:
-          type: integer
-          example: 4
-        customerName:
-          type: string
-          example: סימינר הקיבוצים
+        # customerId:
+        #   type: integer
+        #   example: 4
+        # customerName:
+        #   type: string
+        #   example: סימינר הקיבוצים
         typeId:
           type: integer
           example: 6
@@ -1447,15 +1476,15 @@ components:
         email:
           type: string
           example: test@gmail.com
-        contactName:
-          type: string
-          example: דן
-        contactPhone:
-          type: string
-          example: 00-9999999
-        contactMobile:
-          type: string
-          example: "613566756"
+        # contactName:
+        #   type: string
+        #   example: דן
+        # contactPhone:
+        #   type: string
+        #   example: 00-9999999
+        # contactMobile:
+        #   type: string
+        #   example: "613566756"
         userName:
           type: string
           example: dan
@@ -1590,12 +1619,14 @@ components:
           type: integer
           nullable: true
           example: 1
-        tripStatusId:
-          type: integer
-          example: 3
-        tripStatusName:
-          type: string
-          example: חדש
+        tripStatus:
+          $ref: '#/components/schemas/Status'
+        # tripStatusId:
+        #   type: integer
+        #   example: 3
+        # tripStatusName:
+        #   type: string
+        #   example: חדש
         userMobile:
           type: string
           example: "2222222222"
@@ -1979,46 +2010,100 @@ components:
            type: array
            items:
             $ref: '#/components/schemas/TripActivity'
-        facilityOrderList:
-           type: array
-           items:
-            $ref: '#/components/schemas/FacilityOrder'
+        # activityAndFacilityList:
+        #    type: array
+        #    items:
+        #     $ref: '#/components/schemas/TripActivity'
+        # facilityOrderList:
+        #    type: array
+        #    items:
+        #     $ref: '#/components/schemas/TempOrder'
 
-    FacilityOrder:
-       type: object
-       properties:
-        tripId:
-         type: integer
-         example: 1
-        facilityId:
-          type: integer
-          example: 1
-        orderId: 
+    # FacilityOrder:
+    #    type: object
+    #    properties:
+    #     tripId:
+    #      type: integer
+    #      example: 1
+    #     facilityId:
+    #       type: integer
+    #       example: 1
+    #     orderId: 
+    #      type: integer
+    #      example : 12345
+    #      nullable: true
+    #     orderItemIdentity:
+    #      type: integer
+    #      description: refers to indentity record on data base
+    #      example : 12345
+    #      nullable: true
+    #     facilityName:
+    #      type: string
+    #     startDate: 
+    #       type: string
+    #       format: date-time
+    #     endDate:
+    #       type: string
+    #       format: date-time
+    #     startHour:
+    #       type: string
+    #       format: date-time
+    #     endHour:
+    #       type: string
+    #       format: date-time
+    #     openBy: 
+    #       type: string
+    #       example: 'שחר גל'
+    TempOrder:
+      type: object
+      properties:
+       orderTempId:
+        type: integer
+        example: 1
+       tripId:
+        type: integer
+        example: 12
+       orderTypeCode:
+        type: integer
+       orderTypeName:
+        type: string
+        example : 'היסעים'
+       orderId: 
          type: integer
          example : 12345
          nullable: true
-        orderItemIdentity:
+       orderItemIdentity:
          type: integer
-         description: refers to indentity record on data base
+         description: refers to indentity record on the order table
          example : 12345
          nullable: true
-        facilityName:
+       itemId:
+         type: integer
+         description: the unique item order id;
+         example : 123
+         nullable: true
+       orderItemName:
          type: string
-        startDate: 
+         example: אוטובוס
+       startDate: 
           type: string
           format: date-time
-        endDate:
+          example: '2021-11-12T00:00:00'
+       endDate: 
           type: string
           format: date-time
-        startHour:
+          example: '2021-11-12T00:00:00'
+       fromHour:
           type: string
           format: date-time
-        endHour:
+          example: '2021-11-12T13:00:00'
+       tillHour:
           type: string
           format: date-time
-        openBy: 
+          example: '2021-11-12T15:00:00'
+       userName: 
           type: string
-          example: 'שחר גל'
+
 
           
     TripActivity:
@@ -2026,18 +2111,21 @@ components:
       properties:
         activityId:
           type: integer
+          description :  the unique activity Id
           example: 1
+          nullable: true
         activityName: 
           type: string
           example: 'חינוך'
         tripActivityIdentity :
           type: integer
-          description: refers to indentity record on data base
+          description: refers to indentity record on trip activities table in data base
           example: 56
-        categoryId:
-          type: integer
-          example: 2
           nullable: true
+        # categoryId:
+        #   type: integer
+        #   example: 2
+        #   nullable: true
         date:
            type: string
            format: date-time
@@ -2045,11 +2133,11 @@ components:
         description:
            type: string
            example: 'students education'
-        hourStart:
+        fromHour:
           type: string
           format: date-time
           example: '2021-11-12T10:00:00'
-        hourEnd:
+        tillHour:
           type: string
           format: date-time
           example: '2021-11-12T12:00:00'
@@ -2097,52 +2185,7 @@ components:
         name:
           type: string
           example: 'education'
-    TempOrder:
-      type: object
-      properties:
-       tripId:
-        type: integer
-        example: 12
-       orderTypeCode:
-        type: integer
-       orderTypeName:
-        type: string
-        example : 'היסעים'
-       orderId: 
-         type: integer
-         example : 12345
-         nullable: true
-       orderItemIdentity:
-         type: integer
-         description: refers to indentity record on data base
-         example : 12345
-         nullable: true
-       orderItemId:
-         type: integer
-         example : 123
-         nullable: true
-       orderItemName:
-         type: string
-         example: אוטובוס
-       startDate: 
-          type: string
-          format: date-time
-          example: '2021-11-12T00:00:00'
-       endDate: 
-          type: string
-          format: date-time
-          example: '2021-11-12T00:00:00'
-       fromHour:
-          type: string
-          format: date-time
-          example: '2021-11-12T13:00:00'
-       tillHour:
-          type: string
-          format: date-time
-          example: '2021-11-12T15:00:00'
-       userName: 
-          type: string
-
+ 
     # OrderModel:
     #   type: object
     #   properties:
@@ -2504,11 +2547,17 @@ components:
       properties:
         itemId:
           type: integer
-        itemIdentity:
+          description: the unique item id
+        itemOrderRecordId:
           type: integer
-          description: refers to indentity record on data base
+          description: refers to indentity record on order table in data base
+        orderId:
+          type: integer
+        tempOrderIdentity:
+          type: integer
+          nullable: true
         orderItemDetails:
-          $ref: '#/components/schemas/ItemsByTypeOrder'
+          $ref: '#/components/schemas/ItemsByTypeOrder'    
         quantity:
          type: integer
         itemCost:
@@ -2522,6 +2571,8 @@ components:
         peopleInTrip:
           type: integer
           nullable: true
+        location:
+          type: string         
         startDate:
           type: string
           format: date-time
@@ -2536,11 +2587,14 @@ components:
           format: date-time
         userName:
           type: string
-        comment: 
+        comments: 
           type: string
-       
-          
-           
+        internalComment:
+          type: string     
+        openDate:
+          type: string
+          format: date-time
+        
 
     OrderEvent:
       discriminator:  
@@ -2558,12 +2612,11 @@ components:
       allOf: 
         - $ref: '#/components/schemas/OrderEvent'
       properties:
-        pickUpLocation:
+        exitPoint:
           type: string
-        pickUpAddress:
+          description: exit point of transport for calculate price
+        scatterLocation:
           type: string
-        # scatterAddress:
-        #   type: string
     
     SiteOrder:
         type: object
@@ -2575,7 +2628,7 @@ components:
              example: 5
          siteAddress:
              type: string
-             example: http://
+             example: 'http://'
          isCustomerOrder:
               type: boolean
               example: true
@@ -2584,12 +2637,12 @@ components:
         allOf: 
         - $ref: '#/components/schemas/OrderEvent'
         properties:
-           servingTime:
-              type: string
-              example: 15:00
-           location:
-              type: string
-              example: חדר אוכל ציפורי
+          #  servingTime:
+          #     type: string
+          #     example: 15:00
+          #  location:
+          #     type: string
+          #     example: חדר אוכל ציפורי
            regularDishesNumber:
               type: integer
               example: 100
@@ -2604,9 +2657,12 @@ components:
          allOf: 
          - $ref: '#/components/schemas/OrderEvent'
          properties:
-            location:
+            # location:
+            #   type: string
+            #   example: חדר אוכל ציפורי
+            scatterLocation:
               type: string
-              example: חדר אוכל ציפורי
+              example: tel aviv
             guideName:
               type: string
               example: dan
@@ -2617,21 +2673,30 @@ components:
               type: string
               example: 'kk'
             
-
-    # SecuringOrder:    
-    #      type: object
-    #      allOf: 
-    #      - $ref: '#/components/schemas/TransportOrder'
-    #      properties:
-    #        guardName:
-    #          type: string
-    #          example : dan
-        
-   
-    
-    # MusicActivation:
-    #      type: object
-    #      properties:
+    HostingOrder:
+         type: object
+         allOf: 
+         - $ref: '#/components/schemas/OrderEvent'
+    SecuringOrder:    
+         type: object
+         allOf: 
+         - $ref: '#/components/schemas/OrderEvent'
+         properties:
+           scatterLocation:
+            type: string
+            example: ramat-gan
+          #  guardName:
+          #    type: string
+          #    example : dan
+      
+    MusicActivationOrder:
+         type: object
+         allOf: 
+         - $ref: '#/components/schemas/OrderEvent'
+         properties:
+           totalHours:
+             type: integer
+             example: 4
     
     OrderType:
       type: object
@@ -2642,9 +2707,9 @@ components:
           type: string
         iconPath:
           type: string
-          example: 'http://'
         finOrderType:
           type: string
+          
     Supplier:
       type: object
       properties:
