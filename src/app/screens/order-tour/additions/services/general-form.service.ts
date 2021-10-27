@@ -45,14 +45,14 @@ export class GeneralFormService {
     new QuestionTextbox({
       key: 'quantity',
       label: 'כמות',
-      value: '',
+      value: '1',
       validations: [Validators.required],
     }),
 
     new QuestionTextbox({
       key: 'peopleInTrip',
       label: 'משתתפים',
-      value: String(this.squadAssembleService.peopleInTrip),
+      value: '',
       validations: [Validators.required],
     }),
     new QuestionTextbox({
@@ -138,6 +138,14 @@ export class GeneralFormService {
       value: '',
       icon: 'place',
       validations: [Validators.required],
+      inputProps: {
+        // labelSize: 's5',
+      },
+    }),
+    new QuestionTextbox({
+      key: 'internalComment',
+      label: 'הערות פנימיות',
+      value: '',
       inputProps: {
         // labelSize: 's5',
       },
@@ -344,22 +352,22 @@ export class GeneralFormService {
   // }
 
 
-  // originalItemList = [];
-  // getOrderItemBySupplierId() {
-  //   let index = this.details.findIndex(el => el.key === "supplier");
-  //   var supplierId = parseInt(this.details[index].value);
-  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       this.originalItemList = response;
-  //       response.forEach(element => {
-  //         this.itemsList.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
+  originalItemList = [];
+  getOrderItemBySupplierId(supplierId) {
+    // let index = this.details.findIndex(el => el.key === "supplier");
+    // var supplierId = parseInt(this.details[index].value);
+    this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
+      response => {
+        console.log(response);
+        this.originalItemList = response;
+        response.forEach(element => {
+          this.itemsList.push({ label: element.name, value: element.id.toString() });
+        });
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
 
 
   changeDateFormat(date, format) {

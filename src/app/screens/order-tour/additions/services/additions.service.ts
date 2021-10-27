@@ -102,29 +102,34 @@ export class AdditionsService {
     console.log(this.orderList);
   }
 
-  
+
   getDaysArray = function (start, end) {
-      for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
       arr.push(new Date(dt));
     }
     return arr;
   };
   calculateBillings(itemOrder: any) {
-    // itemOrder.startDate = new Date();
-    // itemOrder.endDate = new Date('27-10-2021');
+    var currentVat = 1.17;
+    itemOrder.quantity = +itemOrder.quantity;
+    itemOrder.startDate = "27/11/2021";
+    let str = itemOrder.startDate.split("/");
+    let startDate1 = str[2] + '-' + str[1] + '-' + str[0];
+    let startDate = new Date(startDate1);
+    itemOrder.endDate = "27/11/2021";
+    let str2 = itemOrder.endDate.split("/");
+    let endDate1 = str2[2] + '-' + str2[1] + '-' + str2[0];
+    let endDate = new Date(endDate1);
     var MultiplyByDays
     var MultiplyByAmountOrPeople
     var MultiplyByAfterSibsud;
     var addToCommentNumOfDaysNights
     var totalNoCharge;
     var ParticipantsOrAmount
-    var s=itemOrder.startDate;
-    let start = new Date(Date.parse(s))
-    let end = new Date(itemOrder.endDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"))
-     var numDayActivity = this.getDaysArray(start, end).length;
-    var numNightActivity = (numDayActivity - 1 == 0 ? 1 : numDayActivity - 1)
+    var numDayActivity = this.getDaysArray(startDate, endDate).length;
+    var numNightActivity = (numDayActivity - 1 == 0 ? numDayActivity - 1 : 1)
     itemOrder.internalComment = " "
-    var item = this.generalFormService.originalItemList.find(el => el.id.toString() === itemOrder.value);
+    var item = this.generalFormService.originalItemList.find(el => el.id.toString() === itemOrder.itemId);
     //-----------------------חישוב מחיר-----------------------------------------------------------------
     //------------------------הפריט מוגדר כזיכוי או תוספת נסיעות-------------------------------
     if (item?.credit == 1) itemOrder.comment = 'הפריט מוגדר כזיכוי'
@@ -149,12 +154,12 @@ export class AdditionsService {
       addToCommentNumOfDaysNights = " סה''כ ימי פעילות " + MultiplyByDays?.toString()
     }
 
-    if (item?.orderType == 6) itemOrder.amount = 1
+    if (item?.orderType == 6) itemOrder.quantity = 1
     //--------------חישוב עלות ללקוח לפי: כמות או משתתפים-----------------
     //--------------כמות = 1 ,משתתפים = 2 -----------------
     if (item?.isSumPeopleOrAmount == 1) {
       ParticipantsOrAmount = "חישוב מכפלה לפי כמות:"
-      MultiplyByAmountOrPeople = itemOrder.amount
+      MultiplyByAmountOrPeople = itemOrder.quantity
     }
     else {  // calculate by participants
       ParticipantsOrAmount = "חישוב מכפלה לפי משתתפים:"
@@ -204,7 +209,7 @@ export class AdditionsService {
 
       }
       else  // פריט שמוגדר לפי כמות או טיול של השתלמות מדריכים
-        itemOrder.internalComment = ParticipantsOrAmount + "סה''כ כמות לחישוב" + itemOrder.amount?.toString() + addToCommentNumOfDaysNights + addToCommentMultipleStr
+        itemOrder.internalComment = ParticipantsOrAmount + "סה''כ כמות לחישוב" + itemOrder.quantity?.toString() + addToCommentNumOfDaysNights + addToCommentMultipleStr
     }
 
     //---------------------------כלכלה------------------------------------------------
@@ -235,7 +240,7 @@ export class AdditionsService {
       {
         itemOrder.billingCustomer = item?.costCustomer * MultiplyByAmountOrPeople    // חישוב חיוב לקוח  
         addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAmountOrPeople?.toString() + "*" + item?.costCustomer
-        itemOrder.internalComment = ParticipantsOrAmount + "סה''כ ארוחות לחישוב" + itemOrder.amount + addToCommentMultipleStr
+        itemOrder.internalComment = ParticipantsOrAmount + "סה''כ ארוחות לחישוב" + itemOrder.quantity + addToCommentMultipleStr
         // סבסוד עלות ללקוח מופעל רק עבור פריטים שמוגדרים לפי משתתפים
         // בהזמנות כלכלה לפי משתתפים - יש להוריד בחיוב לקוח את המנות של המדריכים
       }
@@ -261,7 +266,7 @@ export class AdditionsService {
         }
 
         else // פריט שמוגדר לפי כמות או טיול של השתלמות מדריכים
-          itemOrder.internalComment = ParticipantsOrAmount + "סה''כ כמות לחישוב" + itemOrder.amount + addToCommentNumOfDaysNights + addToCommentMultipleStr
+          itemOrder.internalComment = ParticipantsOrAmount + "סה''כ כמות לחישוב" + itemOrder.quantity + addToCommentNumOfDaysNights + addToCommentMultipleStr
 
       }
     }
@@ -272,12 +277,12 @@ export class AdditionsService {
       // אם סוג פעילות: "עבודה תורמת" או "מחזון להגשמה" - החיוב ללקוח אמור להיות רק 50%
       if (this.squadAssembleService.tripInfofromService.trip.activity.id == 23 || this.squadAssembleService.tripInfofromService.trip.activity.id == 38) {
         itemOrder.billingCustomer = item?.costCustomer * 0.5
-        addToCommentMultipleStr = "עם סבסוד" + "מכפלת החיוב " + itemOrder.amount + "*" + item?.costCustomer + "*0.5" + "*" + MultiplyByDays.toString()
+        addToCommentMultipleStr = "עם סבסוד" + "מכפלת החיוב " + itemOrder.quantity + "*" + item?.costCustomer + "*0.5" + "*" + MultiplyByDays.toString()
         itemOrder.internalComment = "סבסוד קקל לפעילות חינוכית" + this.squadAssembleService.tripInfofromService.trip.activity.name + ", " + "עלות הפריט: " + item?.costCustomer
-        "סה''כ כמות לחישוב" + itemOrder.amount + addToCommentNumOfDaysNights + addToCommentMultipleStr
+        "סה''כ כמות לחישוב" + itemOrder.quantity + addToCommentNumOfDaysNights + addToCommentMultipleStr
       }
       else
-        itemOrder.internalComment = "מחיר לפריט" + item?.costCustomer + "סה''כ כמות לחישוב" + itemOrder.amount + addToCommentNumOfDaysNights + addToCommentMultipleStr
+        itemOrder.internalComment = "מחיר לפריט" + item?.costCustomer + "סה''כ כמות לחישוב" + itemOrder.quantity + addToCommentNumOfDaysNights + addToCommentMultipleStr
 
     }
     //----------------------הדרכה------------------------------------------------------------
@@ -302,9 +307,11 @@ export class AdditionsService {
         if (item?.isSumPeopleOrAmount == 2) // פריט שמוגדר לפי משתתפים
           itemOrder.internalComment = ParticipantsOrAmount + " סה''כ משתתפים לחישוב" + itemOrder.peopleInTrip + addToCommentNumOfDaysNights + addToCommentMultipleStr
         else if (item?.isSumPeopleOrAmount == 1) // פריט שמוגדר לפי כמות
-          itemOrder.internalComment = ParticipantsOrAmount + "סה''כ כמות לחישוב" + itemOrder.amount + addToCommentNumOfDaysNights + addToCommentMultipleStr
+          itemOrder.internalComment = ParticipantsOrAmount + "סה''כ כמות לחישוב" + itemOrder.quantity + addToCommentNumOfDaysNights + addToCommentMultipleStr
       }
     }
+    itemOrder.quantity = itemOrder.quantity.toString();
+
     return itemOrder
   }
 

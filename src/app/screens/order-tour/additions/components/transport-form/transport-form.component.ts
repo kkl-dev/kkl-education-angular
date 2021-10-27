@@ -36,8 +36,8 @@ export class TransportFormComponent implements OnInit {
     private orderService: OrderService, private _dialog: MatDialog, private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
-    this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
-    this.getSupplierList(1,this.tripId,0);
+    //this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
+    this.getSupplierList(1,52910,0);
     //this.generalFormService.getSupplierList(1,this.tripId,0);
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
@@ -224,48 +224,43 @@ export class TransportFormComponent implements OnInit {
   public onValueChange(event) {
     this.form = event;
     console.log('I am form event');
-    this.form.controls["details"].get('peopleInTrip').setValue(this.squadAssembleService.peopleInTrip);
+    //this.form.controls["details"].get('peopleInTrip').setValue(this.squadAssembleService.peopleInTrip);
     //this.getSupplierByOrderType(1);
     this.form.controls["details"].get('supplier').valueChanges.subscribe(value => {
       console.log(value);
-      this.getOrderItemBySupplierId(value);
+      this.generalFormService.getOrderItemBySupplierId(value);
    });
-    this.form.controls["details"].get('itemId').valueChanges.subscribe(value => {
-       console.log(value);
-       let item = this.originalItemList.find(el => el.id === parseInt(value))
-       var x = Math.floor(item.cost);
-       this.form.controls["details"].get('itemCost').patchValue(x);
-    });
    
-    console.log(this.form)
-    this.form.controls["details"].get('supplier').valueChanges.subscribe(value => {
-      console.log(value)
-    });
+    
     this.form.controls["details"].get('itemId').valueChanges.subscribe(value => {
       console.log(value)
-      this.form.value.details.itemId = value;
+      //this.form.value.details.itemId = value;
+      let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
+      var itemCost = Math.floor(item.cost);
+      this.form.controls["details"].get('itemCost').patchValue(itemCost);
       this.additionsService.calculateBillings(this.form.value.details)
 
     });
-
+    console.log(this.form)
+   
 
   }
   
  
   
-  getOrderItemBySupplierId(supplierId) {
-    this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-      response => {
-        console.log(response);
-        this.originalItemList = response;
-        response.forEach(element => {
-          this.generalFormService.itemsList.push({ label: element.name, value: element.id.toString() });
-        });
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  // getOrderItemBySupplierId(supplierId) {
+  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
+  //     response => {
+  //       console.log(response);
+  //       this.originalItemList = response;
+  //       response.forEach(element => {
+  //         this.generalFormService.itemsList.push({ label: element.name, value: element.id.toString() });
+  //       });
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 
   
 }
