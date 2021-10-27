@@ -7,7 +7,8 @@ import { TransportService } from '../../services/transport.service';
 import { EconomyOrder, Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder, UserService } from 'src/app/open-api';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { GeneralFormService } from '../../services/general-form.service';
-
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-economy-form',
   templateUrl: './economy-form.component.html',
@@ -15,7 +16,7 @@ import { GeneralFormService } from '../../services/general-form.service';
 })
 export class EconomyFormComponent implements OnInit {
 
-  constructor(private transportService: TransportService, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
+  constructor(private transportService: TransportService, private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public order: any;
   @Input() public editMode: boolean;
 
@@ -28,14 +29,14 @@ export class EconomyFormComponent implements OnInit {
   };
 
   ngOnInit(): void {
-  
+
     //  this.generalFormService.setDatesValues();
     this.orderService.getSupplierList(1, 52275, 0);
-     
+
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-    if (this.order!= undefined && this.order!= null) {
+    if (this.order != undefined && this.order != null) {
       this.generalFormService.setFormValues(this.order);
     }
 
@@ -43,33 +44,34 @@ export class EconomyFormComponent implements OnInit {
     // this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
     // let economyQuestions = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.economy);
     // this.generalFormService.questionGroups[index].questions = economyQuestions;
-     //option2
-     let detailsArr= this.generalFormService.details;
-     detailsArr= this.changeLabels(detailsArr);
-      let economyQuestions = detailsArr.concat(this.generalFormService.economy);
-     this.generalFormService.questionGroups[index].questions = economyQuestions;
-    this.formTemplate.questionsGroups=this.generalFormService.questionGroups;
+    //option2
+    let detailsArr = this.generalFormService.details;
+    detailsArr = this.changeLabels(detailsArr);
+    let economyQuestions = detailsArr.concat(this.generalFormService.economy);
+    this.generalFormService.questionGroups[index].questions = economyQuestions;
+    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
 
-    
+
   }
 
- 
-    changeLabels(tempArr){
-      console.log('tempArr is :',tempArr);
-     
-       let startDateIndex = tempArr.findIndex(el=> el.key === 'startDate');
-       tempArr[startDateIndex].label= 'מתאריך';
-       let endDateIndex = tempArr.findIndex(el=> el.key === 'endDate');
-       tempArr[endDateIndex].label= 'עד תאריך';
-       let startHourIndex = tempArr.findIndex(el=> el.key === 'startHour');
-       tempArr[startHourIndex].label= 'שעת הגשה';
-       let endHourIndex = tempArr.findIndex(el=> el.key === 'endHour');
-       tempArr[endHourIndex].label= 'שעת סיום';
-       return tempArr;
-    }
+
+  changeLabels(tempArr) {
+    console.log('tempArr is :', tempArr);
+
+    let startDateIndex = tempArr.findIndex(el => el.key === 'startDate');
+    tempArr[startDateIndex].label = 'מתאריך';
+    let endDateIndex = tempArr.findIndex(el => el.key === 'endDate');
+    tempArr[endDateIndex].label = 'עד תאריך';
+    let startHourIndex = tempArr.findIndex(el => el.key === 'startHour');
+    tempArr[startHourIndex].label = 'שעת הגשה';
+    let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
+    tempArr[endHourIndex].label = 'שעת סיום';
+    return tempArr;
+  }
 
   public onSave(): void {
     if (this.form) {
+      if (!this.validationsEconomy()) { return; }
       this.editMode = true;
       this.form.disable();
       var t = {} as EconomyOrder;
@@ -85,8 +87,8 @@ export class EconomyFormComponent implements OnInit {
           t[key] = this.form.value.details[key]
         }
       });
-      t.globalParameters['endHour'] = '2021-11-21T14:00:00';
-      t.globalParameters['startHour'] = '2021-11-21T15:00:00';
+      // t.globalParameters['endHour'] = '2021-11-21T14:00:00';
+      // t.globalParameters['startHour'] = '2021-11-21T15:00:00';
       t.globalParameters['comments'] = this.form.value.comments.comments;
       //change hard coded
       t.order.supplier.id = +this.form.value.details.supplier;
@@ -98,7 +100,24 @@ export class EconomyFormComponent implements OnInit {
     }
   }
 
- 
+  validationsEconomy() {
+    if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'בהזמנת כלכלה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    if (this.form.value.details['endHour'] === null || this.form.value.details['endHour'] === "" || this.form.value.details['endHour'] === undefined) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'בהזמנת כלכלה - חובה למלא שעת סיום', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+
+    return true;
+  }
 
 
   public onEdit() {

@@ -8,6 +8,8 @@ import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { AdditionsService } from '../../services/additions.service';
 import { TransportService } from '../../services/transport.service';
 import { GeneralFormService } from '../../services/general-form.service';
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-transport-form',
@@ -29,7 +31,7 @@ export class TransportFormComponent implements OnInit {
   };
 
   constructor(private generalFormService: GeneralFormService, private transportService: TransportService, private additionsService: AdditionsService,
-    private orderService: OrderService) { }
+    private orderService: OrderService, private _dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.generalFormService.getSupplierList(1, 52275, 0);
@@ -69,6 +71,8 @@ export class TransportFormComponent implements OnInit {
 
   public onSave(): void {
     if (this.form) {
+      // .status==='VALID'
+      // if (!this.validationsTransport()) { return; }
       this.editMode = true;
       this.form.disable();
       var t = {} as TransportOrder;
@@ -93,7 +97,57 @@ export class TransportFormComponent implements OnInit {
     // if (this.additionsService.item.globalParameters.itemId){}
     // find if object already in a schedule
   }
-
+  // validationsTransport() {
+  //   if (this.generalFormService.originalItemList.length > 0) {
+  //     var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+  //   }
+  //   if (item.credit === 0) {
+      // if (!item.name.includes("נסיעות")) {
+      //   if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
+      //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      //       width: '500px',
+      //       data: { message: 'בהזמנת היסעים - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      //     })
+      //     return false;
+      //   }
+      //   if (this.form.value.details['pickUpLocation'] === null || this.form.value.details['pickUpLocation'] === "" || this.form.value.details['pickUpLocation'] === undefined) {
+      //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      //       width: '500px',
+      //       data: { message: 'בהזמנת היסעים - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      //     })
+      //     return false;
+      //   }
+      // }
+      // if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined) {
+      //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      //     width: '500px',
+      //     data: { message: 'בהזמנת היסעים - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      //   })
+      //   return false;
+      // }
+      // if (item.participantsLimit < this.form.value.details['peopleInTrip']) {
+      //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      //     width: '500px',
+      //     data: { message: 'מספר המשתתפים גדול מסך המקומות באוטובוס - יש להוסיף אוטובוס נוסף', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      //   })
+      //   return false;
+      // }
+      // var people = parseInt(this.form.value.details['peopleInTrip'])
+      // console.log(people % item.participantsLimit)
+      // console.log(Math.floor(people / item.participantsLimit))
+      // if (((people % item.participantsLimit) > 0) && (Math.floor(people / item.participantsLimit) > 0)) {
+      //   if (Math.floor(people / item.participantsLimit) < parseInt(this.form.value.details['quantity'])) {
+      //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      //       width: '500px',
+      //       data: { message: 'מספר המשתתפים קטן מסך מספר המקומות בכל האוטובוסים יחד - שים לב שלא הוזמן אוטובוס מיותר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      //     })
+      //     return false;
+      //   }
+      // }
+      // }
+  //   }
+  //   return true;
+  // }
   public onEdit() {
     this.editMode = false;
     this.form.enable();
