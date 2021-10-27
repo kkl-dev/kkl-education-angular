@@ -143,6 +143,7 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [
+    CalendarCardComponent,
     AppComponent,
     MainComponent,
     DashboardComponent,
@@ -281,6 +282,5 @@ FullCalendarModule.registerPlugins([
     DatePipe,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [CalendarCardComponent]
 })
 export class AppModule { }

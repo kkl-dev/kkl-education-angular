@@ -1,8 +1,13 @@
 <div class="calendar-card">
-    <p>test</p>
     <div class="right">
-        <
-        <p>test#</p>
-        <p>{{props.timeText}}</p>
+        <div>
+            <img *ngIf='props.event.extendedProps.img' [src]='props.event.extendedProps.img' />
+            <svg-icon *ngIf='props.event.extendedProps.svgUrl' [src]='props.event.extendedProps.svgUrl'></svg-icon>
+
+        </div>
+        <div>
+            <p class="title">{{props.event.title}}</p>
+            <p class='timeText'>{{props.timeText}}</p>
+        </div>
     </div>
 </div>
