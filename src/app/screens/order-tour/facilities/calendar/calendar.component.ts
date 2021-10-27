@@ -19,7 +19,7 @@ export class CalendarComponent implements OnInit {
   public calendarEventsArr$!: Observable<EventInput[]>;
   public value!: EventInput[];
   public valueSub: Subscription;
-  public hideComponent:boolean = false;
+  public hideComponent: boolean = false;
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
   @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
 
@@ -69,15 +69,12 @@ export class CalendarComponent implements OnInit {
       componentRef.instance.props = props;
       componentRef.changeDetectorRef.detectChanges();
       const html = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-      
+
       return { html: html.innerHTML };
     },
-    eventDidMount: () => {
-      
-    }
   }
 
-  public arrangeDate(date:Date) {
+  public arrangeDate(date: Date) {
     // 2021-10-15T08:00
     const hours = date.getHours();
     const minutes = date.getMinutes();
