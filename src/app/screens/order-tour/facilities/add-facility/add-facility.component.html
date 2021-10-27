@@ -5,17 +5,27 @@
         </app-sleeping-options-by-day>
         <div class="add-facility__header">
             <div class="add-facility__header-icon">
+<<<<<<< HEAD
                 <!-- <svg-icon [src]="item.svgUrl" class="header__form-group-svg"></svg-icon> -->
                 <svg-icon src="assets/images/{{ item.iconPath || defaultImage }}" class="header__form-group-svg"></svg-icon>
+=======
+                <svg-icon src="assets/images/{{ item.iconPath || defaultImage }}" class="header__form-group-svg"></svg-icon>
+                <!-- <svg-icon [src]="item.svgUrl" class="header__form-group-svg"></svg-icon> -->
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
             </div>
             <div class="add-facility__header-content">
                 <div class="add-facility__header-content-heading">
                     <span class="add-facility__header-content-heading-constant">שריין מתקן:</span>
                     <span class="add-facility__header-content-heading-input">{{item.name}}</span>
+<<<<<<< HEAD
                     <!-- <span class="add-facility__header-content-heading-input">{{item.title}}</span> -->
                 </div>
                 <div class="add-facility__header-content-heading-remarks">
                     <!-- <span>{{item.maxParticipants}}</span> -->
+=======
+                </div>
+                <div class="add-facility__header-content-heading-remarks">
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
                     <span>{{item.maxOccupancy}}</span>
                 </div>
             </div>
@@ -52,14 +62,24 @@
                     <span class="add-facility__occupied-hours-table-header-left-type blue">שוריין עבורי</span>
                 </span>
             </div>
+<<<<<<< HEAD
             <div class="add-facility__occupied-hours-table-item" *ngFor="let item of hours">
                 <!-- <span class="add-facility__occupied-hours-hour-start">{{ item.startingHour | numberToTimePipe}}</span> -->
                 <span class="add-facility__occupied-hours-hour-start">{{ item.fromHour | numberToTimePipe}}</span>
+=======
+            <div class="add-facility__occupied-hours-table-item" *ngFor="let item of totalTime">
+                <span class="add-facility__occupied-hours-hour-start">{{ item.fromHour | numberToTimePipe }}</span>
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
                 <span class="add-facility__occupied-hours-hour-end">
                     <!-- <span> -</span> {{ item.endingHour | numberToTimePipe}}</span> -->
                     <span> -</span> {{ item.tillHour | numberToTimePipe}}
                 </span>
+<<<<<<< HEAD
                 <!-- <span class="add-facility__occupied-hours-hour-user">נתפס ע"י {{ item.user }} </span> -->
+=======
+
+
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
                 <span class="add-facility__occupied-hours-hour-user">נתפס ע"י {{ item.customerName }} </span>
             </div>
         </div>

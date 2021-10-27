@@ -32,7 +32,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
 
-import { ApiModule } from 'src/app/open-api';
+import { ApiModule } from 'src/app/open-api/';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';

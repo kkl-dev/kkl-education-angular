@@ -45,6 +45,7 @@ export class CalendarComponent implements OnInit {
     //console.log(till);
 
     this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+      console.log('this.valueSub', this.valueSub)
       if (this.myCalendarComponent) {
         this.myCalendarComponent.options.events = value;
       } else {

@@ -10,9 +10,35 @@ import { DAYS } from 'src/mock_data/facilities';
   styleUrls: ['./add-activity.component.scss']
 })
 export class AddActivityComponent implements OnInit {
+<<<<<<< HEAD
   // @Input() days: any[] = DAYS;
   @Input() days: any[] = this.tripService.facilitiesArray;
 
+=======
+
+  days: {
+    date: string;
+    sleepingOptions: {
+      img: string;
+      availableUnits: number;
+      maxOccupancy: number;
+      nameEng: string;
+      acoomodationTypeName: string;
+      accomodationTypeId: number
+    }
+  }[] = DAYS;
+    
+  // days: {
+  //   day: string;
+  //   options: {
+  //     svgUrl: string;
+  //     sleepingAreas: number;
+  //     avialableSpaces: number;
+  //     type: string;
+  //     singleUnit: string;
+  //   }
+  // }[] = DAYS;
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
   public form: FormGroup;
   public showSleepAreas: boolean = false;
   public selectedDay: number = 0;
@@ -50,9 +76,14 @@ export class AddActivityComponent implements OnInit {
   }
 
   public arrangeTime(arg: string): any {
+<<<<<<< HEAD
     // yak changed for compatible with date (2021-11-07T00:00:00) and not (21.10.2021)
     //  const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let day = this.days[this.selectedDay].date.split("T");
+=======
+    // const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    const [day, month, year] = this.days[this.selectedDay].date.split(".");
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
     let [hours, minutes] = this.form.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;

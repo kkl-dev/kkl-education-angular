@@ -1,19 +1,62 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { InfoCard } from 'src/app/screens/education-results/education-results.component';
+//import { InfoCard } from 'src/app/screens/education-results/education-results.component';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { TripService } from 'src/app/services/trip.service';
 import { UserDataService } from 'src/app/utilities/services/user-data.service';
 import { DAYS } from 'src/mock_data/facilities';
 import { FacilityModel, FacilitiesList, OccupiedHours } from '../models/facility.model';
 
-export interface OccupiedBarModel {
-  startingHour: number;
-  endingHour: number;
-  totalTime: number;
-  user: string;
+<<<<<<< HEAD
+=======
+export interface InfoCard {
+  iconPath: string;
+  name: string;
+  subHeadline?: string;
+  maxOccupancy?: any[];
+  occupiedHours?: TooltipDataModel[];
 }
+
+export interface TooltipDataModel {
+  fromHour: number;
+  tillHour: number;
+  totalTime: number;
+  customerName: string;
+}
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
+export interface OccupiedBarModel {
+  fromHour: number;
+  tillHour: number;
+  totalTime: number;
+  customerName: string;
+}
+
+
+
+
+// export interface InfoCard1 {
+//   svgUrl: string;
+//   title?: string;
+//   headline?: string;
+//   subHeadline?: string;
+//   availability?: TooltipDataModel1[];
+//   maxParticipants?: string;
+//   days?: any[];
+// }
+// export interface TooltipDataModel {
+//   startingHour: number;
+//   endingHour: number;
+//   totalTime: number;
+//   user: string;
+// }
+// export interface OccupiedBarModel {
+//   startingHour: number;
+//   endingHour: number;
+//   totalTime: number;
+//   user: string;
+// }
+
 
 @Component({
   selector: 'app-add-facility',
@@ -22,6 +65,7 @@ export interface OccupiedBarModel {
 })
 export class AddFacilityComponent implements OnInit {
   addFacilityForm: FormGroup;
+<<<<<<< HEAD
   //  @Input() days: any[] = DAYS;
   @Input() days: any[] = this.tripService.facilitiesArray;
 
@@ -30,6 +74,27 @@ export class AddFacilityComponent implements OnInit {
   @Input() startingHour: number = 0
   @Input() endingHour: number = 24;
   @Input() hours: OccupiedHours[];
+=======
+  @Input() days: {
+    date: string;
+    sleepingOptions: {
+      img: string;
+      availableUnits: number;
+      maxOccupancy: number;
+      nameEng: string;
+      acoomodationTypeName: string;
+      accomodationTypeId: number
+    }
+  }[] = DAYS;
+    
+  public selectedFacility$: Observable<InfoCard>;
+  @Input() startingHour: number = 0
+  @Input() endingHour: number = 24;
+  // @Input() hours: OccupiedBarModel[];
+  @Input() totalTime: OccupiedBarModel[];
+
+  
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
   public selectedDay: number = 0;
   public subscribeToFacility: Subscription;
@@ -42,11 +107,17 @@ export class AddFacilityComponent implements OnInit {
   constructor(private userDataService: UserDataService, private facilitiesServices: FacilitiesService, private tripService: TripService) {
     this.username = this.userDataService.user.name;
   }
+  defaultImage : string ='path270.svg';
 
   public ngOnInit(): void {
     this.selectedFacility$ = this.facilitiesServices.getSelectedFacility();
     this.subscribeToFacility = this.selectedFacility$.subscribe(data => {
+<<<<<<< HEAD
       this.hours = data.occupiedHours;
+=======
+      console.log('data in add facility', data)
+      this.totalTime = data.occupiedHours;
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
       this.createOccupiedHoursArray();
       this.createForm(data);
     });
@@ -124,9 +195,15 @@ export class AddFacilityComponent implements OnInit {
     this.addFacilityForm.controls['end'].setValue(event);
   }
   public arrangeTime(arg: string): any {
+<<<<<<< HEAD
     // yak changed for compatible with date (2021-11-07T00:00:00) and not (21.10.2021)
     //  const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let day = this.days[this.selectedDay].date.split("T");
+=======
+    // const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    const [day, month, year] = this.days[this.selectedDay].date.split(".");
+
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
     let [hours, minutes] = this.addFacilityForm.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;
@@ -144,8 +221,13 @@ export class AddFacilityComponent implements OnInit {
   createOccupiedHoursArray() {
     let startingHour = this.startingHour;
 
+<<<<<<< HEAD
     this.hours.map((hour) => {
       if (startingHour < hour.fromHour) {
+=======
+    this.totalTime.map((hour) => {
+      if (startingHour < hour.tillHour) {
+>>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
         this.occupiedHoursArray.push({
           totalHours: hour.fromHour - startingHour,
           user: 'none',
