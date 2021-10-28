@@ -300,26 +300,30 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.userService.createTrip(tripInfo).subscribe(res => {
       console.log('tripInfo from server is :', res);
+  
       this.squadAssemble.tripInfofromService = res;
     }, (err) => {
       console.log(err);
     })
   }
 
-  AddOrder() {
-    // if (this.additionsService.orderList.length > 0) {
-    //   this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
-    //     console.log(res);
-    //   }, (err) => {
-    //     console.log(err);
-    //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-    //       width: '500px',
-    //       data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-    //     })
-    //   })
-    // }
 
-  }
+
+  // AddOrder() {
+  //   if (this.additionsService.orderList.length > 0) {
+  //     this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
+  //       console.log(res);
+  //     }, (err) => {
+  //       console.log(err);
+  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //         width: '500px',
+  //         data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //       })
+  //     })
+  //   }
+
+
+  // }
 
 
 
@@ -346,7 +350,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       if(routeIndex==2){
         this.createTrip();
       }
-      if (routeIndex === 4) this.AddOrder();
+      // if (routeIndex === 4) this.AddOrder();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
       );

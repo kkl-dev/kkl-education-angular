@@ -370,6 +370,34 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Area'
+  /sites:
+     get:
+      tags:
+      - user
+      operationId: GetSites
+      responses:
+        "200":
+          description: sites list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Site'
+  /settlement:
+   get:
+      tags:
+      - user
+      operationId: GetSettlements
+      responses:
+        "200":
+          description: settlement list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Settlement'
 
   /customer/{customerCode}:
     get:
@@ -1873,6 +1901,24 @@ components:
         nameEng:
           type: string
           example: Israel
+    Site:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: אגם החולה
+    Settlement:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: אגם החולה
     ParticipantType:
       type: object
       properties:
@@ -2540,6 +2586,8 @@ components:
     #        type: number
     #        nullable: true
 
+   
+            
     OrderItemCommonDetails:
       #  discriminator:  
       #   propertyName: orderCommonDetails
@@ -2553,11 +2601,16 @@ components:
           description: refers to indentity record on order table in data base
         orderId:
           type: integer
+          description: refers to indentity record on order table in data base
+        orderId:
+          type: integer
         tempOrderIdentity:
           type: integer
           nullable: true
         orderItemDetails:
-          $ref: '#/components/schemas/ItemsByTypeOrder'    
+          $ref: '#/components/schemas/ItemsByTypeOrder'  
+        supplierId :
+          type: integer  
         quantity:
          type: integer
         itemCost:
@@ -2613,8 +2666,8 @@ components:
         - $ref: '#/components/schemas/OrderEvent'
       properties:
         exitPoint:
-          type: string
-          description: exit point of transport for calculate price
+          type: integer
+          description: settlement code - required for calculate price
         scatterLocation:
           type: string
     
@@ -2626,6 +2679,9 @@ components:
          totalHours :
              type: number
              example: 5
+        #  siteCode:
+        #    type: integer
+        #    example: 1
          siteAddress:
              type: string
              example: 'http://'

@@ -98,19 +98,7 @@ export class FormAutocompleteComponent implements OnInit {
   }
   public onDelete(item: any) {
     this.list = this.list.filter(function (el) { return el.value != item.value; });
-    // if (question === 'payerPoll') {
-    // var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
-    // var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerPoll");
-    // this.squadClientService.questions[indx1].group.questions[indx2].value = '';
-    // this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options =undefined;
-    // console.log(this.squadClientService.questions[indx1].group.questions[indx2])
-    // }
-    // if (question === 'customer') {
-    // var indx3 = this.squadClientService.questions.findIndex(o => o.key === 'client');
-    // var indx4 = this.squadClientService.questions[indx3].group.questions.findIndex(o => o.key === "customer");
-    // this.squadClientService.questions[indx3].group.questions[indx4].value = undefined;
-    // this.squadClientService.questions[indx3].group.questions[indx4].inputProps.options = [];
-    // console.log(this.squadClientService.questions[indx3].group.questions[indx4])
+    
       this.tripService.customers=[];
         this.deleteCustomer.emit('customer is deleted');
     
