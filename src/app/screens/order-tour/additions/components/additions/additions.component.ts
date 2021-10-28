@@ -71,6 +71,7 @@ export class AdditionsComponent implements OnInit {
   // }
   getTempOrder() {
     
+
     //this.tripId =this.squadAssembleService.tripInfofromService.trip.id
      this.tripId= 52973;
     this.orderService.getTempOrders(this.tripId).subscribe(
@@ -96,8 +97,8 @@ export class AdditionsComponent implements OnInit {
       // if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
       if (this.tempOrderReduce[orderTypId] === undefined) { return; }
       for (var i in this.tempOrderReduce[orderTypId]) {
-        if(this.tempOrderReduce[orderTypId][i].orderId  != undefined)
-        continue;
+        // if(this.tempOrderReduce[orderTypId][i].orderId  != undefined)
+        // continue;
         var order = {} as OrderEvent;
         order.globalParameters = {} as OrderItemCommonDetails;
         let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate, 'israel');
@@ -142,3 +143,4 @@ export class AdditionsComponent implements OnInit {
     this.orderType = event;
    }
   }
+}

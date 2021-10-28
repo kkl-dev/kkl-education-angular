@@ -8,6 +8,8 @@ import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { AdditionsService } from '../../services/additions.service';
 import { TransportService } from '../../services/transport.service';
 import { GeneralFormService } from '../../services/general-form.service';
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 
@@ -32,18 +34,22 @@ export class TransportFormComponent implements OnInit {
   };
 
   constructor(private generalFormService: GeneralFormService, private transportService: TransportService, private additionsService: AdditionsService,
-    private orderService: OrderService, private squadAssembleService: SquadAssembleService) { }
+    private orderService: OrderService, private _dialog: MatDialog, private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
+
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.getSupplierList(1, this.tripId, 0);
+
     //this.generalFormService.getSupplierList(1,this.tripId,0);
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
+
     this.generalFormService.setDatesValues();
     if (this.order != undefined && this.order != null) {
       this.generalFormService.setFormValues(this.order);
+
     }
     this.setformTemplate();
 
@@ -69,6 +75,7 @@ export class TransportFormComponent implements OnInit {
     this.generalFormService.questionGroups[index].questions = transportQuestions;
     this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
     console.log('group transport is: ', this.formTemplate.questionsGroups);
+
   }
 
   changeLabels(tempArr) {
@@ -116,6 +123,8 @@ export class TransportFormComponent implements OnInit {
   public onSave(): void {
 
     if (this.form) {
+      // .status==='VALID'
+      // if (!this.validationsTransport()) { return; }
       this.editMode = true;
 
       let orderId;
@@ -130,7 +139,9 @@ export class TransportFormComponent implements OnInit {
       t.order.supplier = {} as Supplier;
       t.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
+
         if (key !== 'exitPoint' && key !== 'supplier' && key !== 'scatterLocation') {
+
           if (key != 'startDate' && key != 'endDate') {
             t.globalParameters[key] = this.form.value.details[key];
           }
@@ -156,11 +167,63 @@ export class TransportFormComponent implements OnInit {
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = 1;
+
       // this.generalFormService.addOrder(t,'היסעים');
       this.form.disable({ emitEvent: false });
+
     }
   }
-
+  // validationsTransport() {
+  //   if (this.generalFormService.originalItemList.length > 0) {
+  //     var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+  //   }
+  //   if (item.credit === 0) {
+  // if (!item.name.includes("נסיעות")) {
+  //   if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
+  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //       width: '500px',
+  //       data: { message: 'בהזמנת היסעים - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //     })
+  //     return false;
+  //   }
+  //   if (this.form.value.details['pickUpLocation'] === null || this.form.value.details['pickUpLocation'] === "" || this.form.value.details['pickUpLocation'] === undefined) {
+  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //       width: '500px',
+  //       data: { message: 'בהזמנת היסעים - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //     })
+  //     return false;
+  //   }
+  // }
+  // if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined) {
+  //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //     width: '500px',
+  //     data: { message: 'בהזמנת היסעים - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //   })
+  //   return false;
+  // }
+  // if (item.participantsLimit < this.form.value.details['peopleInTrip']) {
+  //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //     width: '500px',
+  //     data: { message: 'מספר המשתתפים גדול מסך המקומות באוטובוס - יש להוסיף אוטובוס נוסף', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //   })
+  //   return false;
+  // }
+  // var people = parseInt(this.form.value.details['peopleInTrip'])
+  // console.log(people % item.participantsLimit)
+  // console.log(Math.floor(people / item.participantsLimit))
+  // if (((people % item.participantsLimit) > 0) && (Math.floor(people / item.participantsLimit) > 0)) {
+  //   if (Math.floor(people / item.participantsLimit) < parseInt(this.form.value.details['quantity'])) {
+  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //       width: '500px',
+  //       data: { message: 'מספר המשתתפים קטן מסך מספר המקומות בכל האוטובוסים יחד - שים לב שלא הוזמן אוטובוס מיותר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //     })
+  //     return false;
+  //   }
+  // }
+  // }
+  //   }
+  //   return true;
+  // }
   public onEdit() {
     this.editMode = false;
     this.form.enable();
@@ -178,30 +241,21 @@ export class TransportFormComponent implements OnInit {
         this.generalFormService.getOrderItemBySupplierId(value);
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value);
+       console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
-      var x = Math.floor(item.cost);
-      this.form.controls["details"].get('itemCost').patchValue(x);
+      var itemCost = Math.floor(item.cost);
+      this.form.controls["details"].get('itemCost').patchValue(itemCost);
+      console.log(this.form.value.details);
+      var form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingCustomer').patchValue(this.form.value.details.billingCustomer);
+      this.form.controls["details"].get('billingSupplier').patchValue(this.form.value.details.billingSupplier);
     });
 
     console.log(this.form)
   }
 
 
-
-  // getOrderItemBySupplierId(supplierId) {
-  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       this.originalItemList = response;
-  //       response.forEach(element => {
-  //         this.generalFormService.itemsList.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
+  }
 
 
 }

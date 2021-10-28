@@ -46,7 +46,7 @@ export class GeneralFormService {
     new QuestionTextbox({
       key: 'quantity',
       label: 'כמות',
-      value: '',
+      value: '1',
       validations: [Validators.required],
     }),
 
@@ -139,6 +139,14 @@ export class GeneralFormService {
       value: '',
       icon: 'place',
       validations: [Validators.required],
+      inputProps: {
+        // labelSize: 's5',
+      },
+    }),
+    new QuestionTextbox({
+      key: 'internalComment',
+      label: 'הערות פנימיות',
+      value: '',
       inputProps: {
         // labelSize: 's5',
       },
