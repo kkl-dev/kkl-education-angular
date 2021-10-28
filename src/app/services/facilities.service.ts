@@ -47,19 +47,10 @@ export class FacilitiesService {
     this.closeModal(item.type);
   }
 
-<<<<<<< HEAD
   public updateSelectedFacility(args: FacilityModel): void {
     this.selectedFacility.next(args);
   }
   public getSelectedFacility(): Observable<FacilityModel> {
-=======
-  public updateSelectedFacility(args: InfoCard): void {
-    console.log("updateSelectedFacility: args ", args);
-    this.selectedFacility.next(args);
-  }
-  public getSelectedFacility(): Observable<InfoCard> {
-    console.log("updateSelectedFacility: ");
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
     return this.selectedFacility.asObservable();
   }
   

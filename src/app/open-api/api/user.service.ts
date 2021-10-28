@@ -48,7 +48,7 @@ import { Configuration }                                     from '../configurat
 })
 export class UserService {
 
-    protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
+    protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -413,7 +413,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<AvailableAccomodationDate>>(`${this.configuration.basePath}/availableAccomodationDates/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate.toISOString()))}/${encodeURIComponent(String(tillDate.toISOString()))}`,
+        return this.httpClient.get<Array<AvailableAccomodationDate>>(`${this.configuration.basePath}/availableAccomodationDates/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate))}/${encodeURIComponent(String(tillDate))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -465,7 +465,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<FacilityDate>>(`${this.configuration.basePath}/getAvailableFacilities/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate.toISOString()))}/${encodeURIComponent(String(tillDate.toISOString()))}`,
+        return this.httpClient.get<Array<FacilityDate>>(`${this.configuration.basePath}/getAvailableFacilities/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate))}/${encodeURIComponent(String(tillDate))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -517,7 +517,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<AvailableSleepingOptionsByDay>>(`${this.configuration.basePath}/availableSleepingOptions/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate.toISOString()))}/${encodeURIComponent(String(tillDate.toISOString()))}`,
+        return this.httpClient.get<Array<AvailableSleepingOptionsByDay>>(`${this.configuration.basePath}/availableSleepingOptions/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate))}/${encodeURIComponent(String(tillDate))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -1015,7 +1015,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<FacilityMapByDates>>(`${this.configuration.basePath}/getMapFacilities/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate.toISOString()))}/${encodeURIComponent(String(tillDate.toISOString()))}`,
+        return this.httpClient.get<Array<FacilityMapByDates>>(`${this.configuration.basePath}/getMapFacilities/${encodeURIComponent(String(fieldForestCenterId))}/${encodeURIComponent(String(fromDate))}/${encodeURIComponent(String(tillDate))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -1151,7 +1151,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<boolean>(`${this.configuration.basePath}/budget/IsExistBudgetToYishuv/${encodeURIComponent(String(startDate.toISOString()))}/${encodeURIComponent(String(cityId))}/${encodeURIComponent(String(budgetType))}`,
+        return this.httpClient.get<boolean>(`${this.configuration.basePath}/budget/IsExistBudgetToYishuv/${encodeURIComponent(String(startDate))}/${encodeURIComponent(String(cityId))}/${encodeURIComponent(String(budgetType))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

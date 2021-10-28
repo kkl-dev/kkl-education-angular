@@ -19,11 +19,7 @@ import { FakeService } from 'src/app/services/fake.service';
 import { HttpClient } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
-<<<<<<< HEAD
 import { analyzeAndValidateNgModules, NullTemplateVisitor } from '@angular/compiler';
-=======
-import { NullTemplateVisitor } from '@angular/compiler';
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
 import PictureMarkerSymbol from '@arcgis/core/symbols/PictureMarkerSymbol';
 
 @Component({
@@ -126,7 +122,6 @@ export class MapsComponent implements OnInit {
 
     this.view.ui.add("nameDiv", "top-trailing");
     this.view.ui.add("genderButtonDiv", "bottom-left");
-<<<<<<< HEAD
 
     const labelClass = new LabelClass({
       symbol: {
@@ -141,21 +136,14 @@ export class MapsComponent implements OnInit {
       },
       labelPlacement: "above-center",
     });
-=======
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
 
     this.layer = new FeatureLayer({
       url: this.url,
       popupTemplate: this.popupTrailheads,
-<<<<<<< HEAD
       opacity: 0.9
       // ,
       // labelingInfo: [labelClass]
       //definitionExpression: filterex
-=======
-      opacity: 1,
-      definitionExpression: "Purpose <> 'אוהל' and Purpose <> 'בקתה' and Purpose <> 'חדר'"
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
     });
     this.graphicsLayer = new GraphicsLayer({
       opacity: 2
@@ -169,11 +157,6 @@ export class MapsComponent implements OnInit {
       this.forestCenter = this.tripService.centerField;
     }
 
-<<<<<<< HEAD
-=======
-    this.loadWebMap();
-
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
     this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
 
       console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
@@ -183,11 +166,8 @@ export class MapsComponent implements OnInit {
       this.queryandrender();
 
     });
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
   }
 
   genderButtonDivClick() {
@@ -324,13 +304,9 @@ export class MapsComponent implements OnInit {
 
         let pointGraphic = new Graphic({
           geometry: point,
-<<<<<<< HEAD
-          symbol: sym
-=======
           symbol: sym,
           attributes: buldingfeature.attributes,
           popupTemplate: this.popupTrailheads
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
         });
 
         this.graphicsLayer.add(pointGraphic);

@@ -2,31 +2,6 @@ import { Validators } from "@angular/forms";
 import { QuestionSelect } from "src/app/components/form/logic/question-select";
 import { QuestionTextbox } from "src/app/components/form/logic/question-textbox";
 
-<<<<<<< HEAD
-export const DAYS = [
-  { day: '18.10.2021' },
-  { day: '19.10.2021' },
-  { day: '20.10.2021' },
-  { day: '21.10.2021' }];
-
-export const FACILITY_OCCUPANCY = [{
-  startingHour: 8,
-  endingHour: 10,
-  totalTime: 2,
-  user: 'גנים',
-},
-{
-  startingHour: 14,
-  endingHour: 15.25,
-  totalTime: 1.25,
-  user: 'דני',
-},
-{
-  startingHour: 19.75,
-  endingHour: 24,
-  totalTime: 4.25,
-  user: 'יוסי',
-=======
 export const DAYS = [{
   date: '24.10.2021',
   sleepingOptions: {
@@ -122,85 +97,12 @@ export const FACILITY_OCCUPANCY = [{
   "tillHour": "14:30:00",
   "totalTime": 2.33,
   "customerName": "רושד-ג'דיידה-מכר"
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
 }];
 
 
 
 export const FACILITIES_ARRAY = [
   {
-<<<<<<< HEAD
-    svgUrl: 'assets/images/museum.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/classroom.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 20 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/football.svg',
-    title: 'מגרש ספורט',
-    maxParticipants: '',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/leafs.svg',
-    title: 'סיור במשתלה',
-    availability: FACILITY_OCCUPANCY,
-  },
-  // --- length 5 ---
-  {
-    svgUrl: 'assets/images/stage.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/stage.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/stage.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/stage.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/stage.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/stage.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/stage.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-  },
-  {
-    svgUrl: 'assets/images/stage.svg',
-    title: 'תאטרון',
-    maxParticipants: 'עד 320 משתתפים',
-    availability: FACILITY_OCCUPANCY,
-=======
     iconPath: "classroom.svg",
     id: 1813,
     name: "סיור במשתלה",
@@ -242,7 +144,6 @@ export const FACILITIES_ARRAY = [
     id: 1813,
     name: "תאטרון",
     occupiedHours: FACILITY_OCCUPANCY
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
   },
 ];
 

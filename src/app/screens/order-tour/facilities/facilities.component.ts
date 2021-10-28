@@ -278,7 +278,7 @@ export class FacilitiesComponent implements OnInit {
   }
 
   public updateChosenFacility(args: any) {
-    console.log('updateChosenFacility args' + args)
+    console.log('updateChosenFacility args', args)
     this.facilitiesService.updateSelectedFacility(args);
   }
 
@@ -298,68 +298,50 @@ export class FacilitiesComponent implements OnInit {
     console.log('this.calendarEventsArr$: ', this.calendarEventsArr$);
     //let s = this.calendarEventsArr$.source._subscribe;
     //let a = this.calendarEventsArr$.subscribe(data => this.createForm(data));
-    let a = this.calendarEventsArr$.subscribe(data => {
-      console.log('events Arr data => : ', data);
-      this.createForm(data);
-    });
-
-    // let a = this.facilitiesService.getCalendarEventsArr();
+    // let a = this.calendarEventsArr$.subscribe(data => {
+    //   console.log('events Arr data => : ', data);
+    //   this.createForm(data);
+    // });
     console.log('events Arr: ', this.eventsArr);
-    let b: any = this.eventsArr
+    //let b: any = this.eventsArr
     //calendarEventsArr.value
     let userName = this.userDataService.user.name;
+    let newObj: any = this.facilitiesConvertingService.convertActivityForApi(this.eventsArr);
+    console.log('newObj: ', newObj);
+    // newObj.slice(1, -1);
+    // console.log('newObj  slice ', newObj);
 
-    this.activitiyService.createTripActivities(userName, b).subscribe(res => {
+    this.activitiyService.createTripActivities(userName, newObj).subscribe(res => {
       console.log("create Trip Activities: ", { res });
     })
 
-    // {
-    //   "tripId": 1,
-    //   "tempOrderList": [
-    //     {
-    //       "tripId": 12,
-    //       "orderTypeCode": 0,
-    //       "orderTypeName": "היסעים",
-    //       "orderId": 12345,
-    //       "orderItemIdentity": 12345,
-    //       "orderItemId": 123,
-    //       "orderItemName": "אוטובוס",
-    //       "startDate": "2021-11-12T00:00:00",
-    //       "endDate": "2021-11-12T00:00:00",
-    //       "fromHour": "2021-11-12T13:00:00",
-    //       "tillHour": "2021-11-12T15:00:00",
-    //       "userName": "string"
-    //     }
-    //   ],
-    //   "activityList": [
-    //     {
-    //       "activityId": 1,
-    //       "activityName": "חינוך",
-    //       "tripActivityIdentity": 56,
-    //       "categoryId": 2,
-    //       "date": "2021-11-12T00:00:00",
-    //       "description": "students education",
-    //       "hourStart": "2021-11-12T10:00:00",
-    //       "hourEnd": "2021-11-12T12:00:00",
-    //       "tripId": 2,
-    //       "userName": "dan"
-    //     }
-    //   ],
-    //   "facilityOrderList": [
-    //     {
-    //       "tripId": 1,
-    //       "facilityId": 1,
-    //       "orderId": 12345,
-    //       "orderItemIdentity": 12345,
-    //       "facilityName": "string",
-    //       "startDate": "2021-10-26T16:41:17.023Z",
-    //       "endDate": "2021-10-26T16:41:17.023Z",
-    //       "startHour": "2021-10-26T16:41:17.023Z",
-    //       "endHour": "2021-10-26T16:41:17.023Z",
-    //       "openBy": "שחר גל"
-    //     }
-    //   ]
-    // }
+// {
+//   "tripId": 52896,
+//   "tempOrderList": [
+//     {
+//       "tripId": 52896,
+//       "orderTypeCode": 1,
+//       "orderTypeName": "היסעים",
+//       "startDate": "2021-11-12T00:00:00",
+//       "endDate": "2021-11-12T00:00:00",
+//       "fromHour": "2021-11-12T13:00:00",
+//       "tillHour": "2021-11-12T15:00:00",
+//       "userName": "גל שחר"
+//     }
+//   ],
+//   "activityList": [
+//     {
+//       "activityId": 118,
+//       "activityName": "ישעיהו גבעת",
+//       "date": "2021-11-12T00:00:00",
+//  "description": "students education",	
+//       "fromHour": "2021-11-12T10:00:00",	
+//       "tillHour": "2021-11-12T12:00:00",
+//       "tripId": 52896,
+//       "userName": "גל שחר"
+//     }
+//   ]
+// }
   }
 
 }

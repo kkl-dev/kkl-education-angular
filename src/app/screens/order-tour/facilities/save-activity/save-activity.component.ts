@@ -31,24 +31,8 @@ export class SaveActivityComponent implements OnInit {
     { name: 'כלכלה', completed: false },
     { name: 'הפעלה מוסיקלית', completed: false },
   ];
-<<<<<<< HEAD
   // @Input() days: any[] = DAYS;
   @Input() days: any[] = this.tripService.facilitiesArray;
-=======
-  @Input() days: {
-    date: string;
-    sleepingOptions: {
-      img: string;
-      availableUnits: number;
-      maxOccupancy: number;
-      nameEng: string;
-      acoomodationTypeName: string;
-      accomodationTypeId: number
-    }
-  }[] = DAYS;
-    
-  public selectedDay: number = 0;
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
@@ -94,14 +78,9 @@ export class SaveActivityComponent implements OnInit {
 
   // date && time functions // 
   public arrangeTime(arg: string): any {
-<<<<<<< HEAD
     // yak changed for compatible with date (2021-11-07T00:00:00) and not (21.10.2021)
     //  const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let day = this.days[this.selectedDay].date.split("T");
-=======
-    // const [day, month, year] = this.days[this.selectedDay].day.split(".");
-    const [day, month, year] = this.days[this.selectedDay].date.split(".");
->>>>>>> 7e3624ac9bf1873dac859eabced1a716933d429b
     let [hours, minutes] = this.form.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;
