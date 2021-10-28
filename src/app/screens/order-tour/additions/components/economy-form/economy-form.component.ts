@@ -19,6 +19,7 @@ export class EconomyFormComponent implements OnInit {
   constructor(private transportService: TransportService, private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public order: any;
   @Input() public editMode: boolean;
+  tripId : number;
 
   public form: FormGroup;
   public columns: TableCellModel[];
@@ -30,8 +31,9 @@ export class EconomyFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //  this.generalFormService.setDatesValues();
-    this.orderService.getSupplierList(1, 52275, 0);
+    this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
+     this.generalFormService.setDatesValues();
+    this.orderService.getSupplierList(4, this.tripId, 0);
 
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);

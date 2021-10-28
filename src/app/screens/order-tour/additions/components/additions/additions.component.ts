@@ -28,7 +28,7 @@ export class AdditionsComponent implements OnInit {
   // public addSchedule: boolean = false;
   //public orderModel = {} as OrderModel;
   public item$: Observable<any[]>;
-  public items: any [];
+  public items: any[];
   public item: any[];
   public addItem: boolean = false;
   tripId : number;
@@ -71,8 +71,9 @@ export class AdditionsComponent implements OnInit {
   // }
   getTempOrder() {
     
-   // this.tripId =this.squadAssembleService.tripInfofromService.trip.id
-     //this.tripId= 52910;
+
+    //this.tripId =this.squadAssembleService.tripInfofromService.trip.id
+     this.tripId= 52973;
     this.orderService.getTempOrders(this.tripId).subscribe(
       response => {
         console.log(response)
@@ -91,7 +92,7 @@ export class AdditionsComponent implements OnInit {
     )
   }
   mapTempOrder(orderTypId: number) {
-    if (this.tempOrderReduce !== undefined && this.tempOrderReduce !== null) {
+    if (this.tempOrderReduce !== undefined && this.tempOrderReduce !== null  ) {
       var orderList = [];
       // if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
       if (this.tempOrderReduce[orderTypId] === undefined) { return; }
@@ -121,10 +122,11 @@ export class AdditionsComponent implements OnInit {
         }        
       }     
       else{
+        this.items=[];
         this.items= orderList;
-
       }
     }
+    
   }
   change(event) {
     switch (event) {
@@ -135,13 +137,10 @@ export class AdditionsComponent implements OnInit {
       case 4:
         if(this.generalFormService.economyOrderList.length>0)
         this.items=this.generalFormService.economyOrderList;
-        else{
-          this.items=[];
-        }
         break;
    }
     this.mapTempOrder(event);
     this.orderType = event;
-
+   }
   }
 }

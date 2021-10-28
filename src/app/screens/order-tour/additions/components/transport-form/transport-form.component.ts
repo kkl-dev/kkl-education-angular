@@ -11,6 +11,7 @@ import { GeneralFormService } from '../../services/general-form.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transport-form',
@@ -36,14 +37,16 @@ export class TransportFormComponent implements OnInit {
     private orderService: OrderService, private _dialog: MatDialog, private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
-    //this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
-    this.getSupplierList(1, 52910, 0);
+
+    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.getSupplierList(1, this.tripId, 0);
+
     //this.generalFormService.getSupplierList(1,this.tripId,0);
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
 
-    //this.generalFormService.setDatesValues();
+    this.generalFormService.setDatesValues();
     if (this.order != undefined && this.order != null) {
       this.generalFormService.setFormValues(this.order);
 
@@ -123,7 +126,7 @@ export class TransportFormComponent implements OnInit {
       // .status==='VALID'
       // if (!this.validationsTransport()) { return; }
       this.editMode = true;
-      this.form.disable();
+
       let orderId;
       if (this.generalFormService.transportOrderList.length > 0) {
         orderId = this.generalFormService.transportOrderList[0].order.orderId
@@ -136,7 +139,9 @@ export class TransportFormComponent implements OnInit {
       t.order.supplier = {} as Supplier;
       t.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
-        if (key !== 'pickUpAddress' && key !== 'supplier' && key !== 'scatterAddress') {
+
+        if (key !== 'exitPoint' && key !== 'supplier' && key !== 'scatterLocation') {
+
           if (key != 'startDate' && key != 'endDate') {
             t.globalParameters[key] = this.form.value.details[key];
           }
@@ -154,15 +159,18 @@ export class TransportFormComponent implements OnInit {
           t[key] = this.form.value.details[key]
         }
       });
-      t.globalParameters['endHour'] = '2021-11-21T14:00:00';
-      t.globalParameters['startHour'] = '2021-11-21T15:00:00';
+      t.globalParameters['endHour'] = '2021-11-23T14:00:00';
+      t.globalParameters['startHour'] = '2021-11-23T15:00:00';
       t.globalParameters['comments'] = this.form.value.comments.comments;
       t.globalParameters.orderId = orderId;
       t.order.supplier.id = +this.form.value.details.supplier;
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = 1;
-      this.generalFormService.addOrder(t, 'היסעים');
+
+      // this.generalFormService.addOrder(t,'היסעים');
+      this.form.disable({ emitEvent: false });
+
     }
   }
   // validationsTransport() {
@@ -222,18 +230,18 @@ export class TransportFormComponent implements OnInit {
   }
 
   public onValueChange(event) {
+
     this.form = event;
     console.log('I am form event');
     //this.form.controls["details"].get('peopleInTrip').setValue(this.squadAssembleService.peopleInTrip);
     //this.getSupplierByOrderType(1);
-    this.form.controls["details"].get('supplier').valueChanges.subscribe(value => {
-      console.log(value);
-      this.generalFormService.getOrderItemBySupplierId(value);
-    });
-
-
-    this.form.controls["details"].get('itemId').valueChanges.subscribe(value => {
-      console.log(value)
+    this.form.controls["details"].get('supplier').valueChanges.pipe(distinctUntilChanged())
+      .subscribe(value => {
+        console.log(value);
+        this.generalFormService.getOrderItemBySupplierId(value);
+      });
+    this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+       console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
       var itemCost = Math.floor(item.cost);
       this.form.controls["details"].get('itemCost').patchValue(itemCost);
@@ -242,26 +250,12 @@ export class TransportFormComponent implements OnInit {
       this.form.controls["details"].get('billingCustomer').patchValue(this.form.value.details.billingCustomer);
       this.form.controls["details"].get('billingSupplier').patchValue(this.form.value.details.billingSupplier);
     });
+
     console.log(this.form)
-
-
   }
 
 
-
-  // getOrderItemBySupplierId(supplierId) {
-  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       this.originalItemList = response;
-  //       response.forEach(element => {
-  //         this.generalFormService.itemsList.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
+  }
 
 
 }
