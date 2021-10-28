@@ -5,7 +5,7 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { OrderService, TransportOrder, OrderEvent, EconomyOrder } from 'src/app/open-api';
+import { OrderService, TransportOrder, OrderEvent, EconomyOrder, OrderItemCommonDetails, Order } from 'src/app/open-api';
 import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,6 +17,7 @@ export class GeneralFormService {
   supplierList = [];
   itemsList = [];
   public transportOrderList: TransportOrder[] = [];
+  //public transportOrderList: any[] = [];
   public economyOrderList: EconomyOrder[] =[];
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
   constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService,  private _dialog: MatDialog) { }
@@ -52,7 +53,7 @@ export class GeneralFormService {
     new QuestionTextbox({
       key: 'peopleInTrip',
       label: 'משתתפים',
-      value: String(this.squadAssembleService.peopleInTrip),
+      value: '',
       validations: [Validators.required],
     }),
     new QuestionTextbox({
@@ -77,12 +78,12 @@ export class GeneralFormService {
       validations: [Validators.required],
     }),
 
-    new QuestionTextbox({
-      key: 'total',
-      label: 'סה"כ',
-      value: '',
-      validations: [Validators.required],
-    }),
+    // new QuestionTextbox({
+    //   key: 'total',
+    //   label: 'סה"כ',
+    //   value: '',
+    //   validations: [Validators.required],
+    // }),
 
     new QuestionSelect({
       key: 'startDate',
@@ -166,18 +167,18 @@ export class GeneralFormService {
     //     // labelSize: 's5',
     //   },
     // }),
+    // new QuestionTextbox({
+    //   key: 'pickUpAddress',
+    //   label: 'כתובת איסוף',
+    //   value: '',
+    //   validations: [Validators.required],
+    //   icon: 'place',
+    //   inputProps: {
+    //     // labelSize: 's5',
+    //   },
+    // }),
     new QuestionTextbox({
-      key: 'pickUpAddress',
-      label: 'כתובת איסוף',
-      value: '',
-      validations: [Validators.required],
-      icon: 'place',
-      inputProps: {
-        // labelSize: 's5',
-      },
-    }),
-    new QuestionTextbox({
-      key: 'scatterAddress',
+      key: 'scatterLocation',
       label: 'כתובת פיזור',
       value: '',
       validations: [Validators.required],
@@ -186,6 +187,17 @@ export class GeneralFormService {
         // labelSize: 's5',
       },
     }),
+    new QuestionTextbox({
+      key: 'exitPoint',
+      label: 'נקודת יציאה',
+      value: '',
+      validations: [Validators.required],
+      icon: 'place',
+      inputProps: {
+        // labelSize: 's5',
+      },
+    }),
+    
   ]
   public economy: QuestionBase<string>[] = [
     // new QuestionTextbox({
@@ -344,22 +356,22 @@ export class GeneralFormService {
   // }
 
 
-  // originalItemList = [];
-  // getOrderItemBySupplierId() {
-  //   let index = this.details.findIndex(el => el.key === "supplier");
-  //   var supplierId = parseInt(this.details[index].value);
-  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       this.originalItemList = response;
-  //       response.forEach(element => {
-  //         this.itemsList.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
+  originalItemList = [];
+  getOrderItemBySupplierId(supplierId) {
+    // let index = this.details.findIndex(el => el.key === "supplier");
+    // var supplierId = parseInt(this.details[index].value);
+    this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
+      response => {
+        console.log(response);
+        this.originalItemList = response;
+        response.forEach(element => {
+          this.itemsList.push({ label: element.name, value: element.id.toString() });
+        });
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
 
 
   changeDateFormat(date, format) {
@@ -397,7 +409,16 @@ export class GeneralFormService {
     addToOrderList(res, orderType){
       switch (orderType) {
         case 'היסעים':
-            this.transportOrderList.push(res);
+          let t = {} as TransportOrder;
+          t.globalParameters = {} as OrderItemCommonDetails;
+          t.order = {} as Order;
+          t.order=res[0].order;
+          t.globalParameters= res[0].globalParameters;
+          // if(res[0].exitPoint)
+          // t.exitPoint= res[0].exitPoint;
+          // if(res[0].scatterLocation)
+          //  t.scatterLocation= res[0].scatterLocation;
+           this.transportOrderList.push(t);
           break;
   
         case 'כלכלה':
