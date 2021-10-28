@@ -11,6 +11,7 @@ export class CalendarCardComponent implements OnInit {
   constructor() { }
 
   @Input() public props!: any;
+  @Input() public sameHour:boolean;
 
   ngOnInit(): void {
   }

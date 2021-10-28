@@ -1,20 +1,19 @@
 <div class="calendar-card">
     <div class="right">
-        <div>
+        <div [ngClass]="sameHour ? 'same-hour-svg' : null">
             <img *ngIf='props.event.extendedProps.img' [src]='props.event.extendedProps.img' />
-            <svg-icon *ngIf='props.event.extendedProps.svgUrl' [src]='props.event.extendedProps.svgUrl'></svg-icon>
-
+            <svg-icon  *ngIf='props.event.extendedProps.svgUrl' [src]='props.event.extendedProps.svgUrl'></svg-icon>
         </div>
-        <div>
+        <div [ngClass]="sameHour ? 'same-hour' : null">
             <p class="title">{{props.event.title}}</p>
             <p class='timeText'>{{props.timeText}}</p>
         </div>
     </div>
     <div class="left">
         <div class="event-icons">
-            <app-icon type="svg" size="35" key="white-circle"></app-icon>
+            <app-icon type="svg" [size]="sameHour? '25' : '35'" key="white-circle"></app-icon>
             <div class="main-icon">
-                <app-icon type="svg" size="20" key="man-with-bag"></app-icon>
+                <app-icon type="svg" [size]="sameHour? '15' : '20'"  key="man-with-bag"></app-icon>
             </div>
         
         </div>

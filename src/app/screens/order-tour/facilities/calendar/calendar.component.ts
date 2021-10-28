@@ -64,21 +64,28 @@ export class CalendarComponent implements OnInit {
       this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
     },
     eventContent: (props) => {
-      console.log(this.myDynamicComponent);
       const factory = this.resolver.resolveComponentFactory(CalendarCardComponent);
       this.myDynamicComponent.viewContainerRef.clear();
       const componentRef = this.myDynamicComponent.viewContainerRef.createComponent(factory, 0);
       componentRef.instance.props = props;
+      componentRef.instance.sameHour = this.checkIfSameHour(props.timeText)
       componentRef.changeDetectorRef.detectChanges();
       const html = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
       
       return { html: html.innerHTML };
     },
-    eventDidMount: () => {
-      
-    }
-  }
 
+  }
+  public checkIfSameHour(time:string):boolean {
+    const split = time.split(' - ');
+    const hours = split.map(item => {
+      item.split(':');
+      return +item[0]
+    });
+    console.log(hours);
+    
+    return hours[0] == hours[1];
+  }
   public arrangeDate(date:Date) {
     // 2021-10-15T08:00
     const hours = date.getHours();
