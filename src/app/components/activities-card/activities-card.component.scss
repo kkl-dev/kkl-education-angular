@@ -8,6 +8,10 @@
     // box-sizing: border-box;
     // height: 22rem;
     // width: 20rem;
+    .mat-card-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
     ::ng-deep .mat-card-header {
         margin-top: 1rem;
     }
@@ -16,17 +20,16 @@
         // width: 200px;
         margin: 0 auto;
         width: 100%;
-    
     }
     ::ng-deep .mat-card-header-text {
         margin: 0 auto;
     }
-    ::ng-deep .mat-card-actions{
+    ::ng-deep .mat-card-actions {
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
         align-items: baseline;
-        p{
+        p {
             padding: 0;
             margin: 0;
         }
@@ -41,7 +44,7 @@
         color: white;
         border-radius: 8px;
     }
-    button:hover{
+    button:hover {
         cursor: pointer;
     }
     // #title {
@@ -57,8 +60,8 @@
     //     direction: rtl;
     // }
 }
-@media screen and (max-width: 1024px){
-    ::ng-deep .activities-card .mat-card-lg-image{
-        width: 90%!important;
+@media screen and (max-width: 1024px) {
+    ::ng-deep .activities-card .mat-card-lg-image {
+        width: 90% !important;
     }
 }

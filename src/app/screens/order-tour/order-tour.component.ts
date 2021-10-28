@@ -237,7 +237,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
-          ContactForm= true
+          ContactForm= true;
         }
         // if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
         //   console.log('I am budget');
@@ -306,6 +306,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(err);
     })
   }
+
 
 
   // AddOrder() {

@@ -39,8 +39,10 @@
       
         <app-transport-form *ngIf="orderType==1" [order]="item" [editMode]="editMode"  content>
         </app-transport-form>
+
         <app-economy-form *ngIf="orderType==4" [order]="item" [editMode]="editMode" content>
         </app-economy-form>
+
         <!-- <app-order-form [order]="item" [editMode]="editMode" content>
         </app-order-form> -->
         <!-- <app-economy-form [order]="item" [editMode]="editMode" content>

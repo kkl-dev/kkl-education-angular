@@ -3,6 +3,7 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
 import { FacilitiesService } from 'src/app/services/facilities.service';
+import { TripService } from 'src/app/services/trip.service';
 import { DAYS } from 'src/mock_data/facilities';
 
 @Component({
@@ -11,13 +12,17 @@ import { DAYS } from 'src/mock_data/facilities';
   styleUrls: ['./save-activity.component.scss']
 })
 export class SaveActivityComponent implements OnInit {
-  constructor(private facilitiesServices: FacilitiesService) { }
+
+  constructor(private facilitiesServices: FacilitiesService, private tripService: TripService) { }
+
   public selectedActivity$: Observable<ActivitiesCardInterface>;
   public subscribeToActivity: Subscription;
   public updateForm: boolean = false;
   public form: FormGroup;
   public orderingCustomer: boolean = false;
   public showSleepAreas: boolean = false;
+  public selectedDay: number = 0;
+
   @Input() type: string;
   @Input() public additonsType: any[] = [
     { name: 'הסעה', completed: false },
@@ -26,17 +31,8 @@ export class SaveActivityComponent implements OnInit {
     { name: 'כלכלה', completed: false },
     { name: 'הפעלה מוסיקלית', completed: false },
   ];
-  @Input() days: {
-    day: string;
-    options: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
-    }
-  }[] = DAYS;
-  public selectedDay: number = 0;
+  // @Input() days: any[] = DAYS;
+  @Input() days: any[] = this.tripService.facilitiesArray;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
@@ -82,14 +78,17 @@ export class SaveActivityComponent implements OnInit {
 
   // date && time functions // 
   public arrangeTime(arg: string): any {
-    const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    // yak changed for compatible with date (2021-11-07T00:00:00) and not (21.10.2021)
+    //  const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    let day = this.days[this.selectedDay].date.split("T");
     let [hours, minutes] = this.form.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;
     }
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-
+    return `${day[0]}T${hours}:${minutes}`;
+    //return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
+
   public getDay(event: any): void {
     this.selectedDay = event;
   }
@@ -100,7 +99,21 @@ export class SaveActivityComponent implements OnInit {
   public createForm(data): void {
     if (!data.start) {
       this.form = new FormGroup({
-        'title': new FormControl(data.title),
+        // 'title': new FormControl(data.title),
+        // 'selectedDay': new FormControl(this.selectedDay),
+        // 'start': new FormControl('08:00'),
+        // 'end': new FormControl('09:00'),
+        // 'backgroundColor': new FormControl('#F0F6FE'),
+        // 'date': new FormControl(''),
+        // 'className': new FormControl('border-facilities'),
+        // 'type': new FormControl('activity'),
+        // 'invitingCustomer': new FormControl(false),
+        // 'additions': new FormControl(),
+        // 'haveAdditions': new FormControl(true),
+        // 'svgUrl': new FormControl(data.svgUrl),
+        // 'img': new FormControl(data.img)
+
+        'title': new FormControl(data.name),
         'selectedDay': new FormControl(this.selectedDay),
         'start': new FormControl('08:00'),
         'end': new FormControl('09:00'),
@@ -111,8 +124,8 @@ export class SaveActivityComponent implements OnInit {
         'invitingCustomer': new FormControl(false),
         'additions': new FormControl(),
         'haveAdditions': new FormControl(true),
-        'svgUrl': new FormControl(data.svgUrl),
-        'img': new FormControl(data.img)
+        'svgUrl': new FormControl(data.sitePicture),
+        'img': new FormControl(data.sitePicture)
       });
     } else {
       this.updateForm = true;
@@ -131,5 +144,4 @@ export class SaveActivityComponent implements OnInit {
       }
     }
   }
-
 }

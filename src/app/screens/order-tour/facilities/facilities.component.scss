@@ -1,16 +1,16 @@
 @import "../../../../styles.scss";
 
-::ng-deep .border-activities{
-    border-right: 9px solid #37C56B!important;
-    border-radius: 0px 4px 4px 0px!important;
+::ng-deep .border-activities {
+    border-right: 9px solid #37c56b !important;
+    border-radius: 0px 4px 4px 0px !important;
     .fc-v-event {
-        border-color: #37C56B!important;
+        border-color: #37c56b !important;
     }
-  }
-  ::ng-deep .border-facilities{
-    border-right: 9px solid #448ECD!important;
-    border-radius: 0px 4px 4px 0px!important;
-  }
+}
+::ng-deep .border-facilities {
+    border-right: 9px solid #448ecd !important;
+    border-radius: 0px 4px 4px 0px !important;
+}
 
 .facilities {
     margin-top: 2rem;
@@ -59,7 +59,6 @@
             background: #8dc5f5;
         }
         .header {
-
             background: #f3f3f3;
             p {
                 background: #ffffff;
@@ -160,7 +159,7 @@ app-tooltip {
 }
 .info-card {
     display: inline-grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(5, 1fr);
     position: relative;
     direction: rtl;
     row-gap: 5rem;
@@ -191,12 +190,15 @@ app-tooltip {
     float: right;
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
     .card-container {
-        grid-template-columns: auto;
+        grid-template-columns: auto auto;
     }
     ::ng-deep .facilities .activities-card {
-        width: 80%;
+        width: 100%;
         margin: 0 auto;
+    }
+    ::ng-deep .activities-card .mat-card-lg-image {
+        height: 50%;
     }
 }

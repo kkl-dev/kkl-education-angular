@@ -6,7 +6,6 @@
     </app-save-activity>
     <app-add-facility [facility]='(selectedFacility$ | async)' (emitFormValues)='addToCalendar($event)'
         *ngIf="(closeModal$ | async) === 'facility'"></app-add-facility>
-
     <div class="content-1" fxFlex='50'>
         <div class="card">
             <div class="header">
@@ -22,7 +21,6 @@
             <div class="timeline">
                 <app-calendar></app-calendar>
             </div>
-
         </div>
     </div>
     <div class="content-2" fxFlex='45' fxLayout="column">
@@ -93,6 +91,10 @@
             </div>
             <!-- <app-pagination pagesCount='5' currentPage='1'></app-pagination> -->
             <app-pagination [pagesCount]="pagesAmount" currentPage='1' (newPage)="newPageEmit($event)"></app-pagination>
+
+            <div class="test-calander">
+                <button (click)="onTest()">test</button>
+            </div>
         </div>
     </div>
 </div>

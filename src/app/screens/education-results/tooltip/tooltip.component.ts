@@ -30,7 +30,6 @@ export class TooltipComponent implements OnInit {
 
   ngOnInit(): void {
     this.createOccupiedHoursArray();
-    console.log('ngOnInit this.hours: ' + this.hours)
   }
 
   createOccupiedHoursArray() {

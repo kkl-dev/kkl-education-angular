@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { FacilitiesService } from 'src/app/services/facilities.service';
+import { TripService } from 'src/app/services/trip.service';
 import { DAYS } from 'src/mock_data/facilities';
 
 @Component({
@@ -9,22 +10,15 @@ import { DAYS } from 'src/mock_data/facilities';
   styleUrls: ['./add-activity.component.scss']
 })
 export class AddActivityComponent implements OnInit {
-  days: {
-    day: string;
-    options: {
-      svgUrl: string;
-      sleepingAreas: number;
-      avialableSpaces: number;
-      type: string;
-      singleUnit: string;
-    }
-  }[] = DAYS;
+  // @Input() days: any[] = DAYS;
+  @Input() days: any[] = this.tripService.facilitiesArray;
+
   public form: FormGroup;
   public showSleepAreas: boolean = false;
   public selectedDay: number = 0;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
-  constructor(private facilitiesServices: FacilitiesService) { }
+  constructor(private facilitiesServices: FacilitiesService, private tripService: TripService) { }
 
   public onSubmit(): void {
     this.form.controls['selectedDay'].setValue(this.selectedDay);
@@ -54,13 +48,16 @@ export class AddActivityComponent implements OnInit {
   public endTimeChanged(event: string) {
     this.form.controls['end'].setValue(event);
   }
+
   public arrangeTime(arg: string): any {
-    const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    // yak changed for compatible with date (2021-11-07T00:00:00) and not (21.10.2021)
+    //  const [day, month, year] = this.days[this.selectedDay].day.split(".");
+    let day = this.days[this.selectedDay].date.split("T");
     let [hours, minutes] = this.form.value[arg].split(':');
     if (hours.length == 1) {
       hours = `0${hours}`;
     }
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
+    return `${day[0]}T${hours}:${minutes}`;
+    //return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
-
 }
