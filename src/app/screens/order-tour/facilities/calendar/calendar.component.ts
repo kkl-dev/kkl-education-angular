@@ -19,7 +19,7 @@ export class CalendarComponent implements OnInit {
   public calendarEventsArr$!: Observable<EventInput[]>;
   public value!: EventInput[];
   public valueSub: Subscription;
-  public hideComponent:boolean = false;
+  public hideComponent: boolean = false;
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
   @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
 
@@ -32,6 +32,7 @@ export class CalendarComponent implements OnInit {
       start: '2021-10-18',
       end: '2021-10-21'
     },
+    slotEventOverlap:false,
     allDaySlot: false,
     locales: [heLocale],
     selectable: true,
@@ -49,7 +50,8 @@ export class CalendarComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next',
       center: 'title',
-      right: 'timeGridDay,timeGridWeek,dayGridMonth'
+      // right: 'timeGridDay,timeGridWeek,dayGridMonth'
+      right:''
     },
     initialEvents: [],
     eventClick: (info) => {
@@ -62,22 +64,18 @@ export class CalendarComponent implements OnInit {
       this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
     },
     eventContent: (props) => {
-      console.log(this.myDynamicComponent);
       const factory = this.resolver.resolveComponentFactory(CalendarCardComponent);
       this.myDynamicComponent.viewContainerRef.clear();
       const componentRef = this.myDynamicComponent.viewContainerRef.createComponent(factory, 0);
       componentRef.instance.props = props;
       componentRef.changeDetectorRef.detectChanges();
       const html = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-      
+
       return { html: html.innerHTML };
     },
-    eventDidMount: () => {
-      
-    }
   }
 
-  public arrangeDate(date:Date) {
+  public arrangeDate(date: Date) {
     // 2021-10-15T08:00
     const hours = date.getHours();
     const minutes = date.getMinutes();

@@ -13,13 +13,16 @@ div {
     left: 30px;
     ::ng-deep mat-icon {
         border-radius: 50%;
-        height: 20px!important;
-        width: 20px!important;
+        height: 20px !important;
+        width: 20px !important;
         svg {
-            height: 10px;
             width: 10px;
-            position: relative;
-            transform: translateX(-50%);
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            text-align: center;
         }
     }
 }
