@@ -169,7 +169,7 @@ export class AdditionsService {
     //------------------------------חישוב ערכי ברירת מחדל לחיובי ספק ולקוח---------------------------------------------------
 
     itemOrder.billingSupplier = item?.cost * MultiplyByAmountOrPeople * MultiplyByDays //ספק
-    if (item?.orderType == 1 && item?.credit != 1) itemOrder.billingSupplier = itemOrder.billingSupplier * ((JSON.parse(localStorage.getItem('currentVat')).currentVat / 100) + 1)  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+    if (item?.orderType == 1 && item?.credit != 1) itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
     itemOrder.billingCustomer = item?.costCustomer * MultiplyByAmountOrPeople * MultiplyByDays   //לקוח  
     var addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAmountOrPeople?.toString() + "*" + item?.costCustomer + "*" + MultiplyByDays
 
@@ -218,7 +218,7 @@ export class AdditionsService {
       itemOrder.billingSupplier = item?.cost * MultiplyByAmountOrPeople // חישוב חיוב ספק
       // if (item.costVat == 1) {
       if (itemOrder.isVat == 1) {
-        itemOrder.billingSupplier = ((JSON.parse(localStorage.getItem('currentVat')).currentVat / 100) + 1)
+        itemOrder.billingSupplier = (currentVat / 100) + 1
       } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
       if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
@@ -275,7 +275,7 @@ export class AdditionsService {
     else if (item?.orderType == 1) {
       // היסעים - צריך להיות תמיד לפי כמות
       // אם סוג פעילות: "עבודה תורמת" או "מחזון להגשמה" - החיוב ללקוח אמור להיות רק 50%
-      if (this.squadAssembleService.tripInfofromService.trip.activity.id == 23 || this.squadAssembleService.tripInfofromService.trip.activity.id == 38) {
+      if (this.squadAssembleService?.tripInfofromService.trip.activity.id == 23 || this.squadAssembleService?.tripInfofromService.trip.activity.id == 38) {
         itemOrder.billingCustomer = item?.costCustomer * 0.5
         addToCommentMultipleStr = "עם סבסוד" + "מכפלת החיוב " + itemOrder.quantity + "*" + item?.costCustomer + "*0.5" + "*" + MultiplyByDays.toString()
         itemOrder.internalComment = "סבסוד קקל לפעילות חינוכית" + this.squadAssembleService.tripInfofromService.trip.activity.name + ", " + "עלות הפריט: " + item?.costCustomer
@@ -311,8 +311,9 @@ export class AdditionsService {
       }
     }
     itemOrder.quantity = itemOrder.quantity.toString();
-
+    console.log('timmeeeeee')
     return itemOrder
+
   }
 
 }
