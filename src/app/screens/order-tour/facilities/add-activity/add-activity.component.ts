@@ -30,8 +30,7 @@ export class AddActivityComponent implements OnInit {
       'selectedDay': new FormControl(this.selectedDay),
       'start': new FormControl("08:00"),
       'end': new FormControl("09:00"),
-      'backgroundColor': new FormControl('#ECF8EE'),
-      'borderColor' : new FormControl('#37C56B'),
+      'backgroundColor': new FormControl('#f0f9f1'),
       'date': new FormControl(''),
       'className': new FormControl('border-activities'),
       'type': new FormControl('activity')

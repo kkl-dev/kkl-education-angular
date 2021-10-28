@@ -32,6 +32,7 @@ export class CalendarComponent implements OnInit {
       start: '2021-10-18',
       end: '2021-10-21'
     },
+    slotEventOverlap:false,
     allDaySlot: false,
     locales: [heLocale],
     selectable: true,
@@ -49,7 +50,8 @@ export class CalendarComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next',
       center: 'title',
-      right: 'timeGridDay,timeGridWeek,dayGridMonth'
+      // right: 'timeGridDay,timeGridWeek,dayGridMonth'
+      right:''
     },
     initialEvents: [],
     eventClick: (info) => {
