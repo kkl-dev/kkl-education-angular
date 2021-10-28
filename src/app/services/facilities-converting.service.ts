@@ -61,10 +61,63 @@ export class FacilitiesConvertingService {
     return tmpArr;
   }
 
-  convertActivityForApi(arr: any[]) {
-    let calendar= {} as TripCalendar;
-   
-    
+  convertActivityForApi(arr: any) {
+     let calendar= {} as TripCalendar;
+     let tempOrderArr = [];
+     let activityArr = [];
+     let tempOrder;
+     let activity;
+
+    //  arr.forEach(element => {
+       
+    //  });
+
+     for (let i = 0; i < arr.length; i++) { 
+      console.log(arr[i]);
+      tempOrder = 
+        {
+          "tripId": 52896,
+          "orderTypeCode": 1,
+          "orderTypeName": "היסעים",
+          "startDate": arr[i].start,
+          "endDate": arr[i].end,
+          "fromHour": arr[i].start,
+          "tillHour": arr[i].end,
+          "userName": "גל שחר"
+        }      
+      tempOrderArr.push(tempOrder);
+
+      activity = 
+      {
+        "activityId": 118,
+      "activityName": arr[i].title,
+      "date": "2021-11-12T00:00:00",
+      "description": "students education",
+      "fromHour": arr[i].start,
+      "tillHour":  arr[i].end,
+      "tripId": 52896,
+      "userName": "גל שחר"
+      }      
+      activityArr.push(activity);
+    }
+
+    // activityArr = [{
+    //   "activityId": 118,
+    //   "activityName": arr.title,
+    //   "date": "2021-11-12T00:00:00",
+    //   "description": "students education",
+    //   "fromHour": arr.start,
+    //   "tillHour":  arr.end,
+    //   "tripId": 52896,
+    //   "userName": "גל שחר"
+    // }];
+
+    calendar.tripId= 52896;
+    calendar.tempOrderList = tempOrderArr;
+    calendar.activityList = activityArr;
+
+    return calendar;
+
     let tmpArr: any = [];
     arr.map(obj => {
       //console.log(obj);
