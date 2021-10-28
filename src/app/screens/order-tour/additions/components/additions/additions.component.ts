@@ -142,5 +142,5 @@ export class AdditionsComponent implements OnInit {
     this.mapTempOrder(event);
     this.orderType = event;
    }
-  }
+ 
 }
