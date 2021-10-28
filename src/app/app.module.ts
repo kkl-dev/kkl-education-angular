@@ -32,7 +32,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
 
-import { ApiModule } from 'src/app/open-api';
+import { ApiModule } from 'src/app/open-api/';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -130,11 +130,15 @@ import { AddActivityComponent } from './screens/order-tour/facilities/add-activi
 import { ModalComponent } from './components/modal/modal.component';
 import { OutsideDirective } from './utilities/directivs/outside.directive';
 import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping-map.component';
+
+import { CalendarCardComponent } from './screens/order-tour/facilities/calendar/calendar-card/calendar-card.component';
+
 import { FormDetailsComponent } from './screens/order-tour/additions/components/form-details/form-details.component';
 import { OrderFormComponent } from './screens/order-tour/additions/components/order-form/order-form.component';
 import { EconomyFormComponent } from './screens/order-tour/additions/components/economy-form/economy-form.component';
 import { GudianceFormComponent } from './screens/order-tour/additions/components/gudiance-form/gudiance-form.component';
 import { HostingFormComponent } from './screens/order-tour/additions/components/hosting-form/hosting-form.component';
+
 
 
 
@@ -257,11 +261,15 @@ FullCalendarModule.registerPlugins([
     SquadGroupGenderComponent,
     OutsideDirective,
     SleepingMapComponent,
+
+    CalendarCardComponent
+
     FormDetailsComponent,
     OrderFormComponent,
     EconomyFormComponent,
     GudianceFormComponent,
     HostingFormComponent
+
   ],
   imports: [
     BrowserModule,

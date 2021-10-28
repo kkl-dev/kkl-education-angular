@@ -19,7 +19,7 @@ import { FakeService } from 'src/app/services/fake.service';
 import { HttpClient } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
-import { NullTemplateVisitor } from '@angular/compiler';
+import { analyzeAndValidateNgModules, NullTemplateVisitor } from '@angular/compiler';
 import PictureMarkerSymbol from '@arcgis/core/symbols/PictureMarkerSymbol';
 
 @Component({
@@ -48,7 +48,6 @@ export class MapsComponent implements OnInit {
   constructor(protected httpClient: HttpClient, public tripService: TripService, public fakeApi: FakeService) {
 
     this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
-
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
     }
@@ -124,14 +123,30 @@ export class MapsComponent implements OnInit {
     this.view.ui.add("nameDiv", "top-trailing");
     this.view.ui.add("genderButtonDiv", "bottom-left");
 
+    const labelClass = new LabelClass({
+      symbol: {
+        type: "text", // autocasts as new TextSymbol()
+        color: "black",
+        font: {
+          // autocast as new Font()
+          family: "Playfair Display",
+          size: 0,
+          weight: "bold"
+        }
+      },
+      labelPlacement: "above-center",
+    });
+
     this.layer = new FeatureLayer({
       url: this.url,
       popupTemplate: this.popupTrailheads,
-      opacity: 1,
-      definitionExpression: "Purpose <> 'אוהל' and Purpose <> 'בקתה' and Purpose <> 'חדר'"
+      opacity: 0.9
+      // ,
+      // labelingInfo: [labelClass]
+      //definitionExpression: filterex
     });
     this.graphicsLayer = new GraphicsLayer({
-      opacity: 1
+      opacity: 2
     });
     this.myMap.add(this.layer);
     this.myMap.add(this.graphicsLayer);
@@ -142,8 +157,6 @@ export class MapsComponent implements OnInit {
       this.forestCenter = this.tripService.centerField;
     }
 
-    this.loadWebMap();
-
     this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
 
       console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
@@ -153,6 +166,8 @@ export class MapsComponent implements OnInit {
       this.queryandrender();
 
     });
+
+
   }
 
   genderButtonDivClick() {

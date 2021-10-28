@@ -2,7 +2,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { BehaviorSubject } from 'rxjs';
-import { UserService } from 'src/app/open-api/api/user.service';
+import { UserService } from 'src/app/open-api/';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
 import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer, ActivityType, BudgetByParams, Budget } from '../open-api';
@@ -62,21 +62,6 @@ export class TripService {
           "structureId": 1195,
           "gender": "בנות",
           "status": "פנוי"
-        },
-        {
-          "structureId": 1196,
-          "gender": "בנים",
-          "status": "תפוס"
-        },
-        {
-          "structureId": 1197,
-          "gender": "מעורב",
-          "status": "פנוי"
-        },
-        {
-          "structureId": 1198,
-          "gender": "בנות",
-          "status": "תפוס"
         }
       ]
     }
@@ -312,7 +297,6 @@ export class TripService {
         // for (let index = 0; index < this.totalAvailableUnits[0].availableUnits; index++) {
         //   temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
         // }
-
         let gender: string;
         const rand = Math.floor(Math.random() * 3)
         if (rand == 0)
@@ -321,7 +305,6 @@ export class TripService {
           gender = "בנות";
         else
           gender = "מעורב";
-
         if (element.structureType == 'בקתה') {
           if (availableCabins > 0) {
             availableCabins = availableCabins - 1;

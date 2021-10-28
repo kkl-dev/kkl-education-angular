@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { TooltipDataModel } from './tooltip/tooltip.component';
 import { UserDataService } from 'src/app/services/user-data.service';
-import { UserService } from 'src/app/open-api/api/user.service';
+import { UserService } from 'src/app/open-api/';
 import { TripService } from 'src/app/services/trip.service';
 import { FakeService } from 'src/app/services/fake.service';
 import { MapsComponent } from './maps/maps.component';
@@ -39,7 +39,7 @@ export class EducationResultsComponent implements OnInit {
   fromOtherComponent: boolean = true;
   //public facilitiesArray: InfoCard[] = [];
   facilitiesArray: any = [{
-    "date": "2021-09-10T:00:00:00",
+    "date": "2021-10-24T:00:00:00",
     "facilitiesList": []
   }];
 
