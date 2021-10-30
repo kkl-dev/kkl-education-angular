@@ -24,21 +24,21 @@ export class CalendarCardComponent implements OnInit {
 
     const compareHour = +hours[0][0] == +hours[1][0];
     const compareHalfHour = +hours[0][0] + 1 == +hours[1][0];
-
+        
     if (compareHour) {
       this.checkHour = true;
     }
 
     if (!compareHour && compareHalfHour) {
       const totalMinutes = this.compareMinutes(hours);
-      if(totalMinutes < 60){
+      if (totalMinutes < 60) {
         this.checkHour = true;
       }
     }
   }
   private compareMinutes(hours: any[]): number {
-    const startMinutes = +hours[0][1];    
+    const startMinutes = +hours[0][1];
     const endMinutes = +hours[1][1];
-    return 60 % startMinutes + endMinutes;
+    return Math.abs(startMinutes - 60) + endMinutes;
   }
 }
