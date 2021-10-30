@@ -5,6 +5,7 @@
   fxLayoutGap="2rem"
   fxLayoutAlign="space-around center"
 >
+<!-- value="{{ option.value }}" -->
   <h3 class="sleeping-form__name" fxFlex="32">{{tripName}} - שם הטיול  </h3>
   <!-- <p class="sleeping-form-serial"></p>  -->
   <form [dir]="'rtl'" class="sleeping-form__form" fxFlex="64" fxLayout="row">
@@ -15,24 +16,27 @@
         [(ngModel)]="location"
         name="location"
         class="education__form-group-select"
-        
+        disabled  
       >
-        <mat-option
-          value="{{ option.value }}"
+        <mat-option  
+          value="{{ option.id }}"
           *ngFor="let option of formOptions"
         >
-          <span class="education__select-option-text">{{ option.text }}</span>
+          <!-- <span class="education__select-option-text">{{ option.text }}</span> -->
+          <span class="education__select-option-text">{{ option.name }}</span>
         </mat-option>
       </mat-select>
-      <!-- <input matInput  [(ngModel)]="location" style="text-align: center;" readonly> -->
+    
     </mat-form-field>
 
-    <mat-form-field appearance="outline" fxFlex="45">
+    <!-- class="header__form-group-input sleeping-form__calendar" -->
+  
+    <!-- <mat-form-field appearance="outline" fxFlex="45"> -->
+      <mat-form-field appearance="outline" fxFlex="48">
       <mat-label class="placeholder">תאריכי הטיול</mat-label>
       <app-icon matSuffix key="calendar" [color]="'success'"></app-icon>
       <input
         matInput
-        class="header__form-group-input sleeping-form__calendar"
         airbnb-calendar
         type="text"
         [(ngModel)]="date"
@@ -47,5 +51,6 @@
         id="calendar-input"
       />
     </mat-form-field>
+   
   </form>
 </div>

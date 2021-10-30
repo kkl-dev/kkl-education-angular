@@ -250,8 +250,8 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                  
                   }    
-                      num= x.availableUnits * x.maxOccupancy
-                     if(num<lodgersNumber){
+                      num= x.availableUnits * x.maxOccupancy;
+                     if(num<(lodgersNumber* x.availableUnits)){
                       this.IsUnitsNumIsValid=false;
                        this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
                        this.filledNightForm.get('lodgersNumber').setValue('');
@@ -264,7 +264,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                   
                   }
                    num= x.availableUnits * x.maxOccupancy
-                  if(num<lodgersNumber){
+                  if(num<(lodgersNumber * x.availableUnits)){
                     this.IsUnitsNumIsValid=false;
                     this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
                     this.filledNightForm.get('lodgersNumber').setValue('');
@@ -277,7 +277,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)          
                   }
                   num= x.availableUnits * x.maxOccupancy
-                  if(num<lodgersNumber){
+                  if(num<(lodgersNumber* x.availableUnits)){
                     this.IsUnitsNumIsValid=false;
                     this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
                     this.filledNightForm.get('lodgersNumber').setValue('');
@@ -290,7 +290,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)  
                   }
                   num= x.availableUnits * x.maxOccupancy
-                  if(num<lodgersNumber){
+                  if(num<(lodgersNumber* x.availableUnits)){
                     this.IsUnitsNumIsValid=false;
                     this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
                     this.filledNightForm.get('lodgersNumber').setValue('');
@@ -320,11 +320,27 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
             name= 'גיחות'
              break;
       }
+     
+      let text ="";
+      switch (name) {
+        case 'בקתות':
+          text= 'הפנויות'
+          break;
+          case 'חדרים':
+            text= 'הפנויים'
+            break;
+          case 'אוהלים':
+            text= 'הפנויים'
+            break;
+          case 'גיחות':
+            text= 'הפנויות'
+             break;
+      }
     
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {     
         width: '500px',
-        data: { message: ' מספר ה  '+name+" הפנויות בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        // data: { message: 'מספר ה  '+name+" הפנויות בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'מספר ה  '+name+" " +text+" בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
       })
      
    }

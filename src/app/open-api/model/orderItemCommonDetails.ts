@@ -21,9 +21,13 @@ export interface OrderItemCommonDetails {
      * refers to indentity record on order table in data base
      */
     itemOrderRecordId?: number;
+    /**
+     * refers to indentity record on order table in data base
+     */
     orderId?: number;
     tempOrderIdentity?: number | null;
     orderItemDetails?: ItemsByTypeOrder;
+    supplierId?: number;
     quantity?: number;
     itemCost?: number;
     billingSupplier?: number | null;

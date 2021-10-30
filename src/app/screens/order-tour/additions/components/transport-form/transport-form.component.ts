@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm
 import { MatDialog } from '@angular/material/dialog';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-transport-form',
@@ -22,7 +23,7 @@ export class TransportFormComponent implements OnInit {
 
   // @Input() public transport: TransportModel;
   //@Input() public transport: TransportOrder;
-  @Input() public order: any;
+  @Input() public item: any;
   @Input() public editMode: boolean;
   public form: FormGroup;
   public columns: TableCellModel[];
@@ -40,16 +41,26 @@ export class TransportFormComponent implements OnInit {
 
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.getSupplierList(1, this.tripId, 0);
-
+    //this.getSupplierList(1, 5300, 0);
     //this.generalFormService.getSupplierList(1,this.tripId,0);
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-
+    
+     this.generalFormService.itemsList=[]
+    let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
+    this.generalFormService.details[itemIndex].inputProps.options= this.generalFormService.itemsList;
     this.generalFormService.setDatesValues();
-    if (this.order != undefined && this.order != null) {
-      this.generalFormService.setFormValues(this.order);
-
+    if (this.item != undefined && this.item != null || this.item.length==0) {
+      if(this.item.globalParameters.supplierId!= undefined){
+        this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
+      }
+      this.generalFormService.setFormValues(this.item);
+    }
+    else{
+      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+      this.clearFields();
     }
     this.setformTemplate();
 
@@ -88,17 +99,32 @@ export class TransportFormComponent implements OnInit {
     tempArr[startHourIndex].label = 'שעת איסוף';
     let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
     tempArr[endHourIndex].label = 'שעת פיזור';
+    let locationIndex = tempArr.findIndex(el => el.key === 'location');
+    tempArr[locationIndex].label = 'מקום התייצבות';
     return tempArr;
+  }
+
+  clearFields(){
+    let statHourIndex =this.generalFormService.details.findIndex(i => i.key==='startHour');
+    this.generalFormService.details[statHourIndex].value='';
+    let endHourIndex = this.generalFormService.details.findIndex(i => i.key==='endHour');
+    this.generalFormService.details[endHourIndex].value='';
   }
 
   getSupplierList(orderTypeId, tripId, orderId) {
     this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
-        console.log(response)
+        console.log(response);
+        this.generalFormService.supplierList=[];
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        this.getSupplierByOrderType(orderTypeId);
+        let index= this.generalFormService.details.findIndex(i => i.key==='supplierId');
+        this.generalFormService.details[index].inputProps.options= this.generalFormService.supplierList;
+        if(this.item.globalParameters.supplierId!= undefined)
+        this.form.controls["details"].get('supplierId').setValue(this.item.globalParameters.supplierId);
+
+        //this.getSupplierByOrderType(orderTypeId);
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -106,11 +132,12 @@ export class TransportFormComponent implements OnInit {
   }
 
   getSupplierByOrderType(orderTypeId) {
-    this.orderService.getSupplierByOrderType(orderTypeId, 1, 4).subscribe(
+    let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
       response => {
         console.log(response);
-        // if(this.form)
-        //  this.form.controls["details"].get('supplier').setValue(response.id.toString());
+        if(this.form)
+         this.form.controls["details"].get('supplier').setValue(response.id.toString());
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -140,7 +167,7 @@ export class TransportFormComponent implements OnInit {
       t.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
 
-        if (key !== 'exitPoint' && key !== 'supplier' && key !== 'scatterLocation') {
+        if (key !== 'exitPoint'  && key !== 'scatterLocation') {
 
           if (key != 'startDate' && key != 'endDate') {
             t.globalParameters[key] = this.form.value.details[key];
@@ -155,24 +182,37 @@ export class TransportFormComponent implements OnInit {
           }
 
         }
-        else if (key !== "supplier") {
-          t[key] = this.form.value.details[key]
-        }
+        // else if (key !== "supplier") {
+        //   t[key] = this.form.value.details[key]
+        // }
       });
-      t.globalParameters['endHour'] = '2021-11-23T14:00:00';
-      t.globalParameters['startHour'] = '2021-11-23T15:00:00';
+       t.globalParameters['startHour']= this.setDateTimeFormat(t.globalParameters.startDate,t.globalParameters.startHour);
+       //t.globalParameters['startHour'] = '2021-11-23T15:00:00';
+       t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate,t.globalParameters.endHour);
+      //t.globalParameters['endHour'] = '2021-11-23T14:00:00';
+      
       t.globalParameters['comments'] = this.form.value.comments.comments;
       t.globalParameters.orderId = orderId;
-      t.order.supplier.id = +this.form.value.details.supplier;
+      t.order.supplier.id = +this.form.value.details.supplierId;
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = 1;
 
-      // this.generalFormService.addOrder(t,'היסעים');
+       this.generalFormService.addOrder(t,'היסעים');
       this.form.disable({ emitEvent: false });
 
     }
   }
+
+  setDateTimeFormat(date,hour){
+     let str= date.split("T");
+     let hourFormat= str[0]+'T'+hour;
+      return hourFormat;
+  }
+
+  
+
+
   // validationsTransport() {
   //   if (this.generalFormService.originalItemList.length > 0) {
   //     var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
@@ -233,9 +273,10 @@ export class TransportFormComponent implements OnInit {
 
     this.form = event;
     console.log('I am form event');
-    //this.form.controls["details"].get('peopleInTrip').setValue(this.squadAssembleService.peopleInTrip);
+    this.form.controls["details"].get('peopleInTrip').disable();
     //this.getSupplierByOrderType(1);
-    this.form.controls["details"].get('supplier').valueChanges.pipe(distinctUntilChanged())
+   
+    this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);
         this.generalFormService.getOrderItemBySupplierId(value);
@@ -243,13 +284,23 @@ export class TransportFormComponent implements OnInit {
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
        console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
-      var itemCost = Math.floor(item.cost);
+      let itemCost = Math.floor(item.cost);
       this.form.controls["details"].get('itemCost').patchValue(itemCost);
       console.log(this.form.value.details);
-      var form = this.additionsService.calculateBillings(this.form.value.details);
-      this.form.controls["details"].get('billingCustomer').patchValue(this.form.value.details.billingCustomer);
-      this.form.controls["details"].get('billingSupplier').patchValue(this.form.value.details.billingSupplier);
+       let form = this.additionsService.calculateBillings(this.form.value.details);
+       //this.form.controls["details"].get('billingCustomer').patchValue(this.form.value.details.billingCustomer);
+       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
+       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+       
     });
+
+    this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+      
+   });
 
     console.log(this.form)
   }

@@ -13,7 +13,8 @@ export class FacilitiesService {
   constructor() { }
 
   private closeModalObs = new BehaviorSubject('');
-  private calendarEventsArr = new BehaviorSubject<EventInput[] | any>(INITIAL_EVENTS);
+  //private calendarEventsArr = new BehaviorSubject<EventInput[] | any>(INITIAL_EVENTS);
+  public calendarEventsArr = new BehaviorSubject<EventInput[] | any>(INITIAL_EVENTS);
   private selectedFacility = new BehaviorSubject(null);
   private selectedActivity = new BehaviorSubject(null);
 

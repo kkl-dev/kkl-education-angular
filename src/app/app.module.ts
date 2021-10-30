@@ -262,7 +262,7 @@ FullCalendarModule.registerPlugins([
     OutsideDirective,
     SleepingMapComponent,
 
-    CalendarCardComponent
+    CalendarCardComponent,
 
     FormDetailsComponent,
     OrderFormComponent,

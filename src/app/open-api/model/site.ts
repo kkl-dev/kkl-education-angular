@@ -9,12 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Order } from './order';
-import { OrderItemCommonDetails } from './orderItemCommonDetails';
-import { OrderEvent } from './orderEvent';
 
 
-export interface MusicActivationOrder extends OrderEvent { 
-    totalHours?: number;
+export interface Site { 
+    id?: number;
+    name?: string;
 }
 

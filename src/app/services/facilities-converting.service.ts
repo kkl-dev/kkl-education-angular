@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { TripCalendar } from '../open-api';
 import { FacilityModel } from '../screens/order-tour/facilities/models/facility.model';
+import { SquadAssembleService } from '../screens/order-tour/squad-assemble/services/squad-assemble.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FacilitiesConvertingService {
 
-  constructor() { }
-
+  constructor(private squadAssembleService: SquadAssembleService ) { }
   public getFacilitiesDays(arr: any[]): any[] {
     console.log('getFacilitiesDays');
     const datesArr: any[] = [];
@@ -76,7 +76,7 @@ export class FacilitiesConvertingService {
       console.log(arr[i]);
       tempOrder = 
         {
-          "tripId": 52896,
+          "tripId": this.squadAssembleService.tripInfofromService.trip.id,
           "orderTypeCode": 1,
           "orderTypeName": "היסעים",
           "startDate": arr[i].start,
@@ -84,8 +84,21 @@ export class FacilitiesConvertingService {
           "fromHour": arr[i].start,
           "tillHour": arr[i].end,
           "userName": "גל שחר"
-        }      
+        }   
       tempOrderArr.push(tempOrder);
+      tempOrder = 
+        {
+          "tripId": this.squadAssembleService.tripInfofromService.trip.id,
+          "orderTypeCode": 4,
+          "orderTypeName": "כלכלה",
+          "startDate": arr[i].start,
+          "endDate": arr[i].end,
+          "fromHour": arr[i].start,
+          "tillHour": arr[i].end,
+          "userName": "גל שחר"
+        }   
+      tempOrderArr.push(tempOrder);
+
 
       activity = 
       {
@@ -95,7 +108,7 @@ export class FacilitiesConvertingService {
       "description": "students education",
       "fromHour": arr[i].start,
       "tillHour":  arr[i].end,
-      "tripId": 52896,
+      "tripId": this.squadAssembleService.tripInfofromService.trip.id,
       "userName": "גל שחר"
       }      
       activityArr.push(activity);
@@ -112,10 +125,9 @@ export class FacilitiesConvertingService {
     //   "userName": "גל שחר"
     // }];
 
-    calendar.tripId= 52896;
+    calendar.tripId= this.squadAssembleService.tripInfofromService.trip.id;
     calendar.tempOrderList = tempOrderArr;
     calendar.activityList = activityArr;
-
     return calendar;
 
     let tmpArr: any = [];
@@ -155,6 +167,70 @@ export class FacilitiesConvertingService {
     console.log("q: " + q)
     return tmpArr;
   }
+
+  convertActivityForApi2(arr: any) {
+    let calendar= {} as TripCalendar;
+    let tempOrderArr = [];
+    let activityArr = [];
+    let tempOrder;
+    let activity;
+
+    for (let i = 0; i < arr.length; i++) { 
+     console.log(arr[i]);
+     if(arr[i].title=='התייצבות'){
+       tempOrder = 
+       {
+        "tripId": this.squadAssembleService.tripInfofromService.trip.id,
+        "orderTypeCode": 1,
+        "orderTypeName": "היסעים",
+        "startDate": arr[i].start,
+        "endDate": arr[i].end,
+        "fromHour": arr[i].start,
+        "tillHour": arr[i].end,
+        "userName": "גל שחר"
+       }   
+       tempOrderArr.push(tempOrder);
+     }
+     if(arr[i].title=='ארוחת בוקר' || arr[i].title=='ארוחת צהרים' || arr[i].title=='ארוחת ערב'){
+      tempOrder = 
+      {
+       "tripId": this.squadAssembleService.tripInfofromService.trip.id,
+       "orderTypeCode": 4,
+       "orderTypeName": "כלכלה",
+       "startDate": arr[i].start,
+       "endDate": arr[i].end,
+       "fromHour": arr[i].start,
+       "tillHour": arr[i].end,
+       "userName": "גל שחר"
+      }   
+      tempOrderArr.push(tempOrder);
+    }
+    
+    
+    
+   }
+
+   activity = 
+   {
+     "activityId": 5,
+   "activityName": 'מאגר נחל עורבים',
+   "date": "2021-11-12T00:00:00",
+   "description": "students education",
+   "fromHour": '2021-11-12T14:00:00',
+   "tillHour":  '2021-11-12T15:00:00',
+   "tripId": this.squadAssembleService.tripInfofromService.trip.id,
+   "userName": "גל שחר"
+   }      
+   activityArr.push(activity);
+
+  
+   calendar.tripId= this.squadAssembleService.tripInfofromService.trip.id;
+   calendar.tempOrderList = tempOrderArr;
+   calendar.activityList = activityArr;
+   return calendar;
+
+  
+ }
 
 
 //   0:

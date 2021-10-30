@@ -11,13 +11,11 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import {
-    HttpClient, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent, HttpParameterCodec
-} from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent, HttpParameterCodec }       from '@angular/common/http';
+import { CustomHttpParameterCodec }                          from '../encoder';
+import { Observable }                                        from 'rxjs';
 
 import { ItemsByTypeOrder } from '../model/models';
 import { OrderEvent } from '../model/models';
@@ -26,22 +24,23 @@ import { OrderType } from '../model/models';
 import { Supplier } from '../model/models';
 import { TempOrder } from '../model/models';
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class OrderService {
 
+    //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
 
-    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (configuration) {
             this.configuration = configuration;
         }
@@ -71,16 +70,16 @@ export class OrderService {
 
         if (typeof value === "object") {
             if (Array.isArray(value)) {
-                (value as any[]).forEach(elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
+                (value as any[]).forEach( elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
             } else if (value instanceof Date) {
                 if (key != null) {
                     httpParams = httpParams.append(key,
                         (value as Date).toISOString().substr(0, 10));
                 } else {
-                    throw Error("key may not be null if value is Date");
+                   throw Error("key may not be null if value is Date");
                 }
             } else {
-                Object.keys(value).forEach(k => httpParams = this.addToHttpParamsRecursive(
+                Object.keys(value).forEach( k => httpParams = this.addToHttpParamsRecursive(
                     httpParams, value[k], key != null ? `${key}.${k}` : k));
             }
         } else if (key != null) {
@@ -97,12 +96,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-
     public addOrder(permissionId: number, orderEvent?: OrderEvent, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<OrderEvent>>;
     public addOrder(permissionId: number, orderEvent?: OrderEvent, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<OrderEvent>>>;
     public addOrder(permissionId: number, orderEvent?: OrderEvent, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<OrderEvent>>>;
     public addOrder(permissionId: number, orderEvent?: OrderEvent, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-
         if (permissionId === null || permissionId === undefined) {
             throw new Error('Required parameter permissionId was null or undefined when calling addOrder.');
         }
@@ -132,7 +129,7 @@ export class OrderService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -156,10 +153,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public cancelOrder(tripId: number, orderId: number, cause: string, userName: string, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<any>;
-    public cancelOrder(tripId: number, orderId: number, cause: string, userName: string, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<HttpResponse<any>>;
-    public cancelOrder(tripId: number, orderId: number, cause: string, userName: string, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<HttpEvent<any>>;
-    public cancelOrder(tripId: number, orderId: number, cause: string, userName: string, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: undefined }): Observable<any> {
+    public cancelOrder(tripId: number, orderId: number, cause: string, userName: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public cancelOrder(tripId: number, orderId: number, cause: string, userName: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public cancelOrder(tripId: number, orderId: number, cause: string, userName: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public cancelOrder(tripId: number, orderId: number, cause: string, userName: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling cancelOrder.');
         }
@@ -188,7 +185,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -210,10 +207,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<string>;
-    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpResponse<string>>;
-    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpEvent<string>>;
-    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'text/plain' }): Observable<any> {
+    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<string>;
+    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<string>>;
+    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<string>>;
+    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling checkItemsExistInDateTime.');
         }
@@ -246,7 +243,7 @@ export class OrderService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -271,10 +268,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, userName: string, permId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<any>;
-    public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, userName: string, permId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<HttpResponse<any>>;
-    public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, userName: string, permId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: undefined }): Observable<HttpEvent<any>>;
-    public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, userName: string, permId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: undefined }): Observable<any> {
+    public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, userName: string, permId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, userName: string, permId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, userName: string, permId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, userName: string, permId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling deleteItemOrder.');
         }
@@ -306,7 +303,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -328,12 +325,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-
     public editOrder(userName: string, permId: number, orderEvent?: OrderEvent, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<OrderEvent>>;
     public editOrder(userName: string, permId: number, orderEvent?: OrderEvent, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<OrderEvent>>>;
     public editOrder(userName: string, permId: number, orderEvent?: OrderEvent, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<OrderEvent>>>;
     public editOrder(userName: string, permId: number, orderEvent?: OrderEvent, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-
         if (userName === null || userName === undefined) {
             throw new Error('Required parameter userName was null or undefined when calling editOrder.');
         }
@@ -366,7 +361,7 @@ export class OrderService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -386,10 +381,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getOrderTypes(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<OrderType>>;
-    public getOrderTypes(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<OrderType>>>;
-    public getOrderTypes(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<OrderType>>>;
-    public getOrderTypes(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
+    public getOrderTypes(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<OrderType>>;
+    public getOrderTypes(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<OrderType>>>;
+    public getOrderTypes(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<OrderType>>>;
+    public getOrderTypes(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -407,7 +402,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -427,12 +422,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-
     public getOrders(tripId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<OrderEvent>>;
     public getOrders(tripId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<OrderEvent>>>;
     public getOrders(tripId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<OrderEvent>>>;
     public getOrders(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling getOrders.');
         }
@@ -453,7 +446,6 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-
         if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
@@ -476,10 +468,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getOrdersItemBySupplierID(supplierId: number, centerFieldId: number, isOneDay: boolean, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<ItemsByTypeOrder>>;
-    public getOrdersItemBySupplierID(supplierId: number, centerFieldId: number, isOneDay: boolean, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<ItemsByTypeOrder>>>;
-    public getOrdersItemBySupplierID(supplierId: number, centerFieldId: number, isOneDay: boolean, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<ItemsByTypeOrder>>>;
-    public getOrdersItemBySupplierID(supplierId: number, centerFieldId: number, isOneDay: boolean, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
+    public getOrdersItemBySupplierID(supplierId: number, centerFieldId: number, isOneDay: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ItemsByTypeOrder>>;
+    public getOrdersItemBySupplierID(supplierId: number, centerFieldId: number, isOneDay: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ItemsByTypeOrder>>>;
+    public getOrdersItemBySupplierID(supplierId: number, centerFieldId: number, isOneDay: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ItemsByTypeOrder>>>;
+    public getOrdersItemBySupplierID(supplierId: number, centerFieldId: number, isOneDay: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (supplierId === null || supplierId === undefined) {
             throw new Error('Required parameter supplierId was null or undefined when calling getOrdersItemBySupplierID.');
         }
@@ -506,7 +498,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -528,10 +520,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSupplierByOrderType(orderTypeId: number, centerField: number, permissionUser: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Supplier>;
-    public getSupplierByOrderType(orderTypeId: number, centerField: number, permissionUser: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Supplier>>;
-    public getSupplierByOrderType(orderTypeId: number, centerField: number, permissionUser: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Supplier>>;
-    public getSupplierByOrderType(orderTypeId: number, centerField: number, permissionUser: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
+    public getSupplierByOrderType(orderTypeId: number, centerField: number, permissionUser: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Supplier>;
+    public getSupplierByOrderType(orderTypeId: number, centerField: number, permissionUser: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Supplier>>;
+    public getSupplierByOrderType(orderTypeId: number, centerField: number, permissionUser: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Supplier>>;
+    public getSupplierByOrderType(orderTypeId: number, centerField: number, permissionUser: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (orderTypeId === null || orderTypeId === undefined) {
             throw new Error('Required parameter orderTypeId was null or undefined when calling getSupplierByOrderType.');
         }
@@ -558,7 +550,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -580,10 +572,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<Supplier>>;
-    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<Supplier>>>;
-    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<Supplier>>>;
-    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
+    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Supplier>>;
+    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Supplier>>>;
+    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Supplier>>>;
+    public getSupplierList(orderTypeId: number, tripId: number, orderId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (orderTypeId === null || orderTypeId === undefined) {
             throw new Error('Required parameter orderTypeId was null or undefined when calling getSupplierList.');
         }
@@ -610,7 +602,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -630,10 +622,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getTempOrders(tripId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<TempOrder>>;
-    public getTempOrders(tripId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<TempOrder>>>;
-    public getTempOrders(tripId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<TempOrder>>>;
-    public getTempOrders(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
+    public getTempOrders(tripId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<TempOrder>>;
+    public getTempOrders(tripId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<TempOrder>>>;
+    public getTempOrders(tripId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<TempOrder>>>;
+    public getTempOrders(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling getTempOrders.');
         }
@@ -654,7 +646,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
@@ -674,10 +666,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ifAddItemToExistItemByIdOrder(orderItemId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<number>;
-    public ifAddItemToExistItemByIdOrder(orderItemId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpResponse<number>>;
-    public ifAddItemToExistItemByIdOrder(orderItemId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpEvent<number>>;
-    public ifAddItemToExistItemByIdOrder(orderItemId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'text/plain' }): Observable<any> {
+    public ifAddItemToExistItemByIdOrder(orderItemId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<number>;
+    public ifAddItemToExistItemByIdOrder(orderItemId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<number>>;
+    public ifAddItemToExistItemByIdOrder(orderItemId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<number>>;
+    public ifAddItemToExistItemByIdOrder(orderItemId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
         if (orderItemId === null || orderItemId === undefined) {
             throw new Error('Required parameter orderItemId was null or undefined when calling ifAddItemToExistItemByIdOrder.');
         }
@@ -698,7 +690,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 

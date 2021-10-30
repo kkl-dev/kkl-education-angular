@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { LocationModel } from '../../models/location.model';
 import { ScheduleModel } from '../../models/schedule.model';
 import { TransportModel } from '../../models/transport.model';
@@ -9,14 +10,14 @@ import { TransportModel } from '../../models/transport.model';
   styleUrls: ['./tour-panel.component.scss'],
 })
 export class TourPanelComponent implements OnInit {
-  constructor() { }
+  constructor(private squadAssembleService: SquadAssembleService) { }
 
   @Input() editMode: boolean=true;
-  @Input() schedule: ScheduleModel;
+  //@Input() schedule: ScheduleModel;
   @Input() item: any;
   @Input() i: number;
   @Input() orderType: number;
-  locations =  [new LocationModel(new Date(), new Date(), 'נס-הרים', 'ציפורי')]
+  locations =  [new LocationModel(new Date(), new Date(), this.squadAssembleService.tripInfofromService.trip.centerField.name)]
   ngOnInit(): void {
 
   }

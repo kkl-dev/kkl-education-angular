@@ -8,7 +8,7 @@ export class LocationModel {
   ) {
     this.pickUpDate = this.pickUpDate
     this.pickupLocation = this.pickupLocation || 'הכנס מקום'
-    this.dropdownLocation = this.dropdownLocation || 'הכנס מקום'
+    // this.dropdownLocation = this.dropdownLocation || 'הכנס מקום'
 
   }
 

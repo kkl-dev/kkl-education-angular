@@ -23,7 +23,7 @@ export class GeneralFormService {
   constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService,  private _dialog: MatDialog) { }
   public details: QuestionBase<string>[] = [
     new QuestionSelect({
-      key: 'supplier',
+      key: 'supplierId',
       label: 'ספק',
       type: 'select',
       validations: [Validators.required],
@@ -58,7 +58,7 @@ export class GeneralFormService {
     }),
     new QuestionTextbox({
       key: 'itemCost',
-      label: 'מחיר',
+      label: 'מחיר פריט בודד',
       value: '',
       type: 'number',
       validations: [Validators.required],
@@ -66,14 +66,14 @@ export class GeneralFormService {
 
     new QuestionTextbox({
       key: 'billingSupplier',
-      label: 'עלות ספק',
+      label: 'סך עלות ספק',
       value: '',
       validations: [Validators.required],
     }),
 
     new QuestionTextbox({
       key: 'billingCustomer',
-      label: 'חיוב לקוח',
+      label: 'סך עלות לקוח',
       value: '',
       validations: [Validators.required],
     }),
@@ -143,15 +143,7 @@ export class GeneralFormService {
         // labelSize: 's5',
       },
     }),
-    new QuestionTextbox({
-      key: 'internalComment',
-      label: 'הערות פנימיות',
-      value: '',
-      inputProps: {
-        // labelSize: 's5',
-      },
-    }),
-
+   
     
   ]
   public comments: QuestionBase<string>[] = [
@@ -187,7 +179,7 @@ export class GeneralFormService {
     // }),
     new QuestionTextbox({
       key: 'scatterLocation',
-      label: 'כתובת פיזור',
+      label: 'מקום פיזור',
       value: '',
       validations: [Validators.required],
       icon: 'place',
@@ -272,7 +264,27 @@ export class GeneralFormService {
   ) {
     questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
       // control.value = data[control.key]
+      let startDate =data.globalParameters.startDate;
+      let endDate = data.globalParameters.endDate;
       control.value = data.globalParameters[control.key];
+      if(control.key=='peopleInTrip'){
+        control.value=this.squadAssembleService.peopleInTrip;
+      }
+      if(control.key=='startHour' && data.globalParameters[control.key].includes('T')){
+        control.value= this.setTimeFormat(data.globalParameters[control.key]);
+      }
+      if(control.key=='endHour' && data.globalParameters[control.key].includes('T')){
+        control.value= this.setTimeFormat(data.globalParameters[control.key]);
+      }
+      if(control.key=='startDate' && (data.globalParameters[control.key]).includes('T')){
+        control.value= this.changeDateFormat(data.globalParameters[control.key],'israel');
+      }
+      if(control.key=='endDate' &&  (data.globalParameters[control.key]).includes('T')){
+        control.value= this.changeDateFormat(data.globalParameters[control.key],'israel');
+      }
+      if(control.key=='quantity' &&  data.globalParameters[control.key]==undefined){
+        control.value= '1';
+      }
       // if (control.key === 'comments') {
       //   control.value = data;
       // }
@@ -366,21 +378,27 @@ export class GeneralFormService {
 
   originalItemList = [];
   getOrderItemBySupplierId(supplierId) {
-    // let index = this.details.findIndex(el => el.key === "supplier");
-    // var supplierId = parseInt(this.details[index].value);
     this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
       response => {
         console.log(response);
+        this.itemsList=[];
         this.originalItemList = response;
         response.forEach(element => {
           this.itemsList.push({ label: element.name, value: element.id.toString() });
         });
+        let index= this.details.findIndex(i => i.key==='itemId');
+        this.details[index].inputProps.options= this.itemsList;
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
 
+  setTimeFormat(hour){
+    let hourStr= hour.split("T");
+    let hourFormat= hourStr[1];
+     return hourFormat;
+ }
 
   changeDateFormat(date, format) {
     let dateFormat;
@@ -402,8 +420,12 @@ export class GeneralFormService {
 
    addOrder(item: any,orderType) {  
       this.orderService.addOrder(4, item).subscribe(res => {
-        console.log(res);
+        console.log(res);  
         this.addToOrderList(res,orderType);
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
       }, (err) => {
         console.log(err);
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {

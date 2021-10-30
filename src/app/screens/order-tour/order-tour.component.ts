@@ -7,11 +7,14 @@ import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { SquadAssembleService } from './squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
-import { OrderEvent, OrderService, UserService } from 'src/app/open-api';
+import { ActivitiesService, UserService } from 'src/app/open-api';
 import { Location } from '@angular/common';
 import { AdditionsService } from './additions/services/additions.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FacilitiesService } from 'src/app/services/facilities.service';
+import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
+
 
 @Component({
   selector: 'app-order-tour',
@@ -34,6 +37,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   public steps: StepModel[];
   public currentStep: StepModel;
   addOrderSub: Subscription;
+  createActivitiesSub: Subscription;
 
   constructor(
     private router: Router,
@@ -41,11 +45,15 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     private squadAssemble: SquadAssembleService,
     private tripService: TripService,
     private userService: UserService,
-    private orderService: OrderService,
+    private activitiyService: ActivitiesService,
     private location: Location,
     private route: ActivatedRoute,
     private additionsService: AdditionsService,
     private _dialog: MatDialog,
+    private _facilitiesService : FacilitiesService,
+    private  _facilitiesConvertingService : FacilitiesConvertingService
+  
+
   ) { }
 
   ngOnInit(): void {
@@ -307,7 +315,23 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-
+   createTripActivities(route){
+     let events= this._facilitiesService.calendarEventsArr.value;
+     let eventsArr = this._facilitiesConvertingService.convertActivityForApi2(events);
+     let userName='שחר גל'
+      this.createActivitiesSub=this.activitiyService.createTripActivities(userName, eventsArr).subscribe(res=>{
+        console.log(res);
+        this.router.navigateByUrl(
+          `/education/order-tour/${route}`
+        );
+    },(err)=>{
+      console.log(err);    
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
+        width: '500px',
+        data: { message: 'אירעה שגיאה בשליחת הנתונים, נא פנה למנהל המערכת' , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })   
+    })
+   }
 
   // AddOrder() {
   //   if (this.additionsService.orderList.length > 0) {
@@ -350,6 +374,12 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       if(routeIndex==2){
         this.createTrip();
       }
+      if(routeIndex==3){
+        if(this._facilitiesService.calendarEventsArr.value.length>0){
+          this.createTripActivities(this.steps[routeIndex].path);
+          return;
+        }   
+      }
       // if (routeIndex === 4) this.AddOrder();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
@@ -369,6 +399,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.addOrderSub) { this.addOrderSub.unsubscribe(); }
+    if ( this.createActivitiesSub)  { this.createActivitiesSub.unsubscribe(); }
   }
 }
 
