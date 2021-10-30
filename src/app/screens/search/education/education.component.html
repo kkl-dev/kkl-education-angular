@@ -58,6 +58,7 @@
             class="header__form-field-input"
             airbnb-calendar
             (newDate)="newDateRecived($event)"
+            [disabled]="disableDates"
             (sleepingPlace)="newSleepingPlaceRecived($event)"
             (prevDate)="prevDateRecived($event)"
             (closeCalendar)="closeCalendarHandler($event)"

@@ -15,12 +15,10 @@ import { OrderEvent } from './orderEvent';
 
 
 export interface TransportOrder extends OrderEvent { 
-
     /**
-     * exit point of transport for calculate price
+     * settlement code - required for calculate price
      */
-    exitPoint?: string;
+    exitPoint?: number;
     scatterLocation?: string;
-
 }
 

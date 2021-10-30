@@ -35,8 +35,10 @@ export class SleepingOptionsFormComponent implements OnInit {
   //   { imgSrc: 'assets/images/userImage.jpg', text: 'שוני', value: 'שוני' },
   // ];
   public formOptions;
+  fieldCenter;
   freeSpacesArray: FreeSpace[] = [];
-  location: string = '';
+  location: string;
+  
 
   constructor(private checkAvailabilityService: CheckAvailabilityService,private _tripService:TripService, private _squadService: SquadAssembleService ) {
     // this.location =
@@ -118,9 +120,11 @@ export class SleepingOptionsFormComponent implements OnInit {
     
     this._tripService.getAvailableSleepingOptions();
      this.formOptions= this._tripService.formOptions;
-     this.location=  this._tripService.centerField.name;
-     //this.location= ' נס הרים';
-     this.date= this._tripService.sleepingDates.from +' - ' + this._tripService.sleepingDates.till;
+     this.location= this._tripService.centerField.id.toString();
+    
+     //this.date= this._tripService.sleepingDates.from +' - ' + this._tripService.sleepingDates.till;
+     this.date= this._tripService.sleepingDates.till +' - ' + this._tripService.sleepingDates.from ;
+    
      this.tripName= this._squadService.tripInfo.tripDescription;
   }
 }

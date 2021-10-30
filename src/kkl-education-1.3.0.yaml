@@ -2602,8 +2602,6 @@ components:
         orderId:
           type: integer
           description: refers to indentity record on order table in data base
-        orderId:
-          type: integer
         tempOrderIdentity:
           type: integer
           nullable: true

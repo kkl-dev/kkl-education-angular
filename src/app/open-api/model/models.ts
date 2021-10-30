@@ -37,6 +37,8 @@ export * from './orderItemCommonDetails';
 export * from './orderType';
 export * from './participantType';
 export * from './securingOrder';
+export * from './settlement';
+export * from './site';
 export * from './siteOrder';
 export * from './sleepingOptions';
 export * from './status';

@@ -5,16 +5,18 @@
   </div>
   <div class="additions-content">
     <div class="button-container" fxLayout="row" fxLayoutAlign="start">
-      <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="addItem">
+      <!-- <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="!addItem"> -->
+      <button mat-raised-button color="primary" (click)="onAdd()" >
         <!-- addSchedule -->
         הוסף פריט
       </button>
     </div>
     <app-tour-title [value]="tour.title" [id]="tour.id"></app-tour-title>
-    <div *ngIf="!items">
+    <!-- <div *ngIf="!items"> -->
+    <div *ngIf="this.addItem">
       <!-- addSchedule -->
       <!-- <app-tour-panel [editMode]="false" [orderType]="orderType" [item]="item"></app-tour-panel> -->
-      <app-tour-panel [editMode]="false" [orderType]="orderType" ></app-tour-panel>
+      <app-tour-panel [editMode]="false" [orderType]="orderType"  ></app-tour-panel>
     </div>
     <!-- <div *ngFor="let item of item$ | async; index as i">
       <app-tour-panel [editMode]="false" [orderType]="orderType" [item]="item" [i]="i + 1"></app-tour-panel>

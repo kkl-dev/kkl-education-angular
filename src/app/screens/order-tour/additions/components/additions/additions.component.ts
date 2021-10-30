@@ -29,7 +29,7 @@ export class AdditionsComponent implements OnInit {
   //public orderModel = {} as OrderModel;
   public item$: Observable<any[]>;
   public items: any[];
-  public item: any[];
+   public item: any;
   public addItem: boolean = false;
   tripId : number;
   orderType: number = 1;
@@ -47,20 +47,18 @@ export class AdditionsComponent implements OnInit {
     this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
-    // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
-    // this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
-    this.tour.id = 5555;
-    this.tour.title = 'טיול נסיון';
+     this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
+     this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
+    // this.tour.id = 5555;
+    // this.tour.title = 'טיול נסיון';
     // this.additionsService.emitSchedule(this.tour.schedule);
-    this.onAdd();
+    //this.onAdd();
     
   }
 
   public onAdd() {
-    // this.schedule = new ScheduleModel();
-    // this.addSchedule = true;
     // this.item = {} as OrderEvent;
-    this.addItem = true;
+     this.addItem = true;
   }
   // getOrders(){
   //  this.orderService.getOrdersList(this.tripId).subscribe(res=>{
@@ -71,21 +69,27 @@ export class AdditionsComponent implements OnInit {
   // }
   getTempOrder() {
     
-
-    //this.tripId =this.squadAssembleService.tripInfofromService.trip.id
-     this.tripId= 52973;
+    this.tripId =this.squadAssembleService.tripInfofromService.trip.id
+     //this.tripId= 52973;
     this.orderService.getTempOrders(this.tripId).subscribe(
       response => {
-        console.log(response)
-        this.additionsService.tempOrder = response;
-        this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
-          let key = obj['orderTypeCode']
-          if (!acc[key]) { acc[key] = [] }
-          acc[key].push(obj)
-          return acc
-        }, {})
-        this.additionsService.sendtempOrderReduce(this.tempOrderReduce);
-        this.mapTempOrder(1);
+        console.log(response);
+        if(response.length>0){
+          this.additionsService.tempOrder = response;
+          this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
+            let key = obj['orderTypeCode']
+            if (!acc[key]) { acc[key] = [] }
+            acc[key].push(obj)
+            return acc
+          }, {})
+          this.additionsService.sendtempOrderReduce(this.tempOrderReduce);
+          this.mapTempOrder(1);
+        }
+        else{
+          this.addItem =true;
+          return;
+        }
+        
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -95,10 +99,14 @@ export class AdditionsComponent implements OnInit {
     if (this.tempOrderReduce !== undefined && this.tempOrderReduce !== null  ) {
       var orderList = [];
       // if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
-      if (this.tempOrderReduce[orderTypId] === undefined) { return; }
+      if (this.tempOrderReduce[orderTypId] === undefined){
+        if ( this.items.length==0)
+            this.addItem =true;
+           return; 
+      } 
       for (var i in this.tempOrderReduce[orderTypId]) {
-        // if(this.tempOrderReduce[orderTypId][i].orderId  != undefined)
-        // continue;
+        if(this.tempOrderReduce[orderTypId][i].orderId  != undefined)
+        continue;
         var order = {} as OrderEvent;
         order.globalParameters = {} as OrderItemCommonDetails;
         let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate, 'israel');
@@ -133,10 +141,14 @@ export class AdditionsComponent implements OnInit {
       case 1:
         if(this.generalFormService.transportOrderList.length>0)
           this.items=this.generalFormService.transportOrderList;
+          else
+          this.items=[];
         break;
       case 4:
         if(this.generalFormService.economyOrderList.length>0)
         this.items=this.generalFormService.economyOrderList;
+        else
+        this.items=[];
         break;
    }
     this.mapTempOrder(event);

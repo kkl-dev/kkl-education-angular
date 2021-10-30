@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.module.ts
 api/activities.service.ts
@@ -52,6 +51,8 @@ model/orderItemCommonDetails.ts
 model/orderType.ts
 model/participantType.ts
 model/securingOrder.ts
+model/settlement.ts
+model/site.ts
 model/siteOrder.ts
 model/sleepingOptions.ts
 model/status.ts
