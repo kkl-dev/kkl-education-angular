@@ -24,7 +24,8 @@ export class CalendarCardComponent implements OnInit {
 
     const compareHour = +hours[0][0] == +hours[1][0];
     const compareHalfHour = +hours[0][0] + 1 == +hours[1][0];
-
+    console.log(compareHour);
+    
     if (compareHour) {
       this.checkHour = true;
     }

@@ -24,11 +24,11 @@ export class SaveActivityComponent implements OnInit {
 
   @Input() type: string;
   @Input() public additonsType: any[] = [
-    { name: 'הסעה', completed: false , svg:'man-with-bag' },
-    { name: 'אבטחה', completed: false , svg:'man-with-bag' },
+    { name: 'הסעה', completed: false , svg:'bus' },
+    { name: 'אבטחה', completed: false , svg:'shield' },
     { name: 'הדרכה', completed: false , svg:'man-with-bag' },
-    { name: 'כלכלה', completed: false , svg:'man-with-bag' },
-    { name: 'הפעלה מוסיקלית', completed: false , svg:'man-with-bag' },
+    { name: 'כלכלה', completed: false , svg:'dinner' },
+    { name: 'הפעלה מוסיקלית', completed: false , svg:'music' },
   ];
   @Input() days: any[] = DAYS;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
