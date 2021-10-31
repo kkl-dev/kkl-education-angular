@@ -251,7 +251,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                  
                   }    
                       num= x.availableUnits * x.maxOccupancy;
-                     if(num<(lodgersNumber* x.availableUnits)){
+                     if(num<(lodgersNumber* unitsNumber)){
                       this.IsUnitsNumIsValid=false;
                        this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
                        this.filledNightForm.get('lodgersNumber').setValue('');
@@ -264,7 +264,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                   
                   }
                    num= x.availableUnits * x.maxOccupancy
-                  if(num<(lodgersNumber * x.availableUnits)){
+                  if(num<(lodgersNumber * unitsNumber)){
                     this.IsUnitsNumIsValid=false;
                     this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
                     this.filledNightForm.get('lodgersNumber').setValue('');
@@ -277,7 +277,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)          
                   }
                   num= x.availableUnits * x.maxOccupancy
-                  if(num<(lodgersNumber* x.availableUnits)){
+                  if(num<(lodgersNumber* unitsNumber)){
                     this.IsUnitsNumIsValid=false;
                     this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
                     this.filledNightForm.get('lodgersNumber').setValue('');
@@ -290,7 +290,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)  
                   }
                   num= x.availableUnits * x.maxOccupancy
-                  if(num<(lodgersNumber* x.availableUnits)){
+                  if(num<(lodgersNumber* unitsNumber)){
                     this.IsUnitsNumIsValid=false;
                     this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
                     this.filledNightForm.get('lodgersNumber').setValue('');
