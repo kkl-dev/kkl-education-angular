@@ -7,7 +7,6 @@ import { InfoCard } from '../../education-results/education-results.component';
 import { INITIAL_EVENTS } from './calendar/event-utils';
 import { EventInput } from '@fullcalendar/angular';
 import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_ARRAY } from 'src/mock_data/facilities';
-import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
 
 @Component({
   selector: 'app-facilities',

@@ -83,6 +83,8 @@
         justify-content: space-evenly;
         padding: 1rem;
         direction: rtl;
+        justify-content: flex-end;
+        gap: 0.8rem;
         &-icon {
             // border-radius: 5px;
             // align-self: flex-start;
@@ -111,8 +113,9 @@
                     font-size: 20px;
                 }
                 &-input {
-                    font-size: 24px;
+                    font-size: 20px;
                     font-weight: bold;
+                    margin-right: 1rem;
                 }
                 &-customer-type {
                     font-size: 16px;
@@ -124,7 +127,9 @@
                         border-radius: 20px;
                         position: relative;
                         border: 1px solid #e5e5e5;
-
+                        display: flex;
+                        margin-right: 1rem;
+                        text-align: center;
                         &-text {
                             width: 30px;
                             padding: 0 5px;
