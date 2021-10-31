@@ -7,6 +7,7 @@ import { FacilitiesService } from 'src/app/services/facilities.service';
 import { INITIAL_EVENTS } from './calendar/event-utils';
 import { EventInput } from '@fullcalendar/angular';
 import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_ARRAY } from 'src/mock_data/facilities';
+<<<<<<< HEAD
 import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
 import { ActivitiesService, UserService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
@@ -15,6 +16,8 @@ import { Validators } from '@angular/forms';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { UserDataService } from 'src/app/services/user-data.service';
 
+=======
+>>>>>>> main-dev
 
 @Component({
   selector: 'app-facilities',
@@ -81,8 +84,12 @@ export class FacilitiesComponent implements OnInit {
     },
   ];
 
+<<<<<<< HEAD
   constructor(private facilitiesService: FacilitiesService, private usersService: UserService, private tripService: TripService,
     private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService, private userDataService: UserDataService) { }
+=======
+  constructor(private facilitiesService: FacilitiesService) { }
+>>>>>>> main-dev
 
   ngOnInit(): void {
     this.getAvailableFacilities();

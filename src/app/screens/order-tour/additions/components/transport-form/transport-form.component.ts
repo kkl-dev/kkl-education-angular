@@ -269,6 +269,7 @@ export class TransportFormComponent implements OnInit {
     this.form.enable();
   }
 
+<<<<<<< HEAD
   public onValueChange(event) {
 
     this.form = event;
@@ -303,6 +304,12 @@ export class TransportFormComponent implements OnInit {
    });
 
     console.log(this.form)
+=======
+
+  public onRegister(form : FormGroup) {
+    console.log(form.value)
+
+>>>>>>> main-dev
   }
 
 

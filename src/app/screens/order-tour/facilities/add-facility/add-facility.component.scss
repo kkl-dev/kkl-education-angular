@@ -4,13 +4,13 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-color:rgba($color: #000000, $alpha: 0.6);
+    background-color: rgba($color: #000000, $alpha: 0.6);
     z-index: 110;
-    .delete-button{
+    .delete-button {
         background: red;
     }
     ::ng-deep .ngx-timepicker {
-        border-bottom: none!important;
+        border-bottom: none !important;
     }
     ::ng-deep ngx-timepicker-field {
         border: 1px solid #ebebeb;
@@ -20,14 +20,14 @@
     .ngx-timepicker-field-example {
         display: flex;
         flex-direction: column;
-        span{
+        span {
             text-align: right;
         }
         ::ng-deep .ngx-timepicker-control__input {
             font-size: 1.6rem;
         }
         ::ng-deep .ngx-timepicker-control__arrows {
-            top:-5px;
+            top: -5px;
         }
     }
     ::ng-deep .mat-form-field-appearance-outline,
@@ -35,7 +35,7 @@
         margin: 0 !important;
         padding: 0 !important;
     }
-    
+
     ::ng-deep .mat-form-field-infix {
         width: fit-content !important;
         padding: 0 !important;
@@ -43,12 +43,12 @@
     ::ng-deep mat-checkbox {
         direction: rtl;
     }
-    
+
     ::ng-deep .SOBD__days {
         width: 100% !important;
     }
     svg * {
-        fill:#66a3d6 !important
+        fill: #66a3d6 !important;
     }
     &__header {
         display: flex;
@@ -87,7 +87,8 @@
                     font-size: 20px;
                 }
                 &-input {
-                    font-size: 24px;
+                    font-size: 20px;
+                    margin-right: 1rem;
                     font-weight: bold;
                 }
             }
@@ -146,20 +147,25 @@
         font-size: 14px;
         color: #686868;
         border-bottom: 1px solid #707070;
-
-        &-left { 
+        padding: 1rem;
+        &-right {
+            margin-right: 1rem;
+        }
+        &-left {
             display: flex;
             flex-direction: row-reverse;
         }
         &-left-type {
             margin-left: 10px;
-       
         }
     }
-    &__occupied-hours-table-item{
+    &__occupied-hours-table-item {
         direction: rtl;
         padding: 5px 0;
         border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        gap: 3rem;
+        font-weight: 600;
     }
 }
 
@@ -175,15 +181,17 @@
     background-color: #ededed;
     border-top: 4px solid #ededed;
 }
-
+.hours {
+    flex: 0.2;
+}
 .blue {
-    color:#448ecd ;
+    color: #448ecd;
     &:after {
         content: "";
         display: inline-block;
         width: 8px;
         height: 8px;
-        margin: 0 4px; 
+        margin: 0 4px;
         background-color: #448ecd;
     }
 }
@@ -194,7 +202,7 @@
         display: inline-block;
         width: 8px;
         height: 8px;
-        margin: 0 4px; 
+        margin: 0 4px;
         background-color: #37c56b;
     }
 }
@@ -202,10 +210,10 @@
     color: #858585;
     &:after {
         content: "";
-        display: inline-block; 
+        display: inline-block;
         width: 8px;
         height: 8px;
-        margin: 0 4px; 
+        margin: 0 4px;
         background-color: #858585;
     }
 }

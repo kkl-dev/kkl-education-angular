@@ -51,6 +51,7 @@
                 </span>
             </div>
             <div class="add-facility__occupied-hours-table-item" *ngFor="let item of hours">
+<<<<<<< HEAD
                 <!-- <span class="add-facility__occupied-hours-hour-start">{{ item.startingHour | numberToTimePipe}}</span> -->
                 <span class="add-facility__occupied-hours-hour-start">{{ item.fromHour | numberToTimePipe}}</span>
                 <span class="add-facility__occupied-hours-hour-end">
@@ -60,6 +61,16 @@
 
 
                 <span class="add-facility__occupied-hours-hour-user">נתפס ע"י {{ item.customerName }} </span>
+=======
+               <div class="hours">
+                <span class="add-facility__occupied-hours-hour-start">{{
+                    item.startingHour | numberToTimePipe
+                    }}</span>
+                <span class="add-facility__occupied-hours-hour-end">
+                    <span> -</span> {{ item.endingHour | numberToTimePipe}}</span>
+               </div>
+                <span class="add-facility__occupied-hours-hour-user">נתפס ע"י {{ item.user }} </span>
+>>>>>>> main-dev
             </div>
         </div>
     </app-modal>

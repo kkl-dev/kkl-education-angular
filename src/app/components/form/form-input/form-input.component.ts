@@ -37,7 +37,11 @@ export class FormInputComponent implements OnInit {
   @Input() public hint: string;
   @Input() public controlType: string;
   @Input() public options!: [];
+<<<<<<< HEAD
   @Input() public dateOptions!: CalendarOptions;
+=======
+  @Input() public dateOptions!:CalendarOptions;
+>>>>>>> main-dev
 
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
@@ -56,9 +60,14 @@ export class FormInputComponent implements OnInit {
   @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
+<<<<<<< HEAD
   constructor(private formService: FormService, public additionsService: AdditionsService, public transportService: TransportService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService
     ,private generalFormService: GeneralFormService) {
     console.log(this.dateOptions);
+=======
+  constructor(private formService: FormService) {
+
+>>>>>>> main-dev
   }
 
 
@@ -156,6 +165,7 @@ export class FormInputComponent implements OnInit {
     });
   }
   public onSelectChange() {
+<<<<<<< HEAD
     // if (this.control.parent.value.attribute) {
     //   this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
     // }
@@ -226,6 +236,10 @@ export class FormInputComponent implements OnInit {
 
     this.select.emit(this.control);
     this.groupEvent.emit(this.group);
+=======
+    this.select.emit(this.control)
+    console.log(this.control.value)
+>>>>>>> main-dev
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {

@@ -130,7 +130,11 @@ import { AddActivityComponent } from './screens/order-tour/facilities/add-activi
 import { ModalComponent } from './components/modal/modal.component';
 import { OutsideDirective } from './utilities/directivs/outside.directive';
 import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping-map.component';
+<<<<<<< HEAD
 
+=======
+import { DynamicComponent } from './components/dynamic/dynamic.component';
+>>>>>>> main-dev
 import { CalendarCardComponent } from './screens/order-tour/facilities/calendar/calendar-card/calendar-card.component';
 
 import { FormDetailsComponent } from './screens/order-tour/additions/components/form-details/form-details.component';
@@ -150,6 +154,7 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [
+    CalendarCardComponent,
     AppComponent,
     MainComponent,
     DashboardComponent,
@@ -261,6 +266,7 @@ FullCalendarModule.registerPlugins([
     SquadGroupGenderComponent,
     OutsideDirective,
     SleepingMapComponent,
+<<<<<<< HEAD
 
     CalendarCardComponent,
 
@@ -270,6 +276,10 @@ FullCalendarModule.registerPlugins([
     GudianceFormComponent,
     HostingFormComponent
 
+=======
+  
+    DynamicComponent
+>>>>>>> main-dev
   ],
   imports: [
     BrowserModule,

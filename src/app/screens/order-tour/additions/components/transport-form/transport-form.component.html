@@ -1,8 +1,17 @@
 <!-- <p>transport-form works!</p> -->
 <div fxLayout="column" fxFlexFill>
   <div fxFlex="35">
+<<<<<<< HEAD
     <app-form dir="rtl" [formTemplate]="formTemplate" [slots]="{ topButton: formButton }" (valueChange)="onValueChange($event)"
       [editMode]="editMode"></app-form>
+=======
+    <app-form
+      [formTemplate]="formTemplate"
+      [slots]="{ topButton: formButton }"
+      [editMode]="editMode"
+      (register)="onRegister($event)"
+    ></app-form>
+>>>>>>> main-dev
   </div>
   <div fxFlex="35">
     <app-transport-details *ngIf="columns" [columns]="columns"></app-transport-details>
