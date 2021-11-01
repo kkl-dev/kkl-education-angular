@@ -48,8 +48,8 @@ export class AdditionsComponent implements OnInit {
     this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
-    
-     this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
+
+    this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
     // this.additionsService.emitSchedule(this.tour.schedule);
     //this.onAdd();
 
@@ -65,13 +65,13 @@ export class AdditionsComponent implements OnInit {
     }
     this.addItem = true;
   }
-  getOrders(){
-   this.orderService.getOrders(this.tour.id ).subscribe(res=>{
-     console.log(res);
-     this.generalFormService.mapOrderList(res);
-   },(err)=>{
-    console.log(err);
-   })
+  getOrders() {
+    this.orderService.getOrders(this.tour.id).subscribe(res => {
+      console.log(res);
+      this.generalFormService.mapOrderList(res);
+    }, (err) => {
+      console.log(err);
+    })
   }
   getTempOrder() {
 
@@ -105,13 +105,13 @@ export class AdditionsComponent implements OnInit {
     if (this.tempOrderReduce !== undefined && this.tempOrderReduce !== null) {
       var orderList = [];
       // if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
-      if (this.tempOrderReduce[orderTypId] === undefined){
-        if ( this.items.length==0)
-            this.addItem =true;
-           return; 
-      } 
+      if (this.tempOrderReduce[orderTypId] === undefined) {
+        if (this.items.length == 0)
+          this.addItem = true;
+        return;
+      }
       else
-      this.addItem =false;
+        this.addItem = false;
       for (var i in this.tempOrderReduce[orderTypId]) {
         if (this.tempOrderReduce[orderTypId][i].orderId != undefined)
           continue;
@@ -125,7 +125,7 @@ export class AdditionsComponent implements OnInit {
         order.globalParameters.startHour = startHour[1];
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
-        order.globalParameters.tempOrderIdentity=this.tempOrderReduce[orderTypId][i].orderTempId;
+        order.globalParameters.tempOrderIdentity = this.tempOrderReduce[orderTypId][i].orderTempId;
         orderList.push(order);
       }
       // this.additionsService.emitItem(OrderList);
@@ -152,19 +152,19 @@ export class AdditionsComponent implements OnInit {
   change(event) {
     switch (event) {
       case 1:
-        if(this.generalFormService.transportOrderList.length>0){
-          this.items=this.generalFormService.transportOrderList;
-         }     
-          else
-          this.items=[];
+        if (this.generalFormService.transportOrderList.length > 0) {
+          this.items = this.generalFormService.transportOrderList;
+        }
+        else
+          this.items = [];
         break;
       case 3:
-          if(this.generalFormService.siteOrderList.length>0){
-            this.items=this.generalFormService.siteOrderList;
-           }     
-            else
-            this.items=[];
-          break;
+        if (this.generalFormService.siteOrderList.length > 0) {
+          this.items = this.generalFormService.siteOrderList;
+        }
+        else
+          this.items = [];
+        break;
       case 4:
         if (this.generalFormService.economyOrderList.length > 0)
           this.items = this.generalFormService.economyOrderList;
@@ -172,18 +172,18 @@ export class AdditionsComponent implements OnInit {
           this.items = [];
         break;
       case 6:
-          if(this.generalFormService.gudianceOrderList.length>0)
-          this.items=this.generalFormService.gudianceOrderList;
-          else
-          this.items=[];
-          break;
+        if (this.generalFormService.gudianceOrderList.length > 0)
+          this.items = this.generalFormService.gudianceOrderList;
+        else
+          this.items = [];
+        break;
       case 7:
-            if(this.generalFormService.hostingOrderList.length>0)
-            this.items=this.generalFormService.hostingOrderList;
-            else
-            this.items=[];
-            break;
-   }
+        if (this.generalFormService.hostingOrderList.length > 0)
+          this.items = this.generalFormService.hostingOrderList;
+        else
+          this.items = [];
+        break;
+    }
     this.mapTempOrder(event);
     this.orderType = event;
   }

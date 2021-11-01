@@ -373,7 +373,7 @@ paths:
   /sites:
      get:
       tags:
-      - user
+      - order
       operationId: GetSites
       responses:
         "200":
@@ -387,7 +387,7 @@ paths:
   /settlement:
    get:
       tags:
-      - user
+      - order
       operationId: GetSettlements
       responses:
         "200":
@@ -2684,7 +2684,7 @@ components:
              type: string
              example: 'http://'
          isCustomerOrder:
-              type: string
+              type: boolean
               example: true
     EconomyOrder :
         type: object
@@ -2750,8 +2750,8 @@ components:
          - $ref: '#/components/schemas/OrderEvent'
          properties:
            totalHours:
-             type: integer
-             example: 4
+             type: number
+             example: 4.5
     
     OrderType:
       type: object

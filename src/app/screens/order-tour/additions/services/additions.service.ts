@@ -65,7 +65,7 @@ export class AdditionsService {
 
   private itemSubject = new BehaviorSubject<any[]>([])
   public item$: Observable<any[]> = this.itemSubject.asObservable();
- // public tempOrderReduce = new BehaviorSubject<any>(null)
+  // public tempOrderReduce = new BehaviorSubject<any>(null)
 
   public emitItem(item: any[]) {
     this.itemSubject.next(item)
@@ -215,10 +215,11 @@ export class AdditionsService {
     //---------------------------כלכלה------------------------------------------------
     else if (item?.orderType == 4) {
       // בהזמנות כלכלה שורה של פריט היא תמיד ליום אחד
-      itemOrder.billingSupplier = item?.cost * MultiplyByAmountOrPeople // חישוב חיוב ספק
+      itemOrder.billingSupplier = item?.cost * +MultiplyByAmountOrPeople // חישוב חיוב ספק
       // if (item.costVat == 1) {
       if (itemOrder.isVat == 1) {
-        itemOrder.billingSupplier = (currentVat / 100) + 1
+        // itemOrder.billingSupplier = (currentVat / 100) + 1
+        itemOrder.billingSupplier *= currentVat;
       } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
       if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {

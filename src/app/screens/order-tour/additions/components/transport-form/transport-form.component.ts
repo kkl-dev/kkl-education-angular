@@ -83,7 +83,7 @@ export class TransportFormComponent implements OnInit {
     let endDateIndex = tempArr.findIndex(el => el.key === 'endDate');
     tempArr[endDateIndex].label = 'תאריך פיזור';
     let startHourIndex = tempArr.findIndex(el => el.key === 'startHour');
-    tempArr[startHourIndex].label = 'שעת איסוף';
+    tempArr[startHourIndex].label = 'שעת התייצבות';
     let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
     tempArr[endHourIndex].label = 'שעת פיזור';
     let locationIndex = tempArr.findIndex(el => el.key === 'location');
@@ -131,7 +131,7 @@ export class TransportFormComponent implements OnInit {
 
     if (this.form) {
       // .status==='VALID'
-      // if (!this.validationsTransport()) { return; }
+      if (!this.validationsTransport()) { return; }
       this.editMode = true;
 
       let orderId;
@@ -205,7 +205,7 @@ export class TransportFormComponent implements OnInit {
           })
           return false;
         }
-        if (this.form.value.details['pickUpLocation'] === null || this.form.value.details['pickUpLocation'] === "" || this.form.value.details['pickUpLocation'] === undefined) {
+        if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
             data: { message: 'בהזמנת היסעים - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
