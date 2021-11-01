@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { AdditionsService } from '../../services/additions.service';
-import { TransportService } from '../../services/transport.service';
 import { EconomyOrder, Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder, UserService } from 'src/app/open-api';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { GeneralFormService } from '../../services/general-form.service';
@@ -17,7 +16,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class EconomyFormComponent implements OnInit {
 
-  constructor(private transportService: TransportService, private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
+  constructor( private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
   tripId: number;
@@ -32,8 +31,9 @@ export class EconomyFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.generalFormService.setDatesValues();
+    this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
+    this.generalFormService.clearFormFields();
+     this.generalFormService.setDatesValues();
     this.getSupplierList(4, this.tripId, 0);
 
     // if (this.editMode) {
@@ -43,15 +43,15 @@ export class EconomyFormComponent implements OnInit {
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     if (this.item != undefined && this.item != null) {
-      if (this.item.globalParameters.supplierId != undefined || this.item.length == 0) {
+      if(this.item.globalParameters.supplierId!= undefined ){
         this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
       }
       this.generalFormService.setFormValues(this.item);
     }
-    else {
-      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
-      this.clearFields();
+    else{
+      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+      //this.clearFields();
     }
     this.setformTemplate();
 
@@ -82,13 +82,9 @@ export class EconomyFormComponent implements OnInit {
     return tempArr;
   }
 
-
-  clearFields() {
-    let statHourIndex = this.generalFormService.details.findIndex(i => i.key === 'startHour');
-    this.generalFormService.details[statHourIndex].value = '';
-    let endHourIndex = this.generalFormService.details.findIndex(i => i.key === 'endHour');
-    this.generalFormService.details[endHourIndex].value = '';
-  }
+  
+  
+  
   getSupplierList(orderTypeId, tripId, orderId) {
     this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
@@ -97,9 +93,9 @@ export class EconomyFormComponent implements OnInit {
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        let index = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        this.generalFormService.details[index].inputProps.options = this.generalFormService.supplierList;
-        //this.getSupplierByOrderType(orderTypeId);
+        let index= this.generalFormService.details.findIndex(i => i.key==='supplierId');
+        this.generalFormService.details[index].inputProps.options= this.generalFormService.supplierList;
+        this.getSupplierByOrderType(orderTypeId);
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -125,39 +121,43 @@ export class EconomyFormComponent implements OnInit {
       // if (!this.validationsEconomy()) { return; }
       this.editMode = true;
       let orderId;
-      if (this.generalFormService.economyOrderList.length > 0) {
-        orderId = this.generalFormService.economyOrderList[0].order.orderId
-      }
-      var t = {} as EconomyOrder;
-      t.globalParameters = {} as OrderItemCommonDetails;
-      t.order = {} as Order;
-      t.order.orderId = orderId;
-      t.order.supplier = {} as Supplier;
-      t.order.orderType = {} as OrderType;
+      if(this.generalFormService.economyOrderList.length>0){
+        orderId= this.generalFormService.economyOrderList[0].order.orderId
+     }
+      let eco = {} as EconomyOrder;
+      eco.globalParameters = {} as OrderItemCommonDetails;
+      eco.order = {} as Order;
+      eco.order.orderId = orderId;
+      eco.order.supplier = {} as Supplier;
+      eco.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
-        if (key !== 'regularDishesNumber' && key !== 'vegetarianDishesNumber' && key !== 'veganDishesNumber' && key !== 'supplier') {
-          if (key != 'startDate' && key != 'endDate') {
-            t.globalParameters[key] = this.form.value.details[key]
-          } else {
-            if (key == 'startDate') {
-              t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
-            }
-            if (key == 'endDate') {
-              t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
-            }
+        if (key !== 'regularDishesNumber' && key !== 'vegetarianDishesNumber' && key !== 'veganDishesNumber') {
+          if( key !='startDate' && key!='endDate'){
+            eco.globalParameters[key] = this.form.value.details[key]
+          } else{
+            if(key=='startDate'){
+              eco.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
+             }
+             if(key=='endDate'){
+              eco.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
+             }
           }
+        }else{
+
         }
 
       });
-      t.globalParameters['startHour'] = this.setDateTimeFormat(t.globalParameters.startDate, t.globalParameters.startHour);
-      t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate, t.globalParameters.endHour);
-      t.globalParameters['comments'] = this.form.value.comments.comments;
-      t.globalParameters.orderId = orderId;
-      t.order.supplier.id = +this.form.value.details.supplierId;
-      t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      t.order.orderType.name = 'כלכלה';
-      t.order.orderType.id = 4;
-      this.generalFormService.addOrder(t, 'כלכלה');
+      eco.globalParameters['startHour']= this.setDateTimeFormat(eco.globalParameters.startDate,eco.globalParameters.startHour);
+      eco.globalParameters['endHour'] = this.setDateTimeFormat(eco.globalParameters.endDate,eco.globalParameters.endHour);
+      eco.globalParameters['comments'] = this.form.value.comments.comments;
+      eco.globalParameters.orderId=orderId;
+      eco.order.supplier.id = +this.form.value.details.supplierId;
+      eco.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      eco.order.orderType.name = 'כלכלה';
+      eco.order.orderType.id = 4;
+      if(this.item.globalParameters.tempOrderIdentity!= undefined)
+      eco.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
+      this.generalFormService.addOrder(eco,eco.order.orderType.id);
       this.form.disable({ emitEvent: false });
     }
   }

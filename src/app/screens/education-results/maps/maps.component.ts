@@ -157,6 +157,8 @@ export class MapsComponent implements OnInit {
       this.forestCenter = this.tripService.centerField;
     }
 
+    this.loadWebMap();
+
     this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
 
       console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);

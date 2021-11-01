@@ -138,7 +138,7 @@ import { OrderFormComponent } from './screens/order-tour/additions/components/or
 import { EconomyFormComponent } from './screens/order-tour/additions/components/economy-form/economy-form.component';
 import { GudianceFormComponent } from './screens/order-tour/additions/components/gudiance-form/gudiance-form.component';
 import { HostingFormComponent } from './screens/order-tour/additions/components/hosting-form/hosting-form.component';
-import { SiteFormComponent } from './screens/order-tour/additions/components/site-form/site-form.component';
+import { SiteOrderFormComponent } from './screens/order-tour/additions/components/site-order-form/site-order-form.component';
 
 
 
@@ -270,7 +270,7 @@ FullCalendarModule.registerPlugins([
     EconomyFormComponent,
     GudianceFormComponent,
     HostingFormComponent,
-    SiteFormComponent
+    SiteOrderFormComponent
 
   ],
   imports: [

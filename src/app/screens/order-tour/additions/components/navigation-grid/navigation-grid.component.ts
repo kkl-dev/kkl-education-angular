@@ -79,7 +79,7 @@ export class NavigationGridComponent implements OnInit {
       response => {
         console.log(response)
         this.additionsService.orderTypes = response;
-        this.additionsService.tempOrderReduce.subscribe(res => {
+        this.generalFormService.tempOrderReduce.subscribe(res => {
           this.tempOrderReduce = res;
           this.convertStepsModel();
           var indx = this.steps.findIndex(step => step.value === 1);
