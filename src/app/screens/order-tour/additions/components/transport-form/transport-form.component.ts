@@ -67,7 +67,9 @@ export class TransportFormComponent implements OnInit {
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    let detailsArr = this.generalFormService.details;
+    this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
+    //let detailsArr = this.generalFormService.details;
+    let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
     let transportQuestions = detailsArr.concat(this.generalFormService.transport);
     this.generalFormService.questionGroups[index].questions = transportQuestions;
@@ -79,7 +81,7 @@ export class TransportFormComponent implements OnInit {
   changeLabels(tempArr) {
     console.log('tempArr is :', tempArr);
     let startDateIndex = tempArr.findIndex(el => el.key === 'startDate');
-    tempArr[startDateIndex].label = 'תאריך איסוף';
+    tempArr[startDateIndex].label = 'תאריך התייצבות';
     let endDateIndex = tempArr.findIndex(el => el.key === 'endDate');
     tempArr[endDateIndex].label = 'תאריך פיזור';
     let startHourIndex = tempArr.findIndex(el => el.key === 'startHour');

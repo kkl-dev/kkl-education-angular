@@ -58,7 +58,9 @@ export class GudianceFormComponent implements OnInit {
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    let detailsArr = this.generalFormService.details;
+    this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
+    //let detailsArr = this.generalFormService.details;
+    let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
     let guideQuestions = detailsArr.concat(this.generalFormService.guidance);
     this.generalFormService.questionGroups[index].questions = guideQuestions;

@@ -2680,7 +2680,7 @@ components:
          siteCode:
            type: integer
            example: 1
-         siteAddress:
+         siteURL:
              type: string
              example: 'http://'
          isCustomerOrder:

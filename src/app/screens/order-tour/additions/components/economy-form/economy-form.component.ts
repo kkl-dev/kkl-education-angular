@@ -59,7 +59,9 @@ export class EconomyFormComponent implements OnInit {
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    let detailsArr = this.generalFormService.details;
+     this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
+    //let detailsArr = this.generalFormService.details;
+     let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
     let economyQuestions = detailsArr.concat(this.generalFormService.economy);
     this.generalFormService.questionGroups[index].questions = economyQuestions;

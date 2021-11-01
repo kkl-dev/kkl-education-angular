@@ -103,7 +103,6 @@ import { FilledNightComponent } from './screens/order-tour/sleeping-options/fill
 import { FilledNightFormComponent } from './screens/order-tour/sleeping-options/filled-night-form/filled-night-form.component';
 
 import { AdditionsComponent } from './screens/order-tour/additions/components/additions/additions.component';
-import { TransportDetailsComponent } from './screens/order-tour/additions/components/transport-details/transport-details.component';
 import { TourTitleComponent } from './screens/order-tour/tour-title/tour-title.component';
 import { TransportFormComponent } from './screens/order-tour/additions/components/transport-form/transport-form.component';
 import { TourPanelComponent } from './screens/order-tour/additions/components/tour-panel/tour-panel.component';
@@ -134,11 +133,12 @@ import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping
 import { CalendarCardComponent } from './screens/order-tour/facilities/calendar/calendar-card/calendar-card.component';
 
 import { FormDetailsComponent } from './screens/order-tour/additions/components/form-details/form-details.component';
-import { OrderFormComponent } from './screens/order-tour/additions/components/order-form/order-form.component';
 import { EconomyFormComponent } from './screens/order-tour/additions/components/economy-form/economy-form.component';
 import { GudianceFormComponent } from './screens/order-tour/additions/components/gudiance-form/gudiance-form.component';
 import { HostingFormComponent } from './screens/order-tour/additions/components/hosting-form/hosting-form.component';
 import { SiteOrderFormComponent } from './screens/order-tour/additions/components/site-order-form/site-order-form.component';
+import { SecuringOrderFormComponent } from './screens/order-tour/additions/components/securing-order-form/securing-order-form.component';
+import { MusicActivationFormComponent } from './screens/order-tour/additions/components/music-activation-form/music-activation-form.component';
 
 
 
@@ -232,7 +232,6 @@ FullCalendarModule.registerPlugins([
 
     // ADDITIONS COMPONENTS
     AdditionsComponent,
-    TransportDetailsComponent,
     TourTitleComponent,
     TransportFormComponent,
     NavigationGridComponent,
@@ -266,11 +265,12 @@ FullCalendarModule.registerPlugins([
     CalendarCardComponent,
 
     FormDetailsComponent,
-    OrderFormComponent,
     EconomyFormComponent,
     GudianceFormComponent,
     HostingFormComponent,
-    SiteOrderFormComponent
+    SiteOrderFormComponent,
+    SecuringOrderFormComponent,
+    MusicActivationFormComponent
 
   ],
   imports: [
