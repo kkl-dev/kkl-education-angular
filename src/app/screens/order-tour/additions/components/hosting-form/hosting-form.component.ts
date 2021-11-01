@@ -61,8 +61,8 @@ export class HostingFormComponent implements OnInit {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
     let detailsArr = this.generalFormService.details;
     detailsArr = this.changeLabels(detailsArr);
-    let economyQuestions = detailsArr.concat(this.generalFormService.economy);
-    this.generalFormService.questionGroups[index].questions = economyQuestions;
+    //let hostingQuestions = detailsArr.concat(this.generalFormService.hosting);
+    this.generalFormService.questionGroups[index].questions = detailsArr;
     this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
 
   }
@@ -74,11 +74,11 @@ export class HostingFormComponent implements OnInit {
     let endDateIndex = tempArr.findIndex(el => el.key === 'endDate');
     tempArr[endDateIndex].label = 'עד תאריך';
     let startHourIndex = tempArr.findIndex(el => el.key === 'startHour');
-    tempArr[startHourIndex].label = 'שעת הגשה';
+    tempArr[startHourIndex].label = 'שעת הגעה';
     let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
-    tempArr[endHourIndex].label = 'שעת סיום';
+    tempArr[endHourIndex].label = 'שעת יציאה';
     let locationIndex = tempArr.findIndex(el => el.key === 'location');
-    tempArr[locationIndex].label =  'מיקום';
+    tempArr[locationIndex].label =  'כתובת';
     return tempArr;
   }
 

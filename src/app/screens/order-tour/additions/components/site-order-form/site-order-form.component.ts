@@ -59,8 +59,8 @@ export class SiteOrderFormComponent implements OnInit {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
     let detailsArr = this.generalFormService.details;
     detailsArr = this.changeLabels(detailsArr);
-    let economyQuestions = detailsArr.concat(this.generalFormService.economy);
-    this.generalFormService.questionGroups[index].questions = economyQuestions;
+    let siteQuestions = detailsArr.concat(this.generalFormService.site);
+    this.generalFormService.questionGroups[index].questions = siteQuestions;
     this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
 
   }
@@ -72,11 +72,11 @@ export class SiteOrderFormComponent implements OnInit {
     let endDateIndex = tempArr.findIndex(el => el.key === 'endDate');
     tempArr[endDateIndex].label = 'עד תאריך';
     let startHourIndex = tempArr.findIndex(el => el.key === 'startHour');
-    tempArr[startHourIndex].label = 'שעת הגשה';
+    tempArr[startHourIndex].label = 'משעה';
     let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
-    tempArr[endHourIndex].label = 'שעת סיום';
+    tempArr[endHourIndex].label = 'עד שעה';
     let locationIndex = tempArr.findIndex(el => el.key === 'location');
-    tempArr[locationIndex].label =  'מיקום';
+    tempArr[locationIndex].label =  'כתובת האתר';
     return tempArr;
   }
 

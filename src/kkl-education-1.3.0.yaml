@@ -2680,7 +2680,7 @@ components:
          siteCode:
            type: integer
            example: 1
-         siteAddress:
+         siteURL:
              type: string
              example: 'http://'
          isCustomerOrder:
@@ -2750,8 +2750,8 @@ components:
          - $ref: '#/components/schemas/OrderEvent'
          properties:
            totalHours:
-             type: integer
-             example: 4
+             type: number
+             example: 4.5
     
     OrderType:
       type: object
