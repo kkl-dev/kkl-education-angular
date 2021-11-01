@@ -511,20 +511,26 @@ export class GeneralFormService {
     mapOrderList(orderList){
        console.log('order list is: ',orderList);
        orderList.forEach(element => {
-         if (element.order.order.orderType.id==1){
+         if (element.order.orderType.id==1){
            this.transportOrderList.push(element)
          }
-         if (element.order.order.orderType.id==3){
+         if (element.order.orderType.id==2){
+          this.securingOrderList.push(element)
+        }
+         if (element.order.orderType.id==3){
           this.siteOrderList.push(element)
         }
-        if (element.order.order.orderType.id==4){
+        if (element.order.orderType.id==4){
           this.economyOrderList.push(element)
         }
-        if (element.order.order.orderType.id==6){
+        if (element.order.orderType.id==6){
           this.gudianceOrderList.push(element)
         }
-        if (element.order.order.orderType.id==7){
+        if (element.order.orderType.id==7){
           this.hostingOrderList.push(element)
+        }
+        if (element.order.orderType.id==10){
+          this.musicOrderList.push(element)
         }
        });
     }
@@ -569,7 +575,6 @@ export class GeneralFormService {
             site.order=res[0].order;
             site.globalParameters= res[0].globalParameters;
              this.transportOrderList.push(site);
-             //this.updatetempOrderReduce(res,orderTypeId);
             break;
       
         case 4:
@@ -579,6 +584,7 @@ export class GeneralFormService {
           eco.order=res[0].order;
           eco.globalParameters= res[0].globalParameters;
           this.economyOrderList.push(eco);
+          this.updatetempOrderReduce(res,orderTypeId);
           break;
           case 6:
             let guidance = {} as GuidanceOrder;

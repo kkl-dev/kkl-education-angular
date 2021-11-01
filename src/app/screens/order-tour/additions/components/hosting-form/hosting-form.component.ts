@@ -51,7 +51,6 @@ export class HostingFormComponent implements OnInit {
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
-      //this.clearFields();
     }
     this.setformTemplate();
    

@@ -1,1 +1,21 @@
 <p>securing-order-form works!</p>
+<div fxLayout="column" fxFlexFill>
+    <div fxFlex="35">
+      <app-form dir="rtl" [formTemplate]="formTemplate" [slots]="{ topButton: formButton }" (valueChange)="onValueChange($event)"
+        [editMode]="editMode"></app-form>
+    </div>
+    <div fxFlex="35">
+      <app-form-details *ngIf="columns" [columns]="columns"></app-form-details>
+    </div>
+  </div>
+  
+  <ng-template #formButton>
+    <div class="button-container" fxLayout="column" fxLayoutAlign="end start">
+      <button *ngIf="!editMode" type="submit" color="primary" (click)="onSave()" mat-raised-button>
+        שמור
+      </button>
+      <button *ngIf="editMode" type="submit" class="edit-button" (click)="onEdit()" mat-icon-button>
+        <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
+      </button>
+    </div>
+  </ng-template>
