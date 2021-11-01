@@ -5,10 +5,12 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { OrderService, TransportOrder, OrderEvent, EconomyOrder, OrderItemCommonDetails, Order } from 'src/app/open-api';
+import { OrderService, TransportOrder, OrderEvent, EconomyOrder, OrderItemCommonDetails, Order, GuidanceOrder, HostingOrder, SiteOrder, SecuringOrder, MusicActivationOrder } from 'src/app/open-api';
 import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +19,17 @@ export class GeneralFormService {
   supplierList = [];
   itemsList = [];
   public transportOrderList: TransportOrder[] = [];
-  //public transportOrderList: any[] = [];
   public economyOrderList: EconomyOrder[] =[];
+  public gudianceOrderList : GuidanceOrder[]=[];
+  public hostingOrderList : HostingOrder[] =[];
+  public siteOrderList : SiteOrder[] =[];
+  public securingOrderList: SecuringOrder[] =[];
+  public musicOrderList: MusicActivationOrder[]=[];
+  tripOrdersList :OrderEvent[];
+  public tempOrderReduce = new BehaviorSubject<any>(null)
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-  constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService,  private _dialog: MatDialog) { }
+  constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService,  private _dialog: MatDialog,
+    ) { }
   public details: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'supplierId',
@@ -157,26 +166,7 @@ export class GeneralFormService {
     }),
   ];
   public transport: QuestionBase<string>[] = [
-    // new QuestionTextbox({
-    //   key: 'stabilizationLocation',
-    //   label: 'מקום איסוף',
-    //   value: '',
-    //   icon: 'place',
-    //   validations: [Validators.required],
-    //   inputProps: {
-    //     // labelSize: 's5',
-    //   },
-    // }),
-    // new QuestionTextbox({
-    //   key: 'pickUpAddress',
-    //   label: 'כתובת איסוף',
-    //   value: '',
-    //   validations: [Validators.required],
-    //   icon: 'place',
-    //   inputProps: {
-    //     // labelSize: 's5',
-    //   },
-    // }),
+   
     new QuestionTextbox({
       key: 'scatterLocation',
       label: 'מקום פיזור',
@@ -187,40 +177,19 @@ export class GeneralFormService {
         // labelSize: 's5',
       },
     }),
-    new QuestionTextbox({
-      key: 'exitPoint',
+    new QuestionSelect({
+      key: 'exitLocation',
       label: 'נקודת יציאה',
-      value: '',
+      type: 'select',
       validations: [Validators.required],
-      icon: 'place',
       inputProps: {
-        // labelSize: 's5',
+      
       },
     }),
     
   ]
   public economy: QuestionBase<string>[] = [
-    // new QuestionTextbox({
-    //   key: 'servingTime',
-    //   label: 'שעת הגשה',
-    //   value: '',
-    //   icon: 'schedule',
-    //   type: 'time',
-    //   validations: [Validators.required],
-    //   inputProps: {
-    //     // labelSize: 's5',
-    //   },
-    // }),
-    // new QuestionTextbox({
-    //   key: 'location',
-    //   label: 'מיקום',
-    //   value: '',
-    //   icon: 'place',
-    //   validations: [Validators.required],
-    //   inputProps: {
-    //     // labelSize: 's5',
-    //   },
-    // }),
+    
     new QuestionTextbox({
       key: 'regularDishesNumber',
       label: 'מספר מנות רגילות',
@@ -241,8 +210,109 @@ export class GeneralFormService {
     }),
   ]
 
+  public guidance: QuestionBase<string>[] = [
+   
+    new QuestionTextbox({
+      key: 'scatterLocation',
+      label: 'מקום פיזור',
+      value: '',
+      validations: [Validators.required],
+      icon: 'place',
+      inputProps: {
+        // labelSize: 's5',
+      },
+    }),
+    new QuestionTextbox({
+      key: 'guideName',
+      label: 'שם המדריך',
+      value: '',
+      validations: [Validators.required],
+    }),
+    new QuestionSelect({
+      key: 'languageGuidance',
+      label: 'שפת הדרכה',
+      type: 'select',
+      validations: [Validators.required],
+      inputProps: {
+      
+      },
+    }),
+    new QuestionTextbox({
+      key: 'guideInstructions',
+      label: 'שפת הדרכה',
+      value: '',
+      cols: 3,
+      validations: [Validators.required],
+    }),
+  ]
 
-  //public tempDetails = this.details;
+  public site: QuestionBase<string>[] = [
+   
+    new QuestionSelect({
+      key: 'siteCode',
+      label: 'שם האתר',
+      type: 'select',
+      validations: [Validators.required],
+      inputProps: {
+      
+      },
+    }),
+    new QuestionTextbox({
+      key: 'siteAddress',
+      label: 'כתובת האתר',
+      value: '',
+    }),
+    new QuestionTextbox({
+      key: 'totalHours',
+      label: 'סה"כ שעות',
+      value: '',
+      
+    }),
+    new QuestionSelect({
+      key: 'isCustomerOrder',
+      label: 'האם הלקוח מזמין',
+      type: 'select',
+      validations: [Validators.required],
+      inputProps: {
+      
+      },
+    }),
+    
+  ]
+
+  
+  public securing: QuestionBase<string>[] = [
+   
+    new QuestionTextbox({
+      key: 'scatterLocation',
+      label: 'מקום פיזור',
+      value: '',
+      validations: [Validators.required],
+      icon: 'place',
+      inputProps: {
+        // labelSize: 's5',
+      },
+    }),
+    // new QuestionTextbox({
+    //   key: 'guardName',
+    //   label: 'שם המאבטח',
+    //   value: '',
+      
+    // }),
+  
+  ]
+
+  public musicActivation: QuestionBase<string>[] = [
+   
+    new QuestionTextbox({
+      key: 'totalHours',
+      label: 'סה"כ שעות',
+      value: '',
+      
+    }),
+  
+  ]
+
 
   public questionGroups: QuestionGroup[] = [
     {
@@ -294,6 +364,10 @@ export class GeneralFormService {
       //   // control.value = time;
       // }
     });
+  }
+
+  public updateTempOrderReduce(temp) {
+    this.tempOrderReduce.next(temp);
   }
 
   public setFormValues(data: any) {
@@ -416,7 +490,28 @@ export class GeneralFormService {
     return dateFormat;
   }
 
+  clearFormFields(){
+    let statHourIndex =this.details.findIndex(i => i.key==='startHour');
+    this.details[statHourIndex].value='';
+    let endHourIndex = this.details.findIndex(i => i.key==='endHour');
+    this.details[endHourIndex].value='';
+    let quantityIndex= this.details.findIndex(i => i.key==='quantity');
+    this.details[quantityIndex].value='1';
+    let itemCostIndex= this.details.findIndex(i => i.key==='itemCost');
+    this.details[itemCostIndex].value='';
+    let billingSupplierIndex= this.details.findIndex(i => i.key==='billingSupplier');
+    this.details[billingSupplierIndex].value='';
+    let billingCustomerIndex= this.details.findIndex(i => i.key==='billingCustomer');
+    this.details[billingCustomerIndex].value='';
+    let locationIndex= this.details.findIndex(i => i.key==='location');
+    this.details[locationIndex].value='';
+     this.comments[0].value='';
+  }
 
+
+    mapOrderList(orderList){
+
+    }
 
    addOrder(item: any,orderType) {  
       this.orderService.addOrder(4, item).subscribe(res => {
@@ -436,9 +531,9 @@ export class GeneralFormService {
     }
 
   
-    addToOrderList(res, orderType){
-      switch (orderType) {
-        case 'היסעים':
+    addToOrderList(res, orderTypeId){
+      switch (orderTypeId) {
+        case 1:
           let t = {} as TransportOrder;
           t.globalParameters = {} as OrderItemCommonDetails;
           t.order = {} as Order;
@@ -449,13 +544,61 @@ export class GeneralFormService {
           // if(res[0].scatterLocation)
           //  t.scatterLocation= res[0].scatterLocation;
            this.transportOrderList.push(t);
+           this.updatetempOrderReduce(res,orderTypeId);
           break;
-  
-        case 'כלכלה':
-          this.economyOrderList.push(res);
+        case 3:
+            let site = {} as SiteOrder;
+            site.globalParameters = {} as OrderItemCommonDetails;
+            site.order = {} as Order;
+            site.order=res[0].order;
+            site.globalParameters= res[0].globalParameters;
+             this.transportOrderList.push(site);
+             //this.updatetempOrderReduce(res,orderTypeId);
+            break;
+      
+        case 4:
+          let eco = {} as EconomyOrder;
+          eco.globalParameters = {} as OrderItemCommonDetails;
+          eco.order = {} as Order;
+          eco.order=res[0].order;
+          eco.globalParameters= res[0].globalParameters;
+          this.economyOrderList.push(eco);
           break;
+          case 6:
+            let guidance = {} as GuidanceOrder;
+            guidance.globalParameters = {} as OrderItemCommonDetails;
+            guidance.order = {} as Order;
+            guidance.order=res[0].order;
+            guidance.globalParameters= res[0].globalParameters;
+             this.gudianceOrderList.push(guidance);
+             this.updatetempOrderReduce(res,orderTypeId);
+            break;
+          case 7:
+              let hosting = {} as HostingOrder;
+              hosting.globalParameters = {} as OrderItemCommonDetails;
+              hosting.order = {} as Order;
+              hosting.order=res[0].order;
+              hosting.globalParameters= res[0].globalParameters;
+               this.gudianceOrderList.push(hosting);
+               this.updatetempOrderReduce(res,orderTypeId);
+              break;
+    
     }
   }
+
+
+      updatetempOrderReduce(res, orderTypeId){
+      let temp= this.tempOrderReduce.value;
+      for (var i in temp[orderTypeId]) {
+         let tempOrderId= res[0].globalParameters.tempOrderIdentity;
+         if(temp[orderTypeId][i].orderTempId==tempOrderId){
+          temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
+          temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId
+         }
+      }
+      this.updateTempOrderReduce(temp);
+
+    }
 
      
 

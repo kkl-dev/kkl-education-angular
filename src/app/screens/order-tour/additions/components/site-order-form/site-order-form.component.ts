@@ -1,22 +1,23 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit ,Input} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { AdditionsService } from '../../services/additions.service';
-import { EconomyOrder, Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder, UserService } from 'src/app/open-api';
+import { SiteOrder, Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder, UserService } from 'src/app/open-api';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { GeneralFormService } from '../../services/general-form.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { distinctUntilChanged } from 'rxjs/operators';
-@Component({
-  selector: 'app-economy-form',
-  templateUrl: './economy-form.component.html',
-  styleUrls: ['./economy-form.component.scss']
-})
-export class EconomyFormComponent implements OnInit {
 
-  constructor( private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
+@Component({
+  selector: 'app-site-order-form',
+  templateUrl: './site-order-form.component.html',
+  styleUrls: ['./site-order-form.component.scss']
+})
+export class SiteOrderFormComponent implements OnInit {
+
+  constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
   tripId : number;
@@ -30,11 +31,10 @@ export class EconomyFormComponent implements OnInit {
   };
 
   ngOnInit(): void {
-
     this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
     this.generalFormService.clearFormFields();
      this.generalFormService.setDatesValues();
-    this.getSupplierList(4, this.tripId, 0);
+    this.getSupplierList(3, this.tripId, 0);
 
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
@@ -51,12 +51,10 @@ export class EconomyFormComponent implements OnInit {
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
-      //this.clearFields();
     }
     this.setformTemplate();
    
   }
-
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
     let detailsArr = this.generalFormService.details;
@@ -82,9 +80,6 @@ export class EconomyFormComponent implements OnInit {
     return tempArr;
   }
 
-  
-  
-  
   getSupplierList(orderTypeId, tripId, orderId) {
     this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
@@ -95,7 +90,7 @@ export class EconomyFormComponent implements OnInit {
         });
         let index= this.generalFormService.details.findIndex(i => i.key==='supplierId');
         this.generalFormService.details[index].inputProps.options= this.generalFormService.supplierList;
-        this.getSupplierByOrderType(orderTypeId);
+        //this.getSupplierByOrderType(orderTypeId);
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -124,40 +119,41 @@ export class EconomyFormComponent implements OnInit {
       if(this.generalFormService.economyOrderList.length>0){
         orderId= this.generalFormService.economyOrderList[0].order.orderId
      }
-      let eco = {} as EconomyOrder;
-      eco.globalParameters = {} as OrderItemCommonDetails;
-      eco.order = {} as Order;
-      eco.order.orderId = orderId;
-      eco.order.supplier = {} as Supplier;
-      eco.order.orderType = {} as OrderType;
+      var site = {} as SiteOrder;
+      site.globalParameters = {} as OrderItemCommonDetails;
+      site.order = {} as Order;
+      site.order.orderId = orderId;
+      site.order.supplier = {} as Supplier;
+      site.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
-        if (key !== 'regularDishesNumber' && key !== 'vegetarianDishesNumber' && key !== 'veganDishesNumber') {
+        if (key !== 'siteCode' && key !== 'siteAddress' && key !== 'totalHours' && key !== 'isCustomerOrder') {
           if( key !='startDate' && key!='endDate'){
-            eco.globalParameters[key] = this.form.value.details[key]
+            site.globalParameters[key] = this.form.value.details[key]
           } else{
             if(key=='startDate'){
-              eco.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
+              site.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
              }
              if(key=='endDate'){
-              eco.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
+              site.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
              }
           }
-        }else{
+        }
+        else{
 
         }
        
       });
-      eco.globalParameters['startHour']= this.setDateTimeFormat(eco.globalParameters.startDate,eco.globalParameters.startHour);
-      eco.globalParameters['endHour'] = this.setDateTimeFormat(eco.globalParameters.endDate,eco.globalParameters.endHour);
-      eco.globalParameters['comments'] = this.form.value.comments.comments;
-      eco.globalParameters.orderId=orderId;
-      eco.order.supplier.id = +this.form.value.details.supplierId;
-      eco.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      eco.order.orderType.name = 'כלכלה';
-      eco.order.orderType.id = 4;
-      if(this.item.globalParameters.tempOrderIdentity!= undefined)
-      eco.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
-      this.generalFormService.addOrder(eco,eco.order.orderType.id);
+      site.globalParameters['startHour']= this.setDateTimeFormat(site.globalParameters.startDate,site.globalParameters.startHour);
+      site.globalParameters['endHour'] = this.setDateTimeFormat(site.globalParameters.endDate,site.globalParameters.endHour);
+      site.globalParameters['comments'] = this.form.value.comments.comments;
+      site.globalParameters.orderId=orderId;
+      site.order.supplier.id = +this.form.value.details.supplierId;
+      site.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      site.order.orderType.name = 'אתרים';
+      site.order.orderType.id = 3;
+      // if(this.item.globalParameters.tempOrderIdentity!= undefined)
+      //  site.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
+      this.generalFormService.addOrder(site,site.order.orderType.id);
       this.form.disable({ emitEvent: false });
     }
   }
@@ -168,27 +164,7 @@ export class EconomyFormComponent implements OnInit {
      return hourFormat;
    }
 
-  validationsEconomy() {
-    if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'בהזמנת כלכלה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-      return false;
-    }
-    if (this.form.value.details['endHour'] === null || this.form.value.details['endHour'] === "" || this.form.value.details['endHour'] === undefined) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'בהזמנת כלכלה - חובה למלא שעת סיום', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-      return false;
-    }
-
-    return true;
-  }
-
-
-  public onEdit() {
+   public onEdit() {
     this.editMode = false;
     this.form.enable();
   }
@@ -224,4 +200,7 @@ export class EconomyFormComponent implements OnInit {
     console.log(this.form)
    
   }
+
+
+
 }
