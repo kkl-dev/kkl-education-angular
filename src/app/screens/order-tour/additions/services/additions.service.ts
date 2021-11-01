@@ -65,7 +65,7 @@ export class AdditionsService {
 
   private itemSubject = new BehaviorSubject<any[]>([])
   public item$: Observable<any[]> = this.itemSubject.asObservable();
- // public tempOrderReduce = new BehaviorSubject<any>(null)
+  // public tempOrderReduce = new BehaviorSubject<any>(null)
 
   public emitItem(item: any[]) {
     this.itemSubject.next(item)
@@ -112,11 +112,11 @@ export class AdditionsService {
   calculateBillings(itemOrder: any) {
     var currentVat = 1.17;
     itemOrder.quantity = +itemOrder.quantity;
-    itemOrder.startDate = "27/11/2021";
+    // itemOrder.startDate = "27/11/2021";
     let str = itemOrder.startDate.split("/");
     let startDate1 = str[2] + '-' + str[1] + '-' + str[0];
     let startDate = new Date(startDate1);
-    itemOrder.endDate = "27/11/2021";
+    // itemOrder.endDate = "27/11/2021";
     let str2 = itemOrder.endDate.split("/");
     let endDate1 = str2[2] + '-' + str2[1] + '-' + str2[0];
     let endDate = new Date(endDate1);
@@ -215,10 +215,11 @@ export class AdditionsService {
     //---------------------------כלכלה------------------------------------------------
     else if (item?.orderType == 4) {
       // בהזמנות כלכלה שורה של פריט היא תמיד ליום אחד
-      itemOrder.billingSupplier = item?.cost * MultiplyByAmountOrPeople // חישוב חיוב ספק
+      itemOrder.billingSupplier = item?.cost * +MultiplyByAmountOrPeople // חישוב חיוב ספק
       // if (item.costVat == 1) {
       if (itemOrder.isVat == 1) {
-        itemOrder.billingSupplier = (currentVat / 100) + 1
+        // itemOrder.billingSupplier = (currentVat / 100) + 1
+        itemOrder.billingSupplier *= currentVat;
       } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
       if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
@@ -312,9 +313,7 @@ export class AdditionsService {
     }
     itemOrder.quantity = itemOrder.quantity.toString();
     console.log('timmeeeeee')
-    return itemOrder
-
+    return itemOrder;
   }
-
 }
 

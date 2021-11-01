@@ -10,7 +10,8 @@ import { SquadAssembleService } from '../../../squad-assemble/services/squad-ass
 import { OrderService, Order, OrderEvent, TransportOrder, OrderItemCommonDetails, OrderType } from 'src/app/open-api';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { GeneralFormService } from '../../services/general-form.service';
-
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 export interface TourDayModel {
   date: Date;
   locations: any[];
@@ -29,14 +30,14 @@ export class AdditionsComponent implements OnInit {
   //public orderModel = {} as OrderModel;
   public item$: Observable<any[]>;
   public items: any[];
-   public item: any;
+  public item: any;
   public addItem: boolean = false;
-  tripId : number;
+  tripId: number;
   orderType: number = 1;
 
   public tempOrderReduce: any;
 
-  constructor(
+  constructor(private _dialog: MatDialog,
     private tourService: TourService,
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private orderService: OrderService,
     private generalFormService: GeneralFormService) { }
@@ -47,33 +48,39 @@ export class AdditionsComponent implements OnInit {
     this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
-    
-     this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
+
+    this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
     // this.additionsService.emitSchedule(this.tour.schedule);
     //this.onAdd();
-    
+
   }
 
   public onAdd() {
     // this.item = {} as OrderEvent;
-     this.addItem = true;
+    if (this.orderType === 1 && this.items.length > 10) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+    }
+    this.addItem = true;
   }
-  getOrders(){
-   this.orderService.getOrders(this.tour.id ).subscribe(res=>{
-     console.log(res);
-     this.generalFormService.mapOrderList(res);
-   },(err)=>{
-    console.log(err);
-   })
+  getOrders() {
+    this.orderService.getOrders(this.tour.id).subscribe(res => {
+      console.log(res);
+      this.generalFormService.mapOrderList(res);
+    }, (err) => {
+      console.log(err);
+    })
   }
   getTempOrder() {
-    
-    this.tripId =this.squadAssembleService.tripInfofromService.trip.id
-     //this.tripId= 52973;
+
+    this.tripId = this.squadAssembleService.tripInfofromService.trip.id
+    //this.tripId= 52973;
     this.orderService.getTempOrders(this.tripId).subscribe(
       response => {
         console.log(response);
-        if(response.length>0){
+        if (response.length > 0) {
           this.additionsService.tempOrder = response;
           this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
             let key = obj['orderTypeCode']
@@ -84,30 +91,30 @@ export class AdditionsComponent implements OnInit {
           this.generalFormService.updateTempOrderReduce(this.tempOrderReduce);
           this.mapTempOrder(1);
         }
-        else{
-          this.addItem =true;
+        else {
+          this.addItem = true;
           return;
         }
-        
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
   mapTempOrder(orderTypId: number) {
-    if (this.tempOrderReduce !== undefined && this.tempOrderReduce !== null  ) {
+    if (this.tempOrderReduce !== undefined && this.tempOrderReduce !== null) {
       var orderList = [];
       // if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
-      if (this.tempOrderReduce[orderTypId] === undefined){
-        if ( this.items.length==0)
-            this.addItem =true;
-           return; 
-      } 
+      if (this.tempOrderReduce[orderTypId] === undefined) {
+        if (this.items.length == 0)
+          this.addItem = true;
+        return;
+      }
       else
-      this.addItem =false;
+        this.addItem = false;
       for (var i in this.tempOrderReduce[orderTypId]) {
-        if(this.tempOrderReduce[orderTypId][i].orderId  != undefined)
-        continue;
+        if (this.tempOrderReduce[orderTypId][i].orderId != undefined)
+          continue;
         var order = {} as OrderEvent;
         order.globalParameters = {} as OrderItemCommonDetails;
         let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate, 'israel');
@@ -118,24 +125,29 @@ export class AdditionsComponent implements OnInit {
         order.globalParameters.startHour = startHour[1];
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
-        order.globalParameters.tempOrderIdentity=this.tempOrderReduce[orderTypId][i].orderTempId;
+        order.globalParameters.tempOrderIdentity = this.tempOrderReduce[orderTypId][i].orderTempId;
         orderList.push(order);
       }
       // this.additionsService.emitItem(OrderList);
       // this.item$ = this.additionsService.item$;
-      if(this.items!= undefined && this.items.length != 0 ){
-        if (this.items.length>0){
-          let tempArr= this.items.concat(orderList);
-          this.items=[];
-          this.items= tempArr;
-        }        
-      }     
-      else{
-        this.items=[];
-        this.items= orderList;
+      if (this.items != undefined && this.items.length != 0) {
+        if (this.items.length > 0) {
+          let tempArr = this.items.concat(orderList);
+          this.items = [];
+          this.items = tempArr;
+        }
+      }
+      else {
+        this.items = [];
+        this.items = orderList;
       }
     }
-    
+    if (this.tempOrderReduce[1].length > 10) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+    }
   }
   change(event) {
     switch (event) {
@@ -161,6 +173,7 @@ export class AdditionsComponent implements OnInit {
           }
           break;
       case 3:
+
           if(this.generalFormService.siteOrderList.length>0){
             this.items=this.generalFormService.siteOrderList;
             this.addItem=false;
@@ -215,6 +228,6 @@ export class AdditionsComponent implements OnInit {
     this.mapTempOrder(event);
    }
     this.orderType = event;
-   }
- 
+  }
+
 }
