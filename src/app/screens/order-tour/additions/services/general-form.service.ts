@@ -62,7 +62,6 @@ export class GeneralFormService {
     new QuestionTextbox({
       key: 'peopleInTrip',
       label: 'משתתפים',
-      value: '',
       validations: [Validators.required],
     }),
     new QuestionTextbox({
@@ -88,8 +87,8 @@ export class GeneralFormService {
     }),
 
     // new QuestionTextbox({
-    //   key: 'total',
-    //   label: 'סה"כ',
+    //   key: 'isVat',
+    //   label: 'האם כולל מע"מ',
     //   value: '',
     //   validations: [Validators.required],
     // }),
@@ -239,7 +238,7 @@ export class GeneralFormService {
     }),
     new QuestionTextbox({
       key: 'guideInstructions',
-      label: 'שפת הדרכה',
+      label: 'הוראות הדרכה',
       value: '',
       cols: 3,
       validations: [Validators.required],
@@ -250,7 +249,7 @@ export class GeneralFormService {
    
     new QuestionSelect({
       key: 'siteCode',
-      label: 'שם האתר',
+      label: 'בחר אתר',
       type: 'select',
       validations: [Validators.required],
       inputProps: {
@@ -258,8 +257,8 @@ export class GeneralFormService {
       },
     }),
     new QuestionTextbox({
-      key: 'siteAddress',
-      label: 'כתובת האתר',
+      key: 'siteURL',
+      label: 'כתובת האתר באינטרנט',
       value: '',
     }),
     new QuestionTextbox({
@@ -510,7 +509,30 @@ export class GeneralFormService {
 
 
     mapOrderList(orderList){
-
+       console.log('order list is: ',orderList);
+       orderList.forEach(element => {
+         if (element.order.orderType.id==1){
+           this.transportOrderList.push(element)
+         }
+         if (element.order.orderType.id==2){
+          this.securingOrderList.push(element)
+        }
+         if (element.order.orderType.id==3){
+          this.siteOrderList.push(element)
+        }
+        if (element.order.orderType.id==4){
+          this.economyOrderList.push(element)
+        }
+        if (element.order.orderType.id==6){
+          this.gudianceOrderList.push(element)
+        }
+        if (element.order.orderType.id==7){
+          this.hostingOrderList.push(element)
+        }
+        if (element.order.orderType.id==10){
+          this.musicOrderList.push(element)
+        }
+       });
     }
 
    addOrder(item: any,orderType) {  
@@ -553,7 +575,6 @@ export class GeneralFormService {
             site.order=res[0].order;
             site.globalParameters= res[0].globalParameters;
              this.transportOrderList.push(site);
-             //this.updatetempOrderReduce(res,orderTypeId);
             break;
       
         case 4:
@@ -563,6 +584,7 @@ export class GeneralFormService {
           eco.order=res[0].order;
           eco.globalParameters= res[0].globalParameters;
           this.economyOrderList.push(eco);
+          this.updatetempOrderReduce(res,orderTypeId);
           break;
           case 6:
             let guidance = {} as GuidanceOrder;

@@ -40,22 +40,22 @@
       
         <app-transport-form *ngIf="orderType==1" [item]="item" [editMode]="editMode"  content>
         </app-transport-form>
+        <app-securing-order-form *ngIf="orderType==2" [item]="item" [editMode]="editMode"  content>
+        </app-securing-order-form>
 
-        <app-economy-form *ngIf="orderType==3" [item]="item" [editMode]="editMode" content>
-        </app-economy-form>
+        <app-site-order-form *ngIf="orderType==3" [item]="item" [editMode]="editMode" content>
+        </app-site-order-form>
        
         <app-economy-form *ngIf="orderType==4" [item]="item" [editMode]="editMode" content>
         </app-economy-form>
-        <app-economy-form *ngIf="orderType==6" [item]="item" [editMode]="editMode" content>
-        </app-economy-form>
-        <app-economy-form *ngIf="orderType==7" [item]="item" [editMode]="editMode" content>
-        </app-economy-form>
+        <app-gudiance-form *ngIf="orderType==6" [item]="item" [editMode]="editMode" content>
+        </app-gudiance-form>
+        <app-hosting-form *ngIf="orderType==7" [item]="item" [editMode]="editMode" content>
+        </app-hosting-form>
+        <app-music-activation-form *ngIf="orderType==10" [item]="item" [editMode]="editMode" content>
+        </app-music-activation-form>
 
-        <app-order-form [order]="item" *ngIf="orderType==10||orderType==2" [editMode]="editMode" content>
-        </app-order-form>
-        <!-- <app-economy-form [order]="item" [editMode]="editMode" content>
-        </app-economy-form> -->
-        <!-- <app-transport-details *ngIf="editMode" content></app-transport-details> -->
+    
         <app-form-details *ngIf="editMode" content></app-form-details>
       </app-expend-panel>
      

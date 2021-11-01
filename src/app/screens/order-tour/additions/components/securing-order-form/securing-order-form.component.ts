@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { AdditionsService } from '../../services/additions.service';
-import { HostingOrder, Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder, UserService } from 'src/app/open-api';
+import { SecuringOrder, Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder, UserService } from 'src/app/open-api';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { GeneralFormService } from '../../services/general-form.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
@@ -11,11 +11,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-hosting-form',
-  templateUrl: './hosting-form.component.html',
-  styleUrls: ['./hosting-form.component.scss']
+  selector: 'app-securing-order-form',
+  templateUrl: './securing-order-form.component.html',
+  styleUrls: ['./securing-order-form.component.scss']
 })
-export class HostingFormComponent implements OnInit {
+export class SecuringOrderFormComponent implements OnInit {
 
   constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public item: any;
@@ -29,12 +29,11 @@ export class HostingFormComponent implements OnInit {
     hasGroups: true,
     questionsGroups: [],
   };
-
   ngOnInit(): void {
     this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
     this.generalFormService.clearFormFields();
      this.generalFormService.setDatesValues();
-    this.getSupplierList(7, this.tripId, 0);
+    this.getSupplierList(2, this.tripId, 0);
 
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
@@ -55,29 +54,27 @@ export class HostingFormComponent implements OnInit {
     this.setformTemplate();
    
   }
-
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
     let detailsArr = this.generalFormService.details;
     detailsArr = this.changeLabels(detailsArr);
-    //let hostingQuestions = detailsArr.concat(this.generalFormService.hosting);
-    this.generalFormService.questionGroups[index].questions = detailsArr;
+    let securingQuestions = detailsArr.concat(this.generalFormService.securing);
+    this.generalFormService.questionGroups[index].questions = securingQuestions;
     this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
 
   }
   changeLabels(tempArr) {
     console.log('tempArr is :', tempArr);
-
     let startDateIndex = tempArr.findIndex(el => el.key === 'startDate');
-    tempArr[startDateIndex].label = 'מתאריך';
+    tempArr[startDateIndex].label = 'תאריך התייצבות';
     let endDateIndex = tempArr.findIndex(el => el.key === 'endDate');
-    tempArr[endDateIndex].label = 'עד תאריך';
+    tempArr[endDateIndex].label = 'תאריך פיזור';
     let startHourIndex = tempArr.findIndex(el => el.key === 'startHour');
-    tempArr[startHourIndex].label = 'שעת הגעה';
+    tempArr[startHourIndex].label = 'שעת התייצבות';
     let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
-    tempArr[endHourIndex].label = 'שעת יציאה';
+    tempArr[endHourIndex].label = 'שעת פיזור';
     let locationIndex = tempArr.findIndex(el => el.key === 'location');
-    tempArr[locationIndex].label =  'כתובת';
+    tempArr[locationIndex].label = 'מקום התייצבות';
     return tempArr;
   }
 
@@ -112,7 +109,6 @@ export class HostingFormComponent implements OnInit {
 
   }
 
-
   public onSave(): void {
     if (this.form) {
       // if (!this.validationsEconomy()) { return; }
@@ -121,38 +117,43 @@ export class HostingFormComponent implements OnInit {
       if(this.generalFormService.economyOrderList.length>0){
         orderId= this.generalFormService.economyOrderList[0].order.orderId
      }
-      let hosting = {} as HostingOrder;
-      hosting.globalParameters = {} as OrderItemCommonDetails;
-      hosting.order = {} as Order;
-      hosting.order.orderId = orderId;
-      hosting.order.supplier = {} as Supplier;
-      hosting.order.orderType = {} as OrderType;
+      let music = {} as SecuringOrder;
+      music.globalParameters = {} as OrderItemCommonDetails;
+      music.order = {} as Order;
+      music.order.orderId = orderId;
+      music.order.supplier = {} as Supplier;
+      music.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
       
+        if (key !== 'scatterLocation' ) {
+
           if( key !='startDate' && key!='endDate'){
-            hosting.globalParameters[key] = this.form.value.details[key]
+            music.globalParameters[key] = this.form.value.details[key]
           } else{
             if(key=='startDate'){
-              hosting.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
+              music.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
              }
              if(key=='endDate'){
-              hosting.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
+              music.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
              }
           }
-        
+        }
+        else{
+          
+        }
        
       });
-      hosting.globalParameters['startHour']= this.setDateTimeFormat(hosting.globalParameters.startDate,hosting.globalParameters.startHour);
-      hosting.globalParameters['endHour'] = this.setDateTimeFormat(hosting.globalParameters.endDate,hosting.globalParameters.endHour);
-      hosting.globalParameters['comments'] = this.form.value.comments.comments;
-      hosting.globalParameters.orderId=orderId;
-      hosting.order.supplier.id = +this.form.value.details.supplierId;
-      hosting.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      hosting.order.orderType.name = 'פעילות/אירוח';
-      hosting.order.orderType.id = 7;
+      music.globalParameters['startHour']= this.setDateTimeFormat(music.globalParameters.startDate,music.globalParameters.startHour);
+      music.globalParameters['endHour'] = this.setDateTimeFormat(music.globalParameters.endDate,music.globalParameters.endHour);
+      music.globalParameters['comments'] = this.form.value.comments.comments;
+      music.globalParameters.orderId=orderId;
+      music.order.supplier.id = +this.form.value.details.supplierId;
+      music.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      music.order.orderType.name = '';
+      music.order.orderType.id = 7;
       if(this.item.globalParameters.tempOrderIdentity!= undefined)
-       hosting.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
-      this.generalFormService.addOrder(hosting,hosting.order.orderType.id);
+      music.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
+      this.generalFormService.addOrder(music,music.order.orderType.id);
       this.form.disable({ emitEvent: false });
     }
   }
@@ -199,5 +200,6 @@ export class HostingFormComponent implements OnInit {
     console.log(this.form)
    
   }
+
 
 }
