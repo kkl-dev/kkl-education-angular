@@ -112,11 +112,11 @@ export class AdditionsService {
   calculateBillings(itemOrder: any) {
     var currentVat = 1.17;
     itemOrder.quantity = +itemOrder.quantity;
-    itemOrder.startDate = "27/11/2021";
+    // itemOrder.startDate = "27/11/2021";
     let str = itemOrder.startDate.split("/");
     let startDate1 = str[2] + '-' + str[1] + '-' + str[0];
     let startDate = new Date(startDate1);
-    itemOrder.endDate = "27/11/2021";
+    // itemOrder.endDate = "27/11/2021";
     let str2 = itemOrder.endDate.split("/");
     let endDate1 = str2[2] + '-' + str2[1] + '-' + str2[0];
     let endDate = new Date(endDate1);
@@ -312,9 +312,7 @@ export class AdditionsService {
     }
     itemOrder.quantity = itemOrder.quantity.toString();
     console.log('timmeeeeee')
-    return itemOrder
-
+    return itemOrder;
   }
-
 }
 

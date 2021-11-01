@@ -46,20 +46,20 @@ export class TransportFormComponent implements OnInit {
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-    
-     this.generalFormService.itemsList=[]
-    let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
-    this.generalFormService.details[itemIndex].inputProps.options= this.generalFormService.itemsList;
+
+    this.generalFormService.itemsList = []
+    let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+    this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     this.generalFormService.setDatesValues();
-    if (this.item != undefined && this.item != null || this.item.length==0) {
-      if(this.item.globalParameters.supplierId!= undefined){
+    if (this.item != undefined && this.item != null || this.item.length == 0) {
+      if (this.item.globalParameters.supplierId != undefined) {
         this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
       }
       this.generalFormService.setFormValues(this.item);
     }
-    else{
-      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+    else {
+      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
       this.clearFields();
     }
     this.setformTemplate();
@@ -104,25 +104,25 @@ export class TransportFormComponent implements OnInit {
     return tempArr;
   }
 
-  clearFields(){
-    let statHourIndex =this.generalFormService.details.findIndex(i => i.key==='startHour');
-    this.generalFormService.details[statHourIndex].value='';
-    let endHourIndex = this.generalFormService.details.findIndex(i => i.key==='endHour');
-    this.generalFormService.details[endHourIndex].value='';
+  clearFields() {
+    let statHourIndex = this.generalFormService.details.findIndex(i => i.key === 'startHour');
+    this.generalFormService.details[statHourIndex].value = '';
+    let endHourIndex = this.generalFormService.details.findIndex(i => i.key === 'endHour');
+    this.generalFormService.details[endHourIndex].value = '';
   }
 
   getSupplierList(orderTypeId, tripId, orderId) {
     this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
         console.log(response);
-        this.generalFormService.supplierList=[];
+        this.generalFormService.supplierList = [];
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        let index= this.generalFormService.details.findIndex(i => i.key==='supplierId');
-        this.generalFormService.details[index].inputProps.options= this.generalFormService.supplierList;
-        if(this.item.globalParameters.supplierId!= undefined)
-        this.form.controls["details"].get('supplierId').setValue(this.item.globalParameters.supplierId);
+        let index = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+        this.generalFormService.details[index].inputProps.options = this.generalFormService.supplierList;
+        if (this.item.globalParameters.supplierId != undefined)
+          this.form.controls["details"].get('supplierId').setValue(this.item.globalParameters.supplierId);
 
         //this.getSupplierByOrderType(orderTypeId);
       },
@@ -136,16 +136,14 @@ export class TransportFormComponent implements OnInit {
     this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
       response => {
         console.log(response);
-        if(this.form)
-         this.form.controls["details"].get('supplier').setValue(response.id.toString());
+        if (this.form)
+          this.form.controls["details"].get('supplier').setValue(response.id.toString());
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
 
   }
-
-
 
   public onSave(): void {
 
@@ -167,7 +165,7 @@ export class TransportFormComponent implements OnInit {
       t.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
 
-        if (key !== 'exitPoint'  && key !== 'scatterLocation') {
+        if (key !== 'exitPoint' && key !== 'scatterLocation') {
 
           if (key != 'startDate' && key != 'endDate') {
             t.globalParameters[key] = this.form.value.details[key];
@@ -186,11 +184,11 @@ export class TransportFormComponent implements OnInit {
         //   t[key] = this.form.value.details[key]
         // }
       });
-       t.globalParameters['startHour']= this.setDateTimeFormat(t.globalParameters.startDate,t.globalParameters.startHour);
-       //t.globalParameters['startHour'] = '2021-11-23T15:00:00';
-       t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate,t.globalParameters.endHour);
+      t.globalParameters['startHour'] = this.setDateTimeFormat(t.globalParameters.startDate, t.globalParameters.startHour);
+      //t.globalParameters['startHour'] = '2021-11-23T15:00:00';
+      t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate, t.globalParameters.endHour);
       //t.globalParameters['endHour'] = '2021-11-23T14:00:00';
-      
+
       t.globalParameters['comments'] = this.form.value.comments.comments;
       t.globalParameters.orderId = orderId;
       t.order.supplier.id = +this.form.value.details.supplierId;
@@ -198,72 +196,83 @@ export class TransportFormComponent implements OnInit {
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = 1;
 
-       this.generalFormService.addOrder(t,'היסעים');
+      this.generalFormService.addOrder(t, 'היסעים');
       this.form.disable({ emitEvent: false });
 
     }
   }
 
-  setDateTimeFormat(date,hour){
-     let str= date.split("T");
-     let hourFormat= str[0]+'T'+hour;
-      return hourFormat;
+  setDateTimeFormat(date, hour) {
+    let str = date.split("T");
+    let hourFormat = str[0] + 'T' + hour;
+    return hourFormat;
   }
 
-  
+  validationsTransport() {
+    if (this.generalFormService.originalItemList.length > 0) {
+      var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+    }
+    if (item.credit === 0) {
+      if (!item.name.includes("נסיעות")) {
+        if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: 'בהזמנת היסעים - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          })
+          return false;
+        }
+        if (this.form.value.details['pickUpLocation'] === null || this.form.value.details['pickUpLocation'] === "" || this.form.value.details['pickUpLocation'] === undefined) {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: 'בהזמנת היסעים - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          })
+          return false;
+        }
+      }
+      if (this.form.value.details['exitPoint'] === null || this.form.value.details['exitPoint'] === "" || this.form.value.details['exitPoint'] === undefined) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'בהזמנת היסעים - חובה לציין נקודת יציאה לחישוב', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+        return false;
+      }
+      if (this.form.value.details['scatterLocation'] === null || this.form.value.details['scatterLocation'] === "" || this.form.value.details['scatterLocation'] === undefined) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'בהזמנת היסעים - חובה לציין מקום פיזור', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+        return false;
+      }
+      if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'בהזמנת היסעים - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+        return false;
+      }
+      if (item.participantsLimit < this.form.value.details['peopleInTrip']) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'מספר המשתתפים גדול מסך המקומות באוטובוס - יש להוסיף אוטובוס נוסף', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+        return false;
+      }
+      var people = parseInt(this.form.value.details['peopleInTrip'])
+      console.log(people % item.participantsLimit)
+      console.log(Math.floor(people / item.participantsLimit))
+      if (((people % item.participantsLimit) > 0) && (Math.floor(people / item.participantsLimit) > 0)) {
+        if (Math.floor(people / item.participantsLimit) < parseInt(this.form.value.details['quantity'])) {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: 'מספר המשתתפים קטן מסך מספר המקומות בכל האוטובוסים יחד - שים לב שלא הוזמן אוטובוס מיותר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          })
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
-
-  // validationsTransport() {
-  //   if (this.generalFormService.originalItemList.length > 0) {
-  //     var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-  //   }
-  //   if (item.credit === 0) {
-  // if (!item.name.includes("נסיעות")) {
-  //   if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
-  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //       width: '500px',
-  //       data: { message: 'בהזמנת היסעים - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //     })
-  //     return false;
-  //   }
-  //   if (this.form.value.details['pickUpLocation'] === null || this.form.value.details['pickUpLocation'] === "" || this.form.value.details['pickUpLocation'] === undefined) {
-  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //       width: '500px',
-  //       data: { message: 'בהזמנת היסעים - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //     })
-  //     return false;
-  //   }
-  // }
-  // if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined) {
-  //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //     width: '500px',
-  //     data: { message: 'בהזמנת היסעים - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //   })
-  //   return false;
-  // }
-  // if (item.participantsLimit < this.form.value.details['peopleInTrip']) {
-  //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //     width: '500px',
-  //     data: { message: 'מספר המשתתפים גדול מסך המקומות באוטובוס - יש להוסיף אוטובוס נוסף', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //   })
-  //   return false;
-  // }
-  // var people = parseInt(this.form.value.details['peopleInTrip'])
-  // console.log(people % item.participantsLimit)
-  // console.log(Math.floor(people / item.participantsLimit))
-  // if (((people % item.participantsLimit) > 0) && (Math.floor(people / item.participantsLimit) > 0)) {
-  //   if (Math.floor(people / item.participantsLimit) < parseInt(this.form.value.details['quantity'])) {
-  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //       width: '500px',
-  //       data: { message: 'מספר המשתתפים קטן מסך מספר המקומות בכל האוטובוסים יחד - שים לב שלא הוזמן אוטובוס מיותר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //     })
-  //     return false;
-  //   }
-  // }
-  // }
-  //   }
-  //   return true;
-  // }
   public onEdit() {
     this.editMode = false;
     this.form.enable();
@@ -275,23 +284,23 @@ export class TransportFormComponent implements OnInit {
     console.log('I am form event');
     this.form.controls["details"].get('peopleInTrip').disable();
     //this.getSupplierByOrderType(1);
-   
+
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);
         this.generalFormService.getOrderItemBySupplierId(value);
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-       console.log(value)
+      console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
       let itemCost = Math.floor(item.cost);
       this.form.controls["details"].get('itemCost').patchValue(itemCost);
       console.log(this.form.value.details);
-       let form = this.additionsService.calculateBillings(this.form.value.details);
-       //this.form.controls["details"].get('billingCustomer').patchValue(this.form.value.details.billingCustomer);
-       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
-       
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      //this.form.controls["details"].get('billingCustomer').patchValue(this.form.value.details.billingCustomer);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+
     });
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
@@ -299,14 +308,8 @@ export class TransportFormComponent implements OnInit {
       let form = this.additionsService.calculateBillings(this.form.value.details);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
-      
-   });
 
+    });
     console.log(this.form)
   }
-
-
-  
-
-
 }

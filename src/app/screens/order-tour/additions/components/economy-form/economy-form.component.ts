@@ -20,7 +20,7 @@ export class EconomyFormComponent implements OnInit {
   constructor(private transportService: TransportService, private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
-  tripId : number;
+  tripId: number;
 
   public form: FormGroup;
   public columns: TableCellModel[];
@@ -32,29 +32,29 @@ export class EconomyFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
-     this.generalFormService.setDatesValues();
+    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.generalFormService.setDatesValues();
     this.getSupplierList(4, this.tripId, 0);
 
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-    this.generalFormService.itemsList=[]
-    let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
-    this.generalFormService.details[itemIndex].inputProps.options= this.generalFormService.itemsList;
+    this.generalFormService.itemsList = []
+    let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+    this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     if (this.item != undefined && this.item != null) {
-      if(this.item.globalParameters.supplierId!= undefined || this.item.length==0){
+      if (this.item.globalParameters.supplierId != undefined || this.item.length == 0) {
         this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
       }
       this.generalFormService.setFormValues(this.item);
     }
-    else{
-      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+    else {
+      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
       this.clearFields();
     }
     this.setformTemplate();
-   
+
   }
 
   setformTemplate() {
@@ -78,27 +78,27 @@ export class EconomyFormComponent implements OnInit {
     let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
     tempArr[endHourIndex].label = 'שעת סיום';
     let locationIndex = tempArr.findIndex(el => el.key === 'location');
-    tempArr[locationIndex].label =  'מיקום';
+    tempArr[locationIndex].label = 'מיקום';
     return tempArr;
   }
 
-  
-   clearFields(){
-    let statHourIndex =this.generalFormService.details.findIndex(i => i.key==='startHour');
-    this.generalFormService.details[statHourIndex].value='';
-    let endHourIndex = this.generalFormService.details.findIndex(i => i.key==='endHour');
-    this.generalFormService.details[endHourIndex].value='';
+
+  clearFields() {
+    let statHourIndex = this.generalFormService.details.findIndex(i => i.key === 'startHour');
+    this.generalFormService.details[statHourIndex].value = '';
+    let endHourIndex = this.generalFormService.details.findIndex(i => i.key === 'endHour');
+    this.generalFormService.details[endHourIndex].value = '';
   }
   getSupplierList(orderTypeId, tripId, orderId) {
     this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
         console.log(response);
-        this.generalFormService.supplierList=[];
+        this.generalFormService.supplierList = [];
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        let index= this.generalFormService.details.findIndex(i => i.key==='supplierId');
-        this.generalFormService.details[index].inputProps.options= this.generalFormService.supplierList;
+        let index = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+        this.generalFormService.details[index].inputProps.options = this.generalFormService.supplierList;
         //this.getSupplierByOrderType(orderTypeId);
       },
       error => console.log(error),       // error
@@ -111,8 +111,8 @@ export class EconomyFormComponent implements OnInit {
     this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
       response => {
         console.log(response);
-        if(this.form)
-         this.form.controls["details"].get('supplier').setValue(response.id.toString());
+        if (this.form)
+          this.form.controls["details"].get('supplier').setValue(response.id.toString());
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -125,9 +125,9 @@ export class EconomyFormComponent implements OnInit {
       // if (!this.validationsEconomy()) { return; }
       this.editMode = true;
       let orderId;
-      if(this.generalFormService.economyOrderList.length>0){
-        orderId= this.generalFormService.economyOrderList[0].order.orderId
-     }
+      if (this.generalFormService.economyOrderList.length > 0) {
+        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      }
       var t = {} as EconomyOrder;
       t.globalParameters = {} as OrderItemCommonDetails;
       t.order = {} as Order;
@@ -136,37 +136,37 @@ export class EconomyFormComponent implements OnInit {
       t.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
         if (key !== 'regularDishesNumber' && key !== 'vegetarianDishesNumber' && key !== 'veganDishesNumber' && key !== 'supplier') {
-          if( key !='startDate' && key!='endDate'){
+          if (key != 'startDate' && key != 'endDate') {
             t.globalParameters[key] = this.form.value.details[key]
-          } else{
-            if(key=='startDate'){
-              t.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
-             }
-             if(key=='endDate'){
-              t.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
-             }
+          } else {
+            if (key == 'startDate') {
+              t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+            }
+            if (key == 'endDate') {
+              t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+            }
           }
         }
-       
+
       });
-      t.globalParameters['startHour']= this.setDateTimeFormat(t.globalParameters.startDate,t.globalParameters.startHour);
-      t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate,t.globalParameters.endHour);
+      t.globalParameters['startHour'] = this.setDateTimeFormat(t.globalParameters.startDate, t.globalParameters.startHour);
+      t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate, t.globalParameters.endHour);
       t.globalParameters['comments'] = this.form.value.comments.comments;
-      t.globalParameters.orderId=orderId;
+      t.globalParameters.orderId = orderId;
       t.order.supplier.id = +this.form.value.details.supplierId;
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'כלכלה';
       t.order.orderType.id = 4;
-      this.generalFormService.addOrder(t,'כלכלה');
+      this.generalFormService.addOrder(t, 'כלכלה');
       this.form.disable({ emitEvent: false });
     }
   }
 
-   setDateTimeFormat(date,hour){
-    let str= date.split("T");
-    let hourFormat= str[0]+'T'+hour;
-     return hourFormat;
-   }
+  setDateTimeFormat(date, hour) {
+    let str = date.split("T");
+    let hourFormat = str[0] + 'T' + hour;
+    return hourFormat;
+  }
 
   validationsEconomy() {
     if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
@@ -183,11 +183,64 @@ export class EconomyFormComponent implements OnInit {
       })
       return false;
     }
-
+    if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'בהזמנת כלכלה - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    if (this.form.value.details['peopleInTrip'] !== this.form.value.details['quantity']) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'בהזמנת כלכלה - מספר המשתתפים חייב להיות זהה לכמות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    let str = this.form.value.details['startDate'].split("/");
+    let startDate1 = str[2] + '-' + str[1] + '-' + str[0];
+    let startDate = new Date(startDate1);
+    let str2 = this.form.value.details['startDate'].split("/");
+    let startDate2 = str2[2] + '-' + str2[1] + '-' + str2[0];
+    let endDate = new Date(startDate2);
+    var DaysArray = this.getDaysArray(startDate, endDate);
+    if (this.generalFormService.originalItemList.length > 0) {
+      var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+    }
+    var flag = false;
+    DaysArray.forEach(day => { if (day.getDay() === 6) { flag = true; } });
+    if (flag && !item.name.includes("שבת") && !item.name.includes("סעודה שלישית")) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'הטיול חל ביום שבת - יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    if (flag === false && !item.name.includes("שבת") && !item.name.includes("סעודה שלישית")) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'הטיול אינו חל ביום שבת - נבחרה מנה המתאימה ליום שבת! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    flag = false;
+    DaysArray.forEach(day => { if (day.getDay() === 5) { flag = true; } });
+    if (flag === false && !item.name.includes("שישי")) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'הטיול אינו חל ביום שישי - נבחרה מנה המתאימה ליום שישי! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
     return true;
   }
 
-
+  getDaysArray = function (start, end) {
+    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+      arr.push(new Date(dt));
+    }
+    return arr;
+  };
   public onEdit() {
     this.editMode = false;
     this.form.enable();
@@ -203,25 +256,25 @@ export class EconomyFormComponent implements OnInit {
         console.log(value);
         this.generalFormService.getOrderItemBySupplierId(value);
       });
-     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-       console.log(value)
+    this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
       let itemCost = Math.floor(item.cost);
       this.form.controls["details"].get('itemCost').patchValue(itemCost);
-       console.log(this.form.value.details);
-       let form = this.additionsService.calculateBillings(this.form.value.details);
-       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
-       
+      console.log(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+
     });
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);   
-   });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+    });
 
     console.log(this.form)
-   
+
   }
 }
