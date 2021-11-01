@@ -2677,14 +2677,14 @@ components:
          totalHours :
              type: number
              example: 5
-        #  siteCode:
-        #    type: integer
-        #    example: 1
+         siteCode:
+           type: integer
+           example: 1
          siteAddress:
              type: string
              example: 'http://'
          isCustomerOrder:
-              type: boolean
+              type: string
               example: true
     EconomyOrder :
         type: object
@@ -2720,9 +2720,10 @@ components:
             guideName:
               type: string
               example: dan
-            languageGide:
-              type: string
-              example: english
+            languageGuidance:
+              type: integer
+              description: language code
+              example: 1
             guideInstructions:
               type: string
               example: 'kk'

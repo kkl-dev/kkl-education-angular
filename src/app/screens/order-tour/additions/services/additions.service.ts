@@ -65,7 +65,7 @@ export class AdditionsService {
 
   private itemSubject = new BehaviorSubject<any[]>([])
   public item$: Observable<any[]> = this.itemSubject.asObservable();
-  public tempOrderReduce = new BehaviorSubject<any>(null)
+ // public tempOrderReduce = new BehaviorSubject<any>(null)
 
   public emitItem(item: any[]) {
     this.itemSubject.next(item)
@@ -88,9 +88,9 @@ export class AdditionsService {
   // public emitLocations(locations: LocationModel[]) {
   //   this.locationsSubject.next(locations)
   // }
-  public sendtempOrderReduce(temp) {
-    this.tempOrderReduce.next(temp);
-  }
+  // public updateTempOrderReduce(temp) {
+  //   this.tempOrderReduce.next(temp);
+  // }
 
 
 

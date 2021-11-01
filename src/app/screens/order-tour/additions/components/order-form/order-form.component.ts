@@ -14,6 +14,7 @@ import { SquadAssembleService } from '../../../squad-assemble/services/squad-ass
 })
 export class OrderFormComponent implements OnInit {
 
+  // for securing or musicactivation order
   constructor(private transportService: TransportService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public order: any;
   @Input() public editMode: boolean;

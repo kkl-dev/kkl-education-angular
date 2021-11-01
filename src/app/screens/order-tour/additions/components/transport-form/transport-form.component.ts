@@ -40,6 +40,7 @@ export class TransportFormComponent implements OnInit {
   ngOnInit(): void {
 
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.generalFormService.clearFormFields();
     this.getSupplierList(1, this.tripId, 0);
     //this.getSupplierList(1, 5300, 0);
     //this.generalFormService.getSupplierList(1,this.tripId,0);
@@ -51,7 +52,7 @@ export class TransportFormComponent implements OnInit {
     let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
     this.generalFormService.details[itemIndex].inputProps.options= this.generalFormService.itemsList;
     this.generalFormService.setDatesValues();
-    if (this.item != undefined && this.item != null || this.item.length==0) {
+    if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined){
         this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
       }
@@ -60,22 +61,8 @@ export class TransportFormComponent implements OnInit {
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
-      this.clearFields();
     }
     this.setformTemplate();
-
-    // let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    // // this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
-    // // let transportQuestions = this.generalFormService.questionGroups[index].questions.concat(this.generalFormService.transport);
-    // // this.generalFormService.questionGroups[index].questions=transportQuestions;
-    // //option2
-    // let detailsArr= this.generalFormService.details;
-    // detailsArr= this.changeLabels(detailsArr);
-    // let transportQuestions = detailsArr.concat(this.generalFormService.transport);
-    //  this.generalFormService.questionGroups[index].questions = transportQuestions;
-    // this.formTemplate.questionsGroups=this.generalFormService.questionGroups;
-    // console.log('group transport is: ',this.formTemplate.questionsGroups);
-
   }
 
   setformTemplate() {
@@ -104,12 +91,7 @@ export class TransportFormComponent implements OnInit {
     return tempArr;
   }
 
-  clearFields(){
-    let statHourIndex =this.generalFormService.details.findIndex(i => i.key==='startHour');
-    this.generalFormService.details[statHourIndex].value='';
-    let endHourIndex = this.generalFormService.details.findIndex(i => i.key==='endHour');
-    this.generalFormService.details[endHourIndex].value='';
-  }
+ 
 
   getSupplierList(orderTypeId, tripId, orderId) {
     this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
@@ -124,7 +106,7 @@ export class TransportFormComponent implements OnInit {
         if(this.item.globalParameters.supplierId!= undefined)
         this.form.controls["details"].get('supplierId').setValue(this.item.globalParameters.supplierId);
 
-        //this.getSupplierByOrderType(orderTypeId);
+        this.getSupplierByOrderType(orderTypeId);
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -158,7 +140,7 @@ export class TransportFormComponent implements OnInit {
       if (this.generalFormService.transportOrderList.length > 0) {
         orderId = this.generalFormService.transportOrderList[0].order.orderId
       }
-      var t = {} as TransportOrder;
+      let t = {} as TransportOrder;
       t.globalParameters = {} as OrderItemCommonDetails;
       t.order = {} as Order;
       if (orderId != undefined)
@@ -182,9 +164,9 @@ export class TransportFormComponent implements OnInit {
           }
 
         }
-        // else if (key !== "supplier") {
-        //   t[key] = this.form.value.details[key]
-        // }
+        else  {
+         // t[key] = this.form.value.details[key]
+        }
       });
        t.globalParameters['startHour']= this.setDateTimeFormat(t.globalParameters.startDate,t.globalParameters.startHour);
        //t.globalParameters['startHour'] = '2021-11-23T15:00:00';
@@ -197,8 +179,10 @@ export class TransportFormComponent implements OnInit {
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = 1;
+      if(this.item.globalParameters.tempOrderIdentity!= undefined)
+       t.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
 
-       this.generalFormService.addOrder(t,'היסעים');
+       this.generalFormService.addOrder(t,t.order.orderType.id);
       this.form.disable({ emitEvent: false });
 
     }

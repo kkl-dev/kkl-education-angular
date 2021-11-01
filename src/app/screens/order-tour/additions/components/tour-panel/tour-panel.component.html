@@ -3,7 +3,8 @@
     <!-- <app-typography [size]="18" [bold]="600" color="primary" *ngIf="item.globalParameters?.startDate"> -->
     <app-typography  [size]="18" [bold]="600" color="primary"  *ngIf="item" >
       <!-- יום {{ i }} : {{ item.globalParameters.startDate | date: "M/d/yy" }} -->
-      יום {{ i }} : {{ item.globalParameters.startDate }}
+      <!-- יום {{ i }} : {{ item.globalParameters.startDate }} -->
+      יום {{ i }} : {{ date }}
     </app-typography>
   </div>
   <div class="tour-days">
@@ -40,11 +41,18 @@
         <app-transport-form *ngIf="orderType==1" [item]="item" [editMode]="editMode"  content>
         </app-transport-form>
 
+        <app-economy-form *ngIf="orderType==3" [item]="item" [editMode]="editMode" content>
+        </app-economy-form>
+       
         <app-economy-form *ngIf="orderType==4" [item]="item" [editMode]="editMode" content>
         </app-economy-form>
+        <app-economy-form *ngIf="orderType==6" [item]="item" [editMode]="editMode" content>
+        </app-economy-form>
+        <app-economy-form *ngIf="orderType==7" [item]="item" [editMode]="editMode" content>
+        </app-economy-form>
 
-        <!-- <app-order-form [order]="item" [editMode]="editMode" content>
-        </app-order-form> -->
+        <app-order-form [order]="item" *ngIf="orderType==10||orderType==2" [editMode]="editMode" content>
+        </app-order-form>
         <!-- <app-economy-form [order]="item" [editMode]="editMode" content>
         </app-economy-form> -->
         <!-- <app-transport-details *ngIf="editMode" content></app-transport-details> -->
