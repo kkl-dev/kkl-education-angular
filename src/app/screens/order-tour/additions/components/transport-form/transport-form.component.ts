@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder } from 'src/app/open-api';
@@ -13,22 +13,29 @@ import { MatDialog } from '@angular/material/dialog';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { keyframes } from '@angular/animations';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-transport-form',
   templateUrl: './transport-form.component.html',
   styleUrls: ['./transport-form.component.scss'],
 })
-export class TransportFormComponent implements OnInit {
+export class TransportFormComponent implements OnInit , OnDestroy {
 
   // @Input() public transport: TransportModel;
   //@Input() public transport: TransportOrder;
   @Input() public item: any;
   @Input() public editMode: boolean;
+  @Input() orderType: number;
   public form: FormGroup;
   public columns: TableCellModel[];
   tripId: number;
   originalItemList = [];
+  supplierId : number;
+  itemId: number;
+  supplierListSub: Subscription;
+  settlementSub : Subscription;
+  supplierSub: Subscription
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -39,11 +46,17 @@ export class TransportFormComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // if(this.squadAssembleService.tripInfofromService ! = undefined)
+    // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    // else{
+    //   let retrievedObject = localStorage.getItem('tripInfofromService');
+    //   let retrievedObj = JSON.parse(retrievedObject);
+    //    this.tripId= retrievedObj.trip.id;
+    // }
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.generalFormService.clearFormFields();
-    this.getSupplierList(1, this.tripId, 0);
-    //this.getSupplierList(1, 5300, 0);
-    //this.generalFormService.getSupplierList(1,this.tripId,0);
+    this.getSupplierList(this.orderType, this.tripId, 0);
+    //this.getSettelments();
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
@@ -54,6 +67,7 @@ export class TransportFormComponent implements OnInit {
     this.generalFormService.setDatesValues();
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined){
+        this.supplierId= this.item.globalParameters.supplierId;
         this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
       }
       this.generalFormService.setFormValues(this.item);
@@ -94,9 +108,20 @@ export class TransportFormComponent implements OnInit {
   }
 
  
-
+  getSettelments(){
+      this.settlementSub= this.orderService.getSettlements().subscribe(res=>{
+         res.forEach(element=>{
+          this.generalFormService.settlementList.push({ label: element.name, value: element.id.toString() })
+        })
+        let exitLocationIndex = this.generalFormService.transport.findIndex(i => i.key === 'exitLocation');
+        this.generalFormService.transport[exitLocationIndex].inputProps.options = this.generalFormService.supplierList;
+        console.log(res);
+      },(err)=>{
+        console.log(err);
+      })
+  }
   getSupplierList(orderTypeId, tripId, orderId) {
-    this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+    this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
@@ -105,10 +130,8 @@ export class TransportFormComponent implements OnInit {
         });
         let index = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
         this.generalFormService.details[index].inputProps.options = this.generalFormService.supplierList;
-        if (this.item.globalParameters.supplierId != undefined)
-          this.form.controls["details"].get('supplierId').setValue(this.item.globalParameters.supplierId);
-
-        this.getSupplierByOrderType(orderTypeId);
+        // if (this.item.globalParameters.supplierId != undefined)
+        //   this.form.controls["details"].get('supplierId').setValue(this.item.globalParameters.supplierId)
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -116,12 +139,21 @@ export class TransportFormComponent implements OnInit {
   }
 
   getSupplierByOrderType(orderTypeId) {
+    // let centerFieldId 
+    // if(this.squadAssembleService.tripInfofromService ! = undefined){
+    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    // }  
+    // else{
+    //   let retrievedObject = localStorage.getItem('tripInfofromService');
+    //   let retrievedObj = JSON.parse(retrievedObject);
+    //   centerFieldId= retrievedObj.trip.centerField.id;
+    // }
     let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
+    this.supplierSub= this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
       response => {
         console.log(response);
-        if (this.form)
-          this.form.controls["details"].get('supplier').setValue(response.id.toString());
+        this.supplierId= response.id;
+          this.form.controls["details"].get('supplierId').setValue(response.id.toString());
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -264,16 +296,24 @@ export class TransportFormComponent implements OnInit {
     this.form.enable();
   }
 
+   
   public onValueChange(event) {
 
     this.form = event;
+    let isPristine=  this.form.pristine;
+    console.log('I am form Event');
+    if(isPristine==true && this.supplierId == undefined){
+      this.getSupplierByOrderType(this.orderType);
+    }
+    // else if(isPristine==true){
+    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
+    // }
     console.log('I am form event');
     this.form.controls["details"].get('peopleInTrip').disable();
-    //this.getSupplierByOrderType(1);
-
+    
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
-        console.log(value);
+        console.log('supplier changed:',value);
         this.generalFormService.getOrderItemBySupplierId(value);
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
@@ -297,5 +337,11 @@ export class TransportFormComponent implements OnInit {
 
     });
     console.log(this.form)
+  }
+   
+  ngOnDestroy() {
+    if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
+    if ( this.supplierSub)  { this.supplierSub.unsubscribe(); }
+    if ( this.settlementSub)  { this.settlementSub.unsubscribe(); }
   }
 }

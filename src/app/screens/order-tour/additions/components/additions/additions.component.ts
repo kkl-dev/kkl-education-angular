@@ -43,6 +43,15 @@ export class AdditionsComponent implements OnInit {
     private generalFormService: GeneralFormService) { }
 
   ngOnInit(): void {
+    // if(this.squadAssembleService.tripInfofromService ! = undefined)
+    // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
+    // else{
+    //   let retrievedObject = localStorage.getItem('tripInfofromService');
+    //   let retrievedObj = JSON.parse(retrievedObject);
+    //    this.tour.id= retrievedObj.trip.id;
+    //    console.log('retrievedObject: ', retrievedObj);
+    // }
+
     this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
     this.getOrders();
     this.getTempOrder();
@@ -142,12 +151,12 @@ export class AdditionsComponent implements OnInit {
         this.items = orderList;
       }
     }
-    if (this.tempOrderReduce[1].length > 10) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-    }
+    // if (this.tempOrderReduce[1].length > 10) {
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //   })
+    // }
   }
   change(event) {
     switch (event) {

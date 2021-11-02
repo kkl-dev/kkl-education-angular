@@ -5,7 +5,7 @@ import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextarea } from 'src/app/components/form/logic/question-textarea';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { OrderService, TransportOrder, OrderEvent, EconomyOrder, OrderItemCommonDetails, Order, GuidanceOrder, HostingOrder, SiteOrder, SecuringOrder, MusicActivationOrder } from 'src/app/open-api';
+import { OrderService, TransportOrder, OrderEvent, EconomyOrder, OrderItemCommonDetails, Order, GuidanceOrder, HostingOrder, SiteOrder, SecuringOrder, MusicActivationOrder, Settlement } from 'src/app/open-api';
 import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +25,8 @@ export class GeneralFormService {
   public siteOrderList : SiteOrder[] =[];
   public securingOrderList: SecuringOrder[] =[];
   public musicOrderList: MusicActivationOrder[]=[];
+  public settlementList=[];
+  public languageList =[];
   tripOrdersList :OrderEvent[];
   public tempOrderReduce = new BehaviorSubject<any>(null)
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
@@ -182,7 +184,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-      
+        options :this.settlementList
       },
     }),
     
@@ -233,7 +235,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-      
+        options: this.languageList
       },
     }),
     new QuestionTextbox({
