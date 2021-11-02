@@ -65,9 +65,9 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-     this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
+    this.generalFormService.questionGroups[index].questions = this.generalFormService.details;
     //let detailsArr = this.generalFormService.details;
-     let detailsArr = this.generalFormService.questionGroups[index].questions;
+    let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
     let economyQuestions = detailsArr.concat(this.generalFormService.economy);
     this.generalFormService.questionGroups[index].questions = economyQuestions;
@@ -126,6 +126,7 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
 
   public onSave(): void {
     if (this.form) {
+      if (!this.additionsService.globalValidations(this.form)) { return; }
       if (!this.validationsEconomy()) { return; }
       this.editMode = true;
       let orderId;
@@ -198,7 +199,7 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
       })
       return false;
     }
-    if (this.form.value.details['peopleInTrip'] !== this.form.value.details['quantity']) {
+    if (this.form.value.details['peopleInTrip'] !== +this.form.value.details['quantity']) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
         data: { message: 'בהזמנת כלכלה - מספר המשתתפים חייב להיות זהה לכמות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
@@ -224,7 +225,7 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
       })
       return false;
     }
-    if (flag === false && !item.name.includes("שבת") && !item.name.includes("סעודה שלישית")) {
+    if (flag === false && item.name.includes("שבת") && item.name.includes("סעודה שלישית")) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
         data: { message: 'הטיול אינו חל ביום שבת - נבחרה מנה המתאימה ליום שבת! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
