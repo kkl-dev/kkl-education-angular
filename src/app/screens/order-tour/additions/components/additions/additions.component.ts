@@ -44,6 +44,7 @@ export class AdditionsComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     if (this.squadAssembleService.tripInfofromService) {
       this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
       this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
@@ -57,7 +58,7 @@ export class AdditionsComponent implements OnInit {
       console.log('retrievedObject: ', retrievedObj);
     }
 
-    // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
+
     this.getOrders();
     this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));

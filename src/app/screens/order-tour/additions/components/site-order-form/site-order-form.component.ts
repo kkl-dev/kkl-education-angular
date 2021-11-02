@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+
+import { Component, OnInit ,Input,OnDestroy} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
@@ -9,19 +10,24 @@ import { GeneralFormService } from '../../services/general-form.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-site-order-form',
   templateUrl: './site-order-form.component.html',
   styleUrls: ['./site-order-form.component.scss']
 })
-export class SiteOrderFormComponent implements OnInit {
+export class SiteOrderFormComponent implements OnInit,OnDestroy {
 
   constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
-  tripId: number;
-
+  @Input() orderType: number;
+  tripId : number;
+  supplierId : number;
+  itemId: number;
+  supplierListSub: Subscription;
+  supplierSub: Subscription
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -33,8 +39,9 @@ export class SiteOrderFormComponent implements OnInit {
   ngOnInit(): void {
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.generalFormService.clearFormFields();
-    this.generalFormService.setDatesValues();
-    this.getSupplierList(3, this.tripId, 0);
+     this.generalFormService.setDatesValues();
+    this.getSupplierList(this.orderType, this.tripId, 0);
+
 
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
@@ -43,7 +50,8 @@ export class SiteOrderFormComponent implements OnInit {
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     if (this.item != undefined && this.item != null) {
-      if (this.item.globalParameters.supplierId != undefined) {
+      if(this.item.globalParameters.supplierId!= undefined ){
+        this.supplierId= this.item.globalParameters.supplierId;
         this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
       }
       this.generalFormService.setFormValues(this.item);
@@ -81,16 +89,14 @@ export class SiteOrderFormComponent implements OnInit {
   }
 
   getSupplierList(orderTypeId, tripId, orderId) {
-    this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+    this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
-        console.log(response);
-        this.generalFormService.supplierList = [];
+        this.generalFormService.supplierList=[];
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        let index = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        this.generalFormService.details[index].inputProps.options = this.generalFormService.supplierList;
-        //this.getSupplierByOrderType(orderTypeId);
+        let index= this.generalFormService.details.findIndex(i => i.key==='supplierId');
+        this.generalFormService.details[index].inputProps.options= this.generalFormService.supplierList;
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -99,11 +105,11 @@ export class SiteOrderFormComponent implements OnInit {
 
   getSupplierByOrderType(orderTypeId) {
     let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
+    this.supplierSub= this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
       response => {
         console.log(response);
-        if (this.form)
-          this.form.controls["details"].get('supplier').setValue(response.id.toString());
+        this.supplierId= response.id;
+          this.form.controls["details"].get('supplierId').setValue(response.id.toString());
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -188,9 +194,13 @@ export class SiteOrderFormComponent implements OnInit {
 
   public onValueChange(event) {
     this.form = event;
-    console.log('I am form event');
-    //this.getSupplierByOrderType(1);
-
+    let isPristine=  this.form.pristine;
+    if(isPristine==true && this.supplierId == undefined){
+      this.getSupplierByOrderType(this.orderType);
+    }
+    // else if(isPristine==true){
+    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
+    // }
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);
@@ -218,6 +228,9 @@ export class SiteOrderFormComponent implements OnInit {
 
   }
 
-
+  ngOnDestroy() {
+    if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
+    if ( this.supplierSub)  { this.supplierSub.unsubscribe(); }
+  }
 
 }
