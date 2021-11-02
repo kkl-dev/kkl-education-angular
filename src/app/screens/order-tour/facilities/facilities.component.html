@@ -64,15 +64,22 @@
             </div>
             <div class="info-card" id="activities">
                 <ng-container *ngFor="let item of activitiesArray; let i = index">
+                    <!-- <app-info-card class="facilities-items-item" [item]="item" *ngIf='5 > i'
+                        (click)="updateChosenActivity(item) ; openModal('activity')">
+                    </app-info-card> -->
                     <app-info-card class="facilities-items-item" [item]="item" *ngIf='5 > i'
                         (click)="updateChosenActivity(item) ; openModal('activity')">
                     </app-info-card>
                 </ng-container>
                 <ng-container *ngFor="let item of activitiesArray; let i = index">
-                    <app-info-card class="facilities-items-item" [item]="item"
+                    <!-- <app-info-card class="facilities-items-item" [item]="item"
                         *ngIf='i >= 5 && hiddenElements.activities'
                         (click)="updateChosenActivity(item) ; openModal('activity')">
-                    </app-info-card>
+                    </app-info-card> -->
+                    <app-info-card class="facilities-items-item" [item]="item"
+                    *ngIf='i >= 5 && hiddenElements.activities'
+                    (click)="updateChosenActivity(item) ; openModal('activity')">
+                </app-info-card>
                 </ng-container>
             </div>
             <p class="full-list"
@@ -84,16 +91,10 @@
                 <p>פעילויות קרובות</p>
             </div>
             <div class="card-container">
-<<<<<<< HEAD
                 <!-- <app-activities-card *ngFor="let activity of upComingActivitiesArray" [obj]='activity'
                  (buttonClicked)="updateChosenUpComingActivity(activity) ; openModal('activity')"></app-activities-card> -->
                  <app-activities-card *ngFor="let activity of tripActivitiesInfo" [obj]='activity'
                  (buttonClicked)="updateChosenUpComingActivity(activity) ; openModal('activity')"></app-activities-card>
-=======
-                <app-activities-card *ngFor="let activity of upComingActivitiesArray" [obj]='activity'
-                    (buttonClicked)="updateChosenUpComingActivity(activity) ; openModal('activity')">
-                </app-activities-card>
->>>>>>> main-dev
             </div>
             <!-- <app-pagination pagesCount='5' currentPage='1'></app-pagination> -->
             <app-pagination [pagesCount]="pagesAmount" currentPage='1' (newPage)="newPageEmit($event)"></app-pagination>

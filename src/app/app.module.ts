@@ -130,21 +130,13 @@ import { AddActivityComponent } from './screens/order-tour/facilities/add-activi
 import { ModalComponent } from './components/modal/modal.component';
 import { OutsideDirective } from './utilities/directivs/outside.directive';
 import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping-map.component';
-<<<<<<< HEAD
-
-=======
 import { DynamicComponent } from './components/dynamic/dynamic.component';
->>>>>>> main-dev
 import { CalendarCardComponent } from './screens/order-tour/facilities/calendar/calendar-card/calendar-card.component';
-
 import { FormDetailsComponent } from './screens/order-tour/additions/components/form-details/form-details.component';
 import { OrderFormComponent } from './screens/order-tour/additions/components/order-form/order-form.component';
 import { EconomyFormComponent } from './screens/order-tour/additions/components/economy-form/economy-form.component';
 import { GudianceFormComponent } from './screens/order-tour/additions/components/gudiance-form/gudiance-form.component';
 import { HostingFormComponent } from './screens/order-tour/additions/components/hosting-form/hosting-form.component';
-
-
-
 
 
 FullCalendarModule.registerPlugins([
@@ -266,20 +258,13 @@ FullCalendarModule.registerPlugins([
     SquadGroupGenderComponent,
     OutsideDirective,
     SleepingMapComponent,
-<<<<<<< HEAD
-
     CalendarCardComponent,
-
     FormDetailsComponent,
     OrderFormComponent,
     EconomyFormComponent,
     GudianceFormComponent,
-    HostingFormComponent
-
-=======
-  
+    HostingFormComponent,
     DynamicComponent
->>>>>>> main-dev
   ],
   imports: [
     BrowserModule,

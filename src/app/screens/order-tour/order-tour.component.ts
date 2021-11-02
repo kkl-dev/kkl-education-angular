@@ -14,6 +14,7 @@ import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm
 import { MatDialog } from '@angular/material/dialog';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 
 @Component({
@@ -50,10 +51,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private additionsService: AdditionsService,
     private _dialog: MatDialog,
-    private _facilitiesService : FacilitiesService,
-    private  _facilitiesConvertingService : FacilitiesConvertingService
-  
-
+    private _facilitiesService: FacilitiesService,
+    private _facilitiesConvertingService: FacilitiesConvertingService,
+    private userDataService: UserDataService
   ) { }
 
   ngOnInit(): void {
@@ -134,25 +134,25 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.createTrip();
     }
     if (step.label == 'לינה') {
-      let flag= this.syncToTripInfo();
-      if(flag==false){
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
+      let flag = this.syncToTripInfo();
+      if (flag == false) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'נא מלא את שדות החובה בטופס' , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })  
-        step.path= 'squad-assemble';
+          data: { message: 'נא מלא את שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+        step.path = 'squad-assemble';
         this.router.navigateByUrl(`/education/order-tour/${step.path}`)
-         return;
-      } 
-      else{
-        if(this.tripService.isOneDayTrip){
-          step.path="facilities";
+        return;
+      }
+      else {
+        if (this.tripService.isOneDayTrip) {
+          step.path = "facilities";
         }
-      } 
+      }
     }
     this.router.navigateByUrl(`/education/order-tour/${step.path}`);
     this.updateStepsStatus(step);
-   
+
   }
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
@@ -161,9 +161,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
- 
+
   syncToTripInfo() {
-    let flag= false;
+    let flag = false;
     let scheduleForm;
     let detalisForm;
     let ageGroupForm;
@@ -176,9 +176,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
         if (this.squadAssemble.formsArray[i].controls.centerField) {
           console.log('I am schedule');
-          if(this.squadAssemble.formsArray[i].status== 'INVALID'){
+          if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
-            scheduleForm =false
+            scheduleForm = false
           }
           this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[i].get('tripDescription').value;
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
@@ -186,26 +186,26 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.squadAssemble.tripInfo.centerField.linkSite = '';
           let tripDates = this.squadAssemble.formsArray[i].get('dates').value;
           let subTripDates = tripDates.split("-");
-           startDate = subTripDates[0];
+          startDate = subTripDates[0];
           let tripStartArr = startDate.split("/");
           let tripStart = tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
           this.squadAssemble.tripInfo.tripStart = tripStart;
-           endDate = subTripDates[1];
+          endDate = subTripDates[1];
           let tripEndingArr = endDate.split("/");
           let tripEnding = tripEndingArr[2] + '-' + tripEndingArr[1] + '-' + tripEndingArr[0];
           this.squadAssemble.tripInfo.tripEnding = tripEnding;
-          this.squadAssemble.tripInfo.commentManager= this.squadAssemble.formsArray[i].get('commentManager').value;
-          let dates= { from : startDate, till: endDate}
-          this.tripService.sleepingDates=dates;
-           console.log('sleppingDates from orderTour is:',dates);
-           scheduleForm= true;
+          this.squadAssemble.tripInfo.commentManager = this.squadAssemble.formsArray[i].get('commentManager').value;
+          let dates = { from: startDate, till: endDate }
+          this.tripService.sleepingDates = dates;
+          console.log('sleppingDates from orderTour is:', dates);
+          scheduleForm = true;
         }
         if (this.squadAssemble.formsArray[i].controls.attribute) {
 
           console.log('I am details');
-          if(this.squadAssemble.formsArray[i].status== 'INVALID'){
+          if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
-            detalisForm=false
+            detalisForm = false
           }
           this.squadAssemble.tripInfo.insideCenterFieldId = parseInt(this.squadAssemble.formsArray[i].get('insideCenterFieldId').value);
           this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
@@ -213,14 +213,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
           var activityType = this.squadAssemble.formsArray[i].get('activityType').value;
           this.squadAssemble.tripInfo.activity = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(activityType))[0];
-          detalisForm= true;
+          detalisForm = true;
         }
 
         if (this.squadAssemble.formsArray[i].controls.ageGroup) {
           console.log('I am ageGroup');
-          if(this.squadAssemble.formsArray[i].status== 'INVALID'){
+          if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
-            ageGroupForm=false
+            ageGroupForm = false
           }
           var ageGroup = this.squadAssemble.formsArray[i].get('ageGroup').value;
           this.squadAssemble.tripInfo.ageGroup = this.tripService.ageGroupOriginal.filter(el => el.id === parseInt(ageGroup))[0];
@@ -234,53 +234,53 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[i].get('numGuides').value;
           // if(this.squadAssemble.formsArray[i].get('medics').value)
           // this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[i].get('medics').value;
-          ageGroupForm= true;
+          ageGroupForm = true;
         }
         if (this.squadAssemble.formsArray[i].controls.contactName) {
           console.log('I am contact');
-          if(this.squadAssemble.formsArray[i].status== 'INVALID'){
+          if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
-            ContactForm=false
+            ContactForm = false
           }
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
-          ContactForm= true;
+          ContactForm = true;
         }
         // if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
         //   console.log('I am budget');
         //   this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget             
         // }
       }
-      
+
       this.squadAssemble.tripInfo.budget = this.tripService.budgetByParam.budget;
       //if(this.squadAssemble.tripInfo.budget!= undefined)
-      budgetFlag=true;
-     
-       this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
-       if (this.squadAssemble.tripInfo.customer.id != undefined)
-       customerFlag= true;
-      
-       if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
-       flag=true
-       else
-       return flag;
-      if(this.squadAssemble.payerCustomer.name!= undefined)
-      this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
-      this.squadAssemble.tripInfo.generateTime='2021-10-10';
+      budgetFlag = true;
+
+      this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
+      if (this.squadAssemble.tripInfo.customer.id != undefined)
+        customerFlag = true;
+
+      if (scheduleForm == true && ContactForm == true && ageGroupForm == true && detalisForm == true && customerFlag == true && budgetFlag == true)
+        flag = true
+      else
+        return flag;
+      if (this.squadAssemble.payerCustomer.name != undefined)
+        this.squadAssemble.tripInfo.customerPay = this.squadAssemble.payerCustomer;
+      this.squadAssemble.tripInfo.generateTime = '2021-10-10';
       this.squadAssemble.tripInfo.userName = 'שחר גל';
-       if(startDate==endDate ){
-          this.tripService.isOneDayTrip=true;
-           this.createTrip();
-       }
+      if (startDate == endDate) {
+        this.tripService.isOneDayTrip = true;
+        this.createTrip();
+      }
     }
 
     catch (error) {
       console.log(error);
-      flag=false;
+      flag = false;
       return flag;
     }
-    console.log('tripInfo obj is: ',this.squadAssemble.tripInfo);
+    console.log('tripInfo obj is: ', this.squadAssemble.tripInfo);
     return flag;
   }
 
@@ -292,7 +292,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     let tripInfo = this.squadAssemble.tripInfo;
     let obj = this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation = obj;
-    if(!this.tripService.isOneDayTrip){
+    if (!this.tripService.isOneDayTrip) {
       tripInfo.lodgingReservation = obj;
       for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
         for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
@@ -303,35 +303,35 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
-    else{
-      tripInfo.lodgingReservation= [];
+    else {
+      tripInfo.lodgingReservation = [];
     }
     this.userService.createTrip(tripInfo).subscribe(res => {
       console.log('tripInfo from server is :', res);
-  
+
       this.squadAssemble.tripInfofromService = res;
     }, (err) => {
       console.log(err);
     })
   }
 
-   createTripActivities(route){
-     let events= this._facilitiesService.calendarEventsArr.value;
-     let eventsArr = this._facilitiesConvertingService.convertActivityForApi2(events);
-     let userName='שחר גל'
-      this.createActivitiesSub=this.activitiyService.createTripActivities(userName, eventsArr).subscribe(res=>{
-        console.log(res);
-        this.router.navigateByUrl(
-          `/education/order-tour/${route}`
-        );
-    },(err)=>{
-      console.log(err);    
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
+  createTripActivities(route) {
+    let userName = this.userDataService.user.name || 'שחר גל';
+    let events = this._facilitiesService.calendarEventsArr.value;
+    let eventsArr = this._facilitiesConvertingService.convertActivityForApi(events, userName);
+    this.createActivitiesSub = this.activitiyService.createTripActivities(userName, eventsArr).subscribe(res => {
+      console.log(res);
+      this.router.navigateByUrl(
+        `/education/order-tour/${route}`
+      );
+    }, (err) => {
+      console.log(err);
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'אירעה שגיאה בשליחת הנתונים, נא פנה למנהל המערכת' , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })   
+        data: { message: 'אירעה שגיאה בשליחת הנתונים, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
     })
-   }
+  }
 
   // AddOrder() {
   //   if (this.additionsService.orderList.length > 0) {
@@ -358,27 +358,27 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
     if (routeIndex < this.steps.length) {
-      if(routeIndex==1){
-        let flag= this.syncToTripInfo();
-        if(flag==false){ 
-          const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
+      if (routeIndex == 1) {
+        let flag = this.syncToTripInfo();
+        if (flag == false) {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
-            data: { message: 'נא מלא את שדות החובה בטופס' , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-          })      
+            data: { message: 'נא מלא את שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          })
           this.router.navigateByUrl(
             `/education/order-tour/${this.steps[0].path}`
           );
-           return;
-        }    
+          return;
+        }
       }
-      if(routeIndex==2){
+      if (routeIndex == 2) {
         this.createTrip();
       }
-      if(routeIndex==3){
-        if(this._facilitiesService.calendarEventsArr.value.length>0){
+      if (routeIndex == 3) {
+        if (this._facilitiesService.calendarEventsArr.value.length > 0) {
           this.createTripActivities(this.steps[routeIndex].path);
           return;
-        }   
+        }
       }
       // if (routeIndex === 4) this.AddOrder();
       this.router.navigateByUrl(
@@ -399,7 +399,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.addOrderSub) { this.addOrderSub.unsubscribe(); }
-    if ( this.createActivitiesSub)  { this.createActivitiesSub.unsubscribe(); }
+    if (this.createActivitiesSub) { this.createActivitiesSub.unsubscribe(); }
   }
 }
 

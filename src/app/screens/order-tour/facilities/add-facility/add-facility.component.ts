@@ -63,7 +63,7 @@ export class AddFacilityComponent implements OnInit {
   occupiedHoursArray: { totalHours: number; user: string }[] = [];
   showSleepAreas: boolean = false
   username: string = ''
-  defaultImage : string ='defaultFacility.svg'; 
+  defaultImage: string = 'defaultFacility.svg';
 
   constructor(private userDataService: UserDataService, private facilitiesServices: FacilitiesService, private tripService: TripService) {
     this.username = this.userDataService.user.name;
@@ -78,20 +78,6 @@ export class AddFacilityComponent implements OnInit {
     });
   }
   public createForm(data): void {
-    // if(!data.start){
-    //   this.addFacilityForm = new FormGroup({
-    //     'title': new FormControl(data.title),
-    //     'selectedDay': new FormControl(this.selectedDay),
-    //     'start': new FormControl('08:00'),
-    //     'end': new FormControl('09:00'),
-    //     'backgroundColor': new FormControl('#F0F6FE'),
-    //     'date': new FormControl(''),
-    //     'className': new FormControl('border-facilities'),
-    //     'type': new FormControl('facility'),
-    //     'maxParticipants': new FormControl(),
-    //     'availability': new FormControl(data.availability),
-    //     'svgUrl': new FormControl(data.svgUrl)
-    //   });
     if (!data.start) {
       this.addFacilityForm = new FormGroup({
         'title': new FormControl(data.name),
@@ -102,9 +88,10 @@ export class AddFacilityComponent implements OnInit {
         'date': new FormControl(''),
         'className': new FormControl('border-facilities'),
         'type': new FormControl('facility'),
-        'maxParticipants': new FormControl(),
+        // 'maxParticipants': new FormControl(),
         'availability': new FormControl(data.occupiedHours),
-        'svgUrl': new FormControl(data.iconPath)
+        'svgUrl': new FormControl(data.iconPath),
+        'facilityId': new FormControl(data.id || null)
       });
     } else {
       this.updateForm = true;

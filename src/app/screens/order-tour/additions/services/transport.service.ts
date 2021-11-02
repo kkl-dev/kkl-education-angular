@@ -23,15 +23,8 @@ export class TransportService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-<<<<<<< HEAD
         options: this.supplierList,
 
-=======
-        options: [
-          { label: 'solid', value: 'solid' },
-          { label: 'great', value: 'great' },
-        ],
->>>>>>> main-dev
       },
     }),
     new QuestionSelect({

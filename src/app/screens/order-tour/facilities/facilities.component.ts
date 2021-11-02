@@ -7,17 +7,15 @@ import { FacilitiesService } from 'src/app/services/facilities.service';
 import { INITIAL_EVENTS } from './calendar/event-utils';
 import { EventInput } from '@fullcalendar/angular';
 import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_ARRAY } from 'src/mock_data/facilities';
-<<<<<<< HEAD
 import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
-import { ActivitiesService, UserService } from 'src/app/open-api';
+import { ActivitiesService, UserService, OrderService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { Validators } from '@angular/forms';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { UserDataService } from 'src/app/services/user-data.service';
+import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.service';
 
-=======
->>>>>>> main-dev
 
 @Component({
   selector: 'app-facilities',
@@ -35,13 +33,13 @@ export class FacilitiesComponent implements OnInit {
   public hiddenElements: any = { facilities: false, activities: false };
   public colors = { green: '#37C56B', blue: '#448ECD' }
   public activityIsUpComing: boolean = false;
-  //data 
   formArray: QuestionBase<string | number>[];
+  tripId: number = 52896;
   // public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
   // public facilitiesArray: InfoCard1[] = FACILITIES_ARRAY;
   // public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
   // public upComingActivitiesArray: any[];
-
+  orderType: any;
   createForm: any;
   facilityForDay: any;
   facilitiesArray: any;
@@ -84,26 +82,44 @@ export class FacilitiesComponent implements OnInit {
     },
   ];
 
-<<<<<<< HEAD
   constructor(private facilitiesService: FacilitiesService, private usersService: UserService, private tripService: TripService,
-    private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService, private userDataService: UserDataService) { }
-=======
-  constructor(private facilitiesService: FacilitiesService) { }
->>>>>>> main-dev
+    private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService,
+    private userDataService: UserDataService, private orderService: OrderService, private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
+
+    try {
+      this.tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
+    } catch (error) {
+      console.log(error);
+    }
+
     this.getAvailableFacilities();
     this.fillTimes();
     this.getAreas();
     this.getActivityCategories();
     this.getTripActivities();
     this.setFormArray();
+    this.getOrderService();
+
 
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
     this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
     this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
+  }
 
+  getOrderService() {
+    this.orderService.getOrderTypes().subscribe((orderType: any) => {
+      console.log('order Type: ', orderType);
+      if (orderType) {
+        this.orderType = orderType;
+      }
+    },
+      error => {
+        console.log("error in get Order Types : ", { error });
+      });
+    
   }
 
   private setFormArray() {
@@ -250,6 +266,33 @@ export class FacilitiesComponent implements OnInit {
     // console.log("tripActivitiesInfo: ", this.tripActivitiesInfo );
   }
 
+  updateTrip() {
+    let userName = this.userDataService.user.name || 'שחר גל';
+    let events: any = this.eventsArr;
+    this.activitiyService.updateTripActivities(userName, events).subscribe((tripCalendar: any) => {
+      console.log('update Trip Activities: ', tripCalendar);
+      if (tripCalendar) {
+          //....
+      }
+    },
+      error => {
+        console.log("error: ", { error });
+      });
+  }
+
+  getTripCalendar() {
+    let tripId = 52896;
+    this.activitiyService.getTripCalendar(tripId).subscribe((tripCalendar: any) => {
+      console.log('get Trip Calendar: ', tripCalendar);
+      if (tripCalendar) {
+          //....
+      }
+    },
+      error => {
+        console.log("error: ", { error });
+      });
+  }
+
   calculatePages(num) {
     //this.pagesAmount = num / 6;
     console.log("num: ", num);
@@ -296,59 +339,8 @@ export class FacilitiesComponent implements OnInit {
   }
 
   public updateChosenActivity(args: ActivitiesCardInterface) {
-    console.log('updateChosenActivity args' + args)
+    console.log('updateChosenActivity args' + args);
     this.activityIsUpComing = false;
     this.facilitiesService.updateSelectedActivity(args);
   }
-
-  onTest() {
-    console.log('this.calendarEventsArr$: ', this.calendarEventsArr$);
-    //let s = this.calendarEventsArr$.source._subscribe;
-    //let a = this.calendarEventsArr$.subscribe(data => this.createForm(data));
-    // let a = this.calendarEventsArr$.subscribe(data => {
-    //   console.log('events Arr data => : ', data);
-    //   this.createForm(data);
-    // });
-    console.log('events Arr: ', this.eventsArr);
-    //let b: any = this.eventsArr
-    //calendarEventsArr.value
-    let userName = this.userDataService.user.name;
-    let newObj: any = this.facilitiesConvertingService.convertActivityForApi(this.eventsArr);
-    console.log('newObj: ', newObj);
-    // newObj.slice(1, -1);
-    // console.log('newObj  slice ', newObj);
-
-    this.activitiyService.createTripActivities(userName, newObj).subscribe(res => {
-      console.log("create Trip Activities: ", { res });
-    })
-
-// {
-//   "tripId": 52896,
-//   "tempOrderList": [
-//     {
-//       "tripId": 52896,
-//       "orderTypeCode": 1,
-//       "orderTypeName": "היסעים",
-//       "startDate": "2021-11-12T00:00:00",
-//       "endDate": "2021-11-12T00:00:00",
-//       "fromHour": "2021-11-12T13:00:00",
-//       "tillHour": "2021-11-12T15:00:00",
-//       "userName": "גל שחר"
-//     }
-//   ],
-//   "activityList": [
-//     {
-//       "activityId": 118,
-//       "activityName": "ישעיהו גבעת",
-//       "date": "2021-11-12T00:00:00",
-//  "description": "students education",	
-//       "fromHour": "2021-11-12T10:00:00",	
-//       "tillHour": "2021-11-12T12:00:00",
-//       "tripId": 52896,
-//       "userName": "גל שחר"
-//     }
-//   ]
-// }
-  }
-
 }

@@ -18,7 +18,7 @@ import { FormService, FormTemplate } from '../logic/form.service';
 export class FormComponent implements OnInit {
   public form!: FormGroup;
 
-  @Output() register: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() valueChange: EventEmitter<FormGroup> = new EventEmitter();
 
   @Input() formTemplate!: FormTemplate;
   @Input() cols: string;
@@ -36,12 +36,7 @@ export class FormComponent implements OnInit {
   ngOnInit() {
     this.form = this.formService.setFormGroup(this.formTemplate);
 
-<<<<<<< HEAD
     this.valueChange.emit(this.form);
-=======
-
-    this.register.emit(this.form);
->>>>>>> main-dev
     this.subscribeToFormValues();
 
     if (this.editMode) {
@@ -50,17 +45,13 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.register.emit(this.form.value);
+    this.valueChange.emit(this.form.value);
   }
 
   private subscribeToFormValues() {
     this.form.valueChanges.subscribe(() => {
-<<<<<<< HEAD
       this.valueChange.emit(this.form);
       console.log('I am emit form');
-=======
-      this.register.emit(this.form);
->>>>>>> main-dev
     });
   }
 }

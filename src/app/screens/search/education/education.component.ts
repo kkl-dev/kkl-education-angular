@@ -45,21 +45,8 @@ export class EducationComponent implements OnInit {
     freeSpacesArray: this.freeSpacesArray,
   };
 
-<<<<<<< HEAD
   constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
     private checkAvailabilltyService: CheckAvailabilityService) {
-=======
-  constructor(
-    public usersService: UserService,
-    public tripService: TripService,
-    private checkAvailabilltyService: CheckAvailabilityService,
-    public fakeApi: FakeService
-  ) {
-    this.freeSpacesArray = this.freeSpacesArrayGenarator(
-      new Date(),
-      new Date(2022, 11, 17)
-    );
->>>>>>> main-dev
 
     this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
     this.options = {

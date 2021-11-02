@@ -6,13 +6,10 @@ import { Observable, Subscription } from 'rxjs';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import heLocale from '@fullcalendar/core/locales/he';
 import interactionPlugin from '@fullcalendar/interaction';
-<<<<<<< HEAD
-import { h, render } from 'preact';
-import { TripService } from 'src/app/services/trip.service';
-=======
 import { CalendarCardComponent } from './calendar-card/calendar-card.component';
 import { DynamicComponent } from 'src/app/components/dynamic/dynamic.component';
->>>>>>> main-dev
+import { TripService } from 'src/app/services/trip.service';
+
 
 @Component({
   selector: 'app-calendar',
@@ -27,19 +24,11 @@ export class CalendarComponent implements OnInit {
   public hideComponent: boolean = false;
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
   @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
-
-<<<<<<< HEAD
-  //sleepingDates = this.tripService.sleepingDates;
+  
   sleepingDates: any = [];
   days: any[] = this.tripService.facilitiesArray;
 
-  constructor(private facilitiesService: FacilitiesService, private vref: ViewContainerRef, private tripService: TripService) { }
-
-  public calendarOptions: CalendarOptions = {}
-
-  public arrangeDate(date) {
-=======
-  constructor(private facilitiesService: FacilitiesService, private resolver: ComponentFactoryResolver) { }
+  constructor(private facilitiesService: FacilitiesService, private resolver: ComponentFactoryResolver, private tripService: TripService) { }
 
   public calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin, interactionPlugin],
@@ -93,22 +82,18 @@ export class CalendarComponent implements OnInit {
 
   public arrangeDate(date: Date) {
     // 2021-10-15T08:00
->>>>>>> main-dev
     const hours = date.getHours();
     const minutes = date.getMinutes();
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}T${hours <= 9 ? '0' + hours : hours}:${minutes <= 9 ? '0' + minutes : minutes}`
   }
 
   ngOnInit(): void {
-<<<<<<< HEAD
     //get sleeping Dates from trip service
     this.sleepingDates = this.tripService.convertDatesFromSlashToMinus();
     // add another day to last day
     let lastDay = new Date(this.days[this.days.length - 1].date);
     let till = new Date(lastDay.setDate(lastDay.getDate() + 1));
     //console.log(till);
-=======
->>>>>>> main-dev
 
     this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
       console.log('this.valueSub', this.valueSub)

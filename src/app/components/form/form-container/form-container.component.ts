@@ -47,11 +47,7 @@ export class FormContainerComponent implements OnInit {
     this.initFormGroup();
     this.subscribeToQuestions();
     this.subscribeToFormValues();
-<<<<<<< HEAD
-    this.dissableForm();
-=======
     this.disableForm()
->>>>>>> main-dev
   }
 
   private initFormGroup() {

@@ -8,7 +8,7 @@ import { SquadAssembleService } from '../screens/order-tour/squad-assemble/servi
 })
 export class FacilitiesConvertingService {
 
-  constructor(private squadAssembleService: SquadAssembleService ) { }
+  constructor(private squadAssembleService: SquadAssembleService) { }
   public getFacilitiesDays(arr: any[]): any[] {
     console.log('getFacilitiesDays');
     const datesArr: any[] = [];
@@ -34,7 +34,6 @@ export class FacilitiesConvertingService {
                 totalTime: obj['totalTime'],
                 user: obj['customerName']
               };
-
             })
           ]
         };
@@ -61,230 +60,140 @@ export class FacilitiesConvertingService {
     return tmpArr;
   }
 
-  convertActivityForApi(arr: any) {
-     let calendar= {} as TripCalendar;
-     let tempOrderArr = [];
-     let activityArr = [];
-     let tempOrder;
-     let activity;
-
-    //  arr.forEach(element => {
-       
-    //  });
-
-     for (let i = 0; i < arr.length; i++) { 
-      console.log(arr[i]);
-      tempOrder = 
-        {
-          "tripId": this.squadAssembleService.tripInfofromService.trip.id,
-          "orderTypeCode": 1,
-          "orderTypeName": "היסעים",
-          "startDate": arr[i].start,
-          "endDate": arr[i].end,
-          "fromHour": arr[i].start,
-          "tillHour": arr[i].end,
-          "userName": "גל שחר"
-        }   
-      tempOrderArr.push(tempOrder);
-      tempOrder = 
-        {
-          "tripId": this.squadAssembleService.tripInfofromService.trip.id,
-          "orderTypeCode": 4,
-          "orderTypeName": "כלכלה",
-          "startDate": arr[i].start,
-          "endDate": arr[i].end,
-          "fromHour": arr[i].start,
-          "tillHour": arr[i].end,
-          "userName": "גל שחר"
-        }   
-      tempOrderArr.push(tempOrder);
-
-
-      activity = 
-      {
-        "activityId": 118,
-      "activityName": arr[i].title,
-      "date": "2021-11-12T00:00:00",
-      "description": "students education",
-      "fromHour": arr[i].start,
-      "tillHour":  arr[i].end,
-      "tripId": this.squadAssembleService.tripInfofromService.trip.id,
-      "userName": "גל שחר"
-      }      
-      activityArr.push(activity);
+  convertActivityForApi(arr: any, userName: string) {
+    let tripId = 52896;
+    try {
+      tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
+    } catch (error) {
+      console.log(error);
     }
-
-    // activityArr = [{
-    //   "activityId": 118,
-    //   "activityName": arr.title,
-    //   "date": "2021-11-12T00:00:00",
-    //   "description": "students education",
-    //   "fromHour": arr.start,
-    //   "tillHour":  arr.end,
-    //   "tripId": 52896,
-    //   "userName": "גל שחר"
-    // }];
-
-    calendar.tripId= this.squadAssembleService.tripInfofromService.trip.id;
-    calendar.tempOrderList = tempOrderArr;
-    calendar.activityList = activityArr;
-    return calendar;
-
-    let tmpArr: any = [];
-    arr.map(obj => {
-      //console.log(obj);
-      const newObj =   {
-        "tripId": 52896,
-        "tempOrderList": [
-          {
-            "tripId": 52896,
-            "orderTypeCode": 1,
-            "orderTypeName": "היסעים",
-            "startDate": obj.start,
-            "endDate": obj.end,
-            "fromHour": obj.start,
-            "tillHour": obj.end,
-            "userName": "גל שחר"
-          }
-        ],
-        "activityList": [
-          {
-            "activityId": 118,
-            "activityName": obj.title,
-            "date": "2021-11-12T00:00:00",
-            "description": "students education",	
-            "fromHour": obj.start,	
-            "tillHour":  obj.end,
-            "tripId": 52896,
-            "userName": "גל שחר"
-          }
-        ]
-      }
-      tmpArr.push(newObj);
-    });
-
-    var q = Object.assign({}, tmpArr)
-    console.log("q: " + q)
-    return tmpArr;
-  }
-
-  convertActivityForApi2(arr: any) {
-    let calendar= {} as TripCalendar;
+    let calendar = {} as TripCalendar;
     let tempOrderArr = [];
     let activityArr = [];
     let tempOrder;
     let activity;
 
-    for (let i = 0; i < arr.length; i++) { 
-     console.log(arr[i]);
-     if(arr[i].title=='התייצבות'){
-       tempOrder = 
-       {
-        "tripId": this.squadAssembleService.tripInfofromService.trip.id,
-        "orderTypeCode": 1,
-        "orderTypeName": "היסעים",
-        "startDate": arr[i].start,
-        "endDate": arr[i].end,
-        "fromHour": arr[i].start,
-        "tillHour": arr[i].end,
-        "userName": "גל שחר"
-       }   
-       tempOrderArr.push(tempOrder);
-     }
-     if(arr[i].title=='ארוחת בוקר' || arr[i].title=='ארוחת צהרים' || arr[i].title=='ארוחת ערב'){
-      tempOrder = 
-      {
-       "tripId": this.squadAssembleService.tripInfofromService.trip.id,
-       "orderTypeCode": 4,
-       "orderTypeName": "כלכלה",
-       "startDate": arr[i].start,
-       "endDate": arr[i].end,
-       "fromHour": arr[i].start,
-       "tillHour": arr[i].end,
-       "userName": "גל שחר"
-      }   
-      tempOrderArr.push(tempOrder);
+    for (let i = 0; i < arr.length; i++) {
+      console.log(arr[i]);
+      let orderTypeCode = 4;
+      let orderTypeName = ''
+      // if (arr[i].type == "facility") {
+      //check if goes into tempOrderArr
+      if (arr[i].svgUrl && !arr[i].additions) {
+
+        if (arr[i].facilityId) {
+          orderTypeCode = 7;
+          orderTypeName = 'אירוח/פעילות';
+        }
+        tempOrder = {
+          "tripId": tripId,
+          "orderTypeCode": orderTypeCode,
+          "orderTypeName": orderTypeName,
+          "itemId": arr[i].facilityId || null,
+          "startDate": arr[i].start,
+          "endDate": arr[i].end,
+          "fromHour": arr[i].start,
+          "tillHour": arr[i].end,
+          "userName": userName
+        }
+        tempOrderArr.push(tempOrder);
+      }
+      else {
+        activity = {
+          "activityId": arr[i].activityId,
+          "activityName": arr[i].title,
+          "date": arr[i].start,
+          "description": arr[i].description || '',
+          "fromHour": arr[i].start,
+          "tillHour": arr[i].end,
+          "tripId": tripId,
+          "userName": userName
+        }
+        activityArr.push(activity);
+      }
+      if (arr[i].additions) {
+        for (let j = 0; i < arr[i].additions.length; j++) {
+
+          switch (arr[i].additions[j].name) {
+            case "הסעה":
+              orderTypeCode = 1
+              orderTypeName = 'היסעים'
+              break;
+            case "הדרכה":
+              orderTypeCode = 6
+              orderTypeName = 'הדרכה'
+              break;
+            case "כלכלה":
+              orderTypeCode = 4
+              orderTypeName = 'היסעים'
+              break;
+
+            default:
+              orderTypeCode = 0
+              orderTypeName = 'לא ידוע'
+              break;
+          }
+
+          tempOrder = {
+            "tripId": tripId,
+            "orderTypeCode": orderTypeCode,
+            "orderTypeName": orderTypeName,
+            //"itemId": null,
+            "startDate": arr[i].start,
+            "endDate": arr[i].end,
+            "fromHour": arr[i].start,
+            "tillHour": arr[i].end,
+            "userName": userName
+          }
+          tempOrderArr.push(tempOrder);
+        }
+      }
     }
-    
-    
-    
-   }
 
-   activity = 
-   {
-     "activityId": 5,
-   "activityName": 'מאגר נחל עורבים',
-   "date": "2021-11-12T00:00:00",
-   "description": "students education",
-   "fromHour": '2021-11-12T14:00:00',
-   "tillHour":  '2021-11-12T15:00:00',
-   "tripId": this.squadAssembleService.tripInfofromService.trip.id,
-   "userName": "גל שחר"
-   }      
-   activityArr.push(activity);
+    // if (arr[i].title == 'התייצבות') {
+    //   tempOrder = {
+    //     "tripId": this.squadAssembleService.tripInfofromService.trip.id,
+    //     "orderTypeCode": 1,
+    //     "orderTypeName": "היסעים",
+    //     "itemId": arr[i].id || null,
+    //     "startDate": arr[i].start,
+    //     "endDate": arr[i].end,
+    //     "fromHour": arr[i].start,
+    //     "tillHour": arr[i].end,
+    //     "userName": "גל שחר"
+    //   }
+    //   tempOrderArr.push(tempOrder);
+    // }
+    // if (arr[i].title == 'ארוחת בוקר' || arr[i].title == 'ארוחת צהרים' || arr[i].title == 'ארוחת ערב') {
+    //   tempOrder = {
+    //     "tripId": this.squadAssembleService.tripInfofromService.trip.id,
+    //     "orderTypeCode": 4,
+    //     "orderTypeName": "כלכלה",
+    //     // "itemId": arr[i].id || null,
+    //     "startDate": arr[i].start,
+    //     "endDate": arr[i].end,
+    //     "fromHour": arr[i].start,
+    //     "tillHour": arr[i].end,
+    //     "userName": "גל שחר"
+    //   }
+    //   tempOrderArr.push(tempOrder);
+    // }
 
-  
-   calendar.tripId= this.squadAssembleService.tripInfofromService.trip.id;
-   calendar.tempOrderList = tempOrderArr;
-   calendar.activityList = activityArr;
-   return calendar;
-
-  
- }
-
-
-//   0:
-// additions: Array(5)
-// 0: {name: 'הסעה', completed: false}
-// 1: {name: 'אבטחה', completed: false}
-// 2: {name: 'הדרכה', completed: false}
-// 3: {name: 'כלכלה', completed: false}
-// 4: {name: 'הפעלה מוסיקלית', completed: false}
-// length: 5
-// [[Prototype]]: Array(0)
-// backgroundColor: "#F0F6FE"
-// className: "border-facilities"
-// date: ""
-// editable: true
-// end: "2021-11-01T09:00"
-// haveAdditions: true
-// id: "0"
-// img: null
-// invitingCustomer: false
-// selectedDay: 0
-// start: "2021-11-01T08:00"
-// svgUrl: null
-// textColor: "black"
-// title: "נחל חרמון, בניאס: מים ונחלים בגליל העליון"
-// type: "activity"
-
-
-//   {
-//   "tripId": 52896,
-//   "tempOrderList": [
-//     {
-//       "tripId": 52896,
-//       "orderTypeCode": 1,
-//       "orderTypeName": "היסעים",
-//       "startDate": "2021-11-12T00:00:00",
-//       "endDate": "2021-11-12T00:00:00",
-//       "fromHour": "2021-11-12T13:00:00",
-//       "tillHour": "2021-11-12T15:00:00",
-//       "userName": "גל שחר"
-//     }
-//   ],
-//   "activityList": [
-//     {
-//       "activityId": 118,
-//       "activityName": "ישעיהו גבעת",
-//       "date": "2021-11-12T00:00:00",
-//  "description": "students education",	
-//       "fromHour": "2021-11-12T10:00:00",	
-//       "tillHour": "2021-11-12T12:00:00",
-//       "tripId": 52896,
-//       "userName": "גל שחר"
-//     }
-//   ]
-// }
-
+    //   activity = {
+    //     "activityId": arr[i].activityId,
+    //     "activityName": arr[i].title,
+    //     "date": "2021-11-12T00:00:00",
+    //     "description": "students education",
+    //     "fromHour": arr[i].start,
+    //     "tillHour": arr[i].end,
+    //     "tripId": tripId,
+    //     "userName": "גל שחר"
+    //   }
+    //   activityArr.push(activity);
+    // }
+    calendar.tripId = tripId;
+    calendar.tempOrderList = tempOrderArr;
+    calendar.activityList = activityArr;
+    return calendar;
+  }
 }

@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 <!-- <div class="activities-card">
   <mat-card>
-=======
-<div class="activities-card">
-  <mat-card >
->>>>>>> main-dev
     <mat-card-title-group>
       <img mat-card-lg-image [src]='obj.img' />
     </mat-card-title-group>
@@ -26,8 +21,8 @@
 <div class="activities-card">
   <mat-card>
     <mat-card-title-group>
-      <img mat-card-lg-image [src]='obj.sitePicture' />
-    </mat-card-title-group>
+      <img mat-card-lg-image src="{{ obj.sitePicture || defaultImage }}"/>
+        </mat-card-title-group>
     <mat-card-header>
       <mat-card-title>{{obj.name}}</mat-card-title>
     </mat-card-header>
@@ -42,3 +37,4 @@
     </mat-card-actions>
   </mat-card>
 </div>
+<!-- [src]='obj.sitePicture' -->
