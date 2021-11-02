@@ -52,22 +52,22 @@ export class TransportFormComponent implements OnInit {
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     this.generalFormService.setDatesValues();
-    if (this.item != undefined && this.item != null ) {
-      if(this.item.globalParameters.supplierId!= undefined){
+    if (this.item != undefined && this.item != null) {
+      if (this.item.globalParameters.supplierId != undefined) {
         this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
       }
       this.generalFormService.setFormValues(this.item);
     }
-    else{
-      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+    else {
+      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
     }
     this.setformTemplate();
   }
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    this.generalFormService.questionGroups[index].questions=this.generalFormService.details;
+    this.generalFormService.questionGroups[index].questions = this.generalFormService.details;
     //let detailsArr = this.generalFormService.details;
     let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
@@ -93,7 +93,7 @@ export class TransportFormComponent implements OnInit {
     return tempArr;
   }
 
- 
+
 
   getSupplierList(orderTypeId, tripId, orderId) {
     this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
@@ -130,9 +130,8 @@ export class TransportFormComponent implements OnInit {
   }
 
   public onSave(): void {
-
     if (this.form) {
-      // .status==='VALID'
+      if (!this.additionsService.globalValidations(this.form)) { return; }
       if (!this.validationsTransport()) { return; }
       this.editMode = true;
 
@@ -164,8 +163,8 @@ export class TransportFormComponent implements OnInit {
           }
 
         }
-        else  {
-         // t[key] = this.form.value.details[key]
+        else {
+          // t[key] = this.form.value.details[key]
         }
       });
       t.globalParameters['startHour'] = this.setDateTimeFormat(t.globalParameters.startDate, t.globalParameters.startHour);
@@ -179,10 +178,10 @@ export class TransportFormComponent implements OnInit {
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = 1;
-      if(this.item.globalParameters.tempOrderIdentity!= undefined)
-       t.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
+      if (this.item.globalParameters.tempOrderIdentity != undefined)
+        t.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
 
-       this.generalFormService.addOrder(t,t.order.orderType.id);
+      this.generalFormService.addOrder(t, t.order.orderType.id);
       this.form.disable({ emitEvent: false });
 
     }

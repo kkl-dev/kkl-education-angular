@@ -310,6 +310,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log('tripInfo from server is :', res);
   
       this.squadAssemble.tripInfofromService = res;
+      localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
     }, (err) => {
       console.log(err);
     })

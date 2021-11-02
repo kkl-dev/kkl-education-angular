@@ -2645,6 +2645,9 @@ components:
         openDate:
           type: string
           format: date-time
+        isVat:
+           type: boolean
+           nullable: true 
         
 
     OrderEvent:

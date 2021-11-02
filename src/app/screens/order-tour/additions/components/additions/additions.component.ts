@@ -43,13 +43,26 @@ export class AdditionsComponent implements OnInit {
     private generalFormService: GeneralFormService) { }
 
   ngOnInit(): void {
-    this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
+
+    if (this.squadAssembleService.tripInfofromService) {
+      this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
+      this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
+      this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    }
+    else {
+      let retrievedObject = localStorage.getItem('tripInfofromService');
+      let retrievedObj = JSON.parse(retrievedObject);
+      this.tour.id = retrievedObj.trip.id;
+      this.tripId = retrievedObj.trip.id;
+      console.log('retrievedObject: ', retrievedObj);
+    }
+
+    // this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
     this.getOrders();
     this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
 
-    this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
     // this.additionsService.emitSchedule(this.tour.schedule);
     //this.onAdd();
 
@@ -57,10 +70,10 @@ export class AdditionsComponent implements OnInit {
 
   public onAdd() {
     // this.item = {} as OrderEvent;
-    if (this.orderType === 1 && this.items.length > 10) {
+    if ((this.orderType === 1 || this.orderType === 2 || this.orderType === 6) && this.items.length > 10) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'שים לב שכמות הפריטים בהזמנה גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
       })
     }
     this.addItem = true;
@@ -142,91 +155,91 @@ export class AdditionsComponent implements OnInit {
         this.items = orderList;
       }
     }
-    if (this.tempOrderReduce[1].length > 10) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-    }
+    // if (this.tempOrderReduce[1].length > 10) {
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //   })
+    // }
   }
   change(event) {
     switch (event) {
       case 1:
-        if(this.generalFormService.transportOrderList.length>0){
-          this.items=this.generalFormService.transportOrderList;
-          this.addItem=false;
-         }     
-          else{
-            this.items=[];
-            this.addItem=true;
-          }
-          
+        if (this.generalFormService.transportOrderList.length > 0) {
+          this.items = this.generalFormService.transportOrderList;
+          this.addItem = false;
+        }
+        else {
+          this.items = [];
+          this.addItem = true;
+        }
+
         break;
       case 2:
-          if(this.generalFormService.securingOrderList.length>0){
-            this.items=this.generalFormService.securingOrderList;
-            this.addItem=false;
-           }     
-           else{
-            this.items=[];
-            this.addItem=true;
-          }
-          break;
+        if (this.generalFormService.securingOrderList.length > 0) {
+          this.items = this.generalFormService.securingOrderList;
+          this.addItem = false;
+        }
+        else {
+          this.items = [];
+          this.addItem = true;
+        }
+        break;
       case 3:
 
-          if(this.generalFormService.siteOrderList.length>0){
-            this.items=this.generalFormService.siteOrderList;
-            this.addItem=false;
-           }     
-           else{
-            this.items=[];
-            this.addItem=true;
-          }
-          break;
+        if (this.generalFormService.siteOrderList.length > 0) {
+          this.items = this.generalFormService.siteOrderList;
+          this.addItem = false;
+        }
+        else {
+          this.items = [];
+          this.addItem = true;
+        }
+        break;
       case 4:
-        if(this.generalFormService.economyOrderList.length>0){
-          this.items=this.generalFormService.economyOrderList;
-          this.addItem=false;
-        }      
-        else{
-          this.items=[];
-          this.addItem=true;
+        if (this.generalFormService.economyOrderList.length > 0) {
+          this.items = this.generalFormService.economyOrderList;
+          this.addItem = false;
+        }
+        else {
+          this.items = [];
+          this.addItem = true;
         }
         break;
       case 6:
-          if(this.generalFormService.gudianceOrderList.length>0){
-            this.items=this.generalFormService.gudianceOrderList;
-            this.addItem=false;
-          }
-          else{
-            this.items=[];
-            this.addItem=true;
-          }
-          break;
+        if (this.generalFormService.gudianceOrderList.length > 0) {
+          this.items = this.generalFormService.gudianceOrderList;
+          this.addItem = false;
+        }
+        else {
+          this.items = [];
+          this.addItem = true;
+        }
+        break;
       case 7:
-            if(this.generalFormService.hostingOrderList.length>0){
-              this.items=this.generalFormService.hostingOrderList;
-              this.addItem=false;
-            }
-            else{
-              this.items=[];
-              this.addItem=true;
-            }
-            break;
+        if (this.generalFormService.hostingOrderList.length > 0) {
+          this.items = this.generalFormService.hostingOrderList;
+          this.addItem = false;
+        }
+        else {
+          this.items = [];
+          this.addItem = true;
+        }
+        break;
       case 10:
-              if(this.generalFormService.musicOrderList.length>0){
-                this.items=this.generalFormService.musicOrderList;
-                this.addItem=false;
-              }      
-              else{
-                this.items=[];
-                this.addItem=true;
-              }
-              break;
-   }
-   if(event==1 || event ==4 || event ==6 || event ==7){
-    this.mapTempOrder(event);
-   }
+        if (this.generalFormService.musicOrderList.length > 0) {
+          this.items = this.generalFormService.musicOrderList;
+          this.addItem = false;
+        }
+        else {
+          this.items = [];
+          this.addItem = true;
+        }
+        break;
+    }
+    if (event == 1 || event == 4 || event == 6 || event == 7) {
+      this.mapTempOrder(event);
+    }
     this.orderType = event;
   }
 
