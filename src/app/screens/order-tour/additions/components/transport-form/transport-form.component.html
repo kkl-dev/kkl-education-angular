@@ -2,7 +2,7 @@
   <div fxFlex="35">
     <app-form
       [formTemplate]="formTemplate"
-      [slots]="{ topButton: formButton }"
+      [slots]="{ button: formButton }"
       [editMode]="editMode"
       (register)="onRegister($event)"
     ></app-form>
@@ -16,7 +16,7 @@
 </div>
 
 <ng-template #formButton>
-  <div class="button-container" fxLayout="column" fxLayoutAlign="end start">
+  <div class="button-container" fxLayout="column" fxLayoutAlign="end end">
     <button
       *ngIf="!editMode"
       type="submit"
