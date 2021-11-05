@@ -175,7 +175,7 @@ export class GeneralFormService {
       key: 'exitLocation',
       label: 'נקודת יציאה',
       type: 'select',
-      validations: [Validators.required],
+      // validations: [Validators.required],
       inputProps: {
         options :this.settlementList
       },
@@ -262,15 +262,15 @@ export class GeneralFormService {
       value: '',
       
     }),
-    new QuestionSelect({
-      key: 'isCustomerOrder',
-      label: 'האם הלקוח מזמין',
-      type: 'select',
-      validations: [Validators.required],
-      inputProps: {
+    // new QuestionSelect({
+    //   key: 'isCustomerOrder',
+    //   label: 'האם הלקוח מזמין',
+    //   type: 'select',
+    //   validations: [Validators.required],
+    //   inputProps: {
       
-      },
-    }),
+    //   },
+    // }),
     
   ]
 
@@ -537,7 +537,7 @@ export class GeneralFormService {
    addOrder(item: any,orderType) {  
       this.orderService.addOrder( 4,item).subscribe(res => {
         console.log(res);  
-        this.addToOrderList(res,orderType);
+        this.setOrderList(res,orderType,'adding');
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
           data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
@@ -550,30 +550,70 @@ export class GeneralFormService {
         })
       })
     }
+    editOrder(item: any,orderType) { 
+       let userName='שחר גל';
+      this.orderService.editOrder(userName, 4,item).subscribe(res => {
+        console.log(res);  
+        this.setOrderList(res, orderType,'updating')
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'ההזמנה עודכנה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+      }, (err) => {
+        console.log(err);
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+      })
+    }
 
   
-    addToOrderList(res, orderTypeId){
+    setOrderList(res, orderTypeId,operation){
       switch (orderTypeId) {
         case 1:
           let t = {} as TransportOrder;
-          t.globalParameters = {} as OrderItemCommonDetails;
-          t.order = {} as Order;
-          t.order=res[0].order;
-          t.globalParameters= res[0].globalParameters;
-          // if(res[0].exitPoint)
-          // t.exitPoint= res[0].exitPoint;
-          // if(res[0].scatterLocation)
-          //  t.scatterLocation= res[0].scatterLocation;
+          let tranArr: TransportOrder[]=[];
+          if(res.length>1){
+             for (let i = 0; i < res.length; i++) {
+                let trans= {} as TransportOrder;
+                trans= res[i];
+                tranArr.push(trans);
+             }
+          }
+          else if(res.length==1)
+          t = res[0];
+          
+          // t.globalParameters = {} as OrderItemCommonDetails;
+          // t.order = {} as Order;
+          // t.order=res[0].order;
+          // t.globalParameters= res[0].globalParameters;
+           this.transportOrderList=[];
+           if(res.length>1)
+           this.transportOrderList= tranArr;
+           else
            this.transportOrderList.push(t);
-           this.updatetempOrderReduce(res,orderTypeId);
+           if(operation=='adding')
+           this.updatetempOrderReduce1(res,orderTypeId);
           break;
+        case 2:
+            let securing = {} as SecuringOrder;
+            securing.globalParameters = {} as OrderItemCommonDetails;
+            securing.order = {} as Order;
+            securing.order=res[0].order;
+            securing.globalParameters= res[0].globalParameters;
+            this.securingOrderList=[];
+             this.securingOrderList.push(securing);
+            break;
+      
         case 3:
             let site = {} as SiteOrder;
             site.globalParameters = {} as OrderItemCommonDetails;
             site.order = {} as Order;
             site.order=res[0].order;
             site.globalParameters= res[0].globalParameters;
-             this.transportOrderList.push(site);
+            this.siteOrderList=[];
+             this.siteOrderList.push(site);
             break;
       
         case 4:
@@ -582,15 +622,17 @@ export class GeneralFormService {
           eco.order = {} as Order;
           eco.order=res[0].order;
           eco.globalParameters= res[0].globalParameters;
+          this.economyOrderList=[];
           this.economyOrderList.push(eco);
           this.updatetempOrderReduce(res,orderTypeId);
           break;
-          case 6:
+        case 6:
             let guidance = {} as GuidanceOrder;
             guidance.globalParameters = {} as OrderItemCommonDetails;
             guidance.order = {} as Order;
             guidance.order=res[0].order;
             guidance.globalParameters= res[0].globalParameters;
+            this.gudianceOrderList=[];
              this.gudianceOrderList.push(guidance);
              this.updatetempOrderReduce(res,orderTypeId);
             break;
@@ -600,18 +642,32 @@ export class GeneralFormService {
               hosting.order = {} as Order;
               hosting.order=res[0].order;
               hosting.globalParameters= res[0].globalParameters;
-               this.gudianceOrderList.push(hosting);
+              this.hostingOrderList=[];
+               this.hostingOrderList.push(hosting);
                this.updatetempOrderReduce(res,orderTypeId);
               break;
+          case 10:
+                let musicActivation = {} as HostingOrder;
+                musicActivation.globalParameters = {} as OrderItemCommonDetails;
+                musicActivation.order = {} as Order;
+                musicActivation.order=res[0].order;
+                musicActivation.globalParameters= res[0].globalParameters;
+                this.musicOrderList=[];
+                 this.musicOrderList.push(hosting);
+                break;
     
     }
   }
+
+   
+
+    
 
 
       updatetempOrderReduce(res, orderTypeId){
       let temp= this.tempOrderReduce.value;
       for (var i in temp[orderTypeId]) {
-         let tempOrderId= res[0].globalParameters.tempOrderIdentity;
+         let tempOrderId= res[i].globalParameters.tempOrderIdentity;
          if(temp[orderTypeId][i].orderTempId==tempOrderId){
           temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
           temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
@@ -620,6 +676,25 @@ export class GeneralFormService {
       }
       this.updateTempOrderReduce(temp);
 
+    }
+
+    updatetempOrderReduce1(res, orderTypeId){
+      let temp= this.tempOrderReduce.value;
+      for (var i in temp[orderTypeId]) {
+        for(var j in res ){
+          if(temp[orderTypeId][i].orderTempId==res[j].globalParameters.tempOrderIdentity){
+            temp[orderTypeId].splice(i, 1);
+            break;
+        }
+         //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
+         //  if(temp[orderTypeId][i].orderTempId==tempOrderId){
+         //   //temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
+         //   //temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
+         //   temp[orderTypeId].splice(i, 1);
+         //  }
+        }   
+      }
+      this.updateTempOrderReduce(temp);
     }
 
      

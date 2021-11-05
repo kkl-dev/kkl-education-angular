@@ -289,6 +289,7 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
       eco.order.orderType.id = 4;
       if (this.item.globalParameters.tempOrderIdentity != undefined)
         eco.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+        
       this.generalFormService.addOrder(eco, eco.order.orderType.id);
       this.form.disable({ emitEvent: false });
     }
