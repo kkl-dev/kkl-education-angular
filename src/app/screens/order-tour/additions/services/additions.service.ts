@@ -9,7 +9,8 @@ import { TripService } from 'src/app/services/trip.service';
 import { TransportService } from './transport.service';
 import { GeneralFormService } from './general-form.service';
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
-
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 @Injectable({
   providedIn: 'root'
 })
@@ -71,7 +72,7 @@ export class AdditionsService {
     this.itemSubject.next(item)
   }
   constructor(
-    private stepperService: StepperService, private generalFormService: GeneralFormService, private tripService: TripService, private orderService: OrderService, public transportService: TransportService, private squadAssembleService: SquadAssembleService) { }
+    private stepperService: StepperService, private _dialog: MatDialog, private generalFormService: GeneralFormService, private tripService: TripService, private orderService: OrderService, public transportService: TransportService, private squadAssembleService: SquadAssembleService) { }
 
   public getSteps(): StepModel[] {
     return [... this.steps]
@@ -101,8 +102,6 @@ export class AdditionsService {
     this.orderList.push(item);
     console.log(this.orderList);
   }
-
-
   getDaysArray = function (start, end) {
     for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
       arr.push(new Date(dt));
@@ -133,7 +132,8 @@ export class AdditionsService {
     //-----------------------חישוב מחיר-----------------------------------------------------------------
     //------------------------הפריט מוגדר כזיכוי או תוספת נסיעות-------------------------------
     if (item?.credit == 1) itemOrder.comment = 'הפריט מוגדר כזיכוי'
-    if (item?.type == 266 || item?.credit == 1) return itemOrder;
+    // if (item?.type == 266 || item?.credit == 1) return itemOrder;
+    if (item?.credit == 1) return itemOrder;
 
     //------------------ ברירת המחדל היא: להזמנות כלכלה/אתרים: לפי משתתפים, לכל השאר: לפי כמות---------
     //------------------אם החישוב הוא לפי משתתפים הקוד הוא 2 ואם החישוב הוא לפי כמות הקוד הוא 1--------
@@ -146,6 +146,7 @@ export class AdditionsService {
       addToCommentNumOfDaysNights = "סה''כ ימי הטיול:" + MultiplyByDays?.toString()
     }
     else if (item?.isNight === 1) {
+      if (numNightActivity === 0) numNightActivity = 1;
       MultiplyByDays = numNightActivity;
       addToCommentNumOfDaysNights = " סה''כ מספר  לילות בטיול " + MultiplyByDays?.toString()
     }
@@ -169,7 +170,7 @@ export class AdditionsService {
     //------------------------------חישוב ערכי ברירת מחדל לחיובי ספק ולקוח---------------------------------------------------
 
     itemOrder.billingSupplier = item?.cost * MultiplyByAmountOrPeople * MultiplyByDays //ספק
-    if (item?.orderType == 1 && item?.credit != 1) itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+    if (item?.orderType === 1 && item?.credit !== 1) itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
     itemOrder.billingCustomer = item?.costCustomer * MultiplyByAmountOrPeople * MultiplyByDays   //לקוח  
     var addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAmountOrPeople?.toString() + "*" + item?.costCustomer + "*" + MultiplyByDays
 
@@ -194,10 +195,10 @@ export class AdditionsService {
 
     if (item?.orderType == 7) {
       // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים  
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) {
+      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {
         // סבסוד עלות ללקוח מופעל רק עבור פריטים שמוגדרים לפי משתתפים
         // חישוב מספר משתתפים לחיוב - לאחר סבסוד
-        MultiplyByAfterSibsud = MultiplyByAmountOrPeople > 0 ? 0 : MultiplyByAmountOrPeople - (MultiplyByAmountOrPeople / 25)
+        MultiplyByAfterSibsud = MultiplyByAmountOrPeople > 0 ? (MultiplyByAmountOrPeople - (MultiplyByAmountOrPeople / 25)) : 0
         totalNoCharge = MultiplyByAmountOrPeople > 0 ? MultiplyByAmountOrPeople / 25 : 0
         // חישוב חיוב לקוח לאחר סבסוד
         itemOrder.billingCustomer = item?.costCustomer * MultiplyByAfterSibsud * MultiplyByDays
@@ -221,21 +222,22 @@ export class AdditionsService {
         // itemOrder.billingSupplier = (currentVat / 100) + 1
         itemOrder.billingSupplier *= currentVat;
       } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
-        if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
-          var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides ?
-            MultiplyByAmountOrPeople - this.squadAssembleService.tripInfofromService.trip.numGuides : MultiplyByAmountOrPeople
-          // חישוב מספר משתתפים לחיוב - לאחר סבסוד
-          MultiplyByAfterSibsud = MultiplyByAmountOrPeople > 0 ? MultiplyByAmountOrPeople - (MultiplyByAmountOrPeople / 25) : 0
-          totalNoCharge = MultiplyByAmountOrPeople > 0 ? MultiplyByAmountOrPeople / 25 : 0
-          itemOrder.billingCustomer = item?.costCustomer * MultiplyByAfterSibsud   // חישוב חיוב לקוח לאחר סבסוד
-          addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAfterSibsud?.toString() + "*" + item?.costCustomer
-          itemOrder.internalComment = ParticipantsOrAmount + "כמות משתתפים עם מדריכים" + MultiplyByPeopleMinusGuides.toString()
-          if (totalNoCharge > 0)
-            itemOrder.internalComment += ", מהם: " + totalNoCharge?.toString() + "ללא חיוב" + "סה''כ ארוחות לחישוב " + MultiplyByPeopleMinusGuides.toString() + "-" + totalNoCharge.toString() + "=" + MultiplyByAfterSibsud.toString()
+      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
+        // if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
+        var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides ?
+          MultiplyByAmountOrPeople - this.squadAssembleService.tripInfofromService.trip.numGuides : MultiplyByAmountOrPeople
 
-          itemOrder.internalComment += addToCommentMultipleStr
-        }
+        // }
+        // חישוב מספר משתתפים לחיוב - לאחר סבסוד
+        MultiplyByAfterSibsud = MultiplyByPeopleMinusGuides > 0 ? MultiplyByPeopleMinusGuides - Math.floor(MultiplyByPeopleMinusGuides / 25) : 0
+        totalNoCharge = MultiplyByPeopleMinusGuides > 0 ? Math.floor(MultiplyByPeopleMinusGuides / 25) : 0
+        itemOrder.billingCustomer = item?.costCustomer * MultiplyByAfterSibsud   // חישוב חיוב לקוח לאחר סבסוד
+        addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAfterSibsud?.toString() + "*" + item?.costCustomer
+        itemOrder.internalComment = ParticipantsOrAmount + "כמות משתתפים ללא מדריכים" + MultiplyByPeopleMinusGuides.toString()
+        if (totalNoCharge > 0)
+          itemOrder.internalComment += ", מהם: " + totalNoCharge?.toString() + "סה''כ ארוחות לחיוב " + "  ללא חיוב " + MultiplyByPeopleMinusGuides.toString() + "-" + totalNoCharge.toString() + "=" + MultiplyByAfterSibsud.toString()
+
+        itemOrder.internalComment += addToCommentMultipleStr
       }
       else // פריט שמוגדר לפי כמות או טיול של השתלמות מדריכים
       {
@@ -249,15 +251,15 @@ export class AdditionsService {
 
     //   ------------------------אבטחה-----------------------------------------------------------
     else if (item?.orderType == 2) {
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) { // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
+      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) { // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // סבסוד עלות ללקוח מופעל רק עבור פריטים שמוגדרים לפי משתתפים
         // בהזמנות אבטחה לפי משתתפים - יש להוריד בחיוב לקוח את המדריכים
         if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
           MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides ?
             MultiplyByAmountOrPeople - this.squadAssembleService.tripInfofromService.trip.numGuides : MultiplyByAmountOrPeople
           // חישוב מספר משתתפים לחיוב - לאחר סבסוד
-          MultiplyByAfterSibsud = MultiplyByAmountOrPeople > 0 ? 0 : MultiplyByAmountOrPeople - (MultiplyByAmountOrPeople / 25)
-          totalNoCharge = MultiplyByAmountOrPeople > 0 ? MultiplyByAmountOrPeople / 25 : 0
+          MultiplyByAfterSibsud = MultiplyByPeopleMinusGuides > 0 ? (MultiplyByPeopleMinusGuides - Math.floor(MultiplyByPeopleMinusGuides / 25)) : 0
+          totalNoCharge = MultiplyByAmountOrPeople > 0 ? Math.floor(MultiplyByAmountOrPeople / 25) : 0
           itemOrder.billingCustomer = item?.costCustomer * MultiplyByAfterSibsud * MultiplyByDays  // חישוב חיוב לקוח לאחר סבסוד
           addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAfterSibsud?.toString() + "*" + item?.costCustomer + "*" + MultiplyByDays?.toString()
           itemOrder.internalComment = ParticipantsOrAmount + "כמות משתתפים עם מדריכים" + MultiplyByPeopleMinusGuides?.toString()
@@ -276,7 +278,8 @@ export class AdditionsService {
     else if (item?.orderType == 1) {
       // היסעים - צריך להיות תמיד לפי כמות
       // אם סוג פעילות: "עבודה תורמת" או "מחזון להגשמה" - החיוב ללקוח אמור להיות רק 50%
-      if (this.squadAssembleService?.tripInfofromService.trip.activity.id == 23 || this.squadAssembleService?.tripInfofromService.trip.activity.id == 38) {
+      // if (this.squadAssembleService?.tripInfofromService.trip.activity.id == 23 || this.squadAssembleService?.tripInfofromService.trip.activity.id == 38) {
+      if (this.squadAssembleService?.tripInfofromService.trip.activity.id == 38) {
         itemOrder.billingCustomer = item?.costCustomer * 0.5
         addToCommentMultipleStr = "עם סבסוד" + "מכפלת החיוב " + itemOrder.quantity + "*" + item?.costCustomer + "*0.5" + "*" + MultiplyByDays.toString()
         itemOrder.internalComment = "סבסוד קקל לפעילות חינוכית" + this.squadAssembleService.tripInfofromService.trip.activity.name + ", " + "עלות הפריט: " + item?.costCustomer
@@ -288,19 +291,19 @@ export class AdditionsService {
     }
     //----------------------הדרכה------------------------------------------------------------
     else if (item?.orderType == 6) {
-      //עבודה תורמת המדריכים בחינם ללקוח       
-      if (this.squadAssembleService.tripInfofromService.trip.activity.id = 23) {
-        itemOrder.billingCustomer = 0
-        itemOrder.internalComment = "בטיול מסוג עבודה תורמת אין חיוב ללקוח עבור הדרכה"
-      }  //מחזון להגשמה המדריכים בחינם ללקוח       
-      else if (this.squadAssembleService.tripInfofromService.trip.activity.id == 38) {
+      // //עבודה תורמת המדריכים בחינם ללקוח       
+      // if (this.squadAssembleService.tripInfofromService.trip.activity.id = 23) {
+      //   itemOrder.billingCustomer = 0
+      //   itemOrder.internalComment = "בטיול מסוג עבודה תורמת אין חיוב ללקוח עבור הדרכה"
+      // }      
+      // else  //מחזון להגשמה המדריכים בחינם ללקוח  
+      if (this.squadAssembleService.tripInfofromService.trip.activity.id == 38) {
         itemOrder.billingCustomer = 0
         itemOrder.internalComment = "בטיול מסוג מחזון להגשמה אין חיוב ללקוח עבור הדרכה"
       }
     }
     //-----------------------------------חבילות-----------------------------------------------
-    else if (item?.orderType == 88)
-      itemOrder.internalComment += "חיוב לפי חבילה: " + item?.name
+    // else if (item?.orderType == 88) itemOrder.internalComment += "חיוב לפי חבילה: " + item?.name
 
     //-------------------------------כל שאר סוגי ההזמנות--------------------------------------
     else {
@@ -312,8 +315,28 @@ export class AdditionsService {
       }
     }
     itemOrder.quantity = itemOrder.quantity.toString();
-    console.log('timmeeeeee')
     return itemOrder;
   }
+  globalValidations(form) {
+    if (this.generalFormService.originalItemList.length > 0) {
+      var item = this.generalFormService.originalItemList.find(el => el.id.toString() === form.value.details['itemId']);
+    }
+    if (form.status !== 'VALID') {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    if (item?.participantsLimit < form.value.details['peopleInTrip']) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'פריט זה מוגבל במספר משתתפים: ' + item?.participantsLimit, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    return true;
+  }
+
 }
 

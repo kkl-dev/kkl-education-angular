@@ -42,5 +42,6 @@ export interface OrderItemCommonDetails {
     comments?: string;
     internalComment?: string;
     openDate?: string;
+    isVat?: boolean | null;
 }
 

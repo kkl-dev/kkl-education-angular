@@ -1,3 +1,4 @@
+
 import { Component, OnInit ,Input,OnDestroy} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
@@ -27,7 +28,6 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
   itemId: number;
   supplierListSub: Subscription;
   supplierSub: Subscription
-
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -37,17 +37,18 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
   };
 
   ngOnInit(): void {
-    this.tripId=this.squadAssembleService.tripInfofromService.trip.id;
+    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.generalFormService.clearFormFields();
      this.generalFormService.setDatesValues();
     this.getSupplierList(this.orderType, this.tripId, 0);
 
+
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-    this.generalFormService.itemsList=[]
-    let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
-    this.generalFormService.details[itemIndex].inputProps.options= this.generalFormService.itemsList;
+    this.generalFormService.itemsList = []
+    let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+    this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     if (this.item != undefined && this.item != null) {
       if(this.item.globalParameters.supplierId!= undefined ){
         this.supplierId= this.item.globalParameters.supplierId;
@@ -55,12 +56,12 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
       }
       this.generalFormService.setFormValues(this.item);
     }
-    else{
-      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+    else {
+      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
     }
     this.setformTemplate();
-   
+
   }
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
@@ -83,7 +84,7 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
     let endHourIndex = tempArr.findIndex(el => el.key === 'endHour');
     tempArr[endHourIndex].label = 'עד שעה';
     let locationIndex = tempArr.findIndex(el => el.key === 'location');
-    tempArr[locationIndex].label =  'כתובת האתר';
+    tempArr[locationIndex].label = 'כתובת האתר';
     return tempArr;
   }
 
@@ -118,12 +119,20 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
 
   public onSave(): void {
     if (this.form) {
-      // if (!this.validationsEconomy()) { return; }
+      if (this.form.status === 'VALID') {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+        return;
+      }
+      if (!this.additionsService.globalValidations(this.form)) { return; }
+      if (!this.validationsSite()) { return; }
       this.editMode = true;
       let orderId;
-      if(this.generalFormService.economyOrderList.length>0){
-        orderId= this.generalFormService.economyOrderList[0].order.orderId
-     }
+      if (this.generalFormService.economyOrderList.length > 0) {
+        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      }
       var site = {} as SiteOrder;
       site.globalParameters = {} as OrderItemCommonDetails;
       site.order = {} as Order;
@@ -132,44 +141,53 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
       site.order.orderType = {} as OrderType;
       Object.keys(this.form.value.details).map((key, index) => {
         if (key !== 'siteCode' && key !== 'siteAddress' && key !== 'totalHours' && key !== 'isCustomerOrder') {
-          if( key !='startDate' && key!='endDate'){
+          if (key != 'startDate' && key != 'endDate') {
             site.globalParameters[key] = this.form.value.details[key]
-          } else{
-            if(key=='startDate'){
-              site.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
-             }
-             if(key=='endDate'){
-              site.globalParameters[key]= this.generalFormService.changeDateFormat(this.form.value.details[key],'UTC')
-             }
+          } else {
+            if (key == 'startDate') {
+              site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+            }
+            if (key == 'endDate') {
+              site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+            }
           }
         }
-        else{
+        else {
 
         }
-       
+
       });
-      site.globalParameters['startHour']= this.setDateTimeFormat(site.globalParameters.startDate,site.globalParameters.startHour);
-      site.globalParameters['endHour'] = this.setDateTimeFormat(site.globalParameters.endDate,site.globalParameters.endHour);
+      site.globalParameters['startHour'] = this.setDateTimeFormat(site.globalParameters.startDate, site.globalParameters.startHour);
+      site.globalParameters['endHour'] = this.setDateTimeFormat(site.globalParameters.endDate, site.globalParameters.endHour);
       site.globalParameters['comments'] = this.form.value.comments.comments;
-      site.globalParameters.orderId=orderId;
+      site.globalParameters.orderId = orderId;
       site.order.supplier.id = +this.form.value.details.supplierId;
       site.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       site.order.orderType.name = 'אתרים';
       site.order.orderType.id = 3;
       // if(this.item.globalParameters.tempOrderIdentity!= undefined)
       //  site.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
-      this.generalFormService.addOrder(site,site.order.orderType.id);
+      this.generalFormService.addOrder(site, site.order.orderType.id);
       this.form.disable({ emitEvent: false });
     }
   }
+  validationsSite() {
+    if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === undefined || this.form.value.details['peopleInTrip'] === "") {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'חובה לציין את מספר המשתתפים באתר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    return true;
+  }
+  setDateTimeFormat(date, hour) {
+    let str = date.split("T");
+    let hourFormat = str[0] + 'T' + hour;
+    return hourFormat;
+  }
 
-   setDateTimeFormat(date,hour){
-    let str= date.split("T");
-    let hourFormat= str[0]+'T'+hour;
-     return hourFormat;
-   }
-
-   public onEdit() {
+  public onEdit() {
     this.editMode = false;
     this.form.enable();
   }
@@ -188,26 +206,26 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
         console.log(value);
         this.generalFormService.getOrderItemBySupplierId(value);
       });
-     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-       console.log(value)
+    this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
       let itemCost = Math.floor(item.cost);
       this.form.controls["details"].get('itemCost').patchValue(itemCost);
-       console.log(this.form.value.details);
-       let form = this.additionsService.calculateBillings(this.form.value.details);
-       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
-       
+      console.log(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+
     });
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);   
-   });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+    });
 
     console.log(this.form)
-   
+
   }
 
   ngOnDestroy() {
