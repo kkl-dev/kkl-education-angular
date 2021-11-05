@@ -47,7 +47,8 @@ export class TransportFormComponent implements OnInit , OnDestroy {
   };
    indexFormChanged: number;
    isItemFull: boolean;
-   flag: boolean =false
+   flag: boolean =false;
+   isEditable : boolean= false;
 
   constructor(private generalFormService: GeneralFormService, private transportService: TransportService, private additionsService: AdditionsService,
     private orderService: OrderService, private _dialog: MatDialog, private squadAssembleService: SquadAssembleService) { }
@@ -226,10 +227,9 @@ export class TransportFormComponent implements OnInit , OnDestroy {
   public onSave(): void {
     if (this.form) {
 
-      if (!this.additionsService.globalValidations(this.form)) { return; }
-      if (!this.validationsTransport()) { return; }
+      //if (!this.additionsService.globalValidations(this.form)) { return; }
+      //if (!this.validationsTransport()) { return; }
       this.editMode = true;
-
 
       let orderId;
       if (this.generalFormService.transportOrderList.length > 0) {
@@ -273,8 +273,10 @@ export class TransportFormComponent implements OnInit , OnDestroy {
       t.order.orderType.id = 1;
       if (this.item.globalParameters.tempOrderIdentity != undefined)
         t.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-
+      if(!this.isEditable)
       this.generalFormService.addOrder(t, t.order.orderType.id);
+      else
+      this.generalFormService.editOrder(t, t.order.orderType.id);
       this.form.disable({ emitEvent: false });
       this.editMode = true;
 
@@ -373,6 +375,7 @@ export class TransportFormComponent implements OnInit , OnDestroy {
   public onEdit() {
     console.log('I am edit');
     this.editMode = false;
+    this.isEditable=true;
     this.form.enable({ emitEvent: false });
   }
   
