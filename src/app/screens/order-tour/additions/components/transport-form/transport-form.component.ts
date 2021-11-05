@@ -83,6 +83,7 @@ export class TransportFormComponent implements OnInit , OnDestroy {
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
       //this.setformTemplate();
+    }
 
     this.getSupplierList(this.orderType, this.tripId, 0);
     //this.getSettelments();
