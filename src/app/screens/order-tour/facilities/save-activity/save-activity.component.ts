@@ -31,6 +31,10 @@ export class SaveActivityComponent implements OnInit {
     { name: 'כלכלה', completed: false, svg: 'dinner' },
     // { name: 'הפעלה מוסיקלית', completed: false , svg:'music' },
   ];
+
+  @Input() public additonsType2: any[] = [
+    { name: 'הסעה', completed: false, svg: 'bus' }
+  ];
   // @Input() days: any[] = DAYS;
   @Input() days: any[] = this.tripService.facilitiesArray;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
@@ -110,11 +114,11 @@ export class SaveActivityComponent implements OnInit {
         'invitingCustomer': new FormControl(false),
         'additions': new FormControl(),
         'haveAdditions': new FormControl(true),
-        'svgUrl': new FormControl(data.iconPath) || null,
+        'svgUrl': new FormControl('assets/images/' + data.iconPath) || null,
         'img': new FormControl(data.sitePicture),
         'activityId': new FormControl(data.activityId),
-        'description': new FormControl(data.description) || null
-        
+        'description': new FormControl(data.description) || null,
+        'itemId': new FormControl(data.itemId) || null,        
       });
     } else {
       this.updateForm = true;

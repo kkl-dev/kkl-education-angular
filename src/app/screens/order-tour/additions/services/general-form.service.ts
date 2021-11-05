@@ -419,7 +419,7 @@ export class GeneralFormService {
 
 
    addOrder(item: any,orderType) {  
-      this.orderService.addOrder(4, item).subscribe(res => {
+      this.orderService.addOrder(4,item).subscribe(res => {
         console.log(res);  
         this.addToOrderList(res,orderType);
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {

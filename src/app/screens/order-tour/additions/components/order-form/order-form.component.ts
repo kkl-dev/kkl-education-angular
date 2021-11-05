@@ -46,7 +46,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   getSupplierByOrderType() {
-    this.orderService.getSupplierByOrderType(1, 1, 4).subscribe(
+    this.orderService.getSupplierByOrderType(1, 1,4).subscribe(
       response => {
         console.log(response);
         let index = this.transportService.details.findIndex(el => el.key === "supplier");

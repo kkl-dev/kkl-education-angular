@@ -10,7 +10,7 @@ import { Component, Input, OnInit ,Output ,EventEmitter } from '@angular/core';
 export class ActivitiesCardComponent implements OnInit {
   @Input() public obj:ActivitiesCardInterface;
   @Output() public buttonClicked:EventEmitter<any> =  new EventEmitter();
-  defaultImage: string = 'assets/images/img-3.png';
+  defaultImage: string = 'assets/images/img-2.png';
 
   constructor() {}
 

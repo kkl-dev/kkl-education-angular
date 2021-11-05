@@ -80,7 +80,6 @@ export class FacilitiesConvertingService {
       // if (arr[i].type == "facility") {
       //check if goes into tempOrderArr
       if (arr[i].svgUrl && !arr[i].additions) {
-
         if (arr[i].facilityId) {
           orderTypeCode = 7;
           orderTypeName = 'אירוח/פעילות';
@@ -94,26 +93,25 @@ export class FacilitiesConvertingService {
           "endDate": arr[i].end,
           "fromHour": arr[i].start,
           "tillHour": arr[i].end,
-          "userName": userName
+         // "userName": userName
         }
         tempOrderArr.push(tempOrder);
       }
       else {
         activity = {
-          "activityId": arr[i].activityId,
-          "activityName": arr[i].title,
+          "activityId": arr[i].activityId || 1,
+          "activityName": arr[i].title || '',
           "date": arr[i].start,
           "description": arr[i].description || '',
           "fromHour": arr[i].start,
           "tillHour": arr[i].end,
           "tripId": tripId,
-          "userName": userName
+         // "userName": userName
         }
         activityArr.push(activity);
       }
       if (arr[i].additions) {
         for (let j = 0; i < arr[i].additions.length; j++) {
-
           switch (arr[i].additions[j].name) {
             case "הסעה":
               orderTypeCode = 1
@@ -125,7 +123,7 @@ export class FacilitiesConvertingService {
               break;
             case "כלכלה":
               orderTypeCode = 4
-              orderTypeName = 'היסעים'
+              orderTypeName = 'כלכלה'
               break;
 
             default:
@@ -133,67 +131,94 @@ export class FacilitiesConvertingService {
               orderTypeName = 'לא ידוע'
               break;
           }
-
           tempOrder = {
             "tripId": tripId,
             "orderTypeCode": orderTypeCode,
             "orderTypeName": orderTypeName,
-            //"itemId": null,
+            "itemId": arr[i].itemId,
             "startDate": arr[i].start,
             "endDate": arr[i].end,
             "fromHour": arr[i].start,
             "tillHour": arr[i].end,
-            "userName": userName
+            //"userInfo": userName
           }
           tempOrderArr.push(tempOrder);
         }
       }
     }
-
-    // if (arr[i].title == 'התייצבות') {
-    //   tempOrder = {
-    //     "tripId": this.squadAssembleService.tripInfofromService.trip.id,
-    //     "orderTypeCode": 1,
-    //     "orderTypeName": "היסעים",
-    //     "itemId": arr[i].id || null,
-    //     "startDate": arr[i].start,
-    //     "endDate": arr[i].end,
-    //     "fromHour": arr[i].start,
-    //     "tillHour": arr[i].end,
-    //     "userName": "גל שחר"
-    //   }
-    //   tempOrderArr.push(tempOrder);
-    // }
-    // if (arr[i].title == 'ארוחת בוקר' || arr[i].title == 'ארוחת צהרים' || arr[i].title == 'ארוחת ערב') {
-    //   tempOrder = {
-    //     "tripId": this.squadAssembleService.tripInfofromService.trip.id,
-    //     "orderTypeCode": 4,
-    //     "orderTypeName": "כלכלה",
-    //     // "itemId": arr[i].id || null,
-    //     "startDate": arr[i].start,
-    //     "endDate": arr[i].end,
-    //     "fromHour": arr[i].start,
-    //     "tillHour": arr[i].end,
-    //     "userName": "גל שחר"
-    //   }
-    //   tempOrderArr.push(tempOrder);
-    // }
-
-    //   activity = {
-    //     "activityId": arr[i].activityId,
-    //     "activityName": arr[i].title,
-    //     "date": "2021-11-12T00:00:00",
-    //     "description": "students education",
-    //     "fromHour": arr[i].start,
-    //     "tillHour": arr[i].end,
-    //     "tripId": tripId,
-    //     "userName": "גל שחר"
-    //   }
-    //   activityArr.push(activity);
-    // }
     calendar.tripId = tripId;
     calendar.tempOrderList = tempOrderArr;
     calendar.activityList = activityArr;
     return calendar;
+  }
+
+
+  convertTempOrderListforTripCalendar(tempOrderList: any) {
+    let newTempOrderObj = {
+      availability: [],
+      backgroundColor: "#F0F6FE",
+      className: "border-facilities",
+      date: "",
+      end: tempOrderList.tillHour,
+      facilityId: tempOrderList.itemId,
+      selectedDay: 0,
+      start: tempOrderList.fromHour,
+      svgUrl: "assets/images/defaultFacility.svg",
+      title: "temp title",
+      type: "facility"
+    };
+
+    // for (let i = 0; i < arr.length; i++) {
+    //   console.log(arr[i]);
+    //   if (arr[i].svgUrl && !arr[i]) {
+    //     tempOrder = {
+    //       availability: [],
+    //       backgroundColor: "#F0F6FE",
+    //       className: "border-facilities",
+    //       date: "",
+    //       end: arr[i].tillHour,
+    //       facilityId: 1825,
+    //       selectedDay: 0,
+    //       start: arr[i].fromHour,
+    //       svgUrl: "assets/images/de",
+    //       title: "מתחם הפרגולה(עד 100 משתתפים)",
+    //       type: "facility"
+    //     }
+    //     tempOrderArr.push(tempOrder);
+    //   }
+    //   else {
+    //     activity = {
+    //       "activityId": arr[i].activityId,
+    //       "activityName": arr[i].title,
+    //       "date": arr[i].start,
+    //       "description": arr[i].description || '',
+    //       "fromHour": arr[i].start,
+    //       "tillHour": arr[i].end,
+    //       "tripId": tripId,
+    //       "userName": userName
+    //     }
+    //     activityArr.push(activity);
+    //   }
+    //   if (arr[i].additions) {
+    //   }
+    // }
+    return newTempOrderObj;
+  }
+
+  convertActivityListforTripCalendar(activityList: any) {
+    let newActivityListObj = {
+      availability: [],
+      backgroundColor: "#f0f9f1",
+      className: "border-activities",
+      date: activityList.date,
+      end: activityList.tillHour,
+      facilityId: activityList.itemId,
+      selectedDay: 0,
+      start: activityList.fromHour,
+      svgUrl: "assets/images/defaultFacility.svg",
+      title: activityList.activityName,
+      type: "activity"
+    };
+    return newActivityListObj;
   }
 }

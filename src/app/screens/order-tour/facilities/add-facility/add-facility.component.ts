@@ -90,7 +90,8 @@ export class AddFacilityComponent implements OnInit {
         'type': new FormControl('facility'),
         // 'maxParticipants': new FormControl(),
         'availability': new FormControl(data.occupiedHours),
-        'svgUrl': new FormControl(data.iconPath),
+        // 'svgUrl': new FormControl(data.iconPath),
+        'svgUrl': new FormControl('assets/images/' + data.iconPath) || null,
         'facilityId': new FormControl(data.id || null)
       });
     } else {

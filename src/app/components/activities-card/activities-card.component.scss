@@ -28,6 +28,12 @@
         margin: 0 auto;
     }
     ::ng-deep .mat-card-actions {
+        // yak added
+        position: absolute;
+        bottom: 20px;
+        left: 25px;
+        // yak added
+
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;

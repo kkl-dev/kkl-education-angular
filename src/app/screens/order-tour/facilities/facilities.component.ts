@@ -55,45 +55,43 @@ export class FacilitiesComponent implements OnInit {
     {
       iconPath: 'fruits.svg',
       name: 'ארוחת ערב',
+      itemId: 3
     },
     {
       iconPath: 'roast-chicken.svg',
       name: 'ארוחת צהריים',
+      itemId: 164
     },
     {
       iconPath: 'restaurant.svg',
       name: 'ארוחת בוקר',
+      itemId: 1
     },
     {
       iconPath: 'alarm.svg',
       name: 'השכמה',
+      itemId: null
     },
     {
       iconPath: 'bus-with-flag.svg',
       name: 'התייצבות',
-    },
-    {
-      iconPath: 'fruits.svg',
-      name: 'ארוחת ערב',
-    },
-    {
-      iconPath: 'alarm.svg',
-      name: 'השכמה',
-    },
+      itemId: null
+    }
   ];
+
+  activityList: any;
+  tempOrderList: any;
 
   constructor(private facilitiesService: FacilitiesService, private usersService: UserService, private tripService: TripService,
     private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService,
     private userDataService: UserDataService, private orderService: OrderService, private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
-
     try {
       this.tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
     } catch (error) {
       console.log(error);
     }
-
     this.getAvailableFacilities();
     this.fillTimes();
     this.getAreas();
@@ -101,7 +99,7 @@ export class FacilitiesComponent implements OnInit {
     this.getTripActivities();
     this.setFormArray();
     this.getOrderService();
-
+    this.getTripCalendar();
 
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
@@ -119,7 +117,6 @@ export class FacilitiesComponent implements OnInit {
       error => {
         console.log("error in get Order Types : ", { error });
       });
-    
   }
 
   private setFormArray() {
@@ -135,13 +132,13 @@ export class FacilitiesComponent implements OnInit {
       new QuestionSelect({
         key: 'areas',
         label: 'אזור',
-        validations: [Validators.required],
+        // validations: [Validators.required],
         inputProps: { options: this.areas }
       }),
       new QuestionSelect({
         key: 'typeOfActivity',
         label: 'סוג פעילות',
-        validations: [Validators.required],
+        // validations: [Validators.required],
         inputProps: { options: this.activityCategories }
       }),
       new QuestionAutocomplete({
@@ -149,7 +146,7 @@ export class FacilitiesComponent implements OnInit {
         label: 'חפש פעילות',
         cols: 1,
         value: '',
-        validations: [Validators.required],
+        // validations: [Validators.required],
         inputProps: {
           options: this.tripActivitiesShow
         },
@@ -186,7 +183,8 @@ export class FacilitiesComponent implements OnInit {
     this.activitiyService.getTripActivities().subscribe(res => {
       console.log("get Trip Activities res: ", { res });
       this.calculatePages(res.length);
-      let a = this.facilitiesConvertingService.convertTripActivities(res);
+      let tripActivitiesConverted = this.facilitiesConvertingService.convertTripActivities(res);
+      console.log('tripActivitiesConverted: ', tripActivitiesConverted);
       this.tripActivitiesInfoTotal = res;
       this.tripActivitiesFilter = res;
       this.pagesToShow(1);
@@ -263,16 +261,16 @@ export class FacilitiesComponent implements OnInit {
     }
     console.log("tripActivitiesInfo: ", this.tripActivitiesInfo);
     // this.tripActivitiesInfo = this.tripActivitiesInfoTotal;
-    // console.log("tripActivitiesInfo: ", this.tripActivitiesInfo );
+    console.log("tripActivitiesInfo: ", this.tripActivitiesInfo);
   }
 
   updateTrip() {
-    let userName = this.userDataService.user.name || 'שחר גל';
+    let userInfo = this.userDataService.user.name || 'שחר גל';
     let events: any = this.eventsArr;
-    this.activitiyService.updateTripActivities(userName, events).subscribe((tripCalendar: any) => {
+    this.activitiyService.updateTripActivities(userInfo,events).subscribe((tripCalendar: any) => {
       console.log('update Trip Activities: ', tripCalendar);
       if (tripCalendar) {
-          //....
+        //....
       }
     },
       error => {
@@ -282,10 +280,31 @@ export class FacilitiesComponent implements OnInit {
 
   getTripCalendar() {
     let tripId = 52896;
+    try {
+      tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
+    } catch (error) {
+      console.log(error);
+    }
     this.activitiyService.getTripCalendar(tripId).subscribe((tripCalendar: any) => {
       console.log('get Trip Calendar: ', tripCalendar);
       if (tripCalendar) {
-          //....
+        this.activityList = tripCalendar.activityList;
+        this.tempOrderList = tripCalendar.tempOrderList;
+        let newTempOrderObj: any;
+        let newTempActivityList: any;  
+
+         // add to calender
+        for (let i = 0; i < this.tempOrderList.length; i++) {
+          console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
+          newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListforTripCalendar(this.tempOrderList[i]);
+          this.addToCalendar(newTempOrderObj);
+        }
+
+        for (let i = 0; i < this.activityList.length; i++) {
+          console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
+          newTempActivityList = this.facilitiesConvertingService.convertActivityListforTripCalendar(this.activityList[i]);
+          this.addToCalendar(newTempActivityList);
+        }
       }
     },
       error => {
@@ -294,16 +313,14 @@ export class FacilitiesComponent implements OnInit {
   }
 
   calculatePages(num) {
-    //this.pagesAmount = num / 6;
     console.log("num: ", num);
     var quotient = Math.floor(num / 6);
     var remainder = num % 6;
     this.pagesAmount = quotient + remainder;
   }
 
-  public addToCalendar(event: any): void {
+  addToCalendar(event: any): void {
     console.log("addToCalendar: ", event);
-
     const tmpObj: EventInput = {
       id: `${this.eventsArr.length}`,
       textColor: 'black',
@@ -316,7 +333,7 @@ export class FacilitiesComponent implements OnInit {
     this.facilitiesService.updateCalendarEventsArr(tmpObj);
   }
 
-  public openModal(args: string): void {
+  openModal(args: string): void {
     this.facilitiesService.closeModal(args);
     console.log('openModal args: ' + args)
   }
