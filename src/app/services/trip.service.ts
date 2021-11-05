@@ -390,7 +390,7 @@ export class TripService {
   }
 
   getActivityLookupsByAttribute(attributeId: number, userId: string) {
-    this.userService.getActivityByAttribute(attributeId, userId).subscribe(
+    this.userService.getActivityByAttribute(attributeId,userId).subscribe(
       response => {
         this.activityByAttributeOriginal = response;
         response.forEach(element => {

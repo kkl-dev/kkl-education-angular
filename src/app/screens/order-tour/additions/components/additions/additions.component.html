@@ -11,7 +11,7 @@
         הוסף פריט
       </button>
     </div>
-    <app-tour-title [value]="tour.title" [id]="tour.id"></app-tour-title>
+    <app-tour-title [value]="tour.title" [id]="tripId"></app-tour-title>
     <!-- <div *ngIf="!items"> -->
     <div *ngIf="addItem">
       <!-- addSchedule -->
@@ -24,5 +24,8 @@
     <div *ngFor="let item of items ; index as i">
       <app-tour-panel [editMode]="false" [orderType]="orderType" [item]="item" [i]="i + 1"></app-tour-panel>
     </div>
+    <!-- <div>
+      <button (click)="test()">test</button>
+    </div> -->
   </div>
 </div>

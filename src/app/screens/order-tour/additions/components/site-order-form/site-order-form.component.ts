@@ -104,7 +104,7 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
 
   getSupplierByOrderType(orderTypeId) {
     let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    this.supplierSub= this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
+    this.supplierSub= this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId,4).subscribe(
       response => {
         console.log(response);
         this.supplierId= response.id;
