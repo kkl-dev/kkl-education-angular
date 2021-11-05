@@ -24,7 +24,7 @@ export class SummaryComponent implements OnInit {
   constructor(private squadAssembleService: SquadAssembleService, private userService: UserService) { }
 
   ngOnInit(): void {
-    // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
 
     // this.tripId = 52973;
     // this.tripId = 52979;
@@ -32,7 +32,7 @@ export class SummaryComponent implements OnInit {
     // this.tripId = 52974;
     // this.tripId = 52975;
     // this.tripId =52977;
-    this.tripId = 52990;
+    // this.tripId = 52990;
 
     // this.tripDetails = this.JSON_OrderDetails;
 
