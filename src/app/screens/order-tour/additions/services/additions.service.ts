@@ -195,7 +195,7 @@ export class AdditionsService {
 
     if (item?.orderType == 7) {
       // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים  
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) {
+      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {
         // סבסוד עלות ללקוח מופעל רק עבור פריטים שמוגדרים לפי משתתפים
         // חישוב מספר משתתפים לחיוב - לאחר סבסוד
         MultiplyByAfterSibsud = MultiplyByAmountOrPeople > 0 ? (MultiplyByAmountOrPeople - (MultiplyByAmountOrPeople / 25)) : 0
@@ -222,7 +222,7 @@ export class AdditionsService {
         // itemOrder.billingSupplier = (currentVat / 100) + 1
         itemOrder.billingSupplier *= currentVat;
       } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
+      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
         var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides ?
           MultiplyByAmountOrPeople - this.squadAssembleService.tripInfofromService.trip.numGuides : MultiplyByAmountOrPeople
@@ -251,7 +251,7 @@ export class AdditionsService {
 
     //   ------------------------אבטחה-----------------------------------------------------------
     else if (item?.orderType == 2) {
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1) { // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
+      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) { // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // סבסוד עלות ללקוח מופעל רק עבור פריטים שמוגדרים לפי משתתפים
         // בהזמנות אבטחה לפי משתתפים - יש להוריד בחיוב לקוח את המדריכים
         if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
