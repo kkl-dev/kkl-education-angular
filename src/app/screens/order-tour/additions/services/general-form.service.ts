@@ -39,8 +39,11 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        options: this.supplierList,
-
+        //  options: this.supplierList,
+        options: [
+          { label: 'solid', value: '1' },
+          { label: 'great', value: '2' },
+        ],
       },
     }),
     new QuestionSelect({
@@ -102,12 +105,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        // options: [
-        //   { label: 'יום 1', value: '1' },
-        //   { label: 'יום 2', value: '2' },
-        //   { label: 'יום 3', value: '3' },
-        //   { label: 'יום 4', value: '4' },
-        // ],
+  
       },
     }),
     new QuestionSelect({
@@ -117,12 +115,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        // options: [
-        //   { label: 'יום 1', value: '1' },
-        //   { label: 'יום 2', value: '2' },
-        //   { label: 'יום 3', value: '3' },
-        //   { label: 'יום 4', value: '4' },
-        // ],
+       
       },
     }),
     new QuestionTextbox({
@@ -338,6 +331,10 @@ export class GeneralFormService {
       let startDate =data.globalParameters.startDate;
       let endDate = data.globalParameters.endDate;
       control.value = data.globalParameters[control.key];
+      if(control.key=='itemId'){
+        if(data.globalParameters[control.key]!= undefined)
+        control.value= data.globalParameters[control.key].toString();
+      }
       if(control.key=='peopleInTrip'){
         control.value=this.squadAssembleService.peopleInTrip;
       }
@@ -538,7 +535,7 @@ export class GeneralFormService {
     }
 
    addOrder(item: any,orderType) {  
-      this.orderService.addOrder(4, item).subscribe(res => {
+      this.orderService.addOrder( 4,item).subscribe(res => {
         console.log(res);  
         this.addToOrderList(res,orderType);
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
@@ -617,7 +614,8 @@ export class GeneralFormService {
          let tempOrderId= res[0].globalParameters.tempOrderIdentity;
          if(temp[orderTypeId][i].orderTempId==tempOrderId){
           temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
-          temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId
+          temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
+          temp[orderTypeId].splice(i, 1);
          }
       }
       this.updateTempOrderReduce(temp);

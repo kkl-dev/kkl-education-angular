@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
-import { details, summery, supplier, transportColumns } from 'src/mock_data/additions';
+import { transportColumns, details, summery, supplier } from 'src/mock_data/additions';
+
 export interface TableData {
   columns?: TableCellModel[];
   rows: TableCellModel[][];

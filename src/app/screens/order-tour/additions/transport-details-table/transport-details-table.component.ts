@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
-import { columns, details, summery, supplier } from 'src/mock_data/additions';
+//import { columns, details, summery, supplier } from 'src/mock_data/additions';
+import { transportColumns, details, summery, supplier } from 'src/mock_data/additions';
 
 export interface TableCell {
   key?: string;
@@ -33,7 +34,7 @@ export interface supplierRoW {
 export class TransportDetailsTableComponent implements OnInit {
   public col: number = 10;
 
-  public columns: TableCellModel[] = columns;
+  public columns: TableCellModel[] = transportColumns;
 
   private details: TableCellModel[] = this.formatData(details);
 

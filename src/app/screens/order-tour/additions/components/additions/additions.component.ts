@@ -33,6 +33,7 @@ export class AdditionsComponent implements OnInit {
   public item: any;
   public addItem: boolean = false;
   tripId: number;
+  tourTitle: any;
   orderType: number = 1;
 
   public tempOrderReduce: any;
@@ -45,19 +46,9 @@ export class AdditionsComponent implements OnInit {
   ngOnInit(): void {
 
 
-    if (this.squadAssembleService.tripInfofromService) {
-      this.tour.id = this.squadAssembleService.tripInfofromService.trip.id;
-      this.tour.title = this.squadAssembleService.tripInfofromService.trip.tripDescription;
-      this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    }
-    else {
-      let retrievedObject = localStorage.getItem('tripInfofromService');
-      let retrievedObj = JSON.parse(retrievedObject);
-      this.tour.id = retrievedObj.trip.id;
-      this.tripId = retrievedObj.trip.id;
-      console.log('retrievedObject: ', retrievedObj);
-    }
-
+    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+   
+    this.tourTitle= this.squadAssembleService.tripInfofromService.trip.tripDescription;
 
     this.getOrders();
     this.getTempOrder();
@@ -71,16 +62,22 @@ export class AdditionsComponent implements OnInit {
 
   public onAdd() {
     // this.item = {} as OrderEvent;
-    if ((this.orderType === 1 || this.orderType === 2 || this.orderType === 6) && this.items.length > 10) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'שים לב שכמות הפריטים בהזמנה גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-    }
+
+    // if (this.orderType === 1 && this.items.length > 10) {
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //   })
+    // }
+
     this.addItem = true;
   }
+
+  test(){
+    this.addItem = false;
+  }
   getOrders() {
-    this.orderService.getOrders(this.tour.id).subscribe(res => {
+    this.orderService.getOrders(this.tripId).subscribe(res => {
       console.log(res);
       this.generalFormService.mapOrderList(res);
     }, (err) => {
@@ -90,7 +87,7 @@ export class AdditionsComponent implements OnInit {
   getTempOrder() {
 
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id
-    //this.tripId= 52973;
+   // this.tripId= 52973;
     this.orderService.getTempOrders(this.tripId).subscribe(
       response => {
         console.log(response);

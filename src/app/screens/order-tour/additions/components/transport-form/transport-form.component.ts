@@ -14,6 +14,7 @@ import { SquadAssembleService } from '../../../squad-assemble/services/squad-ass
 import { distinctUntilChanged } from 'rxjs/operators';
 import { keyframes } from '@angular/animations';
 import { Subscription } from 'rxjs';
+import { details, summery, supplier, transportColumns } from 'src/mock_data/additions';
 
 @Component({
   selector: 'app-transport-form',
@@ -31,15 +32,22 @@ export class TransportFormComponent implements OnInit , OnDestroy {
   public columns: TableCellModel[];
   tripId: number;
   originalItemList = [];
+  itemsList =[]
   supplierId : number;
   itemId: number;
+  centerFieldId: number;
   supplierListSub: Subscription;
   settlementSub : Subscription;
-  supplierSub: Subscription
+  supplierSub: Subscription;
+  itemListSub:  Subscription;
+  //transQuestions:any [];
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
   };
+   indexFormChanged: number;
+   isItemFull: boolean;
+   flag: boolean =false
 
   constructor(private generalFormService: GeneralFormService, private transportService: TransportService, private additionsService: AdditionsService,
     private orderService: OrderService, private _dialog: MatDialog, private squadAssembleService: SquadAssembleService) { }
@@ -54,31 +62,44 @@ export class TransportFormComponent implements OnInit , OnDestroy {
     //    this.tripId= retrievedObj.trip.id;
     // }
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.generalFormService.clearFormFields();
+    this.generalFormService.itemsList = []
+    let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+    this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
+
+    this.setformTemplate();
+
+    if (this.item != undefined && this.item != null ) {
+      if(this.item.globalParameters.supplierId!= undefined){
+        this.supplierId= this.item.globalParameters.supplierId;
+        this.itemId= this.item.globalParameters.itemId;
+        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
+      }
+     // this.generalFormService.setFormValues(this.item);
+    }
+
+    else{
+      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+      //this.setformTemplate();
+
     this.getSupplierList(this.orderType, this.tripId, 0);
     //this.getSettelments();
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
 
-    this.generalFormService.itemsList = []
-    let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
+   
     this.generalFormService.setDatesValues();
-
-    if (this.item != undefined && this.item != null ) {
-      if(this.item.globalParameters.supplierId!= undefined){
-        this.supplierId= this.item.globalParameters.supplierId;
-        this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
-      }
-      this.generalFormService.setFormValues(this.item);
-    }
-    else {
-      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
-    }
-    this.setformTemplate();
+  
+     //this.setformTemplate();
   }
+
+  test(){
+    this.initiateForm();
+  }
+
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
@@ -88,10 +109,17 @@ export class TransportFormComponent implements OnInit , OnDestroy {
     detailsArr = this.changeLabels(detailsArr);
     let transportQuestions = detailsArr.concat(this.generalFormService.transport);
     this.generalFormService.questionGroups[index].questions = transportQuestions;
-    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
-    console.log('group transport is: ', this.formTemplate.questionsGroups);
+    //this.transQuestions= transportQuestions;
+   // this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
+    //console.log('group transport is: ', this.formTemplate.questionsGroups);
 
   }
+  initiateForm(){
+    this.flag=true;
+    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
+     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
+  }
+
 
   changeLabels(tempArr) {
     console.log('tempArr is :', tempArr);
@@ -128,17 +156,22 @@ export class TransportFormComponent implements OnInit , OnDestroy {
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        let index = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        this.generalFormService.details[index].inputProps.options = this.generalFormService.supplierList;
-        // if (this.item.globalParameters.supplierId != undefined)
-        //   this.form.controls["details"].get('supplierId').setValue(this.item.globalParameters.supplierId)
+         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+         this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
+         if(this.supplierId== undefined)
+           this.getSupplierByOrderType();
+           else{
+            this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+            this.getOrderItemBySupplierId()
+           }
+           
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
 
-  getSupplierByOrderType(orderTypeId) {
+  getSupplierByOrderType() {
     // let centerFieldId 
     // if(this.squadAssembleService.tripInfofromService ! = undefined){
     //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
@@ -148,12 +181,14 @@ export class TransportFormComponent implements OnInit , OnDestroy {
     //   let retrievedObj = JSON.parse(retrievedObject);
     //   centerFieldId= retrievedObj.trip.centerField.id;
     // }
-    let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    this.supplierSub= this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId, 4).subscribe(
+    
+    this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId,4).subscribe(
       response => {
         console.log(response);
         this.supplierId= response.id;
-          this.form.controls["details"].get('supplierId').setValue(response.id.toString());
+        let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+        this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+         this.getOrderItemBySupplierId();
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -161,11 +196,39 @@ export class TransportFormComponent implements OnInit , OnDestroy {
 
   }
 
+  
+  getOrderItemBySupplierId() {
+    this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+      response => {
+        console.log(response);
+        this.itemsList=[];
+        this.originalItemList = response;
+        this.generalFormService.originalItemList=response;
+        response.forEach(element => {
+          this.itemsList.push({ label: element.name, value: element.id.toString() });
+        });
+        let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
+        this.generalFormService.details[itemIndex].inputProps.options= this.itemsList;
+        if(this.itemId!= undefined)
+        this.generalFormService.details[itemIndex].value= this.itemId.toString();
+        if (this.item != undefined && this.item != null ) {
+            this.item.globalParameters.supplierId=this.supplierId.toString();
+            this.generalFormService.setFormValues(this.item);
+        }
+        this.initiateForm();
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
   public onSave(): void {
     if (this.form) {
+
       if (!this.additionsService.globalValidations(this.form)) { return; }
       if (!this.validationsTransport()) { return; }
       this.editMode = true;
+
 
       let orderId;
       if (this.generalFormService.transportOrderList.length > 0) {
@@ -200,10 +263,7 @@ export class TransportFormComponent implements OnInit , OnDestroy {
         }
       });
       t.globalParameters['startHour'] = this.setDateTimeFormat(t.globalParameters.startDate, t.globalParameters.startHour);
-      //t.globalParameters['startHour'] = '2021-11-23T15:00:00';
       t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate, t.globalParameters.endHour);
-      //t.globalParameters['endHour'] = '2021-11-23T14:00:00';
-
       t.globalParameters['comments'] = this.form.value.comments.comments;
       t.globalParameters.orderId = orderId;
       t.order.supplier.id = +this.form.value.details.supplierId;
@@ -215,9 +275,28 @@ export class TransportFormComponent implements OnInit , OnDestroy {
 
       this.generalFormService.addOrder(t, t.order.orderType.id);
       this.form.disable({ emitEvent: false });
+      this.editMode = true;
+
 
     }
   }
+
+  // addOrder(item: any,orderType) {  
+  //   this.orderService.addOrder(4, item).subscribe(res => {
+  //     console.log(res);  
+  //     this.generalFormService.addToOrderList(res,orderType);
+  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //       width: '500px',
+  //       data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //     })
+  //   }, (err) => {
+  //     console.log(err);
+  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //       width: '500px',
+  //       data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //     })
+  //   })
+  // }
 
   setDateTimeFormat(date, hour) {
     let str = date.split("T");
@@ -291,48 +370,58 @@ export class TransportFormComponent implements OnInit , OnDestroy {
   }
 
   public onEdit() {
+    console.log('I am edit');
     this.editMode = false;
-    this.form.enable();
+    this.form.enable({ emitEvent: false });
   }
+  
 
    
   public onValueChange(event) {
 
     this.form = event;
-    let isPristine=  this.form.pristine;
     console.log('I am form Event');
-    if(isPristine==true && this.supplierId == undefined){
-      this.getSupplierByOrderType(this.orderType);
-    }
-    // else if(isPristine==true){
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
+    // if(isPristine==true && this.supplierId == undefined){
+    //   //this.getSupplierByOrderType(this.orderType);
     // }
-    console.log('I am form event');
-    this.form.controls["details"].get('peopleInTrip').disable();
+    // if(isPristine==true && this.supplierId!= undefined){
+    //   this.form.controls["details"].get('supplierId').setValue('',{emitEvent: false});
+    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId,{emitEvent: false})
+    // }
     
+    // if (this.form.controls["details"].get('supplierId').value == "" &&  this.supplierId != undefined)
+    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId);
+
+    // if(isPristine==true &&  this.itemId != undefined){
+    //   this.form.controls["details"].get('itemId').setValue('',{emitEvent: false});
+    //   this.form.controls["details"].get('itemId').setValue(this.itemId,{emitEvent: false});
+    // }
+    
+
+    this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
+        this.supplierId=value;
         this.generalFormService.getOrderItemBySupplierId(value);
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
-      let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
+      let item = this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost = Math.floor(item.cost);
-      this.form.controls["details"].get('itemCost').patchValue(itemCost);
+      this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
       console.log(this.form.value.details);
       let form = this.additionsService.calculateBillings(this.form.value.details);
-      //this.form.controls["details"].get('billingCustomer').patchValue(this.form.value.details.billingCustomer);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
 
     });
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
 
     });
     console.log(this.form)
@@ -342,5 +431,9 @@ export class TransportFormComponent implements OnInit , OnDestroy {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if ( this.supplierSub)  { this.supplierSub.unsubscribe(); }
     if ( this.settlementSub)  { this.settlementSub.unsubscribe(); }
+  }
+
+  test1(){
+    this.form.controls["details"].get('supplierId').setValue('190')
   }
 }

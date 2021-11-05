@@ -39,8 +39,8 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
   // ];
   public allComplete: boolean = false;
 
-  // saveForOptions = [
-  //   { value: 'מבוגרים' },
+  // participantOptions = [
+  //   {id:1 , name: 'מבוגרים' },
   //   { value: 'ילדים' },
   //   { value: 'מורים' },
   // ];
@@ -69,6 +69,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
     if(!this._sleepingService.accomodationTypeOptions){
       this._userService.getLookupAccommodationType(this._tripService.centerField.id).subscribe(res=>{
         this.accomodationTypeOptions=res;
+        //this.accomodationTypeOptions=this.setCa();
         this._sleepingService.setAccomodationByFieldCenter(this.accomodationTypeOptions);
         console.log('accomodationTypeOptions is: ',this.accomodationTypeOptions);
      })
@@ -79,6 +80,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
    if(!this._sleepingService.participantOptions){
     this._userService.getParticipantTypes().subscribe(res=>{
       this.participantOptions=res;
+      //this.participantOptions=this.setpar();
       this._sleepingService.setParticipantsOptions(this.participantOptions);
       console.log('participantOptions is: ',this.participantOptions);
     })
@@ -95,6 +97,18 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
 
   }
 
+   setpar(){
+     let arr=[];
+    arr.push({id:1,name:'מלווים'});
+     
+     return arr;
+   }
+   setCa(){
+   let arr=[];
+    arr.push({id:1,name:'בקתה'}),
+    arr.push({id:4,name:'גיחה'})
+     return arr;
+   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes.valuesForEdit.currentValue !== undefined) {
       this.updateItem(changes.valuesForEdit.currentValue);

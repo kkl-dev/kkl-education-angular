@@ -311,7 +311,7 @@ export class FacilitiesComponent implements OnInit {
     // newObj.slice(1, -1);
     // console.log('newObj  slice ', newObj);
 
-    this.activitiyService.createTripActivities(userName, newObj).subscribe(res => {
+    this.activitiyService.createTripActivities('שחר גל',newObj).subscribe(res => {
       console.log("create Trip Activities: ", { res });
     })
 

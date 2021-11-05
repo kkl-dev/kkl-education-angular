@@ -20,6 +20,7 @@ export class NavigationGridComponent implements OnInit {
   public steps: StepModelNavigation[];
   // @Input() public tempOrderReduce: any;
   tempOrderReduce: any;
+  tempOrderReduceLength: number
   @Output() changeStep: EventEmitter<number> = new EventEmitter();
   public title: string = "תוספות"
   // public tempOrderReduce: any;
@@ -28,7 +29,10 @@ export class NavigationGridComponent implements OnInit {
     private additionsService: AdditionsService, private squadAssembleService: SquadAssembleService, private userService: UserService, private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.getOrderTypes()
+    this.getOrderTypes();
+    this.generalFormService.tempOrderReduce.subscribe(res=>{
+      this.updatetempOrderReduce(res);
+    })
     // this.steps = this.additionsService.getSteps()
   }
   convertStepsModel() {
@@ -68,12 +72,22 @@ export class NavigationGridComponent implements OnInit {
           break;
       }
       // step.svgUrl = this.additionsService.orderTypes[i].iconPath
+     
+      // for (var j in this.tempOrderReduce) {
+      //   if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) { step.badgeValue = this.tempOrderReduce[j].length; }
+      // }
+
       for (var j in this.tempOrderReduce) {
-        if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) { step.badgeValue = this.tempOrderReduce[j].length; }
+        if(this.tempOrderReduce[j].length>0){
+          if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) 
+          { step.badgeValue = this.tempOrderReduce[j].length; }
+        }
       }
+    
       this.steps.push(step)
     }
   }
+
   getOrderTypes() {
     this.orderService.getOrderTypes().subscribe(
       response => {
@@ -90,6 +104,12 @@ export class NavigationGridComponent implements OnInit {
       () => console.log('completed')     // complete
     )
   }
+
+  updatetempOrderReduce(tempOrderReduce){
+    this.tempOrderReduce= tempOrderReduce;
+    this.convertStepsModel();
+  }
+
 
   onChangeStep(step: StepModelNavigation) {
     this.steps.forEach(el => el.isActive = false);
