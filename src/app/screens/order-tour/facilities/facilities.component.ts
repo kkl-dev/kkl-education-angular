@@ -99,7 +99,7 @@ export class FacilitiesComponent implements OnInit {
     this.getTripActivities();
     this.setFormArray();
     this.getOrderService();
-    this.getTripCalendar();
+    //this.getTripCalendar();
 
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
