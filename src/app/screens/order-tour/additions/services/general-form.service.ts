@@ -573,25 +573,9 @@ export class GeneralFormService {
         })
 
       })
-    })
+    
   }
-  editOrder(item: any, orderType) {
-    let userName = 'שחר גל';
-    this.orderService.editOrder(item).subscribe(res => {
-      console.log(res);
-      this.setOrderList(res, orderType, 'updating')
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'ההזמנה עודכנה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-    }, (err) => {
-      console.log(err);
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-    })
-  }
+ 
 
 
   setOrderList(res, orderTypeId, operation) {
@@ -615,7 +599,7 @@ export class GeneralFormService {
            else
            this.transportOrderList.push(t);
            if(operation=='adding')
-           this.updatetempOrderReduce1(res,orderTypeId);
+           this.updatetempOrderReduce(res,orderTypeId);
           break;
         case 2:
             let securing = {} as SecuringOrder;
@@ -672,7 +656,7 @@ export class GeneralFormService {
           this.economyOrderList= ecoArr;
           else
           this.economyOrderList.push(economy);
-          this.updatetempOrderReduce1(res,orderTypeId);
+          this.updatetempOrderReduce(res,orderTypeId);
           break;
         case 6:
             let guidance = {} as GuidanceOrder;
@@ -691,7 +675,7 @@ export class GeneralFormService {
             this.gudianceOrderList= guideArr;
             else
              this.gudianceOrderList.push(guidance);
-             this.updatetempOrderReduce1(res,orderTypeId);
+             this.updatetempOrderReduce(res,orderTypeId);
             break;
           case 7:
               let hosting = {} as HostingOrder;
@@ -747,26 +731,26 @@ export class GeneralFormService {
 
 
 
-      updatetempOrderReduce(res, orderTypeId){
-      let temp= this.tempOrderReduce.value.tempOrderReduce;
-      for (var i in temp[orderTypeId]) {
-         let tempOrderId= res[i].globalParameters.tempOrderIdentity;
-         if(temp[orderTypeId][i].orderTempId==tempOrderId){
-          temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
-          temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
-          temp[orderTypeId].splice(i, 1);
-         }
-      }
-      //this.updateTempOrderReduce(temp);
-      //this.updateTempOrderReduce(temp,orderTypeId);
+  //     updatetempOrderReduce(res, orderTypeId){
+  //     let temp= this.tempOrderReduce.value.tempOrderReduce;
+  //     for (var i in temp[orderTypeId]) {
+  //        let tempOrderId= res[i].globalParameters.tempOrderIdentity;
+  //        if(temp[orderTypeId][i].orderTempId==tempOrderId){
+  //         temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
+  //         temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
+  //         temp[orderTypeId].splice(i, 1);
+  //        }
+  //     }
+  //     //this.updateTempOrderReduce(temp);
+  //     //this.updateTempOrderReduce(temp,orderTypeId);
+     
+  //   }
+  //   this.updateTempOrderReduce(temp);
+   
+  // }
 
-    }
-    this.updateTempOrderReduce(temp);
 
-  }
-
-
-    updatetempOrderReduce1(res, orderTypeId){
+    updatetempOrderReduce(res, orderTypeId){
       let temp= this.tempOrderReduce.value.tempOrderReduce;
       for (var i in temp[orderTypeId]) {
         for(var j in res ){
@@ -782,12 +766,11 @@ export class GeneralFormService {
         //   temp[orderTypeId].splice(i, 1);
         //  }
       }
+    }
 
       //this.updateTempOrderReduce(temp)
       this.updateTempOrderReduce(temp,orderTypeId);
-
-    }
-    this.updateTempOrderReduce(temp);
+     // this.updateTempOrderReduce(temp);
   }
 
 
