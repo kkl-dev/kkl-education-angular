@@ -31,10 +31,11 @@ export class SummaryComponent implements OnInit {
     // this.tripId = 52970;
     // this.tripId = 52974;
     // this.tripId = 52975;
-    // this.tripId =52977;
+    // this.tripId = 52977;
     // this.tripId = 52990;
 
     // this.tripDetails = this.JSON_OrderDetails;
+    // this.SetArrays();
 
     this.userService.getTripDetails(this.tripId).subscribe(TM => {
       this.tripDetails = TM;

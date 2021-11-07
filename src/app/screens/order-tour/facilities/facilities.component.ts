@@ -311,37 +311,37 @@ export class FacilitiesComponent implements OnInit {
     // newObj.slice(1, -1);
     // console.log('newObj  slice ', newObj);
 
-    this.activitiyService.createTripActivities('שחר גל',newObj).subscribe(res => {
+    this.activitiyService.createTripActivities(newObj).subscribe(res => {
       console.log("create Trip Activities: ", { res });
     })
 
-// {
-//   "tripId": 52896,
-//   "tempOrderList": [
-//     {
-//       "tripId": 52896,
-//       "orderTypeCode": 1,
-//       "orderTypeName": "היסעים",
-//       "startDate": "2021-11-12T00:00:00",
-//       "endDate": "2021-11-12T00:00:00",
-//       "fromHour": "2021-11-12T13:00:00",
-//       "tillHour": "2021-11-12T15:00:00",
-//       "userName": "גל שחר"
-//     }
-//   ],
-//   "activityList": [
-//     {
-//       "activityId": 118,
-//       "activityName": "ישעיהו גבעת",
-//       "date": "2021-11-12T00:00:00",
-//  "description": "students education",	
-//       "fromHour": "2021-11-12T10:00:00",	
-//       "tillHour": "2021-11-12T12:00:00",
-//       "tripId": 52896,
-//       "userName": "גל שחר"
-//     }
-//   ]
-// }
+    // {
+    //   "tripId": 52896,
+    //   "tempOrderList": [
+    //     {
+    //       "tripId": 52896,
+    //       "orderTypeCode": 1,
+    //       "orderTypeName": "היסעים",
+    //       "startDate": "2021-11-12T00:00:00",
+    //       "endDate": "2021-11-12T00:00:00",
+    //       "fromHour": "2021-11-12T13:00:00",
+    //       "tillHour": "2021-11-12T15:00:00",
+    //       "userName": "גל שחר"
+    //     }
+    //   ],
+    //   "activityList": [
+    //     {
+    //       "activityId": 118,
+    //       "activityName": "ישעיהו גבעת",
+    //       "date": "2021-11-12T00:00:00",
+    //  "description": "students education",	
+    //       "fromHour": "2021-11-12T10:00:00",	
+    //       "tillHour": "2021-11-12T12:00:00",
+    //       "tripId": 52896,
+    //       "userName": "גל שחר"
+    //     }
+    //   ]
+    // }
   }
 
 }

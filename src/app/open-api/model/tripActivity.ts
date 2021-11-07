@@ -26,6 +26,5 @@ export interface TripActivity {
     fromHour?: string;
     tillHour?: string;
     tripId?: number;
-    userName?: string;
 }
 

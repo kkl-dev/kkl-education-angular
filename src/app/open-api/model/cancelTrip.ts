@@ -15,7 +15,5 @@ export interface CancelTrip {
     tripId: number;
     causeCancel?: string;
     statusToUpdateId: number;
-    userName: string;
-    userNameEng?: string;
 }
 

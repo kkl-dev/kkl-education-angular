@@ -100,7 +100,7 @@ export class HostingFormComponent implements OnInit {
 
   getSupplierByOrderType(orderTypeId) {
     let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId,4).subscribe(
+    this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId).subscribe(
       response => {
         console.log(response);
         if (this.form)
