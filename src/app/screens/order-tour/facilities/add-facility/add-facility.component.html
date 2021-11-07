@@ -4,6 +4,11 @@
             (emitCurrentDay)='getDay($event)' [currentDay]='selectedDay'>
         </app-sleeping-options-by-day>
         <div class="add-facility__header">
+                        <!-- <div class="save-activity__header-icon" [fxFlex]="activity.img ? '30' : '10' ">              
+                <img *ngIf="type" [src]='activity.img' />
+                <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
+            </div> -->
+
             <div class="add-facility__header-icon">
                 <svg-icon src="assets/images/{{ item.iconPath || defaultImage }}" class="header__form-group-svg"></svg-icon>
                 <!-- <svg-icon [src]="item.svgUrl" class="header__form-group-svg"></svg-icon> -->
@@ -13,9 +18,9 @@
                     <span class="add-facility__header-content-heading-constant">שריין מתקן:</span>
                     <span class="add-facility__header-content-heading-input">{{item.name}}</span>
                 </div>
-                <div class="add-facility__header-content-heading-remarks">
+                <!-- <div class="add-facility__header-content-heading-remarks">
                     <span>{{item.maxOccupancy}}</span>
-                </div>
+                </div> -->
             </div>
         </div>
         <form class="add-facility__form" [formGroup]="addFacilityForm" (ngSubmit)='onSubmit()'>
@@ -52,7 +57,9 @@
             </div>
             <div class="add-facility__occupied-hours-table-item" *ngFor="let item of hours">
                 <!-- <span class="add-facility__occupied-hours-hour-start">{{ item.startingHour | numberToTimePipe}}</span> -->
-                <span class="add-facility__occupied-hours-hour-start">{{ item.fromHour | numberToTimePipe}}</span>
+                <!-- <span class="add-facility__occupied-hours-hour-start">{{ item.fromHour | numberToTimePipe}}</span> -->
+                <span class="add-facility__occupied-hours-hour-start">{{ item.start | numberToTimePipe}}</span>
+
                 <span class="add-facility__occupied-hours-hour-end">
                     <!-- <span> -</span> {{ item.endingHour | numberToTimePipe}}</span> -->
                     <span> -</span> {{ item.tillHour | numberToTimePipe}}

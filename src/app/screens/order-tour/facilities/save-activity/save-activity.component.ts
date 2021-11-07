@@ -25,11 +25,15 @@ export class SaveActivityComponent implements OnInit {
 
   @Input() type: string;
   @Input() public additonsType: any[] = [
-    { name: 'הסעה', completed: false },
-    { name: 'אבטחה', completed: false },
-    { name: 'הדרכה', completed: false },
-    { name: 'כלכלה', completed: false },
-    { name: 'הפעלה מוסיקלית', completed: false },
+    { name: 'הסעה', completed: false, svg: 'bus' },
+    // { name: 'אבטחה', completed: false , svg:'shield' },
+    { name: 'הדרכה', completed: false, svg: 'man-with-bag' },
+    { name: 'כלכלה', completed: false, svg: 'dinner' },
+    // { name: 'הפעלה מוסיקלית', completed: false , svg:'music' },
+  ];
+
+  @Input() public additonsType2: any[] = [
+    { name: 'הסעה', completed: false, svg: 'bus' }
   ];
   // @Input() days: any[] = DAYS;
   @Input() days: any[] = this.tripService.facilitiesArray;
@@ -59,7 +63,7 @@ export class SaveActivityComponent implements OnInit {
       this.form.controls['invitingCustomer'].setValue(this.orderingCustomer);
     }
     if (this.form.controls['additions']) {
-      this.form.controls['additions'].setValue(this.additonsType);
+      this.form.controls['additions'].setValue(this.additonsType.filter(item => item.completed));
     }
     this.form.controls['selectedDay'].setValue(this.selectedDay);
     this.form.controls['start'].setValue(this.arrangeTime('start'));
@@ -99,34 +103,25 @@ export class SaveActivityComponent implements OnInit {
   public createForm(data): void {
     if (!data.start) {
       this.form = new FormGroup({
-        // 'title': new FormControl(data.title),
-        // 'selectedDay': new FormControl(this.selectedDay),
-        // 'start': new FormControl('08:00'),
-        // 'end': new FormControl('09:00'),
-        // 'backgroundColor': new FormControl('#F0F6FE'),
-        // 'date': new FormControl(''),
-        // 'className': new FormControl('border-facilities'),
-        // 'type': new FormControl('activity'),
-        // 'invitingCustomer': new FormControl(false),
-        // 'additions': new FormControl(),
-        // 'haveAdditions': new FormControl(true),
-        // 'svgUrl': new FormControl(data.svgUrl),
-        // 'img': new FormControl(data.img)
-
         'title': new FormControl(data.name),
         'selectedDay': new FormControl(this.selectedDay),
         'start': new FormControl('08:00'),
         'end': new FormControl('09:00'),
-        'backgroundColor': new FormControl('#F0F6FE'),
+        'backgroundColor': new FormControl('#f0f9f1'),
         'date': new FormControl(''),
-        'className': new FormControl('border-facilities'),
+        'className': new FormControl('border-activities'),
         'type': new FormControl('activity'),
         'invitingCustomer': new FormControl(false),
         'additions': new FormControl(),
         'haveAdditions': new FormControl(true),
-        'svgUrl': new FormControl(data.sitePicture),
-        'img': new FormControl(data.sitePicture)
+        'itemId': new FormControl(data.itemId) || null,
+        'svgUrl': new FormControl('assets/images/' + data.iconPath || 'assets/images/' + data.svgUrl),
+        //'svgUrl': new FormControl('assets/images/' + data.iconPath) || null,
+        'img': new FormControl(data.sitePicture),
+        'activityId': new FormControl(data.activityId),
+        'description': new FormControl(data.description) || null
       });
+      console.log('this form => ', this.form);
     } else {
       this.updateForm = true;
       data.start = this.separateTimeFromDate(data.start);

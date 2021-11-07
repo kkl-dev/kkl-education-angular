@@ -21,19 +21,21 @@
 <div class="activities-card">
   <mat-card>
     <mat-card-title-group>
-      <img mat-card-lg-image [src]='obj.sitePicture' />
-    </mat-card-title-group>
+      <img mat-card-lg-image src="{{ obj.sitePicture || defaultImage }}"/>
+        </mat-card-title-group>
     <mat-card-header>
       <mat-card-title>{{obj.name}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <p>
-        {{obj.description}}
+        <!-- {{obj.description}} -->
+         הסבר על הפעילות הסבר על הפעילות
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <!-- <p>{{obj.hours}} שעות</p> -->
+      <!-- <p>2 שעות</p> -->
       <button mat-button (click)='buttonClicked.emit()'>שריין</button>
     </mat-card-actions>
   </mat-card>
 </div>
+<!-- [src]='obj.sitePicture' -->

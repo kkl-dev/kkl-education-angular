@@ -195,6 +195,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     )
   }
 
+<<<<<<< HEAD
   getSupplierByOrderType() {
     // let centerFieldId 
     // if(this.squadAssembleService.tripInfofromService ! = undefined){
@@ -209,6 +210,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
 
+=======
+  getSupplierByOrderType(orderTypeId) {
+    let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId).subscribe(
+>>>>>>> internal-yakov-v3
       response => {
         console.log(response);
         this.supplierId = response.id;

@@ -8,12 +8,13 @@ import { INITIAL_EVENTS } from './calendar/event-utils';
 import { EventInput } from '@fullcalendar/angular';
 import { ACTIVITIES_ARRAY, FACILITIES_ARRAY, FORM_ARRAY, UP_COMING_ACTIVITIES_ARRAY } from 'src/mock_data/facilities';
 import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
-import { ActivitiesService, UserService } from 'src/app/open-api';
+import { ActivitiesService, UserService, OrderService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { Validators } from '@angular/forms';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { UserDataService } from 'src/app/services/user-data.service';
+import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.service';
 
 
 @Component({
@@ -32,13 +33,13 @@ export class FacilitiesComponent implements OnInit {
   public hiddenElements: any = { facilities: false, activities: false };
   public colors = { green: '#37C56B', blue: '#448ECD' }
   public activityIsUpComing: boolean = false;
-  //data 
   formArray: QuestionBase<string | number>[];
+  tripId: number = 52896;
   // public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
   // public facilitiesArray: InfoCard1[] = FACILITIES_ARRAY;
   // public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
   // public upComingActivitiesArray: any[];
-
+  orderType: any;
   createForm: any;
   facilityForDay: any;
   facilitiesArray: any;
@@ -54,49 +55,69 @@ export class FacilitiesComponent implements OnInit {
     {
       iconPath: 'fruits.svg',
       name: 'ארוחת ערב',
+      itemId: 3
     },
     {
       iconPath: 'roast-chicken.svg',
       name: 'ארוחת צהריים',
+      itemId: 164
     },
     {
       iconPath: 'restaurant.svg',
       name: 'ארוחת בוקר',
+      itemId: 1
     },
     {
       iconPath: 'alarm.svg',
       name: 'השכמה',
+      itemId: null
     },
     {
       iconPath: 'bus-with-flag.svg',
       name: 'התייצבות',
-    },
-    {
-      iconPath: 'fruits.svg',
-      name: 'ארוחת ערב',
-    },
-    {
-      iconPath: 'alarm.svg',
-      name: 'השכמה',
-    },
+      itemId: null
+    }
   ];
 
+  activityList: any;
+  tempOrderList: any;
+
   constructor(private facilitiesService: FacilitiesService, private usersService: UserService, private tripService: TripService,
-    private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService, private userDataService: UserDataService) { }
+    private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService,
+    private userDataService: UserDataService, private orderService: OrderService, private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
+    try {
+      this.tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
+    } catch (error) {
+      console.log(error);
+    }
     this.getAvailableFacilities();
     this.fillTimes();
     this.getAreas();
     this.getActivityCategories();
     this.getTripActivities();
     this.setFormArray();
+    this.getOrderService();
+    //this.getTripCalendar();
 
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
     this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
+    console.log('calendarEventsArr.value',  this.calendarEventsArr$)
     this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
+  }
 
+  getOrderService() {
+    this.orderService.getOrderTypes().subscribe((orderType: any) => {
+      console.log('order Type: ', orderType);
+      if (orderType) {
+        this.orderType = orderType;
+      }
+    },
+      error => {
+        console.log("error in get Order Types : ", { error });
+      });
   }
 
   private setFormArray() {
@@ -112,13 +133,13 @@ export class FacilitiesComponent implements OnInit {
       new QuestionSelect({
         key: 'areas',
         label: 'אזור',
-        validations: [Validators.required],
+        // validations: [Validators.required],
         inputProps: { options: this.areas }
       }),
       new QuestionSelect({
         key: 'typeOfActivity',
         label: 'סוג פעילות',
-        validations: [Validators.required],
+        // validations: [Validators.required],
         inputProps: { options: this.activityCategories }
       }),
       new QuestionAutocomplete({
@@ -126,7 +147,7 @@ export class FacilitiesComponent implements OnInit {
         label: 'חפש פעילות',
         cols: 1,
         value: '',
-        validations: [Validators.required],
+        // validations: [Validators.required],
         inputProps: {
           options: this.tripActivitiesShow
         },
@@ -163,7 +184,8 @@ export class FacilitiesComponent implements OnInit {
     this.activitiyService.getTripActivities().subscribe(res => {
       console.log("get Trip Activities res: ", { res });
       this.calculatePages(res.length);
-      let a = this.facilitiesConvertingService.convertTripActivities(res);
+      let tripActivitiesConverted = this.facilitiesConvertingService.convertTripActivities(res);
+      console.log('tripActivitiesConverted: ', tripActivitiesConverted);
       this.tripActivitiesInfoTotal = res;
       this.tripActivitiesFilter = res;
       this.pagesToShow(1);
@@ -240,20 +262,66 @@ export class FacilitiesComponent implements OnInit {
     }
     console.log("tripActivitiesInfo: ", this.tripActivitiesInfo);
     // this.tripActivitiesInfo = this.tripActivitiesInfoTotal;
-    // console.log("tripActivitiesInfo: ", this.tripActivitiesInfo );
+    console.log("tripActivitiesInfo: ", this.tripActivitiesInfo);
+  }
+
+  updateTrip() {
+    let userInfo = this.userDataService.user.name || 'שחר גל';
+    let events: any = this.eventsArr;
+    this.activitiyService.updateTripActivities(events).subscribe((tripCalendar: any) => {
+      console.log('update Trip Activities: ', tripCalendar);
+      if (tripCalendar) {
+        //....
+      }
+    },
+      error => {
+        console.log("error: ", { error });
+      });
+  }
+
+  getTripCalendar() {
+    let tripId = 52896;
+    try {
+      tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
+    } catch (error) {
+      console.log(error);
+    }
+    this.activitiyService.getTripCalendar(tripId).subscribe((tripCalendar: any) => {
+      console.log('get Trip Calendar: ', tripCalendar);
+      if (tripCalendar) {
+        this.activityList = tripCalendar.activityList;
+        this.tempOrderList = tripCalendar.tempOrderList;
+        let newTempOrderObj: any;
+        let newTempActivityList: any;  
+
+         // add to calender
+        for (let i = 0; i < this.tempOrderList.length; i++) {
+          console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
+          newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListforTripCalendar(this.tempOrderList[i]);
+          this.addToCalendar(newTempOrderObj);
+        }
+
+        for (let i = 0; i < this.activityList.length; i++) {
+          console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
+          newTempActivityList = this.facilitiesConvertingService.convertActivityListforTripCalendar(this.activityList[i]);
+          this.addToCalendar(newTempActivityList);
+        }
+      }
+    },
+      error => {
+        console.log("error: ", { error });
+      });
   }
 
   calculatePages(num) {
-    //this.pagesAmount = num / 6;
     console.log("num: ", num);
     var quotient = Math.floor(num / 6);
     var remainder = num % 6;
     this.pagesAmount = quotient + remainder;
   }
 
-  public addToCalendar(event: any): void {
+  addToCalendar(event: any): void {
     console.log("addToCalendar: ", event);
-
     const tmpObj: EventInput = {
       id: `${this.eventsArr.length}`,
       textColor: 'black',
@@ -266,7 +334,7 @@ export class FacilitiesComponent implements OnInit {
     this.facilitiesService.updateCalendarEventsArr(tmpObj);
   }
 
-  public openModal(args: string): void {
+  openModal(args: string): void {
     this.facilitiesService.closeModal(args);
     console.log('openModal args: ' + args)
   }
@@ -283,16 +351,17 @@ export class FacilitiesComponent implements OnInit {
   }
 
   public updateChosenUpComingActivity(args: ActivitiesCardInterface) {
-    console.log('updateChosenUpComingActivity args' + args)
+    console.log('update ChosenUp Coming Activity args' + args)
     this.facilitiesService.updateSelectedActivity(args);
     this.activityIsUpComing = true;
   }
 
   public updateChosenActivity(args: ActivitiesCardInterface) {
-    console.log('updateChosenActivity args' + args)
+    console.log('update Chosen Activity args' + args);
     this.activityIsUpComing = false;
     this.facilitiesService.updateSelectedActivity(args);
   }
+<<<<<<< HEAD
 
   onTest() {
     console.log('this.calendarEventsArr$: ', this.calendarEventsArr$);
@@ -345,3 +414,6 @@ export class FacilitiesComponent implements OnInit {
   }
 
 }
+=======
+}
+>>>>>>> internal-yakov-v3

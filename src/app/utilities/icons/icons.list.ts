@@ -12,6 +12,42 @@ export const OPEN_PLUS = `<svg xmlns="http://www.w3.org/2000/svg" width="8.667" 
 <path id="Icon_open-plus" data-name="Icon open-plus" d="M3.25,0V3.25H0V5.417H3.25v3.25H5.417V5.417h3.25V3.25H5.417V0Z"/>
 </svg>
 `;
+
+export const MAN_WITH_BAG = `
+<svg xmlns="http://www.w3.org/2000/svg" id="man-with-bag-and-walking-stick" width="19.333" height="27.59" viewBox="0 0 19.333 27.59">
+  <ellipse id="Ellipse_189" data-name="Ellipse 189" cx="2.526" cy="2.526" rx="2.526" ry="2.526" transform="translate(5.76 0)" fill="#fc1f9d"/>
+  <path id="Path_793" data-name="Path 793" d="M13.16,6.546c-.094-.641-.591-1.027-.954-.925l-2.636.735c-.362.1-.487.945-.384,1.31l2.171,8.915c.106.366.325.547.688.443l1.78-.385a3.112,3.112,0,0,0,1.132-3.627Z" transform="translate(-1.38 0.364)" fill="#fc1f9d"/>
+  <path id="Path_794" data-name="Path 794" d="M8.5,16.109l.451,3.157s1.162,2.759,1.96,4.38c.6,1.228.888,2.113.473,2.334-.637.339-1.493-.421-2.39-1.819-1.5-2.345-2.278-3.517-2.567-4.087l-.455-1.489S8.2,17.109,8.5,16.109Z" transform="translate(5.543 1.045)" fill="#fc1f9d"/>
+  <path id="Path_795" data-name="Path 795" d="M10.435,17.568l3.517-3.493a1.366,1.366,0,0,1,1.944.26c.56.552,1.657,1.073,1.1,1.636l-4.473,3.766.5,4.826c.036,1.191-.034,1.881-.79,1.959-.706.073-1.017-1.395-1.09-1.767,0,0-.9-4.623-1.014-5.274A2.166,2.166,0,0,1,10.435,17.568Z" transform="translate(-4.374 0.893)" fill="#fc1f9d"/>
+  <path id="Path_796" data-name="Path 796" d="M14.762,7.7l2.651,1.247,3.34-2.439a1.189,1.189,0,0,1,1.392,1.928l-3.6,2.609a1.362,1.362,0,0,1-1.241.207s-2.474-1.5-3.137-1.935c-.7-.456-1.423-1.054-1.154-1.557C13.393,7.036,14.087,7.371,14.762,7.7Z" transform="translate(-12.954 0.407)" fill="#fc1f9d"/>
+  <line id="Line_458" data-name="Line 458" y2="20.232" transform="translate(1.897 6.786)" fill="none" stroke="#bababa" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.142"/>
+  <path id="Path_797" data-name="Path 797" d="M3.981,6.48s1.58,4.9,1.82,5.684a1.665,1.665,0,0,0,2.256.961c1.181-.361,2.407-.856,2.215-2.236-.21-1.5-1.63-3.5-2.862-4.784S3.365,4.375,3.981,6.48Z" transform="translate(9.04 0.326)" fill="#fc1f9d"/>
+</svg>`;
+
+export const PINK_CIRCLE = ` <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+<circle id="Ellipse_199" data-name="Ellipse 199" cx="9" cy="9" r="9" fill="#fc1f9d"/>
+</svg>`;
+export const WHITE_CIRCLE = `
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58.5" height="55" viewBox="0 0 58.5 55">
+  <defs>
+    <filter id="Path_840" x="0" y="0" width="55" height="55" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feFlood flood-color="#d9d4ff"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_1353" data-name="Group 1353" transform="translate(-46.5 -1151.5)">
+    <g id="Component_43_10" data-name="Component 43 – 10" transform="translate(51 1155)">
+      <g transform="matrix(1, 0, 0, 1, -4.5, -3.5)" filter="url(#Path_840)">
+        <path id="Path_840-2" data-name="Path 840" d="M23,0A23,23,0,1,1,0,23,23,23,0,0,1,23,0Z" transform="translate(4.5 3.5)" fill="#fff"/>
+      </g>
+    </g>
+    <circle id="Ellipse_219" data-name="Ellipse 219" cx="9" cy="9" r="9" transform="translate(87 1155)" fill="#fc1f9d"/>
+    <path id="Icon_open-plus" data-name="Icon open-plus" d="M3.25,0V3.25H0V5.417H3.25v3.25H5.417V5.417h3.25V3.25H5.417V0Z" transform="translate(91.667 1159.667)" fill="#fff"/>
+  </g>
+</svg>`;
 export const V_SIGN = `<svg xmlns="http://www.w3.org/2000/svg"
  width="17.956" height="17.331" viewBox="0 0 17.956 17.331">
  <defs><style>.v-sign{fill:"none";opacity:0;}.b{fill:none;stroke:#6dc066;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}.c,.d{stroke:none;}.d{fill:#dfdfdf;}</style></defs><g transform="translate(0.332 0.331)">

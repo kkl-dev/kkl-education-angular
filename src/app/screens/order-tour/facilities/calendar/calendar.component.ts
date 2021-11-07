@@ -1,4 +1,4 @@
-import { Component, ComponentRef, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, EmbeddedViewRef, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventInput } from '@fullcalendar/angular';
@@ -6,8 +6,10 @@ import { Observable, Subscription } from 'rxjs';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import heLocale from '@fullcalendar/core/locales/he';
 import interactionPlugin from '@fullcalendar/interaction';
-import { h, render } from 'preact';
+import { CalendarCardComponent } from './calendar-card/calendar-card.component';
+import { DynamicComponent } from 'src/app/components/dynamic/dynamic.component';
 import { TripService } from 'src/app/services/trip.service';
+
 
 @Component({
   selector: 'app-calendar',
@@ -19,33 +21,27 @@ export class CalendarComponent implements OnInit {
   public calendarEventsArr$!: Observable<EventInput[]>;
   public value!: EventInput[];
   public valueSub: Subscription;
+  public hideComponent: boolean = false;
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
-  @ViewChild('calendarEventCard', { read: TemplateRef }) eventCard: TemplateRef<any>;
+  @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
 
-  //sleepingDates = this.tripService.sleepingDates;
   sleepingDates: any = [];
   days: any[] = this.tripService.facilitiesArray;
+  till: any;
 
-  constructor(private facilitiesService: FacilitiesService, private vref: ViewContainerRef, private tripService: TripService) { }
-
-  public calendarOptions: CalendarOptions = {}
-
-  public arrangeDate(date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}T${hours <= 9 ? '0' + hours : hours}:${minutes <= 9 ? '0' + minutes : minutes}`
-  }
-
-  ngOnInit(): void {
+  constructor(private facilitiesService: FacilitiesService, private resolver: ComponentFactoryResolver, private tripService: TripService) {
     //get sleeping Dates from trip service
     this.sleepingDates = this.tripService.convertDatesFromSlashToMinus();
     // add another day to last day
     let lastDay = new Date(this.days[this.days.length - 1].date);
-    let till = new Date(lastDay.setDate(lastDay.getDate() + 1));
-    //console.log(till);
+    this.till = new Date(lastDay.setDate(lastDay.getDate() + 1));
+  }
 
+  calendarOptions: CalendarOptions = {}
+
+  ngOnInit(): void {
     this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
-      console.log('this.valueSub', this.valueSub)
+      console.log('this.value Sub', value)
       if (this.myCalendarComponent) {
         this.myCalendarComponent.options.events = value;
       } else {
@@ -53,18 +49,16 @@ export class CalendarComponent implements OnInit {
           this.myCalendarComponent.options.events = value;
         }, 500);
       }
-
     });
 
     this.calendarOptions = {
       plugins: [timeGridPlugin, interactionPlugin],
       initialView: 'timeGridDay',
       validRange: {
-        // start: '2021-10-18',
-        // end: '2021-10-21'
         start: this.sleepingDates.from,
-        end: till
+        end: this.till
       },
+      slotEventOverlap: false,
       allDaySlot: false,
       locales: [heLocale],
       selectable: true,
@@ -82,7 +76,8 @@ export class CalendarComponent implements OnInit {
       headerToolbar: {
         left: 'prev,next',
         center: 'title',
-        right: 'timeGridDay,timeGridWeek,dayGridMonth'
+        // right: 'timeGridDay,timeGridWeek,dayGridMonth'
+        right: ''
       },
       initialEvents: [],
       eventClick: (info) => {
@@ -94,9 +89,23 @@ export class CalendarComponent implements OnInit {
       eventResize: (info) => {
         this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
       },
-      eventContent: (props, createElement) => {
+      eventContent: (props) => {
+        const factory = this.resolver.resolveComponentFactory(CalendarCardComponent);
+        this.myDynamicComponent.viewContainerRef.clear();
+        const componentRef = this.myDynamicComponent.viewContainerRef.createComponent(factory, 0);
+        componentRef.instance.props = props;
+        componentRef.changeDetectorRef.detectChanges();
+        const html = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
+        return { html: html.innerHTML };
       }
     }
+  }
+
+  public arrangeDate(date: Date) {
+    // 2021-10-15T08:00
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}T${hours <= 9 ? '0' + hours : hours}:${minutes <= 9 ? '0' + minutes : minutes}`
   }
 }

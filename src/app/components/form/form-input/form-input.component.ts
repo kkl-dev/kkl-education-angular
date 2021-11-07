@@ -38,7 +38,6 @@ export class FormInputComponent implements OnInit {
   @Input() public controlType: string;
   @Input() public options!: [];
   @Input() public dateOptions!: CalendarOptions;
-
   @Input() public groupLabel!: string;
   @Input() public theme!: string;
   @Input() public icon!: string;
@@ -177,9 +176,13 @@ export class FormInputComponent implements OnInit {
         this.tripService.getCustomer(attr.autoCustomerId);
       }
       this.tripService.budgetByParam.attribute = attr;
+<<<<<<< HEAD
 
       //this.tripService.budgetByParam.userId = "שחר";
 
+=======
+      this.tripService.budgetByParam.userId = "שחר";
+>>>>>>> internal-yakov-v3
       this.tripService.budgetByParam.userInfo = "שחר גל";
       //find index 'dates'
       var index;

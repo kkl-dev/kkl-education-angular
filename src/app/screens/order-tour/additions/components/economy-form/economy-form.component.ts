@@ -164,9 +164,15 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
   }
 
+<<<<<<< HEAD
 
   getOrderItemBySupplierId() {
     this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+=======
+  getSupplierByOrderType(orderTypeId) {
+    let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId).subscribe(
+>>>>>>> internal-yakov-v3
       response => {
         console.log(response);
         this.itemsList = [];

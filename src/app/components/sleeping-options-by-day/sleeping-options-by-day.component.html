@@ -80,7 +80,7 @@
     </div>
   </div>
 
-  <div class="flex">
+  <div class="flex" *ngIf="showSleepAreas">
     <div class="SOBD__sleep-areas-options-item"
       *ngFor="let item of AvailableSleepingOptions[currentDay].sleepingOptions; let i = index">
       <svg-icon class="SOBD__sleep-areas-options-item-svg" src=" {{ item.img }} "></svg-icon>

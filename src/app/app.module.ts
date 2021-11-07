@@ -129,9 +129,8 @@ import { AddActivityComponent } from './screens/order-tour/facilities/add-activi
 import { ModalComponent } from './components/modal/modal.component';
 import { OutsideDirective } from './utilities/directivs/outside.directive';
 import { SleepingMapComponent } from './screens/order-tour/sleeping-map/sleeping-map.component';
-
+import { DynamicComponent } from './components/dynamic/dynamic.component';
 import { CalendarCardComponent } from './screens/order-tour/facilities/calendar/calendar-card/calendar-card.component';
-
 import { FormDetailsComponent } from './screens/order-tour/additions/components/form-details/form-details.component';
 import { EconomyFormComponent } from './screens/order-tour/additions/components/economy-form/economy-form.component';
 import { GudianceFormComponent } from './screens/order-tour/additions/components/gudiance-form/gudiance-form.component';
@@ -141,9 +140,6 @@ import { SecuringOrderFormComponent } from './screens/order-tour/additions/compo
 import { MusicActivationFormComponent } from './screens/order-tour/additions/components/music-activation-form/music-activation-form.component';
 import {TransportDetailsTableComponent} from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
 
-
-
-
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
   InteractionPlugin
@@ -151,6 +147,7 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [
+    CalendarCardComponent,
     AppComponent,
     MainComponent,
     DashboardComponent,
@@ -261,18 +258,20 @@ FullCalendarModule.registerPlugins([
     SquadGroupGenderComponent,
     OutsideDirective,
     SleepingMapComponent,
-
     CalendarCardComponent,
-
     FormDetailsComponent,
     EconomyFormComponent,
     GudianceFormComponent,
     HostingFormComponent,
+<<<<<<< HEAD
     SiteOrderFormComponent,
     SecuringOrderFormComponent,
     MusicActivationFormComponent,
     TransportDetailsTableComponent
 
+=======
+    DynamicComponent
+>>>>>>> internal-yakov-v3
   ],
   imports: [
     BrowserModule,

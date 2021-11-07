@@ -15,32 +15,6 @@ export interface OccupiedBarModel {
   customerName: string;
 }
 
-
-
-
-// export interface InfoCard1 {
-//   svgUrl: string;
-//   title?: string;
-//   headline?: string;
-//   subHeadline?: string;
-//   availability?: TooltipDataModel1[];
-//   maxParticipants?: string;
-//   days?: any[];
-// }
-// export interface TooltipDataModel {
-//   startingHour: number;
-//   endingHour: number;
-//   totalTime: number;
-//   user: string;
-// }
-// export interface OccupiedBarModel {
-//   startingHour: number;
-//   endingHour: number;
-//   totalTime: number;
-//   user: string;
-// }
-
-
 @Component({
   selector: 'app-add-facility',
   templateUrl: './add-facility.component.html',
@@ -52,46 +26,35 @@ export class AddFacilityComponent implements OnInit {
   @Input() days: any[] = this.tripService.facilitiesArray;
 
   //FacilitiesList
-  public selectedFacility$: Observable<any>;
+  selectedFacility$: Observable<any>;
   @Input() startingHour: number = 0
   @Input() endingHour: number = 24;
   @Input() hours: OccupiedHours[];
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
-  public selectedDay: number = 0;
-  public subscribeToFacility: Subscription;
-  public updateForm: boolean = false;
+  selectedDay: number = 0;
+  subscribeToFacility: Subscription;
+  updateForm: boolean = false;
   occupiedHoursArray: { totalHours: number; user: string }[] = [];
   showSleepAreas: boolean = false
   username: string = ''
-  defaultImage : string ='defaultFacility.svg'; 
+  defaultImage: string = 'defaultFacility.svg';
 
   constructor(private userDataService: UserDataService, private facilitiesServices: FacilitiesService, private tripService: TripService) {
     this.username = this.userDataService.user.name;
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.selectedFacility$ = this.facilitiesServices.getSelectedFacility();
     this.subscribeToFacility = this.selectedFacility$.subscribe(data => {
+      this.createForm(data);
       this.hours = data.occupiedHours;
       this.createOccupiedHoursArray();
-      this.createForm(data);
+      // this.createForm(data);
+
     });
   }
-  public createForm(data): void {
-    // if(!data.start){
-    //   this.addFacilityForm = new FormGroup({
-    //     'title': new FormControl(data.title),
-    //     'selectedDay': new FormControl(this.selectedDay),
-    //     'start': new FormControl('08:00'),
-    //     'end': new FormControl('09:00'),
-    //     'backgroundColor': new FormControl('#F0F6FE'),
-    //     'date': new FormControl(''),
-    //     'className': new FormControl('border-facilities'),
-    //     'type': new FormControl('facility'),
-    //     'maxParticipants': new FormControl(),
-    //     'availability': new FormControl(data.availability),
-    //     'svgUrl': new FormControl(data.svgUrl)
-    //   });
+
+  createForm(data): void {
     if (!data.start) {
       this.addFacilityForm = new FormGroup({
         'title': new FormControl(data.name),
@@ -102,10 +65,14 @@ export class AddFacilityComponent implements OnInit {
         'date': new FormControl(''),
         'className': new FormControl('border-facilities'),
         'type': new FormControl('facility'),
-        'maxParticipants': new FormControl(),
+        // 'maxParticipants': new FormControl(),
         'availability': new FormControl(data.occupiedHours),
-        'svgUrl': new FormControl(data.iconPath)
+        // 'svgUrl': new FormControl(data.iconPath),
+        'svgUrl': new FormControl('assets/images/' + data.iconPath) || null,
+        'facilityId': new FormControl(data.id || null)
       });
+      console.log('this form => ', this.addFacilityForm);
+
     } else {
       this.updateForm = true;
       this.selectedDay = data.selectedDay;
@@ -118,7 +85,7 @@ export class AddFacilityComponent implements OnInit {
     }
 
   }
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.subscribeToFacility.unsubscribe();
   }
 
@@ -136,20 +103,23 @@ export class AddFacilityComponent implements OnInit {
     this.emitFormValues.emit(this.addFacilityForm.value);
     this.closeModal();
   }
-  public deleteItem(event): void {
+
+  deleteItem(event): void {
     event.preventDefault();
     const id = this.addFacilityForm.controls['id'].value;
     this.facilitiesServices.deleteItemFromArray(id);
     this.facilitiesServices.closeModal('close');
   }
 
-  public startTimeChanged(event: string) {
+  startTimeChanged(event: string) {
     this.addFacilityForm.controls['start'].setValue(event);
   }
-  public endTimeChanged(event: string) {
+
+  endTimeChanged(event: string) {
     this.addFacilityForm.controls['end'].setValue(event);
   }
-  public arrangeTime(arg: string): any {
+
+  arrangeTime(arg: string): any {
     // yak changed for compatible with date (2021-11-07T00:00:00) and not (21.10.2021)
     //  const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let day = this.days[this.selectedDay].date.split("T");
@@ -160,30 +130,36 @@ export class AddFacilityComponent implements OnInit {
     return `${day[0]}T${hours}:${minutes}`;
     //return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
-  public getDay(event: any): void {
+
+  getDay(event: any): void {
     this.selectedDay = event;
   }
 
-  public closeModal(): void {
+  closeModal(): void {
     this.facilitiesServices.closeModal('close');
   }
+
   createOccupiedHoursArray() {
     let startingHour = this.startingHour;
 
-    this.hours.map((hour) => {
-      if (startingHour < hour.fromHour) {
-        this.occupiedHoursArray.push({
-          totalHours: hour.fromHour - startingHour,
-          user: 'none',
-        });
-      }
+    try {
+      this.hours.map((hour) => {
+        if (startingHour < hour.fromHour) {
+          this.occupiedHoursArray.push({
+            totalHours: hour.fromHour - startingHour,
+            user: 'none',
+          });
+        }
 
-      this.occupiedHoursArray.push({
-        totalHours: hour.totalTime,
-        user: hour.customerName,
+        this.occupiedHoursArray.push({
+          totalHours: hour.totalTime,
+          user: hour.customerName,
+        });
+        startingHour = hour.tillHour;
       });
-      startingHour = hour.tillHour;
-    });
+    } catch (error) {
+      console.log(error);
+    }
 
     if (startingHour < this.endingHour) {
       this.occupiedHoursArray.push({
@@ -199,7 +175,7 @@ export class AddFacilityComponent implements OnInit {
     return `${totalHoursPrecent}%`;
   }
 
-  public separateTimeFromDate(args: string): string {
+  separateTimeFromDate(args: string): string {
     const [date, time] = args.split('T');
     return time;
   }

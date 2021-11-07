@@ -5,15 +5,18 @@
             [showSleepAreas]='showSleepAreas' [currentDay]='selectedDay' fxFlex='100'>
         </app-sleeping-options-by-day>
         <div class="save-activity__header" fxFlex='100' fxLayout="row">
-            <div class="save-activity__header-icon" [fxFlex]="activity.sitePicture ? '30' : '10' ">
-                <!-- <img *ngIf="type" [src]='activity.img' /> -->
+            <div class="save-activity__header-icon" [fxFlex]="activity.img ? '30' : '10' ">
+                <!-- <div class="save-activity__header-icon" [fxFlex]="assets/images/{{ activity.iconPath}} ? '30' : '10' "> -->
+                    <!-- <div class="save-activity__header-icon" [fxFlex]="assets/images/{{ activity.img}} ? '30' : '10' "> -->
+
+                <img *ngIf="type" [src]='activity.img' />
                 <img *ngIf="type" [src]='activity.sitePicture' />
-                <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>                
+                <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
             </div>
             <div class="save-activity__header-content" fxFlex='70'>
                 <div class="save-activity__header-content-heading">
                     <span class="save-activity__header-content-heading-constant">שריין פעילות:</span>
-                    <!-- <span class="save-activity__header-content-heading-input">{{activity.title}}</span> -->
+                    <span class="save-activity__header-content-heading-input">{{activity.title}}</span>
                     <span class="save-activity__header-content-heading-input">{{activity.name}}</span>
                 </div>
                 <div class="save-activity__header-content-heading-customer-type" *ngIf="type">
@@ -28,12 +31,20 @@
                 </div>
             </div>
         </div>
-        <div class="save-activity__additions" *ngIf='form.value.haveAdditions'>
+        <div class="save-activity__additions" *ngIf='form.value.haveAdditions && !type'>
+            <div class="save-activity__additions-text"> :תוספות</div>
+            <mat-checkbox class="save-activity__additions-checkbox"
+                *ngFor='let addition of additonsType2;let index=index' [(ngModel)]="additonsType[index].completed">
+                {{addition.name}}</mat-checkbox>
+        </div>
+
+        <div class="save-activity__additions" *ngIf='form.value.haveAdditions && type'>
             <div class="save-activity__additions-text"> :תוספות</div>
             <mat-checkbox class="save-activity__additions-checkbox"
                 *ngFor='let addition of additonsType;let index=index' [(ngModel)]="additonsType[index].completed">
                 {{addition.name}}</mat-checkbox>
         </div>
+
         <div class="save-activity__form-bottom-input-area" fxFlex='100' fxLayout="row"
             fxLayoutAlign="space-between none">
             <form [formGroup]="form" (ngSubmit)='onSubmit()' class="save-activity__form-bottom-input-area-inputs">

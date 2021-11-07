@@ -47,7 +47,7 @@ export class FormContainerComponent implements OnInit {
     this.initFormGroup();
     this.subscribeToQuestions();
     this.subscribeToFormValues();
-    this.dissableForm();
+    this.disableForm()
   }
 
   private initFormGroup() {
@@ -59,7 +59,7 @@ export class FormContainerComponent implements OnInit {
     }
   }
 
-  private dissableForm() {
+  private disableForm() {
     if (this.disable) {
       this.formGroup.disable()
     }

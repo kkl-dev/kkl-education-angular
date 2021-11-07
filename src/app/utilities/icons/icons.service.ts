@@ -30,6 +30,9 @@ import {
   GROUP_ICON,
   RESTAURANT_ICON,
   LOGO_ICON,
+  PINK_CIRCLE,
+  WHITE_CIRCLE,
+  MAN_WITH_BAG,
 } from './icons.list';
 
 export interface IconItem {
@@ -47,6 +50,18 @@ export class IconsService {
   ) { }
 
   public iconList: IconItem[] = [
+    {
+      key:'man-with-bag',
+      svgUrl:MAN_WITH_BAG
+    },
+     {
+       key:'white-circle',
+       svgUrl:WHITE_CIRCLE
+     },
+    {
+      key:'pink-circle',
+      svgUrl: PINK_CIRCLE
+    },
     {
       key: 'open-plus',
       svgUrl: OPEN_PLUS

@@ -1,0 +1,47 @@
+.calendar-card {
+    max-height: 100%;
+    display: flex;
+    justify-content: space-between;
+    img {
+        height: 100%;
+    }
+    .title {
+        font-weight: 600;
+    }
+    p {
+        margin: 0;
+    }
+    .right,
+    .left {
+        display: flex;
+        gap: 1rem;
+    }
+    .event-icons {
+        position: relative;
+        .main-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            ::ng-deep svg * {
+                fill: #FC1F9D;
+            }
+        }
+        .secondery-icon {
+            position: absolute;
+            top: 0;
+            left: 70%;
+        }
+    }
+
+    .same-hour {
+        display: flex;
+        gap: 2rem;
+    }
+    .same-hour-svg {
+        ::ng-deep svg {
+            height: 100%;
+            width: 80%;
+        }
+    }
+}
