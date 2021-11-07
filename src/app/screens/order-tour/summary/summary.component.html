@@ -27,22 +27,24 @@
                         <td colspan='4'>
                             <p>{{item.name}}</p>
                         </td>
-                            <td>{{!activateIndex.includes(i) ? item.amount : null}}</td>
-                            <td>{{!activateIndex.includes(i) ? (item.price | currency:'₪') : null}}</td>
-                            <td>{{!activateIndex.includes(i) ? (item.supplierCharge | currency:'₪') : null}}</td>
-                            <td>{{!activateIndex.includes(i) ? (item.customerBilling | currency:'₪') : null}}</td>
+                        <td>{{!activateIndex.includes(i) ? item.amount : null}}</td>
+                        <td>{{!activateIndex.includes(i) ? (item.price | currency:'₪') : null}}</td>
+                        <td>{{!activateIndex.includes(i) ? (item.supplierCharge | currency:'₪') : null}}</td>
+                        <td>{{!activateIndex.includes(i) ? (item.customerBilling | currency:'₪') : null}}</td>
                         <td (click)="toggleItems(i)">
-                            <svg-icon [src]="!activateIndex.includes(i) ? 'assets/images/down-arrow.svg' : 'assets/images/up-arrow.svg'"></svg-icon>
+                            <svg-icon
+                                [src]="!activateIndex.includes(i) ? 'assets/images/down-arrow.svg' : 'assets/images/up-arrow.svg'">
+                            </svg-icon>
                         </td>
                     </tr>
                     <ng-container *ngFor='let e of mySwitch(i)'>
                         <tr *ngIf="activateIndex.includes(i)" class="toggle-table">
-                            <td>{{e.date}}</td>
+                            <td>{{e.date | date :'mediumDate'}}</td>
                             <td>{{e.supplier}}</td>
                             <td>{{e.item}}</td>
                             <td [ngStyle]="{color : e.customerOrder ? 'red' : '#707070'}">{{e.comments}}</td>
                             <td>{{e.amount}}</td>
-                            <td>{{e.price | currency:'₪'}}</td>s
+                            <td>{{e.price | currency:'₪'}}</td>
                             <td>{{e.supplierCharge | currency:'₪'}}</td>
                             <td>{{e.customerBilling | currency:'₪'}}</td>
                         </tr>
@@ -61,13 +63,13 @@
         </table>
         <div class="order-summary">
             <div>
-                <p><span>{{examplePrice | currency:'₪'}}</span> סה"כ לתשלום</p>
+                <p><span>{{PriceTotal | currency:'₪'}}</span> סה"כ לתשלום</p>
             </div>
             <div>
-                <p><span>{{examplePrice | currency:'₪'}}</span> כולל מע"מ</p>
+                <p><span>{{PriceTotalVat | currency:'₪'}}</span> כולל מע"מ</p>
             </div>
             <div>
-                <p><span>{{examplePrice | currency:'₪'}}</span> סה"כ לתשלום אחרי סבסוד קקל</p>
+                <p><span>{{totalPriceAfterKklSubsidy | currency:'₪'}}</span> סה"כ לתשלום אחרי סבסוד קקל</p>
             </div>
         </div>
     </div>

@@ -11,30 +11,34 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent, HttpParameterCodec }       from '@angular/common/http';
-import { CustomHttpParameterCodec }                          from '../encoder';
-import { Observable }                                        from 'rxjs';
+import { Inject, Injectable, Optional } from '@angular/core';
+import {
+    HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent, HttpParameterCodec
+} from '@angular/common/http';
+import { CustomHttpParameterCodec } from '../encoder';
+import { Observable } from 'rxjs';
 
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { Configuration } from '../configuration';
 
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class QueuetasksService {
 
+
     //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
+
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (configuration) {
             this.configuration = configuration;
         }
@@ -64,16 +68,16 @@ export class QueuetasksService {
 
         if (typeof value === "object") {
             if (Array.isArray(value)) {
-                (value as any[]).forEach( elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
+                (value as any[]).forEach(elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
             } else if (value instanceof Date) {
                 if (key != null) {
                     httpParams = httpParams.append(key,
                         (value as Date).toISOString().substr(0, 10));
                 } else {
-                   throw Error("key may not be null if value is Date");
+                    throw Error("key may not be null if value is Date");
                 }
             } else {
-                Object.keys(value).forEach( k => httpParams = this.addToHttpParamsRecursive(
+                Object.keys(value).forEach(k => httpParams = this.addToHttpParamsRecursive(
                     httpParams, value[k], key != null ? `${key}.${k}` : k));
             }
         } else if (key != null) {
@@ -89,10 +93,10 @@ export class QueuetasksService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public searchQueTasks(tripId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/json'}): Observable<string>;
-    public searchQueTasks(tripId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/json'}): Observable<HttpResponse<string>>;
-    public searchQueTasks(tripId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/json'}): Observable<HttpEvent<string>>;
-    public searchQueTasks(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/json'}): Observable<any> {
+    public searchQueTasks(tripId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/json' }): Observable<string>;
+    public searchQueTasks(tripId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/json' }): Observable<HttpResponse<string>>;
+    public searchQueTasks(tripId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/json' }): Observable<HttpEvent<string>>;
+    public searchQueTasks(tripId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'text/json' }): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling searchQueTasks.');
         }
@@ -113,7 +117,7 @@ export class QueuetasksService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 

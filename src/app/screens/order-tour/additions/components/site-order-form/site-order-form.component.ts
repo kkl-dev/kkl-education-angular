@@ -1,5 +1,5 @@
 
-import { Component, OnInit ,Input,OnDestroy} from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
@@ -17,14 +17,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './site-order-form.component.html',
   styleUrls: ['./site-order-form.component.scss']
 })
-export class SiteOrderFormComponent implements OnInit,OnDestroy {
+export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
   constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
   @Input() orderType: number;
-  tripId : number;
-  supplierId : number;
+  tripId: number;
+  supplierId: number;
   itemId: number;
   originalItemList = [];
   itemsList =[]
@@ -59,6 +59,7 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
         //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
+
       }
      // this.generalFormService.setFormValues(this.item);
     }
@@ -115,8 +116,9 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
 
 
   getSupplierList(orderTypeId, tripId, orderId) {
-    this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+    this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
+
         console.log(response);
         this.generalFormService.supplierList = [];
         response.forEach(element => {
@@ -130,12 +132,12 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
             this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
             this.getOrderItemBySupplierId()
            }
-           
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
+
 
   getSupplierByOrderType() {
     // let centerFieldId 
@@ -155,6 +157,7 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
         this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
          this.getOrderItemBySupplierId();
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -271,10 +274,12 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
 
   public onValueChange(event) {
     this.form = event;
+
     // let isPristine=  this.form.pristine;
     // if(isPristine==true && this.supplierId == undefined){
       
     // }
+
     // else if(isPristine==true){
     //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
     // }
@@ -308,7 +313,7 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
-    if ( this.supplierSub)  { this.supplierSub.unsubscribe(); }
+    if (this.supplierSub) { this.supplierSub.unsubscribe(); }
   }
 
 }

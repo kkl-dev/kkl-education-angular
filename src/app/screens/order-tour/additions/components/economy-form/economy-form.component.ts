@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
@@ -15,23 +15,25 @@ import { Subscription } from 'rxjs';
   templateUrl: './economy-form.component.html',
   styleUrls: ['./economy-form.component.scss']
 })
-export class EconomyFormComponent implements OnInit,OnDestroy {
+export class EconomyFormComponent implements OnInit, OnDestroy {
 
   constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
   @Input() orderType: number;
   tripId: number;
-  supplierId : number;
+  supplierId: number;
   itemId: number;
   centerFieldId: number;
+
   itemsList=[];
   flag: boolean =false;
   isEditable : boolean= false;
   originalItemList=[];
+
   supplierListSub: Subscription;
   supplierSub: Subscription;
-  
+
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -74,24 +76,26 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     //    this.tripId= retrievedObj.trip.id;
     // }
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     this.setformTemplate();
+
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined){
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
+
         //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
       }
-     // this.generalFormService.setFormValues(this.item);
+      // this.generalFormService.setFormValues(this.item);
     }
-    else{
-      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+    else {
+      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
       //this.setformTemplate();
     }
     this.getSupplierList(this.orderType, this.tripId, 0);
@@ -100,10 +104,10 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     //   this.generalFormService.setFormValues(this.order);
     // }
 
-   
+
     this.generalFormService.setDatesValues();
-  
-     //this.setformTemplate();
+
+    //this.setformTemplate();
 
   }
 
@@ -155,22 +159,22 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
   // }
 
   getSupplierList(orderTypeId, tripId, orderId) {
-    this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+    this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-         this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
-         if(this.supplierId== undefined)
-           this.getSupplierByOrderType();
-           else{
-            this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
-            this.getOrderItemBySupplierId()
-           }
-           
+        let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+        this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
+        if (this.supplierId == undefined)
+          this.getSupplierByOrderType();
+        else {
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+          this.getOrderItemBySupplierId()
+        }
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -187,14 +191,16 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     //   let retrievedObj = JSON.parse(retrievedObject);
     //   centerFieldId= retrievedObj.trip.centerField.id;
     // }
+
     
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
+
       response => {
         console.log(response);
-        this.supplierId= response.id;
+        this.supplierId = response.id;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
-         this.getOrderItemBySupplierId();
+        this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        this.getOrderItemBySupplierId();
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -202,24 +208,24 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
 
   }
 
-  
+
   getOrderItemBySupplierId() {
     this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
       response => {
         console.log(response);
-        this.itemsList=[];
+        this.itemsList = [];
         this.originalItemList = response;
-        this.generalFormService.originalItemList=response;
+        this.generalFormService.originalItemList = response;
         response.forEach(element => {
           this.itemsList.push({ label: element.name, value: element.id.toString() });
         });
-        let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
-        this.generalFormService.details[itemIndex].inputProps.options= this.itemsList;
-        if(this.itemId!= undefined)
-        this.generalFormService.details[itemIndex].value= this.itemId.toString();
-        if (this.item != undefined && this.item != null ) {
-            this.item.globalParameters.supplierId=this.supplierId.toString();
-            this.generalFormService.setFormValues(this.item);
+        let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+        this.generalFormService.details[itemIndex].inputProps.options = this.itemsList;
+        if (this.itemId != undefined)
+          this.generalFormService.details[itemIndex].value = this.itemId.toString();
+        if (this.item != undefined && this.item != null) {
+          this.item.globalParameters.supplierId = this.supplierId.toString();
+          this.generalFormService.setFormValues(this.item);
         }
         this.initiateForm();
       },
@@ -228,10 +234,10 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     )
   }
 
-  initiateForm(){
-    this.flag=true;
-    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
-     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
+  initiateForm() {
+    this.flag = true;
+    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
+    console.log('this.formTemplate.questionsGroups:', this.formTemplate.questionsGroups)
   }
 
   // getSupplierByOrderType(orderTypeId) {
@@ -291,7 +297,6 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
       eco.order.orderType.id = 4;
       if (this.item.globalParameters.tempOrderIdentity != undefined)
         eco.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-        
      // this.generalFormService.addOrder(eco, eco.order.orderType.id);
       if(!this.isEditable)
       this.generalFormService.addOrder(eco, eco.order.orderType.id);
@@ -461,7 +466,7 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     //   this.form.controls["details"].get('supplierId').setValue('',{emitEvent: false});
     //   this.form.controls["details"].get('supplierId').setValue(this.supplierId,{emitEvent: false})
     // }
-    
+
     // if (this.form.controls["details"].get('supplierId').value == "" &&  this.supplierId != undefined)
     //   this.form.controls["details"].get('supplierId').setValue(this.supplierId);
 
@@ -469,32 +474,34 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     //   this.form.controls["details"].get('itemId').setValue('',{emitEvent: false});
     //   this.form.controls["details"].get('itemId').setValue(this.itemId,{emitEvent: false});
     // }
-    
+
 
     this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
+
         console.log('supplier changed:',value);
         this.supplierId=value;
         this.getOrderItemBySupplierId();
+
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let item = this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost = Math.floor(item.cost);
-      this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
+      this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
       console.log(this.form.value.details);
       let form = this.additionsService.calculateBillings(this.form.value.details);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
     });
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
     });
     console.log(this.form)
@@ -502,6 +509,6 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
   }
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
-    if ( this.supplierSub)  { this.supplierSub.unsubscribe(); }
+    if (this.supplierSub) { this.supplierSub.unsubscribe(); }
   }
 }

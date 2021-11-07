@@ -132,6 +132,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     )
   }
 
+
   getSupplierByOrderType() {
     // let centerFieldId 
     // if(this.squadAssembleService.tripInfofromService ! = undefined){
@@ -144,6 +145,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     // }
     
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
+
       response => {
         console.log(response);
         this.supplierId= response.id;

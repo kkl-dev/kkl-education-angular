@@ -57,7 +57,7 @@ export class FormInputComponent implements OnInit {
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
   constructor(private formService: FormService, public additionsService: AdditionsService, public transportService: TransportService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService
-    ,private generalFormService: GeneralFormService) {
+    , private generalFormService: GeneralFormService) {
     console.log(this.dateOptions);
   }
 
@@ -177,7 +177,9 @@ export class FormInputComponent implements OnInit {
         this.tripService.getCustomer(attr.autoCustomerId);
       }
       this.tripService.budgetByParam.attribute = attr;
+
       //this.tripService.budgetByParam.userId = "שחר";
+
       this.tripService.budgetByParam.userInfo = "שחר גל";
       //find index 'dates'
       var index;

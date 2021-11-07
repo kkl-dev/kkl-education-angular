@@ -19,6 +19,7 @@ export class GeneralFormService {
   supplierList = [];
   itemsList = [];
   public transportOrderList: TransportOrder[] = [];
+
   public economyOrderList: EconomyOrder[] =[];
   public gudianceOrderList : GuidanceOrder[]=[];
   public hostingOrderList : HostingOrder[] =[];
@@ -33,9 +34,10 @@ export class GeneralFormService {
   public tempOrderReduce = new BehaviorSubject<{tempOrderReduce:any,orderType:any}>(null)
 
   public tableData = new BehaviorSubject<any>(null)
+
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-  constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService,  private _dialog: MatDialog,
-    ) { }
+  constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService, private _dialog: MatDialog,
+  ) { }
   public details: QuestionBase<string>[] = [
     new QuestionSelect({
       key: 'supplierId',
@@ -105,7 +107,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-  
+
       },
     }),
     new QuestionSelect({
@@ -115,7 +117,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-       
+
       },
     }),
     new QuestionTextbox({
@@ -146,8 +148,8 @@ export class GeneralFormService {
         // labelSize: 's5',
       },
     }),
-   
-    
+
+
   ]
   public comments: QuestionBase<string>[] = [
     new QuestionTextarea({
@@ -160,7 +162,7 @@ export class GeneralFormService {
     }),
   ];
   public transport: QuestionBase<string>[] = [
-   
+
     new QuestionTextbox({
       key: 'scatterLocation',
       label: 'מקום פיזור',
@@ -177,13 +179,13 @@ export class GeneralFormService {
       type: 'select',
       // validations: [Validators.required],
       inputProps: {
-        options :this.settlementList
+        options: this.settlementList
       },
     }),
-    
+
   ]
   public economy: QuestionBase<string>[] = [
-    
+
     new QuestionTextbox({
       key: 'regularDishesNumber',
       label: 'מספר מנות רגילות',
@@ -205,7 +207,7 @@ export class GeneralFormService {
   ]
 
   public guidance: QuestionBase<string>[] = [
-   
+
     new QuestionTextbox({
       key: 'scatterLocation',
       label: 'מקום פיזור',
@@ -241,14 +243,14 @@ export class GeneralFormService {
   ]
 
   public site: QuestionBase<string>[] = [
-   
+
     new QuestionSelect({
       key: 'siteCode',
       label: 'בחר אתר',
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-      
+
       },
     }),
     new QuestionTextbox({
@@ -260,7 +262,7 @@ export class GeneralFormService {
       key: 'totalHours',
       label: 'סה"כ שעות',
       value: '',
-      
+
     }),
     // new QuestionSelect({
     //   key: 'isCustomerOrder',
@@ -268,15 +270,15 @@ export class GeneralFormService {
     //   type: 'select',
     //   validations: [Validators.required],
     //   inputProps: {
-      
+
     //   },
     // }),
-    
+
   ]
 
-  
+
   public securing: QuestionBase<string>[] = [
-   
+
     new QuestionTextbox({
       key: 'scatterLocation',
       label: 'מקום פיזור',
@@ -291,20 +293,20 @@ export class GeneralFormService {
     //   key: 'guardName',
     //   label: 'שם המאבטח',
     //   value: '',
-      
+
     // }),
-  
+
   ]
 
   public musicActivation: QuestionBase<string>[] = [
-   
+
     new QuestionTextbox({
       key: 'totalHours',
       label: 'סה"כ שעות',
       value: '',
-      
+
     }),
-  
+
   ]
 
 
@@ -328,30 +330,30 @@ export class GeneralFormService {
   ) {
     questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
       // control.value = data[control.key]
-      let startDate =data.globalParameters.startDate;
+      let startDate = data.globalParameters.startDate;
       let endDate = data.globalParameters.endDate;
       control.value = data.globalParameters[control.key];
-      if(control.key=='itemId'){
-        if(data.globalParameters[control.key]!= undefined)
-        control.value= data.globalParameters[control.key].toString();
+      if (control.key == 'itemId') {
+        if (data.globalParameters[control.key] != undefined)
+          control.value = data.globalParameters[control.key].toString();
       }
-      if(control.key=='peopleInTrip'){
-        control.value=this.squadAssembleService.peopleInTrip;
+      if (control.key == 'peopleInTrip') {
+        control.value = this.squadAssembleService.peopleInTrip;
       }
-      if(control.key=='startHour' && data.globalParameters[control.key].includes('T')){
-        control.value= this.setTimeFormat(data.globalParameters[control.key]);
+      if (control.key == 'startHour' && data.globalParameters[control.key].includes('T')) {
+        control.value = this.setTimeFormat(data.globalParameters[control.key]);
       }
-      if(control.key=='endHour' && data.globalParameters[control.key].includes('T')){
-        control.value= this.setTimeFormat(data.globalParameters[control.key]);
+      if (control.key == 'endHour' && data.globalParameters[control.key].includes('T')) {
+        control.value = this.setTimeFormat(data.globalParameters[control.key]);
       }
-      if(control.key=='startDate' && (data.globalParameters[control.key]).includes('T')){
-        control.value= this.changeDateFormat(data.globalParameters[control.key],'israel');
+      if (control.key == 'startDate' && (data.globalParameters[control.key]).includes('T')) {
+        control.value = this.changeDateFormat(data.globalParameters[control.key], 'israel');
       }
-      if(control.key=='endDate' &&  (data.globalParameters[control.key]).includes('T')){
-        control.value= this.changeDateFormat(data.globalParameters[control.key],'israel');
+      if (control.key == 'endDate' && (data.globalParameters[control.key]).includes('T')) {
+        control.value = this.changeDateFormat(data.globalParameters[control.key], 'israel');
       }
-      if(control.key=='quantity' &&  data.globalParameters[control.key]==undefined){
-        control.value= '1';
+      if (control.key == 'quantity' && data.globalParameters[control.key] == undefined) {
+        control.value = '1';
       }
       // if (control.key === 'comments') {
       //   control.value = data;
@@ -445,8 +447,9 @@ export class GeneralFormService {
   //     error => console.log(error),       // error
   //     () => console.log('completed')     // complete
   //   )
-   
+
   // }
+
 
 
   
@@ -467,11 +470,12 @@ export class GeneralFormService {
   //   )
   // }
 
-  setTimeFormat(hour){
-    let hourStr= hour.split("T");
-    let hourFormat= hourStr[1];
-     return hourFormat;
- }
+
+  setTimeFormat(hour) {
+    let hourStr = hour.split("T");
+    let hourFormat = hourStr[1];
+    return hourFormat;
+  }
 
   changeDateFormat(date, format) {
     let dateFormat;
@@ -489,51 +493,52 @@ export class GeneralFormService {
     return dateFormat;
   }
 
-  clearFormFields(){
-    let statHourIndex =this.details.findIndex(i => i.key==='startHour');
-    this.details[statHourIndex].value='';
-    let endHourIndex = this.details.findIndex(i => i.key==='endHour');
-    this.details[endHourIndex].value='';
-    let quantityIndex= this.details.findIndex(i => i.key==='quantity');
-    this.details[quantityIndex].value='1';
-    let itemCostIndex= this.details.findIndex(i => i.key==='itemCost');
-    this.details[itemCostIndex].value='';
-    let billingSupplierIndex= this.details.findIndex(i => i.key==='billingSupplier');
-    this.details[billingSupplierIndex].value='';
-    let billingCustomerIndex= this.details.findIndex(i => i.key==='billingCustomer');
-    this.details[billingCustomerIndex].value='';
-    let locationIndex= this.details.findIndex(i => i.key==='location');
-    this.details[locationIndex].value='';
-     this.comments[0].value='';
+  clearFormFields() {
+    let statHourIndex = this.details.findIndex(i => i.key === 'startHour');
+    this.details[statHourIndex].value = '';
+    let endHourIndex = this.details.findIndex(i => i.key === 'endHour');
+    this.details[endHourIndex].value = '';
+    let quantityIndex = this.details.findIndex(i => i.key === 'quantity');
+    this.details[quantityIndex].value = '1';
+    let itemCostIndex = this.details.findIndex(i => i.key === 'itemCost');
+    this.details[itemCostIndex].value = '';
+    let billingSupplierIndex = this.details.findIndex(i => i.key === 'billingSupplier');
+    this.details[billingSupplierIndex].value = '';
+    let billingCustomerIndex = this.details.findIndex(i => i.key === 'billingCustomer');
+    this.details[billingCustomerIndex].value = '';
+    let locationIndex = this.details.findIndex(i => i.key === 'location');
+    this.details[locationIndex].value = '';
+    this.comments[0].value = '';
   }
 
 
-    mapOrderList(orderList){
-       console.log('order list is: ',orderList);
-       orderList.forEach(element => {
-         if (element.order.orderType.id==1){
-           this.transportOrderList.push(element)
-         }
-         if (element.order.orderType.id==2){
-          this.securingOrderList.push(element)
-        }
-         if (element.order.orderType.id==3){
-          this.siteOrderList.push(element)
-        }
-        if (element.order.orderType.id==4){
-          this.economyOrderList.push(element)
-        }
-        if (element.order.orderType.id==6){
-          this.gudianceOrderList.push(element)
-        }
-        if (element.order.orderType.id==7){
-          this.hostingOrderList.push(element)
-        }
-        if (element.order.orderType.id==10){
-          this.musicOrderList.push(element)
-        }
-       });
-    }
+  mapOrderList(orderList) {
+    console.log('order list is: ', orderList);
+    orderList.forEach(element => {
+      if (element.order.orderType.id == 1) {
+        this.transportOrderList.push(element)
+      }
+      if (element.order.orderType.id == 2) {
+        this.securingOrderList.push(element)
+      }
+      if (element.order.orderType.id == 3) {
+        this.siteOrderList.push(element)
+      }
+      if (element.order.orderType.id == 4) {
+        this.economyOrderList.push(element)
+      }
+      if (element.order.orderType.id == 6) {
+        this.gudianceOrderList.push(element)
+      }
+      if (element.order.orderType.id == 7) {
+        this.hostingOrderList.push(element)
+      }
+      if (element.order.orderType.id == 10) {
+        this.musicOrderList.push(element)
+      }
+    });
+  }
+
 
    addOrder(item: any,orderType) {  
       this.orderService.addOrder( item).subscribe(res => {
@@ -566,24 +571,44 @@ export class GeneralFormService {
           width: '500px',
           data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
         })
-      })
-    }
 
-  
-    setOrderList(res, orderTypeId,operation){
-      switch (orderTypeId) {
-        case 1:
-          let t = {} as TransportOrder;
-          let tranArr: TransportOrder[]=[];
-          if(res.length>1){
-             for (let i = 0; i < res.length; i++) {
-                let trans= {} as TransportOrder;
-                trans= res[i];
-                tranArr.push(trans);
-             }
+      })
+    })
+  }
+  editOrder(item: any, orderType) {
+    let userName = 'שחר גל';
+    this.orderService.editOrder(item).subscribe(res => {
+      console.log(res);
+      this.setOrderList(res, orderType, 'updating')
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'ההזמנה עודכנה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+    }, (err) => {
+      console.log(err);
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+    })
+  }
+
+
+  setOrderList(res, orderTypeId, operation) {
+    switch (orderTypeId) {
+      case 1:
+        let t = {} as TransportOrder;
+        let tranArr: TransportOrder[] = [];
+        if (res.length > 1) {
+          for (let i = 0; i < res.length; i++) {
+            let trans = {} as TransportOrder;
+            trans = res[i];
+            tranArr.push(trans);
           }
-          else if(res.length==1)
+        }
+        else if (res.length == 1)
           t = res[0];
+
            this.transportOrderList=[];
            if(res.length>1)
            this.transportOrderList= tranArr;
@@ -714,12 +739,12 @@ export class GeneralFormService {
                  this.musicOrderList.push(musicActivation);
                 break;
     
+
     }
   }
 
-   
 
-    
+
 
 
       updatetempOrderReduce(res, orderTypeId){
@@ -734,7 +759,12 @@ export class GeneralFormService {
       }
       //this.updateTempOrderReduce(temp);
       //this.updateTempOrderReduce(temp,orderTypeId);
+
     }
+    this.updateTempOrderReduce(temp);
+
+  }
+
 
     updatetempOrderReduce1(res, orderTypeId){
       let temp= this.tempOrderReduce.value.tempOrderReduce;
@@ -743,20 +773,24 @@ export class GeneralFormService {
           if(temp[orderTypeId][i].orderTempId==res[j].globalParameters.tempOrderIdentity){
             temp[orderTypeId].splice(i, 1);
             break;
+
         }
-         //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
-         //  if(temp[orderTypeId][i].orderTempId==tempOrderId){
-         //   //temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
-         //   //temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
-         //   temp[orderTypeId].splice(i, 1);
-         //  }
-        }   
+        //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
+        //  if(temp[orderTypeId][i].orderTempId==tempOrderId){
+        //   //temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
+        //   //temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
+        //   temp[orderTypeId].splice(i, 1);
+        //  }
       }
+
       //this.updateTempOrderReduce(temp)
       this.updateTempOrderReduce(temp,orderTypeId);
-    }
 
-     
+    }
+    this.updateTempOrderReduce(temp);
+  }
+
+
 
 
 }

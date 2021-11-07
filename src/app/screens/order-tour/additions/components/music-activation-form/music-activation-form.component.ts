@@ -1,4 +1,4 @@
-import { Component, OnInit, Input ,OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
@@ -16,15 +16,15 @@ import { Subscription } from 'rxjs';
   templateUrl: './music-activation-form.component.html',
   styleUrls: ['./music-activation-form.component.scss']
 })
-export class MusicActivationFormComponent implements OnInit,OnDestroy {
+export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
   constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
 
   @Input() orderType: number;
-  tripId : number;
-  supplierId : number;
+  tripId: number;
+  supplierId: number;
   itemId: number;
   centerFieldId: number;
   originalItemList = [];
@@ -45,6 +45,7 @@ export class MusicActivationFormComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     // this.generalFormService.clearFormFields();
+
 
     //  this.generalFormService.setDatesValues();
     // this.getSupplierList(this.orderType, this.tripId, 0);
@@ -74,6 +75,7 @@ export class MusicActivationFormComponent implements OnInit,OnDestroy {
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
 
+
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
@@ -82,6 +84,7 @@ export class MusicActivationFormComponent implements OnInit,OnDestroy {
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
         //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
+
       }
      // this.generalFormService.setFormValues(this.item);
     }
@@ -135,7 +138,9 @@ export class MusicActivationFormComponent implements OnInit,OnDestroy {
   }
 
   getSupplierList(orderTypeId, tripId, orderId) {
+
     this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
@@ -157,6 +162,7 @@ export class MusicActivationFormComponent implements OnInit,OnDestroy {
     )
   }
 
+
   getSupplierByOrderType() {
     // let centerFieldId 
     // if(this.squadAssembleService.tripInfofromService ! = undefined){
@@ -175,6 +181,7 @@ export class MusicActivationFormComponent implements OnInit,OnDestroy {
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
         this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
          this.getOrderItemBySupplierId();
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -277,9 +284,11 @@ export class MusicActivationFormComponent implements OnInit,OnDestroy {
 
   public onValueChange(event) {
     this.form = event;
+
     console.log('I am form Event');
   
     this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
+
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
@@ -310,7 +319,7 @@ export class MusicActivationFormComponent implements OnInit,OnDestroy {
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
-    if ( this.supplierSub)  { this.supplierSub.unsubscribe(); }
+    if (this.supplierSub) { this.supplierSub.unsubscribe(); }
   }
 
 }

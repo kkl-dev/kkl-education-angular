@@ -1,4 +1,4 @@
-import { Component, OnInit, Input ,OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
@@ -17,16 +17,16 @@ import { Subscription } from 'rxjs';
   templateUrl: './gudiance-form.component.html',
   styleUrls: ['./gudiance-form.component.scss']
 })
-export class GudianceFormComponent implements OnInit ,OnDestroy {
+export class GudianceFormComponent implements OnInit, OnDestroy {
 
   constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService,
-   private userService:UserService) { }
+    private userService: UserService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
 
   @Input() orderType: number;
-  tripId : number;
-  supplierId : number;
+  tripId: number;
+  supplierId: number;
   itemId: number;
   centerFieldId: number;
   originalItemList = [];
@@ -50,9 +50,9 @@ export class GudianceFormComponent implements OnInit ,OnDestroy {
     // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     // this.generalFormService.clearFormFields();
 
+
     //  this.generalFormService.setDatesValues();
     // this.getSupplierList(this.orderType, this.tripId, 0);
-
 
     // // if (this.editMode) {
     // //   this.generalFormService.setFormValues(this.order);
@@ -87,6 +87,7 @@ export class GudianceFormComponent implements OnInit ,OnDestroy {
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
         //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
+
       }
      // this.generalFormService.setFormValues(this.item);
     }
@@ -143,7 +144,9 @@ export class GudianceFormComponent implements OnInit ,OnDestroy {
   }
 
   getSupplierList(orderTypeId, tripId, orderId) {
+
     this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
@@ -183,12 +186,14 @@ export class GudianceFormComponent implements OnInit ,OnDestroy {
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
         this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
          this.getOrderItemBySupplierId();
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
 
   }
+
 
   
   getOrderItemBySupplierId() {
@@ -225,10 +230,11 @@ export class GudianceFormComponent implements OnInit ,OnDestroy {
          this.generalFormService.details[languageIndex].inputProps.options= this.generalFormService.languageList;
         })
      },(err)=>{
+
       console.log(err);
-     })
+    })
   }
-  
+
 
   public onSave(): void {
     if (this.form) {
@@ -319,9 +325,11 @@ export class GudianceFormComponent implements OnInit ,OnDestroy {
 
   public onValueChange(event) {
     this.form = event;
+
     console.log('I am form Event');
   
     this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
+
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
@@ -353,6 +361,6 @@ export class GudianceFormComponent implements OnInit ,OnDestroy {
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
-    if ( this.supplierSub)  { this.supplierSub.unsubscribe(); }
+    if (this.supplierSub) { this.supplierSub.unsubscribe(); }
   }
 }

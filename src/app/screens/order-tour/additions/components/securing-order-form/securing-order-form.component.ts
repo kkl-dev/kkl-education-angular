@@ -23,8 +23,8 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   @Input() public editMode: boolean;
 
   @Input() orderType: number;
-  tripId : number;
-  supplierId : number;
+  tripId: number;
+  supplierId: number;
   itemId: number;
   originalItemList = [];
   itemsList =[]
@@ -42,10 +42,12 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     questionsGroups: [],
   };
   ngOnInit(): void {
+
     // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     // this.generalFormService.clearFormFields();
     //  this.generalFormService.setDatesValues();
     // this.getSupplierList(this.orderType, this.tripId, 0);
+
 
     // // if (this.editMode) {
     // //   this.generalFormService.setFormValues(this.order);
@@ -73,6 +75,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
 
+
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
@@ -81,6 +84,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
         //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
+
       }
      // this.generalFormService.setFormValues(this.item);
     }
@@ -134,7 +138,9 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   }
 
   getSupplierList(orderTypeId, tripId, orderId) {
+
     this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
@@ -156,6 +162,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     )
   }
 
+
   getSupplierByOrderType() {
     // let centerFieldId 
     // if(this.squadAssembleService.tripInfofromService ! = undefined){
@@ -174,6 +181,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
         this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
          this.getOrderItemBySupplierId();
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -294,13 +302,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
 
   public onValueChange(event) {
     this.form = event;
-    // let isPristine=  this.form.pristine;
-    // if(isPristine==true && this.supplierId == undefined){
-      
-    // }
-    // else if(isPristine==true){
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
-    // }
+
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);
@@ -330,7 +332,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
-    if ( this.supplierSub)  { this.supplierSub.unsubscribe(); }
+    if (this.supplierSub) { this.supplierSub.unsubscribe(); }
   }
 
 
