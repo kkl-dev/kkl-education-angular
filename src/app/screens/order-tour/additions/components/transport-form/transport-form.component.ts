@@ -154,17 +154,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         let exitLocationIndex = this.generalFormService.transport.findIndex(i => i.key === 'exitLocation');
         this.generalFormService.transport[exitLocationIndex].inputProps.options = this.generalFormService.supplierList;
         console.log(res);
-      },(err)=>{
-        console.log(err);
-
-      })
-      let exitLocationIndex = this.generalFormService.transport.findIndex(i => i.key === 'exitLocation');
-      this.generalFormService.transport[exitLocationIndex].inputProps.options = this.generalFormService.supplierList;
-      console.log(res);
-    }, (err) => {
+      },(err) => {
       console.log(err);
     })
   }
+
   getSupplierList(orderTypeId, tripId, orderId) {
     this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
