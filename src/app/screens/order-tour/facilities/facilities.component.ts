@@ -268,7 +268,7 @@ export class FacilitiesComponent implements OnInit {
   updateTrip() {
     let userInfo = this.userDataService.user.name || 'שחר גל';
     let events: any = this.eventsArr;
-    this.activitiyService.updateTripActivities(userInfo,events).subscribe((tripCalendar: any) => {
+    this.activitiyService.updateTripActivities(events).subscribe((tripCalendar: any) => {
       console.log('update Trip Activities: ', tripCalendar);
       if (tripCalendar) {
         //....
@@ -351,13 +351,13 @@ export class FacilitiesComponent implements OnInit {
   }
 
   public updateChosenUpComingActivity(args: ActivitiesCardInterface) {
-    console.log('updateChosenUpComingActivity args' + args)
+    console.log('update ChosenUp Coming Activity args' + args)
     this.facilitiesService.updateSelectedActivity(args);
     this.activityIsUpComing = true;
   }
 
   public updateChosenActivity(args: ActivitiesCardInterface) {
-    console.log('updateChosenActivity args' + args);
+    console.log('update Chosen Activity args' + args);
     this.activityIsUpComing = false;
     this.facilitiesService.updateSelectedActivity(args);
   }

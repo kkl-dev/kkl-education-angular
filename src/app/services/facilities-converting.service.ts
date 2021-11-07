@@ -74,74 +74,85 @@ export class FacilitiesConvertingService {
     let activity;
 
     for (let i = 0; i < arr.length; i++) {
-      console.log(arr[i]);
-      let orderTypeCode = 4;
-      let orderTypeName = ''
-      // if (arr[i].type == "facility") {
-      //check if goes into tempOrderArr
-      if (arr[i].svgUrl && !arr[i].additions) {
-        if (arr[i].facilityId) {
-          orderTypeCode = 7;
-          orderTypeName = 'אירוח/פעילות';
-        }
-        tempOrder = {
-          "tripId": tripId,
-          "orderTypeCode": orderTypeCode,
-          "orderTypeName": orderTypeName,
-          "itemId": arr[i].facilityId || null,
-          "startDate": arr[i].start,
-          "endDate": arr[i].end,
-          "fromHour": arr[i].start,
-          "tillHour": arr[i].end,
-          // "userName": userName
-        }
-        tempOrderArr.push(tempOrder);
-      }
-      else {
-        activity = {
-          "activityId": arr[i].activityId || 1,
-          "activityName": arr[i].title || '',
-          "date": arr[i].start,
-          "description": arr[i].description || '',
-          "fromHour": arr[i].start,
-          "tillHour": arr[i].end,
-          "tripId": tripId,
-          // "userName": userName
-        }
-        activityArr.push(activity);
-      }
-      if (arr[i].additions) {
-        for (let j = 0; i < arr[i].additions.length; j++) {
-          switch (arr[i].additions[j].name) {
-            case "הסעה":
-              orderTypeCode = 1
-              orderTypeName = 'היסעים'
-              break;
-            case "הדרכה":
-              orderTypeCode = 6
-              orderTypeName = 'הדרכה'
-              break;
-            case "כלכלה":
-              orderTypeCode = 4
-              orderTypeName = 'כלכלה'
-              break;
-            default:
-              orderTypeCode = 0
-              orderTypeName = 'לא ידוע'
-              break;
+      console.log('arr ' + i + ': ', arr[i]);
+      //checl t 
+      if (arr[i].start != undefined && arr[i].start.includes("T")) {
+
+        let orderTypeCode = 4;
+        let orderTypeName = '';
+        // if (arr[i].type == "facility") {
+        //check if goes into tempOrderArr
+        // if (arr[i].svgUrl && !arr[i].additions) {
+          if (arr[i].facilityId || arr[i].itemId) {
+             orderTypeName = arr[i].title;
+
+          if (arr[i].facilityId) {
+            orderTypeCode = 7;
+            orderTypeName = 'אירוח/פעילות';
           }
           tempOrder = {
             "tripId": tripId,
             "orderTypeCode": orderTypeCode,
             "orderTypeName": orderTypeName,
-            "itemId": arr[i].itemId,
+            "itemId": arr[i].facilityId || arr[i].itemId,
             "startDate": arr[i].start,
             "endDate": arr[i].end,
             "fromHour": arr[i].start,
             "tillHour": arr[i].end,
-            //"userInfo": userName
+            // "userName": userName
           }
           tempOrderArr.push(tempOrder);
+        }
+        else {
+          activity = {
+            "activityId": arr[i].activityId || null,
+            "activityName": arr[i].title || '',
+            "date": arr[i].start,
+            "description": arr[i].description || arr[i].title,
+            "fromHour": arr[i].start,
+            "tillHour": arr[i].end,
+            "tripId": tripId,
+            // "userName": userName
+          }
+          activityArr.push(activity);
+        }
+        if (arr[i].additions) {
+          for (let j = 0; j < arr[i].additions.length; j++) {
+            switch (arr[i].additions[j].name) {
+              case "הסעה":
+                orderTypeCode = 1
+                orderTypeName = 'היסעים',
+                arr[i].itemId = null
+                break;
+              case "הדרכה":
+                orderTypeCode = 6
+                orderTypeName = 'הדרכה'
+                arr[i].itemId = null
+                break;
+              case "כלכלה":
+                orderTypeCode = 4
+                orderTypeName = 'כלכלה'
+                arr[i].itemId = null
+                break;
+              default:
+                orderTypeCode = 0
+                orderTypeName = 'לא ידוע'
+                arr[i].itemId = null
+                break;
+            }
+            tempOrder = {
+              "tripId": tripId,
+              "orderTypeCode": orderTypeCode,
+              "orderTypeName": orderTypeName,
+              "itemId": arr[i].itemId,
+              "startDate": arr[i].start,
+              "endDate": arr[i].end,
+              "fromHour": arr[i].start,
+              "tillHour": arr[i].end,
+              //"userInfo": userName
+            }
+            tempOrderArr.push(tempOrder);
+          }
         }
       }
     }

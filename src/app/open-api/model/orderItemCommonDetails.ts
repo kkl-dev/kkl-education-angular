@@ -38,9 +38,10 @@ export interface OrderItemCommonDetails {
     endDate?: string;
     startHour?: string;
     endHour?: string;
-    userName?: string;
     comments?: string;
     internalComment?: string;
     openDate?: string;
+    isVat?: boolean | null;
+    userInfo?: string;
 }
 

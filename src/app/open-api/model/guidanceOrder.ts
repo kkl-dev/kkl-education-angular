@@ -17,7 +17,10 @@ import { OrderEvent } from './orderEvent';
 export interface GuidanceOrder extends OrderEvent { 
     scatterLocation?: string;
     guideName?: string;
-    languageGide?: string;
+    /**
+     * language code
+     */
+    languageGuidance?: number;
     guideInstructions?: string;
 }
 

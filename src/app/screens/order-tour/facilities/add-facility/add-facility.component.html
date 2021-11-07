@@ -4,9 +4,13 @@
             (emitCurrentDay)='getDay($event)' [currentDay]='selectedDay'>
         </app-sleeping-options-by-day>
         <div class="add-facility__header">
+                        <!-- <div class="save-activity__header-icon" [fxFlex]="activity.img ? '30' : '10' ">              
+                <img *ngIf="type" [src]='activity.img' />
+                <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
+            </div> -->
+
             <div class="add-facility__header-icon">
-                <svg-icon src="assets/images/{{ item.iconPath || defaultImage }}" class="header__form-group-svg">
-                </svg-icon>
+                <svg-icon src="assets/images/{{ item.iconPath || defaultImage }}" class="header__form-group-svg"></svg-icon>
                 <!-- <svg-icon [src]="item.svgUrl" class="header__form-group-svg"></svg-icon> -->
             </div>
             <div class="add-facility__header-content">

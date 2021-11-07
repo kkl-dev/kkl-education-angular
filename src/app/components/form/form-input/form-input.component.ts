@@ -177,7 +177,7 @@ export class FormInputComponent implements OnInit {
       }
       this.tripService.budgetByParam.attribute = attr;
       this.tripService.budgetByParam.userId = "שחר";
-      this.tripService.budgetByParam.userName = "שחר גל";
+      this.tripService.budgetByParam.userInfo = "שחר גל";
       //find index 'dates'
       var index;
       for (var i in this.squadAssemble.formsArray) {

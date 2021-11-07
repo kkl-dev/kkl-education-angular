@@ -114,12 +114,12 @@ export class SaveActivityComponent implements OnInit {
         'invitingCustomer': new FormControl(false),
         'additions': new FormControl(),
         'haveAdditions': new FormControl(true),
+        'itemId': new FormControl(data.itemId) || null,
         'svgUrl': new FormControl('assets/images/' + data.iconPath || 'assets/images/' + data.svgUrl),
         //'svgUrl': new FormControl('assets/images/' + data.iconPath) || null,
         'img': new FormControl(data.sitePicture),
         'activityId': new FormControl(data.activityId),
-        'description': new FormControl(data.description) || null,
-        'itemId': new FormControl(data.itemId) || null,        
+        'description': new FormControl(data.description) || null
       });
       console.log('this form => ', this.form);
     } else {

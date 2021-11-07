@@ -268,7 +268,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.squadAssemble.payerCustomer.name != undefined)
         this.squadAssemble.tripInfo.customerPay = this.squadAssemble.payerCustomer;
       this.squadAssemble.tripInfo.generateTime = '2021-10-10';
-      this.squadAssemble.tripInfo.userName = 'שחר גל';
+      this.squadAssemble.tripInfo.userInfo = 'שחר גל';
       if (startDate == endDate) {
         this.tripService.isOneDayTrip = true;
         this.createTrip();
@@ -318,8 +318,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   createTripActivities(route) {
     let userName = this.userDataService.user.name || 'שחר גל';
     let events = this._facilitiesService.calendarEventsArr.value;
-    let eventsArr = this._facilitiesConvertingService.convertActivityForApi(events, userName);
-    this.createActivitiesSub = this.activitiyService.createTripActivities(userName,eventsArr).subscribe(res => {
+    let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events, userName);
+    this.createActivitiesSub = this.activitiyService.createTripActivities(eventsArr).subscribe(res => {
       console.log(res);
       this.router.navigateByUrl(
         `/education/order-tour/${route}`

@@ -16,7 +16,8 @@ import { OrderEvent } from './orderEvent';
 
 export interface SiteOrder extends OrderEvent { 
     totalHours?: number;
-    siteAddress?: string;
+    siteCode?: number;
+    siteURL?: string;
     isCustomerOrder?: boolean;
 }
 
