@@ -139,7 +139,7 @@ import { HostingFormComponent } from './screens/order-tour/additions/components/
 import { SiteOrderFormComponent } from './screens/order-tour/additions/components/site-order-form/site-order-form.component';
 import { SecuringOrderFormComponent } from './screens/order-tour/additions/components/securing-order-form/securing-order-form.component';
 import { MusicActivationFormComponent } from './screens/order-tour/additions/components/music-activation-form/music-activation-form.component';
-
+import {TransportDetailsTableComponent} from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
 
 
 
@@ -270,7 +270,8 @@ FullCalendarModule.registerPlugins([
     HostingFormComponent,
     SiteOrderFormComponent,
     SecuringOrderFormComponent,
-    MusicActivationFormComponent
+    MusicActivationFormComponent,
+    TransportDetailsTableComponent
 
   ],
   imports: [

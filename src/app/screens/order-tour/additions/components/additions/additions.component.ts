@@ -99,8 +99,9 @@ export class AdditionsComponent implements OnInit {
             acc[key].push(obj)
             return acc
           }, {})
-          this.generalFormService.updateTempOrderReduce(this.tempOrderReduce);
-          this.mapTempOrder(1);
+          this.generalFormService.updateTempOrderReduce(this.tempOrderReduce,this.orderType);
+          //this.generalFormService.updateTempOrderReduce(this.tempOrderReduce);
+          this.mapTempOrder(this.orderType);
         }
         else {
           this.addItem = true;

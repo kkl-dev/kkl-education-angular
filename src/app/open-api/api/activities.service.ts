@@ -30,10 +30,9 @@ import { Configuration }                                     from '../configurat
   providedIn: 'root'
 })
 export class ActivitiesService {
-    protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
 
     //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
-    
+    protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -90,18 +89,14 @@ export class ActivitiesService {
 
     /**
      * adding activities ,orderFacilities, and Start an order
-     * @param userName 
      * @param tripCalendar 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createTripActivities(userName: string, tripCalendar?: TripCalendar, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
-    public createTripActivities(userName: string, tripCalendar?: TripCalendar, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
-    public createTripActivities(userName: string, tripCalendar?: TripCalendar, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
-    public createTripActivities(userName: string, tripCalendar?: TripCalendar, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
-        if (userName === null || userName === undefined) {
-            throw new Error('Required parameter userName was null or undefined when calling createTripActivities.');
-        }
+    public createTripActivities(tripCalendar?: TripCalendar, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public createTripActivities(tripCalendar?: TripCalendar, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public createTripActivities(tripCalendar?: TripCalendar, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public createTripActivities(tripCalendar?: TripCalendar, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -131,7 +126,7 @@ export class ActivitiesService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<any>(`${this.configuration.basePath}/createTripActivities/${encodeURIComponent(String(userName))}`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/createTripActivities`,
             tripCalendar,
             {
                 responseType: <any>responseType_,
@@ -269,18 +264,14 @@ export class ActivitiesService {
 
     /**
      * update activities ,orderFacilities, and Start an order
-     * @param userName 
      * @param tripCalendar a tripCalendar to be updated
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateTripActivities(userName: string, tripCalendar: TripCalendar, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripCalendar>;
-    public updateTripActivities(userName: string, tripCalendar: TripCalendar, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripCalendar>>;
-    public updateTripActivities(userName: string, tripCalendar: TripCalendar, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripCalendar>>;
-    public updateTripActivities(userName: string, tripCalendar: TripCalendar, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (userName === null || userName === undefined) {
-            throw new Error('Required parameter userName was null or undefined when calling updateTripActivities.');
-        }
+    public updateTripActivities(tripCalendar: TripCalendar, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripCalendar>;
+    public updateTripActivities(tripCalendar: TripCalendar, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripCalendar>>;
+    public updateTripActivities(tripCalendar: TripCalendar, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripCalendar>>;
+    public updateTripActivities(tripCalendar: TripCalendar, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (tripCalendar === null || tripCalendar === undefined) {
             throw new Error('Required parameter tripCalendar was null or undefined when calling updateTripActivities.');
         }
@@ -314,7 +305,7 @@ export class ActivitiesService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.put<TripCalendar>(`${this.configuration.basePath}/updateTrip/${encodeURIComponent(String(userName))}`,
+        return this.httpClient.put<TripCalendar>(`${this.configuration.basePath}/updateTrip`,
             tripCalendar,
             {
                 responseType: <any>responseType_,

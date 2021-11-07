@@ -26,7 +26,8 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
   itemId: number;
   centerFieldId: number;
   itemsList=[];
-  flag= false;
+  flag: boolean =false;
+  isEditable : boolean= false;
   originalItemList=[];
   supplierListSub: Subscription;
   supplierSub: Subscription;
@@ -81,6 +82,7 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     this.setformTemplate();
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined){
+        this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
         //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
@@ -186,7 +188,7 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     //   centerFieldId= retrievedObj.trip.centerField.id;
     // }
     
-    this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId,4).subscribe(
+    this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
       response => {
         console.log(response);
         this.supplierId= response.id;
@@ -249,8 +251,8 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
   public onSave(): void {
     if (this.form) {
 
-      if (!this.additionsService.globalValidations(this.form)) { return; }
-      if (!this.validationsEconomy()) { return; }
+     // if (!this.additionsService.globalValidations(this.form)) { return; }
+      //if (!this.validationsEconomy()) { return; }
       this.editMode = true;
       let orderId;
       if (this.generalFormService.economyOrderList.length > 0) {
@@ -290,7 +292,11 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
       if (this.item.globalParameters.tempOrderIdentity != undefined)
         eco.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
         
+     // this.generalFormService.addOrder(eco, eco.order.orderType.id);
+      if(!this.isEditable)
       this.generalFormService.addOrder(eco, eco.order.orderType.id);
+      else
+      this.generalFormService.editOrder(eco, eco.order.orderType.id);
       this.form.disable({ emitEvent: false });
     }
   }
@@ -404,8 +410,10 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
     return arr;
   };
   public onEdit() {
+    console.log('I am edit');
     this.editMode = false;
-    this.form.enable();
+    this.isEditable=true;
+    this.form.enable({ emitEvent: false });
   }
 
   public onValueChange(event) {
@@ -468,7 +476,7 @@ export class EconomyFormComponent implements OnInit,OnDestroy {
       .subscribe(value => {
         console.log('supplier changed:',value);
         this.supplierId=value;
-        this.generalFormService.getOrderItemBySupplierId(value);
+        this.getOrderItemBySupplierId();
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)

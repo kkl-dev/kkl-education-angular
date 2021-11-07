@@ -47,6 +47,7 @@ export class TransportDetailsTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log('I am details',this.details)
   }
 
   private formatData(data: TableCellModel[]) {

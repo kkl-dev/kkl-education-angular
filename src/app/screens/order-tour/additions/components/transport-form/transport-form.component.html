@@ -6,7 +6,9 @@
       [editMode]="editMode"></app-form>
   </div>
   <div fxFlex="35">
-    <app-form-details *ngIf="columns" [columns]="columns"></app-form-details>
+    <!-- <app-form-details *ngIf="columns" [columns]="columns"></app-form-details> -->
+    <app-form-details *ngIf="true" [columns]="columns"></app-form-details>
+  
   </div>
 </div>
 
@@ -18,6 +20,6 @@
     <button *ngIf="editMode" type="submit" class="edit-button" (click)="onEdit()" mat-icon-button>
       <app-icon scale="1" color="primary" key="edit" type="mat"></app-icon>
     </button>
-    <button (click)="test1()">test</button>
+    <!-- <button (click)="test1()">test</button> -->
   </div>
 </ng-template>

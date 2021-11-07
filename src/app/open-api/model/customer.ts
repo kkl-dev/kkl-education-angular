@@ -29,7 +29,7 @@ export interface Customer extends BaseCustomer {
     phoneWorks?: string;
     fax?: string;
     email?: string;
-    userName?: string;
+    userInfo?: string;
     generateDate?: string | null;
     appId?: number | null;
     noPayment?: number | null;

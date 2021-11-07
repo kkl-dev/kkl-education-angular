@@ -29,7 +29,6 @@ export interface Order {
     causeCancellation?: string;
     cancelBy?: string;
     paidToSupplier?: number | null;
-    userName?: string;
     openDate?: string | null;
     finOrderType?: string;
     budgetItem?: number | null;
@@ -45,5 +44,6 @@ export interface Order {
     totalPayCustomer?: number | null;
     totalPaySupplier?: number | null;
     totalPayAfterKklSubsidy?: number | null;
+    userName?: string;
 }
 

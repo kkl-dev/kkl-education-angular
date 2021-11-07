@@ -19,7 +19,7 @@ export interface BudgetByParams {
     attribute: TripAttribute;
     activity?: ActivityType;
     budget?: Budget;
-    userName: string;
+    userInfo?: string;
     userId: string;
     tripId?: number | null;
 }

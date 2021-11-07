@@ -160,7 +160,7 @@ export class FormInputComponent implements OnInit {
     //   this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
     // }
     if (this.name === 'attribute') {
-      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
+      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute);
       this.group.controls['activityType'].setValue(undefined);//איפוס שדה פעילות
       if (this.control.value === '12') {
         var index;
@@ -177,8 +177,8 @@ export class FormInputComponent implements OnInit {
         this.tripService.getCustomer(attr.autoCustomerId);
       }
       this.tripService.budgetByParam.attribute = attr;
-      this.tripService.budgetByParam.userId = "שחר";
-      this.tripService.budgetByParam.userName = "שחר גל";
+      //this.tripService.budgetByParam.userId = "שחר";
+      this.tripService.budgetByParam.userInfo = "שחר גל";
       //find index 'dates'
       var index;
       for (var i in this.squadAssemble.formsArray) {

@@ -26,8 +26,14 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
   tripId : number;
   supplierId : number;
   itemId: number;
+  originalItemList = [];
+  itemsList =[]
   supplierListSub: Subscription;
-  supplierSub: Subscription
+  supplierSub: Subscription;
+  itemListSub:  Subscription;
+  centerFieldId: number;
+   flag: boolean =false;
+   isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -37,30 +43,42 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
   };
 
   ngOnInit(): void {
+  
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.generalFormService.clearFormFields();
-     this.generalFormService.setDatesValues();
-    this.getSupplierList(this.orderType, this.tripId, 0);
-
-
-    // if (this.editMode) {
-    //   this.generalFormService.setFormValues(this.order);
-    // }
     this.generalFormService.itemsList = []
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
-    if (this.item != undefined && this.item != null) {
-      if(this.item.globalParameters.supplierId!= undefined ){
-        this.supplierId= this.item.globalParameters.supplierId;
-        this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
-      }
-      this.generalFormService.setFormValues(this.item);
-    }
-    else {
-      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
-    }
+
     this.setformTemplate();
+
+    if (this.item != undefined && this.item != null ) {
+      if(this.item.globalParameters.supplierId!= undefined){
+        this.editMode=true;
+        this.supplierId= this.item.globalParameters.supplierId;
+        this.itemId= this.item.globalParameters.itemId;
+        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
+      }
+     // this.generalFormService.setFormValues(this.item);
+    }
+
+    else{
+      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+      //this.setformTemplate();
+    }
+
+    this.getSupplierList(this.orderType, this.tripId, 0);
+    //this.getSettelments();
+    // if (this.editMode) {
+    //   this.generalFormService.setFormValues(this.order);
+    // }
+
+   
+    this.generalFormService.setDatesValues();
+  
+     //this.setformTemplate();
 
   }
   setformTemplate() {
@@ -69,7 +87,7 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
     detailsArr = this.changeLabels(detailsArr);
     let siteQuestions = detailsArr.concat(this.generalFormService.site);
     this.generalFormService.questionGroups[index].questions = siteQuestions;
-    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
+    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
 
   }
   changeLabels(tempArr) {
@@ -88,46 +106,99 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
     return tempArr;
   }
 
+  initiateForm(){
+    this.flag=true;
+    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
+     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
+  }
+
+
+
   getSupplierList(orderTypeId, tripId, orderId) {
     this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
-        this.generalFormService.supplierList=[];
+        console.log(response);
+        this.generalFormService.supplierList = [];
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        let index= this.generalFormService.details.findIndex(i => i.key==='supplierId');
-        this.generalFormService.details[index].inputProps.options= this.generalFormService.supplierList;
+         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+         this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
+         if(this.supplierId== undefined)
+           this.getSupplierByOrderType();
+           else{
+            this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+            this.getOrderItemBySupplierId()
+           }
+           
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
 
-  getSupplierByOrderType(orderTypeId) {
-    let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    this.supplierSub= this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId,4).subscribe(
+  getSupplierByOrderType() {
+    // let centerFieldId 
+    // if(this.squadAssembleService.tripInfofromService ! = undefined){
+    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    // }  
+    // else{
+    //   let retrievedObject = localStorage.getItem('tripInfofromService');
+    //   let retrievedObj = JSON.parse(retrievedObject);
+    //   centerFieldId= retrievedObj.trip.centerField.id;
+    // }
+    
+    this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
       response => {
         console.log(response);
         this.supplierId= response.id;
-          this.form.controls["details"].get('supplierId').setValue(response.id.toString());
+        let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+        this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+         this.getOrderItemBySupplierId();
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
 
+  }
+
+  
+  getOrderItemBySupplierId() {
+    this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+      response => {
+        console.log(response);
+        this.itemsList=[];
+        this.originalItemList = response;
+        this.generalFormService.originalItemList=response;
+        response.forEach(element => {
+          this.itemsList.push({ label: element.name, value: element.id.toString() });
+        });
+        let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
+        this.generalFormService.details[itemIndex].inputProps.options= this.itemsList;
+        if(this.itemId!= undefined)
+        this.generalFormService.details[itemIndex].value= this.itemId.toString();
+        if (this.item != undefined && this.item != null ) {
+            this.item.globalParameters.supplierId=this.supplierId.toString();
+            this.generalFormService.setFormValues(this.item);
+        }
+        this.initiateForm();
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
   }
 
   public onSave(): void {
     if (this.form) {
-      if (this.form.status === 'VALID') {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
-        return;
-      }
-      if (!this.additionsService.globalValidations(this.form)) { return; }
-      if (!this.validationsSite()) { return; }
+      // if (this.form.status === 'VALID') {
+      //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      //     width: '500px',
+      //     data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      //   })
+      //   return;
+      // }
+      // if (!this.additionsService.globalValidations(this.form)) { return; }
+      // if (!this.validationsSite()) { return; }
       this.editMode = true;
       let orderId;
       if (this.generalFormService.economyOrderList.length > 0) {
@@ -167,7 +238,11 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
       site.order.orderType.id = 3;
       // if(this.item.globalParameters.tempOrderIdentity!= undefined)
       //  site.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
+      //this.generalFormService.addOrder(site, site.order.orderType.id);
+      if(!this.isEditable)
       this.generalFormService.addOrder(site, site.order.orderType.id);
+      else
+      this.generalFormService.editOrder(site, site.order.orderType.id);
       this.form.disable({ emitEvent: false });
     }
   }
@@ -188,23 +263,26 @@ export class SiteOrderFormComponent implements OnInit,OnDestroy {
   }
 
   public onEdit() {
+    console.log('I am edit');
     this.editMode = false;
-    this.form.enable();
+    this.isEditable=true;
+    this.form.enable({ emitEvent: false });
   }
 
   public onValueChange(event) {
     this.form = event;
-    let isPristine=  this.form.pristine;
-    if(isPristine==true && this.supplierId == undefined){
-      this.getSupplierByOrderType(this.orderType);
-    }
+    // let isPristine=  this.form.pristine;
+    // if(isPristine==true && this.supplierId == undefined){
+      
+    // }
     // else if(isPristine==true){
     //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
     // }
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);
-        this.generalFormService.getOrderItemBySupplierId(value);
+        this.supplierId=value;
+        this.getOrderItemBySupplierId();
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)

@@ -40,15 +40,15 @@ export class TransportFormComponent implements OnInit , OnDestroy {
   settlementSub : Subscription;
   supplierSub: Subscription;
   itemListSub:  Subscription;
+  flag: boolean =false;
+  isEditable : boolean= false;
   //transQuestions:any [];
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
   };
-   indexFormChanged: number;
-   isItemFull: boolean;
-   flag: boolean =false;
-   isEditable : boolean= false;
+   
+  
 
   constructor(private generalFormService: GeneralFormService, private transportService: TransportService, private additionsService: AdditionsService,
     private orderService: OrderService, private _dialog: MatDialog, private squadAssembleService: SquadAssembleService) { }
@@ -73,6 +73,7 @@ export class TransportFormComponent implements OnInit , OnDestroy {
 
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined){
+        this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
         //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
@@ -116,11 +117,7 @@ export class TransportFormComponent implements OnInit , OnDestroy {
     //console.log('group transport is: ', this.formTemplate.questionsGroups);
 
   }
-  initiateForm(){
-    this.flag=true;
-    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
-     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
-  }
+  
 
 
   changeLabels(tempArr) {
@@ -136,6 +133,12 @@ export class TransportFormComponent implements OnInit , OnDestroy {
     let locationIndex = tempArr.findIndex(el => el.key === 'location');
     tempArr[locationIndex].label = 'מקום התייצבות';
     return tempArr;
+  }
+
+  initiateForm(){
+    this.flag=true;
+    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
+     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
 
   getSettelments(){
@@ -184,7 +187,7 @@ export class TransportFormComponent implements OnInit , OnDestroy {
     //   centerFieldId= retrievedObj.trip.centerField.id;
     // }
     
-    this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId,4).subscribe(
+    this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
       response => {
         console.log(response);
         this.supplierId= response.id;
@@ -279,7 +282,6 @@ export class TransportFormComponent implements OnInit , OnDestroy {
       this.generalFormService.editOrder(t, t.order.orderType.id);
       this.form.disable({ emitEvent: false });
       this.editMode = true;
-
 
     }
   }
@@ -385,29 +387,13 @@ export class TransportFormComponent implements OnInit , OnDestroy {
 
     this.form = event;
     console.log('I am form Event');
-    // if(isPristine==true && this.supplierId == undefined){
-    //   //this.getSupplierByOrderType(this.orderType);
-    // }
-    // if(isPristine==true && this.supplierId!= undefined){
-    //   this.form.controls["details"].get('supplierId').setValue('',{emitEvent: false});
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId,{emitEvent: false})
-    // }
-    
-    // if (this.form.controls["details"].get('supplierId').value == "" &&  this.supplierId != undefined)
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId);
-
-    // if(isPristine==true &&  this.itemId != undefined){
-    //   this.form.controls["details"].get('itemId').setValue('',{emitEvent: false});
-    //   this.form.controls["details"].get('itemId').setValue(this.itemId,{emitEvent: false});
-    // }
-    
-
+  
     this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
         this.supplierId=value;
-        this.generalFormService.getOrderItemBySupplierId(value);
+        this.getOrderItemBySupplierId();
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)

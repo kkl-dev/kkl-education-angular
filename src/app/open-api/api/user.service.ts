@@ -18,7 +18,6 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { AccommodationType } from '../model/models';
-import { Account } from '../model/models';
 import { ActivityType } from '../model/models';
 import { AgeGroup } from '../model/models';
 import { Area } from '../model/models';
@@ -48,10 +47,8 @@ import { Configuration }                                     from '../configurat
 })
 export class UserService {
 
-
     //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
-
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -209,19 +206,15 @@ export class UserService {
 
     /**
      * @param attributeId 
-     * @param userId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ActivityType>>;
-    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ActivityType>>>;
-    public getActivityByAttribute(attributeId: number, userId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ActivityType>>>;
-    public getActivityByAttribute(attributeId: number, userId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getActivityByAttribute(attributeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ActivityType>>;
+    public getActivityByAttribute(attributeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ActivityType>>>;
+    public getActivityByAttribute(attributeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ActivityType>>>;
+    public getActivityByAttribute(attributeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (attributeId === null || attributeId === undefined) {
             throw new Error('Required parameter attributeId was null or undefined when calling getActivityByAttribute.');
-        }
-        if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling getActivityByAttribute.');
         }
 
         let headers = this.defaultHeaders;
@@ -244,7 +237,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<ActivityType>>(`${this.configuration.basePath}/activityType/${encodeURIComponent(String(attributeId))}/${encodeURIComponent(String(userId))}`,
+        return this.httpClient.get<Array<ActivityType>>(`${this.configuration.basePath}/activityType/${encodeURIComponent(String(attributeId))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -1166,113 +1159,17 @@ export class UserService {
     }
 
     /**
-     * @param permissionId 
-     * @param permissionName 
-     * @param userId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Account>;
-    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Account>>;
-    public loginPB(permissionId: number, permissionName: string, userId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Account>>;
-    public loginPB(permissionId: number, permissionName: string, userId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (permissionId === null || permissionId === undefined) {
-            throw new Error('Required parameter permissionId was null or undefined when calling loginPB.');
-        }
-        if (permissionName === null || permissionName === undefined) {
-            throw new Error('Required parameter permissionName was null or undefined when calling loginPB.');
-        }
-        if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling loginPB.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType_ = 'text';
-        }
-
-        return this.httpClient.get<Account>(`${this.configuration.basePath}/loginPB/${encodeURIComponent(String(permissionId))}/${encodeURIComponent(String(permissionName))}/${encodeURIComponent(String(userId))}`,
-            {
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public loginToPBTest(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Account>;
-    public loginToPBTest(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Account>>;
-    public loginToPBTest(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Account>>;
-    public loginToPBTest(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType_ = 'text';
-        }
-
-        return this.httpClient.get<Account>(`${this.configuration.basePath}/loginPB`,
-            {
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * @param tripId the unique trip Id
-     * @param userNmae 
      * @param tripInfo a trip to be updated
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripModel>;
-    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripModel>>;
-    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripModel>>;
-    public updateTrip(tripId: number, userNmae: string, tripInfo: TripInfo, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripModel>;
+    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripModel>>;
+    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripModel>>;
+    public updateTrip(tripId: number, tripInfo: TripInfo, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling updateTrip.');
-        }
-        if (userNmae === null || userNmae === undefined) {
-            throw new Error('Required parameter userNmae was null or undefined when calling updateTrip.');
         }
         if (tripInfo === null || tripInfo === undefined) {
             throw new Error('Required parameter tripInfo was null or undefined when calling updateTrip.');
@@ -1307,7 +1204,7 @@ export class UserService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.put<TripModel>(`${this.configuration.basePath}/updateTrip/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(userNmae))}`,
+        return this.httpClient.put<TripModel>(`${this.configuration.basePath}/updateTrip/${encodeURIComponent(String(tripId))}`,
             tripInfo,
             {
                 responseType: <any>responseType_,
