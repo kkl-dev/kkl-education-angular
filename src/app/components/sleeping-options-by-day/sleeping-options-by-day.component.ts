@@ -10,6 +10,7 @@ import { TripService } from 'src/app/services/trip.service';
 export class SleepingOptionsByDayComponent implements OnInit {
   @Input() currentDay: number = 0;
   @Output() emitCurrentDay: EventEmitter<number> = new EventEmitter();
+  @Input() showSleepAreas:boolean=true
   @Input() sleepingOptionsByDay: {
     day: string;
     options: {
@@ -24,22 +25,25 @@ export class SleepingOptionsByDayComponent implements OnInit {
   AvailableSleepingOptions: any;
   default: number = 0;
   //currentDay: number = 0;
-  @Input() showSleepAreas:boolean=true
+  onNgInit: boolean = true;
+
   constructor(public tripService: TripService) { }
 
   ngOnInit() {
-    this.tripService.forestCenter.subscribe(forestCenter => {
-      //this.forestCenter = result; // this set's the username to the default observable value
-      console.log('sleeping --> forestCenter result:', forestCenter);
-    });
+
+    if (!this.onNgInit) {
+      this.tripService.forestCenter.subscribe(forestCenter => {
+        //this.forestCenter = result; // this set's the username to the default observable value
+        console.log('sleeping --> forestCenter result:', forestCenter);
+      });
+    }
+    this.onNgInit = false;
 
     this.tripService.AvailableSleepingOptions.subscribe(sleepingOptions => {      
       this.AvailableSleepingOptions = sleepingOptions; // this set's the username to the default observable value
       //console.log('sleeping -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
     });
   }
-  
- 
 
   previousPage() {
     this.currentDay = this.currentDay - 1;

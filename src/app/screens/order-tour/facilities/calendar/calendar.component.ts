@@ -28,7 +28,7 @@ export class CalendarComponent implements OnInit {
   sleepingDates: any = [];
   days: any[] = this.tripService.facilitiesArray;
   till: any;
-  
+
   constructor(private facilitiesService: FacilitiesService, private resolver: ComponentFactoryResolver, private tripService: TripService) {
     //get sleeping Dates from trip service
     this.sleepingDates = this.tripService.convertDatesFromSlashToMinus();

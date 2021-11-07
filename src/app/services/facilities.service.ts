@@ -48,15 +48,25 @@ export class FacilitiesService {
     this.closeModal(item.type);
   }
 
-  public updateSelectedFacility(args: FacilityModel): void {
+  // public updateSelectedFacility(args: FacilityModel): void {
+  //   console.log("updateSelected Facility: args ", args);
+  //   this.selectedFacility.next(args);
+  // }
+
+  // public getSelectedFacility(): Observable<FacilityModel> {
+  //   return this.selectedFacility.asObservable();
+  // }
+
+  public updateSelectedFacility(args: any): void {
+    console.log("updateSelected Facility: args ", args);
     this.selectedFacility.next(args);
   }
-  public getSelectedFacility(): Observable<FacilityModel> {
+  public getSelectedFacility(): Observable<any> {
     return this.selectedFacility.asObservable();
   }
-  
+
   public updateSelectedActivity(args: ActivitiesCardInterface): void {
-    console.log("updateSelectedActivity: args ", args);
+    console.log("updateSelected Activity: args ", args);
     this.selectedActivity.next(args);
   }
   public getSelectedActivity(): Observable<ActivitiesCardInterface> {
@@ -69,12 +79,14 @@ export class FacilitiesService {
     arr[index] = args;
     this.calendarEventsArr.next(arr);
   }
+
   public deleteItemFromArray(id: string | number): void {
     const index = this.calendarEventsArr.value.findIndex((item: any) => item.id === id);
     const arr = [...this.calendarEventsArr.value];
     arr.splice(index, 1);
     this.calendarEventsArr.next(arr);
   }
+  
   public updateTimesInArray(id: string | number, dates: string[]): void {
     const index = this.calendarEventsArr.value.findIndex((item: any) => item.id === id);
     const arr = [...this.calendarEventsArr.value];

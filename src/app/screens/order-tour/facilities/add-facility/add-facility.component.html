@@ -14,9 +14,9 @@
                     <span class="add-facility__header-content-heading-constant">שריין מתקן:</span>
                     <span class="add-facility__header-content-heading-input">{{item.name}}</span>
                 </div>
-                <div class="add-facility__header-content-heading-remarks">
+                <!-- <div class="add-facility__header-content-heading-remarks">
                     <span>{{item.maxOccupancy}}</span>
-                </div>
+                </div> -->
             </div>
         </div>
         <form class="add-facility__form" [formGroup]="addFacilityForm" (ngSubmit)='onSubmit()'>
@@ -53,7 +53,9 @@
             </div>
             <div class="add-facility__occupied-hours-table-item" *ngFor="let item of hours">
                 <!-- <span class="add-facility__occupied-hours-hour-start">{{ item.startingHour | numberToTimePipe}}</span> -->
-                <span class="add-facility__occupied-hours-hour-start">{{ item.fromHour | numberToTimePipe}}</span>
+                <!-- <span class="add-facility__occupied-hours-hour-start">{{ item.fromHour | numberToTimePipe}}</span> -->
+                <span class="add-facility__occupied-hours-hour-start">{{ item.start | numberToTimePipe}}</span>
+
                 <span class="add-facility__occupied-hours-hour-end">
                     <!-- <span> -</span> {{ item.endingHour | numberToTimePipe}}</span> -->
                     <span> -</span> {{ item.tillHour | numberToTimePipe}}

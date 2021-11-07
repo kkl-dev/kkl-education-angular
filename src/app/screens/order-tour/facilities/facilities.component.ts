@@ -104,6 +104,7 @@ export class FacilitiesComponent implements OnInit {
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
     this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
+    console.log('calendarEventsArr.value',  this.calendarEventsArr$)
     this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
   }
 

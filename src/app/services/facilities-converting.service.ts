@@ -93,7 +93,7 @@ export class FacilitiesConvertingService {
           "endDate": arr[i].end,
           "fromHour": arr[i].start,
           "tillHour": arr[i].end,
-         // "userName": userName
+          // "userName": userName
         }
         tempOrderArr.push(tempOrder);
       }
@@ -106,7 +106,7 @@ export class FacilitiesConvertingService {
           "fromHour": arr[i].start,
           "tillHour": arr[i].end,
           "tripId": tripId,
-         // "userName": userName
+          // "userName": userName
         }
         activityArr.push(activity);
       }
@@ -125,7 +125,6 @@ export class FacilitiesConvertingService {
               orderTypeCode = 4
               orderTypeName = 'כלכלה'
               break;
-
             default:
               orderTypeCode = 0
               orderTypeName = 'לא ידוע'
