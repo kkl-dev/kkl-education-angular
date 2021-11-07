@@ -30,11 +30,12 @@ export class WizardComponent implements OnInit {
       {
         src: 'assets/images/05-destination.svg',
         text: 'הטיולים שלי',
-      link: '',},
+        link: '',
+      },
       {
         src: 'assets/images/button.svg',
         text: 'טיול חדש',
-        link: ''
+        link: '/education/order-tour/squad-assemble'
       },
       {
         src: 'assets/images/report.svg',
@@ -44,7 +45,7 @@ export class WizardComponent implements OnInit {
       {
         src: 'assets/images/calendar.svg',
         text: 'בדיקת זמינות',
-        link: ''
+        link: '/education/search'
       },
     ]
   }
