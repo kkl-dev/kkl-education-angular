@@ -49,8 +49,10 @@ import { Configuration } from '../configuration';
 })
 export class UserService {
 
-    // protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
-    protected basePath = 'http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
+
+    //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
+    protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
+
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -211,10 +213,12 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getActivityByAttribute(attributeId: number, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<ActivityType>>;
-    public getActivityByAttribute(attributeId: number, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<ActivityType>>>;
-    public getActivityByAttribute(attributeId: number, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<ActivityType>>>;
-    public getActivityByAttribute(attributeId: number, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
+
+    public getActivityByAttribute(attributeId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ActivityType>>;
+    public getActivityByAttribute(attributeId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ActivityType>>>;
+    public getActivityByAttribute(attributeId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ActivityType>>>;
+    public getActivityByAttribute(attributeId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+
         if (attributeId === null || attributeId === undefined) {
             throw new Error('Required parameter attributeId was null or undefined when calling getActivityByAttribute.');
         }
@@ -1166,10 +1170,12 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<TripModel>;
-    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<TripModel>>;
-    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<TripModel>>;
-    public updateTrip(tripId: number, tripInfo: TripInfo, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
+
+    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripModel>;
+    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripModel>>;
+    public updateTrip(tripId: number, tripInfo: TripInfo, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripModel>>;
+    public updateTrip(tripId: number, tripInfo: TripInfo, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling updateTrip.');
         }

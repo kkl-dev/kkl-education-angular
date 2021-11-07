@@ -22,7 +22,8 @@ export class NavigationGridComponent implements OnInit {
   tempOrderReduce: any;
   tempOrderReduceLength: number
   @Output() changeStep: EventEmitter<number> = new EventEmitter();
-  public title: string = "תוספות"
+  public title: string = "תוספות";
+  orderTypeSelected;
   // public tempOrderReduce: any;
 
   constructor(private generalFormService: GeneralFormService,
@@ -44,7 +45,6 @@ export class NavigationGridComponent implements OnInit {
         case 'היסעים':
           step.svgUrl = 'bus';
           step.value = 1;
-
           break;
         case 'אבטחה':
           step.svgUrl = 'shield';
@@ -83,7 +83,6 @@ export class NavigationGridComponent implements OnInit {
           { step.badgeValue = this.tempOrderReduce[j].length; }
         }
       }
-    
       this.steps.push(step)
     }
   }
@@ -94,7 +93,8 @@ export class NavigationGridComponent implements OnInit {
         console.log(response)
         this.additionsService.orderTypes = response;
         this.generalFormService.tempOrderReduce.subscribe(res => {
-          this.tempOrderReduce = res;
+          //this.tempOrderReduce = res;
+          this.tempOrderReduce = res.tempOrderReduce;
           this.convertStepsModel();
           var indx = this.steps.findIndex(step => step.value === 1);
           this.steps[indx].isActive = true;
@@ -105,9 +105,13 @@ export class NavigationGridComponent implements OnInit {
     )
   }
 
-  updatetempOrderReduce(tempOrderReduce){
-    this.tempOrderReduce= tempOrderReduce;
+  updatetempOrderReduce(res){
+    //this.tempOrderReduce= res;
+     this.tempOrderReduce= res.tempOrderReduce;
+     this.orderTypeSelected= res.orderType;
     this.convertStepsModel();
+     let index= this.steps.findIndex(i=> i.value === this.orderTypeSelected)
+     this.steps[index].isActive=true;
   }
 
 

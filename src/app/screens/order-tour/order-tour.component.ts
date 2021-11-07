@@ -255,24 +255,26 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.squadAssemble.tripInfo.budget = this.tripService.budgetByParam.budget;
       //if(this.squadAssemble.tripInfo.budget!= undefined)
-      budgetFlag = true;
 
-      this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
-      if (this.squadAssemble.tripInfo.customer.id != undefined)
-        customerFlag = true;
-
-      if (scheduleForm == true && ContactForm == true && ageGroupForm == true && detalisForm == true && customerFlag == true && budgetFlag == true)
-        flag = true
-      else
-        return flag;
-      if (this.squadAssemble.payerCustomer.name != undefined)
-        this.squadAssemble.tripInfo.customerPay = this.squadAssemble.payerCustomer;
-      this.squadAssemble.tripInfo.generateTime = '2021-10-10';
+      budgetFlag=true;
+     
+       this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
+       if (this.squadAssemble.tripInfo.customer.id != undefined)
+       customerFlag= true;
+      
+       if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
+       flag=true
+       else
+       return flag;
+      if(this.squadAssemble.payerCustomer.name!= undefined)
+      this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
+      this.squadAssemble.tripInfo.generateTime='2021-10-10';
       this.squadAssemble.tripInfo.userInfo = 'שחר גל';
-      if (startDate == endDate) {
-        this.tripService.isOneDayTrip = true;
-        this.createTrip();
-      }
+       if(startDate==endDate ){
+          this.tripService.isOneDayTrip=true;
+           this.createTrip();
+       }
+
     }
 
     catch (error) {
@@ -316,18 +318,20 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  createTripActivities(route) {
-    let events = this._facilitiesService.calendarEventsArr.value;
-    let eventsArr = this._facilitiesConvertingService.convertActivityForApi2(events);
-    let userName = 'שחר גל';
-    this.createActivitiesSub = this.activitiyService.createTripActivities(eventsArr).subscribe(res => {
-      console.log(res);
-      this.router.navigateByUrl(
-        `/education/order-tour/${route}`
-      );
-    }, (err) => {
-      console.log(err);
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+
+   createTripActivities(route){
+     let events= this._facilitiesService.calendarEventsArr.value;
+     let eventsArr = this._facilitiesConvertingService.convertActivityForApi2(events);
+     let userName='שחר גל';
+      this.createActivitiesSub=this.activitiyService.createTripActivities( eventsArr).subscribe(res=>{
+        console.log(res);
+        this.router.navigateByUrl(
+          `/education/order-tour/${route}`
+        );
+    },(err)=>{
+      console.log(err);    
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
+
         width: '500px',
         data: { message: 'אירעה שגיאה בשליחת הנתונים, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
       })

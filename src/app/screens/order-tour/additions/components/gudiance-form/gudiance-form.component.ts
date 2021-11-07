@@ -28,10 +28,15 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   tripId: number;
   supplierId: number;
   itemId: number;
+  centerFieldId: number;
+  originalItemList = [];
+  itemsList =[]
   supplierListSub: Subscription;
   supplierSub: Subscription;
+  itemListSub:  Subscription;
   languageSub: Subscription;
-
+  flag: boolean =false;
+  isEditable : boolean= false;
 
   public form: FormGroup;
   public columns: TableCellModel[];
@@ -42,31 +47,67 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.generalFormService.clearFormFields();
-
-    this.generalFormService.setDatesValues();
-    this.getSupplierList(this.orderType, this.tripId, 0);
+    // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    // this.generalFormService.clearFormFields();
 
 
-    // if (this.editMode) {
-    //   this.generalFormService.setFormValues(this.order);
+    //  this.generalFormService.setDatesValues();
+    // this.getSupplierList(this.orderType, this.tripId, 0);
+
+    // // if (this.editMode) {
+    // //   this.generalFormService.setFormValues(this.order);
+    // // }
+    // this.generalFormService.itemsList = []
+    // let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+    // this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
+    // if (this.item != undefined && this.item != null) {
+    //   if(this.item.globalParameters.supplierId!= undefined ){
+    //     this.supplierId= this.item.globalParameters.supplierId;
+    //     this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
+    //   }
+    //   this.generalFormService.setFormValues(this.item);
     // }
+    // else {
+    //   let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
+    //   this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
+    // }
+    // this.setformTemplate();
+    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
-    if (this.item != undefined && this.item != null) {
-      if (this.item.globalParameters.supplierId != undefined) {
-        this.supplierId = this.item.globalParameters.supplierId;
-        this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
-      }
-      this.generalFormService.setFormValues(this.item);
-    }
-    else {
-      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
-    }
+
     this.setformTemplate();
+
+    if (this.item != undefined && this.item != null ) {
+      if(this.item.globalParameters.supplierId!= undefined){
+        this.editMode=true;
+        this.supplierId= this.item.globalParameters.supplierId;
+        this.itemId= this.item.globalParameters.itemId;
+        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
+
+      }
+     // this.generalFormService.setFormValues(this.item);
+    }
+
+    else{
+      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+      //this.setformTemplate();
+    }
+
+    this.getSupplierList(this.orderType, this.tripId, 0);
+    //this.getSettelments();
+    // if (this.editMode) {
+    //   this.generalFormService.setFormValues(this.order);
+    // }
+
+   
+    this.generalFormService.setDatesValues();
+  
+     //this.setformTemplate();
 
   }
 
@@ -78,7 +119,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     detailsArr = this.changeLabels(detailsArr);
     let guideQuestions = detailsArr.concat(this.generalFormService.guidance);
     this.generalFormService.questionGroups[index].questions = guideQuestions;
-    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
+    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
 
   }
   changeLabels(tempArr) {
@@ -96,31 +137,56 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     return tempArr;
   }
 
+  initiateForm(){
+    this.flag=true;
+    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
+     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
+  }
+
   getSupplierList(orderTypeId, tripId, orderId) {
-    this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+
+    this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-        let index = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        this.generalFormService.details[index].inputProps.options = this.generalFormService.supplierList;
-        //this.getSupplierByOrderType(orderTypeId);
+         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+         this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
+         if(this.supplierId== undefined)
+           this.getSupplierByOrderType();
+           else{
+            this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+            this.getOrderItemBySupplierId()
+           }
+           
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
 
-  getSupplierByOrderType(orderTypeId) {
-    let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    this.supplierSub = this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId).subscribe(
+  getSupplierByOrderType() {
+    // let centerFieldId 
+    // if(this.squadAssembleService.tripInfofromService ! = undefined){
+    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    // }  
+    // else{
+    //   let retrievedObject = localStorage.getItem('tripInfofromService');
+    //   let retrievedObj = JSON.parse(retrievedObject);
+    //   centerFieldId= retrievedObj.trip.centerField.id;
+    // }
+    
+    this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
       response => {
         console.log(response);
+        this.supplierId= response.id;
+        let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+        this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+         this.getOrderItemBySupplierId();
 
-        this.supplierId = response.id;
-        this.form.controls["details"].get('supplierId').setValue(response.id.toString());
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -128,15 +194,43 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
   }
 
-  getLanguages() {
-    this.languageSub = this.userService.getLanguages().subscribe(res => {
-      console.log(res);
-      res.forEach(element => {
-        this.generalFormService.languageList.push({ label: element.name, value: element.id });
-        let languageIndex = this.generalFormService.details.findIndex(i => i.key === 'languageGuidance');
-        this.generalFormService.details[languageIndex].inputProps.options = this.generalFormService.languageList;
-      })
-    }, (err) => {
+
+  
+  getOrderItemBySupplierId() {
+    this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+      response => {
+        console.log(response);
+        this.itemsList=[];
+        this.originalItemList = response;
+        this.generalFormService.originalItemList=response;
+        response.forEach(element => {
+          this.itemsList.push({ label: element.name, value: element.id.toString() });
+        });
+        let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
+        this.generalFormService.details[itemIndex].inputProps.options= this.itemsList;
+        if(this.itemId!= undefined)
+        this.generalFormService.details[itemIndex].value= this.itemId.toString();
+        if (this.item != undefined && this.item != null ) {
+            this.item.globalParameters.supplierId=this.supplierId.toString();
+            this.generalFormService.setFormValues(this.item);
+        }
+        this.initiateForm();
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+  getLanguages(){
+     this.languageSub= this.userService.getLanguages().subscribe(res=>{
+        console.log(res);
+        res.forEach(element =>{
+          this.generalFormService.languageList.push({label:element.name,value :element.id});
+          let languageIndex= this.generalFormService.details.findIndex(i => i.key==='languageGuidance');
+         this.generalFormService.details[languageIndex].inputProps.options= this.generalFormService.languageList;
+        })
+     },(err)=>{
+
       console.log(err);
     })
   }
@@ -144,8 +238,8 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
   public onSave(): void {
     if (this.form) {
-      if (!this.additionsService.globalValidations(this.form)) { return; }
-      if (!this.validationsGudiance()) { return; }
+      //if (!this.additionsService.globalValidations(this.form)) { return; }
+     // if (!this.validationsGudiance()) { return; }
       this.editMode = true;
       let orderId;
       if (this.generalFormService.economyOrderList.length > 0) {
@@ -185,7 +279,11 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       guide.order.orderType.id = 6;
       if (this.item.globalParameters.tempOrderIdentity != undefined)
         guide.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+      //this.generalFormService.addOrder(guide, guide.order.orderType.id);
+      if(!this.isEditable)
       this.generalFormService.addOrder(guide, guide.order.orderType.id);
+      else
+      this.generalFormService.editOrder(guide, guide.order.orderType.id);
       this.form.disable({ emitEvent: false });
     }
   }
@@ -219,43 +317,44 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   }
 
   public onEdit() {
+    console.log('I am edit');
     this.editMode = false;
-    this.form.enable();
+    this.isEditable=true;
+    this.form.enable({ emitEvent: false });
   }
 
   public onValueChange(event) {
     this.form = event;
-    let isPristine = this.form.pristine;
-    if (isPristine == true && this.supplierId == undefined) {
-      this.getSupplierByOrderType(this.orderType);
-    }
-    // else if(isPristine==true){
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
-    // }
+
+    console.log('I am form Event');
+  
+    this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
 
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
-        console.log(value);
-        this.generalFormService.getOrderItemBySupplierId(value);
+        console.log('supplier changed:',value);
+        this.supplierId=value;
+        this.getOrderItemBySupplierId();
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
-      let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
+      let item = this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost = Math.floor(item.cost);
-      this.form.controls["details"].get('itemCost').patchValue(itemCost);
+      this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
       console.log(this.form.value.details);
       let form = this.additionsService.calculateBillings(this.form.value.details);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
 
     });
+
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
-    });
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
 
+    });
     console.log(this.form)
 
   }

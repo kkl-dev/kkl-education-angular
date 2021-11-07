@@ -19,16 +19,22 @@ export class GeneralFormService {
   supplierList = [];
   itemsList = [];
   public transportOrderList: TransportOrder[] = [];
-  public economyOrderList: EconomyOrder[] = [];
-  public gudianceOrderList: GuidanceOrder[] = [];
-  public hostingOrderList: HostingOrder[] = [];
-  public siteOrderList: SiteOrder[] = [];
-  public securingOrderList: SecuringOrder[] = [];
-  public musicOrderList: MusicActivationOrder[] = [];
-  public settlementList = [];
-  public languageList = [];
-  tripOrdersList: OrderEvent[];
-  public tempOrderReduce = new BehaviorSubject<any>(null)
+
+  public economyOrderList: EconomyOrder[] =[];
+  public gudianceOrderList : GuidanceOrder[]=[];
+  public hostingOrderList : HostingOrder[] =[];
+  public siteOrderList : SiteOrder[] =[];
+  public securingOrderList: SecuringOrder[] =[];
+  public musicOrderList: MusicActivationOrder[]=[];
+  public settlementList=[];
+  public languageList =[];
+  originalItemList = [];
+  tripOrdersList :OrderEvent[];
+  //public tempOrderReduce = new BehaviorSubject<any>(null)
+  public tempOrderReduce = new BehaviorSubject<{tempOrderReduce:any,orderType:any}>(null)
+
+  public tableData = new BehaviorSubject<any>(null)
+
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
   constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService, private _dialog: MatDialog,
   ) { }
@@ -39,11 +45,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        //  options: this.supplierList,
-        options: [
-          { label: 'solid', value: '1' },
-          { label: 'great', value: '2' },
-        ],
+          options: this.supplierList,    
       },
     }),
     new QuestionSelect({
@@ -364,8 +366,9 @@ export class GeneralFormService {
     });
   }
 
-  public updateTempOrderReduce(temp) {
-    this.tempOrderReduce.next(temp);
+  public updateTempOrderReduce(temp,orderType) {
+    this.tempOrderReduce.next({tempOrderReduce:temp,orderType: orderType});
+    //this.tempOrderReduce.next(temp);
   }
 
   public setFormValues(data: any) {
@@ -448,23 +451,25 @@ export class GeneralFormService {
   // }
 
 
-  originalItemList = [];
-  getOrderItemBySupplierId(supplierId) {
-    this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-      response => {
-        console.log(response);
-        this.itemsList = [];
-        this.originalItemList = response;
-        response.forEach(element => {
-          this.itemsList.push({ label: element.name, value: element.id.toString() });
-        });
-        let index = this.details.findIndex(i => i.key === 'itemId');
-        this.details[index].inputProps.options = this.itemsList;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+
+  
+  // getOrderItemBySupplierId(supplierId) {
+  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
+  //     response => {
+  //       console.log(response);
+  //       this.itemsList=[];
+  //       this.originalItemList = response;
+  //       response.forEach(element => {
+  //         this.itemsList.push({ label: element.name, value: element.id.toString() });
+  //       });
+  //       let index= this.details.findIndex(i => i.key==='itemId');
+  //       this.details[index].inputProps.options= this.itemsList;
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
+
 
   setTimeFormat(hour) {
     let hourStr = hour.split("T");
@@ -534,19 +539,39 @@ export class GeneralFormService {
     });
   }
 
-  addOrder(item: any, orderType) {
-    this.orderService.addOrder(item).subscribe(res => {
-      console.log(res);
-      this.setOrderList(res, orderType, 'adding');
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+
+   addOrder(item: any,orderType) {  
+      this.orderService.addOrder( item).subscribe(res => {
+        console.log(res); 
+        this.tableData.next(res);
+        this.setOrderList(res,orderType,'adding');
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+      }, (err) => {
+        console.log(err);
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
       })
-    }, (err) => {
-      console.log(err);
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    }
+    editOrder(item: any,orderType) { 
+      this.orderService.editOrder(item).subscribe(res => {
+        console.log(res);  
+        this.setOrderList(res, orderType,'updating')
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'ההזמנה עודכנה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+      }, (err) => {
+        console.log(err);
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+
       })
     })
   }
@@ -584,77 +609,136 @@ export class GeneralFormService {
         else if (res.length == 1)
           t = res[0];
 
-        // t.globalParameters = {} as OrderItemCommonDetails;
-        // t.order = {} as Order;
-        // t.order=res[0].order;
-        // t.globalParameters= res[0].globalParameters;
-        this.transportOrderList = [];
-        if (res.length > 1)
-          this.transportOrderList = tranArr;
-        else
-          this.transportOrderList.push(t);
-        if (operation == 'adding')
-          this.updatetempOrderReduce1(res, orderTypeId);
-        break;
-      case 2:
-        let securing = {} as SecuringOrder;
-        securing.globalParameters = {} as OrderItemCommonDetails;
-        securing.order = {} as Order;
-        securing.order = res[0].order;
-        securing.globalParameters = res[0].globalParameters;
-        this.securingOrderList = [];
-        this.securingOrderList.push(securing);
-        break;
-
-      case 3:
-        let site = {} as SiteOrder;
-        site.globalParameters = {} as OrderItemCommonDetails;
-        site.order = {} as Order;
-        site.order = res[0].order;
-        site.globalParameters = res[0].globalParameters;
-        this.siteOrderList = [];
-        this.siteOrderList.push(site);
-        break;
-
-      case 4:
-        let eco = {} as EconomyOrder;
-        eco.globalParameters = {} as OrderItemCommonDetails;
-        eco.order = {} as Order;
-        eco.order = res[0].order;
-        eco.globalParameters = res[0].globalParameters;
-        this.economyOrderList = [];
-        this.economyOrderList.push(eco);
-        this.updatetempOrderReduce(res, orderTypeId);
-        break;
-      case 6:
-        let guidance = {} as GuidanceOrder;
-        guidance.globalParameters = {} as OrderItemCommonDetails;
-        guidance.order = {} as Order;
-        guidance.order = res[0].order;
-        guidance.globalParameters = res[0].globalParameters;
-        this.gudianceOrderList = [];
-        this.gudianceOrderList.push(guidance);
-        this.updatetempOrderReduce(res, orderTypeId);
-        break;
-      case 7:
-        let hosting = {} as HostingOrder;
-        hosting.globalParameters = {} as OrderItemCommonDetails;
-        hosting.order = {} as Order;
-        hosting.order = res[0].order;
-        hosting.globalParameters = res[0].globalParameters;
-        this.hostingOrderList = [];
-        this.hostingOrderList.push(hosting);
-        this.updatetempOrderReduce(res, orderTypeId);
-        break;
-      case 10:
-        let musicActivation = {} as HostingOrder;
-        musicActivation.globalParameters = {} as OrderItemCommonDetails;
-        musicActivation.order = {} as Order;
-        musicActivation.order = res[0].order;
-        musicActivation.globalParameters = res[0].globalParameters;
-        this.musicOrderList = [];
-        this.musicOrderList.push(hosting);
-        break;
+           this.transportOrderList=[];
+           if(res.length>1)
+           this.transportOrderList= tranArr;
+           else
+           this.transportOrderList.push(t);
+           if(operation=='adding')
+           this.updatetempOrderReduce1(res,orderTypeId);
+          break;
+        case 2:
+            let securing = {} as SecuringOrder;
+            let securingArr : SecuringOrder[]=[];
+            if(res.length>1){
+              for (let i = 0; i < res.length; i++) {
+                 let securing1= {} as SecuringOrder;
+                 securing1= res[i];
+                 securingArr.push(securing1);
+              }
+           }
+           else if(res.length==1)
+           securing = res[0];
+            this.securingOrderList=[];
+            if(res.length>1)
+            this.securingOrderList= securingArr;
+            else
+             this.securingOrderList.push(securing);
+            break;
+      
+        case 3:
+            let site = {} as SiteOrder;
+            let siteArr: SiteOrder[]=[];
+            if(res.length>1){
+               for (let i = 0; i < res.length; i++) {
+                  let site1= {} as SiteOrder;
+                  site1= res[i];
+                  siteArr.push(site1);
+               }
+            }
+            else if(res.length==1)
+            site = res[0];
+            this.siteOrderList=[];
+            if(res.length>1)
+            this.siteOrderList= siteArr;
+            else
+             this.siteOrderList.push(site);
+            break;
+      
+        case 4:
+          let economy = {} as EconomyOrder;
+          let ecoArr: EconomyOrder[]=[];
+          if(res.length>1){
+             for (let i = 0; i < res.length; i++) {
+                let eco= {} as EconomyOrder;
+                eco= res[i];
+                ecoArr.push(eco);
+             }
+          }
+          else if(res.length==1)
+          economy = res[0]; 
+          this.economyOrderList=[];
+          if(res.length>1)
+          this.economyOrderList= ecoArr;
+          else
+          this.economyOrderList.push(economy);
+          this.updatetempOrderReduce1(res,orderTypeId);
+          break;
+        case 6:
+            let guidance = {} as GuidanceOrder;
+            let guideArr: GuidanceOrder[]=[];
+            if(res.length>1){
+               for (let i = 0; i < res.length; i++) {
+                  let guide= {} as GuidanceOrder;
+                  guide= res[i];
+                  guideArr.push(guide);
+               }
+            }
+            else if(res.length==1)
+            guidance = res[0]; 
+            this.gudianceOrderList=[];
+            if(res.length>1)
+            this.gudianceOrderList= guideArr;
+            else
+             this.gudianceOrderList.push(guidance);
+             this.updatetempOrderReduce1(res,orderTypeId);
+            break;
+          case 7:
+              let hosting = {} as HostingOrder;
+              let hostArr: HostingOrder[]=[];
+              if(res.length>1){
+                 for (let i = 0; i < res.length; i++) {
+                    let host= {} as HostingOrder;
+                    host= res[i];
+                    hostArr.push(host);
+                 }
+              }
+              else if(res.length==1)
+              hosting = res[0]; 
+              // hosting.globalParameters = {} as OrderItemCommonDetails;
+              // hosting.order = {} as Order;
+              // hosting.order=res[0].order;
+              // hosting.globalParameters= res[0].globalParameters;
+              this.hostingOrderList=[];
+              if(res.length>1)
+              this.hostingOrderList= hostArr;
+              else
+               this.hostingOrderList.push(hosting);
+               this.updatetempOrderReduce(res,orderTypeId);
+              break;
+          case 10:
+                let musicActivation = {} as MusicActivationOrder;
+                let musicArr: MusicActivationOrder[]=[];
+                if(res.length>1){
+                   for (let i = 0; i < res.length; i++) {
+                      let music= {} as MusicActivationOrder;
+                      music= res[i];
+                      musicArr.push(music);
+                   }
+                }
+                else if(res.length==1)
+                musicActivation = res[0]; 
+                // musicActivation.globalParameters = {} as OrderItemCommonDetails;
+                // musicActivation.order = {} as Order;
+                // musicActivation.order=res[0].order;
+                // musicActivation.globalParameters= res[0].globalParameters;
+                this.musicOrderList=[];
+                if(res.length>1)
+                this.musicOrderList= musicArr;
+                else
+                 this.musicOrderList.push(musicActivation);
+                break;
+    
 
     }
   }
@@ -663,28 +747,33 @@ export class GeneralFormService {
 
 
 
-
-  updatetempOrderReduce(res, orderTypeId) {
-    let temp = this.tempOrderReduce.value;
-    for (var i in temp[orderTypeId]) {
-      let tempOrderId = res[i].globalParameters.tempOrderIdentity;
-      if (temp[orderTypeId][i].orderTempId == tempOrderId) {
-        temp[orderTypeId][i].orderId = res[0].globalParameters.orderId;
-        temp[orderTypeId][i].orderItemIdentity = res[0].globalParameters.itemOrderRecordId;
-        temp[orderTypeId].splice(i, 1);
+      updatetempOrderReduce(res, orderTypeId){
+      let temp= this.tempOrderReduce.value.tempOrderReduce;
+      for (var i in temp[orderTypeId]) {
+         let tempOrderId= res[i].globalParameters.tempOrderIdentity;
+         if(temp[orderTypeId][i].orderTempId==tempOrderId){
+          temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
+          temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
+          temp[orderTypeId].splice(i, 1);
+         }
       }
+      //this.updateTempOrderReduce(temp);
+      //this.updateTempOrderReduce(temp,orderTypeId);
+
     }
     this.updateTempOrderReduce(temp);
 
   }
 
-  updatetempOrderReduce1(res, orderTypeId) {
-    let temp = this.tempOrderReduce.value;
-    for (var i in temp[orderTypeId]) {
-      for (var j in res) {
-        if (temp[orderTypeId][i].orderTempId == res[j].globalParameters.tempOrderIdentity) {
-          temp[orderTypeId].splice(i, 1);
-          break;
+
+    updatetempOrderReduce1(res, orderTypeId){
+      let temp= this.tempOrderReduce.value.tempOrderReduce;
+      for (var i in temp[orderTypeId]) {
+        for(var j in res ){
+          if(temp[orderTypeId][i].orderTempId==res[j].globalParameters.tempOrderIdentity){
+            temp[orderTypeId].splice(i, 1);
+            break;
+
         }
         //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
         //  if(temp[orderTypeId][i].orderTempId==tempOrderId){
@@ -693,6 +782,10 @@ export class GeneralFormService {
         //   temp[orderTypeId].splice(i, 1);
         //  }
       }
+
+      //this.updateTempOrderReduce(temp)
+      this.updateTempOrderReduce(temp,orderTypeId);
+
     }
     this.updateTempOrderReduce(temp);
   }

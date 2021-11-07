@@ -37,6 +37,24 @@ export const details: TableCellModel[] = [
   },
 ]
 
+export const details1: TableCellModel[] = [
+  {
+    key: 'orderType',
+    label: 'סוג',
+    value: 'היסעים',
+  },
+  {
+    key: 'status',
+    label: 'סטטוס',
+    value: 'חדש',
+  },
+  {
+    key: 'type',
+    label: 'מספר הזמנת רכש',
+    value: 'חדש',
+  },
+]
+
 export const supplier: TableCellModel[] = [
   {
     key: 'name',

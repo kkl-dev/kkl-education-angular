@@ -1,11 +1,12 @@
 
 <div fxLayout="column" fxFlexFill>
-    <div fxFlex="35">
+    <div fxFlex="35" *ngIf="flag">
       <app-form dir="rtl" [formTemplate]="formTemplate" [slots]="{ topButton: formButton }" (valueChange)="onValueChange($event)"
         [editMode]="editMode"></app-form>
     </div>
     <div fxFlex="35">
       <app-form-details *ngIf="columns" [columns]="columns"></app-form-details>
+      <!-- <app-form-details *ngIf="true" [columns]="columns"></app-form-details> -->
     </div>
   </div>
   
