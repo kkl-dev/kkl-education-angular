@@ -65,7 +65,7 @@ export interface TripInfo {
     tripStatus?: Status;
     userMobile?: string;
     userId?: string;
-    userName: string;
+    userInfo?: string;
     reasonUnConfirm?: string;
     /**
      * 1=Inside center, 2=Outside center

@@ -30,6 +30,5 @@ export interface TempOrder {
     endDate?: string;
     fromHour?: string;
     tillHour?: string;
-    userName?: string;
 }
 

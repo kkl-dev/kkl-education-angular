@@ -17,7 +17,7 @@ export interface Movements {
     typeId?: number;
     typeName?: string;
     description?: string;
-    userName?: string;
+    userInfo?: string;
     openDate?: string;
 }
 

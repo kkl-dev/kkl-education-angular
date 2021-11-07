@@ -13,8 +13,8 @@
 
 export interface Account { 
     userId?: string;
-    userName?: string;
-    userNameEng?: string;
+    userInfo?: string;
+    userInfoEng?: string;
     password?: string;
     email?: string;
     phone?: string;
