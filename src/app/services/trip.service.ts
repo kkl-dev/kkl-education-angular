@@ -389,11 +389,7 @@ export class TripService {
     )
   }
 
-<<<<<<< HEAD
   getActivityLookupsByAttribute(attributeId: number) {
-=======
-  getActivityLookupsByAttribute(attributeId: number, userId: string) {
->>>>>>> internal-yakov-v3
     this.userService.getActivityByAttribute(attributeId).subscribe(
       response => {
         this.activityByAttributeOriginal = response;

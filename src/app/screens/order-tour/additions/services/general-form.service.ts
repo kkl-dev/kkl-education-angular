@@ -543,17 +543,11 @@ export class GeneralFormService {
 
 
    addOrder(item: any,orderType) {  
-<<<<<<< HEAD
       this.orderService.addOrder( item).subscribe(res => {
         console.log(res); 
         this.tableData.next(res);
         this.enableButton.next(true);
         this.setOrderList(res,orderType,'adding');
-=======
-      this.orderService.addOrder(item).subscribe(res => {
-        console.log(res);  
-        this.addToOrderList(res,orderType);
->>>>>>> internal-yakov-v3
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
           data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }

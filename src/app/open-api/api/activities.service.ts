@@ -33,16 +33,11 @@ import { Configuration } from '../configuration';
 })
 export class ActivitiesService {
 
-<<<<<<< HEAD
 
     //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
     protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
 
   
-=======
-    protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
-
->>>>>>> internal-yakov-v3
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -103,10 +98,6 @@ export class ActivitiesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
     public createTripActivities(tripCalendar?: TripCalendar, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
     public createTripActivities(tripCalendar?: TripCalendar, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
     public createTripActivities(tripCalendar?: TripCalendar, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
@@ -282,18 +273,10 @@ export class ActivitiesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
     public updateTripActivities(tripCalendar: TripCalendar, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripCalendar>;
     public updateTripActivities(tripCalendar: TripCalendar, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripCalendar>>;
     public updateTripActivities(tripCalendar: TripCalendar, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripCalendar>>;
     public updateTripActivities(tripCalendar: TripCalendar, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
         if (tripCalendar === null || tripCalendar === undefined) {
             throw new Error('Required parameter tripCalendar was null or undefined when calling updateTripActivities.');
         }

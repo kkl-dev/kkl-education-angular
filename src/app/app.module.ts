@@ -263,15 +263,11 @@ FullCalendarModule.registerPlugins([
     EconomyFormComponent,
     GudianceFormComponent,
     HostingFormComponent,
-<<<<<<< HEAD
     SiteOrderFormComponent,
     SecuringOrderFormComponent,
     MusicActivationFormComponent,
     TransportDetailsTableComponent
 
-=======
-    DynamicComponent
->>>>>>> internal-yakov-v3
   ],
   imports: [
     BrowserModule,

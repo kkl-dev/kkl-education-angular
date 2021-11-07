@@ -1070,7 +1070,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Supplier'
-<<<<<<< HEAD
   /order/hostingOccupancy:
      post:
       tags:
@@ -1135,8 +1134,6 @@ paths:
               schema:
                 type: number
 
-=======
->>>>>>> internal-yakov-v3
 components:
   schemas:
     FieldForestCenter:
@@ -1670,15 +1667,9 @@ components:
         userMobile:
           type: string
           example: "2222222222"
-<<<<<<< HEAD
         # userId:
         #   type: string
         #   example: gadiId
-=======
-        userId:
-          type: string
-          example: gadiId
->>>>>>> internal-yakov-v3
         userInfo:
           type: string
           example: gadi
@@ -1742,10 +1733,6 @@ components:
       type: object
       required:
       - attribute
-<<<<<<< HEAD
-=======
-      - userId
->>>>>>> internal-yakov-v3
       properties:
         tripStart:
           type: string
@@ -1759,15 +1746,9 @@ components:
         userInfo:
           type: string
           example: dan
-<<<<<<< HEAD
         # userId:
         #   type: string
         #   example: dan123
-=======
-        userId:
-          type: string
-          example: dan123
->>>>>>> internal-yakov-v3
         tripId:
           type: integer
           nullable: true
@@ -2350,11 +2331,7 @@ components:
         totalPayAfterKklSubsidy:
            type: number
            nullable: true
-<<<<<<< HEAD
         userInfo:
-=======
-        userName:
->>>>>>> internal-yakov-v3
             type: string
         # numGuide:
         #   type: integer
@@ -2699,13 +2676,7 @@ components:
          siteURL:
              type: string
              example: 'http://'
-<<<<<<< HEAD
        
-=======
-         isCustomerOrder:
-              type: boolean
-              example: true
->>>>>>> internal-yakov-v3
     EconomyOrder :
         type: object
         allOf: 
@@ -2918,7 +2889,6 @@ components:
           items:
             $ref: '#/components/schemas/Movements'
           nullable: true
-<<<<<<< HEAD
     
     OccupancyValidation:
       type: object
@@ -2955,5 +2925,3 @@ components:
            nullable: true
 
            
-=======
->>>>>>> internal-yakov-v3

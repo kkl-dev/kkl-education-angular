@@ -38,11 +38,8 @@ import { Configuration } from '../configuration';
 })
 export class OrderService {
 
-<<<<<<< HEAD
 
     //protected basePath = 'https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0';
-=======
->>>>>>> internal-yakov-v3
     protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
 
     public defaultHeaders = new HttpHeaders();
@@ -104,10 +101,6 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
     public addOrder(orderEvent?: OrderEvent, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<OrderEvent>>;
     public addOrder(orderEvent?: OrderEvent, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<OrderEvent>>>;
     public addOrder(orderEvent?: OrderEvent, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<OrderEvent>>>;
@@ -161,18 +154,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
     public cancelOrder(tripId: number, orderId: number, cause: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
     public cancelOrder(tripId: number, orderId: number, cause: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
     public cancelOrder(tripId: number, orderId: number, cause: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
     public cancelOrder(tripId: number, orderId: number, cause: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling cancelOrder.');
         }
@@ -279,18 +264,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
     public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
     public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
     public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
     public deleteItemOrder(tripId: number, orderId: number, itemIndex: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling deleteItemOrder.');
         }
@@ -336,18 +313,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
     public editOrder(orderEvent?: OrderEvent, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<OrderEvent>>;
     public editOrder(orderEvent?: OrderEvent, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<OrderEvent>>>;
     public editOrder(orderEvent?: OrderEvent, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<OrderEvent>>>;
     public editOrder(orderEvent?: OrderEvent, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
 
         let headers = this.defaultHeaders;
 
@@ -530,17 +499,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
     public getSettlements(observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<Array<Settlement>>;
     public getSettlements(observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpResponse<Array<Settlement>>>;
     public getSettlements(observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' }): Observable<HttpEvent<Array<Settlement>>>;
     public getSettlements(observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' }): Observable<any> {
-=======
-    public getSettlements(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Settlement>>;
-    public getSettlements(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Settlement>>>;
-    public getSettlements(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Settlement>>>;
-    public getSettlements(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
->>>>>>> internal-yakov-v3
 
         let headers = this.defaultHeaders;
 
@@ -558,11 +520,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-<<<<<<< HEAD
         if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-=======
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
->>>>>>> internal-yakov-v3
             responseType_ = 'text';
         }
 
@@ -582,18 +540,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
     public getSites(tripYear: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Site>>;
     public getSites(tripYear: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Site>>>;
     public getSites(tripYear: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Site>>>;
     public getSites(tripYear: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
         if (tripYear === null || tripYear === undefined) {
             throw new Error('Required parameter tripYear was null or undefined when calling getSites.');
         }
@@ -614,11 +564,7 @@ export class OrderService {
 
 
         let responseType_: 'text' | 'json' = 'json';
-<<<<<<< HEAD
         if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-=======
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
->>>>>>> internal-yakov-v3
             responseType_ = 'text';
         }
 
@@ -639,18 +585,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
     public getSupplierByOrderType(orderTypeId: number, centerField: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Supplier>;
     public getSupplierByOrderType(orderTypeId: number, centerField: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Supplier>>;
     public getSupplierByOrderType(orderTypeId: number, centerField: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Supplier>>;
     public getSupplierByOrderType(orderTypeId: number, centerField: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-<<<<<<< HEAD
-
-=======
->>>>>>> internal-yakov-v3
         if (orderTypeId === null || orderTypeId === undefined) {
             throw new Error('Required parameter orderTypeId was null or undefined when calling getSupplierByOrderType.');
         }
