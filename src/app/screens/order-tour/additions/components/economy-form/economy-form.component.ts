@@ -33,7 +33,9 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
   supplierListSub: Subscription;
   supplierSub: Subscription;
-
+  ifShowtable: boolean=false;
+  tableDataSub: Subscription;
+  tableData: any;
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -44,37 +46,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    // this.generalFormService.clearFormFields();
-    // this.generalFormService.setDatesValues();
-    // this.getSupplierList(this.orderType, this.tripId, 0);
-
-    // // if (this.editMode) {
-    // //   this.generalFormService.setFormValues(this.order);
-    // // }
-    // this.generalFormService.itemsList = []
-    // let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    // this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
-    // if (this.item != undefined && this.item != null) {
-    //   if (this.item.globalParameters.supplierId != undefined) {
-    //     this.supplierId= this.item.globalParameters.supplierId;
-    //     this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
-    //   }
-    //   this.generalFormService.setFormValues(this.item);
-    // }
-    // else {
-    //   let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
-    //   this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
-    // }
-    // this.setformTemplate();
-
-    // if(this.squadAssembleService.tripInfofromService ! = undefined)
-    // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    // else{
-    //   let retrievedObject = localStorage.getItem('tripInfofromService');
-    //   let retrievedObj = JSON.parse(retrievedObject);
-    //    this.tripId= retrievedObj.trip.id;
-    // }
+  
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.generalFormService.clearFormFields();
@@ -88,10 +60,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
-
-        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
       }
-      // this.generalFormService.setFormValues(this.item);
     }
     else {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
@@ -107,7 +76,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
     this.generalFormService.setDatesValues();
 
-    //this.setformTemplate();
+    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+      console.log('res from table data intransort is :',res);
+      this.tableData=res;
+      this.ifShowtable=true;
+    })
 
   }
 
@@ -141,22 +114,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
 
 
-  // getSupplierList(orderTypeId, tripId, orderId) {
-  //   this.supplierListSub= this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       this.generalFormService.supplierList = [];
-  //       response.forEach(element => {
-  //         this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //       let index = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-  //       this.generalFormService.details[index].inputProps.options = this.generalFormService.supplierList;
-  //       this.getSupplierByOrderType(orderTypeId);
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
+  
 
   getSupplierList(orderTypeId, tripId, orderId) {
     this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
@@ -191,8 +149,6 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     //   let retrievedObj = JSON.parse(retrievedObject);
     //   centerFieldId= retrievedObj.trip.centerField.id;
     // }
-
-    
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
 
       response => {
@@ -228,6 +184,10 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
           this.generalFormService.setFormValues(this.item);
         }
         this.initiateForm();
+        if (this.item != undefined && this.item != null) {
+          if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId!= undefined)
+           this.displayTable();
+        }
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -239,21 +199,17 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
     console.log('this.formTemplate.questionsGroups:', this.formTemplate.questionsGroups)
   }
+  displayTable(){
+    let transArr= this.generalFormService.economyOrderList;
+    let currentObj= transArr.find(i=> (i.globalParameters.itemOrderRecordId)=== (this.item.globalParameters.itemOrderRecordId) && (i.globalParameters.supplierId)=== (this.item.globalParameters.supplierId) );
+    let arr=[]
+    arr.push(currentObj);
+    this.tableData=arr;
+    this.ifShowtable=true;
 
-  // getSupplierByOrderType(orderTypeId) {
-  //   let centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-  //   this.supplierSub=this.orderService.getSupplierByOrderType(orderTypeId, centerFieldId,4).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       this.supplierId= response.id;
-  //         this.form.controls["details"].get('supplierId').setValue(response.id.toString());
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
+ }
 
-  // }
-
+ 
   public onSave(): void {
     if (this.form) {
 
@@ -295,9 +251,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       eco.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       eco.order.orderType.name = 'כלכלה';
       eco.order.orderType.id = 4;
-      if (this.item.globalParameters.tempOrderIdentity != undefined)
+      if(this.item!= undefined){
+        if (this.item.globalParameters.tempOrderIdentity != undefined)
         eco.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-     // this.generalFormService.addOrder(eco, eco.order.orderType.id);
+      }
+    
       if(!this.isEditable)
       this.generalFormService.addOrder(eco, eco.order.orderType.id);
       else
@@ -422,60 +380,10 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   }
 
   public onValueChange(event) {
-    // this.form = event;
-    // console.log('I am form event');
-    // let isPristine=  this.form.pristine;
-    // // if(isPristine==true && this.supplierId == undefined){
-    // //   this.getSupplierByOrderType(this.orderType);
-    // // }
-    // // else if(isPristine==true){
-    // //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
-    // // }
-
-    // this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
-    //   .subscribe(value => {
-    //     console.log(value);
-    //     this.generalFormService.getOrderItemBySupplierId(value);
-    //   });
-    // this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-    //   console.log(value)
-    //   let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
-    //   let itemCost = Math.floor(item.cost);
-    //   this.form.controls["details"].get('itemCost').patchValue(itemCost);
-    //   console.log(this.form.value.details);
-    //   let form = this.additionsService.calculateBillings(this.form.value.details);
-    //   this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-    //   this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
-
-    // });
-    // this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-    //   console.log(value)
-    //   let form = this.additionsService.calculateBillings(this.form.value.details);
-    //   this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-    //   this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
-    // });
-
-    // console.log(this.form);
-
+  
     this.form = event;
     console.log('I am form Event');
-    // if(isPristine==true && this.supplierId == undefined){
-    //   //this.getSupplierByOrderType(this.orderType);
-    // }
-    // if(isPristine==true && this.supplierId!= undefined){
-    //   this.form.controls["details"].get('supplierId').setValue('',{emitEvent: false});
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId,{emitEvent: false})
-    // }
-
-    // if (this.form.controls["details"].get('supplierId').value == "" &&  this.supplierId != undefined)
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId);
-
-    // if(isPristine==true &&  this.itemId != undefined){
-    //   this.form.controls["details"].get('itemId').setValue('',{emitEvent: false});
-    //   this.form.controls["details"].get('itemId').setValue(this.itemId,{emitEvent: false});
-    // }
-
-
+   
     this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
@@ -510,5 +418,6 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
+    if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
   }
 }

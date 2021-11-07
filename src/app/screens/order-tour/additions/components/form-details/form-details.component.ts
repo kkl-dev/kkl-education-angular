@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input, SimpleChanges } from '@angular/core';
 import { buildDayTableModel } from '@fullcalendar/daygrid';
 import { BehaviorSubject } from 'rxjs';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
@@ -158,9 +158,11 @@ export interface TableData {
 export class FormDetailsComponent implements OnInit {
 
   flag:boolean= false;
+  @Input() public tableData: any;
+ 
   //public columns: TableCellModel[] = transportColumns;
   public columns: TableCellModel[] = transportColumns1;
-
+  
 
   public title: string = 'פרטים נוספים';
   public editMode: boolean = false;
@@ -219,19 +221,24 @@ export class FormDetailsComponent implements OnInit {
   constructor(private generalFormService: GeneralFormService) { }
 
   ngOnInit(): void {
-    this.generalFormService.tableData.subscribe(res=>{
-      if(res!= null && res!=undefined){
-        this.setTableData(res);
-      }
-      console.log('res from table data is :',res);
-    })
+    // this.generalFormService.tableData.subscribe(res=>{  
+    //     this.setTableData(res);
+    //     console.log('res from table data is :',res);
+    // })
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.tableData.currentValue !=null && changes.tableData.currentValue!= undefined) {
+      console.log('changes is: ',changes.tableData.currentValue);
+      this.setTableData(changes.tableData.currentValue);
+    }
   }
 
    setTableData(res){
-    this.detailsSubject.value.columns[0].value=res[0].order.tripId;
-      this.detailsSubject.value.rows[0][0].value= res[0].order.orderType.name;
+    this.detailsSubject.value.columns[0].value= res[0].order.tripId;
+      this.detailsSubject.value.rows[0][0].value= res[0].order.orderType.name
       this.detailsSubject.value.rows[0][1].value = res[0].order.status?res[0].order.status.name:'';
-      this.detailsSubject.value.rows[1][0].value = res[0].order.supplier.name;
+      this.detailsSubject.value.rows[1][0].value =  res[0].order.supplier.name;
 
      this.flag=true;
    }

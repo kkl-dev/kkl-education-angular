@@ -5,7 +5,9 @@
         [editMode]="editMode"></app-form>
     </div>
     <div fxFlex="35">
-      <app-form-details *ngIf="columns" [columns]="columns"></app-form-details>
+      <!-- <app-form-details *ngIf="columns" [columns]="columns"></app-form-details> -->
+      <app-form-details  *ngIf="ifShowtable" [tableData]="tableData" [columns]="columns"></app-form-details>
+     
       <!-- <app-form-details *ngIf="true" [columns]="columns"></app-form-details> -->
     </div>
   </div>

@@ -6,12 +6,12 @@
   <div class="additions-content">
     <div class="button-container" fxLayout="row" fxLayoutAlign="start">
       <!-- <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="!addItem"> -->
-      <button mat-raised-button color="primary" (click)="onAdd()" >
+      <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="disabled" >
         <!-- addSchedule -->
         הוסף פריט
       </button>
     </div>
-    <app-tour-title [value]="tour.title" [id]="tripId"></app-tour-title>
+    <app-tour-title [value]="tourTitle" [id]="tripId"></app-tour-title>
     <!-- <div *ngIf="!items"> -->
     <div *ngIf="addItem">
       <!-- addSchedule -->

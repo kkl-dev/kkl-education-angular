@@ -36,7 +36,9 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
    isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
-
+  ifShowtable: boolean=false;
+  tableDataSub: Subscription;
+  tableData: any;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -69,18 +71,17 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
       //this.setformTemplate();
     }
-
     this.getSupplierList(this.orderType, this.tripId, 0);
-    //this.getSettelments();
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-
-   
     this.generalFormService.setDatesValues();
+    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+      console.log('res from table data intransort is :',res);
+      this.tableData=res;
+      this.ifShowtable=true;
+    })
   
-     //this.setformTemplate();
-
   }
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
@@ -112,6 +113,16 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
      console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
+
+  displayTable(){
+    let transArr= this.generalFormService.siteOrderList;
+    let currentObj= transArr.find(i=> (i.globalParameters.itemOrderRecordId)=== (this.item.globalParameters.itemOrderRecordId) && (i.globalParameters.supplierId)=== (this.item.globalParameters.supplierId) );
+    let arr=[]
+    arr.push(currentObj);
+    this.tableData=arr;
+    this.ifShowtable=true;
+
+ }
 
 
 
@@ -185,6 +196,10 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
             this.generalFormService.setFormValues(this.item);
         }
         this.initiateForm();
+        if (this.item != undefined && this.item != null) {
+          if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId!= undefined)
+           this.displayTable();
+        }
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete

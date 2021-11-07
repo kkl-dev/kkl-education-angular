@@ -1070,6 +1070,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Supplier'
+  /order/hostingOccupancy:
+     post:
+      tags:
+      - order
+      operationId: CheckHostingOccupancy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OccupancyValidation'
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/classOccupancy:
+     post:
+      tags:
+      - order
+      operationId: CheckClassOccpancy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OccupancyValidation'
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/hourOccupancy:
+     post:
+      tags:
+      - order
+      operationId: CheckHoursOccupancyPerItemInOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OccupancyValidation'
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/vat:
+    get:
+      tags:
+      - order
+      operationId: GetCurrentVat
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: number
+
 components:
   schemas:
     FieldForestCenter:
@@ -1603,9 +1667,9 @@ components:
         userMobile:
           type: string
           example: "2222222222"
-        userId:
-          type: string
-          example: gadiId
+        # userId:
+        #   type: string
+        #   example: gadiId
         userInfo:
           type: string
           example: gadi
@@ -2612,9 +2676,7 @@ components:
          siteURL:
              type: string
              example: 'http://'
-         isCustomerOrder:
-              type: boolean
-              example: true
+       
     EconomyOrder :
         type: object
         allOf: 
@@ -2827,3 +2889,39 @@ components:
           items:
             $ref: '#/components/schemas/Movements'
           nullable: true
+    
+    OccupancyValidation:
+      type: object
+      properties:
+        centerFieldId:
+          type: integer
+          example: 1
+        startDate:
+          type: string
+          format: date
+        endDate:
+           type: string
+           format: date 
+        startHour:
+           type: string
+           format: date
+        endHour:
+           type: string
+           format: date
+        typeSleepId:
+           type: integer
+        amountItem:
+           type: number
+        tripId: 
+           type: integer
+        orderId: 
+           type : integer
+           nullable: true
+        itemOrderRecordId: 
+           type: integer
+           nullable: true
+        classCode: 
+           type: integer
+           nullable: true
+
+           

@@ -43,7 +43,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   itemListSub:  Subscription;
   flag: boolean =false;
   isEditable : boolean= false;
-
+  ifShowtable: boolean=false;
+  tableDataSub: Subscription;
+  tableData: any;
   //transQuestions:any [];
   public formTemplate: FormTemplate = {
     hasGroups: true,
@@ -79,7 +81,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
-
+        
         //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
       }
       // this.generalFormService.setFormValues(this.item);
@@ -92,15 +94,16 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
 
     this.getSupplierList(this.orderType, this.tripId, 0);
-    //this.getSettelments();
+    this.getSettelments();
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
-
-
     this.generalFormService.setDatesValues();
-
-    //this.setformTemplate();
+    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+      console.log('res from table data intransort is :',res);
+      this.tableData=res;
+      this.ifShowtable=true;
+    })
   }
 
  
@@ -146,13 +149,23 @@ export class TransportFormComponent implements OnInit, OnDestroy {
      console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
 
+  displayTable(){
+     let transArr= this.generalFormService.transportOrderList;
+     let currentObj= transArr.find(i=> (i.globalParameters.itemOrderRecordId)=== (this.item.globalParameters.itemOrderRecordId) && (i.globalParameters.supplierId)=== (this.item.globalParameters.supplierId) );
+     let arr=[]
+     arr.push(currentObj);
+     this.tableData=arr;
+     this.ifShowtable=true;
+
+  }
+
   getSettelments(){
       this.settlementSub= this.orderService.getSettlements().subscribe(res=>{
          res.forEach(element=>{
           this.generalFormService.settlementList.push({ label: element.name, value: element.id.toString() })
         })
         let exitLocationIndex = this.generalFormService.transport.findIndex(i => i.key === 'exitLocation');
-        this.generalFormService.transport[exitLocationIndex].inputProps.options = this.generalFormService.supplierList;
+        this.generalFormService.transport[exitLocationIndex].inputProps.options = this.generalFormService.settlementList;
         console.log(res);
       },(err) => {
       console.log(err);
@@ -229,6 +242,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           this.generalFormService.setFormValues(this.item);
         }
         this.initiateForm();
+        if (this.item != undefined && this.item != null) {
+          if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId!= undefined)
+           this.displayTable();
+        }
+       
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -282,8 +301,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = 1;
-      if (this.item.globalParameters.tempOrderIdentity != undefined)
+      if(this.item!= undefined){
+        if (this.item.globalParameters.tempOrderIdentity != undefined)
         t.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+      }
+      
       if (!this.isEditable)
         this.generalFormService.addOrder(t, t.order.orderType.id);
       else
@@ -416,6 +438,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
     if (this.settlementSub) { this.settlementSub.unsubscribe(); }
+    if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
   }
 
   test1() {

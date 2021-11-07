@@ -31,9 +31,9 @@ export class NavigationGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrderTypes();
-    this.generalFormService.tempOrderReduce.subscribe(res=>{
-      this.updatetempOrderReduce(res);
-    })
+    // this.generalFormService.tempOrderReduce.subscribe(res=>{
+    //   this.updatetempOrderReduce(res);
+    // })
     // this.steps = this.additionsService.getSteps()
   }
   convertStepsModel() {
@@ -76,13 +76,15 @@ export class NavigationGridComponent implements OnInit {
       // for (var j in this.tempOrderReduce) {
       //   if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) { step.badgeValue = this.tempOrderReduce[j].length; }
       // }
-
-      for (var j in this.tempOrderReduce) {
-        if(this.tempOrderReduce[j].length>0){
-          if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) 
-          { step.badgeValue = this.tempOrderReduce[j].length; }
+      if(this.tempOrderReduce != null && this.tempOrderReduce != undefined){
+        for (var j in this.tempOrderReduce) {
+          if(this.tempOrderReduce[j].length>0){
+            if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) 
+            { step.badgeValue = this.tempOrderReduce[j].length; }
+          }
         }
       }
+   
       this.steps.push(step)
     }
   }
@@ -94,8 +96,12 @@ export class NavigationGridComponent implements OnInit {
         this.additionsService.orderTypes = response;
         this.generalFormService.tempOrderReduce.subscribe(res => {
           //this.tempOrderReduce = res;
+          if( res!= null)
           this.tempOrderReduce = res.tempOrderReduce;
           this.convertStepsModel();
+          if (res != null) 
+          var indx = this.steps.findIndex(step => step.value === res.orderType);
+          else
           var indx = this.steps.findIndex(step => step.value === 1);
           this.steps[indx].isActive = true;
         })
@@ -105,14 +111,14 @@ export class NavigationGridComponent implements OnInit {
     )
   }
 
-  updatetempOrderReduce(res){
-    //this.tempOrderReduce= res;
-     this.tempOrderReduce= res.tempOrderReduce;
-     this.orderTypeSelected= res.orderType;
-    this.convertStepsModel();
-     let index= this.steps.findIndex(i=> i.value === this.orderTypeSelected)
-     this.steps[index].isActive=true;
-  }
+  // updatetempOrderReduce(res){
+  //   //this.tempOrderReduce= res;
+  //    this.tempOrderReduce= res.tempOrderReduce;
+  //    this.orderTypeSelected= res.orderType;
+  //   this.convertStepsModel();
+  //    let index= this.steps.findIndex(i=> i.value === this.orderTypeSelected)
+  //    this.steps[index].isActive=true;
+  // }
 
 
   onChangeStep(step: StepModelNavigation) {

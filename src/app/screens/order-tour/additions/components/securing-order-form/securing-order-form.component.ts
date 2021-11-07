@@ -36,6 +36,9 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
+  ifShowtable: boolean=false;
+  tableDataSub: Subscription;
+  tableData: any;
 
   public formTemplate: FormTemplate = {
     hasGroups: true,
@@ -43,31 +46,6 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   };
   ngOnInit(): void {
 
-    // this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    // this.generalFormService.clearFormFields();
-    //  this.generalFormService.setDatesValues();
-    // this.getSupplierList(this.orderType, this.tripId, 0);
-
-
-    // // if (this.editMode) {
-    // //   this.generalFormService.setFormValues(this.order);
-    // // }
-    // this.generalFormService.itemsList = []
-    // let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    // this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
-    // if (this.item != undefined && this.item != null) {
-    //   if(this.item.globalParameters.supplierId!= undefined ){
-    //     this.supplierId= this.item.globalParameters.supplierId;
-    //     this.generalFormService.getOrderItemBySupplierId(this.item.globalParameters.supplierId);
-    //   }
-    //   this.generalFormService.setFormValues(this.item);
-    // }
-    // else {
-    //   let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
-    //   this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
-    // }
-    // this.setformTemplate();
-    ///
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.generalFormService.clearFormFields();
@@ -104,7 +82,11 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
    
     this.generalFormService.setDatesValues();
   
-     //this.setformTemplate();
+    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+      console.log('res from table data intransort is :',res);
+      this.tableData=res;
+      this.ifShowtable=true;
+    })
 
   }
   setformTemplate() {
@@ -136,6 +118,16 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
      console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
+
+  displayTable(){
+    let transArr= this.generalFormService.securingOrderList;
+    let currentObj= transArr.find(i=> (i.globalParameters.itemOrderRecordId)=== (this.item.globalParameters.itemOrderRecordId) && (i.globalParameters.supplierId)=== (this.item.globalParameters.supplierId) );
+    let arr=[]
+    arr.push(currentObj);
+    this.tableData=arr;
+    this.ifShowtable=true;
+
+ }
 
   getSupplierList(orderTypeId, tripId, orderId) {
 
@@ -209,6 +201,10 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
             this.generalFormService.setFormValues(this.item);
         }
         this.initiateForm();
+        if (this.item != undefined && this.item != null) {
+          if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId!= undefined)
+           this.displayTable();
+        }
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -258,9 +254,11 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       securing.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       securing.order.orderType.name = '';
       securing.order.orderType.id = 7;
-      if (this.item.globalParameters.tempOrderIdentity != undefined)
-      securing.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-     // this.generalFormService.addOrder(securing, securing.order.orderType.id);
+      if(this.item!= undefined){
+        if (this.item.globalParameters.tempOrderIdentity != undefined)
+        securing.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+      }
+      
       if(!this.isEditable)
       this.generalFormService.addOrder(securing, securing.order.orderType.id);
       else

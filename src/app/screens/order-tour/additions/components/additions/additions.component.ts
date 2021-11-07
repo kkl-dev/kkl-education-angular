@@ -35,7 +35,7 @@ export class AdditionsComponent implements OnInit {
   tripId: number;
   tourTitle: any;
   orderType: number = 1;
-
+  disabled: boolean= false;
   public tempOrderReduce: any;
 
   constructor(private _dialog: MatDialog,
@@ -57,7 +57,9 @@ export class AdditionsComponent implements OnInit {
 
     // this.additionsService.emitSchedule(this.tour.schedule);
     //this.onAdd();
-
+     this.generalFormService.enableButton.subscribe(res=>{
+       this.disabled=!res;
+     })
   }
 
   public onAdd() {
@@ -105,6 +107,7 @@ export class AdditionsComponent implements OnInit {
         }
         else {
           this.addItem = true;
+          this.disabled=true;
           return;
         }
 
@@ -172,7 +175,7 @@ export class AdditionsComponent implements OnInit {
           this.items = [];
           this.addItem = true;
         }
-
+        this.disabled=true;
         break;
       case 2:
         if (this.generalFormService.securingOrderList.length > 0) {
@@ -183,6 +186,7 @@ export class AdditionsComponent implements OnInit {
           this.items = [];
           this.addItem = true;
         }
+        this.disabled=true;
         break;
       case 3:
 
@@ -194,6 +198,7 @@ export class AdditionsComponent implements OnInit {
           this.items = [];
           this.addItem = true;
         }
+        this.disabled=true;
         break;
       case 4:
         if (this.generalFormService.economyOrderList.length > 0) {
@@ -204,6 +209,7 @@ export class AdditionsComponent implements OnInit {
           this.items = [];
           this.addItem = true;
         }
+        this.disabled=true;
         break;
       case 6:
         if (this.generalFormService.gudianceOrderList.length > 0) {
@@ -214,6 +220,7 @@ export class AdditionsComponent implements OnInit {
           this.items = [];
           this.addItem = true;
         }
+        this.disabled=true;
         break;
       case 7:
         if (this.generalFormService.hostingOrderList.length > 0) {
@@ -224,6 +231,7 @@ export class AdditionsComponent implements OnInit {
           this.items = [];
           this.addItem = true;
         }
+        this.disabled=true;
         break;
       case 10:
         if (this.generalFormService.musicOrderList.length > 0) {
@@ -234,6 +242,7 @@ export class AdditionsComponent implements OnInit {
           this.items = [];
           this.addItem = true;
         }
+        this.disabled=true;
         break;
     }
     if (event == 1 || event == 4 || event == 6 || event == 7) {

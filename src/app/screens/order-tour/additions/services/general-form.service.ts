@@ -9,7 +9,7 @@ import { OrderService, TransportOrder, OrderEvent, EconomyOrder, OrderItemCommon
 import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 
 @Injectable({
@@ -33,7 +33,9 @@ export class GeneralFormService {
   //public tempOrderReduce = new BehaviorSubject<any>(null)
   public tempOrderReduce = new BehaviorSubject<{tempOrderReduce:any,orderType:any}>(null)
 
-  public tableData = new BehaviorSubject<any>(null)
+  public tableData = new Subject();
+  public enableButton =new Subject<boolean>();
+ 
 
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
   constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService, private _dialog: MatDialog,
@@ -544,6 +546,7 @@ export class GeneralFormService {
       this.orderService.addOrder( item).subscribe(res => {
         console.log(res); 
         this.tableData.next(res);
+        this.enableButton.next(true);
         this.setOrderList(res,orderType,'adding');
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
@@ -689,10 +692,6 @@ export class GeneralFormService {
               }
               else if(res.length==1)
               hosting = res[0]; 
-              // hosting.globalParameters = {} as OrderItemCommonDetails;
-              // hosting.order = {} as Order;
-              // hosting.order=res[0].order;
-              // hosting.globalParameters= res[0].globalParameters;
               this.hostingOrderList=[];
               if(res.length>1)
               this.hostingOrderList= hostArr;
@@ -712,10 +711,6 @@ export class GeneralFormService {
                 }
                 else if(res.length==1)
                 musicActivation = res[0]; 
-                // musicActivation.globalParameters = {} as OrderItemCommonDetails;
-                // musicActivation.order = {} as Order;
-                // musicActivation.order=res[0].order;
-                // musicActivation.globalParameters= res[0].globalParameters;
                 this.musicOrderList=[];
                 if(res.length>1)
                 this.musicOrderList= musicArr;
