@@ -1,11 +1,12 @@
 <div fxFill fxLayout="row" fxLayoutAlign="center center">
+  <ng-container *ngIf="value$ | async"></ng-container>
   <mat-accordion>
     <app-expend-panel variant="form" [expanded]="expend">
       <div
         title
         fxLayout="row"
         fxLayoutAlign="space-between center"
-        class="title"
+        class="form-title"
       >
         <app-typography color="primary" bold="600" size="16">
           {{ detailsGroup.header.label }}
@@ -15,6 +16,7 @@
         content
         [cols]="detailsGroup.cols"
         [questions]="detailsGroup.questions"
+        (register)="onRegister($event)"
       >
       </app-form-container>
     </app-expend-panel>

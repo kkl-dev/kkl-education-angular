@@ -2,6 +2,7 @@ import { FormService } from 'src/app/components/form/logic/form.service';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class SquadDetailsService {
       key: 'activityType',
       label: 'סוג הפעילות',
       type: 'select',
+      rows : 3,
       inputProps: {
         options: [
           { label: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
@@ -34,6 +36,20 @@ export class SquadDetailsService {
         ],
       },
     }),
+
+
+    new QuestionRadio({
+      key: 'department',
+      type: 'radio',
+      rows : 3,
+      inputProps: {
+        options: [
+          { label: 'מחלקת פנים', value: 'domestic' },
+          { label: 'מחלקת חוץ', value: 'foreign' },
+        ],
+      },
+    }),
+
     new QuestionSelect({
       key: 'tripLocation',
       label: 'מחלקה',

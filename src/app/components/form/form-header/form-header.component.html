@@ -1,4 +1,5 @@
 <div
+  class="form-title"
   [ngClass]="[variant, 'underline']"
   fxLayout="row"
   fxLayoutAlign="space-between end"
@@ -8,7 +9,7 @@
   <div [ngClass]="[variant, 'title']">
     <ng-content select="[title]"></ng-content>
   </div>
-  <div >
+  <div>
     <ng-container *ngTemplateOutlet="slots[slot]"></ng-container>
   </div>
 </div>
