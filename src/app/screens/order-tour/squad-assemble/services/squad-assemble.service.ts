@@ -77,7 +77,6 @@ export class SquadAssembleService {
       new Date(2021, 11, 17)
     );
     console.log(this.options);
-    
   }
 
   public scheduleQuestions: QuestionBase<string | Date>[] = [
@@ -114,6 +113,16 @@ export class SquadAssembleService {
       validations: [Validators.required],
       dateOptions: dateOptions,
       inputProps: {},
+    }),
+
+    new QuestionSelect({
+      key: 'tourRegion',
+      type: 'select',
+      label: 'איזור טיול',
+
+      inputProps: {
+        options: [],
+      },
     }),
 
     new QuestionTextarea({
