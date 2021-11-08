@@ -18,7 +18,7 @@ import { LinksComponent } from './components/links/links.component';
 // FULL CALENDER PLUGIN
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import  InteractionPlugin  from '@fullcalendar/interaction';
+import InteractionPlugin from '@fullcalendar/interaction';
 
 import { DatePipe } from '@angular/common';
 import { WizardComponent } from './components/wizard/wizard.component';
@@ -27,7 +27,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { MaterialModule } from './material/material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { AirbnbCalendarModule } from 'comrax-alex-airbnb-calendar';
 import { GlobalErrorHandler } from './utilities/interceptors/error';
@@ -138,7 +138,7 @@ import { HostingFormComponent } from './screens/order-tour/additions/components/
 import { SiteOrderFormComponent } from './screens/order-tour/additions/components/site-order-form/site-order-form.component';
 import { SecuringOrderFormComponent } from './screens/order-tour/additions/components/securing-order-form/securing-order-form.component';
 import { MusicActivationFormComponent } from './screens/order-tour/additions/components/music-activation-form/music-activation-form.component';
-import {TransportDetailsTableComponent} from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
+import { TransportDetailsTableComponent } from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
