@@ -121,12 +121,15 @@ export class AdditionsComponent implements OnInit {
       var orderList = [];
       // if (this.tempOrderReduce[orderTypId] === undefined) { this.item$ = new Observable<any[]>(); return; }
       if (this.tempOrderReduce[orderTypId] === undefined) {
-        if (this.items.length == 0)
+        if(this.items == undefined){
           this.addItem = true;
-        return;
-      }
-      else
-        this.addItem = false;
+        }
+      return;
+    }
+    else{
+      this.addItem = false;
+      this.disabled= true;
+    }  
       for (var i in this.tempOrderReduce[orderTypId]) {
         if (this.tempOrderReduce[orderTypId][i].orderId != undefined)
           continue;

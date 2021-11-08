@@ -63,7 +63,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getActiveStep();
     this.setActiveStep();
     this.subscribeToNewClient();
-  }
+}
 
   ngAfterViewInit() { }
 
@@ -131,7 +131,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   public onChangeStep(step: StepModel) {
     // just for test
     if (step.path == 'facilities') {
-      this.createTrip();
+      this.createTrip(this.steps[2].path);
     }
     if (step.label == 'לינה') {
       let flag = this.syncToTripInfo();
@@ -272,7 +272,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.squadAssemble.tripInfo.userInfo = 'שחר גל';
        if(startDate==endDate ){
           this.tripService.isOneDayTrip=true;
-           this.createTrip();
+           this.createTrip(this.steps[2].path);
        }
 
     }
@@ -290,7 +290,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-  createTrip() {
+  createTrip(route) {
     let tripInfo = this.squadAssemble.tripInfo;
     let obj = this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation = obj;
@@ -310,9 +310,11 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.userService.createTrip(tripInfo).subscribe(res => {
       console.log('tripInfo from server is :', res);
-
       this.squadAssemble.tripInfofromService = res;
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
+      this.router.navigateByUrl(
+        `/education/order-tour/${route}`
+      );
     }, (err) => {
       console.log(err);
     })
@@ -375,7 +377,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       if (routeIndex == 2) {
-        this.createTrip();
+        this.createTrip(this.steps[routeIndex].path);
+        return;
       }
       if (routeIndex == 3) {
         if (this._facilitiesService.calendarEventsArr.value.length > 0) {

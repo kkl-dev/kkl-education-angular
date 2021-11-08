@@ -266,8 +266,8 @@ FullCalendarModule.registerPlugins([
     SiteOrderFormComponent,
     SecuringOrderFormComponent,
     MusicActivationFormComponent,
-    TransportDetailsTableComponent
-
+    TransportDetailsTableComponent,
+    DynamicComponent
   ],
   imports: [
     BrowserModule,

@@ -31,6 +31,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   supplierListSub: Subscription;
   supplierSub: Subscription;
   itemListSub:  Subscription;
+  sitesSub: Subscription;
   centerFieldId: number;
    flag: boolean =false;
    isEditable : boolean= false;
@@ -53,29 +54,24 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
     this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
 
-    this.setformTemplate();
+    //this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined){
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
-        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
-
+        //this.generalFormService.getOrderItemBySupplierId(this.supplierId)
       }
-     // this.generalFormService.setFormValues(this.item);
     }
-
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
-      //this.setformTemplate();
     }
-    this.getSupplierList(this.orderType, this.tripId, 0);
-    // if (this.editMode) {
-    //   this.generalFormService.setFormValues(this.order);
-    // }
+    //this.getSupplierList(this.orderType, this.tripId, 0);
     this.generalFormService.setDatesValues();
+    this.setformTemplate();
+
     this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
       console.log('res from table data intransort is :',res);
       this.tableData=res;
@@ -85,12 +81,15 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   }
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
-    let detailsArr = this.generalFormService.details;
+    this.generalFormService.questionGroups[index].questions = this.generalFormService.details;
+    let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
+    //detailsArr.splice(0,0,this.generalFormService.siteQuestion);
     let siteQuestions = detailsArr.concat(this.generalFormService.site);
     this.generalFormService.questionGroups[index].questions = siteQuestions;
-    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
-
+    this.flag=true;
+    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
+      
   }
   changeLabels(tempArr) {
     console.log('tempArr is :', tempArr);
@@ -124,12 +123,20 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
  }
 
-
+  getSites(){
+    this.sitesSub= this.orderService.getSites(2021).subscribe(res=>{
+      console.log(res);
+      res.forEach(elem=>{
+        this.generalFormService.siteList.push({label: elem.name ,value : elem.id.toString()})
+      })
+    },(err)=>{
+      console.log(err);
+    })
+  }
 
   getSupplierList(orderTypeId, tripId, orderId) {
     this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
-
         console.log(response);
         this.generalFormService.supplierList = [];
         response.forEach(element => {
@@ -320,6 +327,21 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       let form = this.additionsService.calculateBillings(this.form.value.details);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+    });
+
+    this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+
+    });
+    this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+
     });
 
     console.log(this.form)
