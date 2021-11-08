@@ -76,7 +76,6 @@ export class SquadAssembleService {
       new Date(),
       new Date(2021, 11, 17)
     );
-    console.log(this.options);
   }
 
   public scheduleQuestions: QuestionBase<string | Date>[] = [

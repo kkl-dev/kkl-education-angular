@@ -6,19 +6,18 @@
       [gutterSize]="gutter"
     >
       <ng-container *ngFor="let question of group?.questions || questions">
-        <mat-grid-tile
-          *ngIf="group?.hasTopButton || hasTopButton"
-          colspan="1"
-          [rowspan]="question.rows || 5"
-        >
-          <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
-        </mat-grid-tile>
+        <ng-container *ngIf="group?.hasTopButton || hasTopButton">
+          <mat-grid-tile colspan="1" [rowspan]="question.rows || 5">
+            <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+          </mat-grid-tile>
+        </ng-container>
 
-        <mat-grid-tile
-          *ngIf="question.offset"
-          [rowspan]="question.rows"
-          [colspan]="question.offset"
-        ></mat-grid-tile>
+        <ng-container *ngIf="question.offset">
+          <mat-grid-tile
+            [rowspan]="question?.rows"
+            [colspan]="question?.offset"
+          ></mat-grid-tile>
+        </ng-container>
 
         <mat-grid-tile
           *ngIf="!question?.isGroup"
@@ -46,26 +45,28 @@
           </app-input-radio>
         </mat-grid-tile>
 
-        <mat-grid-tile
-          *ngIf="question?.isGroup"
-          [colspan]="question.group?.cols || 1"
-          [rowspan]="question.rows || 20"
-        >
-          <app-form-group
-            [question]="question"
-            [group]="question.group"
-            [formGroup]="formGroup"
-            [slot]="slots[question.key]"
-          ></app-form-group>
-        </mat-grid-tile>
+        <ng-container *ngIf="question?.isGroup">
+          <mat-grid-tile
+            [colspan]="question.group?.cols || 1"
+            [rowspan]="question.rows || 20"
+          >
+            <app-form-group
+              [question]="question"
+              [group]="question.group"
+              [formGroup]="formGroup"
+              [slot]="slots[question.key]"
+            ></app-form-group>
+          </mat-grid-tile>
+        </ng-container>
 
-        <mat-grid-tile
-          *ngIf="group?.hasBottomButton || hasBottomButton"
-          [colspan]="(group?.cols - question?.cols) || 1"
-          [rowspan]="question?.rows || 1"
-        >
-          <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
-        </mat-grid-tile>
+        <ng-container *ngIf="group?.hasBottomButton">
+          <mat-grid-tile
+            [colspan]="group?.cols - question?.cols || 1"
+            [rowspan]="question?.rows || 1"
+          >
+            <ng-container *ngTemplateOutlet="slots?.button"></ng-container>
+          </mat-grid-tile>
+        </ng-container>
       </ng-container>
     </mat-grid-list>
   </form>
