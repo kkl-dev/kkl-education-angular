@@ -28,6 +28,7 @@ export class SquadDetailsService {
       key: 'activityType',
       label: 'סוג הפעילות',
       type: 'select',
+      rows : 3,
       inputProps: {
         options: [
           { label: 'אירוח אכסנייה', value: 'אירוח אכסנייה' },
@@ -40,6 +41,7 @@ export class SquadDetailsService {
     new QuestionRadio({
       key: 'department',
       type: 'radio',
+      rows : 3,
       inputProps: {
         options: [
           { label: 'מחלקת פנים', value: 'domestic' },
