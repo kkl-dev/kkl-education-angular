@@ -33,7 +33,7 @@ export class SummaryComponent implements OnInit {
     // this.tripId = 52975;
     // this.tripId = 52977;
     // this.tripId = 52990;
-    // this.tripId = 52989;
+    // this.tripId = 52979;
 
     this.userService.getTripDetails(this.tripId).subscribe(TM => {
       this.tripDetails = TM;
@@ -60,7 +60,8 @@ export class SummaryComponent implements OnInit {
             price: (n.globalParameters.itemCost == undefined) ? 0 : n.globalParameters.itemCost,
             supplierCharge: (n.globalParameters.billingSupplier == undefined) ? 0 : n.globalParameters.billingSupplier,
             customerBilling: (n.globalParameters.billingCustomer == undefined) ? 0 : n.globalParameters.billingCustomer,
-            customerOrder: true
+            customerOrder: true,
+            totalPayAfterKklSubsidy: n.order.totalPayAfterKklSubsidy
           }
         })
       }
@@ -74,12 +75,16 @@ export class SummaryComponent implements OnInit {
       n["amount"] = n["orderList"].reduce((sum, current) => sum + ((current["amount"] == undefined) ? 0 : current["amount"]), 0),
         n["price"] = n["orderList"].reduce((sum, current) => sum + ((current["price"] == undefined) ? 0 : current["price"]), 0),
         n["supplierCharge"] = n["orderList"].reduce((sum, current) => sum + ((current["supplierCharge"] == undefined) ? 0 : current["supplierCharge"]), 0),
-        n["customerBilling"] = n["orderList"].reduce((sum, current) => sum + ((current["customerBilling"] == undefined) ? 0 : current["customerBilling"]), 0)
+        n["customerBilling"] = n["orderList"].reduce((sum, current) => sum + ((current["customerBilling"] == undefined) ? 0 : current["customerBilling"]), 0),
+        n["totalPayAfterKklSubsidy"] = n["orderList"][0].totalPayAfterKklSubsidy
     })
 
+
+
     this.PriceTotal = this.tableBodyTitles.reduce((sum, current) => sum + ((current["customerBilling"] == undefined) ? 0 : current["customerBilling"]), 0);
-    this.PriceTotalVat = this.PriceTotal * 1.17;
-    this.totalPriceAfterKklSubsidy = this.PriceTotalVat;
+    this.PriceTotalVat = this.PriceTotal; // this.PriceTotal * 1.17;
+
+    this.totalPriceAfterKklSubsidy = this.tableBodyTitles.reduce((sum, current) => sum + ((current["totalPayAfterKklSubsidy"] == undefined) ? 0 : current["totalPayAfterKklSubsidy"]), 0);
   }
 
   // open / close table
