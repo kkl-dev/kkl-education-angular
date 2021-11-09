@@ -268,7 +268,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       let t = {} as TransportOrder;
       t.globalParameters = {} as OrderItemCommonDetails;
       t.order = {} as Order;
-      if (orderId != undefined)
+      if (orderId != undefined && orderId)
         t.order.orderId = orderId;
       t.order.supplier = {} as Supplier;
       t.order.orderType = {} as OrderType;

@@ -73,15 +73,15 @@ export class FacilitiesConvertingService {
     let tempOrder;
     let activity;
     let tripActivityIdentity = 0;
-    let orderTempId = 0;
-    let orderId = 0;
-    let orderItemIdentity = 0;
+    let orderTempId = null;
+    let orderId = null;
+    let orderItemIdentity = null;
 
     for (let i = 0; i < arr.length; i++) {
-      tripActivityIdentity = arr[i].tripActivityIdentity || 0;
-      orderTempId = arr[i].orderTempId || 0;
-      orderId = arr[i].orderId || 0;
-      orderItemIdentity = arr[i].orderItemIdentity || 0;
+      tripActivityIdentity = arr[i].tripActivityIdentity || null;
+      orderTempId = arr[i].orderTempId || null;
+      orderId = arr[i].orderId || null;
+      orderItemIdentity = arr[i].orderItemIdentity || null;
       try {
         tripId = arr[i].tripId;
       } catch (error) {
@@ -109,7 +109,7 @@ export class FacilitiesConvertingService {
             orderTypeName = 'אירוח/פעילות';
           }
           tempOrder = {
-            "orderTempId": arr[i].orderTempId || 0,
+            "orderTempId": arr[i].orderTempId || null,
             "orderId": arr[i].orderId,
             "orderItemIdentity": arr[i].orderItemIdentity,
             "tripId": tripId,

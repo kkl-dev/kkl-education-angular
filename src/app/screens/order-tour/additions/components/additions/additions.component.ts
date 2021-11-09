@@ -128,10 +128,10 @@ export class AdditionsComponent implements OnInit {
     }
     else{
       this.addItem = false;
-      this.disabled= true;
     }  
       for (var i in this.tempOrderReduce[orderTypId]) {
-        if (this.tempOrderReduce[orderTypId][i].orderId != undefined)
+         if (this.tempOrderReduce[orderTypId][i].orderId != undefined && this.tempOrderReduce[orderTypId][i].orderId)
+        // if (this.tempOrderReduce[orderTypId][i].orderId)
           continue;
         var order = {} as OrderEvent;
         order.globalParameters = {} as OrderItemCommonDetails;
