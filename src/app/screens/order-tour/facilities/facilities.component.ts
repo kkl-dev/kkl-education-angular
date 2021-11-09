@@ -99,7 +99,7 @@ export class FacilitiesComponent implements OnInit {
     this.getTripActivities();
     this.setFormArray();
     this.getOrderService();
-   // this.getTripCalendar();
+    this.getTripCalendar();
 
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
@@ -316,7 +316,9 @@ export class FacilitiesComponent implements OnInit {
         for (let i = 0; i < this.activityList.length; i++) {
           //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
           newTempActivityList = this.facilitiesConvertingService.convertActivityListforTripCalendar(this.activityList[i]);
+          if(newTempActivityList.activityName) {
           this.addToCalendar(newTempActivityList);
+          }
         }
       }
     },

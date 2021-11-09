@@ -244,6 +244,11 @@ export class FacilitiesConvertingService {
   }
 
   convertActivityListforTripCalendar(activityList: any) {
+    if(activityList.fromHour.includes("1900") || activityList.date.includes("1900")) {
+      activityList.date = activityList.tillHour;
+      activityList.date = activityList.tillHour;
+      activityList.date = activityList.tillHour;
+    } 
     let newActivityListObj = {
       activityId: activityList.activityId,
       tripActivityIdentity: activityList.tripActivityIdentity,
