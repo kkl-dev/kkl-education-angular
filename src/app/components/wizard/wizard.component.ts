@@ -27,11 +27,11 @@ export class WizardComponent implements OnInit {
     private userDataService: UserDataService) {
     this.prefix = this.userDataService.user.urlPrefix
     this.wizardItems = [
-      {
-        src: 'assets/images/05-destination.svg',
-        text: 'הטיולים שלי',
-        link: '',
-      },
+      // {
+      //   src: 'assets/images/05-destination.svg',
+      //   text: 'הטיולים שלי',
+      //   link: '',
+      // },
       {
         src: 'assets/images/button.svg',
         text: 'טיול חדש',
