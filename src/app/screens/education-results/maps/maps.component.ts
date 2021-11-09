@@ -232,11 +232,11 @@ export class MapsComponent implements OnInit {
   getSVGStatus(Purpose: string, Status: string) {
     let svgPath: string;
     if (Purpose == "בקתה")
-      svgPath = (Status == "פנוי") ? "../../../../assets/images/svgcabinPanui.svg" : "../../../../assets/images/svgcabinTafus.svg";
+      svgPath = (Status == "פנוי") ? "assets/images/svgcabinPanui.svg" : "assets/images/svgcabinTafus.svg";
     else if (Purpose == "אוהל")
-      svgPath = (Status == "פנוי") ? "../../../../assets/images/svgtentPanui.svg" : "../../../../assets/images/svgtentTafus.svg";
+      svgPath = (Status == "פנוי") ? "assets/images/svgtentPanui.svg" : "assets/images/svgtentTafus.svg";
     else if (Purpose == "חדר")
-      svgPath = (Status == "פנוי") ? "../../../../assets/images/svgroomPanui.svg" : "../../../../assets/images/svgroomTafus.svg";
+      svgPath = (Status == "פנוי") ? "assets/images/svgroomPanui.svg" : "assets/images/svgroomTafus.svg";
 
     return svgPath;
   }
