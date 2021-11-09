@@ -38,13 +38,16 @@ export class SquadDetailsService {
       rows : 3,
       inputProps: {
         options: [
-          { label: 'מחלקת פנים', value: 'domestic' },
-          { label: 'מחלקת חוץ', value: 'foreign' },
+          // { label: 'מחלקת פנים', value: 'domestic' },
+          // { label: 'מחלקת חוץ', value: 'foreign' },
+          { label: 'מחלקת פנים', value: '1' },
+          { label: 'מחלקת חוץ', value: '8' },
         ],
       },
     }),
     new QuestionSelect({
-      key: 'departmentId',
+      // key: 'departmentId',
+      key: 'tripLocation',
       label: 'מחלקה',
       type: 'select',
       inputProps: {

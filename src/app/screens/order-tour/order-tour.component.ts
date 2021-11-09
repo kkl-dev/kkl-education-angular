@@ -208,7 +208,15 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             detalisForm = false
           }
           this.squadAssemble.tripInfo.insideCenterFieldId = parseInt(this.squadAssemble.formsArray[i].get('insideCenterFieldId').value);
-          this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
+          //this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
+          this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('department').value);
+
+          if ( this.squadAssemble.tripInfo.departmentId==8){
+            let countryId= this.squadAssemble.formsArray[i].get('tripLocation').value;
+            let countryObj= this.tripService.countries.find(i=> i.id=== countryId);
+            this.squadAssemble.tripInfo.country= countryObj;
+          }
+
           var attribute = this.squadAssemble.formsArray[i].get('attribute').value;
           this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
           var activityType = this.squadAssemble.formsArray[i].get('activityType').value;

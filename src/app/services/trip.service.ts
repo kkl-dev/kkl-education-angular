@@ -550,29 +550,29 @@ export class TripService {
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
-    this.userService.getParticipantTypes().subscribe(
-      response => {
-        console.log('response', response)
-        this.participantTypes = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-    this.userService.getLanguages().subscribe(
-      response => {
-        console.log('response', response)
-        this.languages = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-    this.userService.getCountries().subscribe(
-      response => {
-        console.log('response', response)
-        this.languages = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
+    // this.userService.getParticipantTypes().subscribe(
+    //   response => {
+    //     console.log('response', response)
+    //     this.participantTypes = response;
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
+    // this.userService.getLanguages().subscribe(
+    //   response => {
+    //     console.log('response', response)
+    //     this.languages = response;
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
+    // this.userService.getCountries().subscribe(
+    //   response => {
+    //     console.log('response', response)
+    //     this.languages = response;
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
   }
 }
