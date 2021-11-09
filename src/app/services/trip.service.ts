@@ -109,12 +109,12 @@ export class TripService {
 
   setFreeSpacesArray(freeSpacesArray: any) {
     this.freeSpacesArray = freeSpacesArray;
-    console.log('this.freeSpacesArray: ', this.freeSpacesArray);
+    //console.log('this.freeSpacesArray: ', this.freeSpacesArray);
   }
 
   setfacilitiesArray(facilitiesArray: any) {
     this.facilitiesArray = facilitiesArray;
-    console.log('facilitiesArray: ', this.facilitiesArray);
+    //console.log('facilitiesArray: ', this.facilitiesArray);
   }
 
   updateForestCenter(forestCenter: any) {
@@ -150,7 +150,7 @@ export class TripService {
     let till = str2[2] + '-' + str2[1] + '-' + str2[0];
 
     this.userService.getAvailableSleepingOptionsByDates(this.centerField.id, from, till).subscribe((sleepingAvailability: any) => {
-      console.log('sleeping Availability ==>', { sleepingAvailability });
+      //console.log('sleeping Availability ==>', { sleepingAvailability });
       if (sleepingAvailability) {
         this.availableSleepingOptions = sleepingAvailability;
         //for maps
@@ -206,7 +206,7 @@ export class TripService {
     this.availableTents = 0;
     this.availableGicha = 0;
     this.totalAvailableUnits = this.availableSleepingOptions[day].sleepingOptions[0].maxOccupancy;
-    console.log("totalAvailableUnits: " + this.totalAvailableUnits)
+    //console.log("totalAvailableUnits: " + this.totalAvailableUnits)
 
     let max = [];
     this.availableSleepingOptions[day].sleepingOptions.forEach(element => {
@@ -230,7 +230,7 @@ export class TripService {
       }
     });
     this.totalAvailableUnits = max;
-    console.log("totalAvailableUnits: ", this.totalAvailableUnits);
+    //console.log("totalAvailableUnits: ", this.totalAvailableUnits);
 
 
     this.getMapFacilities(this.centerField.id, "2022-10-19", "2022-10-19");
@@ -239,7 +239,7 @@ export class TripService {
   getMapFacilities(centerField, from, till) {
     //getMapFacilities for sending sleeping id to map
     this.userService.getMapFacilities(centerField, from, till).subscribe((lodgingList: any) => {
-      console.log('lodging Facility List Array ==>', { lodgingList });
+      //console.log('lodging Facility List Array ==>', { lodgingList });
       this.lodgingFacilityListArray = [];
       let temp = []
       // let totalUnits = {
@@ -342,8 +342,7 @@ export class TripService {
         }
       });
       this.lodgingFacilityListArray.push({ fieldForestCenterName: centerFieldName }, { lodgingFacilityList: temp });
-      //console.log(a)
-      console.log("this.lodgingFacilityListArray", this.lodgingFacilityListArray);
+      //console.log("this.lodgingFacilityListArray", this.lodgingFacilityListArray);
       this.lodgingFacilityListArrayObservable.next(this.lodgingFacilityListArray);
 
 

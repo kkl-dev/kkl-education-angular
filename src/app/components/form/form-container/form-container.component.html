@@ -14,7 +14,9 @@
             [control]="formGroup.controls[question.key]" [group]="formGroup" [type]="question.type" [label]="question.label"
             [icon]="question.icon" [options]="question.inputProps?.options"
             [dateOptions]="question.dateOptions" [controlType]="question.controlType"
-            (autocomplete)="onAutocomplete($event)"></app-form-input>
+            (autocomplete)="onAutocomplete(question.inputProps.options)"></app-form-input>
+
+            <!-- (autocomplete)="onAutocomplete($event)"></app-form-input> -->
 
           <app-input-radio [control]="formGroup.controls[question.key]" [question]="question"
             *ngIf="question.controlType === 'radio'">

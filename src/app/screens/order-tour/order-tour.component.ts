@@ -159,9 +159,6 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activeStep = +newActiveStep;
   }
 
-
-
-
   syncToTripInfo() {
     let flag = false;
     let scheduleForm;
@@ -299,6 +296,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   createTrip(route) {
+
     if (this.squadAssemble.tripInfofromService != undefined ){
       this.router.navigateByUrl(
         `/education/order-tour/${route}`

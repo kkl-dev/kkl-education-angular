@@ -150,6 +150,7 @@ export class FormInputComponent implements OnInit {
         this.color = '';
       }
       if (this.controlType === 'autocomplete') {
+        //console.log('autocomplete - this.control ', this.control);
         this.autocomplete.emit(this.control)
       }
     });

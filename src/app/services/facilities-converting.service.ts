@@ -63,7 +63,7 @@ export class FacilitiesConvertingService {
   convertActivityForApi(arr: any, userName: string) {
     let tripId = 52896;
     try {
-      tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
+      tripId = this.squadAssembleService.tripInfofromService.trip.id;
     } catch (error) {
       console.log(error);
     }
@@ -72,10 +72,26 @@ export class FacilitiesConvertingService {
     let activityArr = [];
     let tempOrder;
     let activity;
+    let tripActivityIdentity = 0;
+    let orderTempId = 0;
+    let orderId = 0;
+    let orderItemIdentity = 0;
 
     for (let i = 0; i < arr.length; i++) {
+      tripActivityIdentity = arr[i].tripActivityIdentity || 0;
+      orderTempId = arr[i].orderTempId || 0;
+      orderId = arr[i].orderId || 0;
+      orderItemIdentity = arr[i].orderItemIdentity || 0;
+      try {
+        tripId = arr[i].tripId;
+      } catch (error) {
+        
+      }
+      if (!tripId) {
+        tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      }
       console.log('arr ' + i + ': ', arr[i]);
-      //checl t 
+      //check
       if (arr[i].start != undefined && arr[i].start.includes("T")) {
 
         let orderTypeCode = 4;
@@ -83,14 +99,19 @@ export class FacilitiesConvertingService {
         // if (arr[i].type == "facility") {
         //check if goes into tempOrderArr
         // if (arr[i].svgUrl && !arr[i].additions) {
-          if (arr[i].facilityId || arr[i].itemId) {
-             orderTypeName = arr[i].title;
+        if (arr[i].facilityId || arr[i].itemId || arr[i].type == "facility") {
+          orderTypeName = arr[i].title;
+          orderTypeCode = arr[i].orderTypeCode;
+          orderTypeName = arr[i].orderTypeName;
 
           if (arr[i].facilityId) {
             orderTypeCode = 7;
             orderTypeName = 'אירוח/פעילות';
           }
           tempOrder = {
+            "orderTempId": arr[i].orderTempId || 0,
+            "orderId": arr[i].orderId,
+            "orderItemIdentity": arr[i].orderItemIdentity,
             "tripId": tripId,
             "orderTypeCode": orderTypeCode,
             "orderTypeName": orderTypeName,
@@ -98,21 +119,20 @@ export class FacilitiesConvertingService {
             "startDate": arr[i].start,
             "endDate": arr[i].end,
             "fromHour": arr[i].start,
-            "tillHour": arr[i].end,
-            // "userName": userName
+            "tillHour": arr[i].end
           }
           tempOrderArr.push(tempOrder);
         }
         else {
           activity = {
+            "tripActivityIdentity": arr[i].tripActivityIdentity || null,
             "activityId": arr[i].activityId || null,
             "activityName": arr[i].title || '',
             "date": arr[i].start,
             "description": arr[i].description || arr[i].title,
             "fromHour": arr[i].start,
             "tillHour": arr[i].end,
-            "tripId": tripId,
-            // "userName": userName
+            "tripId": tripId
           }
           activityArr.push(activity);
         }
@@ -122,7 +142,7 @@ export class FacilitiesConvertingService {
               case "הסעה":
                 orderTypeCode = 1
                 orderTypeName = 'היסעים',
-                arr[i].itemId = null
+                  arr[i].itemId = null
                 break;
               case "הדרכה":
                 orderTypeCode = 6
@@ -141,6 +161,9 @@ export class FacilitiesConvertingService {
                 break;
             }
             tempOrder = {
+              "orderTempId": orderTempId || 0,
+              "orderId": orderId,
+              "orderItemIdentity": orderItemIdentity,
               "tripId": tripId,
               "orderTypeCode": orderTypeCode,
               "orderTypeName": orderTypeName,
@@ -148,8 +171,7 @@ export class FacilitiesConvertingService {
               "startDate": arr[i].start,
               "endDate": arr[i].end,
               "fromHour": arr[i].start,
-              "tillHour": arr[i].end,
-              //"userInfo": userName
+              "tillHour": arr[i].end
             }
             tempOrderArr.push(tempOrder);
           }
@@ -162,19 +184,25 @@ export class FacilitiesConvertingService {
     return calendar;
   }
 
-
   convertTempOrderListforTripCalendar(tempOrderList: any) {
     let newTempOrderObj = {
+      // tripActivityIdentity: tempOrderList.tripActivityIdentity,
+      tripId: tempOrderList.tripId,
+      orderTypeCode: tempOrderList.orderTypeCode,
+      orderTypeName: tempOrderList.orderTypeName,
+      orderTempId: tempOrderList.orderTempId,
+      orderId: tempOrderList.orderId,
+      orderItemIdentity: tempOrderList.orderItemIdentity,
       availability: [],
       backgroundColor: "#F0F6FE",
       className: "border-facilities",
       date: "",
       end: tempOrderList.tillHour,
-      facilityId: tempOrderList.itemId,
+      facilityId: tempOrderList.itemId || null,
       selectedDay: 0,
       start: tempOrderList.fromHour,
       svgUrl: "assets/images/defaultFacility.svg",
-      title: "temp title",
+      title: tempOrderList.orderTypeName || tempOrderList.activityName || null,
       type: "facility"
     };
 
@@ -217,12 +245,15 @@ export class FacilitiesConvertingService {
 
   convertActivityListforTripCalendar(activityList: any) {
     let newActivityListObj = {
-      availability: [],
+      activityId: activityList.activityId,
+      tripActivityIdentity: activityList.tripActivityIdentity,
+      tripId: activityList.tripId,
+      //availability: [],
       backgroundColor: "#f0f9f1",
       className: "border-activities",
       date: activityList.date,
       end: activityList.tillHour,
-      facilityId: activityList.itemId,
+      facilityId: activityList.itemId || null,
       selectedDay: 0,
       start: activityList.fromHour,
       svgUrl: "assets/images/defaultFacility.svg",

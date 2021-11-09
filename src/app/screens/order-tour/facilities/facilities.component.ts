@@ -40,7 +40,7 @@ export class FacilitiesComponent implements OnInit {
   // public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
   // public upComingActivitiesArray: any[];
   orderType: any;
-  createForm: any;
+  //createForm: any;
   facilityForDay: any;
   facilitiesArray: any;
   tripActivities: any = [];
@@ -99,12 +99,12 @@ export class FacilitiesComponent implements OnInit {
     this.getTripActivities();
     this.setFormArray();
     this.getOrderService();
-    //this.getTripCalendar();
+   // this.getTripCalendar();
 
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
     this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
-    console.log('calendarEventsArr.value',  this.calendarEventsArr$)
+    console.log('calendarEventsArr.value',  this.calendarEventsArr$);
     this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
   }
 
@@ -146,7 +146,7 @@ export class FacilitiesComponent implements OnInit {
         key: 'activity',
         label: 'חפש פעילות',
         cols: 1,
-        value: '',
+       value: '',
         // validations: [Validators.required],
         inputProps: {
           options: this.tripActivitiesShow
@@ -160,7 +160,7 @@ export class FacilitiesComponent implements OnInit {
       console.log('getAreas: ', areas);
       if (areas) {
         areas.forEach(element => {
-          this.areas.push({ label: element.name, value: element.id.toString() })
+          this.areas.push({ label: element.name, value: element.id.toString() });
         });
       }
     },
@@ -185,7 +185,7 @@ export class FacilitiesComponent implements OnInit {
       console.log("get Trip Activities res: ", { res });
       this.calculatePages(res.length);
       let tripActivitiesConverted = this.facilitiesConvertingService.convertTripActivities(res);
-      console.log('tripActivitiesConverted: ', tripActivitiesConverted);
+     // console.log('tripActivitiesConverted: ', tripActivitiesConverted);
       this.tripActivitiesInfoTotal = res;
       this.tripActivitiesFilter = res;
       this.pagesToShow(1);
@@ -219,7 +219,7 @@ export class FacilitiesComponent implements OnInit {
   }
 
   logForm(form) {
-    console.log("form: ", form);
+    console.log("facility - form: ", form);
     let obj = form.value;
     let tripActivities = this.tripActivitiesInfoTotal;
     if (obj.areas) {
@@ -230,20 +230,31 @@ export class FacilitiesComponent implements OnInit {
       tripActivities = tripActivities.filter((a: { activityId: any; }) =>
         a.activityId == obj.typeOfActivity);
     }
+    //for autocmplete filter
+    if (obj.activity) {     
+      tripActivities = tripActivities.filter((a: any) =>
+        //a.name == obj.activity);
+        a.activityId == obj.activity);
+
+        if (tripActivities == []) {
+          console.log('tripActivities emty must use auto complete: ')
+        }
+    }
+
     this.tripActivitiesFilter = tripActivities;
     this.tripActivitiesInfo = tripActivities;
     this.tripActivitiesShow = [];
     this.tripActivitiesFilter.forEach(element => {
       this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
     });
-    console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
+    //console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
     this.setFormArray();
     this.calculatePages(this.tripActivitiesFilter.length);
     this.pagesToShow(1);
   }
 
   newPageEmit(page) {
-    console.log("page: ", page);
+    //console.log("page: ", page);
     if (page == 1) {
       this.pagesToShow(1);
     } else {
@@ -262,14 +273,14 @@ export class FacilitiesComponent implements OnInit {
     }
     console.log("tripActivitiesInfo: ", this.tripActivitiesInfo);
     // this.tripActivitiesInfo = this.tripActivitiesInfoTotal;
-    console.log("tripActivitiesInfo: ", this.tripActivitiesInfo);
+    //console.log("tripActivitiesInfo: ", this.tripActivitiesInfo);
   }
 
   updateTrip() {
-    let userInfo = this.userDataService.user.name || 'שחר גל';
+    //let userInfo = this.userDataService.user.name || 'שחר גל';
     let events: any = this.eventsArr;
     this.activitiyService.updateTripActivities(events).subscribe((tripCalendar: any) => {
-      console.log('update Trip Activities: ', tripCalendar);
+      //console.log('update Trip Activities: ', tripCalendar);
       if (tripCalendar) {
         //....
       }
@@ -280,6 +291,7 @@ export class FacilitiesComponent implements OnInit {
   }
 
   getTripCalendar() {
+    //this.eventsArr = [];
     let tripId = 52896;
     try {
       tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
@@ -296,13 +308,13 @@ export class FacilitiesComponent implements OnInit {
 
          // add to calender
         for (let i = 0; i < this.tempOrderList.length; i++) {
-          console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
+          //console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
           newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListforTripCalendar(this.tempOrderList[i]);
           this.addToCalendar(newTempOrderObj);
         }
 
         for (let i = 0; i < this.activityList.length; i++) {
-          console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
+          //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
           newTempActivityList = this.facilitiesConvertingService.convertActivityListforTripCalendar(this.activityList[i]);
           this.addToCalendar(newTempActivityList);
         }
@@ -314,14 +326,14 @@ export class FacilitiesComponent implements OnInit {
   }
 
   calculatePages(num) {
-    console.log("num: ", num);
+    //console.log("num: ", num);
     var quotient = Math.floor(num / 6);
     var remainder = num % 6;
     this.pagesAmount = quotient + remainder;
   }
 
   addToCalendar(event: any): void {
-    console.log("addToCalendar: ", event);
+    //console.log("addToCalendar: ", event);
     const tmpObj: EventInput = {
       id: `${this.eventsArr.length}`,
       textColor: 'black',
@@ -351,14 +363,18 @@ export class FacilitiesComponent implements OnInit {
   }
 
   public updateChosenUpComingActivity(args: ActivitiesCardInterface) {
-    console.log('update ChosenUp Coming Activity args' + args)
-    this.facilitiesService.updateSelectedActivity(args);
+    console.log('update ChosenUp Coming Activity args' + args);
     this.activityIsUpComing = true;
+    this.facilitiesService.updateSelectedActivity(args);
   }
 
   public updateChosenActivity(args: ActivitiesCardInterface) {
     console.log('update Chosen Activity args' + args);
     this.activityIsUpComing = false;
     this.facilitiesService.updateSelectedActivity(args);
+  }
+
+  onOptionSelected(e: any) {
+    console.log('onOptionSelected - e',e);
   }
 }

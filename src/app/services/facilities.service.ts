@@ -38,6 +38,7 @@ export class FacilitiesService {
   }
 
   public findObjectInCalendarArray(id: string | number) {
+    console.log("findObjectInCalendarArray: " + id);
     const [item] = this.calendarEventsArr.value.filter((item: any) => item.id === id);
     if (item.type === 'activity') {
       this.updateSelectedActivity(item);
