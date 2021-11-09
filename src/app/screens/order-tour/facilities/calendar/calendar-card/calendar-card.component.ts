@@ -1,6 +1,5 @@
 import { Component, Input, NgModule, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-calendar-card',
   templateUrl: './calendar-card.component.html',
@@ -22,19 +21,24 @@ export class CalendarCardComponent implements OnInit {
       return item.split(':');
     });
 
-    const compareHour = +hours[0][0] == +hours[1][0];
-    const compareHalfHour = +hours[0][0] + 1 == +hours[1][0];
-        
-    if (compareHour) {
-      this.checkHour = true;
-    }
-
-    if (!compareHour && compareHalfHour) {
-      const totalMinutes = this.compareMinutes(hours);
-      if (totalMinutes < 60) {
+    try {
+      const compareHour = +hours[0][0] == +hours[1][0];
+      const compareHalfHour = +hours[0][0] + 1 == +hours[1][0];
+          
+      if (compareHour) {
         this.checkHour = true;
       }
+  
+      if (!compareHour && compareHalfHour) {
+        const totalMinutes = this.compareMinutes(hours);
+        if (totalMinutes < 60) {
+          this.checkHour = true;
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
+
   }
   private compareMinutes(hours: any[]): number {
     const startMinutes = +hours[0][1];

@@ -10,6 +10,7 @@
           [icon]="question.icon" [options]="question.inputProps?.options"
           [dateOptions]="question.inputProps?.dateOptions" [controlType]="question.controlType"
           (autocomplete)="onAutocomplete($event)" (select)="onSelect($event)" (optionSelected)="onOptionSelected($event,question.key)">
+                  <!-- (autocomplete)="onAutocomplete($event, question)" (select)="onSelect($event)" (optionSelected)="onOptionSelected($event,question)"> -->
         </app-form-input>
       </div>
     </div>

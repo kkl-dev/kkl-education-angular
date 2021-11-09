@@ -12,22 +12,15 @@ import { DAYS } from 'src/mock_data/facilities';
 export class AddActivityComponent implements OnInit {
   // @Input() days: any[] = DAYS;
   @Input() days: any[] = this.tripService.facilitiesArray;
+  @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   public form: FormGroup;
   public showSleepAreas: boolean = false;
   public selectedDay: number = 0;
-  @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
   constructor(private facilitiesServices: FacilitiesService, private tripService: TripService) { }
 
-  public onSubmit(): void {
-    this.form.controls['selectedDay'].setValue(this.selectedDay);
-    this.form.controls['start'].setValue(this.arrangeTime('start'));
-    this.form.controls['end'].setValue(this.arrangeTime('end'));
-    this.emitFormValues.emit(this.form.value);
-    this.facilitiesServices.closeModal('close');
-  }
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.form = new FormGroup({
       'title': new FormControl(''),
       'selectedDay': new FormControl(this.selectedDay),
@@ -37,21 +30,32 @@ export class AddActivityComponent implements OnInit {
       'date': new FormControl(''),
       'className': new FormControl('border-activities'),
       'type': new FormControl('activity'),
-      'itemId': new FormControl(0)      
+      'itemId': new FormControl(0)
 
     });
   }
-  public getDay(event: any): void {
+
+  onSubmit(): void {
+    this.form.controls['selectedDay'].setValue(this.selectedDay);
+    this.form.controls['start'].setValue(this.arrangeTime('start'));
+    this.form.controls['end'].setValue(this.arrangeTime('end'));
+    this.emitFormValues.emit(this.form.value);
+    this.facilitiesServices.closeModal('close');
+  }
+
+  getDay(event: any): void {
     this.selectedDay = event;
   }
-  public startTimeChanged(event: string) {
+
+  startTimeChanged(event: string) {
     this.form.controls['start'].setValue(event);
   }
-  public endTimeChanged(event: string) {
+
+  endTimeChanged(event: string) {
     this.form.controls['end'].setValue(event);
   }
 
-  public arrangeTime(arg: string): any {
+  arrangeTime(arg: string): any {
     // yak changed for compatible with date (2021-11-07T00:00:00) and not (21.10.2021)
     //  const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let day = this.days[this.selectedDay].date.split("T");

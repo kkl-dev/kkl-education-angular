@@ -41,23 +41,30 @@ export class SaveActivityComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedActivity$ = this.facilitiesServices.getSelectedActivity();
-    this.subscribeToActivity = this.selectedActivity$.subscribe(data => this.createForm(data));
+    this.subscribeToActivity = this.selectedActivity$.subscribe(data => {
+      this.createForm(data);
+    });
   }
-  public ngOnDestroy(): void {
+
+  ngOnDestroy(): void {
     this.subscribeToActivity.unsubscribe();
   }
-  public startTimeChanged(event: string): void {
+
+  startTimeChanged(event: string): void {
     this.form.controls['start'].setValue(event);
   }
-  public endTimeChanged(event: string): void {
+
+  endTimeChanged(event: string): void {
     this.form.controls['end'].setValue(event);
   }
-  public deleteItem(event): void {
+
+  deleteItem(event): void {
     event.preventDefault();
     const id = this.form.controls['id'].value;
     this.facilitiesServices.deleteItemFromArray(id);
     this.facilitiesServices.closeModal('close');
   }
+
   onSubmit() {
     if (this.type) {
       this.form.controls['invitingCustomer'].setValue(this.orderingCustomer);
@@ -68,6 +75,7 @@ export class SaveActivityComponent implements OnInit {
     this.form.controls['selectedDay'].setValue(this.selectedDay);
     this.form.controls['start'].setValue(this.arrangeTime('start'));
     this.form.controls['end'].setValue(this.arrangeTime('end'));
+    
     if (this.updateForm) {
       this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
       this.facilitiesServices.closeModal('close');
@@ -81,7 +89,7 @@ export class SaveActivityComponent implements OnInit {
   }
 
   // date && time functions // 
-  public arrangeTime(arg: string): any {
+  arrangeTime(arg: string): any {
     // yak changed for compatible with date (2021-11-07T00:00:00) and not (21.10.2021)
     //  const [day, month, year] = this.days[this.selectedDay].day.split(".");
     let day = this.days[this.selectedDay].date.split("T");
@@ -93,18 +101,21 @@ export class SaveActivityComponent implements OnInit {
     //return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
-  public getDay(event: any): void {
+  getDay(event: any): void {
     this.selectedDay = event;
   }
-  public separateTimeFromDate(args: string): string {
+
+  separateTimeFromDate(args: string): string {
     const [date, time] = args.split('T');
     return time;
   }
-  public createForm(data): void {
+  createForm(data): void {
     if (!data.start) {
       this.form = new FormGroup({
         'title': new FormControl(data.name),
         'selectedDay': new FormControl(this.selectedDay),
+        // 'start': new FormControl('08:00'),
+        // 'end': new FormControl('09:00'),
         'start': new FormControl('08:00'),
         'end': new FormControl('09:00'),
         'backgroundColor': new FormControl('#f0f9f1'),
@@ -114,14 +125,16 @@ export class SaveActivityComponent implements OnInit {
         'invitingCustomer': new FormControl(false),
         'additions': new FormControl(),
         'haveAdditions': new FormControl(true),
-        'itemId': new FormControl(data.itemId) || null,
+        'itemId': new FormControl(data.itemId || null),
         'svgUrl': new FormControl('assets/images/' + data.iconPath || 'assets/images/' + data.svgUrl),
         //'svgUrl': new FormControl('assets/images/' + data.iconPath) || null,
         'img': new FormControl(data.sitePicture),
-        'activityId': new FormControl(data.activityId),
-        'description': new FormControl(data.description) || null
+        'activityId': new FormControl(data.activityId || null),
+        'tripActivityIdentity': new FormControl(data.tripActivityIdentity || null),
+        'tripId': new FormControl(data.tripId || null),
+        'description': new FormControl(data.description || null)
       });
-      console.log('this form => ', this.form);
+      //console.log('this form => ', this.form);
     } else {
       this.updateForm = true;
       data.start = this.separateTimeFromDate(data.start);

@@ -68,10 +68,15 @@ export class AddFacilityComponent implements OnInit {
         // 'maxParticipants': new FormControl(),
         'availability': new FormControl(data.occupiedHours),
         // 'svgUrl': new FormControl(data.iconPath),
-        'svgUrl': new FormControl('assets/images/' + data.iconPath) || null,
-        'facilityId': new FormControl(data.id || null)
+        'svgUrl': new FormControl('assets/images/' + data.iconPath || null),
+        'facilityId': new FormControl(data.id || null),
+        'tripActivityIdentity': new FormControl(data.tripActivityIdentity || null),
+        'orderTempId': new FormControl(data.orderTempId || null),
+        'orderId': new FormControl(data.orderId || null),
+        'tempOrderList': new FormControl(data.tempOrderList || null)
       });
-      console.log('this form => ', this.addFacilityForm);
+      
+      //console.log('this form => ', this.addFacilityForm);
 
     } else {
       this.updateForm = true;

@@ -31,7 +31,7 @@
                 <button fxFlex='20' (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
             </div>
             <div class="forms" fxFlex='100'>
-                <app-form-container [questions]='formArray' [cols]='3' (register)="logForm($event)">
+                <app-form-container [questions]='formArray' [cols]='3' (register)="logForm($event)" (optionSelected)="onOptionSelected($event)">
                 </app-form-container>
             </div>
         </div>
