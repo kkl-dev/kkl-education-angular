@@ -34,12 +34,27 @@ export class SquadGroupService {
       key: 'ageGroup',
       type: 'select',
       fullWidth: true,
-      rows: 4,
+      rows: 3,
       label: 'קבוצת גיל',
       inputProps: {
          options: this.tripService.ageGroup
       },
       validations: [Validators.required],
+    }),
+
+    new QuestionSelect({
+      key: 'assemble',
+      type: 'select',
+      fullWidth: true,
+      rows: 4,
+      label: 'הרכב קבוצה',
+      inputProps: {
+        options: [
+          { label: 'בנים', value: '1' },
+          { label: 'בנות', value: '2' },
+          { label: 'מעורב', value: '3' },
+        ],
+      },
     }),
 
     new QuestionNumber({
@@ -68,13 +83,13 @@ export class SquadGroupService {
       cols: 2,
       rows: 4,
     }),
-    // new QuestionNumber({
-    //   key: 'medics',
-    //   label: 'חובשים',
-    //   cols: 2,
-    //   rows: 4,
-    //   offset: 3,
-    // }),
+    new QuestionNumber({
+      key: 'kids',
+      label: 'מתחת לגיל 2',
+      cols: 2,
+      rows: 4,
+      offset: 3,
+    }),
   ];
 
   public groupQuestions: QuestionBase<string>[] = [
@@ -91,6 +106,16 @@ export class SquadGroupService {
           { label: 'לקוח מספר שלוש', value: '20+' },
           { label: 'לקוח מספר ארבע', value: '30+' },
         ],
+      },
+    }),
+    new QuestionSelect({
+      key: 'assemble',
+      type: 'select',
+      fullWidth: true,
+      rows: 4,
+      label: 'הרכב קבוצה',
+      inputProps: {
+        options: [],
       },
     }),
     new QuestionBase({
@@ -136,16 +161,16 @@ export class SquadGroupService {
     }),
 
     new QuestionBase({
-      key: 'medics',
+      key: 'kids',
       isGroup: true,
       fullWidth: true,
       rows: 5,
       group: {
-        key: 'medics',
+        key: 'kids',
         cols: 5,
         rows: 5,
-        label: 'חובשים',
-        questions: this.genderArray,
+        label: 'מתחת לגיל 2',
+                questions: this.genderArray,
       },
     }),
   ];

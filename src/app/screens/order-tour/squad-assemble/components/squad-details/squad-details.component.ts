@@ -6,6 +6,8 @@ import { TripService } from 'src/app/services/trip.service';
 import { Observable, Subject } from 'rxjs';
 import { BreakpointService } from 'src/app/utilities/services/breakpoint.service';
 import { SquadDetailsService } from './squad-details.service';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-squad-details',
@@ -19,8 +21,10 @@ export class SquadDetailsComponent implements OnInit {
   public budgetKKL: number = 18332736;
   public expend: boolean = true;
 
-  public $questions = new Subject<QuestionBase<string | number | Date>[]>();
+  public value$: Observable<string>;
+  public questions$ = new Subject<QuestionBase<string | number | Date>[]>();
   public tablet$: Observable<boolean>;
+  
   constructor(private squadAssembleService: SquadAssembleService,public tripService: TripService, private breakpoints: BreakpointService,
     private squadDetailsService: SquadDetailsService) { }
 
@@ -49,7 +53,23 @@ export class SquadDetailsComponent implements OnInit {
   public onBudget() {
   }
 
+  public listenToRadioButton(formGroup: FormGroup) {
+    const radioControl = formGroup.controls['department'];
+    const tripLocation = formGroup.controls['tripLocation'];
+    this.value$ = radioControl.valueChanges.pipe(
+      distinctUntilChanged(),
+      map((value: string) => {
+        value === 'domestic'
+          ? tripLocation.disable({ emitEvent: false })
+          : tripLocation.enable({ emitEvent: false });
+
+        return value;
+      })
+    );
+  }
+
   public logForm(form) {
+    this.listenToRadioButton(form);
     this.squadAssembleService.updateFormArray(form);
   }
 }

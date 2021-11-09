@@ -291,6 +291,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   createTrip(route) {
+    if (this.squadAssemble.tripInfofromService != undefined ){
+      this.router.navigateByUrl(
+        `/education/order-tour/${route}`
+      );
+      return;
+    }
+  
     let tripInfo = this.squadAssemble.tripInfo;
     let obj = this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation = obj;
@@ -373,6 +380,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.router.navigateByUrl(
             `/education/order-tour/${this.steps[0].path}`
           );
+          return;
+        }
+        else{
+          if( this.tripService.isOneDayTrip==true)
           return;
         }
       }

@@ -19,14 +19,14 @@
       <mat-list-item fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of squadBudgetService.list">
         <div mat-line>
           <app-typography>
-            {{ item.label }} :
+            <!-- {{ item.label }} : -->
           </app-typography>
           <ng-container [ngSwitch]="item.type">
             <app-typography *ngSwitchDefault [bold]="600">
-              {{ item.value }}
+              <!-- {{ item.value }} -->
             </app-typography>
             <app-typography *ngSwitchCase="'number'" [bold]="600">
-              {{ item.value | number }}
+              <!-- {{ item.value | number }} -->
             </app-typography>
           </ng-container>
         </div>

@@ -160,7 +160,6 @@ export class GeneralFormService {
       label: 'הערות',
       cols: 6,
       rows: 6,
-      offset: 1,
       value: '',
     }),
   ];
@@ -323,7 +322,7 @@ export class GeneralFormService {
     {
       key: 'comments',
       questions: this.comments,
-      hasButton: true,
+      hasBottomButton : true,
       cols: 8,
     },
   ];

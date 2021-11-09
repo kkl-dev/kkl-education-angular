@@ -511,7 +511,8 @@ export class TripService {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {
         this.fieldForestCentersOriginal = response;
-        response.forEach(element => {
+        this.fieldForestCentersOriginal = response.filter(aco => aco.accommodationList.length > 0);
+        this.fieldForestCentersOriginal.forEach(element => {
           this.fieldForestCenters.push({ label: element.name, value: element.id.toString() });
         });
       },

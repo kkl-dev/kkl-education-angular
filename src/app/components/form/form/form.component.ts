@@ -26,7 +26,8 @@ export class FormComponent implements OnInit {
   @Input() hasButton: boolean = false;
   @Input() editMode: boolean;
   @Input() slots: {
-    topButton?: ElementRef;
+    // topButton?: ElementRef;
+    button?: ElementRef;
     group?: ElementRef;
   };
   @Input() customQuestionTemplates = {};

@@ -35,40 +35,51 @@ export class SquadAssembleService {
   payerCustomer = {} as BaseCustomer;
   tripInfofromService: TripModel;
   peopleInTrip ;
-  public freeSpacesArrayGenarator(start: Date, end: Date) {
-    const i = 0;
-    let freeSpacesArray = [];
-    while (start < end) {
-      start = new Date(start.setDate(start.getDate() + 1));
-      freeSpacesArray.push({
-        date: start,
-        freeSpace: [
-          {
-            accomodationName: 'cabin',
-            availableBeds: +Math.floor(Math.random() * 8).toString(),
-          },
-          {
-            accomodationName: 'tent',
-            availableBeds: +Math.floor(Math.random() * 8).toString(),
-          },
-          {
-            accomodationName: 'room',
-            availableBeds: +Math.floor(Math.random() * 8).toString(),
-          },
-        ],
-      });
-    }
-    return freeSpacesArray;
-  }
+  options!: CalendarOptions;
+  // public freeSpacesArrayGenarator(start: Date, end: Date) {
+  //   const i = 0;
+  //   let freeSpacesArray = [];
+  //   while (start < end) {
+  //     start = new Date(start.setDate(start.getDate() + 1));
+  //     freeSpacesArray.push({
+  //       date: start,
+  //       freeSpace: [
+  //         {
+  //           accomodationName: 'cabin',
+  //           availableBeds: +Math.floor(Math.random() * 8).toString(),
+  //         },
+  //         {
+  //           accomodationName: 'tent',
+  //           availableBeds: +Math.floor(Math.random() * 8).toString(),
+  //         },
+  //         {
+  //           accomodationName: 'room',
+  //           availableBeds: +Math.floor(Math.random() * 8).toString(),
+  //         },
+  //       ],
+  //     });
+  //   }
+  //   return freeSpacesArray;
+  // }
 
-  public options: CalendarOptions = {
-    firstCalendarDay: 0,
-    format: 'LL/dd/yyyy',
-    closeOnSelected: true,
-    minYear: 2019,
-    maxYear: 2021,
-    freeSpacesArray: this.freeSpacesArray,
-  };
+  // public options: CalendarOptions = {
+  //   firstCalendarDay: 0,
+  //   format: 'LL/dd/yyyy',
+  //   closeOnSelected: true,
+  //   minYear: 2019,
+  //   maxYear: 2021,
+  //   freeSpacesArray: this.freeSpacesArray,
+  // };
+
+  // public options1: CalendarOptions = {
+  //   firstCalendarDay: 0,
+  //   format: 'dd/LL/yyyy',
+  //   closeOnSelected: true,
+  //   //  fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
+  //   freeSpacesArray: this.freeSpacesArray,
+  // };
+
+ 
 
   constructor(
     private tripService: TripService, public usersService: UserService,
@@ -78,12 +89,20 @@ export class SquadAssembleService {
     private squadBudgetService: SquadBudgetService,
     private squadGroupService: SquadGroupService // private squadScheduleService : SquadSch
   ) {
-    this.freeSpacesArray = this.freeSpacesArrayGenarator(
-      new Date(),
-      new Date(2021, 11, 17)
-    );
-    console.log(this.options);
+    // this.freeSpacesArray = this.freeSpacesArrayGenarator(
+    //   new Date(),
+    //   new Date(2021, 11, 17)
+    // );
+    // this.freeSpacesArray = this.tripService.freeSpacesArray;
+    // this.options = {
+    //   firstCalendarDay: 0,
+    // format: 'dd/LL/yyyy',
+    // closeOnSelected: true,
+    // //  fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
+    // freeSpacesArray: this.freeSpacesArray,
+    // };
 
+    // console.log(this.options);
   }
 
   public scheduleQuestions: QuestionBase<string | Date>[] = [
@@ -125,11 +144,20 @@ export class SquadAssembleService {
       value: null,
       rows: 4,
       validations: [Validators.required],
-      dateOptions: dateOptions,
+      //  dateOptions: dateOptions,
+       dateOptions: null,
       inputProps: {},
     }),
 
+    new QuestionSelect({
+      key: 'tourRegion',
+      type: 'select',
+      label: 'איזור טיול',
 
+      inputProps: {
+        options: [],
+      },
+    }),
     new QuestionTextarea({
       key: 'commentManager',
       label: 'הערות מנהליות',
