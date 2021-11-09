@@ -272,15 +272,18 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         t.order.orderId = orderId;
       t.order.supplier = {} as Supplier;
       t.order.orderType = {} as OrderType;
-      Object.keys(this.form.value.details).map((key, index) => {
+      //Object.keys(this.form.value.details).map((key, index) => {
+      Object.keys(this.form.getRawValue().details).map((key, index) => {
 
         if (key !== 'exitPoint' && key !== 'scatterLocation') {
 
           if (key != 'startDate' && key != 'endDate') {
-            t.globalParameters[key] = this.form.value.details[key];
+            //t.globalParameters[key] = this.form.value.details[key];
+            t.globalParameters[key] = this.form.getRawValue().details[key];
           }
           else {
             if (key == 'startDate') {
+              //t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
               t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
             }
             if (key == 'endDate') {
@@ -293,6 +296,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           // t[key] = this.form.value.details[key]
         }
       });
+    
       t.globalParameters['startHour'] = this.setDateTimeFormat(t.globalParameters.startDate, t.globalParameters.startHour);
       t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate, t.globalParameters.endHour);
       t.globalParameters['comments'] = this.form.value.comments.comments;
@@ -405,6 +409,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   
     this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
@@ -425,6 +431,20 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     });
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+
+    });
+    this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+
+    });
+    this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });

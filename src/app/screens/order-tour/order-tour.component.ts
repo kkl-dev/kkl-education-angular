@@ -63,7 +63,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getActiveStep();
     this.setActiveStep();
     this.subscribeToNewClient();
-  }
+}
 
   ngAfterViewInit() { }
 
@@ -205,7 +205,15 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             detalisForm = false
           }
           this.squadAssemble.tripInfo.insideCenterFieldId = parseInt(this.squadAssemble.formsArray[i].get('insideCenterFieldId').value);
-          this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
+          //this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
+          this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('department').value);
+
+          if ( this.squadAssemble.tripInfo.departmentId==8){
+            let countryId= this.squadAssemble.formsArray[i].get('tripLocation').value;
+            let countryObj= this.tripService.countries.find(i=> i.id=== countryId);
+            this.squadAssemble.tripInfo.country= countryObj;
+          }
+
           var attribute = this.squadAssemble.formsArray[i].get('attribute').value;
           this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
           var activityType = this.squadAssemble.formsArray[i].get('activityType').value;
@@ -288,6 +296,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   createTrip(route) {
+
+    if (this.squadAssemble.tripInfofromService != undefined ){
+      this.router.navigateByUrl(
+        `/education/order-tour/${route}`
+      );
+      return;
+    }
+  
     let tripInfo = this.squadAssemble.tripInfo;
     let obj = this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation = obj;
@@ -307,7 +323,6 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.userService.createTrip(tripInfo).subscribe(res => {
       console.log('tripInfo from server is :', res);
-
       this.squadAssemble.tripInfofromService = res;
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
       this.router.navigateByUrl(
@@ -371,6 +386,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.router.navigateByUrl(
             `/education/order-tour/${this.steps[0].path}`
           );
+          return;
+        }
+        else{
+          if( this.tripService.isOneDayTrip==true)
           return;
         }
       }

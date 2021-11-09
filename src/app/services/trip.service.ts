@@ -510,7 +510,8 @@ export class TripService {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {
         this.fieldForestCentersOriginal = response;
-        response.forEach(element => {
+        this.fieldForestCentersOriginal = response.filter(aco => aco.accommodationList.length > 0);
+        this.fieldForestCentersOriginal.forEach(element => {
           this.fieldForestCenters.push({ label: element.name, value: element.id.toString() });
         });
       },
@@ -548,29 +549,29 @@ export class TripService {
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
-    this.userService.getParticipantTypes().subscribe(
-      response => {
-        console.log('response', response)
-        this.participantTypes = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-    this.userService.getLanguages().subscribe(
-      response => {
-        console.log('response', response)
-        this.languages = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-    this.userService.getCountries().subscribe(
-      response => {
-        console.log('response', response)
-        this.languages = response;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
+    // this.userService.getParticipantTypes().subscribe(
+    //   response => {
+    //     console.log('response', response)
+    //     this.participantTypes = response;
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
+    // this.userService.getLanguages().subscribe(
+    //   response => {
+    //     console.log('response', response)
+    //     this.languages = response;
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
+    // this.userService.getCountries().subscribe(
+    //   response => {
+    //     console.log('response', response)
+    //     this.languages = response;
+    //   },
+    //   error => console.log(error),       // error
+    //   () => console.log('completed')     // complete
+    // )
   }
 }

@@ -251,7 +251,7 @@ export class TransportService {
     {
       key: 'comments',
       questions: this.comments,
-      hasButton: true,
+      hasBottomButton : true,
       cols: 8,
     },
   ];

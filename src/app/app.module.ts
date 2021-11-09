@@ -268,7 +268,6 @@ FullCalendarModule.registerPlugins([
     MusicActivationFormComponent,
     TransportDetailsTableComponent,
     DynamicComponent
-
   ],
   imports: [
     BrowserModule,

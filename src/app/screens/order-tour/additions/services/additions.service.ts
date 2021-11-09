@@ -124,9 +124,18 @@ export class AdditionsService {
     var MultiplyByAfterSibsud;
     var addToCommentNumOfDaysNights
     var totalNoCharge;
-    var ParticipantsOrAmount
+    var ParticipantsOrAmount;
     var numDayActivity = this.getDaysArray(startDate, endDate).length;
-    var numNightActivity = (numDayActivity - 1 == 0 ? numDayActivity - 1 : 1)
+    var numNightActivity = (numDayActivity - 1 == 0 ?  1: numDayActivity - 1)
+    if(itemOrder.startDate==""){
+      numDayActivity=1;
+      numNightActivity=1;
+    }
+    if(itemOrder.endDate==""){
+      numDayActivity=1;
+      numNightActivity=1;
+    }
+    
     itemOrder.internalComment = " "
     var item = this.generalFormService.originalItemList.find(el => el.id.toString() === itemOrder.itemId);
     //-----------------------חישוב מחיר-----------------------------------------------------------------
@@ -164,7 +173,9 @@ export class AdditionsService {
     }
     else {  // calculate by participants
       ParticipantsOrAmount = "חישוב מכפלה לפי משתתפים:"
-      MultiplyByAmountOrPeople = itemOrder.peopleInTrip
+      //MultiplyByAmountOrPeople = itemOrder.peopleInTrip
+      let index= this.generalFormService.details.findIndex(i=> i.key== 'peopleInTrip')
+      MultiplyByAmountOrPeople = this.generalFormService.details[index].value;
     }
 
     //------------------------------חישוב ערכי ברירת מחדל לחיובי ספק ולקוח---------------------------------------------------
@@ -315,6 +326,12 @@ export class AdditionsService {
       }
     }
     itemOrder.quantity = itemOrder.quantity.toString();
+    // itiel
+    let billingSupplierRound= (Math.round(itemOrder.billingSupplier * 100) / 100).toFixed(2);
+    let billingCustomerRound= (Math.round(itemOrder.billingCustomer * 100) / 100).toFixed(2);
+     itemOrder.billingSupplier= billingSupplierRound;
+     itemOrder.billingCustomer= billingCustomerRound;
+    // end itiel
     return itemOrder;
   }
   globalValidations(form) {

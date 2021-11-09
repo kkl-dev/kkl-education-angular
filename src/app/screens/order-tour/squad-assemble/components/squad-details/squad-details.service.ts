@@ -2,6 +2,7 @@ import { FormService } from 'src/app/components/form/logic/form.service';
 import { Injectable } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
+import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { TripService } from 'src/app/services/trip.service';
 import { FormGroup, Validators } from '@angular/forms';
 
@@ -25,13 +26,28 @@ export class SquadDetailsService {
       key: 'activityType',
       label: 'סוג הפעילות',
       type: 'select',
+      rows : 3,
       inputProps: {
         options: this.tripService.activityByAttribute,
       },
       validations: [Validators.required],
     }),
+    new QuestionRadio({
+      key: 'department',
+      type: 'radio',
+      rows : 3,
+      inputProps: {
+        options: [
+          // { label: 'מחלקת פנים', value: 'domestic' },
+          // { label: 'מחלקת חוץ', value: 'foreign' },
+          { label: 'מחלקת פנים', value: '1' },
+          { label: 'מחלקת חוץ', value: '8' },
+        ],
+      },
+    }),
     new QuestionSelect({
-      key: 'departmentId',
+      // key: 'departmentId',
+      key: 'tripLocation',
       label: 'מחלקה',
       type: 'select',
       inputProps: {

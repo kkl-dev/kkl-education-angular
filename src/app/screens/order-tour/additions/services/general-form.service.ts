@@ -29,6 +29,7 @@ export class GeneralFormService {
   public settlementList=[];
   public languageList =[];
   originalItemList = [];
+  public siteList =[];
   tripOrdersList :OrderEvent[];
   //public tempOrderReduce = new BehaviorSubject<any>(null)
   public tempOrderReduce = new BehaviorSubject<{tempOrderReduce:any,orderType:any}>(null)
@@ -159,7 +160,6 @@ export class GeneralFormService {
       label: 'הערות',
       cols: 6,
       rows: 6,
-      offset: 1,
       value: '',
     }),
   ];
@@ -244,6 +244,16 @@ export class GeneralFormService {
     }),
   ]
 
+  // public siteQuestion = new QuestionSelect({
+  //   key: 'siteCode',
+  //   label: 'בחר אתר',
+  //   type: 'select',
+  //   validations: [Validators.required],
+  //   inputProps: {
+  //     options: this.siteList,  
+  //   },
+  // })
+
   public site: QuestionBase<string>[] = [
 
     new QuestionSelect({
@@ -252,7 +262,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-
+        options: this.siteList,  
       },
     }),
     new QuestionTextbox({
@@ -266,16 +276,7 @@ export class GeneralFormService {
       value: '',
 
     }),
-    // new QuestionSelect({
-    //   key: 'isCustomerOrder',
-    //   label: 'האם הלקוח מזמין',
-    //   type: 'select',
-    //   validations: [Validators.required],
-    //   inputProps: {
-
-    //   },
-    // }),
-
+  
   ]
 
 
@@ -321,7 +322,7 @@ export class GeneralFormService {
     {
       key: 'comments',
       questions: this.comments,
-      hasButton: true,
+      hasBottomButton : true,
       cols: 8,
     },
   ];
@@ -425,54 +426,7 @@ export class GeneralFormService {
   }
 
 
-  // getSupplierList(orderTypeId,tripId,orderId) {
-  //   this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
-  //     response => {
-  //       console.log(response)
-  //       response.forEach(element => {
-  //         this.supplierList.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //       this.getSupplierByOrderType(orderTypeId);
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
-
-  // getSupplierByOrderType(orderTypeId) {
-  //   this.orderService.getSupplierByOrderType(orderTypeId,1, 4).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       let index = this.details.findIndex(el => el.key === "supplier");
-  //       this.details[index].value = response.id.toString();
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-
-  // }
-
-
-
-  
-  // getOrderItemBySupplierId(supplierId) {
-  //   this.orderService.getOrdersItemBySupplierID(supplierId, 1, false).subscribe(
-  //     response => {
-  //       console.log(response);
-  //       this.itemsList=[];
-  //       this.originalItemList = response;
-  //       response.forEach(element => {
-  //         this.itemsList.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //       let index= this.details.findIndex(i => i.key==='itemId');
-  //       this.details[index].inputProps.options= this.itemsList;
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
-
-
+ 
   setTimeFormat(hour) {
     let hourStr = hour.split("T");
     let hourFormat = hourStr[1];
@@ -496,6 +450,7 @@ export class GeneralFormService {
   }
 
   clearFormFields() {
+    
     let statHourIndex = this.details.findIndex(i => i.key === 'startHour');
     this.details[statHourIndex].value = '';
     let endHourIndex = this.details.findIndex(i => i.key === 'endHour');
@@ -515,6 +470,7 @@ export class GeneralFormService {
 
 
   mapOrderList(orderList) {
+    this.tripOrdersList= orderList;
     console.log('order list is: ', orderList);
     orderList.forEach(element => {
       if (element.order.orderType.id == 1) {
@@ -767,7 +723,6 @@ export class GeneralFormService {
       this.updateTempOrderReduce(temp,orderTypeId);
      // this.updateTempOrderReduce(temp);
   }
-
 
 
 

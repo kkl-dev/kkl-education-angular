@@ -27,14 +27,16 @@ export class FormContainerComponent implements OnInit {
 
   @Input() cols: string;
   @Input() gutter: string = '3';
-  @Input() hasButton: boolean = false;
+  //@Input() hasButton: boolean = false;
+  @Input() topButton: boolean = false;
   @Input() hasBottomButton: boolean = false;
 
   @Input() disable: boolean;
 
 
   @Input() slots: {
-    topButton?: ElementRef;
+    // topButton?: ElementRef;
+    button?: ElementRef;
     groupInputs?: ElementRef;
   };
 

@@ -325,6 +325,21 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
     });
 
+    this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+
+    });
+    this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+
+    });
+
     console.log(this.form)
   }
 

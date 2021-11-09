@@ -7,6 +7,8 @@ import { SquadAssembleService } from '../services/squad-assemble.service';
 import { SquadGroupComponent } from './squad-group/squad-group.component';
 import { SquadClientService } from './squad-client/squad-client.service';
 
+import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
+
 @Component({
   selector: 'app-squad-assemble',
   templateUrl: './squad-assemble.component.html',
@@ -15,11 +17,19 @@ import { SquadClientService } from './squad-client/squad-client.service';
 export class SquadAssembleComponent implements OnInit {
   public squads: QuestionGroup[];
   public budgetGroup: QuestionGroup;
-
+  options!: CalendarOptions;
   private newClientMode: boolean;
   public md$ : Observable<boolean>
   constructor(private squadAssembleService: SquadAssembleService,private tripService:TripService, private breakpointService : BreakpointService,
-    private squadClientService: SquadClientService) {}
+    private squadClientService: SquadClientService) {
+      this.options = {
+      firstCalendarDay: 0,
+      format: 'dd/LL/yyyy',
+      closeOnSelected: true,
+      //  fromToDate: { from:new Date(2021, 9, 17), to:new Date(2021, 9, 22)},
+      freeSpacesArray: this.tripService.freeSpacesArray,
+      };
+    }
   
   ngOnInit(): void {
     this.tripService.getLookUp();
@@ -91,7 +101,9 @@ export class SquadAssembleComponent implements OnInit {
       this.squadClientService.questions[contactGroupIndex].group.questions[contactImailIndex].value= this.squadAssembleService.tripInfo.contactEmail;
     }
     else{
-     console.log('trip info is undefined');
+       let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
+       this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
+       console.log('trip info is undefined');
     }
  }
   private subscribeToNewClient() {

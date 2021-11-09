@@ -32,7 +32,7 @@ export interface InfoCard {
 })
 
 export class EducationResultsComponent implements OnInit {
- // @ViewChild(MapsComponent) child: MapsComponent;
+  //@ViewChild(MapsComponent) child: MapsComponent;
   forestCenter: any | undefined;
   //forestCenter: any | undefined = this.tripService.centerField || {};
   sleepingDates: any;
