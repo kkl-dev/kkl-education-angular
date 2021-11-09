@@ -35,6 +35,13 @@ export class SquadDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.tablet$ = this.breakpoints.isTablet();
     this.setSquadDetails();
+    this.tripService.activityByAttr.subscribe(res=>{
+       console.log(res); 
+       this.squadDetailsService.questions[1].inputProps.options=res;
+    })
+    // this.tripService.activityByAttr.subscribe(res=>{
+    //   console.log('I am activities from tripService', res);
+    // })
   }
 
   setSquadDetails(){
@@ -128,10 +135,7 @@ export class SquadDetailsComponent implements OnInit {
     this.form=form;
     this.listenToRadioButton(form);
     console.log('I am form details: ', form);
-    // this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-    //   console.log(value)
-    //   this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-    // });
+   
     this.squadAssembleService.updateFormArray(form);
   }
 }

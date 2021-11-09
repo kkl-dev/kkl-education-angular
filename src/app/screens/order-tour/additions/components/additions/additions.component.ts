@@ -130,7 +130,7 @@ export class AdditionsComponent implements OnInit {
       this.addItem = false;
     }  
       for (var i in this.tempOrderReduce[orderTypId]) {
-         if (this.tempOrderReduce[orderTypId][i].orderId != undefined && this.tempOrderReduce[orderTypId][i].orderId)
+         if (this.tempOrderReduce[orderTypId][i].orderId != undefined && this.tempOrderReduce[orderTypId][i].orderId && this.tempOrderReduce[orderTypId][i].orderId!=0 )
         // if (this.tempOrderReduce[orderTypId][i].orderId)
           continue;
         var order = {} as OrderEvent;

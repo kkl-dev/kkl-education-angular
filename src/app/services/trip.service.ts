@@ -1,7 +1,7 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { FreeSpace } from 'comrax-alex-airbnb-calendar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { UserService } from 'src/app/open-api/';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
@@ -14,6 +14,8 @@ import { SquadClientService } from '../screens/order-tour/squad-assemble/compone
 })
 export class TripService {
 
+  // public activityByAttr = new Subject([] any);
+  public activityByAttr = new BehaviorSubject<any[]>(null)
   constructor(private userService: UserService, private squadBudgetService: SquadBudgetService, public squadClientService: SquadClientService) { }
   // 
   //  forestCenters: any = {};
@@ -392,10 +394,12 @@ export class TripService {
     this.userService.getActivityByAttribute(attributeId).subscribe(
       response => {
         this.activityByAttributeOriginal = response;
+        this.activityByAttribute = [];
         response.forEach(element => {
           this.activityByAttribute.push({ label: element.name, value: element.id.toString() });
         });
-        console.log('activityByAttribute is :', this.activityByAttribute)
+        console.log('activityByAttribute is :', this.activityByAttribute);
+        this.activityByAttr.next(this.activityByAttribute);
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
