@@ -46,6 +46,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   ifShowtable: boolean=false;
   tableDataSub: Subscription;
   tableData: any;
+  isItemOrderExist: boolean;
   //transQuestions:any [];
   public formTemplate: FormTemplate = {
     hasGroups: true,
@@ -239,7 +240,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           this.generalFormService.details[itemIndex].value = this.itemId.toString();
         if (this.item != undefined && this.item != null) {
           this.item.globalParameters.supplierId = this.supplierId.toString();
-          this.generalFormService.setFormValues(this.item);
+          if(this.item.globalParameters.orderId)
+          this.isItemOrderExist=true;
+          this.generalFormService.setFormValues(this.item,this.isItemOrderExist);
         }
         this.initiateForm();
         if (this.item != undefined && this.item != null) {
@@ -284,10 +287,10 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           else {
             if (key == 'startDate') {
               //t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
-              t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
             if (key == 'endDate') {
-              t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
           }
 
@@ -299,9 +302,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     
       t.globalParameters['startHour'] = this.setDateTimeFormat(t.globalParameters.startDate, t.globalParameters.startHour);
       t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate, t.globalParameters.endHour);
-      t.globalParameters['comments'] = this.form.value.comments.comments;
+      t.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       t.globalParameters.orderId = orderId;
-      t.order.supplier.id = +this.form.value.details.supplierId;
+      t.order.supplier.id = +this.form.getRawValue().details.supplierId;
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = 1;
@@ -408,9 +411,10 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     console.log('I am form Event');
 
   
-    this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
+    //this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
     this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
     this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);

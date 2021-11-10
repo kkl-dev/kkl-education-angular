@@ -40,6 +40,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   ifShowtable: boolean=false;
   tableDataSub: Subscription;
   tableData: any;
+  isItemOrderExist : boolean;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -200,7 +201,9 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         this.generalFormService.details[itemIndex].value= this.itemId.toString();
         if (this.item != undefined && this.item != null ) {
             this.item.globalParameters.supplierId=this.supplierId.toString();
-            this.generalFormService.setFormValues(this.item);
+            if(this.item.globalParameters.orderId)
+            this.isItemOrderExist=true;
+            this.generalFormService.setFormValues(this.item,this.isItemOrderExist);
         }
         this.initiateForm();
         if (this.item != undefined && this.item != null) {
@@ -296,15 +299,9 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
   public onValueChange(event) {
     this.form = event;
-
-    // let isPristine=  this.form.pristine;
-    // if(isPristine==true && this.supplierId == undefined){
-      
-    // }
-
-    // else if(isPristine==true){
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
-    // }
+    // this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    // this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    // this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);

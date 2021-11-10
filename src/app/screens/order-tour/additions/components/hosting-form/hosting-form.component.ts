@@ -38,6 +38,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   ifShowtable: boolean=false;
   tableDataSub: Subscription;
   tableData: any;
+  isItemOrderExist: boolean;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -187,7 +188,9 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         this.generalFormService.details[itemIndex].value= this.itemId.toString();
         if (this.item != undefined && this.item != null ) {
             this.item.globalParameters.supplierId=this.supplierId.toString();
-            this.generalFormService.setFormValues(this.item);
+            if(this.item.globalParameters.orderId)
+             this.isItemOrderExist=true;
+            this.generalFormService.setFormValues(this.item,this.isItemOrderExist);
         }
         this.initiateForm();
         if (this.item != undefined && this.item != null) {
@@ -243,7 +246,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         hosting.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
       }
      
-      //this.generalFormService.addOrder(hosting, hosting.order.orderType.id);
       if(!this.isEditable)
       this.generalFormService.addOrder(hosting, hosting.order.orderType.id);
       else
@@ -284,8 +286,9 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     console.log('I am form Event');
-  
-    this.form.controls["details"].get('peopleInTrip').disable({ emitEvent: false });
+    // this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    // this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    // this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
