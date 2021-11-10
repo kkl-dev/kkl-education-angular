@@ -5,9 +5,10 @@ info:
   description: Education new project|
   contact:
     email: yochai@one1.co.il
-  version: 1.3.0
+  version: 1.4.1
 servers:
-- url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
+# - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
+- url: http://knf-appl-dev3:8077
   description: SwaggerHub API Auto Mocking
 tags:
 - name: user
@@ -305,6 +306,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Country'
+  
 
   /languages:
     get:
@@ -364,6 +366,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Area'
+  /areaByChevel/{chevelCode}:
+    get:
+      tags:
+      - user
+      operationId: GetAreasByChevel
+      parameters:
+      - name: chevelCode
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: list of areas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Area'
+
   /sites/{tripYear}:
      get:
       tags:
@@ -839,18 +862,6 @@ paths:
       tags:
       - order
       operationId: EditOrder
-      # parameters:
-      # - name: descOccupancyProbFromSp
-      #   in: path
-      #   required: true
-      #   schema:
-      #     type: string
-      #     nullable: true
-      # - name: isRemoveOccProb
-      #   in: path
-      #   required: true
-      #   schema:
-      #     type: integer
       requestBody:
         content:
           application/json:
@@ -1084,14 +1095,14 @@ paths:
         "200":
           description: Success
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/OccupancyValidationResult'
   /order/classOccupancy:
      post:
       tags:
       - order
-      operationId: CheckClassOccpancy
+      operationId: CheckClassOccupancy
       requestBody:
         content:
           application/json:
@@ -1101,9 +1112,9 @@ paths:
         "200":
           description: Success
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/OccupancyValidationResult'
   /order/hourOccupancy:
      post:
       tags:
@@ -1118,14 +1129,70 @@ paths:
         "200":
           description: Success
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/OccupancyValidationResult'
   /order/vat:
     get:
       tags:
       - order
       operationId: GetCurrentVat
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: number
+  /order/orderCenter/{tripId}/{descriptionMove}/{typeMove}/{tripStatusId}:
+     get:
+      tags:
+      - order
+      operationId: SendToOrderCenter
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: descriptionMove
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: typeMove
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: tripStatusId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        "400":
+          description: invalid data supplied
+        "500":
+          description: internal server error
+    
+  /order/scancontract/{tripId}:
+    get:
+      tags:
+      - order
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer
+      operationId: isThereScanContract
       responses:
         "200":
           description: Success
@@ -1162,6 +1229,15 @@ components:
           description: list of available accomoadation types
           items:
             $ref: '#/components/schemas/AccommodationType'
+        diningRoomNotAvaliableFrom:
+          type: string
+          format: datetime
+        diningRoomNotAvaliableTill:
+          type: string
+          format: datetime
+        chevelCode :
+          type: integer
+          example: 1       
         linkSite:
           type: string
           description: gg
@@ -1701,6 +1777,9 @@ components:
           type: integer
           nullable: true
           example: 4
+        collectiveGroupId:
+          type: integer
+          nullable: true
         isOccupancyProblematic:
           type: integer
           nullable: true
@@ -2869,6 +2948,9 @@ components:
           items:
             type: string
             nullable: true
+        isNeedManagerApproval:
+            type: boolean
+             
 
     TripModel:
       type: object
@@ -2911,7 +2993,7 @@ components:
            format: date
         typeSleepId:
            type: integer
-        amountItem:
+        quantityItem:
            type: number
         tripId: 
            type: integer
@@ -2924,5 +3006,16 @@ components:
         classCode: 
            type: integer
            nullable: true
-
+        ischeckCooking:
+           type: integer
+           nullable: true
            
+    OccupancyValidationResult:
+        type: object
+        properties:
+         isOccupancyProblem:
+          type: boolean
+         message:
+          type: string
+
+         

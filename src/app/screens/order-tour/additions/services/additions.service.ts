@@ -345,15 +345,61 @@ export class AdditionsService {
       })
       return false;
     }
-    if (item?.participantsLimit < form.value.details['peopleInTrip']) {
+    if(item?.participantsLimit != null){
+    if (item?.participantsLimit < form.value.details['peopleInTrip'] ) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
         data: { message: 'פריט זה מוגבל במספר משתתפים: ' + item?.participantsLimit, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
       })
       return false;
     }
+  }
+    // פריט מוגבל לכמות אחת בלבד
+    if(item?.amountLimit!= null){
+      if (item?.amountLimit < form.value.details['quantity']) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'פריט זה מוגבל לכמות 1 בלבד: ' + item?.participantsLimit }
+        })
+        return false;
+      }
+    }
+   
+
+    // בדיקה עם הפריט מסוג תוספות
+    // ואם יש הרשאה -  למשווק אין
+    // אין שדה כזה בDB
+    //לUSER is_allowd_have_tosefet
+    // חסר השדה הזה בYAML
+    // if (item?.name.include("תוספת") == true ) {
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: "פריט מסוג תוספות לא תואם להרשאה זו" }
+    //   })
+    //   return false;
+    // }
+
+      // בדיקה שהפריט לא קיים באותה שעה ובאותם תאריכים
+    // חוץ מפריט זיכוי או כיתה
+    // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null))
+    // this.orderService.checkItemsExistInDateTime(this.squadAssembleService.tripInfofromService.trip.id,
+    //   this.squadAssembleService.tripInfofromService.trip.centerField.id, item).subscribe(
+    //     response => {
+    //       if (response != "") {
+    //         this._dialog.open(ConfirmDialogComponent, {
+    //           width: '500px',
+    //           data: { message: response, content: ''}
+    //         })
+    //          return false
+    //       }
+    //     },err=> console.log(err))
+
     return true;
   }
+
+   
+
+
 
 }
 

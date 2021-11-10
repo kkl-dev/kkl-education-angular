@@ -358,9 +358,9 @@ export class GeneralFormService {
       if (control.key == 'quantity' && data.globalParameters[control.key] == undefined) {
         control.value = '1';
       }
-      if (control.key === 'comments') {
-        control.value = data;
-      }
+      // if (control.key === 'comments') {
+      //   control.value = data;
+      // }
       // if (control.key === 'endHour') {
       //   var time = new Date(data[control.key]);
       //   control.value = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })

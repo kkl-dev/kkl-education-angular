@@ -76,6 +76,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
     }
     this.getSupplierList(this.orderType, this.tripId, 0); 
+    this.getLanguages();
     this.generalFormService.setDatesValues();
     this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
       console.log('res from table data intransort is :',res);
@@ -215,10 +216,10 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
      this.languageSub= this.userService.getLanguages().subscribe(res=>{
         console.log(res);
         res.forEach(element =>{
-          this.generalFormService.languageList.push({label:element.name,value :element.id});
-          let languageIndex= this.generalFormService.details.findIndex(i => i.key==='languageGuidance');
-         this.generalFormService.details[languageIndex].inputProps.options= this.generalFormService.languageList;
+          this.generalFormService.languageList.push({label:element.name,value :element.id}); 
         })
+        let languageIndex= this.generalFormService.details.findIndex(i => i.key==='languageGuidance');
+        this.generalFormService.details[languageIndex].inputProps.options= this.generalFormService.languageList;
      },(err)=>{
 
       console.log(err);
@@ -229,7 +230,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   public onSave(): void {
     if (this.form) {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
-     // if (!this.validationsGudiance()) { return; }
+     //if (!this.validationsGudiance()) { return; }
       this.editMode = true;
       let orderId;
       if (this.generalFormService.economyOrderList.length > 0) {
@@ -241,29 +242,32 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       guide.order.orderId = orderId;
       guide.order.supplier = {} as Supplier;
       guide.order.orderType = {} as OrderType;
-      Object.keys(this.form.value.details).map((key, index) => {
+      Object.keys(this.form.getRawValue().details).map((key, index) => {
         if (key !== 'scatterLocation' && key !== 'guideName' && key !== 'languageGuidance' && key !== 'guideInstructions') {
           if (key != 'startDate' && key != 'endDate') {
-            guide.globalParameters[key] = this.form.value.details[key]
+            guide.globalParameters[key] = this.form.getRawValue().details[key]
           } else {
             if (key == 'startDate') {
-              guide.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              guide.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
             if (key == 'endDate') {
-              guide.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              guide.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
           }
         }
         else {
-
+          guide.scatterLocation= this.form.getRawValue().details['scatterLocation'];
+          guide.guideName=  this.form.getRawValue().details['guideName'];
+          guide.languageGuidance= this.form.getRawValue().details['languageGuidance'];
+          guide.guideInstructions= this.form.getRawValue().details['guideInstructions'];
         }
 
       });
       guide.globalParameters['startHour'] = this.setDateTimeFormat(guide.globalParameters.startDate, guide.globalParameters.startHour);
       guide.globalParameters['endHour'] = this.setDateTimeFormat(guide.globalParameters.endDate, guide.globalParameters.endHour);
-      guide.globalParameters['comments'] = this.form.value.comments.comments;
+      guide.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       guide.globalParameters.orderId = orderId;
-      guide.order.supplier.id = +this.form.value.details.supplierId;
+      guide.order.supplier.id = +this.form.getRawValue().details.supplierId;
       guide.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       guide.order.orderType.name = 'הדרכה';
       guide.order.orderType.id = 6;
@@ -271,12 +275,14 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
         if (this.item.globalParameters.tempOrderIdentity != undefined)
         guide.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
       }
-     
-      //this.generalFormService.addOrder(guide, guide.order.orderType.id);
+    
       if(!this.isEditable)
       this.generalFormService.addOrder(guide, guide.order.orderType.id);
-      else
-      this.generalFormService.editOrder(guide, guide.order.orderType.id);
+      else{
+        guide.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+        this.generalFormService.editOrder(guide, guide.order.orderType.id);
+      }
+     
       this.form.disable({ emitEvent: false });
     }
   }
@@ -299,7 +305,103 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
         })
         return false;
       }
+
     }
+    // chani
+
+    // אם הפריט הוא תוספת ריכוז חובה להכניס הערה
+    if (item.itemId == 234) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'חובה למלא הערה בפריט - תןוספת ריכוז', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    // הרד קודד - צריך עדכון DB
+    // אם הפריט הוא ריכוז מחנה וגם הטיול חוץ מרכז שדה לא לאפשר לשבץ מדריך לפריט זה
+    if ((item.itemId == 25 || item.itemId == 152 || item.itemId == 218 ||
+      item.itemId == 219 || item.itemId == 229 || item.itemId == 235 || item.itemId == 271)
+      && this.squadAssembleService.tripInfofromService.trip.insideCenterFieldId == 2) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    // צריך טיפול בהרשאות- בינתיים , מתייחסים להרשאה כהרשאה קבועה - משווק
+    // צריך תנאי האם ההרשאה היא אכן משווק
+    // אם הפריט זיכוי (וההרשאה משווק)
+    if (item.credit == 1) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'פריט מסוג זיכוי מצריך אישור חשב', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
+    // חסר בYAML צריך להוסיך את השדה הזה
+    // אם הפריט מצריך אישור של מנהל מחלקה וגם אם הוא מסוג זיכוי
+    // if (item.need_att_manager_approval == 1) {
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'פריט  מצריך אישור מנהל מחלקה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //   })
+    //   return false;
+    // }
+
+    // לא לכל ההרשאות
+    if (item.itemId = 220) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'אין לך הרשאה לקלוט פריט זה', content: '', }
+      })
+      return false;
+    }
+
+    // בדיקה שהפריט שישי שבת
+    // או חג
+    if (item.itemId == 219) {
+      if (item.startDate.getDay() != 6 || item.endDate.getDay() != 7) {
+        // בדיקה שזה לא יוצא חג- ואם כן שאלה האם להמשיך , צריך לברר מול חיה
+        if (this.isHoliday()) {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: ' ', content: '', }
+          })
+        }
+        else {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: '"פריט זה לא מתאים לתאריכי הטיול" ', content: '', }
+          })
+          return false;
+        }
+      }
+    }
+
+    // אין להוסיף פריטים "תוספת לינה" ו"תוספת פעילות לילה" (419, 177) לאותו לילה בטיול
+    // צרך בדיקה אם זה אכן מבצע את הבדיקה הזאת בצורה נכונה
+    if (item.itemId == 117 || item.itemId == 419) {
+      if (this.generalFormService.guidance.filter(x => x["itemId"].itemId == item.itemId &&
+        x["startDate"].getDate() == item.startDate &&
+        x["startDate"].getDate() < item.endDate) != null) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: "אין להזין את הפריטים: תוספת לינת לילה ותוספת פעילות לילה לאותו לילה בטיול", content: '', }
+        })
+        return false;
+      }
+    }
+    return true;
+  }
+
+   // chani- from PB
+  // צריך להיות כללי
+  isHoliday() {
+    // var hebrewDate = require("hebrew-date");
+    // console.log(hebrewDate(2016, 10, 2));
+
+    // רשימה של חגים בלוח השנה העברי
+    // מחזיר האם
     return true;
   }
 
@@ -320,9 +422,9 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.form = event;
 
     console.log('I am form Event');
-    // this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    // this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    // this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);

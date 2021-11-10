@@ -225,31 +225,31 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       music.order.orderId = orderId;
       music.order.supplier = {} as Supplier;
       music.order.orderType = {} as OrderType;
-      Object.keys(this.form.value.details).map((key, index) => {
+      Object.keys(this.form.getRawValue().details).map((key, index) => {
 
         if (key !== 'totalHours') {
 
           if (key != 'startDate' && key != 'endDate') {
-            music.globalParameters[key] = this.form.value.details[key]
+            music.globalParameters[key] = this.form.getRawValue().details[key]
           } else {
             if (key == 'startDate') {
-              music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
             if (key == 'endDate') {
-              music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
           }
         }
         else {
-
+          music.totalHours= this.form.getRawValue().details[key];
         }
 
       });
       music.globalParameters['startHour'] = this.setDateTimeFormat(music.globalParameters.startDate, music.globalParameters.startHour);
       music.globalParameters['endHour'] = this.setDateTimeFormat(music.globalParameters.endDate, music.globalParameters.endHour);
-      music.globalParameters['comments'] = this.form.value.comments.comments;
+      music.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       music.globalParameters.orderId = orderId;
-      music.order.supplier.id = +this.form.value.details.supplierId;
+      music.order.supplier.id = +this.form.getRawValue().details.supplierId;
       music.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       music.order.orderType.name = 'מפעיל מוסיקלי';
       music.order.orderType.id = 7;
@@ -261,8 +261,11 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       //this.generalFormService.addOrder(music, music.order.orderType.id);
       if(!this.isEditable)
       this.generalFormService.addOrder(music, music.order.orderType.id);
-      else
-      this.generalFormService.editOrder(music, music.order.orderType.id);
+      else{
+        music.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+        this.generalFormService.editOrder(music, music.order.orderType.id);
+      }
+      
       this.form.disable({ emitEvent: false });
     }
   }
@@ -283,9 +286,9 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     console.log('I am form Event');
-    // this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    // this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    // this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);

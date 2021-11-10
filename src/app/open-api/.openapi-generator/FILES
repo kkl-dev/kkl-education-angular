@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.module.ts
 api/activities.service.ts
@@ -45,6 +44,7 @@ model/models.ts
 model/movements.ts
 model/musicActivationOrder.ts
 model/nightNumberOptions.ts
+model/occupancyValidation.ts
 model/occupiedHours.ts
 model/order.ts
 model/orderEvent.ts

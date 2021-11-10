@@ -216,7 +216,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   public onSave(): void {
     if (this.form) {
 
-     // if (!this.additionsService.globalValidations(this.form)) { return; }
+     //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsEconomy()) { return; }
       this.editMode = true;
       let orderId;
@@ -229,28 +229,30 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       eco.order.orderId = orderId;
       eco.order.supplier = {} as Supplier;
       eco.order.orderType = {} as OrderType;
-      Object.keys(this.form.value.details).map((key, index) => {
+      Object.keys(this.form.getRawValue().details).map((key, index) => {
         if (key !== 'regularDishesNumber' && key !== 'vegetarianDishesNumber' && key !== 'veganDishesNumber') {
           if (key != 'startDate' && key != 'endDate') {
-            eco.globalParameters[key] = this.form.value.details[key]
+            eco.globalParameters[key] = this.form.getRawValue().details[key]
           } else {
             if (key == 'startDate') {
-              eco.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              eco.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
             if (key == 'endDate') {
-              eco.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              eco.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
           }
         } else {
-
+          eco.regularDishesNumber= this.form.getRawValue().details[key];
+          eco.veganDishesNumber= this.form.getRawValue().details[key];
+          eco.vegetarianDishesNumber= this.form.getRawValue().details[key];
         }
 
       });
       eco.globalParameters['startHour'] = this.setDateTimeFormat(eco.globalParameters.startDate, eco.globalParameters.startHour);
       eco.globalParameters['endHour'] = this.setDateTimeFormat(eco.globalParameters.endDate, eco.globalParameters.endHour);
-      eco.globalParameters['comments'] = this.form.value.comments.comments;
+      eco.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       eco.globalParameters.orderId = orderId;
-      eco.order.supplier.id = +this.form.value.details.supplierId;
+      eco.order.supplier.id = +this.form.getRawValue().details.supplierId;
       eco.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       eco.order.orderType.name = 'כלכלה';
       eco.order.orderType.id = 4;
@@ -261,8 +263,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     
       if(!this.isEditable)
       this.generalFormService.addOrder(eco, eco.order.orderType.id);
-      else
-      this.generalFormService.editOrder(eco, eco.order.orderType.id);
+      else{
+        eco.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+        this.generalFormService.editOrder(eco, eco.order.orderType.id);
+      }
+      
       this.form.disable({ emitEvent: false });
     }
   }
@@ -386,9 +391,9 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   
     this.form = event;
     console.log('I am form Event');
-    // this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    // this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    // this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
 

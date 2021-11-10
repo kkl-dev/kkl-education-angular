@@ -3,13 +3,14 @@ import { FormGroup } from '@angular/forms';
 import { FormTemplate } from 'src/app/components/form/logic/form.service';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
 import { AdditionsService } from '../../services/additions.service';
-import { HostingOrder, Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder, UserService } from 'src/app/open-api';
+import { HostingOrder, OccupancyValidation, Order, OrderItemCommonDetails, OrderService, OrderType, Supplier, TransportOrder, UserService } from 'src/app/open-api';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { GeneralFormService } from '../../services/general-form.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-hosting-form',
@@ -18,7 +19,8 @@ import { Subscription } from 'rxjs';
 })
 export class HostingFormComponent implements OnInit, OnDestroy {
 
-  constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService) { }
+  constructor(private _dialog: MatDialog, private generalFormService: GeneralFormService, private squadAssembleService: SquadAssembleService, private additionsService: AdditionsService, private orderService: OrderService,
+    private tripService:TripService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
   @Input() orderType: number;
@@ -39,6 +41,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist: boolean;
+  occupancyValidation :OccupancyValidation;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -218,16 +221,16 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       hosting.order.orderId = orderId;
       hosting.order.supplier = {} as Supplier;
       hosting.order.orderType = {} as OrderType;
-      Object.keys(this.form.value.details).map((key, index) => {
+      Object.keys(this.form.getRawValue().details).map((key, index) => {
 
         if (key != 'startDate' && key != 'endDate') {
-          hosting.globalParameters[key] = this.form.value.details[key]
+          hosting.globalParameters[key] = this.form.getRawValue().details[key]
         } else {
           if (key == 'startDate') {
-            hosting.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+            hosting.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
           }
           if (key == 'endDate') {
-            hosting.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+            hosting.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
           }
         }
 
@@ -235,9 +238,9 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       });
       hosting.globalParameters['startHour'] = this.setDateTimeFormat(hosting.globalParameters.startDate, hosting.globalParameters.startHour);
       hosting.globalParameters['endHour'] = this.setDateTimeFormat(hosting.globalParameters.endDate, hosting.globalParameters.endHour);
-      hosting.globalParameters['comments'] = this.form.value.comments.comments;
+      hosting.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       hosting.globalParameters.orderId = orderId;
-      hosting.order.supplier.id = +this.form.value.details.supplierId;
+      hosting.order.supplier.id = +this.form.getRawValue().details.supplierId;
       hosting.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       hosting.order.orderType.name = 'פעילות/אירוח';
       hosting.order.orderType.id = 7;
@@ -254,6 +257,11 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     }
   }
   validationsHosting() {
+    var item;
+    if (this.generalFormService.originalItemList.length > 0) {
+       item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+    }
+
     if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
@@ -268,8 +276,92 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       })
       return false;
     }
+    // chani
+    // צריך בדיקות
+
+    // אם הפריט מסוג כיתה- לא יכול להיות בטווח של כמה ימים
+    if (this.form.value.details['startDate'] != this.form.value.details['endDate'] &&
+      item.orderItemDetails.classroomTypeId != null) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'אין להזין טווח תאריכים של יותר מיום אחד עבור פריט כיתות', content: '' }
+      })
+      return false;
+    }
+
+    // חובה להזין לפחות לילה אחד בפריט שלא מסוג כיתה או בישול
+    if (this.form.value.details["itemId"] != 250 && item.orderItemDetails.classroomTypeId == null
+      && this.form.value.details['startDate'] == this.form.value.details['endDate']) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'בהזמנת אירוח- חובה לציין בטווח התאריכים לילה אחד לפחות. מלבד אם הפריט הוא כיתה או פריט "בישול עצמי בשטח הגיחה" (פריט 250)', content: '' }
+      })
+      return false;
+    }
+
+    // אם סוג הלינה
+    var res = this.tripService.fieldForestCenters.find(x => x.id == this.tripService.centerField.id);
+    var typeSleep = res.accommodationList.filter(x => x.id == item.orderItemDetails.typeSleepId);
+    if (typeSleep != null) {
+      var amount = this.form.value.details['peopleInTrip'] / this.form.value.details['quantity']
+      if (amount > typeSleep.maxOccupancy) {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: "מס המשתתפים ליחידת לינה גדול מכמות המקומות הקיימים ליחידת לינה", content: '' }
+        })
+        return false;
+      }
+    }
+     this.occupancyValidation= {} as OccupancyValidation;
+     this.occupancyValidation.centerFieldId= this.centerFieldId;
+     this.occupancyValidation.tripId= this.tripId;
+     this.occupancyValidation.startDate= this.generalFormService.changeDateFormat(this.form.getRawValue().details['startDate'], 'UTC')
+     this.occupancyValidation.endDate= this.generalFormService.changeDateFormat(this.form.getRawValue().details['endDate'], 'UTC')
+     this.occupancyValidation.amountItem= this.form.value.details['quantity'];
+     if(item.orderItemDetails.classroomTypeId != null){
+      this.occupancyValidation.classCode= item.orderItemDetails.classroomTypeId;
+       this.CheckClassOccupancy(this.occupancyValidation)
+     }
+     else if(item.orderItemDetails.typeSleepId != null){
+      this.occupancyValidation.typeSleepId= item.orderItemDetails.typeSleepId;
+      this.CheckHostingOccupancy(this.occupancyValidation);
+      this.occupancyValidation.startHour= this.setDateTimeFormat(this.occupancyValidation.startDate, this.form.getRawValue().details['startHour']);
+      this.occupancyValidation.endHour = this.setDateTimeFormat(this.occupancyValidation.endDate, this.form.getRawValue().details['endHour']);
+      this.CheckHoursOccupancyPerItemInOrder(this.occupancyValidation);
+     }
+     else{
+      this.CheckHostingOccupancy(this.occupancyValidation);
+     }
+     
     return true;
   }
+
+  CheckHostingOccupancy(occupancyValidation){ 
+    this.orderService.checkHostingOccupancy(occupancyValidation).subscribe(res=>{
+    console.log(res);
+    },(err)=>{
+     console.log(err);
+    })
+  }
+
+  CheckClassOccupancy(occupancyValidation){
+      this.orderService.checkClassOccpancy(occupancyValidation).subscribe(res=>{
+        console.log(res);
+      },(err)=>{
+        console.log(err);
+      })
+  }
+
+    CheckHoursOccupancyPerItemInOrder(occupancyValidation){
+      this.orderService.checkHoursOccupancyPerItemInOrder().subscribe(res=>{
+        console.log(res);
+      },(err)=>{
+        console.log(err);
+      })
+  }
+
+
+
   setDateTimeFormat(date, hour) {
     let str = date.split("T");
     let hourFormat = str[0] + 'T' + hour;
@@ -286,9 +378,9 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     console.log('I am form Event');
-    // this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    // this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    // this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
