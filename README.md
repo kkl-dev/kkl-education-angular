@@ -31,5 +31,6 @@ openapi-generator-cli generate -i src/kkl-education-1.3.1.yaml -g typescript-ang
 
  #yael
  link to the server
-    protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0';
+    <!-- protected basePath='http://knf-appl-dev3:8077/shivek/kkl-education/1.1.0'; -->
+     protected basePath='http://knf-appl-dev3:8077';
       var budgetByParam = {} as BudgetByParams;

@@ -10,7 +10,7 @@ import { FormGroup, Validators } from '@angular/forms';
   providedIn: 'root'
 })
 export class SquadDetailsService {
-
+  activitiesByAttr=[]
   public questions: QuestionBase<string>[] = [
     new QuestionSelect({
       // key: 'characteristic',
@@ -18,7 +18,8 @@ export class SquadDetailsService {
       label: 'מאפיין',
       type: 'select',
       inputProps: {
-        options: this.tripService.attributes,
+         options: this.tripService.attributes,
+    
       },
       validations: [Validators.required],
     }),
@@ -28,7 +29,7 @@ export class SquadDetailsService {
       type: 'select',
       rows : 3,
       inputProps: {
-        options: this.tripService.activityByAttribute,
+        // options: this.tripService.activityByAttribute,
       },
       validations: [Validators.required],
     }),

@@ -1114,7 +1114,7 @@ paths:
      post:
       tags:
       - order
-      operationId: CheckClassOccpancy
+      operationId: CheckClassOccupancy
       requestBody:
         content:
           application/json:
@@ -2988,37 +2988,40 @@ components:
     OccupancyValidation:
       type: object
       properties:
-        centerFieldId:
+         centerFieldId:
           type: integer
           example: 1
-        startDate:
+         startDate:
           type: string
           format: date
-        endDate:
+         endDate:
            type: string
            format: date 
-        startHour:
+         startHour:
            type: string
            format: date
-        endHour:
+           nullable: true
+         endHour:
            type: string
            format: date
-        typeSleepId:
+           nullable: true
+         typeSleepId:
            type: integer
-        amountItem:
-           type: number
-        tripId: 
+           nullable: true
+         quantityItem:
            type: integer
-        orderId: 
+         tripId: 
+           type: integer
+         orderId: 
            type : integer
            nullable: true
-        itemOrderRecordId: 
+         itemOrderRecordId: 
            type: integer
            nullable: true
-        classCode: 
+         classCode: 
            type: integer
            nullable: true
-        ischeckCooking:
+         ischeckCooking:
            type: integer
            nullable: true
            

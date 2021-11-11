@@ -79,7 +79,7 @@ export class NavigationGridComponent implements OnInit {
       if(this.tempOrderReduce != null && this.tempOrderReduce != undefined){
         for (var j in this.tempOrderReduce) {
           if(this.tempOrderReduce[j].length>0){
-            if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id) 
+            if (this.tempOrderReduce[j][0].orderTypeCode === this.additionsService.orderTypes[i].id && !this.tempOrderReduce[j][0].orderId ) 
             { step.badgeValue = this.tempOrderReduce[j].length; }
           }
         }

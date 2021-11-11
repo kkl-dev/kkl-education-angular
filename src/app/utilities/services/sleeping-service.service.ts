@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionNumber } from 'src/app/components/form/logic/question-number';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
@@ -17,6 +17,8 @@ export class SleepingServiceService {
     sleepingPlace: string;
     calendarInput: string;
   } = { sleepingPlace: '', calendarInput: '' };
+  lodgersNumber: number;
+  formsArray: FormGroup[] = [];
 
   questions: QuestionBase<string | number>[] = [
 
@@ -151,6 +153,21 @@ export class SleepingServiceService {
 
   setParticipantsOptions(participants){
      this.participantOptions= participants;
+  }
+
+  public updateFormArray(form: FormGroup) {
+    // const index = this.formsArray.findIndex(
+    //   (formItem) => form.controls == formItem.controls
+    // );
+    // if (index > -1) {
+    //   this.formsArray[index] = form;
+    // } else {
+    //   this.formsArray.push(form);
+    // }
+
+    this.formsArray.push(form);
+    console.log(' formarray is: ', this.formsArray)
+    console.log('formarray length is: ', this.formsArray.length)
   }
 
   updateQuestions(

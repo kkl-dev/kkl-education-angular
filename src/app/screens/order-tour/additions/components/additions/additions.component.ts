@@ -51,7 +51,7 @@ export class AdditionsComponent implements OnInit {
     this.tourTitle= this.squadAssembleService.tripInfofromService.trip.tripDescription;
 
     this.getOrders();
-    this.getTempOrder();
+    //this.getTempOrder();
     // this.tourService.setTour(TourModel.create(tourTransport));
     // this.tour = this.tourService.getTour();
 
@@ -82,6 +82,7 @@ export class AdditionsComponent implements OnInit {
     this.orderService.getOrders(this.tripId).subscribe(res => {
       console.log(res);
       this.generalFormService.mapOrderList(res);
+      this.getTempOrder();
     }, (err) => {
       console.log(err);
     })
@@ -94,6 +95,7 @@ export class AdditionsComponent implements OnInit {
       response => {
         console.log(response);
         if (response.length > 0) {
+          
           this.additionsService.tempOrder = response;
           this.tempOrderReduce = this.additionsService.tempOrder.reduce(function (acc, obj) {
             let key = obj['orderTypeCode']
@@ -128,10 +130,10 @@ export class AdditionsComponent implements OnInit {
     }
     else{
       this.addItem = false;
-      this.disabled= true;
     }  
       for (var i in this.tempOrderReduce[orderTypId]) {
-        if (this.tempOrderReduce[orderTypId][i].orderId != undefined)
+         if (this.tempOrderReduce[orderTypId][i].orderId != undefined && this.tempOrderReduce[orderTypId][i].orderId && this.tempOrderReduce[orderTypId][i].orderId!=0 )
+        // if (this.tempOrderReduce[orderTypId][i].orderId)
           continue;
         var order = {} as OrderEvent;
         order.globalParameters = {} as OrderItemCommonDetails;
@@ -156,8 +158,17 @@ export class AdditionsComponent implements OnInit {
         }
       }
       else {
-        this.items = [];
-        this.items = orderList;
+          this.items = [];
+          if(orderList.length>0){
+            this.items = orderList;  
+          }
+          else if (this.orderType==1 && this.generalFormService.transportOrderList.length > 0){
+            this.items = this.generalFormService.transportOrderList; 
+          }
+          else{
+            this.addItem = true;
+          }
+              
       }
     }
     // if (this.tempOrderReduce[1].length > 10) {
@@ -173,79 +184,93 @@ export class AdditionsComponent implements OnInit {
         if (this.generalFormService.transportOrderList.length > 0) {
           this.items = this.generalFormService.transportOrderList;
           this.addItem = false;
+          this.disabled=false;
         }
         else {
           this.items = [];
           this.addItem = true;
+          this.disabled=true;
         }
-        this.disabled=true;
+        //this.disabled=true;
         break;
       case 2:
         if (this.generalFormService.securingOrderList.length > 0) {
           this.items = this.generalFormService.securingOrderList;
           this.addItem = false;
+          this.disabled=false;
         }
         else {
           this.items = [];
           this.addItem = true;
+          this.disabled=true;
         }
-        this.disabled=true;
+        //this.disabled=true;
         break;
       case 3:
 
         if (this.generalFormService.siteOrderList.length > 0) {
           this.items = this.generalFormService.siteOrderList;
           this.addItem = false;
+          this.disabled=false;
         }
         else {
           this.items = [];
           this.addItem = true;
+          this.disabled=true;
         }
-        this.disabled=true;
+        //this.disabled=true;
         break;
       case 4:
         if (this.generalFormService.economyOrderList.length > 0) {
           this.items = this.generalFormService.economyOrderList;
           this.addItem = false;
+          this.disabled=false;
         }
         else {
           this.items = [];
           this.addItem = true;
+          this.disabled=true;
         }
-        this.disabled=true;
+        //this.disabled=true;
         break;
       case 6:
         if (this.generalFormService.gudianceOrderList.length > 0) {
           this.items = this.generalFormService.gudianceOrderList;
           this.addItem = false;
+          this.disabled=false;
         }
         else {
           this.items = [];
           this.addItem = true;
+          this.disabled=true;
         }
-        this.disabled=true;
+        //this.disabled=true;
         break;
       case 7:
         if (this.generalFormService.hostingOrderList.length > 0) {
           this.items = this.generalFormService.hostingOrderList;
           this.addItem = false;
+          this.disabled=false;
         }
         else {
           this.items = [];
           this.addItem = true;
+          this.disabled=true;
         }
-        this.disabled=true;
+        //this.disabled=true;
         break;
       case 10:
         if (this.generalFormService.musicOrderList.length > 0) {
           this.items = this.generalFormService.musicOrderList;
           this.addItem = false;
+          this.disabled=false;
         }
         else {
           this.items = [];
           this.addItem = true;
+          this.disabled=true;
         }
-        this.disabled=true;
+        //this.disabled=true;
         break;
     }
     if (event == 1 || event == 4 || event == 6 || event == 7) {

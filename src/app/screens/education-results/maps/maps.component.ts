@@ -245,25 +245,25 @@ export class MapsComponent implements OnInit {
     let svgPath: string;
     if (Purpose == "בקתה")
       if (Gender == "בנות")
-        svgPath = "../../../../assets/images/svgcabinBanot.svg";
+        svgPath = "assets/images/svgcabinBanot.svg";
       else if (Gender == "בנים")
-        svgPath = "../../../../assets/images/svgcabinBanim.svg";
+        svgPath = "assets/images/svgcabinBanim.svg";
       else
-        svgPath = "../../../../assets/images/svgcabinMeurav.svg";
+        svgPath = "assets/images/svgcabinMeurav.svg";
     else if (Purpose == "אוהל")
       if (Gender == "בנות")
-        svgPath = "../../../../assets/images/svgtentBanot.svg";
+        svgPath = "assets/images/svgtentBanot.svg";
       else if (Gender == "בנים")
-        svgPath = "../../../../assets/images/svgtentBanim.svg";
+        svgPath = "assets/images/svgtentBanim.svg";
       else
-        svgPath = "../../../../assets/images/svgtentMeurav.svg";
+        svgPath = "assets/images/svgtentMeurav.svg";
     else if (Purpose == "חדר")
       if (Gender == "בנות")
-        svgPath = "../../../../assets/images/svgroomBanot.svg";
+        svgPath = "assets/images/svgroomBanot.svg";
       else if (Gender == "בנים")
-        svgPath = "../../../../assets/images/svgroomBanim.svg";
+        svgPath = "assets/images/svgroomBanim.svg";
       else
-        svgPath = "../../../../assets/images/svgroomMeurav.svg";
+        svgPath = "assets/images/svgroomMeurav.svg";
 
     return svgPath;
   }

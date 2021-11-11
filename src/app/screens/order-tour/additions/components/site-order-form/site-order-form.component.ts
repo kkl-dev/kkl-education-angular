@@ -40,6 +40,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   ifShowtable: boolean=false;
   tableDataSub: Subscription;
   tableData: any;
+  isItemOrderExist : boolean;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -68,7 +69,8 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
     }
-    //this.getSupplierList(this.orderType, this.tripId, 0);
+    this.getSupplierList(this.orderType, this.tripId, 0);
+    this.getSites();
     this.generalFormService.setDatesValues();
     this.setformTemplate();
 
@@ -129,6 +131,8 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       res.forEach(elem=>{
         this.generalFormService.siteList.push({label: elem.name ,value : elem.id.toString()})
       })
+      let siteIndex= this.generalFormService.details.findIndex(i => i.key==='siteCode');
+      this.generalFormService.details[siteIndex].inputProps.options= this.generalFormService.siteList;
     },(err)=>{
       console.log(err);
     })
@@ -200,7 +204,9 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         this.generalFormService.details[itemIndex].value= this.itemId.toString();
         if (this.item != undefined && this.item != null ) {
             this.item.globalParameters.supplierId=this.supplierId.toString();
-            this.generalFormService.setFormValues(this.item);
+            if(this.item.globalParameters.orderId)
+            this.isItemOrderExist=true;
+            this.generalFormService.setFormValues(this.item,this.isItemOrderExist);
         }
         this.initiateForm();
         if (this.item != undefined && this.item != null) {
@@ -215,15 +221,15 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
   public onSave(): void {
     if (this.form) {
-      // if (this.form.status === 'VALID') {
-      //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-      //     width: '500px',
-      //     data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      //   })
-      //   return;
-      // }
-      // if (!this.additionsService.globalValidations(this.form)) { return; }
-      // if (!this.validationsSite()) { return; }
+      if (this.form.status === 'VALID') {
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        })
+        return;
+      }
+      //if (!this.additionsService.globalValidations(this.form)) { return; }
+      //if (!this.validationsSite()) { return; }
       this.editMode = true;
       let orderId;
       if (this.generalFormService.economyOrderList.length > 0) {
@@ -235,44 +241,49 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       site.order.orderId = orderId;
       site.order.supplier = {} as Supplier;
       site.order.orderType = {} as OrderType;
-      Object.keys(this.form.value.details).map((key, index) => {
-        if (key !== 'siteCode' && key !== 'siteAddress' && key !== 'totalHours' && key !== 'isCustomerOrder') {
+      //this.form.value.details
+      Object.keys(this.form.getRawValue().details).map((key, index) => {
+        if (key !== 'siteCode' && key !== 'siteURL' && key !== 'totalHours' ) {
           if (key != 'startDate' && key != 'endDate') {
-            site.globalParameters[key] = this.form.value.details[key]
+            site.globalParameters[key] = this.form.getRawValue().details[key]
           } else {
             if (key == 'startDate') {
-              site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
             if (key == 'endDate') {
-              site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
+              site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
             }
           }
         }
         else {
-
+              site.siteCode= this.form.getRawValue().details[key];
+              site.siteURL= this.form.getRawValue().details[key];
+              site.totalHours= this.form.getRawValue().details[key];
         }
 
       });
       site.globalParameters['startHour'] = this.setDateTimeFormat(site.globalParameters.startDate, site.globalParameters.startHour);
       site.globalParameters['endHour'] = this.setDateTimeFormat(site.globalParameters.endDate, site.globalParameters.endHour);
-      site.globalParameters['comments'] = this.form.value.comments.comments;
+      site.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       site.globalParameters.orderId = orderId;
-      site.order.supplier.id = +this.form.value.details.supplierId;
+      site.order.supplier.id = +this.form.getRawValue().details.supplierId;
       site.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       site.order.orderType.name = 'אתרים';
       site.order.orderType.id = 3;
       // if(this.item.globalParameters.tempOrderIdentity!= undefined)
       //  site.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
-      //this.generalFormService.addOrder(site, site.order.orderType.id);
       if(!this.isEditable)
       this.generalFormService.addOrder(site, site.order.orderType.id);
-      else
-      this.generalFormService.editOrder(site, site.order.orderType.id);
+      else{
+        site.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+        this.generalFormService.editOrder(site, site.order.orderType.id);
+      }
+     
       this.form.disable({ emitEvent: false });
     }
   }
   validationsSite() {
-    if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === undefined || this.form.value.details['peopleInTrip'] === "") {
+    if (this.form.getRawValue().details['peopleInTrip'] === null || this.form.getRawValue().details['peopleInTrip'] === undefined || this.form.getRawValue().details['peopleInTrip'] === "") {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
         data: { message: 'חובה לציין את מספר המשתתפים באתר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
@@ -296,15 +307,9 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
   public onValueChange(event) {
     this.form = event;
-
-    // let isPristine=  this.form.pristine;
-    // if(isPristine==true && this.supplierId == undefined){
-      
-    // }
-
-    // else if(isPristine==true){
-    //   this.form.controls["details"].get('supplierId').setValue(this.supplierId)
-    // }
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);

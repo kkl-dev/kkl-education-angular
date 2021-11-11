@@ -329,7 +329,7 @@ export class GeneralFormService {
 
   public setInitialValues(
     questions: QuestionBase<string | number | Date | QuestionGroup>[],
-    data: any
+    data: any,isItemOrderExist
   ) {
     questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
       // control.value = data[control.key]
@@ -340,7 +340,7 @@ export class GeneralFormService {
         if (data.globalParameters[control.key] != undefined)
           control.value = data.globalParameters[control.key].toString();
       }
-      if (control.key == 'peopleInTrip') {
+      if (control.key == 'peopleInTrip' && !isItemOrderExist) {
         control.value = this.squadAssembleService.peopleInTrip;
       }
       if (control.key == 'startHour' && data.globalParameters[control.key].includes('T')) {
@@ -374,9 +374,9 @@ export class GeneralFormService {
     //this.tempOrderReduce.next(temp);
   }
 
-  public setFormValues(data: any) {
+  public setFormValues(data: any,isItemOrderExist) {
     this.questionGroups.map((group: QuestionGroup) => {
-      this.setInitialValues(group.questions, data);
+      this.setInitialValues(group.questions, data,isItemOrderExist);
     });
   }
 
@@ -472,6 +472,13 @@ export class GeneralFormService {
   mapOrderList(orderList) {
     this.tripOrdersList= orderList;
     console.log('order list is: ', orderList);
+    this.transportOrderList=[];
+    this.securingOrderList=[];
+    this.siteOrderList=[];
+    this.economyOrderList=[];
+    this.gudianceOrderList=[];
+    this.hostingOrderList=[];
+    this.musicOrderList=[];
     orderList.forEach(element => {
       if (element.order.orderType.id == 1) {
         this.transportOrderList.push(element)
