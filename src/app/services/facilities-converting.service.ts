@@ -61,7 +61,7 @@ export class FacilitiesConvertingService {
   }
 
   convertActivityForApi(arr: any, userName: string) {
-    let tripId = 52896;
+    let tripId = 0;
     try {
       tripId = this.squadAssembleService.tripInfofromService.trip.id;
     } catch (error) {
@@ -85,13 +85,13 @@ export class FacilitiesConvertingService {
       try {
         tripId = arr[i].tripId;
       } catch (error) {
-        
+
       }
       if (!tripId) {
         tripId = this.squadAssembleService.tripInfofromService.trip.id;
       }
-      console.log('arr ' + i + ': ', arr[i]);
-      //check
+      //console.log('arr ' + i + ': ', arr[i]);
+      //check if valid start
       if (arr[i].start != undefined && arr[i].start.includes("T")) {
 
         let orderTypeCode = 4;
@@ -205,55 +205,27 @@ export class FacilitiesConvertingService {
       title: tempOrderList.orderTypeName || tempOrderList.activityName || null,
       type: "facility"
     };
-
-    // for (let i = 0; i < arr.length; i++) {
-    //   console.log(arr[i]);
-    //   if (arr[i].svgUrl && !arr[i]) {
-    //     tempOrder = {
-    //       availability: [],
-    //       backgroundColor: "#F0F6FE",
-    //       className: "border-facilities",
-    //       date: "",
-    //       end: arr[i].tillHour,
-    //       facilityId: 1825,
-    //       selectedDay: 0,
-    //       start: arr[i].fromHour,
-    //       svgUrl: "assets/images/de",
-    //       title: "מתחם הפרגולה(עד 100 משתתפים)",
-    //       type: "facility"
-    //     }
-    //     tempOrderArr.push(tempOrder);
-    //   }
-    //   else {
-    //     activity = {
-    //       "activityId": arr[i].activityId,
-    //       "activityName": arr[i].title,
-    //       "date": arr[i].start,
-    //       "description": arr[i].description || '',
-    //       "fromHour": arr[i].start,
-    //       "tillHour": arr[i].end,
-    //       "tripId": tripId,
-    //       "userName": userName
-    //     }
-    //     activityArr.push(activity);
-    //   }
-    //   if (arr[i].additions) {
-    //   }
-    // }
     return newTempOrderObj;
   }
 
   convertActivityListforTripCalendar(activityList: any) {
-    if(activityList.fromHour.includes("1900") || activityList.date.includes("1900")) {
+    //fix if date is from 1900
+    if (activityList.fromHour.includes("1900") || activityList.date.includes("1900")) {
       activityList.date = activityList.tillHour;
-      activityList.date = activityList.tillHour;
-      activityList.date = activityList.tillHour;
-    } 
+      activityList.fromHour = activityList.tillHour;
+
+      let [date, time] = activityList.fromHour.split('T');
+      let fromHour = date + 'T07:00:00';
+
+      let [date2, time2] = activityList.tillHour.split('T');
+      let tillHour = date2 + 'T08:00:00';
+      activityList.fromHour = fromHour;
+      activityList.tillHour = tillHour;
+    }
     let newActivityListObj = {
-      activityId: activityList.activityId,
-      tripActivityIdentity: activityList.tripActivityIdentity,
-      tripId: activityList.tripId,
-      //availability: [],
+      activityId: activityList.activityId || null,
+      tripActivityIdentity: activityList.tripActivityIdentity || null,
+      tripId: activityList.tripId || null,
       backgroundColor: "#f0f9f1",
       className: "border-activities",
       date: activityList.date,
@@ -262,7 +234,7 @@ export class FacilitiesConvertingService {
       selectedDay: 0,
       start: activityList.fromHour,
       svgUrl: "assets/images/defaultFacility.svg",
-      title: activityList.activityName,
+      title: activityList.activityName || null,
       type: "activity"
     };
     return newActivityListObj;

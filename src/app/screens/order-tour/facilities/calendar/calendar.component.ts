@@ -9,25 +9,23 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarCardComponent } from './calendar-card/calendar-card.component';
 import { DynamicComponent } from 'src/app/components/dynamic/dynamic.component';
 import { TripService } from 'src/app/services/trip.service';
-
-
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-
-  public calendarEventsArr$!: Observable<EventInput[]>;
-  public value!: EventInput[];
-  public valueSub: Subscription;
-  public hideComponent: boolean = false;
+  
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
   @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
-
+  calendarEventsArr$!: Observable<EventInput[]>;
+  value!: EventInput[];
+  valueSub: Subscription;
+  hideComponent: boolean = false;
   sleepingDates: any = [];
   days: any[] = this.tripService.facilitiesArray;
   till: any;
+  calendarOptions: CalendarOptions = {}
 
   constructor(private facilitiesService: FacilitiesService, private resolver: ComponentFactoryResolver, private tripService: TripService) {
     //get sleeping Dates from trip service
@@ -37,11 +35,9 @@ export class CalendarComponent implements OnInit {
     this.till = new Date(lastDay.setDate(lastDay.getDate() + 1));
   }
 
-  calendarOptions: CalendarOptions = {}
-
   ngOnInit(): void {
     this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
-      console.log('this.value Sub', value)
+      //console.log('this.value Sub', value)
       if (this.myCalendarComponent) {
         this.myCalendarComponent.options.events = value;
       } else {

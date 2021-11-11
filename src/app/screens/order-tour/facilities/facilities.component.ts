@@ -34,7 +34,7 @@ export class FacilitiesComponent implements OnInit {
   public colors = { green: '#37C56B', blue: '#448ECD' }
   public activityIsUpComing: boolean = false;
   formArray: QuestionBase<string | number>[];
-  tripId: number = 52896;
+  tripId: number = 0;
   // public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
   // public facilitiesArray: InfoCard1[] = FACILITIES_ARRAY;
   // public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
@@ -88,7 +88,7 @@ export class FacilitiesComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      this.tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
+      this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     } catch (error) {
       console.log(error);
     }
@@ -102,9 +102,9 @@ export class FacilitiesComponent implements OnInit {
     this.getTripCalendar();
 
     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
+    console.log('calendarEventsArr.value',  this.calendarEventsArr$);
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
     this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
-    console.log('calendarEventsArr.value',  this.calendarEventsArr$);
     this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
   }
 
@@ -292,9 +292,9 @@ export class FacilitiesComponent implements OnInit {
 
   getTripCalendar() {
     //this.eventsArr = [];
-    let tripId = 52896;
+    let tripId = 0;
     try {
-      tripId = this.squadAssembleService.tripInfofromService.trip.id || 52896;
+      tripId = this.squadAssembleService.tripInfofromService.trip.id;
     } catch (error) {
       console.log(error);
     }
@@ -316,7 +316,7 @@ export class FacilitiesComponent implements OnInit {
         for (let i = 0; i < this.activityList.length; i++) {
           //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
           newTempActivityList = this.facilitiesConvertingService.convertActivityListforTripCalendar(this.activityList[i]);
-          if(newTempActivityList.activityName) {
+          if(newTempActivityList.title) {
           this.addToCalendar(newTempActivityList);
           }
         }

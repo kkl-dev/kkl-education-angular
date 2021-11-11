@@ -81,8 +81,13 @@ export class AddFacilityComponent implements OnInit {
     } else {
       this.updateForm = true;
       this.selectedDay = data.selectedDay;
-      data.start = this.separateTimeFromDate(data.start);
-      data.end = this.separateTimeFromDate(data.end);
+      if (data.start.includes("T")) {
+        data.start = this.separateTimeFromDate(data.start);
+      }
+       if (data.end.includes("T")) {
+        data.end = this.separateTimeFromDate(data.end);
+      }
+     
       this.addFacilityForm = new FormGroup({});
       for (const property in data) {
         this.addFacilityForm.addControl(property, new FormControl(data[property]));
