@@ -1,25 +1,24 @@
 @import "../../../../styles.scss";
 
 ::ng-deep .border-activities {
-    border-right: 9px solid #37c56b !important;
+    border: none!important;
     border-radius: 0px 4px 4px 0px !important;
-    .fc-v-event {
-        border-color: #37c56b !important;
-    }
-    ::ng-deep svg *{
+    border-right: 9px solid #37c56b !important;
+    ::ng-deep .right svg * {
         fill: #37c56b;
     }
-    .timeText{
+    .timeText {
         color: #37c56b;
     }
 }
 ::ng-deep .border-facilities {
+    border: none!important;
     border-right: 9px solid #448ecd !important;
     border-radius: 0px 4px 4px 0px !important;
-    ::ng-deep svg *{
+    ::ng-deep .right svg * {
         fill: #448ecd;
     }
-    .timeText{
+    .timeText {
         color: #448ecd;
     }
 }

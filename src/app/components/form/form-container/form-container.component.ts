@@ -27,14 +27,14 @@ export class FormContainerComponent implements OnInit {
 
   @Input() cols: string;
   @Input() gutter: string = '3';
-  @Input() hasButton: boolean = false;
+  @Input() topButton: boolean = false;
   @Input() hasBottomButton: boolean = false;
 
   @Input() disable: boolean;
 
 
   @Input() slots: {
-    topButton?: ElementRef;
+    button?: ElementRef;
     groupInputs?: ElementRef;
   };
 
@@ -48,6 +48,8 @@ export class FormContainerComponent implements OnInit {
     this.subscribeToQuestions();
     this.subscribeToFormValues();
     this.disableForm()
+
+    console.log(this.group)
   }
 
   private initFormGroup() {

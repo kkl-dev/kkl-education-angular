@@ -81,7 +81,7 @@ export class TransportService {
       value: '',
       validations: [Validators.required],
     }),
-  ].reverse();
+  ];
 
   public locations: QuestionBase<string | Date>[] = [
     new QuestionSelect({
@@ -157,7 +157,7 @@ export class TransportService {
       },
     }),
 
-  ].reverse();
+  ];
 
   public comments: QuestionBase<string>[] = [
     new QuestionTextarea({
@@ -165,7 +165,6 @@ export class TransportService {
       label: 'הערות',
       cols: 6,
       rows: 6,
-      offset: 1,
       value: '',
     }),
   ];
@@ -184,7 +183,7 @@ export class TransportService {
     {
       key: 'comments',
       questions: this.comments,
-      hasButton: true,
+      hasBottomButton : true,
       cols: 8,
     },
   ];

@@ -50,7 +50,7 @@ export class EducationComponent implements OnInit {
   ) {
     this.freeSpacesArray = this.freeSpacesArrayGenarator(
       new Date(),
-      new Date(2021, 11, 17)
+      new Date(2022, 11, 17)
     );
 
     this.options = {

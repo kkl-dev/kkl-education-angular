@@ -47,11 +47,13 @@
                 </span>
             </div>
             <div class="add-facility__occupied-hours-table-item" *ngFor="let item of hours">
+               <div class="hours">
                 <span class="add-facility__occupied-hours-hour-start">{{
                     item.startingHour | numberToTimePipe
                     }}</span>
                 <span class="add-facility__occupied-hours-hour-end">
                     <span> -</span> {{ item.endingHour | numberToTimePipe}}</span>
+               </div>
                 <span class="add-facility__occupied-hours-hour-user">נתפס ע"י {{ item.user }} </span>
             </div>
         </div>

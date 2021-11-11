@@ -20,8 +20,11 @@ app-form-group {
   text-align: center;
 }
 
-
 ::ng-deep airbnb-calendar {
-  position:  fixed !important;
+  position: fixed !important;
   overflow: visible !important;
+}
+
+app-input-radio {
+  width: 90%;
 }

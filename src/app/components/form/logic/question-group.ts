@@ -10,7 +10,8 @@ export class QuestionGroup {
     public gutter?: string | number,
     public isGroup?: boolean,
     public questions?: any[],
-    public hasButton?: boolean
+    public hasTopButton?: boolean,
+    public hasBottomButton?: boolean
   ) {}
 
   static create(group: QuestionGroup) {
@@ -23,7 +24,8 @@ export class QuestionGroup {
       group.gutter,
       group.isGroup,
       group.questions,
-      group.hasButton
+      group.hasTopButton,
+      group.hasBottomButton
     );
   }
 }

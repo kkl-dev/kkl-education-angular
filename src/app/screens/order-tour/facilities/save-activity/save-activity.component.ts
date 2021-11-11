@@ -24,11 +24,11 @@ export class SaveActivityComponent implements OnInit {
 
   @Input() type: string;
   @Input() public additonsType: any[] = [
-    { name: 'הסעה', completed: false },
-    { name: 'אבטחה', completed: false },
-    { name: 'הדרכה', completed: false },
-    { name: 'כלכלה', completed: false },
-    { name: 'הפעלה מוסיקלית', completed: false },
+    { name: 'הסעה', completed: false , svg:'bus' },
+    { name: 'אבטחה', completed: false , svg:'shield' },
+    { name: 'הדרכה', completed: false , svg:'man-with-bag' },
+    { name: 'כלכלה', completed: false , svg:'dinner' },
+    { name: 'הפעלה מוסיקלית', completed: false , svg:'music' },
   ];
   @Input() days: any[] = DAYS;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
@@ -57,7 +57,7 @@ export class SaveActivityComponent implements OnInit {
       this.form.controls['invitingCustomer'].setValue(this.orderingCustomer);
     }
     if (this.form.controls['additions']) {
-      this.form.controls['additions'].setValue(this.additonsType);
+      this.form.controls['additions'].setValue(this.additonsType.filter(item => item.completed));
     }
     this.form.controls['selectedDay'].setValue(this.selectedDay);
     this.form.controls['start'].setValue(this.arrangeTime('start'));
@@ -98,8 +98,7 @@ export class SaveActivityComponent implements OnInit {
         'selectedDay': new FormControl(this.selectedDay),
         'start': new FormControl('08:00'),
         'end': new FormControl('09:00'),
-        'backgroundColor': new FormControl('#F0F6FE'),
-        'borderColor' : new FormControl('#37C56B'),
+        'backgroundColor': new FormControl('#f0f9f1'),
         'date': new FormControl(''),
         'className': new FormControl('border-activities'),
         'type': new FormControl('activity'),

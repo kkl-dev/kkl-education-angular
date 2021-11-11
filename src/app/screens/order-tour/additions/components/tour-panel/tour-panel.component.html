@@ -1,4 +1,4 @@
-<div class="tour-container">
+<div class="tour-container" dir="rtl">
   <div class="tour-header">
     <app-typography
       [size]="18"
@@ -36,8 +36,17 @@
           </div>
 
           <div description></div>
-          <app-transport-form [transport]="schedule.transport" [location]="location" [editMode]="editMode" content></app-transport-form>
-          <app-transport-details *ngIf="editMode" content></app-transport-details>
+          <app-transport-form
+        
+            [transport]="schedule.transport"
+            [location]="location"
+            [editMode]="editMode"
+            content
+          ></app-transport-form>
+          <app-transport-details
+            *ngIf="editMode"
+            content
+          ></app-transport-details>
         </app-expend-panel>
       </ng-container>
     </mat-accordion>
