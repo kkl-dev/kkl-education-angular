@@ -6,6 +6,8 @@ import { QuestionGroup } from './question-group';
 export interface SelectOption {
   label: string;
   value: string;
+  id? : number;
+  name? : string;
 }
 
 // export interface SelectOption {

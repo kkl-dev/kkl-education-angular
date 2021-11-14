@@ -273,8 +273,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
        return flag;
       if(this.squadAssemble.payerCustomer.name!= undefined)
       this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
-      this.squadAssemble.tripInfo.generateTime='2021-10-10';
-      this.squadAssemble.tripInfo.userInfo = 'שחר גל';
+      let date = new Date()
+      let year= date.getFullYear();
+      let month= date.getMonth()+1;
+      let day = date.getDate();
+      let dateFormat= year+'-'+(month)+'-'+day;
+      this.squadAssemble.tripInfo.generateTime=dateFormat;
+      //this.squadAssemble.tripInfo.userInfo = 'שחר גל';
        if(startDate==endDate ){
           this.tripService.isOneDayTrip=true;
            this.createTrip(this.steps[2].path);
