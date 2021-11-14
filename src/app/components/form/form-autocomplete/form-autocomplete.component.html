@@ -1,27 +1,41 @@
 <div class="form-autocomplete" fxLayout="column" fxLayoutAlign=" center">
-
   <form [formGroup]="formGroup">
-
     <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100">
-
-      <div *ngFor="let question of group.questions" [fxFlex]="question.type === 'select' ? 30 : 60">
-        <app-form-input [control]="formGroup.controls[question.key]" [label]="question.label"
-          [disabled]="question.disabled" [split]="cols > question.cols" [type]="question.type" [label]="question.label"
-          [icon]="question.icon" [options]="question.inputProps?.options"
-          [dateOptions]="question.inputProps?.dateOptions" [controlType]="question.controlType"
-          (autocomplete)="onAutocomplete($event)" (select)="onSelect($event)" (optionSelected)="onOptionSelected($event)">
+      <div
+        *ngFor="let question of group.questions"
+        [fxFlex]="question.type === 'select' ? 30 : 60"
+      >
+        <app-form-input
+          [control]="formGroup.controls[question.key]"
+          [label]="question.label"
+          [disabled]="question.disabled"
+          [split]="cols > question.cols"
+          [type]="question.type"
+          [label]="question.label"
+          [icon]="question.icon"
+          [options]="question.inputProps?.options"
+          [dateOptions]="question.inputProps?.dateOptions"
+          [controlType]="question.controlType"
+          (autocomplete)="onAutocomplete($event)"
+          (select)="onSelect($event)"
+          (optionSelected)="onOptionSelected($event)"
+        >
         </app-form-input>
       </div>
     </div>
-
   </form>
 
-  <div class="data-container" fxLayout="column" fxLayoutAlign="start center">
-    <div *ngFor="let item of list" class="autocomplete" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="data-container" fxLayout="column" fxLayoutAlign="start center" dir="rtl">
+    <div
+      *ngFor="let option of options$ | async"
+      class="autocomplete"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
       <app-typography>
-        {{ item }}
+        {{ option.label }}
       </app-typography>
-      <button mat-icon-button (click)="onDelete()">
+      <button mat-icon-button (click)="onDelete(option)">
         <mat-icon color="warn">clear</mat-icon>
       </button>
     </div>

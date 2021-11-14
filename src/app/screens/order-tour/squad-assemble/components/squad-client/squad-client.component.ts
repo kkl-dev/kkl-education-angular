@@ -1,12 +1,17 @@
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import {
+  QuestionBase,
+  SelectOption,
+} from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-squad-client',
@@ -27,6 +32,14 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
 
+  private subjectSchool: Subject<SelectOption>;
+  public schools$: Observable<SelectOption>;
+
+  private subjectOptions: BehaviorSubject<SelectOption[]>;
+  public options$: Observable<SelectOption[]>;
+
+  public schoolOptions$: Observable<SelectOption[]>;
+
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
 
@@ -38,6 +51,12 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.subjectSchool = new Subject<SelectOption>();
+    this.schools$ = this.subjectSchool.asObservable();
+
+    this.subjectOptions = new BehaviorSubject<SelectOption[]>([]);
+    this.options$ = this.subjectOptions.asObservable();
+
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
     this.setQuestions();
     this.subscribeToEditMode();
@@ -45,6 +64,8 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
     this.$saveMode = this.squadAssembleService.getSaveModeObs();
     this.formGroup = this.formService.setFormGroup(this.group);
+
+    this.setSchoolOptions()
   }
 
   ngOnDestroy(): void {
@@ -97,7 +118,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   // method to add new editMode form
   public onAddClient(): void {
-    this.squadNewClientService.emitNewClient(true)
+    this.squadNewClientService.emitNewClient(true);
   }
 
   public onEdit(): void {
@@ -109,5 +130,41 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   public onClear() {
     this.squadAssembleService.emitSaveMode(false);
     this.formGroup.controls.contact.disable();
+  }
+
+  public onAutocomplete(control: FormControl) {}
+
+  public onSelect(control: FormControl) {}
+
+  public onOptionSelected(event: MatAutocompleteSelectedEvent) {
+    this.squadClientService.emitClientSelected(event.option.value);
+    const { value } = event.option;
+    const option = this.formatOption(value);
+    this.subjectSchool.next(option);
+
+    // TODO - SERVER SIDE
+  }
+  public onDelete(option: SelectOption) {
+
+    console.log(option)
+
+  }
+
+  public formatOption(value: string): SelectOption {
+    const arr = value.split('-');
+    return { value: arr[0], label: arr[1] };
+  }
+
+  private setSchoolOptions() {
+    this.schoolOptions$ = this.options$.pipe(
+      switchMap((options: SelectOption[]) => {
+        return this.schools$.pipe(
+          map((option: SelectOption) => {
+            options.push(option);
+            return options;
+          })
+        );
+      })
+    );
   }
 }
