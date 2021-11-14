@@ -1,9 +1,12 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { QuestionBase, SelectOption } from 'src/app/components/form/logic/question-base';
+import {
+  QuestionBase,
+  SelectOption,
+} from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
@@ -28,6 +31,9 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
 
+  private subjectSchool : BehaviorSubject<SelectOption[]>;
+  public schools$ : Observable<SelectOption[]>
+
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
 
@@ -39,6 +45,9 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.subjectSchool = new BehaviorSubject<SelectOption[]>([])
+    this.schools$ = this.subjectSchool.asObservable();
+    
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
     this.setQuestions();
     this.subscribeToEditMode();
@@ -98,7 +107,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   // method to add new editMode form
   public onAddClient(): void {
-    this.squadNewClientService.emitNewClient(true)
+    this.squadNewClientService.emitNewClient(true);
   }
 
   public onEdit(): void {
@@ -112,16 +121,23 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.formGroup.controls.contact.disable();
   }
 
+  public onAutocomplete(control: FormControl) {}
 
-  public onAutocomplete(control: FormControl) {
-  }
-
-  public onSelect(control: FormControl) {
-  }
+  public onSelect(control: FormControl) {}
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.squadClientService.emitClientSelected(event.option.value);
+    const { value } = event.option;
+    const option = this.formatOption(value);
+
+    // TODO - SERVER SIDE
   }
-  public onDelete(option: SelectOption) {
+  public onDelete(option: SelectOption) {}
+
+  public formatOption(value: string): SelectOption {
+    const arr = value.split('-');
+    return { value: arr[0], label: arr[1] };
   }
+
+
 }
