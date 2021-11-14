@@ -16,7 +16,7 @@ export class FormAutocompleteComponent implements OnInit {
   @Input() group: QuestionGroup;
   @Input() public formGroup: FormGroup = null;
 
-  @Input() options$: Observable<SelectOption[]>;
+  @Input() public options$: Observable<SelectOption[]>;
 
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
   @Output() select: EventEmitter<FormControl> = new EventEmitter();

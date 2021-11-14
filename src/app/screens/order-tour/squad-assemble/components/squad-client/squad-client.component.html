@@ -14,7 +14,7 @@
       <app-form-autocomplete
         [group]="clientQuestions.group"
         [formGroup]="formGroup.controls.client"
-        [options$]="schools$"
+        [options$]="schoolOptions$"
         (autocomplete)="onAutocomplete($event)"
         (select)="onSelect($event)"
         (optionSelected)="onOptionSelected($event)"

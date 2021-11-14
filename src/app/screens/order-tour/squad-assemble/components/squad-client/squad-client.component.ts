@@ -11,6 +11,7 @@ import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-squad-client',
@@ -31,8 +32,13 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
 
-  private subjectSchool : BehaviorSubject<SelectOption[]>;
-  public schools$ : Observable<SelectOption[]>
+  private subjectSchool: Subject<SelectOption>;
+  public schools$: Observable<SelectOption>;
+
+  private subjectOptions: BehaviorSubject<SelectOption[]>;
+  public options$: Observable<SelectOption[]>;
+
+  public schoolOptions$: Observable<SelectOption[]>;
 
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
@@ -45,9 +51,12 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subjectSchool = new BehaviorSubject<SelectOption[]>([])
+    this.subjectSchool = new Subject<SelectOption>();
     this.schools$ = this.subjectSchool.asObservable();
-    
+
+    this.subjectOptions = new BehaviorSubject<SelectOption[]>([]);
+    this.options$ = this.subjectOptions.asObservable();
+
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
     this.setQuestions();
     this.subscribeToEditMode();
@@ -55,6 +64,8 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
     this.$saveMode = this.squadAssembleService.getSaveModeObs();
     this.formGroup = this.formService.setFormGroup(this.group);
+
+    this.setSchoolOptions()
   }
 
   ngOnDestroy(): void {
@@ -129,15 +140,31 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.squadClientService.emitClientSelected(event.option.value);
     const { value } = event.option;
     const option = this.formatOption(value);
+    this.subjectSchool.next(option);
 
     // TODO - SERVER SIDE
   }
-  public onDelete(option: SelectOption) {}
+  public onDelete(option: SelectOption) {
+
+    console.log(option)
+
+  }
 
   public formatOption(value: string): SelectOption {
     const arr = value.split('-');
     return { value: arr[0], label: arr[1] };
   }
 
-
+  private setSchoolOptions() {
+    this.schoolOptions$ = this.options$.pipe(
+      switchMap((options: SelectOption[]) => {
+        return this.schools$.pipe(
+          map((option: SelectOption) => {
+            options.push(option);
+            return options;
+          })
+        );
+      })
+    );
+  }
 }
