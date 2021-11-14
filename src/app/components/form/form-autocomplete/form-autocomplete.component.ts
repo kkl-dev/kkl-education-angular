@@ -16,7 +16,7 @@ export class FormAutocompleteComponent implements OnInit {
   @Input() group: QuestionGroup;
   @Input() public formGroup: FormGroup = null;
 
-  public options$: Observable<SelectOption[]> = of([]);
+  @Input() options$: Observable<SelectOption[]>;
 
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
   @Output() select: EventEmitter<FormControl> = new EventEmitter();
@@ -24,10 +24,7 @@ export class FormAutocompleteComponent implements OnInit {
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> =
     new EventEmitter();
 
-  constructor(
-    private formService: FormService,
-    private squadClientService: SquadClientService
-  ) {}
+  constructor(private formService: FormService) {}
 
   ngOnInit(): void {
     this.formGroup =
@@ -47,7 +44,6 @@ export class FormAutocompleteComponent implements OnInit {
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.optionSelected.emit(event);
-    // this.squadClientService.emitClientSelected(event.option.value);
   }
   public onDelete(option: SelectOption) {
     this.delete.emit(option);

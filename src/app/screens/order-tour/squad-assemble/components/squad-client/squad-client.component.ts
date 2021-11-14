@@ -1,12 +1,13 @@
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionBase, SelectOption } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-squad-client',
@@ -109,5 +110,18 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   public onClear() {
     this.squadAssembleService.emitSaveMode(false);
     this.formGroup.controls.contact.disable();
+  }
+
+
+  public onAutocomplete(control: FormControl) {
+  }
+
+  public onSelect(control: FormControl) {
+  }
+
+  public onOptionSelected(event: MatAutocompleteSelectedEvent) {
+    this.squadClientService.emitClientSelected(event.option.value);
+  }
+  public onDelete(option: SelectOption) {
   }
 }
