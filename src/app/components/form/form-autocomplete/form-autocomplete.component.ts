@@ -1,9 +1,11 @@
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormService } from 'src/app/components/form/logic/form.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { QuestionGroup } from '../logic/question-group';
 import { SquadClientService } from 'src/app/screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
+import { Observable, of } from 'rxjs';
+import { SelectOption } from '../logic/question-base';
 
 @Component({
   selector: 'app-form-autocomplete',
@@ -14,7 +16,13 @@ export class FormAutocompleteComponent implements OnInit {
   @Input() group: QuestionGroup;
   @Input() public formGroup: FormGroup = null;
 
-  public list: string[] = [];
+  public options$: Observable<SelectOption[]> = of([]);
+
+  @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
+  @Output() select: EventEmitter<FormControl> = new EventEmitter();
+  @Output() delete: EventEmitter<SelectOption> = new EventEmitter();
+  @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> =
+    new EventEmitter();
 
   constructor(
     private formService: FormService,
@@ -30,19 +38,18 @@ export class FormAutocompleteComponent implements OnInit {
   }
 
   public onAutocomplete(control: FormControl) {
-    // TODO search server logic
+    this.autocomplete.emit(control);
   }
 
   public onSelect(control: FormControl) {
-    // TODO select server logic
+    this.select.emit(control);
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
-    // TODO get client from server logic
-    this.squadClientService.emitClientSelected(event.option.value);
-    this.list.push(event.option.value);
+    this.optionSelected.emit(event);
+    // this.squadClientService.emitClientSelected(event.option.value);
   }
-  public onDelete() {
-    // TODO delete server logic
+  public onDelete(option: SelectOption) {
+    this.delete.emit(option);
   }
 }
