@@ -18,7 +18,7 @@ export interface TransportOrder extends OrderEvent {
     /**
      * settlement code - required for calculate price
      */
-    exitPoint?: number;
+    exitPoint?: number | null;
     scatterLocation?: string;
 }
 

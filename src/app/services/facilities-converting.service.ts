@@ -210,18 +210,32 @@ export class FacilitiesConvertingService {
 
   convertActivityListforTripCalendar(activityList: any) {
     //fix if date is from 1900
-    if (activityList.fromHour.includes("1900") || activityList.date.includes("1900")) {
-      activityList.date = activityList.tillHour;
-      activityList.fromHour = activityList.tillHour;
-
-      let [date, time] = activityList.fromHour.split('T');
-      let fromHour = date + 'T07:00:00';
-
-      let [date2, time2] = activityList.tillHour.split('T');
-      let tillHour = date2 + 'T08:00:00';
-      activityList.fromHour = fromHour;
-      activityList.tillHour = tillHour;
+    if (activityList.fromHour.includes("1900") || activityList.tillHour.includes("1900")) {
+      let [date] = activityList.date.split('T');
+      let [d, from] = activityList.fromHour.split('T');
+      let till = activityList.tillHour.split('T');
+      activityList.fromHour = `${date}T${from}`;
+      activityList.tillHour = `${date}T${till[1]}`
     }
+
+    //   if (activityList.fromHour.includes("1900")) {
+    //     let [d] = activityList.date.split('T');
+    //     let [, t] = activityList.fromHour.split('T');
+    //     activityList.tillHour = `${d}T${t}`
+
+
+    //   activityList.fromHour = activityList.tillHour;
+
+    //   let [date, time] = activityList.fromHour.split('T');
+    //   let fromHour = date + 'T07:00:00';
+
+    //   let [date2, time2] = activityList.tillHour.split('T');
+    //   let tillHour = date2 + 'T08:00:00';
+    //   activityList.fromHour = fromHour;
+    //   activityList.tillHour = tillHour;
+    // }
+
+
     let newActivityListObj = {
       activityId: activityList.activityId || null,
       tripActivityIdentity: activityList.tripActivityIdentity || null,

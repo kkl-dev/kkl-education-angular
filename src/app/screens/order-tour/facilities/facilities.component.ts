@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+//import { Component, OnInit } from '@angular/core';
+//import { Observable } from 'rxjs';
 import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { FacilitiesService } from 'src/app/services/facilities.service';
@@ -16,6 +16,17 @@ import { QuestionAutocomplete } from 'src/app/components/form/logic/question-aut
 import { UserDataService } from 'src/app/services/user-data.service';
 import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.service';
 
+import { Component, ComponentFactoryResolver, EmbeddedViewRef, OnInit, ViewChild } from '@angular/core';
+import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
+import timeGridPlugin from '@fullcalendar/timegrid';
+//import { EventInput } from '@fullcalendar/angular';
+import { Observable, Subscription } from 'rxjs';
+//import { FacilitiesService } from 'src/app/services/facilities.service';
+import heLocale from '@fullcalendar/core/locales/he';
+import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarCardComponent } from './calendar/calendar-card/calendar-card.component';
+import { DynamicComponent } from 'src/app/components/dynamic/dynamic.component';
+//import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-facilities',
@@ -24,6 +35,8 @@ import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.
 })
 
 export class FacilitiesComponent implements OnInit {
+  calenderArray = [];
+
   public eventsArr: EventInput[] = [...INITIAL_EVENTS];
   public closeModal$: Observable<string>;
   public selectedFacility$: Observable<any>;
@@ -84,9 +97,28 @@ export class FacilitiesComponent implements OnInit {
 
   constructor(private facilitiesService: FacilitiesService, private usersService: UserService, private tripService: TripService,
     private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService,
-    private userDataService: UserDataService, private orderService: OrderService, private squadAssembleService: SquadAssembleService) { }
+    private userDataService: UserDataService, private orderService: OrderService, private squadAssembleService: SquadAssembleService,
+    private resolver: ComponentFactoryResolver) {
+         //get sleeping Dates from trip service
+         this.sleepingDates = this.tripService.convertDatesFromSlashToMinus();
+         // add another day to last day
+         let lastDay = new Date(this.days[this.days.length - 1].date);
+         this.till = new Date(lastDay.setDate(lastDay.getDate() + 1));
+     }
 
   ngOnInit(): void {
+
+    // this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+    //   console.log('getCalendarEventsArr: ', value)
+    //   if (this.myCalendarComponent) {
+    //     this.myCalendarComponent.options.events = value;
+    //   } else {
+    //     setTimeout(() => {
+    //       this.myCalendarComponent.options.events = value;
+    //     }, 500);
+    //   }
+    // });
+
     try {
       this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     } catch (error) {
@@ -101,11 +133,73 @@ export class FacilitiesComponent implements OnInit {
     this.getOrderService();
     this.getTripCalendar();
 
-    this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
-    console.log('calendarEventsArr.value',  this.calendarEventsArr$);
+     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
+     console.log('calendarEventsArr.value',  this.calendarEventsArr$);
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
     this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
     this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
+
+    //for calender c
+    // this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+    //   //console.log('this.value Sub', value)
+    //   if (this.myCalendarComponent) {
+    //     this.myCalendarComponent.options.events = value;
+    //   } else {
+    //     setTimeout(() => {
+    //       this.myCalendarComponent.options.events = value;
+    //     }, 500);
+    //   }
+    // });
+
+    this.calendarOptions = {
+      plugins: [timeGridPlugin, interactionPlugin],
+      initialView: 'timeGridDay',
+      validRange: {
+        start: this.sleepingDates.from,
+        end: this.till
+      },
+      slotEventOverlap: false,
+      allDaySlot: false,
+      locales: [heLocale],
+      selectable: true,
+      titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
+      eventTimeFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        meridiem: false
+      },
+      slotLabelFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        meridiem: false
+      },
+      headerToolbar: {
+        left: 'prev,next',
+        center: 'title',
+        // right: 'timeGridDay,timeGridWeek,dayGridMonth'
+        right: ''
+      },
+      initialEvents: [],
+      eventClick: (info) => {
+        this.facilitiesService.findObjectInCalendarArray(info.event.id);
+      },
+      eventDrop: (info) => {
+        this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
+      },
+      eventResize: (info) => {
+        this.facilitiesService.updateTimesInArray(info.event.id, [this.arrangeDate(info.event.start), this.arrangeDate(info.event.end)]);
+      },
+      eventContent: (props) => {
+        const factory = this.resolver.resolveComponentFactory(CalendarCardComponent);
+        this.myDynamicComponent.viewContainerRef.clear();
+        const componentRef = this.myDynamicComponent.viewContainerRef.createComponent(factory, 0);
+        componentRef.instance.props = props;
+        componentRef.changeDetectorRef.detectChanges();
+        const html = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+
+        return { html: html.innerHTML };
+      }
+    }
   }
 
   getOrderService() {
@@ -311,15 +405,28 @@ export class FacilitiesComponent implements OnInit {
           //console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
           newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListforTripCalendar(this.tempOrderList[i]);
           this.addToCalendar(newTempOrderObj);
+          this.calenderArray.push(newTempOrderObj);
         }
 
         for (let i = 0; i < this.activityList.length; i++) {
           //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
           newTempActivityList = this.facilitiesConvertingService.convertActivityListforTripCalendar(this.activityList[i]);
-          if(newTempActivityList.title) {
+         // if(newTempActivityList.title) {
           this.addToCalendar(newTempActivityList);
-          }
+          this.calenderArray.push(newTempActivityList);
+          //}
         }
+        console.log('calenderArray', this.calenderArray);
+
+        if (this.myCalendarComponent) {
+          this.myCalendarComponent.options.events = this.calenderArray;
+        } else {
+          setTimeout(() => {
+            this.myCalendarComponent.options.events = this.calenderArray;
+          }, 500);
+        }
+
+
       }
     },
       error => {
@@ -379,4 +486,25 @@ export class FacilitiesComponent implements OnInit {
   onOptionSelected(e: any) {
     console.log('onOptionSelected - e',e);
   }
+
+
+  //calender c 
+  @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
+  @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
+  value!: EventInput[];
+  valueSub: Subscription;
+  hideComponent: boolean = false;
+  sleepingDates: any = [];
+  days: any[] = this.tripService.facilitiesArray;
+  till: any;
+  calendarOptions: CalendarOptions = {}
+  
+
+  arrangeDate(date: Date) {
+    // 2021-10-15T08:00
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}T${hours <= 9 ? '0' + hours : hours}:${minutes <= 9 ? '0' + minutes : minutes}`
+  }
+
 }

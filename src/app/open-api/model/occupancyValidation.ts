@@ -15,10 +15,10 @@ export interface OccupancyValidation {
     centerFieldId?: number;
     startDate?: string;
     endDate?: string;
-    startHour?: string;
-    endHour?: string;
-    typeSleepId?: number;
-    amountItem?: number;
+    startHour?: string | null;
+    endHour?: string | null;
+    typeSleepId?: number | null;
+    quantityItem?: number;
     tripId?: number;
     orderId?: number | null;
     itemOrderRecordId?: number | null;

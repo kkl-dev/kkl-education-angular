@@ -345,7 +345,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   }
 
   CheckClassOccupancy(occupancyValidation){
-      this.orderService.checkClassOccpancy(occupancyValidation).subscribe(res=>{
+      this.orderService.checkClassOccupancy(occupancyValidation).subscribe(res=>{
         console.log(res);
       },(err)=>{
         console.log(err);

@@ -19,26 +19,26 @@ export class FacilitiesService {
   private selectedActivity = new BehaviorSubject(null);
 
   public getCalendarEventsArr(): Observable<EventInput[]> {
-    console.log("getCalendarEventsArr: ");
+    console.log("get Calendar EventsArr: ");
     return this.calendarEventsArr.asObservable();
   }
 
   public updateCalendarEventsArr(args: EventInput): void {
-    console.log("updateCalendarEventsArr: args ", args);
+    console.log("update Calendar EventsArr: args ", args);
     this.calendarEventsArr.next([...this.calendarEventsArr.value, args]);
   }
 
   public closeModal(args: string): void {
-    console.log("closeModal: args ", args);
+    console.log("close Modal: args ", args);
     this.closeModalObs.next(args);
   }
   public getCloseModalObs(): Observable<string> {
-    console.log("getCloseModalObs: ");
+    console.log("get CloseModalObs: ");
     return this.closeModalObs.asObservable();
   }
 
   public findObjectInCalendarArray(id: string | number) {
-    console.log("findObjectInCalendarArray: " + id);
+    console.log("find Object In CalendarArray: " + id);
     const [item] = this.calendarEventsArr.value.filter((item: any) => item.id === id);
     if (item.type === 'activity') {
       this.updateSelectedActivity(item);

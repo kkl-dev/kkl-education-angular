@@ -44,6 +44,7 @@ model/models.ts
 model/movements.ts
 model/musicActivationOrder.ts
 model/nightNumberOptions.ts
+model/occupancyCheckingResult.ts
 model/occupancyValidation.ts
 model/occupiedHours.ts
 model/order.ts

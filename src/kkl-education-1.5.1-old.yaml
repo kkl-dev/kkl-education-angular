@@ -1004,9 +1004,9 @@ paths:
         "200":
           description: Success
           content:
-            application/json:
+            text/plain:
               schema:
-                $ref: '#/components/schemas/OccupancyCheckingResult'
+                type: string
   /defaultItemByItem/IfAddItemToExistItemByIdOrder/{orderItemId}:
     get:
       tags:
@@ -1097,7 +1097,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OccupancyCheckingResult'
+                $ref: '#/components/schemas/OccupancyValidationResult'
   /order/classOccupancy:
      post:
       tags:
@@ -1114,7 +1114,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OccupancyCheckingResult'
+                $ref: '#/components/schemas/OccupancyValidationResult'
   /order/hourOccupancy:
      post:
       tags:
@@ -1131,7 +1131,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OccupancyCheckingResult'
+                $ref: '#/components/schemas/OccupancyValidationResult'
   /order/vat:
     get:
       tags:
@@ -2738,7 +2738,6 @@ components:
       properties:
         exitPoint:
           type: integer
-          nullable: true
           description: settlement code - required for calculate price
         scatterLocation:
           type: string
@@ -2873,10 +2872,6 @@ components:
         isGuideSupplier:
           type: integer
           nullable: true
-        isXemptedFromVat:
-          type: boolean
-          example: false;
-        
     ItemsByTypeOrder:
       type: object
       properties:
@@ -2981,44 +2976,41 @@ components:
     OccupancyValidation:
       type: object
       properties:
-         centerFieldId:
+        centerFieldId:
           type: integer
           example: 1
-         startDate:
+        startDate:
           type: string
           format: date
-         endDate:
+        endDate:
            type: string
            format: date 
-         startHour:
+        startHour:
            type: string
            format: date
-           nullable: true
-         endHour:
+        endHour:
            type: string
            format: date
-           nullable: true
-         typeSleepId:
+        typeSleepId:
            type: integer
-           nullable: true
-         quantityItem:
+        quantityItem:
+           type: number
+        tripId: 
            type: integer
-         tripId: 
-           type: integer
-         orderId: 
+        orderId: 
            type : integer
            nullable: true
-         itemOrderRecordId: 
+        itemOrderRecordId: 
            type: integer
            nullable: true
-         classCode: 
+        classCode: 
            type: integer
            nullable: true
-         ischeckCooking:
+        ischeckCooking:
            type: integer
            nullable: true
            
-    OccupancyCheckingResult:
+    OccupancyValidationResult:
         type: object
         properties:
          isOccupancyProblem:
