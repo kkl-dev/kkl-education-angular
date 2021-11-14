@@ -273,7 +273,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
              else{
               if (!this.additionsService.globalValidations(this.form)) { return; }
               //if (!this.validationsTransport()) { return; }
-              this.mapFormFields()
+              this.mapFormFieldsToServer()
              }
           })
       }
@@ -344,7 +344,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
   }
 
-    public mapFormFields(){
+    public mapFormFieldsToServer(){
       this.editMode = true;
       let orderId;
       if (this.generalFormService.transportOrderList.length > 0) {

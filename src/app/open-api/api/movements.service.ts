@@ -29,6 +29,7 @@ import { Configuration }                                     from '../configurat
 })
 export class MovementsService {
 
+    //protected basePath = 'http://knf-appl-dev3:5077';
     protected basePath = 'http://knf-appl-dev3:8077';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();

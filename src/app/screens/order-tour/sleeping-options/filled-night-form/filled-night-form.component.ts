@@ -257,12 +257,12 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
              if(israelFormatDate == nightDateFormat1)   {
               let x= avaliableSleepingOptionsByDates[j].sleepingOptions.find((q: { accomodationTypeId: any }) => q.accomodationTypeId === accomodationSelected)
               let num;
-             let cachCabinNum;
-             let cachTentNUm;
-             let cachRoomNum;
-             let cachCabinLodgers;
-             let cachTentLodgers;
-             let cachRoomLodgers;
+            //  let cachCabinNum;
+            //  let cachTentNUm;
+            //  let cachRoomNum;
+            //  let cachCabinLodgers;
+            //  let cachTentLodgers;
+            //  let cachRoomLodgers;
               // for (var i in this._sleepingService.formsArray) {
               //   Object.keys(this._sleepingService.formsArray[i].controls).forEach(key => {
               //     if (key === '') {
