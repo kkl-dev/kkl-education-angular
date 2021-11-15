@@ -40,6 +40,8 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist: boolean;
+  isSupplierXemptedFromVat: boolean;
+  isSaveOrderSucceededSub: Subscription;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -50,8 +52,8 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-    let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
+    //let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+    //this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
 
 
     this.setformTemplate();
@@ -87,7 +89,12 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       this.tableData=res;
       this.ifShowtable=true;
     })
-
+    this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
+      if(res)
+      this.editMode = false;
+      else
+      this.editMode = true;
+   })
   }
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
@@ -136,6 +143,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
+        this.generalFormService.originalSupplierList=response;
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
@@ -170,6 +178,10 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       response => {
         console.log(response);
         this.supplierId= response.id;
+        if(response.isXemptedFromVat==1)
+        this.isSupplierXemptedFromVat=true;
+        else
+        this.isSupplierXemptedFromVat=false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
         this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
          this.getOrderItemBySupplierId();
@@ -183,7 +195,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
 
   
   getOrderItemBySupplierId() {
-    this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+    this.itemListSub= this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
       response => {
         console.log(response);
         this.itemsList=[];
@@ -194,6 +206,8 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
         });
         let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
         this.generalFormService.details[itemIndex].inputProps.options= this.itemsList;
+        if(this.form)
+        return;
         if(this.itemId!= undefined)
         this.generalFormService.details[itemIndex].value= this.itemId.toString();
         if (this.item != undefined && this.item != null ) {
@@ -217,7 +231,6 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     if (this.form) {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsSecuring()) { return; }
-      this.editMode = true;
       let orderId;
       if (this.generalFormService.economyOrderList.length > 0) {
         orderId = this.generalFormService.economyOrderList[0].order.orderId
@@ -312,36 +325,54 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         console.log(value);
         this.supplierId=value;
+        this.form.controls["details"].get('itemCost').patchValue('', { emitEvent: false });
+        this.form.controls["details"].get('billingSupplier').patchValue('', { emitEvent: false });
+        this.form.controls["details"].get('billingCustomer').patchValue('', { emitEvent: false });
+        let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
+        if(supplier.isXemptedFromVat==1)
+        this.isSupplierXemptedFromVat=true;
+        else
+        this.isSupplierXemptedFromVat=false;
         this.getOrderItemBySupplierId();
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
-      let itemCost = Math.floor(item.cost);
+      let itemCost;
+      if(!item.cost){
+        this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+        this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+        this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+        return;
+      }
+      if(this.isSupplierXemptedFromVat=true)
+        itemCost = Math.floor(item.cost);
+       else
+       itemCost = Math.floor(item.costVat);
       this.form.controls["details"].get('itemCost').patchValue(itemCost);
       console.log(this.form.value.details);
-      let form = this.additionsService.calculateBillings(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
 
     });
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
     });
 
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
@@ -353,6 +384,9 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
+    if (this.itemListSub) { this.itemListSub.unsubscribe(); }
+    if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
+    if(this.isSaveOrderSucceededSub){this.isSaveOrderSucceededSub.unsubscribe()}
   }
 
 

@@ -5,7 +5,7 @@ info:
   description: Education new project|
   contact:
     email: yochai@one1.co.il
-  version: 1.4.1
+  version: 1.5.1
 servers:
 # - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
 - url: http://knf-appl-dev3:8077
@@ -2874,8 +2874,13 @@ components:
           type: integer
           nullable: true
         isXemptedFromVat:
+<<<<<<< HEAD
           type: boolean
           example: false;
+=======
+          type: integer
+          example: 0
+>>>>>>> 97f4ba4b533b0af77191e6b294ca025293b44238
         
     ItemsByTypeOrder:
       type: object

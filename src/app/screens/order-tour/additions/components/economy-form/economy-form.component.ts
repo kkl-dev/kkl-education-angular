@@ -33,10 +33,13 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
   supplierListSub: Subscription;
   supplierSub: Subscription;
+  itemListSub:  Subscription;
   ifShowtable: boolean=false;
   tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist: boolean;
+  isSupplierXemptedFromVat: boolean;
+  isSaveOrderSucceededSub: Subscription;
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -52,8 +55,8 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-    let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
+    //let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+    //this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
@@ -82,6 +85,13 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.tableData=res;
       this.ifShowtable=true;
     })
+
+    this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
+      if(res)
+      this.editMode = false;
+      else
+      this.editMode = true;
+   })
 
   }
 
@@ -122,6 +132,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
+        this.generalFormService.originalSupplierList=response;
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
@@ -155,6 +166,10 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       response => {
         console.log(response);
         this.supplierId = response.id;
+        if(response.isXemptedFromVat==1)
+        this.isSupplierXemptedFromVat=true;
+        else
+        this.isSupplierXemptedFromVat=false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
         this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
         this.getOrderItemBySupplierId();
@@ -167,7 +182,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
 
   getOrderItemBySupplierId() {
-    this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+    this.itemListSub= this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
       response => {
         console.log(response);
         this.itemsList = [];
@@ -178,6 +193,8 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         });
         let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
         this.generalFormService.details[itemIndex].inputProps.options = this.itemsList;
+        if(this.form)
+        return;
         if (this.itemId != undefined)
           this.generalFormService.details[itemIndex].value = this.itemId.toString();
         if (this.item != undefined && this.item != null) {
@@ -218,7 +235,6 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
      //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsEconomy()) { return; }
-      this.editMode = true;
       let orderId;
       if (this.generalFormService.economyOrderList.length > 0) {
         orderId = this.generalFormService.economyOrderList[0].order.orderId
@@ -396,19 +412,36 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
-
         console.log('supplier changed:',value);
         this.supplierId=value;
+        this.form.controls["details"].get('itemCost').patchValue('', { emitEvent: false });
+        this.form.controls["details"].get('billingSupplier').patchValue('', { emitEvent: false });
+        this.form.controls["details"].get('billingCustomer').patchValue('', { emitEvent: false });
+        let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
+        if(supplier.isXemptedFromVat==1)
+        this.isSupplierXemptedFromVat=true;
+        else
+        this.isSupplierXemptedFromVat=false;
         this.getOrderItemBySupplierId();
 
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let item = this.originalItemList.find(el => el.id === parseInt(value))
-      let itemCost = Math.floor(item.cost);
+      let itemCost;
+      if(!item.cost){
+        this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+        this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+        this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+        return;
+      }
+      if(this.isSupplierXemptedFromVat=true)
+        itemCost = Math.floor(item.cost);
+       else
+       itemCost = Math.floor(item.costVat);
       this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
       console.log(this.form.value.details);
-      let form = this.additionsService.calculateBillings(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
@@ -416,21 +449,25 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-
+    });
+    this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
     });
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details);
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
@@ -441,6 +478,8 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
+    if (this.itemListSub) { this.itemListSub.unsubscribe(); }
     if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
+    if(this.isSaveOrderSucceededSub){this.isSaveOrderSucceededSub.unsubscribe()}
   }
 }

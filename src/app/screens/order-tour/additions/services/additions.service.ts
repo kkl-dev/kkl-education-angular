@@ -108,7 +108,7 @@ export class AdditionsService {
     }
     return arr;
   };
-  calculateBillings(itemOrder: any) {
+  calculateBillings(itemOrder: any,isXemptedFromVat) {
     var currentVat = 1.17;
     itemOrder.quantity = +itemOrder.quantity;
     // itemOrder.startDate = "27/11/2021";
@@ -181,7 +181,10 @@ export class AdditionsService {
     //------------------------------חישוב ערכי ברירת מחדל לחיובי ספק ולקוח---------------------------------------------------
 
     itemOrder.billingSupplier = item?.cost * MultiplyByAmountOrPeople * MultiplyByDays //ספק
-    if (item?.orderType === 1 && item?.credit !== 1) itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+    //if (item?.orderType === 1 && item?.credit !== 1) itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+    if(!isXemptedFromVat && item?.credit !== 1){
+      itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+    } 
     itemOrder.billingCustomer = item?.costCustomer * MultiplyByAmountOrPeople * MultiplyByDays   //לקוח  
     var addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAmountOrPeople?.toString() + "*" + item?.costCustomer + "*" + MultiplyByDays
 
@@ -229,10 +232,12 @@ export class AdditionsService {
       // בהזמנות כלכלה שורה של פריט היא תמיד ליום אחד
       itemOrder.billingSupplier = item?.cost * +MultiplyByAmountOrPeople // חישוב חיוב ספק
       // if (item.costVat == 1) {
-      if (itemOrder.isVat == 1) {
-        // itemOrder.billingSupplier = (currentVat / 100) + 1
-        itemOrder.billingSupplier *= currentVat;
-      } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+      // if (itemOrder.isVat == 1) {
+      //   // itemOrder.billingSupplier = (currentVat / 100) + 1
+      //   itemOrder.billingSupplier *= currentVat;
+      // } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+      if(!isXemptedFromVat)
+      itemOrder.billingSupplier *= currentVat;
       if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
         var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides ?

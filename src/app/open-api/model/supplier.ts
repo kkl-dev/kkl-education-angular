@@ -26,6 +26,11 @@ export interface Supplier {
     registrationNum?: string;
     supplierFinId?: number;
     isGuideSupplier?: number | null;
+<<<<<<< HEAD
     isXemptedFromVat?: boolean;
+=======
+    //isXemptedFromVat?: boolean;
+    isXemptedFromVat?: number;
+>>>>>>> 97f4ba4b533b0af77191e6b294ca025293b44238
 }
 
