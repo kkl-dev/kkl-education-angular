@@ -15,9 +15,12 @@ export class CalendarCardComponent implements OnInit {
   ngOnInit(): void {
     this.checkTimes();
   }
+
   private checkTimes(): void {
     const split = this.props.timeText.split(' - ');
-    const hours = split.map(item => {
+   // let hours = split.map(item => {
+      const hours = split.map(item => {
+
       return item.split(':');
     });
 
@@ -40,6 +43,7 @@ export class CalendarCardComponent implements OnInit {
     }
 
   }
+
   private compareMinutes(hours: any[]): number {
     const startMinutes = +hours[0][1];
     const endMinutes = +hours[1][1];

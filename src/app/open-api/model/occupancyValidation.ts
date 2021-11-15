@@ -24,5 +24,6 @@ export interface OccupancyValidation {
     itemOrderRecordId?: number | null;
     classCode?: number | null;
     ischeckCooking?: number | null;
+    // amountItem?: any;
 }
 

@@ -15,13 +15,14 @@ export class SaveActivityComponent implements OnInit {
 
   constructor(private facilitiesServices: FacilitiesService, private tripService: TripService) { }
 
-  public selectedActivity$: Observable<ActivitiesCardInterface>;
-  public subscribeToActivity: Subscription;
-  public updateForm: boolean = false;
-  public form: FormGroup;
-  public orderingCustomer: boolean = false;
-  public showSleepAreas: boolean = false;
-  public selectedDay: number = 0;
+  selectedActivity$: Observable<ActivitiesCardInterface>;
+  subscribeToActivity: Subscription;
+  updateForm: boolean = false;
+  form: FormGroup;
+  orderingCustomer: boolean = false;
+  showSleepAreas: boolean = false;
+  selectedDay: number = 0;
+  defaultImage: string = 'defaultFacility.svg';
 
   @Input() type: string;
   @Input() public additonsType: any[] = [
@@ -31,11 +32,9 @@ export class SaveActivityComponent implements OnInit {
     { name: 'כלכלה', completed: false, svg: 'dinner' },
     // { name: 'הפעלה מוסיקלית', completed: false , svg:'music' },
   ];
-
   @Input() public additonsType2: any[] = [
     { name: 'הסעה', completed: false, svg: 'bus' }
   ];
-  // @Input() days: any[] = DAYS;
   @Input() days: any[] = this.tripService.facilitiesArray;
   @Output() emitFormValues: EventEmitter<any> = new EventEmitter();
 
@@ -75,7 +74,7 @@ export class SaveActivityComponent implements OnInit {
     this.form.controls['selectedDay'].setValue(this.selectedDay);
     this.form.controls['start'].setValue(this.arrangeTime('start'));
     this.form.controls['end'].setValue(this.arrangeTime('end'));
-    
+
     if (this.updateForm) {
       this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
       this.facilitiesServices.closeModal('close');
@@ -109,10 +108,12 @@ export class SaveActivityComponent implements OnInit {
     const [date, time] = args.split('T');
     return time;
   }
+  
   createForm(data): void {
     if (!data.start) {
+      this.updateForm = false;
       this.form = new FormGroup({
-        'title': new FormControl(data.name),
+        'title': new FormControl(data.name || data.title),
         'selectedDay': new FormControl(this.selectedDay),
         // 'start': new FormControl('08:00'),
         // 'end': new FormControl('09:00'),
@@ -137,8 +138,14 @@ export class SaveActivityComponent implements OnInit {
       //console.log('this form => ', this.form);
     } else {
       this.updateForm = true;
-      data.start = this.separateTimeFromDate(data.start);
-      data.end = this.separateTimeFromDate(data.end);
+      if (data.start.includes("T")) {
+        data.start = this.separateTimeFromDate(data.start);
+      }
+      if (data.end.includes("T")) {
+        data.end = this.separateTimeFromDate(data.end);
+      }
+      // data.start = this.separateTimeFromDate(data.start);
+      // data.end = this.separateTimeFromDate(data.end);
       this.selectedDay = data.selectedDay;
       if (data.invitingCustomer) {
         this.orderingCustomer = data.invitingCustomer;

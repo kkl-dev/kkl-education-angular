@@ -7,12 +7,19 @@
         <div class="save-activity__header" fxFlex='100' fxLayout="row">
             <div class="save-activity__header-icon" [fxFlex]="activity.img ? '30' : '10' ">
                 <!-- <div class="save-activity__header-icon" [fxFlex]="assets/images/{{ activity.iconPath}} ? '30' : '10' "> -->
-                    <!-- <div class="save-activity__header-icon" [fxFlex]="assets/images/{{ activity.img}} ? '30' : '10' "> -->
-
-                <img *ngIf="type" [src]='activity.img' />
-                <img *ngIf="type" [src]='activity.sitePicture' />
-                <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
+                <!-- <div class="save-activity__header-icon" [fxFlex]="assets/images/{{ activity.img}} ? '30' : '10' "> -->                    
+                    <img *ngIf="type" src="assets/images/{{ activity.img || activity.sitePicture }}" />
+                <!-- <img *ngIf="type" [src]='activity.img' />
+                <img *ngIf="type" [src]='activity.sitePicture' /> -->
+                <img *ngIf="!type" src="assets/images/{{ activity.svgUrl || activity.sitePicture }}" class="header__form-group-svg"/>
+                <!-- <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon> -->
             </div>
+
+            <!-- <div class="save-activity__header-icon">
+                <svg-icon src="assets/images/{{ activity.iconPath || defaultImage }}" class="header__form-group-svg"></svg-icon>
+                <svg-icon [src]="item.svgUrl" class="header__form-group-svg"></svg-icon>
+            </div> -->
+
             <div class="save-activity__header-content" fxFlex='70'>
                 <div class="save-activity__header-content-heading">
                     <span class="save-activity__header-content-heading-constant">שריין פעילות:</span>

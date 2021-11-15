@@ -213,3 +213,12 @@ app-tooltip {
         height: 50%;
     }
 }
+
+
+// for calender c
+::ng-deep td.fc-timegrid-slot.fc-timegrid-slot-lane {
+    background:white;
+}
+.calendar-hide{
+    display: none;
+}

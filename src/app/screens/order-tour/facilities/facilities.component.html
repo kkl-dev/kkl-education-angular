@@ -20,7 +20,15 @@
                 <p>תוספות בתשלום</p>
             </div>
             <div class="timeline">
-                <app-calendar></app-calendar>
+                <!-- <app-calendar></app-calendar> -->
+                <!-- start app-calendar -->
+                <full-calendar #calendar [options]="calendarOptions">
+                </full-calendar>                
+                <div class="calendar-hide">
+                    <app-dynamic #dynamic></app-dynamic>
+                </div>
+                <!-- end app-calendar -->
+                
             </div>
         </div>
     </div>

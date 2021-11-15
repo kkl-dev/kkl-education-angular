@@ -46,16 +46,17 @@ export class AddFacilityComponent implements OnInit {
   ngOnInit(): void {
     this.selectedFacility$ = this.facilitiesServices.getSelectedFacility();
     this.subscribeToFacility = this.selectedFacility$.subscribe(data => {
-      this.createForm(data);
+      //this.createForm(data);
       this.hours = data.occupiedHours;
       this.createOccupiedHoursArray();
-      // this.createForm(data);
+      this.createForm(data);
 
     });
   }
 
   createForm(data): void {
     if (!data.start) {
+      this.updateForm = false;
       this.addFacilityForm = new FormGroup({
         'title': new FormControl(data.name),
         'selectedDay': new FormControl(this.selectedDay),
@@ -81,8 +82,13 @@ export class AddFacilityComponent implements OnInit {
     } else {
       this.updateForm = true;
       this.selectedDay = data.selectedDay;
-      data.start = this.separateTimeFromDate(data.start);
-      data.end = this.separateTimeFromDate(data.end);
+      if (data.start.includes("T")) {
+        data.start = this.separateTimeFromDate(data.start);
+      }
+       if (data.end.includes("T")) {
+        data.end = this.separateTimeFromDate(data.end);
+      }
+     
       this.addFacilityForm = new FormGroup({});
       for (const property in data) {
         this.addFacilityForm.addControl(property, new FormControl(data[property]));
