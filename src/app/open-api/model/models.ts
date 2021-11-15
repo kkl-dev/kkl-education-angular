@@ -30,6 +30,7 @@ export * from './mapParameters';
 export * from './movements';
 export * from './musicActivationOrder';
 export * from './nightNumberOptions';
+export * from './occupancyCheckingResult';
 export * from './occupancyValidation';
 export * from './occupiedHours';
 export * from './order';

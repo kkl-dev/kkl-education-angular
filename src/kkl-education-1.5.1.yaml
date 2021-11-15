@@ -5,7 +5,7 @@ info:
   description: Education new project|
   contact:
     email: yochai@one1.co.il
-  version: 1.4.1
+  version: 1.5.1
 servers:
 # - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
 - url: http://knf-appl-dev3:8077
@@ -1004,9 +1004,9 @@ paths:
         "200":
           description: Success
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/OccupancyCheckingResult'
   /defaultItemByItem/IfAddItemToExistItemByIdOrder/{orderItemId}:
     get:
       tags:
@@ -1097,7 +1097,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OccupancyValidationResult'
+                $ref: '#/components/schemas/OccupancyCheckingResult'
   /order/classOccupancy:
      post:
       tags:
@@ -1114,7 +1114,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OccupancyValidationResult'
+                $ref: '#/components/schemas/OccupancyCheckingResult'
   /order/hourOccupancy:
      post:
       tags:
@@ -1131,7 +1131,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OccupancyValidationResult'
+                $ref: '#/components/schemas/OccupancyCheckingResult'
   /order/vat:
     get:
       tags:
@@ -2738,6 +2738,7 @@ components:
       properties:
         exitPoint:
           type: integer
+          nullable: true
           description: settlement code - required for calculate price
         scatterLocation:
           type: string
@@ -2872,6 +2873,10 @@ components:
         isGuideSupplier:
           type: integer
           nullable: true
+        isXemptedFromVat:
+          type: integer
+          example: 0
+        
     ItemsByTypeOrder:
       type: object
       properties:
@@ -2976,41 +2981,44 @@ components:
     OccupancyValidation:
       type: object
       properties:
-        centerFieldId:
+         centerFieldId:
           type: integer
           example: 1
-        startDate:
+         startDate:
           type: string
           format: date
-        endDate:
+         endDate:
            type: string
            format: date 
-        startHour:
+         startHour:
            type: string
            format: date
-        endHour:
+           nullable: true
+         endHour:
            type: string
            format: date
-        typeSleepId:
+           nullable: true
+         typeSleepId:
            type: integer
-        quantityItem:
-           type: number
-        tripId: 
+           nullable: true
+         quantityItem:
            type: integer
-        orderId: 
+         tripId: 
+           type: integer
+         orderId: 
            type : integer
            nullable: true
-        itemOrderRecordId: 
+         itemOrderRecordId: 
            type: integer
            nullable: true
-        classCode: 
+         classCode: 
            type: integer
            nullable: true
-        ischeckCooking:
+         ischeckCooking:
            type: integer
            nullable: true
            
-    OccupancyValidationResult:
+    OccupancyCheckingResult:
         type: object
         properties:
          isOccupancyProblem:

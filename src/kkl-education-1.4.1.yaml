@@ -9,6 +9,7 @@ info:
 servers:
 # - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
 - url: http://knf-appl-dev3:8077
+- url: http://localhost:8080
   description: SwaggerHub API Auto Mocking
 tags:
 - name: user

@@ -18,6 +18,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { ItemsByTypeOrder } from '../model/models';
+import { OccupancyCheckingResult } from '../model/models';
 import { OccupancyValidation } from '../model/models';
 import { OrderEvent } from '../model/models';
 import { OrderItemCommonDetails } from '../model/models';
@@ -38,7 +39,6 @@ import { Configuration }                                     from '../configurat
 })
 export class OrderService {
 
-    //protected basePath = 'http://knf-appl-dev3:5077';
     protected basePath = 'http://knf-appl-dev3:8077';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
@@ -201,10 +201,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkClassOccpancy(occupancyValidation?: OccupancyValidation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<string>;
-    public checkClassOccpancy(occupancyValidation?: OccupancyValidation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<string>>;
-    public checkClassOccpancy(occupancyValidation?: OccupancyValidation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<string>>;
-    public checkClassOccpancy(occupancyValidation?: OccupancyValidation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+    public checkClassOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<OccupancyCheckingResult>;
+    public checkClassOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<OccupancyCheckingResult>>;
+    public checkClassOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<OccupancyCheckingResult>>;
+    public checkClassOccupancy(occupancyValidation?: OccupancyValidation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -212,7 +212,7 @@ export class OrderService {
         if (httpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'text/plain'
+                'application/json'
             ];
             httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -235,7 +235,7 @@ export class OrderService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<string>(`${this.configuration.basePath}/order/classOccupancy`,
+        return this.httpClient.post<OccupancyCheckingResult>(`${this.configuration.basePath}/order/classOccupancy`,
             occupancyValidation,
             {
                 responseType: <any>responseType_,
@@ -252,10 +252,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkHostingOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<string>;
-    public checkHostingOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<string>>;
-    public checkHostingOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<string>>;
-    public checkHostingOccupancy(occupancyValidation?: OccupancyValidation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+    public checkHostingOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<OccupancyCheckingResult>;
+    public checkHostingOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<OccupancyCheckingResult>>;
+    public checkHostingOccupancy(occupancyValidation?: OccupancyValidation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<OccupancyCheckingResult>>;
+    public checkHostingOccupancy(occupancyValidation?: OccupancyValidation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -263,7 +263,7 @@ export class OrderService {
         if (httpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'text/plain'
+                'application/json'
             ];
             httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -286,7 +286,7 @@ export class OrderService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<string>(`${this.configuration.basePath}/order/hostingOccupancy`,
+        return this.httpClient.post<OccupancyCheckingResult>(`${this.configuration.basePath}/order/hostingOccupancy`,
             occupancyValidation,
             {
                 responseType: <any>responseType_,
@@ -303,10 +303,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkHoursOccupancyPerItemInOrder(occupancyValidation?: OccupancyValidation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<string>;
-    public checkHoursOccupancyPerItemInOrder(occupancyValidation?: OccupancyValidation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<string>>;
-    public checkHoursOccupancyPerItemInOrder(occupancyValidation?: OccupancyValidation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<string>>;
-    public checkHoursOccupancyPerItemInOrder(occupancyValidation?: OccupancyValidation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+    public checkHoursOccupancyPerItemInOrder(occupancyValidation?: OccupancyValidation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<OccupancyCheckingResult>;
+    public checkHoursOccupancyPerItemInOrder(occupancyValidation?: OccupancyValidation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<OccupancyCheckingResult>>;
+    public checkHoursOccupancyPerItemInOrder(occupancyValidation?: OccupancyValidation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<OccupancyCheckingResult>>;
+    public checkHoursOccupancyPerItemInOrder(occupancyValidation?: OccupancyValidation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -314,7 +314,7 @@ export class OrderService {
         if (httpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'text/plain'
+                'application/json'
             ];
             httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -337,7 +337,7 @@ export class OrderService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<string>(`${this.configuration.basePath}/order/hourOccupancy`,
+        return this.httpClient.post<OccupancyCheckingResult>(`${this.configuration.basePath}/order/hourOccupancy`,
             occupancyValidation,
             {
                 responseType: <any>responseType_,
@@ -356,10 +356,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<string>;
-    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<string>>;
-    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<string>>;
-    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<OccupancyCheckingResult>;
+    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<OccupancyCheckingResult>>;
+    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<OccupancyCheckingResult>>;
+    public checkItemsExistInDateTime(tripId: number, centerFieldId: number, orderItemCommonDetails?: OrderItemCommonDetails, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling checkItemsExistInDateTime.');
         }
@@ -373,7 +373,7 @@ export class OrderService {
         if (httpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'text/plain'
+                'application/json'
             ];
             httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -396,7 +396,7 @@ export class OrderService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<string>(`${this.configuration.basePath}/orderItems/CheckItemsExistInDateTime/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(centerFieldId))}`,
+        return this.httpClient.post<OccupancyCheckingResult>(`${this.configuration.basePath}/orderItems/CheckItemsExistInDateTime/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(centerFieldId))}`,
             orderItemCommonDetails,
             {
                 responseType: <any>responseType_,

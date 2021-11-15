@@ -29,13 +29,15 @@ export class GeneralFormService {
   public settlementList=[];
   public languageList =[];
   originalItemList = [];
+  originalSupplierList =[];
   public siteList =[];
   tripOrdersList :OrderEvent[];
+ 
   //public tempOrderReduce = new BehaviorSubject<any>(null)
   public tempOrderReduce = new BehaviorSubject<{tempOrderReduce:any,orderType:any}>(null)
-
   public tableData = new Subject();
   public enableButton =new Subject<boolean>();
+  public isSaveOrderSucceeded = new Subject<boolean>();
  
 
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
@@ -176,7 +178,7 @@ export class GeneralFormService {
       },
     }),
     new QuestionSelect({
-      key: 'exitLocation',
+      key: 'exitPoint',
       label: 'נקודת יציאה',
       type: 'select',
       // validations: [Validators.required],
@@ -450,7 +452,8 @@ export class GeneralFormService {
   }
 
   clearFormFields() {
-    
+    let itemIndex= this.details.findIndex(i => i.key === 'itemId');
+    this.details[itemIndex].value='';
     let statHourIndex = this.details.findIndex(i => i.key === 'startHour');
     this.details[statHourIndex].value = '';
     let endHourIndex = this.details.findIndex(i => i.key === 'endHour');
@@ -470,8 +473,8 @@ export class GeneralFormService {
 
 
   mapOrderList(orderList) {
-    this.tripOrdersList= orderList;
-    console.log('order list is: ', orderList);
+    //this.tripOrdersList= orderList;
+    
     this.transportOrderList=[];
     this.securingOrderList=[];
     this.siteOrderList=[];
@@ -510,6 +513,7 @@ export class GeneralFormService {
         console.log(res); 
         this.tableData.next(res);
         this.enableButton.next(true);
+        this.isSaveOrderSucceeded.next(true);
         this.setOrderList(res,orderType,'adding');
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
@@ -517,6 +521,7 @@ export class GeneralFormService {
         })
       }, (err) => {
         console.log(err);
+        this.isSaveOrderSucceeded.next(false);
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
           data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
@@ -526,13 +531,15 @@ export class GeneralFormService {
     editOrder(item: any,orderType) { 
       this.orderService.editOrder(item).subscribe(res => {
         console.log(res);  
-        this.setOrderList(res, orderType,'updating')
+        this.setOrderList(res, orderType,'updating');
+        this.isSaveOrderSucceeded.next(true);
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
           data: { message: 'ההזמנה עודכנה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
         })
       }, (err) => {
         console.log(err);
+        this.isSaveOrderSucceeded.next(false);
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
           data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }

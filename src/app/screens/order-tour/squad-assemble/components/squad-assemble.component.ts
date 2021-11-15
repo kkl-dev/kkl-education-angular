@@ -8,6 +8,7 @@ import { SquadGroupComponent } from './squad-group/squad-group.component';
 import { SquadClientService } from './squad-client/squad-client.service';
 
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
+import { UserService } from 'src/app/open-api';
 
 @Component({
   selector: 'app-squad-assemble',
@@ -21,7 +22,7 @@ export class SquadAssembleComponent implements OnInit {
   private newClientMode: boolean;
   public md$ : Observable<boolean>
   constructor(private squadAssembleService: SquadAssembleService,private tripService:TripService, private breakpointService : BreakpointService,
-    private squadClientService: SquadClientService) {
+    private squadClientService: SquadClientService,private userService:UserService) {
       this.options = {
       firstCalendarDay: 0,
       format: 'dd/LL/yyyy',
@@ -33,6 +34,7 @@ export class SquadAssembleComponent implements OnInit {
   
   ngOnInit(): void {
     this.tripService.getLookUp();
+    //this.getRegionList();
     this.subscribeToNewClient();
     this.md$ = this.breakpointService.isTablet()
     this.setSchedulAndClientSquadValues();
@@ -74,6 +76,16 @@ export class SquadAssembleComponent implements OnInit {
     };
   }
 
+   getRegionList(){
+     let chevelCode= this.tripService.centerField.chevelCode
+     this.userService.getAreasByChevel(chevelCode).subscribe(res=>{
+      res.forEach(element => {
+        this.squadAssembleService.regionList.push({ label: element.name, value: element.id.toString() });
+      });
+     },(err)=>{
+       console.log(err);
+     })
+   }
   setSchedulAndClientSquadValues(){
     if(this.squadAssembleService.tripInfo.tripStart!=undefined){
       console.log('trip info is full');

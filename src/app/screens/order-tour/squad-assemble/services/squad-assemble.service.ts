@@ -36,6 +36,7 @@ export class SquadAssembleService {
   tripInfofromService: TripModel;
   peopleInTrip ;
   options!: CalendarOptions;
+  regionList=[];
   // public freeSpacesArrayGenarator(start: Date, end: Date) {
   //   const i = 0;
   //   let freeSpacesArray = [];
@@ -155,7 +156,7 @@ export class SquadAssembleService {
     //   label: 'איזור טיול',
 
     //   inputProps: {
-    //     options: [],
+    //     options: this.regionList
     //   },
     // }),
     new QuestionTextarea({
