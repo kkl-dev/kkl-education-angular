@@ -232,12 +232,13 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsSecuring()) { return; }
       let orderId;
-      if (this.generalFormService.economyOrderList.length > 0) {
-        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      if (this.generalFormService.securingOrderList.length > 0) {
+        orderId = this.generalFormService.securingOrderList[0].order.orderId
       }
       let securing = {} as SecuringOrder;
       securing.globalParameters = {} as OrderItemCommonDetails;
       securing.order = {} as Order;
+      if (orderId != undefined && orderId)
       securing.order.orderId = orderId;
       securing.order.supplier = {} as Supplier;
       securing.order.orderType = {} as OrderType;

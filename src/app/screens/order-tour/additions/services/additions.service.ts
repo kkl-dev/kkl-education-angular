@@ -236,8 +236,7 @@ export class AdditionsService {
       //   // itemOrder.billingSupplier = (currentVat / 100) + 1
       //   itemOrder.billingSupplier *= currentVat;
       // } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
-      if(!isXemptedFromVat)
-      itemOrder.billingSupplier *= currentVat;
+     
       if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
         var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides ?

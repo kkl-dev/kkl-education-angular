@@ -246,12 +246,13 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsSite()) { return; }
       let orderId;
-      if (this.generalFormService.economyOrderList.length > 0) {
-        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      if (this.generalFormService.siteOrderList.length > 0) {
+        orderId = this.generalFormService.siteOrderList[0].order.orderId
       }
       var site = {} as SiteOrder;
       site.globalParameters = {} as OrderItemCommonDetails;
       site.order = {} as Order;
+      if (orderId != undefined && orderId)
       site.order.orderId = orderId;
       site.order.supplier = {} as Supplier;
       site.order.orderType = {} as OrderType;

@@ -248,12 +248,13 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
      //if (!this.validationsGudiance()) { return; }
       let orderId;
-      if (this.generalFormService.economyOrderList.length > 0) {
-        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      if (this.generalFormService.gudianceOrderList.length > 0) {
+        orderId = this.generalFormService.gudianceOrderList[0].order.orderId
       }
       let guide = {} as GuidanceOrder;
       guide.globalParameters = {} as OrderItemCommonDetails;
       guide.order = {} as Order;
+      if (orderId != undefined && orderId)
       guide.order.orderId = orderId;
       guide.order.supplier = {} as Supplier;
       guide.order.orderType = {} as OrderType;

@@ -378,7 +378,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       t.globalParameters = {} as OrderItemCommonDetails;
       t.order = {} as Order;
       if (orderId != undefined && orderId)
-        t.order.orderId = orderId;
+         t.order.orderId = orderId;
       t.order.supplier = {} as Supplier;
       t.order.orderType = {} as OrderType;
       //Object.keys(this.form.value.details).map((key, index) => {
@@ -574,13 +574,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
     });
-    this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+    // this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    //   console.log(value)
+    //   let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+    //   this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+    //   this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
-    });
+    // });
     console.log(this.form)
   }
 

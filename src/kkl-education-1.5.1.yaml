@@ -1235,6 +1235,7 @@ components:
         diningRoomNotAvaliableTill:
           type: string
           format: datetime
+          nullable: true
         chevelCode :
           type: integer
           example: 1       

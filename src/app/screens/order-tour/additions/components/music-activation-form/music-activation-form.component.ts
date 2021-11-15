@@ -231,12 +231,13 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsMusicActivation()) { return; }
       let orderId;
-      if (this.generalFormService.economyOrderList.length > 0) {
-        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      if (this.generalFormService.musicOrderList.length > 0) {
+        orderId = this.generalFormService.musicOrderList[0].order.orderId
       }
       let music = {} as MusicActivationOrder;
       music.globalParameters = {} as OrderItemCommonDetails;
       music.order = {} as Order;
+      if (orderId != undefined && orderId)
       music.order.orderId = orderId;
       music.order.supplier = {} as Supplier;
       music.order.orderType = {} as OrderType;

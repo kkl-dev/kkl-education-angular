@@ -242,6 +242,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       let eco = {} as EconomyOrder;
       eco.globalParameters = {} as OrderItemCommonDetails;
       eco.order = {} as Order;
+      if (orderId != undefined && orderId)
       eco.order.orderId = orderId;
       eco.order.supplier = {} as Supplier;
       eco.order.orderType = {} as OrderType;

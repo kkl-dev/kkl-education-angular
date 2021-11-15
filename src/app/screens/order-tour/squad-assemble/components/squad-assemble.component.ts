@@ -34,7 +34,7 @@ export class SquadAssembleComponent implements OnInit {
   
   ngOnInit(): void {
     this.tripService.getLookUp();
-    //this.getRegionList();
+    this.getRegionList();
     this.subscribeToNewClient();
     this.md$ = this.breakpointService.isTablet()
     this.setSchedulAndClientSquadValues();
@@ -79,6 +79,7 @@ export class SquadAssembleComponent implements OnInit {
    getRegionList(){
      let chevelCode= this.tripService.centerField.chevelCode
      this.userService.getAreasByChevel(chevelCode).subscribe(res=>{
+       this.squadAssembleService.originalRegionList=res;
       res.forEach(element => {
         this.squadAssembleService.regionList.push({ label: element.name, value: element.id.toString() });
       });

@@ -230,12 +230,13 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsHosting()) { return; }
       let orderId;
-      if (this.generalFormService.economyOrderList.length > 0) {
-        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      if (this.generalFormService.hostingOrderList.length > 0) {
+        orderId = this.generalFormService.hostingOrderList[0].order.orderId
       }
       let hosting = {} as HostingOrder;
       hosting.globalParameters = {} as OrderItemCommonDetails;
       hosting.order = {} as Order;
+      if (orderId != undefined && orderId)
       hosting.order.orderId = orderId;
       hosting.order.supplier = {} as Supplier;
       hosting.order.orderType = {} as OrderType;
