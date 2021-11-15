@@ -347,7 +347,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat=true)
+      if(this.isSupplierXemptedFromVat==true)
         itemCost = Math.floor(item.cost);
        else
        itemCost = Math.floor(item.costVat);

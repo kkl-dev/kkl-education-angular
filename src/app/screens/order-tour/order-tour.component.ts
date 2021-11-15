@@ -181,7 +181,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
           this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
           this.squadAssemble.tripInfo.centerField.linkSite = '';
-          let areaId=this.squadAssemble.formsArray[i].get('areaTrip').value;
+          let areaId= +this.squadAssemble.formsArray[i].get('areaTrip').value;
           this.squadAssemble.tripInfo.areaTrip= this.squadAssemble.originalRegionList.find(i=> i.id=== areaId); 
           let tripDates = this.squadAssemble.formsArray[i].get('dates').value;
           let subTripDates = tripDates.split("-");
