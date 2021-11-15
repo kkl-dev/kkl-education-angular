@@ -275,30 +275,33 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   public onSave(): void {
     if (this.form) {
-      let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-      if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
-        this.orderService.checkItemsExistInDateTime(this.tripId,
-          this.centerFieldId, item).subscribe(res=>{
-             if(res!= " "){
-              this._dialog.open(ConfirmDialogComponent, {
-                width: '500px',
-                data: { message: res, content: ''}
-              })
-              return;
-             }
-             else{
-              if (!this.additionsService.globalValidations(this.form)) { return; }
-              //if (!this.validationsTransport()) { return; }
-              this.mapFormFieldsToServer()
-             }
-          })
-      }
-      else{
-        if (!this.additionsService.globalValidations(this.form)) { return; }
-        //if (!this.validationsTransport()) { return; }
-        this.mapFormFieldsToServer()
-      }
+      // let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+      // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+      //   this.orderService.checkItemsExistInDateTime(this.tripId,
+      //     this.centerFieldId, item).subscribe(res=>{
+      //        if(res!= " "){
+      //         this._dialog.open(ConfirmDialogComponent, {
+      //           width: '500px',
+      //           data: { message: res, content: ''}
+      //         })
+      //         return;
+      //        }
+      //        else{
+      //         if (!this.additionsService.globalValidations(this.form)) { return; }
+      //         //if (!this.validationsTransport()) { return; }
+      //         this.mapFormFieldsToServer()
+      //        }
+      //     })
+      // }
+      // else{
+      //   if (!this.additionsService.globalValidations(this.form)) { return; }
+      //   //if (!this.validationsTransport()) { return; }
+      //   this.mapFormFieldsToServer()
+      // }
        
+      if (!this.additionsService.globalValidations(this.form)) { return; }
+      //if (!this.validationsTransport()) { return; }
+      this.mapFormFieldsToServer()
       //if (!this.additionsService.globalValidations(this.form)) { return; }
      // if (!this.validationsTransport()) { return; }
       // this.editMode = true;
@@ -521,9 +524,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         console.log('supplier changed:',value);
         this.supplierId=value;
         this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('itemCost').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue('', { emitEvent: false });
         let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
         if(supplier.isXemptedFromVat==1)
         this.isSupplierXemptedFromVat=true;

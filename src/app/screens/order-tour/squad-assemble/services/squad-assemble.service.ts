@@ -150,15 +150,15 @@ export class SquadAssembleService {
       inputProps: {},
     }),
 
-    // new QuestionSelect({
-    //   key: 'tourRegion',
-    //   type: 'select',
-    //   label: 'איזור טיול',
-
-    //   inputProps: {
-    //     options: this.regionList
-    //   },
-    // }),
+    new QuestionSelect({
+      key: 'tourRegion',
+      type: 'select',
+      label: 'איזור טיול',
+       
+      inputProps: {
+         options: this.regionList
+      },
+    }),
     new QuestionTextarea({
       key: 'commentManager',
       label: 'הערות מנהליות',
