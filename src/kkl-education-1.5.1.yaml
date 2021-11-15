@@ -2874,13 +2874,8 @@ components:
           type: integer
           nullable: true
         isXemptedFromVat:
-<<<<<<< HEAD
-          type: boolean
-          example: false;
-=======
           type: integer
           example: 0
->>>>>>> 97f4ba4b533b0af77191e6b294ca025293b44238
         
     ItemsByTypeOrder:
       type: object

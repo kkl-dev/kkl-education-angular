@@ -11,7 +11,8 @@
                     <img *ngIf="type" src="assets/images/{{ activity.img || activity.sitePicture }}" />
                 <!-- <img *ngIf="type" [src]='activity.img' />
                 <img *ngIf="type" [src]='activity.sitePicture' /> -->
-                <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
+                <img *ngIf="!type" src="assets/images/{{ activity.svgUrl || activity.sitePicture }}" class="header__form-group-svg"/>
+                <!-- <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon> -->
             </div>
 
             <!-- <div class="save-activity__header-icon">

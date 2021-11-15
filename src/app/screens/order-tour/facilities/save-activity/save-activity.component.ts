@@ -111,8 +111,9 @@ export class SaveActivityComponent implements OnInit {
   
   createForm(data): void {
     if (!data.start) {
+      this.updateForm = false;
       this.form = new FormGroup({
-        'title': new FormControl(data.name),
+        'title': new FormControl(data.name || data.title),
         'selectedDay': new FormControl(this.selectedDay),
         // 'start': new FormControl('08:00'),
         // 'end': new FormControl('09:00'),

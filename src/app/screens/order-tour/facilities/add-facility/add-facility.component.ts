@@ -56,6 +56,7 @@ export class AddFacilityComponent implements OnInit {
 
   createForm(data): void {
     if (!data.start) {
+      this.updateForm = false;
       this.addFacilityForm = new FormGroup({
         'title': new FormControl(data.name),
         'selectedDay': new FormControl(this.selectedDay),

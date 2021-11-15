@@ -35,8 +35,7 @@ export class FacilitiesConvertingService {
                 user: obj['customerName']
               };
             })
-          ]
-        };
+          ]};
         arr.push(newObj);
       });
     });
@@ -95,14 +94,15 @@ export class FacilitiesConvertingService {
       if (arr[i].start != undefined && arr[i].start.includes("T")) {
 
         let orderTypeCode = 4;
-        let orderTypeName = '';
+        let orderTypeName = 'כלכלה';
         // if (arr[i].type == "facility") {
         //check if goes into tempOrderArr
         // if (arr[i].svgUrl && !arr[i].additions) {
         if (arr[i].facilityId || arr[i].itemId || arr[i].type == "facility") {
-          orderTypeName = arr[i].title;
-          orderTypeCode = arr[i].orderTypeCode;
-          orderTypeName = arr[i].orderTypeName;
+          // if (arr[i].facilityId || arr[i].type == "facility") {
+
+          // orderTypeCode = arr[i].orderTypeCode;
+          // orderTypeName = arr[i].orderTypeName;
 
           if (arr[i].facilityId) {
             orderTypeCode = 7;
@@ -115,6 +115,7 @@ export class FacilitiesConvertingService {
             "tripId": tripId,
             "orderTypeCode": orderTypeCode,
             "orderTypeName": orderTypeName,
+            "orderItemName": arr[i].title,
             "itemId": arr[i].facilityId || arr[i].itemId,
             "startDate": arr[i].start,
             "endDate": arr[i].end,
@@ -167,6 +168,7 @@ export class FacilitiesConvertingService {
               "tripId": tripId,
               "orderTypeCode": orderTypeCode,
               "orderTypeName": orderTypeName,
+              "orderItemName": arr[i].title, // fix
               "itemId": arr[i].itemId,
               "startDate": arr[i].start,
               "endDate": arr[i].end,
