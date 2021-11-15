@@ -108,6 +108,7 @@ export class SaveActivityComponent implements OnInit {
     const [date, time] = args.split('T');
     return time;
   }
+  
   createForm(data): void {
     if (!data.start) {
       this.form = new FormGroup({

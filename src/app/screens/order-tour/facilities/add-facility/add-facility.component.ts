@@ -46,10 +46,10 @@ export class AddFacilityComponent implements OnInit {
   ngOnInit(): void {
     this.selectedFacility$ = this.facilitiesServices.getSelectedFacility();
     this.subscribeToFacility = this.selectedFacility$.subscribe(data => {
-      this.createForm(data);
+      //this.createForm(data);
       this.hours = data.occupiedHours;
       this.createOccupiedHoursArray();
-      // this.createForm(data);
+      this.createForm(data);
 
     });
   }

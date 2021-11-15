@@ -317,7 +317,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
      this.occupancyValidation.tripId= this.tripId;
      this.occupancyValidation.startDate= this.generalFormService.changeDateFormat(this.form.getRawValue().details['startDate'], 'UTC')
      this.occupancyValidation.endDate= this.generalFormService.changeDateFormat(this.form.getRawValue().details['endDate'], 'UTC')
-     this.occupancyValidation.amountItem= this.form.value.details['quantity'];
+     this.occupancyValidation.quantityItem= this.form.value.details['quantity'];
      if(item.orderItemDetails.classroomTypeId != null){
       this.occupancyValidation.classCode= item.orderItemDetails.classroomTypeId;
        this.CheckClassOccupancy(this.occupancyValidation)

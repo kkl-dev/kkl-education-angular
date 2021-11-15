@@ -108,16 +108,16 @@ export class FacilitiesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
-    //   console.log('getCalendarEventsArr: ', value)
-    //   if (this.myCalendarComponent) {
-    //     this.myCalendarComponent.options.events = value;
-    //   } else {
-    //     setTimeout(() => {
-    //       this.myCalendarComponent.options.events = value;
-    //     }, 500);
-    //   }
-    // });
+    this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+      console.log('getCalendarEventsArr: ', value)
+      if (this.myCalendarComponent) {
+        this.myCalendarComponent.options.events = value;
+      } else {
+        setTimeout(() => {
+          this.myCalendarComponent.options.events = value;
+        }, 500);
+      }
+    });
 
     try {
       this.tripId = this.squadAssembleService.tripInfofromService.trip.id;

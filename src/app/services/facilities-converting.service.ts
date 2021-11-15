@@ -208,6 +208,17 @@ export class FacilitiesConvertingService {
     return newTempOrderObj;
   }
 
+  arrangeTime(date: string) {
+    // yak 
+    let day = date.split("T");
+    let [hours, minutes] = day[1].split(':');
+
+    if (hours.length == 1) {
+      hours = `0${hours}`;
+    }
+    return `${day[0]}T${hours}:${minutes}`;
+  }
+
   convertActivityListforTripCalendar(activityList: any) {
     //fix if date is from 1900
     if (activityList.fromHour.includes("1900") || activityList.tillHour.includes("1900")) {
@@ -215,7 +226,11 @@ export class FacilitiesConvertingService {
       let [d, from] = activityList.fromHour.split('T');
       let till = activityList.tillHour.split('T');
       activityList.fromHour = `${date}T${from}`;
-      activityList.tillHour = `${date}T${till[1]}`
+      activityList.tillHour = `${date}T${till[1]}`;
+
+      activityList.fromHour = this.arrangeTime(activityList.fromHour);
+      activityList.tillHour = this.arrangeTime(activityList.tillHour);
+
     }
 
     //   if (activityList.fromHour.includes("1900")) {
