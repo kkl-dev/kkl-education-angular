@@ -42,20 +42,20 @@ export class SquadGroupService {
       validations: [Validators.required],
     }),
 
-    new QuestionSelect({
-      key: 'assemble',
-      type: 'select',
-      fullWidth: true,
-      rows: 4,
-      label: 'הרכב קבוצה',
-      inputProps: {
-        options: [
-          { label: 'בנים', value: '1' },
-          { label: 'בנות', value: '2' },
-          { label: 'מעורב', value: '3' },
-        ],
-      },
-    }),
+    // new QuestionSelect({
+    //   key: 'assemble',
+    //   type: 'select',
+    //   fullWidth: true,
+    //   rows: 4,
+    //   label: 'הרכב קבוצה',
+    //   inputProps: {
+    //     options: [
+    //       { label: 'בנים', value: '1' },
+    //       { label: 'בנות', value: '2' },
+    //       { label: 'מעורב', value: '3' },
+    //     ],
+    //   },
+    // }),
 
     new QuestionNumber({
       key: 'numAccompanied',

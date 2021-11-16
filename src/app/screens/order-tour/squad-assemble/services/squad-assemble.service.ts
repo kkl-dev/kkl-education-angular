@@ -157,8 +157,9 @@ export class SquadAssembleService {
       label: 'איזור טיול',
        
       inputProps: {
-         options: this.regionList
+        //  options: this.regionList
       },
+      validations: [Validators.required],
     }),
     new QuestionTextarea({
       key: 'commentManager',

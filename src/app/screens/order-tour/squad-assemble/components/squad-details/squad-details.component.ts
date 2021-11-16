@@ -56,9 +56,9 @@ export class SquadDetailsComponent implements OnInit {
       let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='department');
       this.squadDetailsService.questions[departmentIdIndex].value= this.squadAssembleService.tripInfo.departmentId.toString();
       let tripLocationIndex = this.squadDetailsService.questions.findIndex(i => i.key ==='tripLocation');
-      if(this.squadAssembleService.tripInfo.departmentId.toString() =='1')
-      this.squadDetailsService.questions[tripLocationIndex].value ='1';
-      else if(this.squadAssembleService.tripInfo.departmentId.toString() =='8'){
+      if(this.squadAssembleService.tripInfo.departmentId.toString() =='8')
+      this.squadDetailsService.questions[tripLocationIndex].value ='8';
+      else if(this.squadAssembleService.tripInfo.departmentId.toString() =='1'){
         this.squadDetailsService.questions[tripLocationIndex].inputProps.options=[];
         this.countriesList = this.setCountryList(this.tripService.countries)
         this.squadDetailsService.questions[tripLocationIndex].inputProps.options = this.countriesList;
@@ -90,7 +90,7 @@ export class SquadDetailsComponent implements OnInit {
       //   return value;
       // })
       map((value: string) => {
-        value === '1'
+        value === '8'
           ? this.setVal()
           : this.setCountries();
 
@@ -103,12 +103,12 @@ export class SquadDetailsComponent implements OnInit {
     let tripLocationIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='tripLocation');
     //this.squadDetailsService.questions[departmentIdIndex].value= '1';
     let options =   [
-      { label: 'ישראל', value: '1' },
-      { label: 'חו"ל', value: '8' },
+      { label: 'ישראל', value: '8' },
+      { label: 'חו"ל', value: '1' },
     ];
     this.squadDetailsService.questions[tripLocationIndex].inputProps.options=[];
     this.squadDetailsService.questions[tripLocationIndex].inputProps.options= options;
-    this.form.controls['tripLocation'].patchValue('1');
+    this.form.controls['tripLocation'].patchValue('8');
      this.form.controls['tripLocation'].disable({ emitEvent: false });   
    }
    setCountries(){

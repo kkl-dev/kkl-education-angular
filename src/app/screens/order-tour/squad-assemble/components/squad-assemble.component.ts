@@ -20,6 +20,7 @@ export class SquadAssembleComponent implements OnInit {
   public budgetGroup: QuestionGroup;
   options!: CalendarOptions;
   private newClientMode: boolean;
+  //regionList=[];
   public md$ : Observable<boolean>
   constructor(private squadAssembleService: SquadAssembleService,private tripService:TripService, private breakpointService : BreakpointService,
     private squadClientService: SquadClientService,private userService:UserService) {
@@ -34,7 +35,7 @@ export class SquadAssembleComponent implements OnInit {
   
   ngOnInit(): void {
     this.tripService.getLookUp();
-    this.getRegionList();
+   
     this.subscribeToNewClient();
     this.md$ = this.breakpointService.isTablet()
     this.setSchedulAndClientSquadValues();
@@ -76,25 +77,16 @@ export class SquadAssembleComponent implements OnInit {
     };
   }
 
-   getRegionList(){
-     let chevelCode= this.tripService.centerField.chevelCode
-     this.userService.getAreasByChevel(chevelCode).subscribe(res=>{
-       this.squadAssembleService.originalRegionList=res;
-      res.forEach(element => {
-        this.squadAssembleService.regionList.push({ label: element.name, value: element.id.toString() });
-      });
-     },(err)=>{
-       console.log(err);
-     })
-   }
+ 
   setSchedulAndClientSquadValues(){
     if(this.squadAssembleService.tripInfo.tripStart!=undefined){
+    // if(this.squadAssembleService.tripInfo !=undefined){
       console.log('trip info is full');
-      let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
-      this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
-      let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
-      this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
-      // set client and contact form values
+      // let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
+      // this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
+      // let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
+      // this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
+      // // set client and contact form values
       let custObj={
         label: this.squadAssembleService.tripInfo.customer.name,
         value : this.squadAssembleService.tripInfo.customer.id.toString()
@@ -103,7 +95,6 @@ export class SquadAssembleComponent implements OnInit {
       custArr.push(custObj);
       this.squadClientService.questions[0].group.questions[0].inputProps.options=custArr;
       this.squadClientService.questions[0].group.questions[0].value=custObj.value;
-      //this.squadClientService.emitClientSelected(this.squadAssembleService.tripInfo.customer.id.toString())
       let contactGroupIndex=  this.squadClientService.questions.findIndex(i => i.key=='contact');
       let contactGroup = this.squadClientService.questions.find(i => i.key=='contact');
       let contactNameIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactName');
@@ -113,31 +104,7 @@ export class SquadAssembleComponent implements OnInit {
       let contactImailIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactEmail');
       this.squadClientService.questions[contactGroupIndex].group.questions[contactImailIndex].value= this.squadAssembleService.tripInfo.contactEmail;
     }
-    else{
-       let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
-       this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
-       if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
-        this.squadAssembleService.scheduleQuestions[datesIndex].value=this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till;
-        if (typeof (Storage) !== "undefined") {
-          localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
-        }
-      }
-      else {
-        this.squadAssembleService.scheduleQuestions[datesIndex].value= localStorage.getItem("sleepingDates");
-      }
-      if (this.tripService.centerField.id != 0) {
-        this.squadAssembleService.scheduleQuestions[1].value= this.tripService.centerField.id.toString();
-        if (typeof (Storage) !== "undefined") {
-          localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
-          localStorage.setItem("centerFieldName", this.tripService.centerField.name);
-        }
-      }
-      else {
-        this.squadAssembleService.scheduleQuestions[1].value= localStorage.getItem("centerFieldId");
-        //this.control.setValue(localStorage.getItem("centerFieldId"));
-      }
-       console.log('trip info is undefined');
-    }
+  
  }
   private subscribeToNewClient() {
     this.squadAssembleService.getNewClientObs().subscribe((value: boolean) => {

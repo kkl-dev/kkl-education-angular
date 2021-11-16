@@ -268,7 +268,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       music.order.supplier.id = +this.form.getRawValue().details.supplierId;
       music.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       music.order.orderType.name = 'מפעיל מוסיקלי';
-      music.order.orderType.id = 7;
+      music.order.orderType.id = 10;
       if(this.item!= undefined){
         if (this.item.globalParameters.tempOrderIdentity != undefined)
         music.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
