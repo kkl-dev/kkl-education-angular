@@ -53,8 +53,8 @@ export class SquadDetailsService {
       type: 'select',
       inputProps: {
         options: [
-          { label: 'ישראל', value: '1' },
-          { label: 'חו"ל', value: '8' },
+          { label: 'ישראל', value: '8' },
+          { label: 'חו"ל', value: '1' },
         ],
       },
       validations: [Validators.required],

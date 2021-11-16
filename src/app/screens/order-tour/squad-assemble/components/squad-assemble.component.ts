@@ -116,6 +116,26 @@ export class SquadAssembleComponent implements OnInit {
     else{
        let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
        this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
+       if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
+        this.squadAssembleService.scheduleQuestions[datesIndex].value=this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till;
+        if (typeof (Storage) !== "undefined") {
+          localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+        }
+      }
+      else {
+        this.squadAssembleService.scheduleQuestions[datesIndex].value= localStorage.getItem("sleepingDates");
+      }
+      if (this.tripService.centerField.id != 0) {
+        this.squadAssembleService.scheduleQuestions[1].value= this.tripService.centerField.id.toString();
+        if (typeof (Storage) !== "undefined") {
+          localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
+          localStorage.setItem("centerFieldName", this.tripService.centerField.name);
+        }
+      }
+      else {
+        this.squadAssembleService.scheduleQuestions[1].value= localStorage.getItem("centerFieldId");
+        //this.control.setValue(localStorage.getItem("centerFieldId"));
+      }
        console.log('trip info is undefined');
     }
  }
@@ -125,4 +145,33 @@ export class SquadAssembleComponent implements OnInit {
       this.setSquads();
     });
   }
+
+
+  // setDefaultValues(name: string) {
+  //   switch (name) {
+  //     case 'dates':
+  //       if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
+  //         this.control.setValue(this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+  //         if (typeof (Storage) !== "undefined") {
+  //           localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+  //         }
+  //       }
+  //       else {
+  //         this.control.setValue(localStorage.getItem("sleepingDates"));
+  //       }
+  //       break;
+
+  //     case 'centerField':
+  //       if (this.tripService.centerField.id != 0) {
+  //         this.control.setValue(this.tripService.centerField.id.toString());
+  //         if (typeof (Storage) !== "undefined") {
+  //           localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
+  //           localStorage.setItem("centerFieldName", this.tripService.centerField.name);
+  //         }
+  //       }
+  //       else {
+  //         this.control.setValue(localStorage.getItem("centerFieldId"));
+  //       }
+  //   }
+  // }
 }

@@ -64,8 +64,8 @@ export class FormInputComponent implements OnInit {
   ngOnInit(): void {
     this.name = this.getName(this.control);
     let name = this.getName(this.control);
-    if (name == 'dates' || name == 'centerField')
-      this.setDefaultValues(name);
+    // if (name == 'dates' || name == 'centerField')
+      //this.setDefaultValues(name);
     this.subscribeToControl();
   }
 
@@ -86,33 +86,33 @@ export class FormInputComponent implements OnInit {
     console.log(sleepingPlace);
   }
 
-  setDefaultValues(name: string) {
-    switch (name) {
-      case 'dates':
-        if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
-          this.control.setValue(this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
-          if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
-          }
-        }
-        else {
-          this.control.setValue(localStorage.getItem("sleepingDates"));
-        }
-        break;
+  // setDefaultValues(name: string) {
+  //   switch (name) {
+  //     case 'dates':
+  //       if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
+  //         this.control.setValue(this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+  //         if (typeof (Storage) !== "undefined") {
+  //           localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+  //         }
+  //       }
+  //       else {
+  //         this.control.setValue(localStorage.getItem("sleepingDates"));
+  //       }
+  //       break;
 
-      case 'centerField':
-        if (this.tripService.centerField.id != 0) {
-          this.control.setValue(this.tripService.centerField.id.toString());
-          if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
-            localStorage.setItem("centerFieldName", this.tripService.centerField.name);
-          }
-        }
-        else {
-          this.control.setValue(localStorage.getItem("centerFieldId"));
-        }
-    }
-  }
+  //     case 'centerField':
+  //       if (this.tripService.centerField.id != 0) {
+  //         this.control.setValue(this.tripService.centerField.id.toString());
+  //         if (typeof (Storage) !== "undefined") {
+  //           localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
+  //           localStorage.setItem("centerFieldName", this.tripService.centerField.name);
+  //         }
+  //       }
+  //       else {
+  //         this.control.setValue(localStorage.getItem("centerFieldId"));
+  //       }
+  //   }
+  // }
 
   getName(control: AbstractControl): string | null {
     let group = <FormGroup>control.parent;
@@ -177,7 +177,6 @@ export class FormInputComponent implements OnInit {
         this.tripService.getCustomer(attr.autoCustomerId);
       }
       this.tripService.budgetByParam.attribute = attr;
-      //this.tripService.budgetByParam.userInfo = "שחר גל";
       //find index 'dates'
       var index;
       for (var i in this.squadAssemble.formsArray) {

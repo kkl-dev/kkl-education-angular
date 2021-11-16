@@ -445,7 +445,7 @@ export class TripService {
         let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
         let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
         if (this.budget.type == 1) {
-
+          this.budgetIncome=[];
           response.subBudgetIncomeList.forEach(element => {
             this.budgetIncome.push({ label: element.name, value: element.id.toString() });
           });
