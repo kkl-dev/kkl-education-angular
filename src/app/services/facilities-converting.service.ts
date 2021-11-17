@@ -59,7 +59,7 @@ export class FacilitiesConvertingService {
     return tmpArr;
   }
 
-  convertActivityForApi(arr: any, userName: string) {
+  convertActivityForApi(arr: any) {
     let tripId = 0;
     try {
       tripId = this.squadAssembleService.tripInfofromService.trip.id;
@@ -98,7 +98,7 @@ export class FacilitiesConvertingService {
         // if (arr[i].type == "facility") {
         //check if goes into tempOrderArr
         // if (arr[i].svgUrl && !arr[i].additions) {
-        if (arr[i].facilityId || arr[i].itemId || arr[i].type == "facility") {
+        if (arr[i].facilityId || arr[i].itemId) {
           // if (arr[i].facilityId || arr[i].type == "facility") {
 
           // orderTypeCode = arr[i].orderTypeCode;
@@ -129,7 +129,7 @@ export class FacilitiesConvertingService {
             "tripActivityIdentity": arr[i].tripActivityIdentity || null,
             "activityId": arr[i].activityId || null,
             "activityName": arr[i].title || '',
-            "date": arr[i].start,
+            "date": arr[i].date || arr[i].start,
             "description": arr[i].description || arr[i].title,
             "fromHour": arr[i].start,
             "tillHour": arr[i].end,
@@ -168,8 +168,8 @@ export class FacilitiesConvertingService {
               "tripId": tripId,
               "orderTypeCode": orderTypeCode,
               "orderTypeName": orderTypeName,
-              "orderItemName": arr[i].title, // fix
-              "itemId": arr[i].itemId,
+             // "orderItemName": arr[i].title, // not meant to send orderItemName 
+              //"itemId": arr[i].itemId,
               "startDate": arr[i].start,
               "endDate": arr[i].end,
               "fromHour": arr[i].start,
@@ -205,20 +205,10 @@ export class FacilitiesConvertingService {
       start: tempOrderList.fromHour,
       svgUrl: "assets/images/defaultFacility.svg",
       title: tempOrderList.orderTypeName || tempOrderList.activityName || null,
+      ItemName: tempOrderList.orderItemName || null,
       type: "facility"
     };
     return newTempOrderObj;
-  }
-
-  arrangeTime(date: string) {
-    // yak 
-    let day = date.split("T");
-    let [hours, minutes] = day[1].split(':');
-
-    if (hours.length == 1) {
-      hours = `0${hours}`;
-    }
-    return `${day[0]}T${hours}:${minutes}`;
   }
 
   convertActivityListforTripCalendar(activityList: any) {
@@ -266,8 +256,22 @@ export class FacilitiesConvertingService {
       start: activityList.fromHour,
       svgUrl: "assets/images/defaultFacility.svg",
       title: activityList.activityName || null,
+      ItemName: activityList.activityName || null,
       type: "activity"
     };
     return newActivityListObj;
   }
+
+  
+  arrangeTime(date: string) {
+    // yak 
+    let day = date.split("T");
+    let [hours, minutes] = day[1].split(':');
+
+    if (hours.length == 1) {
+      hours = `0${hours}`;
+    }
+    return `${day[0]}T${hours}:${minutes}`;
+  }
+
 }

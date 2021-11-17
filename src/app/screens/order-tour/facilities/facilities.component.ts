@@ -41,7 +41,7 @@ export class FacilitiesComponent implements OnInit {
   public closeModal$: Observable<string>;
   public selectedFacility$: Observable<any>;
   public selectedActivity$: Observable<ActivitiesCardInterface>;
-  public calendarEventsArr$: Observable<EventInput[]>;
+  //public calendarEventsArr$: Observable<EventInput[]>;
   public timesArray: Array<string | number> = [];
   public hiddenElements: any = { facilities: false, activities: false };
   public colors = { green: '#37C56B', blue: '#448ECD' }
@@ -108,16 +108,16 @@ export class FacilitiesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
-      console.log('getCalendarEventsArr: ', value)
-      if (this.myCalendarComponent) {
-        this.myCalendarComponent.options.events = value;
-      } else {
-        setTimeout(() => {
-          this.myCalendarComponent.options.events = value;
-        }, 500);
-      }
-    });
+    // this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+    //   console.log('getCalendarEventsArr: ', value)
+    //   if (this.myCalendarComponent) {
+    //     this.myCalendarComponent.options.events = value;
+    //   } else {
+    //     setTimeout(() => {
+    //       this.myCalendarComponent.options.events = value;
+    //     }, 500);
+    //   }
+    // });
 
     try {
       this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
@@ -133,8 +133,8 @@ export class FacilitiesComponent implements OnInit {
     this.getOrderService();
     this.getTripCalendar();
 
-     this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
-     console.log('calendarEventsArr.value',  this.calendarEventsArr$);
+    //  this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
+    //  console.log('calendarEventsArr.value',  this.calendarEventsArr$);
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
     this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
     this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
@@ -399,6 +399,8 @@ export class FacilitiesComponent implements OnInit {
         this.tempOrderList = tripCalendar.tempOrderList;
         let newTempOrderObj: any;
         let newTempActivityList: any;  
+        this.facilitiesService.calendarEventsArr.next([]);
+        console.log("calendarEventsArr value ", this.facilitiesService.calendarEventsArr.value);
 
          // add to calender
         for (let i = 0; i < this.tempOrderList.length; i++) {
@@ -418,14 +420,23 @@ export class FacilitiesComponent implements OnInit {
         }
         console.log('calenderArray', this.calenderArray);
 
-        if (this.myCalendarComponent) {
-          this.myCalendarComponent.options.events = this.calenderArray;
-        } else {
-          setTimeout(() => {
-            this.myCalendarComponent.options.events = this.calenderArray;
-          }, 500);
-        }
-
+        // if (this.myCalendarComponent) {
+        //   this.myCalendarComponent.options.events = this.calenderArray;
+        // } else {
+        //   setTimeout(() => {
+        //     this.myCalendarComponent.options.events = this.calenderArray;
+        //   }, 500);
+        // }
+        this.valueSub = this.facilitiesService.getCalendarEventsArr(this.calenderArray).subscribe(value => {
+          console.log('getCalendarEventsArr: ', value);
+          if (this.myCalendarComponent) {
+            this.myCalendarComponent.options.events = value;
+          } else {
+            setTimeout(() => {
+              this.myCalendarComponent.options.events = value;
+            }, 500);
+          }
+        });
 
       }
     },
@@ -457,7 +468,7 @@ export class FacilitiesComponent implements OnInit {
 
   openModal(args: string): void {
     this.facilitiesService.closeModal(args);
-    console.log('openModal args: ' + args)
+    console.log('openModal args: ' + args);
   }
 
   public fillTimes(): void {
