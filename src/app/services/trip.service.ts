@@ -500,7 +500,9 @@ export class TripService {
         let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
         let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
         this.squadBudgetService.questions[index1].inputProps.options=[];
+        this.squadBudgetService.questions[index1].value='';
         this.squadBudgetService.questions[index2].inputProps.options=[];
+        this.squadBudgetService.questions[index2].value='';
         // if (this.budget.type == 1) {
         if (this.budget.type != undefined) {
           this.budgetIncome=[];

@@ -160,6 +160,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   syncToTripInfo() {
+    //let flagObj={flag:false,msg:''}
     let flag = false;
     let scheduleForm;
     let detalisForm;
@@ -242,13 +243,37 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           var ageGroup = this.squadAssemble.formsArray[i].get('ageGroup').value;
           this.squadAssemble.tripInfo.ageGroup = this.tripService.ageGroupOriginal.filter(el => el.id === parseInt(ageGroup))[0];
           if (this.squadAssemble.formsArray[i].get('numAdultAndYoung').value)
+             if(parseInt(this.squadAssemble.formsArray[i].get('numAdultAndYoung').value)>=0)
             this.squadAssemble.tripInfo.numAdultAndYoung = +this.squadAssemble.formsArray[i].get('numAdultAndYoung').value;
+            else{
+              this.squadAssemble.formsArray[i].get('numAdultAndYoung').setValue('');
+              this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה ילדים/מבוגרים');
+              return false;
+            }      
           if (this.squadAssemble.formsArray[i].get('numDrivers').value)
+          if (parseInt(this.squadAssemble.formsArray[i].get('numDrivers').value)>=0)
             this.squadAssemble.tripInfo.numDrivers = +this.squadAssemble.formsArray[i].get('numDrivers').value;
+            else{
+              this.squadAssemble.formsArray[i].get('numDrivers').setValue('');
+              this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה מספר נהגים');
+              return false;
+            }      
           if (this.squadAssemble.formsArray[i].get('numAccompanied').value)
+          if (parseInt(this.squadAssemble.formsArray[i].get('numAccompanied').value)>= 0)
             this.squadAssemble.tripInfo.numAccompanied = +this.squadAssemble.formsArray[i].get('numAccompanied').value;
+            else{
+              this.squadAssemble.formsArray[i].get('numAccompanied').setValue('');
+              this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה מספר מלווים');
+              return false;
+            }      
           if (this.squadAssemble.formsArray[i].get('numGuides').value)
+          if (parseInt(this.squadAssemble.formsArray[i].get('numGuides').value) >= 0)
             this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[i].get('numGuides').value;
+            else{
+              this.squadAssemble.formsArray[i].get('numGuides').setValue('');
+              this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה מספר מדריכים');
+              return false;
+            }     
           // if(this.squadAssemble.formsArray[i].get('medics').value)
           // this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[i].get('medics').value;
           ageGroupForm = true;
@@ -265,17 +290,15 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
           ContactForm = true;
         }
-        // if (this.squadAssemble.formsArray[i].controls.budgetIncome) {
-        //   console.log('I am budget');
-        //   this.squadAssemble.tripInfo.budget=this.tripService.budgetByParam.budget             
-        // }
       }
-
+       if(this.tripService.budgetByParam.budget.isByCity==1 ){
+         if(!this.tripService.budgetByParam.budget.cityId){
+           flag =false;
+           return flag;
+         }
+      }
       this.squadAssemble.tripInfo.budget = this.tripService.budgetByParam.budget;
-      //if(this.squadAssemble.tripInfo.budget!= undefined)
-
       budgetFlag=true;
-     
        this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
        if (this.squadAssemble.tripInfo.customer.id != undefined)
        customerFlag= true;
@@ -292,7 +315,6 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       let day = date.getDate();
       let dateFormat= year+'-'+(month)+'-'+day;
       this.squadAssemble.tripInfo.generateTime=dateFormat;
-      //this.squadAssemble.tripInfo.userInfo = 'שחר גל';
        if(startDate==endDate ){
           this.tripService.isOneDayTrip=true;
            this.createTrip(this.steps[2].path);
@@ -400,7 +422,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     if (routeIndex < this.steps.length) {
       if (routeIndex == 1) {
         let flag = this.syncToTripInfo();
-        if (flag == false) {
+        if (flag == false ) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
             data: { message: 'נא מלא את שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
@@ -441,6 +463,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.location.back();
   }
 
+  setDialogMessage(message){
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+       data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+     })
+
+  }
 
   ngOnDestroy() {
     if (this.addOrderSub) { this.addOrderSub.unsubscribe(); }

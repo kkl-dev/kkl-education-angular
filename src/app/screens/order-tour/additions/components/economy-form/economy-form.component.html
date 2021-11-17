@@ -1,6 +1,6 @@
 
 <div fxLayout="column" fxFlexFill>
-    <div fxFlex="35" *ngIf="flag">
+    <div fxFlex="35" *ngIf="ifInitiateFormflag">
       <app-form dir="rtl" [formTemplate]="formTemplate" [slots]="{ button: formButton }" (valueChange)="onValueChange($event)"
         [editMode]="editMode"></app-form>
     </div>

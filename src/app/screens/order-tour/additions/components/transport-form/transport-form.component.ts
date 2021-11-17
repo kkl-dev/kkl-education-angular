@@ -39,15 +39,17 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   supplierListSub: Subscription;
   settlementSub: Subscription;
   supplierSub: Subscription;
+  addOrderSub: Subscription;
+  editOrderSub: Subscription;
 
   itemListSub:  Subscription;
-  flag: boolean =false;
+  ifInitiateFormflag: boolean =false;
   isEditable : boolean= false;
   ifShowtable: boolean=false;
-  tableDataSub: Subscription;
+  //tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist: boolean;
-  isSaveOrderSucceededSub: Subscription;
+  //isSaveOrderSucceededSub: Subscription;
   isSupplierXemptedFromVat: boolean;
   ifCalculateBySumPeople : boolean;
   //isXemptedFromVat: boolean;
@@ -83,15 +85,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
 
     if (this.item != undefined && this.item != null ) {
-      if(this.item.globalParameters.supplierId!= undefined){
+      if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
+        this.isItemOrderExist=true;
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;  
-        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
       }
-      // this.generalFormService.setFormValues(this.item);
     }
-
     else {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
@@ -99,28 +99,25 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
     this.generalFormService.setDatesValues();
     this.getSupplierList(this.orderType, this.tripId, 0);
-    this.getSettelments();
+    //this.getSettelments();
     // if (this.editMode) {
     //   this.generalFormService.setFormValues(this.order);
     // }
    
-    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-      console.log('res from table data intransort is :',res);
-      this.tableData=res;
-      this.ifShowtable=true;
-    })
-    this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-       if(res)
-       this.editMode = true;
-       else
-       this.editMode = false;
-    })
+    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+    //   console.log('res from table data intransort is :',res);
+    //   this.tableData=res;
+    //   this.ifShowtable=true;
+    // })
+    // this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
+    //    if(res)
+    //    this.editMode = true;
+    //    else
+    //    this.editMode = false;
+    // })
 
 
   }
-
- 
-
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
@@ -156,34 +153,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   }
 
 
-  initiateForm(){
-    this.flag=true;
-    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
-     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
-  }
-
-  displayTable(){
-     let transArr= this.generalFormService.transportOrderList;
-     let currentObj= transArr.find(i=> (i.globalParameters.itemOrderRecordId)=== (this.item.globalParameters.itemOrderRecordId) && (i.globalParameters.supplierId)=== (this.item.globalParameters.supplierId) );
-     let arr=[]
-     arr.push(currentObj);
-     this.tableData=arr;
-     this.ifShowtable=true;
-
-  }
-
-  getSettelments(){
-      this.settlementSub= this.orderService.getSettlements().subscribe(res=>{
-         res.forEach(element=>{
-          this.generalFormService.settlementList.push({ label: element.name, value: element.id.toString() })
-        })
-        let exitLocationIndex = this.generalFormService.transport.findIndex(i => i.key === 'exitLocation');
-        this.generalFormService.transport[exitLocationIndex].inputProps.options = this.generalFormService.settlementList;
-        console.log(res);
-      },(err) => {
-      console.log(err);
-    })
-  }
+  
 
   getSupplierList(orderTypeId, tripId, orderId) {
     this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
@@ -210,17 +180,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   }
 
   getSupplierByOrderType() {
-    // let centerFieldId 
-    // if(this.squadAssembleService.tripInfofromService ! = undefined){
-    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    // }  
-    // else{
-    //   let retrievedObject = localStorage.getItem('tripInfofromService');
-    //   let retrievedObj = JSON.parse(retrievedObject);
-    //   centerFieldId= retrievedObj.trip.centerField.id;
-    // }
-
-    
+ 
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
       response => {
         console.log(response);
@@ -239,7 +199,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   }
 
-
+  
   getOrderItemBySupplierId() {
    this.itemListSub= this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
       response => {
@@ -254,26 +214,73 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.generalFormService.details[itemIndex].inputProps.options = this.itemsList;
         if(this.form)
         return;
-        if (this.itemId != undefined)
-          this.generalFormService.details[itemIndex].value = this.itemId.toString();
+        // if (this.itemId != undefined)
+        
         if (this.item != undefined && this.item != null) {
-          this.item.globalParameters.supplierId = this.supplierId.toString();
-          if(this.item.globalParameters.orderId)
-          this.isItemOrderExist=true;
-          this.generalFormService.setFormValues(this.item,this.isItemOrderExist);
+          this.item.globalParameters.supplierId = this.supplierId.toString();   
+          if (this.isItemOrderExist){
+            this.generalFormService.details[itemIndex].value = this.itemId.toString(); 
+            if(this.generalFormService.settlementList.length>0 && this.item.exitPoint != undefined)
+            {
+              let exitLocationIndex = this.generalFormService.questionGroups[0].questions.findIndex(i => i.key === 'exitPoint');
+              this.generalFormService.questionGroups[0].questions[exitLocationIndex].value= this.item.exitPoint;
+              this.setForm();
+              return;
+            }
+          }     
+           // this.generalFormService.setFormValues(this.item,this.isItemOrderExist);
         }
-        this.initiateForm();
-        if (this.item != undefined && this.item != null) {
-          if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId!= undefined)
-           this.displayTable();
-        }
-       
-
+        this.getSettelments();
+        
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
+
+  getSettelments(){
+    this.settlementSub= this.orderService.getSettlements().subscribe(res=>{
+      console.log(res);
+       res.forEach(element=>{
+        this.generalFormService.settlementList.push({ label: element.name, value: element.id.toString() })
+      })
+      let exitLocationIndex = this.generalFormService.questionGroups[0].questions.findIndex(i => i.key === 'exitPoint');
+      this.generalFormService.questionGroups[0].questions[exitLocationIndex].inputProps.options = this.generalFormService.settlementList;
+      this.setForm();
+     
+    },(err) => {
+    console.log(err);
+  })
+}
+
+  setForm(){
+    if (this.item != undefined && this.item != null) {
+       this.generalFormService.setFormValues(this.item,this.isItemOrderExist);
+    }
+    this.initiateForm();
+    if (this.item != undefined && this.item != null) {
+      if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId!= undefined)
+       this.displayTable();
+    }
+  }
+
+  initiateForm(){
+    this.ifInitiateFormflag=true;
+    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
+     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
+  }
+
+  displayTable(){
+     let transArr= this.generalFormService.transportOrderList;
+     let currentObj= transArr.find(i=> (i.globalParameters.itemOrderRecordId)=== (this.item.globalParameters.itemOrderRecordId) && (i.globalParameters.supplierId)=== (this.item.globalParameters.supplierId) );
+     let arr=[]
+     arr.push(currentObj);
+     this.tableData=arr;
+     this.ifShowtable=true;
+
+  }
+
+ 
 
   public onSave(): void {
     if (this.form) {
@@ -297,81 +304,14 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       }
       else{
         if (!this.additionsService.globalValidations(this.form)) { return; }
-        //if (!this.validationsTransport()) { return; }
+        if (!this.validationsTransport()) { return; }
         this.mapFormFieldsToServer()
       }
-       
-      //if (!this.additionsService.globalValidations(this.form)) { return; }
-      //if (!this.validationsTransport()) { return; }
-      //this.mapFormFieldsToServer()
-      //if (!this.additionsService.globalValidations(this.form)) { return; }
-     // if (!this.validationsTransport()) { return; }
-      // this.editMode = true;
-
-      // let orderId;
-      // if (this.generalFormService.transportOrderList.length > 0) {
-      //   orderId = this.generalFormService.transportOrderList[0].order.orderId
-      // }
-      // let t = {} as TransportOrder;
-      // t.globalParameters = {} as OrderItemCommonDetails;
-      // t.order = {} as Order;
-      // if (orderId != undefined && orderId)
-      //   t.order.orderId = orderId;
-      // t.order.supplier = {} as Supplier;
-      // t.order.orderType = {} as OrderType;
-      // //Object.keys(this.form.value.details).map((key, index) => {
-      // Object.keys(this.form.getRawValue().details).map((key, index) => {
-
-      //   if (key !== 'exitPoint' && key !== 'scatterLocation') {
-
-      //     if (key != 'startDate' && key != 'endDate') {
-      //       //t.globalParameters[key] = this.form.value.details[key];
-      //       t.globalParameters[key] = this.form.getRawValue().details[key];
-      //     }
-      //     else {
-      //       if (key == 'startDate') {
-      //         //t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.value.details[key], 'UTC')
-      //         t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-      //       }
-      //       if (key == 'endDate') {
-      //         t.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-      //       }
-      //     }
-
-      //   }
-      //   else {
-      //     // t[key] = this.form.value.details[key]
-      //   }
-      // });
-    
-      // t.globalParameters['startHour'] = this.setDateTimeFormat(t.globalParameters.startDate, t.globalParameters.startHour);
-      // t.globalParameters['endHour'] = this.setDateTimeFormat(t.globalParameters.endDate, t.globalParameters.endHour);
-      // t.globalParameters['comments'] = this.form.getRawValue().comments.comments;
-      // t.globalParameters.orderId = orderId;
-      // t.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      // t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      // t.order.orderType.name = 'היסעים';
-      // t.order.orderType.id = 1;
-      // if(this.item!= undefined){
-      //   if (this.item.globalParameters.tempOrderIdentity != undefined)
-      //   t.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-      // }
-      
-      // if (!this.isEditable)
-      //   this.generalFormService.addOrder(t, t.order.orderType.id);
-      // else{
-      //   t.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-      //   this.generalFormService.editOrder(t, t.order.orderType.id);
-      // }
-        
-      // this.form.disable({ emitEvent: false });
-      // this.editMode = true;
-
     }
   }
 
     public mapFormFieldsToServer(){
-      this.editMode = true;
+      //this.editMode = true;
       let orderId;
       if (this.generalFormService.transportOrderList.length > 0) {
         orderId = this.generalFormService.transportOrderList[0].order.orderId
@@ -416,23 +356,71 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       t.order.supplier.id = +this.form.getRawValue().details.supplierId;
       t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       t.order.orderType.name = 'היסעים';
-      t.order.orderType.id = 1;
+      t.order.orderType.id = this.orderType;
       if(this.item!= undefined){
         if (this.item.globalParameters.tempOrderIdentity != undefined)
         t.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
       }
       
-      if (!this.isEditable)
-        this.generalFormService.addOrder(t, t.order.orderType.id);
+      if (!this.isEditable){
+        //this.generalFormService.addOrder(t, t.order.orderType.id);
+        this.addOrder(t);
+      }
       else{
         t.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-        this.generalFormService.editOrder(t, t.order.orderType.id);
+        //this.generalFormService.editOrder(t, t.order.orderType.id);
+        this.editOrder(t)
       }
         
       this.form.disable({ emitEvent: false });
       //this.editMode = true;
     }
+
+    addOrder(item){
+    this.addOrderSub=  this.orderService.addOrder( item).subscribe(res => {
+        console.log(res); 
+        //this.tableData.next(res);
+        this.tableData=res;
+        this.ifShowtable=true;
+        this.generalFormService.enableButton.next(true);
+        //this.isSaveOrderSucceeded.next(true);
+        this.editMode = true;
+        this.generalFormService.setOrderList(res,this.orderType,'adding');
+        this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+      }, (err) => {
+        console.log(err);
+        //this.isSaveOrderSucceeded.next(false);
+        this.editMode = false;
+        this.form.enable({ emitEvent: false });
+        this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
+      })
+    }
+
+     editOrder(item){
+     this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
+        console.log(res);  
+        this.generalFormService.setOrderList(res, this.orderType,'updating');
+        //this.isSaveOrderSucceeded.next(true);
+        this.editMode = true;
+        this.setDialogMessage('ההזמנה עודכנה בהצלחה');
+      }, (err) => {
+        console.log(err);
+        this.ifShowtable=false;
+         //this.isSaveOrderSucceeded.next(false);
+         this.editMode = false;
+         this.form.enable({ emitEvent: false });
+         this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
+       })
+    
+     }
  
+      setDialogMessage(message){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+           data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+         })
+
+      }
 
   setDateTimeFormat(date, hour) {
     let str = date.split("T");
@@ -482,7 +470,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         })
         return false;
       }
-      if (item.participantsLimit < this.form.value.details['peopleInTrip']) {
+
+      if (item.participantsLimit < this.form.value.details['peopleInTrip'] && item.participantsLimit != null) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
           data: { message: 'מספר המשתתפים גדול מסך המקומות באוטובוס - יש להוסיף אוטובוס נוסף', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
@@ -490,6 +479,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         return false;
       }
       var people = parseInt(this.form.value.details['peopleInTrip'])
+      if (item.participantsLimit != null){
       console.log(people % item.participantsLimit)
       console.log(Math.floor(people / item.participantsLimit))
       if (((people % item.participantsLimit) > 0) && (Math.floor(people / item.participantsLimit) > 0)) {
@@ -500,6 +490,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           })
           return false;
         }
+       }
       }
     }
     return true;
@@ -605,8 +596,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
     if (this.itemListSub) { this.itemListSub.unsubscribe(); }
     if (this.settlementSub) { this.settlementSub.unsubscribe(); }
-    if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
-    if(this.isSaveOrderSucceededSub){this.isSaveOrderSucceededSub.unsubscribe()}
+    if(this.addOrderSub) {this.addOrderSub.unsubscribe();}
+    if(this.editOrderSub){this.editOrderSub.unsubscribe()}
   }
 
   

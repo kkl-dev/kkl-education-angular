@@ -35,17 +35,19 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   supplierSub: Subscription;
   itemListSub:  Subscription;
   languageSub: Subscription;
-  flag: boolean =false;
+  addOrderSub: Subscription;
+  editOrderSub: Subscription;
+  ifInitiateFormflag: boolean =false;
   isEditable : boolean= false;
 
   public form: FormGroup;
   public columns: TableCellModel[];
   ifShowtable: boolean=false;
-  tableDataSub: Subscription;
+  //tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist: boolean;
   isSupplierXemptedFromVat: boolean;
-  isSaveOrderSucceededSub: Subscription;
+  //isSaveOrderSucceededSub: Subscription;
   ifCalculateBySumPeople : boolean;
   valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
@@ -82,18 +84,18 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.getSupplierList(this.orderType, this.tripId, 0); 
     this.getLanguages();
     this.generalFormService.setDatesValues();
-    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-      console.log('res from table data intransort is :',res);
-      this.tableData=res;
-      this.ifShowtable=true;
-    })
+    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+    //   console.log('res from table data intransort is :',res);
+    //   this.tableData=res;
+    //   this.ifShowtable=true;
+    // })
 
-    this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-      if(res)
-      this.editMode = true;
-      else
-      this.editMode = false;
-   })
+  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
+  //     if(res)
+  //     this.editMode = true;
+  //     else
+  //     this.editMode = false;
+  //  })
 
   }
 
@@ -124,7 +126,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   }
 
   initiateForm(){
-    this.flag=true;
+    this.ifInitiateFormflag=true;
     this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
      console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
@@ -288,22 +290,70 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       guide.order.supplier.id = +this.form.getRawValue().details.supplierId;
       guide.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       guide.order.orderType.name = 'הדרכה';
-      guide.order.orderType.id = 6;
+      guide.order.orderType.id = this.orderType;
       if(this.item!= undefined){
         if (this.item.globalParameters.tempOrderIdentity != undefined)
         guide.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
       }
     
-      if(!this.isEditable)
-      this.generalFormService.addOrder(guide, guide.order.orderType.id);
+      if(!this.isEditable){
+        //this.generalFormService.addOrder(guide, guide.order.orderType.id);
+        this.addOrder(guide);
+      }     
       else{
         guide.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-        this.generalFormService.editOrder(guide, guide.order.orderType.id);
+        //this.generalFormService.editOrder(guide, guide.order.orderType.id);
+        this.editOrder(guide)
       }
      
       this.form.disable({ emitEvent: false });
     }
   }
+
+  addOrder(item){
+    this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
+       console.log(res); 
+       //this.tableData.next(res);
+       this.tableData=res;
+       this.ifShowtable=true;
+       this.generalFormService.enableButton.next(true);
+       //this.isSaveOrderSucceeded.next(true);
+       this.editMode = true;
+       this.generalFormService.setOrderList(res,this.orderType,'adding');
+       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+     }, (err) => {
+       console.log(err);
+       //this.isSaveOrderSucceeded.next(false);
+       this.editMode = false;
+       this.form.enable({ emitEvent: false });
+       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
+     })
+   }
+ 
+    editOrder(item){
+    this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
+       console.log(res);  
+       this.generalFormService.setOrderList(res, this.orderType,'updating');
+       //this.isSaveOrderSucceeded.next(true);
+       this.editMode = true;
+       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
+     }, (err) => {
+       console.log(err);
+       this.ifShowtable=false;
+        //this.isSaveOrderSucceeded.next(false);
+        this.editMode = false;
+        this.form.enable({ emitEvent: false });
+        this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
+      })
+    }
+ 
+    setDialogMessage(message){
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+         data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+       })
+    }
+
   validationsGudiance() {
     if (this.generalFormService.originalItemList.length > 0) {
       var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
@@ -515,7 +565,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
     if (this.itemListSub) { this.itemListSub.unsubscribe(); }
-    if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
-    if(this.isSaveOrderSucceededSub){this.isSaveOrderSucceededSub.unsubscribe()}
+    if(this.addOrderSub) {this.addOrderSub.unsubscribe();}
+    if(this.editOrderSub){this.editOrderSub.unsubscribe()}
   }
 }

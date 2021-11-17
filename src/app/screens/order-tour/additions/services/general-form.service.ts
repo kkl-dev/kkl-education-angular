@@ -37,7 +37,7 @@ export class GeneralFormService {
   public tempOrderReduce = new BehaviorSubject<{tempOrderReduce:any,orderType:any}>(null)
   public tableData = new Subject();
   public enableButton =new Subject<boolean>();
-  public isSaveOrderSucceeded = new Subject<boolean>();
+  //public isSaveOrderSucceeded = new Subject<boolean>();
  
 
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
@@ -508,46 +508,46 @@ export class GeneralFormService {
   }
 
 
-   addOrder(item: any,orderType) {  
-      this.orderService.addOrder( item).subscribe(res => {
-        console.log(res); 
-        this.tableData.next(res);
-        this.enableButton.next(true);
-        this.isSaveOrderSucceeded.next(true);
-        this.setOrderList(res,orderType,'adding');
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
-      }, (err) => {
-        console.log(err);
-        this.isSaveOrderSucceeded.next(false);
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
-      })
-    }
-    editOrder(item: any,orderType) { 
-      this.orderService.editOrder(item).subscribe(res => {
-        console.log(res);  
-        this.setOrderList(res, orderType,'updating');
-        this.isSaveOrderSucceeded.next(true);
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'ההזמנה עודכנה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
-      }, (err) => {
-        console.log(err);
-        this.isSaveOrderSucceeded.next(false);
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
+  //  addOrder(item: any,orderType) {  
+  //     this.orderService.addOrder( item).subscribe(res => {
+  //       console.log(res); 
+  //       this.tableData.next(res);
+  //       this.enableButton.next(true);
+  //       //this.isSaveOrderSucceeded.next(true);
+  //       this.setOrderList(res,orderType,'adding');
+  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //         width: '500px',
+  //         data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //       })
+  //     }, (err) => {
+  //       console.log(err);
+  //       //this.isSaveOrderSucceeded.next(false);
+  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //         width: '500px',
+  //         data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //       })
+  //     })
+  //   }
+  //   editOrder(item: any,orderType) { 
+  //     this.orderService.editOrder(item).subscribe(res => {
+  //       console.log(res);  
+  //       this.setOrderList(res, orderType,'updating');
+  //       //this.isSaveOrderSucceeded.next(true);
+  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //         width: '500px',
+  //         data: { message: 'ההזמנה עודכנה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //       })
+  //     }, (err) => {
+  //       console.log(err);
+  //       //this.isSaveOrderSucceeded.next(false);
+  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //         width: '500px',
+  //         data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  //       })
 
-      })
+  //     })
     
-  }
+  // }
  
 
 

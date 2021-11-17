@@ -32,16 +32,18 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   supplierListSub: Subscription;
   supplierSub: Subscription;
   itemListSub:  Subscription;
-  flag: boolean =false;
+  addOrderSub: Subscription;
+  editOrderSub: Subscription;
+  ifInitiateFormflag: boolean =false;
   isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
   ifShowtable: boolean=false;
-  tableDataSub: Subscription;
+  //tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist: boolean;
   isSupplierXemptedFromVat: boolean
-  isSaveOrderSucceededSub: Subscription;
+  //isSaveOrderSucceededSub: Subscription;
   ifCalculateBySumPeople : boolean;
   valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
@@ -81,18 +83,18 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
     this.getSupplierList(this.orderType, this.tripId, 0);
    
     this.generalFormService.setDatesValues();
-    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-      console.log('res from table data intransort is :',res);
-      this.tableData=res;
-      this.ifShowtable=true;
-    })
+    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+    //   console.log('res from table data intransort is :',res);
+    //   this.tableData=res;
+    //   this.ifShowtable=true;
+    // })
 
-    this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-      if(res)
-      this.editMode = true;
-      else
-      this.editMode = false;
-   })
+  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
+  //     if(res)
+  //     this.editMode = true;
+  //     else
+  //     this.editMode = false;
+  //  })
 
   }
 
@@ -122,7 +124,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   }
 
   initiateForm(){
-    this.flag=true;
+    this.ifInitiateFormflag=true;
     this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
      console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
@@ -230,63 +232,192 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
   public onSave(): void {
     if (this.form) {
-      //if (!this.additionsService.globalValidations(this.form)) { return; }
-      //if (!this.validationsMusicActivation()) { return; }
-      let orderId;
-      if (this.generalFormService.musicOrderList.length > 0) {
-        orderId = this.generalFormService.musicOrderList[0].order.orderId
-      }
-      let music = {} as MusicActivationOrder;
-      music.globalParameters = {} as OrderItemCommonDetails;
-      music.order = {} as Order;
-      if (orderId != undefined && orderId)
-      music.order.orderId = orderId;
-      music.order.supplier = {} as Supplier;
-      music.order.orderType = {} as OrderType;
-      Object.keys(this.form.getRawValue().details).map((key, index) => {
-
-        if (key !== 'totalHours') {
-
-          if (key != 'startDate' && key != 'endDate') {
-            music.globalParameters[key] = this.form.getRawValue().details[key]
-          } else {
-            if (key == 'startDate') {
-              music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-            }
-            if (key == 'endDate') {
-              music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-            }
-          }
+      let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+        if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+          this.orderService.checkItemsExistInDateTime(this.tripId,
+            this.centerFieldId, item).subscribe(res=>{
+               if(res.message!= "false"){
+                this._dialog.open(ConfirmDialogComponent, {
+                  width: '500px',
+                  data: { message: res, content: ''}
+                })
+                return;
+               }
+               else{
+                if (!this.additionsService.globalValidations(this.form)) { return; }
+                if (!this.validationsMusicActivation()) { return; }
+                this.mapFormFieldsToServer();
+               }
+            })
         }
-        else {
-          music.totalHours= this.form.getRawValue().details[key];
-        }
-
-      });
-      music.globalParameters['startHour'] = this.setDateTimeFormat(music.globalParameters.startDate, music.globalParameters.startHour);
-      music.globalParameters['endHour'] = this.setDateTimeFormat(music.globalParameters.endDate, music.globalParameters.endHour);
-      music.globalParameters['comments'] = this.form.getRawValue().comments.comments;
-      music.globalParameters.orderId = orderId;
-      music.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      music.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      music.order.orderType.name = 'מפעיל מוסיקלי';
-      music.order.orderType.id = 10;
-      if(this.item!= undefined){
-        if (this.item.globalParameters.tempOrderIdentity != undefined)
-        music.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-      }
-     
-      //this.generalFormService.addOrder(music, music.order.orderType.id);
-      if(!this.isEditable)
-      this.generalFormService.addOrder(music, music.order.orderType.id);
-      else{
-        music.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-        this.generalFormService.editOrder(music, music.order.orderType.id);
-      }
+        else{
+         if (!this.additionsService.globalValidations(this.form)) { return; }
+         if (!this.validationsMusicActivation()) { return; }
+         this.mapFormFieldsToServer();
+       }
       
-      this.form.disable({ emitEvent: false });
+      // let orderId;
+      // if (this.generalFormService.musicOrderList.length > 0) {
+      //   orderId = this.generalFormService.musicOrderList[0].order.orderId
+      // }
+      // let music = {} as MusicActivationOrder;
+      // music.globalParameters = {} as OrderItemCommonDetails;
+      // music.order = {} as Order;
+      // if (orderId != undefined && orderId)
+      // music.order.orderId = orderId;
+      // music.order.supplier = {} as Supplier;
+      // music.order.orderType = {} as OrderType;
+      // Object.keys(this.form.getRawValue().details).map((key, index) => {
+
+      //   if (key !== 'totalHours') {
+
+      //     if (key != 'startDate' && key != 'endDate') {
+      //       music.globalParameters[key] = this.form.getRawValue().details[key]
+      //     } else {
+      //       if (key == 'startDate') {
+      //         music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+      //       }
+      //       if (key == 'endDate') {
+      //         music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+      //       }
+      //     }
+      //   }
+      //   else {
+      //     music.totalHours= this.form.getRawValue().details[key];
+      //   }
+
+      // });
+      // music.globalParameters['startHour'] = this.setDateTimeFormat(music.globalParameters.startDate, music.globalParameters.startHour);
+      // music.globalParameters['endHour'] = this.setDateTimeFormat(music.globalParameters.endDate, music.globalParameters.endHour);
+      // music.globalParameters['comments'] = this.form.getRawValue().comments.comments;
+      // music.globalParameters.orderId = orderId;
+      // music.order.supplier.id = +this.form.getRawValue().details.supplierId;
+      // music.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      // music.order.orderType.name = 'מפעיל מוסיקלי';
+      // music.order.orderType.id = this.orderType;
+      // if(this.item!= undefined){
+      //   if (this.item.globalParameters.tempOrderIdentity != undefined)
+      //   music.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+      // }
+     
+      // if(!this.isEditable){
+      //   //this.generalFormService.addOrder(music, music.order.orderType.id);
+      //   this.addOrder(music);
+      // }
+      // else{
+      //   music.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+      //   //this.generalFormService.editOrder(music, music.order.orderType.id);
+      //   this.editOrder(music)
+      // }
+      
+      // this.form.disable({ emitEvent: false });
     }
   }
+
+  public mapFormFieldsToServer(){ 
+    let orderId;
+    if (this.generalFormService.musicOrderList.length > 0) {
+      orderId = this.generalFormService.musicOrderList[0].order.orderId
+    }
+    let music = {} as MusicActivationOrder;
+    music.globalParameters = {} as OrderItemCommonDetails;
+    music.order = {} as Order;
+    if (orderId != undefined && orderId)
+    music.order.orderId = orderId;
+    music.order.supplier = {} as Supplier;
+    music.order.orderType = {} as OrderType;
+    Object.keys(this.form.getRawValue().details).map((key, index) => {
+
+      if (key !== 'totalHours') {
+
+        if (key != 'startDate' && key != 'endDate') {
+          music.globalParameters[key] = this.form.getRawValue().details[key]
+        } else {
+          if (key == 'startDate') {
+            music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+          }
+          if (key == 'endDate') {
+            music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+          }
+        }
+      }
+      else {
+        music.totalHours= this.form.getRawValue().details['totalHours'];
+      }
+
+    });
+    music.globalParameters['startHour'] = this.setDateTimeFormat(music.globalParameters.startDate, music.globalParameters.startHour);
+    music.globalParameters['endHour'] = this.setDateTimeFormat(music.globalParameters.endDate, music.globalParameters.endHour);
+    music.globalParameters['comments'] = this.form.getRawValue().comments.comments;
+    music.globalParameters.orderId = orderId;
+    music.order.supplier.id = +this.form.getRawValue().details.supplierId;
+    music.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    music.order.orderType.name = 'מפעיל מוסיקלי';
+    music.order.orderType.id = this.orderType;
+    if(this.item!= undefined){
+      if (this.item.globalParameters.tempOrderIdentity != undefined)
+      music.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+    }
+   
+    if(!this.isEditable){
+      //this.generalFormService.addOrder(music, music.order.orderType.id);
+      this.addOrder(music);
+    }
+    else{
+      music.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+      //this.generalFormService.editOrder(music, music.order.orderType.id);
+      this.editOrder(music)
+    }
+    
+    this.form.disable({ emitEvent: false });
+  }
+
+  addOrder(item){
+    this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
+      console.log(res); 
+      //this.tableData.next(res);
+      this.tableData=res;
+      this.ifShowtable=true;
+      this.generalFormService.enableButton.next(true);
+      //this.isSaveOrderSucceeded.next(true);
+      this.editMode = true;
+      this.generalFormService.setOrderList(res,this.orderType,'adding');
+      this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+    }, (err) => {
+      console.log(err);
+      //this.isSaveOrderSucceeded.next(false);
+      this.editMode = false;
+      this.form.enable({ emitEvent: false });
+      this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
+    })
+  }
+
+   editOrder(item){
+    this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
+      console.log(res);  
+      this.generalFormService.setOrderList(res, this.orderType,'updating');
+      //this.isSaveOrderSucceeded.next(true);
+      this.editMode = true;
+      this.setDialogMessage('ההזמנה עודכנה בהצלחה');
+    }, (err) => {
+      console.log(err);
+      this.ifShowtable=false;
+       //this.isSaveOrderSucceeded.next(false);
+       this.editMode = false;
+       this.form.enable({ emitEvent: false });
+       this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
+     })
+  
+   }
+
+   setDialogMessage(message){
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+       data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+     })
+
+  }
+
   validationsMusicActivation() { return true; }
   setDateTimeFormat(date, hour) {
     let str = date.split("T");
@@ -389,8 +520,8 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
     if (this.itemListSub) { this.itemListSub.unsubscribe(); }
-    if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
-    if(this.isSaveOrderSucceededSub){this.isSaveOrderSucceededSub.unsubscribe()}
+    if(this.addOrderSub) {this.addOrderSub.unsubscribe();}
+    if(this.editOrderSub){this.editOrderSub.unsubscribe()}
   }
 
 }

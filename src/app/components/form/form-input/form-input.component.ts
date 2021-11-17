@@ -202,6 +202,8 @@ export class FormInputComponent implements OnInit {
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
     if (this.name === 'location') {
+      let cityId= this.control.parent.value;
+      this.tripService.budgetByParam.budget.cityId= parseInt(cityId.location);
       this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
     }
     if (this.name === 'budgetIncome') {

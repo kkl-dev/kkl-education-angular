@@ -32,17 +32,19 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   supplierSub: Subscription;
   itemListSub:  Subscription;
   sitesSub: Subscription;
+  addOrderSub: Subscription;
+  editOrderSub: Subscription;
   centerFieldId: number;
-   flag: boolean =false;
+  ifInitiateFormflag: boolean =false;
    isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
   ifShowtable: boolean=false;
-  tableDataSub: Subscription;
+  //tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist : boolean;
   isSupplierXemptedFromVat: boolean;
-  isSaveOrderSucceededSub: Subscription;
+  //isSaveOrderSucceededSub: Subscription;
   valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
     hasGroups: true,
@@ -77,17 +79,17 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     this.generalFormService.setDatesValues();
     this.setformTemplate();
 
-    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-      console.log('res from table data intransort is :',res);
-      this.tableData=res;
-      this.ifShowtable=true;
-    })
-    this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-      if(res)
-      this.editMode = true;
-      else
-      this.editMode = false;
-   })
+    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+    //   console.log('res from table data intransort is :',res);
+    //   this.tableData=res;
+    //   this.ifShowtable=true;
+    // })
+  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
+  //     if(res)
+  //     this.editMode = true;
+  //     else
+  //     this.editMode = false;
+  //  })
   
   }
   setformTemplate() {
@@ -98,8 +100,8 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     //detailsArr.splice(0,0,this.generalFormService.siteQuestion);
     let siteQuestions = detailsArr.concat(this.generalFormService.site);
     this.generalFormService.questionGroups[index].questions = siteQuestions;
-    this.flag=true;
-    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
+    //this.ifInitiateFormflag=true;
+    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
       
   }
   changeLabels(tempArr) {
@@ -119,7 +121,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   }
 
   initiateForm(){
-    this.flag=true;
+    //this.flag=true;
     this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
      console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
@@ -134,25 +136,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
  }
 
-  getSites(){
-    let tripStart= this.squadAssembleService.tripInfofromService.trip.tripStart;
-    let tripStart1= tripStart.split("T");
-    let subTripStart= tripStart1[0];
-    let year= parseInt(subTripStart[0]);
-    let chevelCode= this.squadAssembleService.tripInfofromService.trip.centerField.chevelCode
-
-    this.sitesSub= this.orderService.getSites(year,chevelCode).subscribe(res=>{
-      console.log(res);
-      res.forEach(elem=>{
-        this.generalFormService.siteList.push({label: elem.name ,value : elem.id.toString()})
-      })
-      let siteIndex= this.generalFormService.details.findIndex(i => i.key==='siteCode');
-      this.generalFormService.details[siteIndex].inputProps.options= this.generalFormService.siteList;
-    },(err)=>{
-      console.log(err);
-    })
-  }
-
+ 
   getSupplierList(orderTypeId, tripId, orderId) {
     this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
@@ -178,16 +162,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
 
   getSupplierByOrderType() {
-    // let centerFieldId 
-    // if(this.squadAssembleService.tripInfofromService ! = undefined){
-    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    // }  
-    // else{
-    //   let retrievedObject = localStorage.getItem('tripInfofromService');
-    //   let retrievedObj = JSON.parse(retrievedObject);
-    //   centerFieldId= retrievedObj.trip.centerField.id;
-    // }
-    
+   
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
       response => {
         console.log(response);
@@ -241,6 +216,26 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     )
   }
 
+  getSites(){
+    let tripStart= this.squadAssembleService.tripInfofromService.trip.tripStart;
+    let tripStart1= tripStart.split("T");
+    let subTripStart= tripStart1[0];
+    let year= parseInt(subTripStart[0]);
+    let chevelCode= this.squadAssembleService.tripInfofromService.trip.centerField.chevelCode
+
+    this.sitesSub= this.orderService.getSites(year,chevelCode).subscribe(res=>{
+      console.log(res);
+      res.forEach(elem=>{
+        this.generalFormService.siteList.push({label: elem.name ,value : elem.id.toString()})
+      })
+      let siteIndex= this.generalFormService.details.findIndex(i => i.key==='siteCode');
+      this.generalFormService.details[siteIndex].inputProps.options= this.generalFormService.siteList;
+    },(err)=>{
+      console.log(err);
+    })
+  }
+
+
   public onSave(): void {
     if (this.form) {
       if (this.form.status === 'VALID') {
@@ -250,8 +245,8 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         })
         return;
       }
-      //if (!this.additionsService.globalValidations(this.form)) { return; }
-      //if (!this.validationsSite()) { return; }
+      if (!this.additionsService.globalValidations(this.form)) { return; }
+      if (!this.validationsSite()) { return; }
       let orderId;
       if (this.generalFormService.siteOrderList.length > 0) {
         orderId = this.generalFormService.siteOrderList[0].order.orderId
@@ -278,9 +273,9 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
           }
         }
         else {
-              site.siteCode= this.form.getRawValue().details[key];
-              site.siteURL= this.form.getRawValue().details[key];
-              site.totalHours= this.form.getRawValue().details[key];
+              site.siteCode= this.form.getRawValue().details['siteCode'];
+              site.siteURL= this.form.getRawValue().details['siteURL'];
+              site.totalHours= this.form.getRawValue().details['totalHours'];
         }
 
       });
@@ -291,14 +286,17 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       site.order.supplier.id = +this.form.getRawValue().details.supplierId;
       site.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       site.order.orderType.name = 'אתרים';
-      site.order.orderType.id = 3;
+      site.order.orderType.id = this.orderType;
       // if(this.item.globalParameters.tempOrderIdentity!= undefined)
       //  site.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
-      if(!this.isEditable)
-      this.generalFormService.addOrder(site, site.order.orderType.id);
+      if(!this.isEditable){
+        //this.generalFormService.addOrder(site, site.order.orderType.id);
+        this.addOrder(site);
+      }
       else{
         site.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-        this.generalFormService.editOrder(site, site.order.orderType.id);
+        //this.generalFormService.editOrder(site, site.order.orderType.id);
+        this.editOrder(site);
       }
      
       this.form.disable({ emitEvent: false });
@@ -319,6 +317,52 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     let hourFormat = str[0] + 'T' + hour;
     return hourFormat;
   }
+
+  addOrder(item){
+    this.addOrderSub=  this.orderService.addOrder( item).subscribe(res => {
+        console.log(res); 
+        //this.tableData.next(res);
+        this.tableData=res;
+        this.ifShowtable=true;
+        this.generalFormService.enableButton.next(true);
+        //this.isSaveOrderSucceeded.next(true);
+        this.editMode = true;
+        this.generalFormService.setOrderList(res,this.orderType,'adding');
+        this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+      }, (err) => {
+        console.log(err);
+        //this.isSaveOrderSucceeded.next(false);
+        this.editMode = false;
+        this.form.enable({ emitEvent: false });
+        this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
+      })
+    }
+
+     editOrder(item){
+     this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
+        console.log(res);  
+        this.generalFormService.setOrderList(res, this.orderType,'updating');
+        //this.isSaveOrderSucceeded.next(true);
+        this.editMode = true;
+        this.setDialogMessage('ההזמנה עודכנה בהצלחה');
+      }, (err) => {
+        console.log(err);
+        this.ifShowtable=false;
+         //this.isSaveOrderSucceeded.next(false);
+         this.editMode = false;
+         this.form.enable({ emitEvent: false });
+         this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
+       })
+    
+     }
+ 
+      setDialogMessage(message){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+           data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+         })
+
+      }
 
   public onEdit() {
     console.log('I am edit');
@@ -404,8 +448,8 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
     if (this.itemListSub) { this.itemListSub.unsubscribe(); }
-    if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
-    if(this.isSaveOrderSucceededSub){this.isSaveOrderSucceededSub.unsubscribe()}
+    if(this.addOrderSub) {this.addOrderSub.unsubscribe();}
+    if(this.editOrderSub){this.editOrderSub.unsubscribe()}
   }
 
 }

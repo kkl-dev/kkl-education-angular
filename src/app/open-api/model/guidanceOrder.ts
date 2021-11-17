@@ -20,7 +20,7 @@ export interface GuidanceOrder extends OrderEvent {
     /**
      * language code
      */
-    languageGuidance?: number;
+    languageGuidance?: number | null;
     guideInstructions?: string;
 }
 

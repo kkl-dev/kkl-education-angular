@@ -31,17 +31,19 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   supplierListSub: Subscription;
   supplierSub: Subscription;
   itemListSub:  Subscription;
+  addOrderSub: Subscription;
+  editOrderSub: Subscription;
   centerFieldId: number;
-  flag: boolean =false;
+  ifInitiateFormflag: boolean =false;
   isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
   ifShowtable: boolean=false;
-  tableDataSub: Subscription;
+  //tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist: boolean;
   isSupplierXemptedFromVat: boolean;
-  isSaveOrderSucceededSub: Subscription;
+  //isSaveOrderSucceededSub: Subscription;
   ifCalculateBySumPeople : boolean;
   valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
@@ -86,17 +88,17 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
    
     this.generalFormService.setDatesValues();
   
-    this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-      console.log('res from table data intransort is :',res);
-      this.tableData=res;
-      this.ifShowtable=true;
-    })
-    this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-      if(res)
-      this.editMode = true;
-      else
-      this.editMode = false;
-   })
+    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
+    //   console.log('res from table data intransort is :',res);
+    //   this.tableData=res;
+    //   this.ifShowtable=true;
+    // })
+  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
+  //     if(res)
+  //     this.editMode = true;
+  //     else
+  //     this.editMode = false;
+  //  })
   }
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
@@ -123,7 +125,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   }
 
   initiateForm(){
-    this.flag=true;
+    this.ifInitiateFormflag=true;
     this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
      console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
@@ -231,62 +233,193 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
 
   public onSave(): void {
     if (this.form) {
-      //if (!this.additionsService.globalValidations(this.form)) { return; }
-      //if (!this.validationsSecuring()) { return; }
-      let orderId;
-      if (this.generalFormService.securingOrderList.length > 0) {
-        orderId = this.generalFormService.securingOrderList[0].order.orderId
+      let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+      if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+        this.orderService.checkItemsExistInDateTime(this.tripId,
+          this.centerFieldId, item).subscribe(res=>{
+             if(res.message!= "false"){
+              this._dialog.open(ConfirmDialogComponent, {
+                width: '500px',
+                data: { message: res, content: ''}
+              })
+              return;
+             }
+             else{
+              if (!this.additionsService.globalValidations(this.form)) { return; }
+              if (!this.validationsSecuring()) { return; }
+              this.mapFormFieldsToServer()
+             }
+          })
       }
-      let securing = {} as SecuringOrder;
-      securing.globalParameters = {} as OrderItemCommonDetails;
-      securing.order = {} as Order;
-      if (orderId != undefined && orderId)
-      securing.order.orderId = orderId;
-      securing.order.supplier = {} as Supplier;
-      securing.order.orderType = {} as OrderType;
-      Object.keys(this.form.getRawValue().details).map((key, index) => {
-
-        if (key !== 'scatterLocation') {
-
-          if (key != 'startDate' && key != 'endDate') {
-            securing.globalParameters[key] = this.form.getRawValue().details[key]
-          } else {
-            if (key == 'startDate') {
-              securing.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-            }
-            if (key == 'endDate') {
-              securing.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-            }
-          }
-        }
-        else {
-          securing.scatterLocation= this.form.getRawValue().details['scatterLocation'];
-        }
-
-      });
-      securing.globalParameters['startHour'] = this.setDateTimeFormat(securing.globalParameters.startDate, securing.globalParameters.startHour);
-      securing.globalParameters['endHour'] = this.setDateTimeFormat(securing.globalParameters.endDate, securing.globalParameters.endHour);
-      securing.globalParameters['comments'] = this.form.getRawValue().comments.comments;
-      securing.globalParameters.orderId = orderId;
-      securing.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      securing.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      securing.order.orderType.name = '';
-      securing.order.orderType.id = 2;
-      if(this.item!= undefined){
-        if (this.item.globalParameters.tempOrderIdentity != undefined)
-        securing.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-      }
-      
-      if(!this.isEditable)
-      this.generalFormService.addOrder(securing, securing.order.orderType.id);
       else{
-        securing.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-        this.generalFormService.editOrder(securing, securing.order.orderType.id);
+        if (!this.additionsService.globalValidations(this.form)) { return; }
+        if (!this.validationsSecuring()) { return; }
+        this.mapFormFieldsToServer();
       }
+    
+      // let orderId;
+      // if (this.generalFormService.securingOrderList.length > 0) {
+      //   orderId = this.generalFormService.securingOrderList[0].order.orderId
+      // }
+      // let securing = {} as SecuringOrder;
+      // securing.globalParameters = {} as OrderItemCommonDetails;
+      // securing.order = {} as Order;
+      // if (orderId != undefined && orderId)
+      // securing.order.orderId = orderId;
+      // securing.order.supplier = {} as Supplier;
+      // securing.order.orderType = {} as OrderType;
+      // Object.keys(this.form.getRawValue().details).map((key, index) => {
+
+      //   if (key !== 'scatterLocation') {
+
+      //     if (key != 'startDate' && key != 'endDate') {
+      //       securing.globalParameters[key] = this.form.getRawValue().details[key]
+      //     } else {
+      //       if (key == 'startDate') {
+      //         securing.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+      //       }
+      //       if (key == 'endDate') {
+      //         securing.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+      //       }
+      //     }
+      //   }
+      //   else {
+      //     securing.scatterLocation= this.form.getRawValue().details['scatterLocation'];
+      //   }
+
+      // });
+      // securing.globalParameters['startHour'] = this.setDateTimeFormat(securing.globalParameters.startDate, securing.globalParameters.startHour);
+      // securing.globalParameters['endHour'] = this.setDateTimeFormat(securing.globalParameters.endDate, securing.globalParameters.endHour);
+      // securing.globalParameters['comments'] = this.form.getRawValue().comments.comments;
+      // securing.globalParameters.orderId = orderId;
+      // securing.order.supplier.id = +this.form.getRawValue().details.supplierId;
+      // securing.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      // securing.order.orderType.name = '';
+      // securing.order.orderType.id = this.orderType;
+      // if(this.item!= undefined){
+      //   if (this.item.globalParameters.tempOrderIdentity != undefined)
+      //   securing.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+      // }
       
-      this.form.disable({ emitEvent: false });
+      // if(!this.isEditable){
+      //   //this.generalFormService.addOrder(securing, securing.order.orderType.id);
+      //   this.addOrder(securing);
+      // }    
+      // else{
+      //   securing.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+      //   //this.generalFormService.editOrder(securing, securing.order.orderType.id);
+      //   this.editOrder(securing)
+      // }
+      
+      // this.form.disable({ emitEvent: false });
     }
   }
+
+  public mapFormFieldsToServer(){
+    let orderId;
+    if (this.generalFormService.securingOrderList.length > 0) {
+      orderId = this.generalFormService.securingOrderList[0].order.orderId
+    }
+    let securing = {} as SecuringOrder;
+    securing.globalParameters = {} as OrderItemCommonDetails;
+    securing.order = {} as Order;
+    if (orderId != undefined && orderId)
+    securing.order.orderId = orderId;
+    securing.order.supplier = {} as Supplier;
+    securing.order.orderType = {} as OrderType;
+    Object.keys(this.form.getRawValue().details).map((key, index) => {
+
+      if (key !== 'scatterLocation') {
+
+        if (key != 'startDate' && key != 'endDate') {
+          securing.globalParameters[key] = this.form.getRawValue().details[key]
+        } else {
+          if (key == 'startDate') {
+            securing.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+          }
+          if (key == 'endDate') {
+            securing.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+          }
+        }
+      }
+      else {
+        securing.scatterLocation= this.form.getRawValue().details['scatterLocation'];
+      }
+
+    });
+    securing.globalParameters['startHour'] = this.setDateTimeFormat(securing.globalParameters.startDate, securing.globalParameters.startHour);
+    securing.globalParameters['endHour'] = this.setDateTimeFormat(securing.globalParameters.endDate, securing.globalParameters.endHour);
+    securing.globalParameters['comments'] = this.form.getRawValue().comments.comments;
+    securing.globalParameters.orderId = orderId;
+    securing.order.supplier.id = +this.form.getRawValue().details.supplierId;
+    securing.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    securing.order.orderType.name = '';
+    securing.order.orderType.id = this.orderType;
+    if(this.item!= undefined){
+      if (this.item.globalParameters.tempOrderIdentity != undefined)
+      securing.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+    }
+    
+    if(!this.isEditable){
+      //this.generalFormService.addOrder(securing, securing.order.orderType.id);
+      this.addOrder(securing);
+    }    
+    else{
+      securing.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+      //this.generalFormService.editOrder(securing, securing.order.orderType.id);
+      this.editOrder(securing)
+    }
+    
+    this.form.disable({ emitEvent: false });
+
+  }
+
+  addOrder(item){
+    this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
+      console.log(res); 
+      //this.tableData.next(res);
+      this.tableData=res;
+      this.ifShowtable=true;
+      this.generalFormService.enableButton.next(true);
+      //this.isSaveOrderSucceeded.next(true);
+      this.editMode = true;
+      this.generalFormService.setOrderList(res,this.orderType,'adding');
+      this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+    }, (err) => {
+      console.log(err);
+      //this.isSaveOrderSucceeded.next(false);
+      this.editMode = false;
+      this.form.enable({ emitEvent: false });
+      this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
+    })
+  }
+
+   editOrder(item){
+   this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
+      console.log(res);  
+      this.generalFormService.setOrderList(res, this.orderType,'updating');
+      //this.isSaveOrderSucceeded.next(true);
+      this.editMode = true;
+      this.setDialogMessage('ההזמנה עודכנה בהצלחה');
+    }, (err) => {
+      console.log(err);
+      this.ifShowtable=false;
+       //this.isSaveOrderSucceeded.next(false);
+       this.editMode = false;
+       this.form.enable({ emitEvent: false });
+       this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
+     })
+  
+   }
+
+       setDialogMessage(message){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+           data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+         })
+
+      }
+
   validationsSecuring() {
     if (this.generalFormService.originalItemList.length > 0) {
       var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
@@ -405,8 +538,8 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
     if (this.itemListSub) { this.itemListSub.unsubscribe(); }
-    if(this.tableDataSub) {this.tableDataSub.unsubscribe();}
-    if(this.isSaveOrderSucceededSub){this.isSaveOrderSucceededSub.unsubscribe()}
+    if(this.addOrderSub) {this.addOrderSub.unsubscribe();}
+    if(this.editOrderSub){this.editOrderSub.unsubscribe()}
   }
 
 

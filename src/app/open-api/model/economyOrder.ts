@@ -16,7 +16,7 @@ import { OrderEvent } from './orderEvent';
 
 export interface EconomyOrder extends OrderEvent { 
     regularDishesNumber?: number;
-    vegetarianDishesNumber?: number;
-    veganDishesNumber?: number;
+    vegetarianDishesNumber?: number | null;
+    veganDishesNumber?: number | null;
 }
 
