@@ -213,12 +213,18 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           //this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
           this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('department').value);
 
-          if ( this.squadAssemble.tripInfo.departmentId==1){
+          // if ( this.squadAssemble.tripInfo.departmentId==1){
+           
             let countryId= this.squadAssemble.formsArray[i].get('tripLocation').value;
-            let countryObj= this.tripService.countries.find(i=> i.id=== countryId);
+            let countryObj;
+            if (countryId != "900"){
+               countryObj= this.tripService.countries.find(i=> i.id=== countryId);
+            } 
+            else{
+              countryObj = {id: countryId ,name:'ישראל'};
+            }
             this.squadAssemble.tripInfo.country= countryObj;
-          }
-
+          // }
           var attribute = this.squadAssemble.formsArray[i].get('attribute').value;
           this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
           var activityType = this.squadAssemble.formsArray[i].get('activityType').value;

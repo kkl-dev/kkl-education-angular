@@ -174,8 +174,13 @@ export class AdditionsService {
     else {  // calculate by participants
       ParticipantsOrAmount = "חישוב מכפלה לפי משתתפים:"
       //MultiplyByAmountOrPeople = itemOrder.peopleInTrip
-      let index= this.generalFormService.details.findIndex(i=> i.key== 'peopleInTrip')
-      MultiplyByAmountOrPeople = this.generalFormService.details[index].value;
+      if(itemOrder.peopleInTrip)
+      MultiplyByAmountOrPeople = itemOrder.peopleInTrip;
+      else{
+        let index= this.generalFormService.details.findIndex(i=> i.key== 'peopleInTrip')
+        MultiplyByAmountOrPeople = this.generalFormService.details[index].value;
+      }
+     
     }
 
     //------------------------------חישוב ערכי ברירת מחדל לחיובי ספק ולקוח---------------------------------------------------
@@ -230,7 +235,7 @@ export class AdditionsService {
     //---------------------------כלכלה------------------------------------------------
     else if (item?.orderType == 4) {
       // בהזמנות כלכלה שורה של פריט היא תמיד ליום אחד
-      itemOrder.billingSupplier = item?.cost * +MultiplyByAmountOrPeople // חישוב חיוב ספק
+      //itemOrder.billingSupplier = item?.cost * +MultiplyByAmountOrPeople // חישוב חיוב ספק
       // if (item.costVat == 1) {
       // if (itemOrder.isVat == 1) {
       //   // itemOrder.billingSupplier = (currentVat / 100) + 1

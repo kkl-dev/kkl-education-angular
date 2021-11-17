@@ -2780,9 +2780,11 @@ components:
               example: 100
            vegetarianDishesNumber: 
               type: integer
+              nullable: true
               example: 20
            veganDishesNumber: 
               type: integer
+              nullable: true
               example: 20
     GuidanceOrder :
          type: object
@@ -2801,6 +2803,7 @@ components:
             languageGuidance:
               type: integer
               description: language code
+              nullable: true
               example: 1
             guideInstructions:
               type: string

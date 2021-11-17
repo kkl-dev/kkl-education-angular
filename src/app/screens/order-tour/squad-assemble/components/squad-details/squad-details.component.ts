@@ -103,12 +103,12 @@ export class SquadDetailsComponent implements OnInit {
     let tripLocationIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='tripLocation');
     //this.squadDetailsService.questions[departmentIdIndex].value= '1';
     let options =   [
-      { label: 'ישראל', value: '8' },
-      { label: 'חו"ל', value: '1' },
+      { label: 'ישראל', value: '900' },
+      { label: 'חו"ל', value: '' },
     ];
     this.squadDetailsService.questions[tripLocationIndex].inputProps.options=[];
     this.squadDetailsService.questions[tripLocationIndex].inputProps.options= options;
-    this.form.controls['tripLocation'].patchValue('8');
+    this.form.controls['tripLocation'].patchValue('900');
      this.form.controls['tripLocation'].disable({ emitEvent: false });   
    }
    setCountries(){
@@ -133,6 +133,11 @@ export class SquadDetailsComponent implements OnInit {
    }
   public logForm(form) {
     this.form=form;
+    if(form.controls['department'].value =='8'){
+      this.form.controls['tripLocation'].patchValue('900', { emitEvent: false });
+      this.form.controls['tripLocation'].disable({ emitEvent: false }); 
+    }
+  
     this.listenToRadioButton(form);
     console.log('I am form details: ', form);
     this.squadAssembleService.updateFormArray(form);

@@ -93,9 +93,9 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     })
     this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
       if(res)
-      this.editMode = false;
-      else
       this.editMode = true;
+      else
+      this.editMode = false;
    })
   }
   setformTemplate() {
@@ -271,7 +271,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       securing.order.supplier.id = +this.form.getRawValue().details.supplierId;
       securing.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
       securing.order.orderType.name = '';
-      securing.order.orderType.id = 7;
+      securing.order.orderType.id = 2;
       if(this.item!= undefined){
         if (this.item.globalParameters.tempOrderIdentity != undefined)
         securing.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;

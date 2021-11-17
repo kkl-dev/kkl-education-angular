@@ -89,9 +89,9 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
     this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
       if(res)
-      this.editMode = false;
-      else
       this.editMode = true;
+      else
+      this.editMode = false;
    })
 
   }

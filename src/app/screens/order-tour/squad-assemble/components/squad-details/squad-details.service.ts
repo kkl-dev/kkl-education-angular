@@ -45,17 +45,18 @@ export class SquadDetailsService {
           { label: 'מחלקת חוץ', value: '1' },
         ],
       },
+      value: '8',
       validations: [Validators.required],
     }),
     new QuestionSelect({
       // key: 'departmentId',
       key: 'tripLocation',
-      label: 'מחלקה',
+      label: 'מדינה',
       type: 'select',
       inputProps: {
         options: [
-          { label: 'ישראל', value: '8' },
-          { label: 'חו"ל', value: '1' },
+          { label: 'ישראל', value: '900' },
+          { label: 'חו"ל', value: '' },
         ],
       },
       validations: [Validators.required],
