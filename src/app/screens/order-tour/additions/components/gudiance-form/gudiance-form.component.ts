@@ -443,6 +443,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
     this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
     this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.form.controls["details"].get('guideName').disable({ emitEvent: false });
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);

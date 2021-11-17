@@ -348,6 +348,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     }, (err) => {
       console.log(err);
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
     })
   }
 

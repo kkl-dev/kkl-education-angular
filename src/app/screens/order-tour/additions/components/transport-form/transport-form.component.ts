@@ -290,7 +290,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
              }
              else{
               if (!this.additionsService.globalValidations(this.form)) { return; }
-              //if (!this.validationsTransport()) { return; }
+              if (!this.validationsTransport()) { return; }
               this.mapFormFieldsToServer()
              }
           })

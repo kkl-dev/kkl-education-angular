@@ -200,13 +200,13 @@ export class GeneralFormService {
       key: 'vegetarianDishesNumber',
       label: 'מספר מנות צמחוניות',
       value: '',
-      validations: [Validators.required],
+      // validations: [Validators.required],
     }),
     new QuestionTextbox({
       key: 'veganDishesNumber',
       label: 'מספר מנות טבעוניות',
       value: '',
-      validations: [Validators.required],
+      // validations: [Validators.required],
     }),
   ]
 
