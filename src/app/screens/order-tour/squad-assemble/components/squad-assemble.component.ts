@@ -38,7 +38,7 @@ export class SquadAssembleComponent implements OnInit {
    
     this.subscribeToNewClient();
     this.md$ = this.breakpointService.isTablet()
-    this.setSchedulAndClientSquadValues();
+    this.setClientSquadValues();
   }
 
   private setSquads() {
@@ -78,15 +78,9 @@ export class SquadAssembleComponent implements OnInit {
   }
 
  
-  setSchedulAndClientSquadValues(){
+  setClientSquadValues(){
     if(this.squadAssembleService.tripInfo.tripStart!=undefined){
-    // if(this.squadAssembleService.tripInfo !=undefined){
       console.log('trip info is full');
-      // let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
-      // this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
-      // let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
-      // this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
-      // // set client and contact form values
       let custObj={
         label: this.squadAssembleService.tripInfo.customer.name,
         value : this.squadAssembleService.tripInfo.customer.id.toString()

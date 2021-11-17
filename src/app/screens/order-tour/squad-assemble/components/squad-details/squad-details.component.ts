@@ -135,7 +135,6 @@ export class SquadDetailsComponent implements OnInit {
     this.form=form;
     this.listenToRadioButton(form);
     console.log('I am form details: ', form);
-   
     this.squadAssembleService.updateFormArray(form);
   }
 }

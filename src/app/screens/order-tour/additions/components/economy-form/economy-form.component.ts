@@ -40,6 +40,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   isItemOrderExist: boolean;
   isSupplierXemptedFromVat: boolean;
   isSaveOrderSucceededSub: Subscription;
+  valueChangeIndex= 0;
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -415,17 +416,20 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         console.log('supplier changed:',value);
         this.supplierId=value;
+        if( this.valueChangeIndex>0)
         this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
         let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
         if(supplier.isXemptedFromVat==1)
         this.isSupplierXemptedFromVat=true;
         else
         this.isSupplierXemptedFromVat=false;
+        if( this.valueChangeIndex>0)
         this.getOrderItemBySupplierId();
-
+        this.valueChangeIndex= this.valueChangeIndex+1;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
+      this.valueChangeIndex= this.valueChangeIndex+1;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost;
       if(!item.cost){

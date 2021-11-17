@@ -43,6 +43,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   isItemOrderExist : boolean;
   isSupplierXemptedFromVat: boolean;
   isSaveOrderSucceededSub: Subscription;
+  valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -134,7 +135,13 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
  }
 
   getSites(){
-    this.sitesSub= this.orderService.getSites(2021).subscribe(res=>{
+    let tripStart= this.squadAssembleService.tripInfofromService.trip.tripStart;
+    let tripStart1= tripStart.split("T");
+    let subTripStart= tripStart1[0];
+    let year= parseInt(subTripStart[0]);
+    let chevelCode= this.squadAssembleService.tripInfofromService.trip.centerField.chevelCode
+
+    this.sitesSub= this.orderService.getSites(year,chevelCode).subscribe(res=>{
       console.log(res);
       res.forEach(elem=>{
         this.generalFormService.siteList.push({label: elem.name ,value : elem.id.toString()})
@@ -329,15 +336,19 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         console.log(value);
         this.supplierId=value;
+        if( this.valueChangeIndex>0)
         this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
         let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
         if(supplier.isXemptedFromVat==1)
         this.isSupplierXemptedFromVat=true;
         else
         this.isSupplierXemptedFromVat=false;
+        if( this.valueChangeIndex>0)
         this.getOrderItemBySupplierId();
+        this.valueChangeIndex= this.valueChangeIndex+1;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      this.valueChangeIndex= this.valueChangeIndex+1;
       console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
       let itemCost;

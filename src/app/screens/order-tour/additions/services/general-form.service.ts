@@ -110,20 +110,20 @@ export class GeneralFormService {
       icon: 'date_range',
       label: 'תאריך איסוף',
       type: 'select',
-      validations: [Validators.required],
       inputProps: {
 
       },
+      validations: [Validators.required],
     }),
     new QuestionSelect({
       key: 'endDate',
       icon: 'date_range',
       label: 'תאריך פיזור',
       type: 'select',
-      validations: [Validators.required],
       inputProps: {
 
       },
+      validations: [Validators.required],
     }),
     new QuestionTextbox({
       key: 'startHour',
