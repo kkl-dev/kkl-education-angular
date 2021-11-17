@@ -387,7 +387,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Area'
 
-  /sites/{tripYear}:
+  /sites/{tripYear}/{chevelCode}:
      get:
       tags:
       - order
@@ -399,6 +399,11 @@ paths:
         schema:
           type: integer
           example: 2022
+      - name: chevelCode
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
         "200":
           description: sites list
@@ -1235,6 +1240,7 @@ components:
         diningRoomNotAvaliableTill:
           type: string
           format: datetime
+          nullable: true
         chevelCode :
           type: integer
           example: 1       

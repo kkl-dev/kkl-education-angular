@@ -43,6 +43,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   isItemOrderExist : boolean;
   isSupplierXemptedFromVat: boolean;
   isSaveOrderSucceededSub: Subscription;
+  valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -134,7 +135,13 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
  }
 
   getSites(){
-    this.sitesSub= this.orderService.getSites(2021).subscribe(res=>{
+    let tripStart= this.squadAssembleService.tripInfofromService.trip.tripStart;
+    let tripStart1= tripStart.split("T");
+    let subTripStart= tripStart1[0];
+    let year= parseInt(subTripStart[0]);
+    let chevelCode= this.squadAssembleService.tripInfofromService.trip.centerField.chevelCode
+
+    this.sitesSub= this.orderService.getSites(year,chevelCode).subscribe(res=>{
       console.log(res);
       res.forEach(elem=>{
         this.generalFormService.siteList.push({label: elem.name ,value : elem.id.toString()})
@@ -246,12 +253,13 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsSite()) { return; }
       let orderId;
-      if (this.generalFormService.economyOrderList.length > 0) {
-        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      if (this.generalFormService.siteOrderList.length > 0) {
+        orderId = this.generalFormService.siteOrderList[0].order.orderId
       }
       var site = {} as SiteOrder;
       site.globalParameters = {} as OrderItemCommonDetails;
       site.order = {} as Order;
+      if (orderId != undefined && orderId)
       site.order.orderId = orderId;
       site.order.supplier = {} as Supplier;
       site.order.orderType = {} as OrderType;
@@ -328,17 +336,19 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         console.log(value);
         this.supplierId=value;
-        this.form.controls["details"].get('itemCost').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue('', { emitEvent: false });
+        if( this.valueChangeIndex>0)
+        this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
         let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
         if(supplier.isXemptedFromVat==1)
         this.isSupplierXemptedFromVat=true;
         else
         this.isSupplierXemptedFromVat=false;
+        if( this.valueChangeIndex>0)
         this.getOrderItemBySupplierId();
+        this.valueChangeIndex= this.valueChangeIndex+1;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      this.valueChangeIndex= this.valueChangeIndex+1;
       console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
       let itemCost;
@@ -348,7 +358,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat=true)
+      if(this.isSupplierXemptedFromVat==true)
         itemCost = Math.floor(item.cost);
        else
        itemCost = Math.floor(item.costVat);

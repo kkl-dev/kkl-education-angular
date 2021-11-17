@@ -175,12 +175,16 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('I am schedule');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
-            scheduleForm = false
+            scheduleForm = false;
+            continue;
           }
           this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[i].get('tripDescription').value;
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
           this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
+          this.tripService.centerFieldObj=center;
           this.squadAssemble.tripInfo.centerField.linkSite = '';
+          let areaId= +this.squadAssemble.formsArray[i].get('areaTrip').value;
+          this.squadAssemble.tripInfo.areaTrip= this.squadAssemble.originalRegionList.find(i=> i.id=== areaId); 
           let tripDates = this.squadAssemble.formsArray[i].get('dates').value;
           let subTripDates = tripDates.split("-");
           startDate = subTripDates[0];
@@ -202,13 +206,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('I am details');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
-            detalisForm = false
+            detalisForm = false;
+            continue;
           }
           this.squadAssemble.tripInfo.insideCenterFieldId = parseInt(this.squadAssemble.formsArray[i].get('insideCenterFieldId').value);
           //this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('departmentId').value);
           this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('department').value);
 
-          if ( this.squadAssemble.tripInfo.departmentId==8){
+          if ( this.squadAssemble.tripInfo.departmentId==1){
             let countryId= this.squadAssemble.formsArray[i].get('tripLocation').value;
             let countryObj= this.tripService.countries.find(i=> i.id=== countryId);
             this.squadAssemble.tripInfo.country= countryObj;
@@ -225,7 +230,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('I am ageGroup');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
-            ageGroupForm = false
+            ageGroupForm = false;
+            continue;
           }
           var ageGroup = this.squadAssemble.formsArray[i].get('ageGroup').value;
           this.squadAssemble.tripInfo.ageGroup = this.tripService.ageGroupOriginal.filter(el => el.id === parseInt(ageGroup))[0];
@@ -245,7 +251,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('I am contact');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
-            ContactForm = false
+            ContactForm = false;
+            continue;
           }
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;

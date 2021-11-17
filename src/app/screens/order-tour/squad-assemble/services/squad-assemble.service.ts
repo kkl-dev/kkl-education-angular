@@ -37,6 +37,7 @@ export class SquadAssembleService {
   peopleInTrip ;
   options!: CalendarOptions;
   regionList=[];
+  originalRegionList=[];
   // public freeSpacesArrayGenarator(start: Date, end: Date) {
   //   const i = 0;
   //   let freeSpacesArray = [];
@@ -150,15 +151,16 @@ export class SquadAssembleService {
       inputProps: {},
     }),
 
-    // new QuestionSelect({
-    //   key: 'tourRegion',
-    //   type: 'select',
-    //   label: 'איזור טיול',
-
-    //   inputProps: {
-    //     options: this.regionList
-    //   },
-    // }),
+    new QuestionSelect({
+      key: 'areaTrip',
+      type: 'select',
+      label: 'איזור טיול',
+       
+      inputProps: {
+        //  options: this.regionList
+      },
+      validations: [Validators.required],
+    }),
     new QuestionTextarea({
       key: 'commentManager',
       label: 'הערות מנהליות',

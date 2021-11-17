@@ -406,7 +406,7 @@ export class TripService {
     )
   }
 
-  getBudgetKKl(budgetByParam: any) {
+  getBudgetKKl1(budgetByParam: any) {
     this.userService.getBadgetKKl(budgetByParam).subscribe(
       response => {
         console.log('response', response)
@@ -437,30 +437,93 @@ export class TripService {
     )
   }
 
+
+  getBudgetKKl(budgetByParam: any) {
+    this.userService.getBadgetKKl(budgetByParam).subscribe(
+      response => {
+        console.log('response', response)
+        this.budget = response;
+        if (this.budget.listCity !== null) {
+          var list = [];
+          this.budget.listCity.forEach(element => {
+            list.push({ label: element.name, value: element.id.toString() });
+          });
+          var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+          if (list.length === 1) {
+            this.squadBudgetService.questions[index].group.questions[0].value = list[0].value;
+            this.squadBudgetService.questions[index].group.questions[0].label = list[0].label;
+          }
+          else { this.squadBudgetService.questions[index].group.questions[0].inputProps.options = list; }
+        }
+        let incomeIndex= this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
+        let expenseIndex= this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
+        if(this.squadBudgetService.questions[incomeIndex].inputProps.options.length>0){
+          this.squadBudgetService.questions[incomeIndex].value='';
+          this.squadBudgetService.questions[incomeIndex].label='תת סעיף תקציב הכנסות';
+          this.squadBudgetService.questions[incomeIndex].inputProps.options = [];
+        }
+       
+        if(this.squadBudgetService.questions[expenseIndex].inputProps.options.length>0){
+          this.squadBudgetService.questions[expenseIndex].value='';
+          this.squadBudgetService.questions[expenseIndex].label='תת סעיף תקציב הוצאות';
+          this.squadBudgetService.questions[expenseIndex].inputProps.options = [];
+        }
+      
+          if (this.budget.type !== undefined) {
+            this.squadBudgetService.budget.type = this.budget.desc;
+            this.squadBudgetService.budget.budget = this.budget.kklAmount;
+            this.squadBudgetService.budget.expense = this.budget.customerAmount;
+            this.squadBudgetService.budget.deliver = this.budget.execution;
+            this.squadBudgetService.budget.overflow = this.budget.balanceFin;
+            this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
+          }
+        
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+
   getBudgetExpensesAndIncome(budgetByParam: any) {
     this.userService.getBadgetExpensesAndIncome(budgetByParam).subscribe(
       response => {
         console.log('response', response)
         this.budgetExpensesAndIncome = response;
+        if (this.budget.type !== undefined) {
+          this.squadBudgetService.budget.budget = this.budgetExpensesAndIncome.kklAmount;
+          this.squadBudgetService.budget.expense = this.budgetExpensesAndIncome.customerAmount;
+          this.squadBudgetService.budget.deliver = this.budgetExpensesAndIncome.execution;
+          this.squadBudgetService.budget.overflow = this.budgetExpensesAndIncome.balanceFin;
+          this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
+        }
         let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
         let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
-        if (this.budget.type == 1) {
-
+        this.squadBudgetService.questions[index1].inputProps.options=[];
+        this.squadBudgetService.questions[index2].inputProps.options=[];
+        // if (this.budget.type == 1) {
+        if (this.budget.type != undefined) {
+          this.budgetIncome=[];
+          this.budgetExpenses=[];
           response.subBudgetIncomeList.forEach(element => {
             this.budgetIncome.push({ label: element.name, value: element.id.toString() });
           });
           this.squadBudgetService.questions[index1].inputProps.options = this.budgetIncome;
+          this.squadBudgetService.questions[index1].value = response.incomeId.toString();
+          this.squadBudgetService.questions[index1].label= response.incomeName;
           response.subBudgetExpenseList.forEach(element => {
             this.budgetExpenses.push({ label: element.name, value: element.id.toString() });
           });
           this.squadBudgetService.questions[index2].inputProps.options = this.budgetExpenses;
+          this.squadBudgetService.questions[index2].value = response.expensesId.toString();
+          this.squadBudgetService.questions[index2].label= response.expensesName;
         }
-        // else {
+         else {
         this.squadBudgetService.questions[index1].value = response.incomeId.toString();
         this.squadBudgetService.questions[index1].label = response.incomeName;
         this.squadBudgetService.questions[index2].value = response.expensesId.toString();
         this.squadBudgetService.questions[index2].label = response.expensesName;
-        // }
+       }
         this.budgetByParam.budget.cityId = response.cityId
         this.budgetByParam.budget.expensesId = response.expensesId
         this.budgetByParam.budget.incomeId = response.incomeId

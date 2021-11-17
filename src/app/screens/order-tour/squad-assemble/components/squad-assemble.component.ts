@@ -20,6 +20,7 @@ export class SquadAssembleComponent implements OnInit {
   public budgetGroup: QuestionGroup;
   options!: CalendarOptions;
   private newClientMode: boolean;
+  //regionList=[];
   public md$ : Observable<boolean>
   constructor(private squadAssembleService: SquadAssembleService,private tripService:TripService, private breakpointService : BreakpointService,
     private squadClientService: SquadClientService,private userService:UserService) {
@@ -34,10 +35,10 @@ export class SquadAssembleComponent implements OnInit {
   
   ngOnInit(): void {
     this.tripService.getLookUp();
-    //this.getRegionList();
+   
     this.subscribeToNewClient();
     this.md$ = this.breakpointService.isTablet()
-    this.setSchedulAndClientSquadValues();
+    this.setClientSquadValues();
   }
 
   private setSquads() {
@@ -76,24 +77,10 @@ export class SquadAssembleComponent implements OnInit {
     };
   }
 
-   getRegionList(){
-     let chevelCode= this.tripService.centerField.chevelCode
-     this.userService.getAreasByChevel(chevelCode).subscribe(res=>{
-      res.forEach(element => {
-        this.squadAssembleService.regionList.push({ label: element.name, value: element.id.toString() });
-      });
-     },(err)=>{
-       console.log(err);
-     })
-   }
-  setSchedulAndClientSquadValues(){
+ 
+  setClientSquadValues(){
     if(this.squadAssembleService.tripInfo.tripStart!=undefined){
       console.log('trip info is full');
-      let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
-      this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
-      let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
-      this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
-      // set client and contact form values
       let custObj={
         label: this.squadAssembleService.tripInfo.customer.name,
         value : this.squadAssembleService.tripInfo.customer.id.toString()
@@ -102,7 +89,6 @@ export class SquadAssembleComponent implements OnInit {
       custArr.push(custObj);
       this.squadClientService.questions[0].group.questions[0].inputProps.options=custArr;
       this.squadClientService.questions[0].group.questions[0].value=custObj.value;
-      //this.squadClientService.emitClientSelected(this.squadAssembleService.tripInfo.customer.id.toString())
       let contactGroupIndex=  this.squadClientService.questions.findIndex(i => i.key=='contact');
       let contactGroup = this.squadClientService.questions.find(i => i.key=='contact');
       let contactNameIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactName');
@@ -112,11 +98,7 @@ export class SquadAssembleComponent implements OnInit {
       let contactImailIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactEmail');
       this.squadClientService.questions[contactGroupIndex].group.questions[contactImailIndex].value= this.squadAssembleService.tripInfo.contactEmail;
     }
-    else{
-       let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
-       this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
-       console.log('trip info is undefined');
-    }
+  
  }
   private subscribeToNewClient() {
     this.squadAssembleService.getNewClientObs().subscribe((value: boolean) => {
@@ -124,4 +106,33 @@ export class SquadAssembleComponent implements OnInit {
       this.setSquads();
     });
   }
+
+
+  // setDefaultValues(name: string) {
+  //   switch (name) {
+  //     case 'dates':
+  //       if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
+  //         this.control.setValue(this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+  //         if (typeof (Storage) !== "undefined") {
+  //           localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+  //         }
+  //       }
+  //       else {
+  //         this.control.setValue(localStorage.getItem("sleepingDates"));
+  //       }
+  //       break;
+
+  //     case 'centerField':
+  //       if (this.tripService.centerField.id != 0) {
+  //         this.control.setValue(this.tripService.centerField.id.toString());
+  //         if (typeof (Storage) !== "undefined") {
+  //           localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
+  //           localStorage.setItem("centerFieldName", this.tripService.centerField.name);
+  //         }
+  //       }
+  //       else {
+  //         this.control.setValue(localStorage.getItem("centerFieldId"));
+  //       }
+  //   }
+  // }
 }

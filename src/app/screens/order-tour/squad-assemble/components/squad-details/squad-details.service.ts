@@ -41,10 +41,11 @@ export class SquadDetailsService {
         options: [
           // { label: 'מחלקת פנים', value: 'domestic' },
           // { label: 'מחלקת חוץ', value: 'foreign' },
-          { label: 'מחלקת פנים', value: '1' },
-          { label: 'מחלקת חוץ', value: '8' },
+          { label: 'מחלקת פנים', value: '8' },
+          { label: 'מחלקת חוץ', value: '1' },
         ],
       },
+      validations: [Validators.required],
     }),
     new QuestionSelect({
       // key: 'departmentId',
@@ -53,8 +54,8 @@ export class SquadDetailsService {
       type: 'select',
       inputProps: {
         options: [
-          { label: 'ישראל', value: '1' },
-          { label: 'חו"ל', value: '8' },
+          { label: 'ישראל', value: '8' },
+          { label: 'חו"ל', value: '1' },
         ],
       },
       validations: [Validators.required],

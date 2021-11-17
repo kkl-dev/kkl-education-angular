@@ -44,7 +44,8 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   isSupplierXemptedFromVat: boolean;
   occupancyValidation :OccupancyValidation;
   isSaveOrderSucceededSub: Subscription;
-
+  valueChangeIndex= 0;
+  ifCalculateBySumPeople : boolean;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -202,8 +203,10 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         });
         let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
         this.generalFormService.details[itemIndex].inputProps.options= this.itemsList;
-        if(this.form)
-        return;
+        if(this.form){
+         return
+        }
+       
         if(this.itemId!= undefined)
         this.generalFormService.details[itemIndex].value= this.itemId.toString();
         if (this.item != undefined && this.item != null ) {
@@ -228,12 +231,13 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
       //if (!this.validationsHosting()) { return; }
       let orderId;
-      if (this.generalFormService.economyOrderList.length > 0) {
-        orderId = this.generalFormService.economyOrderList[0].order.orderId
+      if (this.generalFormService.hostingOrderList.length > 0) {
+        orderId = this.generalFormService.hostingOrderList[0].order.orderId
       }
       let hosting = {} as HostingOrder;
       hosting.globalParameters = {} as OrderItemCommonDetails;
       hosting.order = {} as Order;
+      if (orderId != undefined && orderId)
       hosting.order.orderId = orderId;
       hosting.order.supplier = {} as Supplier;
       hosting.order.orderType = {} as OrderType;
@@ -401,38 +405,44 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         console.log('supplier changed:',value);
         this.supplierId=value;
-        this.form.controls["details"].get('itemCost').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue('', { emitEvent: false });
-        let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
-        if(supplier.isXemptedFromVat==1)
-        this.isSupplierXemptedFromVat=true;
-        else
-        this.isSupplierXemptedFromVat=false;
-        this.getOrderItemBySupplierId();
+        if( this.valueChangeIndex>0)
+         this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
+          let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
+          if(supplier.isXemptedFromVat==1)
+          this.isSupplierXemptedFromVat=true;
+          else
+          this.isSupplierXemptedFromVat=false;
+          if( this.valueChangeIndex>0)
+          this.getOrderItemBySupplierId();
+          this.valueChangeIndex= this.valueChangeIndex+1;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let item = this.originalItemList.find(el => el.id === parseInt(value))
-      let itemCost;
-      if(!item.cost){
-        this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
-        return;
-      }
-      if(this.isSupplierXemptedFromVat=true)
-        itemCost = Math.floor(item.cost);
-       else
-       itemCost = Math.floor(item.costVat);
-      this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
-      console.log(this.form.value.details);
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
-
+        this.valueChangeIndex= this.valueChangeIndex+1;
+        console.log(value)
+        let item = this.originalItemList.find(el => el.id === parseInt(value))
+        if (item.isSumPeopleOrAmount == 1)
+        this.ifCalculateBySumPeople= false;
+        else
+        this.ifCalculateBySumPeople= true;
+        let itemCost;
+        if(!item.cost){
+          this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+          this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+          this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+          return;
+        }
+        if(this.isSupplierXemptedFromVat==true)
+          itemCost = Math.floor(item.cost);
+         else
+         itemCost = Math.floor(item.costVat);
+        this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
+        console.log(this.form.value.details);
+        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
+        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
     });
 
+    if(!this.ifCalculateBySumPeople){
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
@@ -440,6 +450,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
 
     });
+  }
 
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
@@ -455,6 +466,15 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
     });
+    if(this.ifCalculateBySumPeople == true){
+      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+        console.log(value)
+        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+  
+      });
+    }
     console.log(this.form)
   }
 

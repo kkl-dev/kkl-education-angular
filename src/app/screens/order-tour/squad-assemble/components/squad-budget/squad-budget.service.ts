@@ -26,7 +26,7 @@ export class SquadBudgetService {
       rows: 4,
       label: 'תת סעיף תקציב הכנסות',
       inputProps: {
-        options: [],
+        // options: [],
       },
     }),
     new QuestionSelect({
@@ -36,7 +36,7 @@ export class SquadBudgetService {
       rows: 4,
       label: 'תת סעיף תקציב הוצאות',
       inputProps: {
-        options: [],
+        // options: [],
       },
     }),
     new QuestionBase({
@@ -69,7 +69,7 @@ export class SquadBudgetService {
   public list: ListItem[] = [
     {
       key: 'type',
-      label: 'סוג תקציב',
+      label: 'סוג תקצוב',
       type: 'text'
     },
     {

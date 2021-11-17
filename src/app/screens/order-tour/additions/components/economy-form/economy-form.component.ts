@@ -40,6 +40,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   isItemOrderExist: boolean;
   isSupplierXemptedFromVat: boolean;
   isSaveOrderSucceededSub: Subscription;
+  valueChangeIndex= 0;
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -242,6 +243,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       let eco = {} as EconomyOrder;
       eco.globalParameters = {} as OrderItemCommonDetails;
       eco.order = {} as Order;
+      if (orderId != undefined && orderId)
       eco.order.orderId = orderId;
       eco.order.supplier = {} as Supplier;
       eco.order.orderType = {} as OrderType;
@@ -414,19 +416,20 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         console.log('supplier changed:',value);
         this.supplierId=value;
-        this.form.controls["details"].get('itemCost').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue('', { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue('', { emitEvent: false });
+        if( this.valueChangeIndex>0)
+        this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
         let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
         if(supplier.isXemptedFromVat==1)
         this.isSupplierXemptedFromVat=true;
         else
         this.isSupplierXemptedFromVat=false;
+        if( this.valueChangeIndex>0)
         this.getOrderItemBySupplierId();
-
+        this.valueChangeIndex= this.valueChangeIndex+1;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
+      this.valueChangeIndex= this.valueChangeIndex+1;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost;
       if(!item.cost){
@@ -435,7 +438,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat=true)
+      if(this.isSupplierXemptedFromVat==true)
         itemCost = Math.floor(item.cost);
        else
        itemCost = Math.floor(item.costVat);

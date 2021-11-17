@@ -110,27 +110,27 @@ export class GeneralFormService {
       icon: 'date_range',
       label: 'תאריך איסוף',
       type: 'select',
-      validations: [Validators.required],
       inputProps: {
 
       },
+      validations: [Validators.required],
     }),
     new QuestionSelect({
       key: 'endDate',
       icon: 'date_range',
       label: 'תאריך פיזור',
       type: 'select',
-      validations: [Validators.required],
       inputProps: {
 
       },
+      validations: [Validators.required],
     }),
     new QuestionTextbox({
       key: 'startHour',
       label: 'שעת איסוף',
       icon: 'schedule',
       type: 'time',
-      validations: [Validators.required],
+      // validations: [Validators.required],
       // inputProps: {
       //   // labelSize: 's5',
       // },
@@ -141,14 +141,14 @@ export class GeneralFormService {
       label: 'שעת פיזור',
       icon: 'schedule',
       type: 'time',
-      validations: [Validators.required],
+      // validations: [Validators.required],
     }),
     new QuestionTextbox({
       key: 'location',
       label: 'מיקום',
       value: '',
       icon: 'place',
-      validations: [Validators.required],
+      // validations: [Validators.required],
       inputProps: {
         // labelSize: 's5',
       },
@@ -181,7 +181,7 @@ export class GeneralFormService {
       key: 'exitPoint',
       label: 'נקודת יציאה',
       type: 'select',
-      // validations: [Validators.required],
+      validations: [Validators.required],
       inputProps: {
         options: this.settlementList
       },
@@ -216,7 +216,7 @@ export class GeneralFormService {
       key: 'scatterLocation',
       label: 'מקום פיזור',
       value: '',
-      validations: [Validators.required],
+      // validations: [Validators.required],
       icon: 'place',
       inputProps: {
         // labelSize: 's5',
@@ -226,7 +226,7 @@ export class GeneralFormService {
       key: 'guideName',
       label: 'שם המדריך',
       value: '',
-      validations: [Validators.required],
+      // validations: [Validators.required],
     }),
     new QuestionSelect({
       key: 'languageGuidance',
@@ -242,7 +242,7 @@ export class GeneralFormService {
       label: 'הוראות הדרכה',
       value: '',
       cols: 3,
-      validations: [Validators.required],
+      // validations: [Validators.required],
     }),
   ]
 
