@@ -45,10 +45,27 @@ export class AdditionsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if(this.squadAssembleService.tripInfofromService){
+      this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      this.generalFormService.tripId= this.tripId;
+      this.generalFormService.tripInfo= this.squadAssembleService.tripInfofromService;
+      this.generalFormService.peopleInTrip= this.squadAssembleService.peopleInTrip;
+    }
+    else{
+      this.tripId= parseInt(localStorage.getItem('tripId'));
+      this.generalFormService.tripId= this.tripId;
+      this.generalFormService.peopleInTrip = parseInt(localStorage.getItem('peopleInTrip'))
+      //let retrievedObject = localStorage.getItem('centerFieldObj');
+      let retrievedObject = localStorage.getItem('tripInfofromService');
+      let retrievedObj = JSON.parse(retrievedObject);
+       this.generalFormService.tripInfo= retrievedObj;
+       console.log('retrievedObject: ', retrievedObj);
 
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    }
    
-    this.tourTitle= this.squadAssembleService.tripInfofromService.trip.tripDescription;
+    //this.tourTitle= this.squadAssembleService.tripInfofromService.trip.tripDescription;
+     this.tourTitle= this.generalFormService.tripInfo.trip.tripDescription;
+    
 
     this.getOrders();
     //this.getTempOrder();
@@ -75,9 +92,6 @@ export class AdditionsComponent implements OnInit {
     this.addItem = true;
   }
 
-  test(){
-    this.addItem = false;
-  }
   getOrders() {
     this.orderService.getOrders(this.tripId).subscribe(res => {
       console.log(res);
@@ -88,8 +102,6 @@ export class AdditionsComponent implements OnInit {
     })
   }
   getTempOrder() {
-
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id
    // this.tripId= 52973;
     this.orderService.getTempOrders(this.tripId).subscribe(
       response => {

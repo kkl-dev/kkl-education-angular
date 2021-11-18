@@ -3,6 +3,7 @@ import { SquadAssembleService } from '../../../squad-assemble/services/squad-ass
 import { LocationModel } from '../../models/location.model';
 import { ScheduleModel } from '../../models/schedule.model';
 import { TransportModel } from '../../models/transport.model';
+import { GeneralFormService } from '../../services/general-form.service';
 
 @Component({
   selector: 'app-tour-panel',
@@ -10,7 +11,7 @@ import { TransportModel } from '../../models/transport.model';
   styleUrls: ['./tour-panel.component.scss'],
 })
 export class TourPanelComponent implements OnInit {
-  constructor(private squadAssembleService: SquadAssembleService) { }
+  constructor(private squadAssembleService: SquadAssembleService,private generalFormService:GeneralFormService) { }
 
   @Input() editMode: boolean=true;
   //@Input() schedule: ScheduleModel;
@@ -18,53 +19,54 @@ export class TourPanelComponent implements OnInit {
   @Input() i: number;
   @Input() orderType: number;
   date;
-  locations =  [new LocationModel(new Date(), new Date(), this.squadAssembleService.tripInfofromService.trip.centerField.name)]
+  hidden: boolean= true;
+  locations =  [new LocationModel(new Date(), new Date(), this.generalFormService.tripInfo.trip.centerField.name)]
   textHeader: any;
   ngOnInit(): void {
-     this.setDateFormat();
-     this.setHeaderText(this.orderType);
+     //this.setDateFormat();
+     
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes.orderType.currentValue !=null && changes.orderType.currentValue!= undefined) {
       console.log('changes is: ',changes.orderType.currentValue);
+      this.setHeaderText(changes.orderType.currentValue);
     }
   }
    setDateFormat(){
-    
-      if(this.item.globalParameters != undefined){
-        if(this.item.globalParameters.startDate.includes('T')){
-          let subDate= this.item.globalParameters.startDate.split('T');
-          let date= subDate[0];
-          let subDate1= date.split('-');
-          let israelDateFormat= subDate1[2]+'/'+subDate1[1]+'/'+subDate1[0];
-          this.date= israelDateFormat;
-        }
-          else{
-           this.date= this.item.globalParameters.startDate;
+       
+        if(this.item?.globalParameters != undefined){
+          if(this.item.globalParameters.startDate.includes('T')){
+            let subDate= this.item.globalParameters.startDate.split('T');
+            let date= subDate[0];
+            let subDate1= date.split('-');
+            let israelDateFormat= subDate1[2]+'/'+subDate1[1]+'/'+subDate1[0];
+            this.date= israelDateFormat;
           }
-       }
-      
+            else{
+             this.date= this.item.globalParameters.startDate;
+            }
+         }     
   }
 
   setHeaderText(orderType){
     switch (orderType) {
       case 1:
-        this.textHeader= this.locations[0].pickupLocation ;
+        this.textHeader= 'הזמנת היסעים'
         break;
       case 2:
-           this.textHeader= this.locations[0].pickupLocation;
+        this.textHeader= 'הזמנת אבטחה'
           break;
       case 3:
-          this.textHeader= this.locations[0].pickupLocation;
+        this.textHeader= 'הזמנת אתרים'
           break;
       case 4:
-         this.textHeader= this.locations[0].pickupLocation;
+        this.textHeader= 'הזמנת כלכלה'
         break;
       case 6:
             this.textHeader= 'הדרכת טיול';
           break;
       case 7:
-           this.textHeader= this.locations[0].pickupLocation
+          this.textHeader= 'הזמנת אירוח ';
             break;
       case 10:
                this.textHeader= 'הפעלה מוסיקלית';

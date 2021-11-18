@@ -214,7 +214,8 @@ export class AdditionsService {
 
     if (item?.orderType == 7) {
       // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים  
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {
+      // if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {
+        if (item?.isSumPeopleOrAmount == 2 && this.generalFormService.tripInfo.trip.attribute.subsidization1To25 == 1 && this.generalFormService.tripInfo.trip.activity.id !== 2) {
         // סבסוד עלות ללקוח מופעל רק עבור פריטים שמוגדרים לפי משתתפים
         // חישוב מספר משתתפים לחיוב - לאחר סבסוד
         MultiplyByAfterSibsud = MultiplyByAmountOrPeople > 0 ? (MultiplyByAmountOrPeople - (MultiplyByAmountOrPeople / 25)) : 0
@@ -242,10 +243,10 @@ export class AdditionsService {
       //   itemOrder.billingSupplier *= currentVat;
       // } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
      
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
+      if (item?.isSumPeopleOrAmount == 2 && this.generalFormService.tripInfo.trip.attribute.subsidization1To25 == 1 && this.generalFormService.tripInfo.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
-        var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides ?
-          MultiplyByAmountOrPeople - this.squadAssembleService.tripInfofromService.trip.numGuides : MultiplyByAmountOrPeople
+        var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
+          MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides : MultiplyByAmountOrPeople
 
         // }
         // חישוב מספר משתתפים לחיוב - לאחר סבסוד
@@ -271,12 +272,12 @@ export class AdditionsService {
 
     //   ------------------------אבטחה-----------------------------------------------------------
     else if (item?.orderType == 2) {
-      if (item?.isSumPeopleOrAmount == 2 && this.squadAssembleService.tripInfofromService.trip.attribute.subsidization1To25 == 1 && this.squadAssembleService.tripInfofromService.trip.activity.id !== 2) { // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
+      if (item?.isSumPeopleOrAmount == 2 && this.generalFormService.tripInfo.trip.attribute.subsidization1To25 == 1 && this.generalFormService.tripInfo.trip.activity.id !== 2) { // פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // סבסוד עלות ללקוח מופעל רק עבור פריטים שמוגדרים לפי משתתפים
         // בהזמנות אבטחה לפי משתתפים - יש להוריד בחיוב לקוח את המדריכים
-        if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
-          MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides ?
-            MultiplyByAmountOrPeople - this.squadAssembleService.tripInfofromService.trip.numGuides : MultiplyByAmountOrPeople
+        if (MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides) {
+          MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
+            MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides : MultiplyByAmountOrPeople
           // חישוב מספר משתתפים לחיוב - לאחר סבסוד
           MultiplyByAfterSibsud = MultiplyByPeopleMinusGuides > 0 ? (MultiplyByPeopleMinusGuides - Math.floor(MultiplyByPeopleMinusGuides / 25)) : 0
           totalNoCharge = MultiplyByAmountOrPeople > 0 ? Math.floor(MultiplyByAmountOrPeople / 25) : 0
@@ -299,10 +300,10 @@ export class AdditionsService {
       // היסעים - צריך להיות תמיד לפי כמות
       // אם סוג פעילות: "עבודה תורמת" או "מחזון להגשמה" - החיוב ללקוח אמור להיות רק 50%
       // if (this.squadAssembleService?.tripInfofromService.trip.activity.id == 23 || this.squadAssembleService?.tripInfofromService.trip.activity.id == 38) {
-      if (this.squadAssembleService?.tripInfofromService.trip.activity.id == 38) {
+      if (this.generalFormService?.tripInfo.trip.activity.id == 38) {
         itemOrder.billingCustomer = item?.costCustomer * 0.5
         addToCommentMultipleStr = "עם סבסוד" + "מכפלת החיוב " + itemOrder.quantity + "*" + item?.costCustomer + "*0.5" + "*" + MultiplyByDays.toString()
-        itemOrder.internalComment = "סבסוד קקל לפעילות חינוכית" + this.squadAssembleService.tripInfofromService.trip.activity.name + ", " + "עלות הפריט: " + item?.costCustomer
+        itemOrder.internalComment = "סבסוד קקל לפעילות חינוכית" + this.generalFormService.tripInfo.trip.activity.name + ", " + "עלות הפריט: " + item?.costCustomer
         "סה''כ כמות לחישוב" + itemOrder.quantity + addToCommentNumOfDaysNights + addToCommentMultipleStr
       }
       else
@@ -317,7 +318,7 @@ export class AdditionsService {
       //   itemOrder.internalComment = "בטיול מסוג עבודה תורמת אין חיוב ללקוח עבור הדרכה"
       // }      
       // else  //מחזון להגשמה המדריכים בחינם ללקוח  
-      if (this.squadAssembleService.tripInfofromService.trip.activity.id == 38) {
+      if (this.generalFormService.tripInfo.trip.activity.id == 38) {
         itemOrder.billingCustomer = 0
         itemOrder.internalComment = "בטיול מסוג מחזון להגשמה אין חיוב ללקוח עבור הדרכה"
       }
@@ -368,7 +369,8 @@ export class AdditionsService {
       if (item?.amountLimit < form.value.details['quantity']) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'פריט זה מוגבל לכמות 1 בלבד: ' + item?.participantsLimit }
+          // data: { message: 'פריט זה מוגבל לכמות 1 בלבד: ' + item?.participantsLimit }
+          data: { message: 'פריט זה מוגבל ל: ' + item?.amountLimit +' בלבד' }
         })
         return false;
       }

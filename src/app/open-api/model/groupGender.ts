@@ -11,8 +11,8 @@
  */
 
 
-export interface OccupancyCheckingResult { 
-    isOccupancyProblem?: boolean | null;
-    message?: string;
+export interface GroupGender { 
+    id?: number;
+    name?: string;
 }
 

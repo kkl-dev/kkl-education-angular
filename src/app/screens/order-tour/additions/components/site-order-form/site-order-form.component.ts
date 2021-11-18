@@ -35,7 +35,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   addOrderSub: Subscription;
   editOrderSub: Subscription;
   centerFieldId: number;
-  ifInitiateFormflag: boolean =false;
+  ifInitiateFormflag: boolean ;
    isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
@@ -46,6 +46,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   isSupplierXemptedFromVat: boolean;
   //isSaveOrderSucceededSub: Subscription;
   valueChangeIndex= 0;
+  itemOrderRecordId: number;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -53,56 +54,37 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.tripId = this.generalFormService.tripId;
+    //this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-    //let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    //this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
-
-    //this.setformTemplate();
-
+   
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined){
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
-        //this.generalFormService.getOrderItemBySupplierId(this.supplierId)
       }
     }
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
+      this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
     }
     this.getSupplierList(this.orderType, this.tripId, 0);
     this.getSites();
     this.generalFormService.setDatesValues();
     this.setformTemplate();
-
-    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-    //   console.log('res from table data intransort is :',res);
-    //   this.tableData=res;
-    //   this.ifShowtable=true;
-    // })
-  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-  //     if(res)
-  //     this.editMode = true;
-  //     else
-  //     this.editMode = false;
-  //  })
-  
   }
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
     this.generalFormService.questionGroups[index].questions = this.generalFormService.details;
     let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
-    //detailsArr.splice(0,0,this.generalFormService.siteQuestion);
     let siteQuestions = detailsArr.concat(this.generalFormService.site);
     this.generalFormService.questionGroups[index].questions = siteQuestions;
-    //this.ifInitiateFormflag=true;
-    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
-      
+   
   }
   changeLabels(tempArr) {
     console.log('tempArr is :', tempArr);
@@ -121,7 +103,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   }
 
   initiateForm(){
-    //this.flag=true;
+    this.ifInitiateFormflag=true;
     this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
      console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
   }
@@ -217,11 +199,11 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   }
 
   getSites(){
-    let tripStart= this.squadAssembleService.tripInfofromService.trip.tripStart;
+    let tripStart= this.generalFormService.tripInfo.trip.tripStart;
     let tripStart1= tripStart.split("T");
     let subTripStart= tripStart1[0];
     let year= parseInt(subTripStart[0]);
-    let chevelCode= this.squadAssembleService.tripInfofromService.trip.centerField.chevelCode
+    let chevelCode= this.generalFormService.tripInfo.trip.centerField.chevelCode
 
     this.sitesSub= this.orderService.getSites(year,chevelCode).subscribe(res=>{
       console.log(res);
@@ -284,7 +266,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       site.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       site.globalParameters.orderId = orderId;
       site.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      site.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      site.order.tripId = this.tripId;
       site.order.orderType.name = 'אתרים';
       site.order.orderType.id = this.orderType;
       // if(this.item.globalParameters.tempOrderIdentity!= undefined)
@@ -294,7 +276,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         this.addOrder(site);
       }
       else{
-        site.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+        site.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
         //this.generalFormService.editOrder(site, site.order.orderType.id);
         this.editOrder(site);
       }
@@ -321,6 +303,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   addOrder(item){
     this.addOrderSub=  this.orderService.addOrder( item).subscribe(res => {
         console.log(res); 
+        this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
         //this.tableData.next(res);
         this.tableData=res;
         this.ifShowtable=true;

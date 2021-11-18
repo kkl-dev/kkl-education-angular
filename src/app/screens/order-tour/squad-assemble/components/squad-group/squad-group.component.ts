@@ -91,6 +91,7 @@ export class SquadGroupComponent {
   }
      this.list[0].value= sum;
      this.squadAssembleService.peopleInTrip=sum;
+     localStorage.setItem('peopleInTrip',sum.toString())
     this.squadAssembleService.updateFormArray(form);
   }
 

@@ -55,6 +55,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   //isXemptedFromVat: boolean;
   //transQuestions:any [];
   valueChangeIndex= 0;
+  itemOrderRecordId: number;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -74,8 +75,10 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     //   let retrievedObj = JSON.parse(retrievedObject);
     //    this.tripId= retrievedObj.trip.id;
     // }
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+     this.tripId = this.generalFormService.tripId;
+    //this.centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
     //let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
@@ -94,7 +97,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
     else {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
+      //this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
+      this.generalFormService.details[peopleInTripIndex].value =  (this.generalFormService.peopleInTrip).toString();
       //this.setformTemplate();
     }
     this.generalFormService.setDatesValues();
@@ -201,7 +205,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   
   getOrderItemBySupplierId() {
-   this.itemListSub= this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+   this.itemListSub= this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId,false).subscribe(
       response => {
         console.log(response);
         this.itemsList = [];
@@ -285,7 +289,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   public onSave(): void {
     if (this.form) {
       let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-      if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+      // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+       if(item?.amountLimit!= null){
         this.orderService.checkItemsExistInDateTime(this.tripId,
           this.centerFieldId, item).subscribe(res=>{
              if(res.message!= "false"){
@@ -296,18 +301,20 @@ export class TransportFormComponent implements OnInit, OnDestroy {
               return;
              }
              else{
-              if (!this.additionsService.globalValidations(this.form)) { return; }
-              if (!this.validationsTransport()) { return; }
-              this.mapFormFieldsToServer()
+               this.validationItem();
              }
           })
       }
       else{
-        if (!this.additionsService.globalValidations(this.form)) { return; }
-        if (!this.validationsTransport()) { return; }
-        this.mapFormFieldsToServer()
+        this.validationItem();
       }
     }
+  }
+
+  validationItem(){
+    if (!this.additionsService.globalValidations(this.form)) { return; }
+    if (!this.validationsTransport()) { return; }
+    this.mapFormFieldsToServer()
   }
 
     public mapFormFieldsToServer(){
@@ -354,7 +361,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       t.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       t.globalParameters.orderId = orderId;
       t.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      t.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      t.order.tripId = this.tripId;
       t.order.orderType.name = 'היסעים';
       t.order.orderType.id = this.orderType;
       if(this.item!= undefined){
@@ -367,7 +374,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.addOrder(t);
       }
       else{
-        t.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+        t.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
         //this.generalFormService.editOrder(t, t.order.orderType.id);
         this.editOrder(t)
       }
@@ -380,6 +387,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.addOrderSub=  this.orderService.addOrder( item).subscribe(res => {
         console.log(res); 
         //this.tableData.next(res);
+        this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
         this.tableData=res;
         this.ifShowtable=true;
         this.generalFormService.enableButton.next(true);

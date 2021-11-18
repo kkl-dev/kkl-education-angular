@@ -18,6 +18,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class GeneralFormService {
   supplierList = [];
   itemsList = [];
+  tripId: number;
+  centerFieldObj;
+  tripInfo: any;
+  peopleInTrip: number
   public transportOrderList: TransportOrder[] = [];
 
   public economyOrderList: EconomyOrder[] =[];
@@ -383,7 +387,7 @@ export class GeneralFormService {
   }
 
   setDatesValues() {
-    let tripDetails = this.squadAssembleService.tripInfofromService.trip;
+    let tripDetails = this.tripInfo.trip;
     let startDate = tripDetails.tripStart;
     let endDate = tripDetails.tripEnding;
     let str = startDate.split("T");

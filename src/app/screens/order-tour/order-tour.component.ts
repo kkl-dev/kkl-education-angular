@@ -182,7 +182,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[i].get('tripDescription').value;
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
           this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
-          this.tripService.centerFieldObj=center;
+          this.tripService.centerFieldObj.next(this.squadAssemble.tripInfo.centerField);
+          localStorage.setItem('centerFieldObj', JSON.stringify(this.squadAssemble.tripInfo.centerField));
           this.squadAssemble.tripInfo.centerField.linkSite = '';
           let areaId= +this.squadAssemble.formsArray[i].get('areaTrip').value;
           this.squadAssemble.tripInfo.areaTrip= this.squadAssemble.originalRegionList.find(i=> i.id=== areaId); 
@@ -307,6 +308,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
        flag=true
        else
        return flag;
+      
       if(this.squadAssemble.payerCustomer.name!= undefined)
       this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
       let date = new Date()
@@ -319,9 +321,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.tripService.isOneDayTrip=true;
            this.createTrip(this.steps[2].path);
        }
-
     }
-
     catch (error) {
       console.log(error);
       flag = false;
@@ -330,6 +330,17 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log('tripInfo obj is: ', this.squadAssemble.tripInfo);
     return flag;
   }
+
+
+   public findInvalidControls(formName) {
+        // const controls = this.AddCustomerForm.controls;
+        // for (const name in controls) {
+        //     if (controls[name].invalid) {
+        //         invalid.push(name);
+        //     }
+        // }
+        // return invalid;
+    }
 
 
 
@@ -364,6 +375,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userService.createTrip(tripInfo).subscribe(res => {
       console.log('tripInfo from server is :', res);
       this.squadAssemble.tripInfofromService = res;
+      localStorage.setItem('tripId',res.trip.id.toString());
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
       this.router.navigateByUrl(
         `/education/order-tour/${route}`
