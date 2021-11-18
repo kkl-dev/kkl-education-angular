@@ -99,12 +99,12 @@ export class FacilitiesComponent implements OnInit {
     private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService,
     private userDataService: UserDataService, private orderService: OrderService, private squadAssembleService: SquadAssembleService,
     private resolver: ComponentFactoryResolver) {
-         //get sleeping Dates from trip service
-         this.sleepingDates = this.tripService.convertDatesFromSlashToMinus();
-         // add another day to last day
-         let lastDay = new Date(this.days[this.days.length - 1].date);
-         this.till = new Date(lastDay.setDate(lastDay.getDate() + 1));
-     }
+    //get sleeping Dates from trip service
+    this.sleepingDates = this.tripService.convertDatesFromSlashToMinus();
+    // add another day to last day
+    let lastDay = new Date(this.days[this.days.length - 1].date);
+    this.till = new Date(lastDay.setDate(lastDay.getDate() + 1));
+  }
 
   ngOnInit(): void {
 
@@ -240,7 +240,7 @@ export class FacilitiesComponent implements OnInit {
         key: 'activity',
         label: 'חפש פעילות',
         cols: 1,
-       value: '',
+        value: '',
         // validations: [Validators.required],
         inputProps: {
           options: this.tripActivitiesShow
@@ -279,7 +279,7 @@ export class FacilitiesComponent implements OnInit {
       console.log("get Trip Activities res: ", { res });
       this.calculatePages(res.length);
       let tripActivitiesConverted = this.facilitiesConvertingService.convertTripActivities(res);
-     // console.log('tripActivitiesConverted: ', tripActivitiesConverted);
+      // console.log('tripActivitiesConverted: ', tripActivitiesConverted);
       this.tripActivitiesInfoTotal = res;
       this.tripActivitiesFilter = res;
       this.pagesToShow(1);
@@ -325,14 +325,14 @@ export class FacilitiesComponent implements OnInit {
         a.activityId == obj.typeOfActivity);
     }
     //for autocmplete filter
-    if (obj.activity) {     
+    if (obj.activity) {
       tripActivities = tripActivities.filter((a: any) =>
         //a.name == obj.activity);
         a.activityId == obj.activity);
 
-        if (tripActivities == []) {
-          console.log('tripActivities emty must use auto complete: ')
-        }
+      if (tripActivities == []) {
+        console.log('tripActivities emty must use auto complete: ')
+      }
     }
 
     this.tripActivitiesFilter = tripActivities;
@@ -385,60 +385,61 @@ export class FacilitiesComponent implements OnInit {
   }
 
   getTripCalendar() {
-    //this.eventsArr = [];
-    let tripId = 0;
-    try {
-      tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    } catch (error) {
-      console.log(error);
-    }
-    this.activitiyService.getTripCalendar(tripId).subscribe((tripCalendar: any) => {
+    // let tripId = 0;
+    // try {
+    //   tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    this.activitiyService.getTripCalendar(this.tripId).subscribe((tripCalendar: any) => {
       console.log('get Trip Calendar: ', tripCalendar);
-      if (tripCalendar) {
-        this.activityList = tripCalendar.activityList;
-        this.tempOrderList = tripCalendar.tempOrderList;
-        let newTempOrderObj: any;
-        let newTempActivityList: any;  
-        this.facilitiesService.calendarEventsArr.next([]);
-        console.log("calendarEventsArr value ", this.facilitiesService.calendarEventsArr.value);
+      //if (tripCalendar) {
+      this.activityList = tripCalendar.activityList;
+      this.tempOrderList = tripCalendar.tempOrderList;
+      let newTempOrderObj: any;
+      let newTempActivityList: any;
+      console.log("calendarEventsArr value ", this.facilitiesService.calendarEventsArr.value);
+      this.facilitiesService.calendarEventsArr.next([]);
+      console.log("calendarEventsArr value 2", this.facilitiesService.calendarEventsArr.value);
 
-         // add to calender
-        for (let i = 0; i < this.tempOrderList.length; i++) {
-          //console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
-          newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListforTripCalendar(this.tempOrderList[i]);
-          this.addToCalendar(newTempOrderObj);
-          this.calenderArray.push(newTempOrderObj);
-        }
-
-        for (let i = 0; i < this.activityList.length; i++) {
-          //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
-          newTempActivityList = this.facilitiesConvertingService.convertActivityListforTripCalendar(this.activityList[i]);
-         // if(newTempActivityList.title) {
-          this.addToCalendar(newTempActivityList);
-          this.calenderArray.push(newTempActivityList);
-          //}
-        }
-        console.log('calenderArray', this.calenderArray);
-
-        // if (this.myCalendarComponent) {
-        //   this.myCalendarComponent.options.events = this.calenderArray;
-        // } else {
-        //   setTimeout(() => {
-        //     this.myCalendarComponent.options.events = this.calenderArray;
-        //   }, 500);
-        // }
-        this.valueSub = this.facilitiesService.getCalendarEventsArr(this.calenderArray).subscribe(value => {
-          console.log('getCalendarEventsArr: ', value);
-          if (this.myCalendarComponent) {
-            this.myCalendarComponent.options.events = value;
-          } else {
-            setTimeout(() => {
-              this.myCalendarComponent.options.events = value;
-            }, 500);
-          }
-        });
-
+      // add to calender
+      for (let i = 0; i < this.tempOrderList.length; i++) {
+        //console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
+        newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListfromTripCalendarApi(this.tempOrderList[i]);
+        this.addToCalendar(newTempOrderObj, true);
+        this.calenderArray.push(newTempOrderObj);
       }
+
+      for (let i = 0; i < this.activityList.length; i++) {
+        //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
+        newTempActivityList = this.facilitiesConvertingService.convertActivityListfromTripCalendarApi(this.activityList[i]);
+        // if(newTempActivityList.title) {
+        this.addToCalendar(newTempActivityList, true);
+        this.calenderArray.push(newTempActivityList);
+        //}
+      }
+      console.log('calenderArray', this.calenderArray);
+
+      // if (this.myCalendarComponent) {
+      //   this.myCalendarComponent.options.events = this.calenderArray;
+      // } else {
+      //   setTimeout(() => {
+      //     this.myCalendarComponent.options.events = this.calenderArray;
+      //   }, 500);
+      // }
+      this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+        console.log('getCalendarEventsArr: ', value);
+        if (this.myCalendarComponent) {
+          this.myCalendarComponent.options.events = value;
+          //send info to api
+        } else {
+          setTimeout(() => {
+            this.myCalendarComponent.options.events = value;
+          }, 500);
+        }
+      });
+
+      //}
     },
       error => {
         console.log("error: ", { error });
@@ -452,7 +453,7 @@ export class FacilitiesComponent implements OnInit {
     this.pagesAmount = quotient + remainder;
   }
 
-  addToCalendar(event: any): void {
+  addToCalendar(event: any, fromTripCalendarApi: boolean): void {
     //console.log("addToCalendar: ", event);
     const tmpObj: EventInput = {
       id: `${this.eventsArr.length}`,
@@ -463,7 +464,7 @@ export class FacilitiesComponent implements OnInit {
       tmpObj[property] = event[property];
     }
     this.eventsArr.push(tmpObj);
-    this.facilitiesService.updateCalendarEventsArr(tmpObj);
+    this.facilitiesService.updateCalendarEventsArr(tmpObj, fromTripCalendarApi);
   }
 
   openModal(args: string): void {
@@ -495,7 +496,7 @@ export class FacilitiesComponent implements OnInit {
   }
 
   onOptionSelected(e: any) {
-    console.log('onOptionSelected - e',e);
+    console.log('onOptionSelected - e', e);
   }
 
 
@@ -509,7 +510,7 @@ export class FacilitiesComponent implements OnInit {
   days: any[] = this.tripService.facilitiesArray;
   till: any;
   calendarOptions: CalendarOptions = {}
-  
+
 
   arrangeDate(date: Date) {
     // 2021-10-15T08:00

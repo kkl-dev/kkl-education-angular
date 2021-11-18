@@ -5,12 +5,15 @@ import { INITIAL_EVENTS } from '../screens/order-tour/facilities/calendar/event-
 import { InfoCard } from '../screens/education-results/education-results.component';
 import { ActivitiesCardInterface } from '../components/activities-card/activities-card.component';
 import { FacilityModel } from '../screens/order-tour/facilities/models/facility.model';
+import { FacilitiesConvertingService } from './facilities-converting.service';
+import { ActivitiesService } from 'src/app/open-api';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FacilitiesService {
 
-  constructor() { }
+  constructor(private facilitiesConvertingService: FacilitiesConvertingService, private activitiyService: ActivitiesService) { }
 
   private closeModalObs = new BehaviorSubject('');
   //private calendarEventsArr = new BehaviorSubject<EventInput[] | any>(INITIAL_EVENTS);
@@ -23,9 +26,21 @@ export class FacilitiesService {
     return this.calendarEventsArr.asObservable();
   }
 
-  public updateCalendarEventsArr(args: EventInput): void {
+  public updateCalendarEventsArr(args: EventInput, fromTripCalendarApi: boolean): void {
     console.log("update Calendar EventsArr: args ", args);
     this.calendarEventsArr.next([...this.calendarEventsArr.value, args]);
+
+    // del for temp 
+    // if (!fromTripCalendarApi) {
+    //   let eventsArr = this.facilitiesConvertingService.convertActivityForApi(this.calendarEventsArr.value);
+
+    //   this.activitiyService.createTripActivities(eventsArr).subscribe(res => {
+    //     console.log(res);
+    //   }, (err) => {
+    //     console.log(err);
+
+    //   })
+    // }
   }
 
   public closeModal(args: string): void {
@@ -87,7 +102,7 @@ export class FacilitiesService {
     arr.splice(index, 1);
     this.calendarEventsArr.next(arr);
   }
-  
+
   public updateTimesInArray(id: string | number, dates: string[]): void {
     const index = this.calendarEventsArr.value.findIndex((item: any) => item.id === id);
     const arr = [...this.calendarEventsArr.value];

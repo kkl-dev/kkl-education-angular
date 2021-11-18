@@ -36,7 +36,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.valueSub = this.facilitiesService.getCalendarEventsArr('').subscribe(value => {
+    this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
       //console.log('this.value Sub', value)
       if (this.myCalendarComponent) {
         this.myCalendarComponent.options.events = value;

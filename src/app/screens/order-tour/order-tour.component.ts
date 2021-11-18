@@ -349,6 +349,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.router.navigateByUrl(
     //       `/education/order-tour/${route}`
     //     );
+        ////  ------   yak del since it is being called in facilities
     //let userName = this.userDataService.user.name || 'שחר גל';
     let events = this._facilitiesService.calendarEventsArr.value;
     let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events);

@@ -19,6 +19,7 @@ export * from './economyOrder';
 export * from './facilityDate';
 export * from './facilityMapByDates';
 export * from './fieldForestCenter';
+export * from './groupGender';
 export * from './guidanceOrder';
 export * from './hostingOrder';
 export * from './itemsByTypeOrder';
