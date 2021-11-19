@@ -390,9 +390,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createTripActivities(route) {
-    let userName = this.userDataService.user.name || 'שחר גל';
+    // this.router.navigateByUrl(
+    //       `/education/order-tour/${route}`
+    //     );
+        ////  ------   yak del since it is being called in facilities
+    //let userName = this.userDataService.user.name || 'שחר גל';
     let events = this._facilitiesService.calendarEventsArr.value;
-    let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events, userName);
+    let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events);
     this.createActivitiesSub = this.activitiyService.createTripActivities(eventsArr).subscribe(res => {
       console.log(res);
       this.router.navigateByUrl(

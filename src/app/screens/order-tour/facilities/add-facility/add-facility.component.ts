@@ -76,6 +76,20 @@ export class AddFacilityComponent implements OnInit {
         'orderId': new FormControl(data.orderId || null),
         'tempOrderList': new FormControl(data.tempOrderList || null)
       });
+
+
+//       endDate: "2021-11-18T13:00:00"
+// fromHour: "2021-11-18T10:00:00"
+// itemId: 642
+// orderId: null
+// orderItemIdentity: null
+// orderItemName: "ציפורי- מדשאה (עד 250 איש)"
+// orderTempId: 794
+// orderTypeCode: 7
+// orderTypeName: "אירוח/פעילות"
+// startDate: "2021-11-18T10:00:00"
+// tillHour: "2021-11-18T13:00:00"
+// tripId: 57256
       
       //console.log('this form => ', this.addFacilityForm);
 
