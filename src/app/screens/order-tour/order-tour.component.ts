@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
 import { UserDataService } from 'src/app/services/user-data.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
@@ -53,7 +54,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     private _dialog: MatDialog,
     private _facilitiesService: FacilitiesService,
     private _facilitiesConvertingService: FacilitiesConvertingService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -286,7 +288,12 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             ContactForm = false;
             continue;
           }
+          
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
+          if(!this.squadAssemble.formsArray[i].get('contactPhone').value){
+            ContactForm = false;
+            continue;
+          }
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
           ContactForm = true;
@@ -294,6 +301,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       }
        if(this.tripService.budgetByParam.budget.isByCity==1 ){
          if(!this.tripService.budgetByParam.budget.cityId){
+          this.setDialogMessage('שדה ישוב בחלק של התקצוב הינו חובה');
            flag =false;
            return flag;
          }
@@ -306,8 +314,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       
        if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
        flag=true
-       else
-       return flag;
+       else{
+         if(!ContactForm){
+          this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
+         }
+        return flag;
+       }
+     
       
       if(this.squadAssemble.payerCustomer.name!= undefined)
       this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
@@ -372,7 +385,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     else {
       tripInfo.lodgingReservation = [];
     }
+    this.spinner.show();
     this.userService.createTrip(tripInfo).subscribe(res => {
+      this.spinner.hide();
       console.log('tripInfo from server is :', res);
       this.squadAssemble.tripInfofromService = res;
       localStorage.setItem('tripId',res.trip.id.toString());
@@ -381,6 +396,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         `/education/order-tour/${route}`
       );
     }, (err) => {
+      this.spinner.hide();
       console.log(err);
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',

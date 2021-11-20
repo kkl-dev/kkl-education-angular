@@ -51,7 +51,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   isItemOrderExist: boolean;
   //isSaveOrderSucceededSub: Subscription;
   isSupplierXemptedFromVat: boolean;
-  ifCalculateBySumPeople : boolean;
+  //ifCalculateBySumPeople : boolean;
+  ifCalculateByQuantity : boolean;
   //isXemptedFromVat: boolean;
   //transQuestions:any [];
   valueChangeIndex= 0;
@@ -390,14 +391,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
         this.tableData=res;
         this.ifShowtable=true;
-        this.generalFormService.enableButton.next(true);
-        //this.isSaveOrderSucceeded.next(true);
         this.editMode = true;
         this.generalFormService.setOrderList(res,this.orderType,'adding');
         this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+        this.generalFormService.enableButton.next(true);
+       
       }, (err) => {
         console.log(err);
-        //this.isSaveOrderSucceeded.next(false);
         this.editMode = false;
         this.form.enable({ emitEvent: false });
         this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
@@ -408,7 +408,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
      this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
         console.log(res);  
         this.generalFormService.setOrderList(res, this.orderType,'updating');
-        //this.isSaveOrderSucceeded.next(true);
         this.editMode = true;
         this.setDialogMessage('ההזמנה עודכנה בהצלחה');
       }, (err) => {
@@ -539,10 +538,10 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       this.valueChangeIndex= this.valueChangeIndex+1;
       console.log(value)
       let item = this.originalItemList.find(el => el.id === parseInt(value))
-      if (item.isSumPeopleOrAmount == 1)
-       this.ifCalculateBySumPeople= false;
+      if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
+       this.ifCalculateByQuantity= true;
       else
-      this.ifCalculateBySumPeople= true;
+      this.ifCalculateByQuantity= false;
       let itemCost;
       if(!item.cost){
         this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
@@ -550,8 +549,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat==true)
+      if(this.isSupplierXemptedFromVat==true){
         itemCost = Math.floor(item.cost);
+        itemCost= (Math.round(item.cost * 100) / 100).toFixed(2);
+        //let billingSupplierRound= (Math.round(itemOrder.billingSupplier * 100) / 100).toFixed(2);
+      }
        else
        itemCost = Math.floor(item.costVat);
       this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
@@ -562,15 +564,28 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
     });
 
-    if(!this.ifCalculateBySumPeople){
       this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+        if(this.ifCalculateByQuantity){
         console.log(value)
         let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
         this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
         this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-  
+        }
+        else
+        return;
       });
-    }
+
+      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+        if(!this.ifCalculateByQuantity){
+        console.log(value)
+        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+        }
+        else
+        return;
+      });
+    
    
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
@@ -586,15 +601,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
     });
-    if(this.ifCalculateBySumPeople == true){
-      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-        console.log(value)
-        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-  
-      });
-    }
+ 
    
     console.log(this.form)
   }

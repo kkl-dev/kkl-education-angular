@@ -44,6 +44,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   tableData: any;
   isItemOrderExist : boolean;
   isSupplierXemptedFromVat: boolean;
+  ifCalculateByQuantity : boolean;
   //isSaveOrderSucceededSub: Subscription;
   valueChangeIndex= 0;
   itemOrderRecordId: number;
@@ -378,6 +379,10 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       this.valueChangeIndex= this.valueChangeIndex+1;
       console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
+      if (item?.isSumPeopleOrAmount == 1 ) // by default is by num of participants unless the isSumPeopleOrAmount is 1
+      this.ifCalculateByQuantity= true;
+     else
+     this.ifCalculateByQuantity= false;
       let itemCost;
       if(!item.cost){
         this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
@@ -396,18 +401,30 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
 
     });
+  
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if(this.ifCalculateByQuantity){
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+      }
+      else
+      return;
     });
+  
+  
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if(!this.ifCalculateByQuantity){
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      }
+      else
+      return;
     });
+  
 
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)

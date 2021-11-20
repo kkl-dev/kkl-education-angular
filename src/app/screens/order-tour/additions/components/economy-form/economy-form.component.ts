@@ -422,15 +422,15 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       })
       return false;
     }
-    flag = false;
-    DaysArray.forEach(day => { if (day.getDay() === 5) { flag = true; } });
-    if (flag === false && !item.name.includes("שישי")) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'הטיול אינו חל ביום שישי - נבחרה מנה המתאימה ליום שישי! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-      return false;
-    }
+    // flag = false;
+    // DaysArray.forEach(day => { if (day.getDay() === 5) { flag = true; } });
+    // if (flag === false && !item.name.includes("שישי")) {
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'הטיול אינו חל ביום שישי - נבחרה מנה המתאימה ליום שישי! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //   })
+    //   return false;
+    // }
     if ((this.form.value.details['startDate'] !== this.form.value.details['endDate']) && item.credit === 0) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',

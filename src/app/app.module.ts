@@ -139,6 +139,7 @@ import { SiteOrderFormComponent } from './screens/order-tour/additions/component
 import { SecuringOrderFormComponent } from './screens/order-tour/additions/components/securing-order-form/securing-order-form.component';
 import { MusicActivationFormComponent } from './screens/order-tour/additions/components/music-activation-form/music-activation-form.component';
 import { TransportDetailsTableComponent } from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -284,6 +285,7 @@ FullCalendarModule.registerPlugins([
     AirbnbCalendarModule,
     ApiModule,
     FullCalendarModule,
+    NgxSpinnerModule,
     NgxMaterialTimepickerModule.setLocale('he-IL'),
   ],
   providers: [
