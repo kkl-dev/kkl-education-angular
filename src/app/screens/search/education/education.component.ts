@@ -220,6 +220,8 @@ export class EducationComponent implements OnInit {
   }
 
   AvailableDaysChecking() {
+    if(!this.forestCenterId || !this.sleepingDates.from || !this.sleepingDates.till )
+    return false;
     let from = this.sleepingDates.from;
     let till = this.sleepingDates.till;
     let fromArr = from.split("/");
@@ -253,6 +255,7 @@ export class EducationComponent implements OnInit {
   }
 
   printFormValues() {
+    
     if (this.signupForm != undefined && this.AvailableDaysChecking()) {
       this.emitFormValues.emit(this.signupForm);
       this.checkAvailabilltyService.saveCheackAvailabilltyValues(

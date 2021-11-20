@@ -171,6 +171,10 @@ export class AdditionsService {
       ParticipantsOrAmount = "חישוב מכפלה לפי כמות:"
       MultiplyByAmountOrPeople = itemOrder.quantity
     }
+    else if(item?.orderType == 4){
+      ParticipantsOrAmount = "חישוב מכפלה לפי כמות:"
+      MultiplyByAmountOrPeople = itemOrder.quantity
+    }
     else {  // calculate by participants
       ParticipantsOrAmount = "חישוב מכפלה לפי משתתפים:"
       //MultiplyByAmountOrPeople = itemOrder.peopleInTrip

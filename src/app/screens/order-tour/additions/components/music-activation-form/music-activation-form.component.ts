@@ -45,7 +45,8 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   isSupplierXemptedFromVat: boolean
   //isSaveOrderSucceededSub: Subscription;
   itemOrderRecordId: number;
-  ifCalculateBySumPeople : boolean;
+  //ifCalculateBySumPeople : boolean;
+  ifCalculateByQuantity : boolean;
   valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
     hasGroups: true,
@@ -379,10 +380,10 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       console.log(value)
       this.valueChangeIndex= this.valueChangeIndex+1;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
-      if (item.isSumPeopleOrAmount == 1)
-      this.ifCalculateBySumPeople= false;
+      if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
+      this.ifCalculateByQuantity= true;
       else
-      this.ifCalculateBySumPeople= true;
+      this.ifCalculateByQuantity= false;
       let itemCost;
       if(!item.cost){
         this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
@@ -402,15 +403,33 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
     });
 
-    if(!this.ifCalculateBySumPeople){
+    
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if(this.ifCalculateByQuantity){
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+      }
+      else
+      return;
 
     });
-  }
+  
+
+  
+    this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if(!this.ifCalculateByQuantity){
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      }
+      else
+      return;
+
+    });
+  
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
@@ -426,15 +445,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
     });
 
-    if(this.ifCalculateBySumPeople == true){
-      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-        console.log(value)
-        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-  
-      });
-    }
+   
     console.log(this.form)
   }
 
