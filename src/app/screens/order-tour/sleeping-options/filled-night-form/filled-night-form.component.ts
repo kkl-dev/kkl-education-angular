@@ -369,7 +369,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
             this.filledNightForm.get('unitsNumber').setValue('');
             this.displayMessage1(accomodationNameSelected,availableCabins)
           }
-          if (lodgersNumber> (unitsNumber*maxCabinOccupancy)  ){
+          if (lodgersNumber> (availableCabins*maxCabinOccupancy)  ){
                console.log('there is an occupancy problem');
                this.filledNightForm.get('unitsNumber').setValue('');
                this.filledNightForm.get('lodgersNumber').setValue('');
@@ -382,7 +382,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
               this.filledNightForm.get('unitsNumber').setValue('');
               this.displayMessage1(accomodationNameSelected,avaliableTents)
             }
-            if (lodgersNumber> (unitsNumber*maxTentOccupancy)  ){
+            if (lodgersNumber> (avaliableTents*maxTentOccupancy)  ){
                  console.log('there is an occupancy problem');
                  this.filledNightForm.get('unitsNumber').setValue('');
                  this.filledNightForm.get('lodgersNumber').setValue('');
@@ -395,7 +395,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
               this.filledNightForm.get('unitsNumber').setValue('');
               this.displayMessage1(accomodationNameSelected,avaliableRooms)
             }
-            if (lodgersNumber> (unitsNumber*maxRoomOccupancy)  ){
+            if (lodgersNumber> (avaliableRooms*maxRoomOccupancy)  ){
                  console.log('there is an occupancy problem');
                  this.filledNightForm.get('unitsNumber').setValue('');
                  this.filledNightForm.get('lodgersNumber').setValue('');
@@ -408,7 +408,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
               this.filledNightForm.get('unitsNumber').setValue('');
               this.displayMessage1(accomodationNameSelected,availableCampaign)
             }
-            if (lodgersNumber> (unitsNumber*maxCampingOccupancy)  ){
+            if (lodgersNumber> (availableCampaign*maxCampingOccupancy)  ){
                  console.log('there is an occupancy problem');
                  this.filledNightForm.get('unitsNumber').setValue('');
                  this.filledNightForm.get('lodgersNumber').setValue('');
