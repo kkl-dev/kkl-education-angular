@@ -44,6 +44,12 @@
       [filledNight]="filledNight" [index]="index" [filledNightOptions]='filledNight.optionsArr'></app-filled-night>
   </div> -->
 
+  <!-- <div class="sleeping-options__filled-nights">
+    <app-filled-night *ngFor="let filledNight of filledNightsArray; let i = index"
+      (deleteFilledNight)="deleteFilledNight(i)" (editFilledNight)="editFilledNight(i)" 
+      (deleteFilledNightOption)='deleteFilledNightOption($event,i)' (editFilledNightOption)='editFilledNightOption($event,i)'
+      [filledNight]="filledNight" [index]="index" [filledNightOptions]='filledNight.lodgingDetailsList'></app-filled-night>
+  </div> -->
   <div class="sleeping-options__filled-nights">
     <app-filled-night *ngFor="let filledNight of filledNightsArray; let i = index"
       (deleteFilledNight)="deleteFilledNight(i)" (editFilledNight)="editFilledNight(i)" 

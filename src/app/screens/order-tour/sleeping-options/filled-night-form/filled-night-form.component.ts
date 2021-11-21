@@ -229,8 +229,20 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
      console.log('nightSelected is: ', nightSelected)
      let avaliableSleepingOptionsByDates= this._tripService.AvailableSleepingOptionsByDay.value;
      console.log('avaliableSleepingOptionsByDates is :', avaliableSleepingOptionsByDates)
+     let maxCabinOccupancy=0;
+     let maxTentOccupancy =0;
+     let maxRoomOccupancy=0;
+     let maxCampingOccupancy=0;
+     let availableCabins=0;
+     let avaliableTents =0
+     let avaliableRooms =0;
+     let availableCampaign: 0;
+      let isMoreThanOneDay : boolean;
       for (let i = 0; i< nightSelected.length; i++) {
-
+           if( nightSelected.length>1)
+           isMoreThanOneDay=true;
+           else
+           isMoreThanOneDay==false;
          for (let j = 0; j< avaliableSleepingOptionsByDates.length; j++) {
              let sleepingDate= avaliableSleepingOptionsByDates[j].date;
              let subDate= sleepingDate.split("T");
@@ -244,63 +256,50 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
              if(israelFormatDate == nightDateFormat1)   {
               let x= avaliableSleepingOptionsByDates[j].sleepingOptions.find((q: { accomodationTypeId: any }) => q.accomodationTypeId === accomodationSelected)
               let num;
-            //  let cachCabinNum;
-            //  let cachTentNUm;
-            //  let cachRoomNum;
-            //  let cachCabinLodgers;
-            //  let cachTentLodgers;
-            //  let cachRoomLodgers;
-              // for (var i in this._sleepingService.formsArray) {
-              //   Object.keys(this._sleepingService.formsArray[i].controls).forEach(key => {
-              //     if (key === '') {
-              //        let acoId= this._sleepingService.formsArray[i].controls[key].value.id;
-              //        switch(accomodationSelected) { 
-              //         case 1: 
-                         
-              //         break;
-              //         case 2:  
-              //         break;
-              //         case 3:
-              //          break;
-              //          case 4:
-              //           break;
-                      
-              //        }
-              //     }
-              //     if(key === 'lodgersNumber'){
-                    
-              //     }
-              //   });
-              // }
+        
               switch(accomodationSelected) { 
                 case 1:          
-                  if (x.availableUnits < unitsNumber){
+                  if (nightSelected.length==1 && x.availableUnits < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
-                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                  
+                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)   
+                    return  this.IsUnitsNumIsValid;           
                   } 
-                  else if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
+                  else if (nightSelected.length>1){
+                    availableCabins= availableCabins+x.availableUnits;
+                  } 
+                  // else if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
+                  //   this.filledNightForm.get('unitsNumber').setValue('');
+                  //   this.filledNightForm.get('lodgersNumber').setValue('');
+                  //   this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
+                  // }
+                   if (nightSelected.length==1 && (lodgersNumber> (unitsNumber*x.maxOccupancy))){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
-                    this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
+                    this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy));
+                    return  this.IsUnitsNumIsValid; 
                   }
-                    //   num= x.availableUnits * x.maxOccupancy;
-                    //  if(num<(lodgersNumber* unitsNumber)){
-                    //   this.IsUnitsNumIsValid=false;
-                    //    this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
-                    //    this.filledNightForm.get('lodgersNumber').setValue('');
-                    //  }        
+                  else if (nightSelected.length>1){
+                    maxCabinOccupancy= x.maxOccupancy;
+                  }
                  break;  
                  case 2:
-                  if (x.availableUnits<unitsNumber){
+                  if (nightSelected.length==1 && x.availableUnits < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                   
                   }
-                  else if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
+                  else if (nightSelected.length>1){
+                    avaliableTents= avaliableTents+x.availableUnits;
+                  } 
+
+                  if (nightSelected.length==1 && (lodgersNumber> (unitsNumber*x.maxOccupancy))){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
+                  }
+                  else if (nightSelected.length>1){
+                    maxTentOccupancy= x.maxOccupancy;
                   }
                   //  num= x.availableUnits * x.maxOccupancy
                   // if(num<(lodgersNumber * unitsNumber)){
@@ -310,15 +309,21 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   // }      
                   break;
                  case 3:
-                  if (x.availableUnits<unitsNumber){
+                  if (nightSelected.length==1 && x.availableUnits < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)          
                   }
-                  else if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
+                  else if (nightSelected.length>1){
+                    avaliableRooms= avaliableRooms+x.availableUnits;
+                  } 
+                  if (nightSelected.length==1 && (lodgersNumber> (unitsNumber*x.maxOccupancy))){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
+                  }
+                  else if (nightSelected.length>1){
+                    maxRoomOccupancy= x.maxOccupancy;
                   }
                   // num= x.availableUnits * x.maxOccupancy
                   // if(num<(lodgersNumber* unitsNumber)){
@@ -328,15 +333,21 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   // }      
                   break;
                  case 4:  
-                  if (x.availableUnits<unitsNumber){
+                 if (nightSelected.length==1 && x.availableUnits < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)  
                   }
-                  else if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
+                  else if (nightSelected.length>1){
+                    availableCampaign= availableCampaign+x.availableUnits;
+                  } 
+                  if (nightSelected.length==1 && (lodgersNumber> (unitsNumber*x.maxOccupancy))){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
+                  }
+                  else if (nightSelected.length>1){
+                    maxCampingOccupancy= x.maxOccupancy;
                   }
                   // num= x.availableUnits * x.maxOccupancy
                   // if(num<(lodgersNumber* unitsNumber)){
@@ -349,7 +360,68 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
             }
           }     
          }
-      }  
+      } 
+      if(isMoreThanOneDay){
+        switch(accomodationSelected) { 
+          case 1:  
+          if (unitsNumber> availableCabins){
+            console.log('there is an available occupancy problem ');
+            this.filledNightForm.get('unitsNumber').setValue('');
+            this.displayMessage1(accomodationNameSelected,availableCabins)
+          }
+          if (lodgersNumber> (unitsNumber*maxCabinOccupancy)  ){
+               console.log('there is an occupancy problem');
+               this.filledNightForm.get('unitsNumber').setValue('');
+               this.filledNightForm.get('lodgersNumber').setValue('');
+               this.displayMessage4(accomodationNameSelected,unitsNumber,(unitsNumber*maxCabinOccupancy))
+          }
+          break;
+          case 2:
+            if (unitsNumber> avaliableTents){
+              console.log('there is an available occupancy problem ');
+              this.filledNightForm.get('unitsNumber').setValue('');
+              this.displayMessage1(accomodationNameSelected,avaliableTents)
+            }
+            if (lodgersNumber> (unitsNumber*maxTentOccupancy)  ){
+                 console.log('there is an occupancy problem');
+                 this.filledNightForm.get('unitsNumber').setValue('');
+                 this.filledNightForm.get('lodgersNumber').setValue('');
+                 this.displayMessage4(accomodationNameSelected,unitsNumber,(unitsNumber*maxTentOccupancy))
+            }
+          break;
+          case 3:
+            if (unitsNumber> avaliableRooms){
+              console.log('there is an available occupancy problem ');
+              this.filledNightForm.get('unitsNumber').setValue('');
+              this.displayMessage1(accomodationNameSelected,avaliableRooms)
+            }
+            if (lodgersNumber> (unitsNumber*maxRoomOccupancy)  ){
+                 console.log('there is an occupancy problem');
+                 this.filledNightForm.get('unitsNumber').setValue('');
+                 this.filledNightForm.get('lodgersNumber').setValue('');
+                 this.displayMessage4(accomodationNameSelected,unitsNumber,(unitsNumber*maxRoomOccupancy))
+            }
+          break;
+          case 4:
+            if (unitsNumber> availableCampaign){
+              console.log('there is an available occupancy problem ');
+              this.filledNightForm.get('unitsNumber').setValue('');
+              this.displayMessage1(accomodationNameSelected,availableCampaign)
+            }
+            if (lodgersNumber> (unitsNumber*maxCampingOccupancy)  ){
+                 console.log('there is an occupancy problem');
+                 this.filledNightForm.get('unitsNumber').setValue('');
+                 this.filledNightForm.get('lodgersNumber').setValue('');
+                 this.displayMessage4(accomodationNameSelected,unitsNumber,(unitsNumber*maxCampingOccupancy))
+            }
+          break;
+
+       }      
+      
+  
+      }
+      
+     
     }
      
       return  this.IsUnitsNumIsValid;
@@ -393,13 +465,55 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
       })
      
    }
-   displayMessage2(date,name, num){
-    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+
+   displayMessage1(name, avaliableUnits){
+    switch (name) {
+      case 'בקתה':
+        name= 'בקתות'
+        break;
+        case 'חדר':
+          name= 'חדרים'
+          break;
+        case 'אוהל':
+           name= 'אוהלים'
+          break;
+        case 'גיחה':
+          name= 'גיחות'
+           break;
+    }
+   
+    let text ="";
+    switch (name) {
+      case 'בקתות':
+        text= 'הפנויות'
+        break;
+        case 'חדרים':
+          text= 'הפנויים'
+          break;
+        case 'אוהלים':
+          text= 'הפנויים'
+          break;
+        case 'גיחות':
+          text= 'הפנויות'
+           break;
+    }
+  
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {     
       width: '500px',
-      data: { message: ' מספר הלנים המקסימלי ב ' +name+" בתאריך "+date +'  הינו  ' + num , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      // data: { message: 'מספר ה  '+name+" הפנויות בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      data: { message: 'מספר ה  '+name+" " +text+" בתאריכים שהוזנו הינו  "  + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
     })
    
  }
+
+ 
+//    displayMessage2(date,name, num){
+//     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+//       width: '500px',
+//       data: { message: ' מספר הלנים המקסימלי ב ' +name+" בתאריך "+date +'  הינו  ' + num , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+//     })
+   
+//  }
 
  displayMessage3(name,unitsNumber,maxOccupancy){
   switch (name) {
@@ -423,6 +537,28 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
  
 }
 
+displayMessage4(name,unitsNumber,maxOccupancy){
+  switch (name) {
+    case 'בקתה':
+      name= 'בקתות'
+      break;
+      case 'חדר':
+        name= 'חדרים'
+        break;
+      case 'אוהל':
+         name= 'אוהלים'
+        break;
+      case 'גיחה':
+        name= 'גיחות'
+         break;
+  }
+  const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    width: '500px',
+    data: { message: 'כמות התפוסה עבור ' + unitsNumber+ ' '+ name +' בתאריכים שהוזנו הינה' + maxOccupancy, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+  })
+ 
+}
+
   
   public sumbitUpdatedItem(): void {
     this.updateNightCount();    
@@ -432,11 +568,11 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
     this.valuesForEdit = null;
   }
   onSubmit() {
-    // if(!this.filledNightForm.valid)
-    // return
     let IsValid=this.validateUnitsNumber();
     if (!IsValid)
      return;
+      if(!this.filledNightForm.valid)
+      return
     
     this.updateNightCount();
       this.emitFormValues.emit(this.filledNightForm);
