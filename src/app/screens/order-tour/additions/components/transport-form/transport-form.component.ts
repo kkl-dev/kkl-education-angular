@@ -533,6 +533,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         if( this.valueChangeIndex>0)
         this.getOrderItemBySupplierId();
         this.valueChangeIndex= this.valueChangeIndex+1;
+        
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex= this.valueChangeIndex+1;
