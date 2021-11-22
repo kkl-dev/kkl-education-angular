@@ -185,6 +185,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
           this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
           this.tripService.centerFieldObj.next(this.squadAssemble.tripInfo.centerField);
+          this.tripService.centerField= this.squadAssemble.tripInfo.centerField;
           localStorage.setItem('centerFieldObj', JSON.stringify(this.squadAssemble.tripInfo.centerField));
           this.squadAssemble.tripInfo.centerField.linkSite = '';
           let areaId= +this.squadAssemble.formsArray[i].get('areaTrip').value;

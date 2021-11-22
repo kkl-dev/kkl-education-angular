@@ -69,6 +69,7 @@ export class SquadGroupService {
       offset: 1,
       cols: 2,
       rows: 4,
+      validations: [Validators.required],
     }),
     new QuestionNumber({
       key: 'numDrivers',
