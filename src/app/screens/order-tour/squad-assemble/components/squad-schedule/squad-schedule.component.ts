@@ -4,7 +4,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
 import { ListItem } from 'src/app/components/grid/list-item.model';
-import { UserService } from 'src/app/open-api';
+import { AvailableAccomodationDate, UserService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 import { BreakpointService } from 'src/app/utilities/services/breakpoint.service';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
@@ -20,7 +20,10 @@ export class SquadScheduleComponent implements OnInit {
   @Input() public group: QuestionGroup;
   @Input() public questions: QuestionBase<string | number | Date>[];
   options!: CalendarOptions;
+  AvailableDates!: AvailableAccomodationDate[];
+  freeSpacesArray: FreeSpace[] = [];
   public tripId: number ;
+  centerFieldId: number;
   //regionList=[];
 
   public list: ListItem[] = [
@@ -85,23 +88,7 @@ export class SquadScheduleComponent implements OnInit {
      
     }
 
-    // getRegionList1(){
-    //   let chevelCode= this.tripService.centerField.chevelCode
-    //   this.userService.getAreasByChevel(chevelCode).subscribe(res=>{
-    //     this.squadAssembleService.originalRegionList=res;
-    //     this.squadAssembleService.regionList=[];
-    //    res.forEach(element => {
-    //      this.squadAssembleService.regionList.push({ label: element.name, value: element.id.toString() });
-    //    });
-    //    this.squadAssembleService.scheduleQuestions[3].inputProps.options=[];
-    //    this.squadAssembleService.scheduleQuestions[3].inputProps.options=this.squadAssembleService.regionList;
-    //    if(this.squadAssembleService.tripInfo.areaTrip !=undefined){
-    //      this.squadAssembleService.scheduleQuestions[3].value= this.squadAssembleService.tripInfo.areaTrip.id.toString();
-    //    }
-    //   },(err)=>{
-    //     console.log(err);
-    //   })
-    // }
+   
 
     setSchedulSquadValues(){
       if(this.squadAssembleService.tripInfo.tripStart!=undefined){
@@ -115,9 +102,24 @@ export class SquadScheduleComponent implements OnInit {
           this.squadAssembleService.scheduleQuestions[3].value= this.squadAssembleService.tripInfo.areaTrip.id.toString();
         }
       }
-      else{
+     
+        if (this.tripService.centerField.id != 0) {
+          this.centerFieldId=this.tripService.centerField.id
+          this.squadAssembleService.scheduleQuestions[1].value= this.tripService.centerField.id.toString();
+          if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
+            localStorage.setItem("centerFieldName", this.tripService.centerField.name);
+          }
+        }
+        else { 
+          this.squadAssembleService.scheduleQuestions[1].value= localStorage.getItem("centerFieldId");
+          this.centerFieldId= parseInt(localStorage.getItem("centerFieldId"));
+        }        
          let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
-         this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
+          if(!this.options.freeSpacesArray)
+           this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),this.centerFieldId);
+           else
+          this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
          if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
           this.squadAssembleService.scheduleQuestions[datesIndex].value=this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till;
           if (typeof (Storage) !== "undefined") {
@@ -127,20 +129,54 @@ export class SquadScheduleComponent implements OnInit {
         else {
           this.squadAssembleService.scheduleQuestions[datesIndex].value= localStorage.getItem("sleepingDates");
         }
-        if (this.tripService.centerField.id != 0) {
-          this.squadAssembleService.scheduleQuestions[1].value= this.tripService.centerField.id.toString();
-          if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
-            localStorage.setItem("centerFieldName", this.tripService.centerField.name);
-          }
-        }
-        else {
-          this.squadAssembleService.scheduleQuestions[1].value= localStorage.getItem("centerFieldId");
-          //this.control.setValue(localStorage.getItem("centerFieldId"));
-        }
-         console.log('trip info is undefined');
-      }
+        
+        
+      
    }
+
+   getAvailableDates(fromDate: string, tillDate: string,centerFieldId) {
+    fromDate = fromDate.substring(0, 10);
+    tillDate = tillDate.substring(0, 10);
+    this.userService.getAvailableAccomodationDates(this.centerFieldId, fromDate, tillDate).subscribe(
+      response => {
+        console.log(response)
+        this.AvailableDates = response;
+        this.AvailableDates.forEach(element => element.freeSpace.forEach(element => { if (element.availableBeds === undefined) { element.availableBeds = 0; } }));
+        this.freeSpacesArray = this.freeSpacesArrayGenaratorFromServer(new Date(fromDate), new Date(tillDate));
+        this.tripService.setFreeSpacesArray(this.freeSpacesArray);
+        this.options = {
+          firstCalendarDay: 0,
+          format: 'dd/LL/yyyy',
+          maxDate: new Date(tillDate), 
+          closeOnSelected: true,
+          minYear: new Date().getFullYear() - 1,
+          maxYear: new Date(tillDate).getFullYear() + 1,
+          freeSpacesArray: this.freeSpacesArray,
+        };
+        this.squadAssembleService.scheduleQuestions[2].dateOptions= this.options;
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+  freeSpacesArrayGenaratorFromServer(start: Date, end: Date) {
+    let i = 0;
+    let freeSpacesArray = [];
+    start.setDate(start.getDate() - 1);
+
+    while (start < end && i <= this.AvailableDates.length) {
+      freeSpacesArray.push({
+        date: start,
+        freeSpace: this.AvailableDates[i].freeSpace
+      });
+
+      start = new Date(start.setDate(start.getDate() + 1));
+      i++;
+    }
+    return freeSpacesArray;
+  }
+
   
 
   //log form when valid
@@ -152,9 +188,14 @@ export class SquadScheduleComponent implements OnInit {
      
     // });
     form.controls["centerField"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log('I am region Event',value);
      form.controls["areaTrip"].patchValue('', { emitEvent: false });
+     this.centerFieldId= value;
       this.getRegionList(value,'centerFieldId');
+      this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),this.centerFieldId);
+    });
+
+    form.controls["dates"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+     
     });
     this.squadAssembleService.updateFormArray(form);
   }

@@ -163,7 +163,7 @@ export class SquadAssembleService {
     }),
     new QuestionTextarea({
       key: 'commentManager',
-      label: 'הערות מנהליות',
+      label: 'הערות למרכז הזמנות',
       rows: 6,
     }),
   ];

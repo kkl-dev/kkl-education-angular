@@ -225,24 +225,25 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
      let accomodationSelected= this.filledNightForm.get('accomodationType').value.id;
      let accomodationNameSelected= this.filledNightForm.get('accomodationType').value.name;
      let nightSelected = this.filledNightForm.get('nightsCount').value;
+     
      if(unitsNumber &&  accomodationSelected || !nightSelected){
      console.log('nightSelected is: ', nightSelected)
      let avaliableSleepingOptionsByDates= this._tripService.AvailableSleepingOptionsByDay.value;
      console.log('avaliableSleepingOptionsByDates is :', avaliableSleepingOptionsByDates)
-     let maxCabinOccupancy=0;
-     let maxTentOccupancy =0;
-     let maxRoomOccupancy=0;
-     let maxCampingOccupancy=0;
-     let availableCabins=0;
-     let avaliableTents =0
-     let avaliableRooms =0;
-     let availableCampaign: 0;
-      let isMoreThanOneDay : boolean;
+    //  let maxCabinOccupancy=0;
+    //  let maxTentOccupancy =0;
+    //  let maxRoomOccupancy=0;
+    //  let maxCampingOccupancy=0;
+    //  let availableCabins=0;
+    //  let avaliableTents =0
+    //  let avaliableRooms =0;
+    //  let availableCampaign: 0;
+      //let isMoreThanOneDay : boolean;
       for (let i = 0; i< nightSelected.length; i++) {
-           if( nightSelected.length>1)
-           isMoreThanOneDay=true;
-           else
-           isMoreThanOneDay==false;
+          //  if( nightSelected.length>1)
+          //  isMoreThanOneDay=true;
+          //  else
+          //  isMoreThanOneDay==false;
          for (let j = 0; j< avaliableSleepingOptionsByDates.length; j++) {
              let sleepingDate= avaliableSleepingOptionsByDates[j].date;
              let subDate= sleepingDate.split("T");
@@ -257,11 +258,11 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
              let nightDateFormat1= nightDateFormat[0]+'/'+nightDateFormat[1]+'/'+nightDateFormat[2]
              if(israelFormatDate == nightDateFormat1)   {
               let x= avaliableSleepingOptionsByDates[j].sleepingOptions.find((q: { accomodationTypeId: any }) => q.accomodationTypeId === accomodationSelected)
-              let num;
-        
+              
               switch(accomodationSelected) { 
                 case 1:          
-                  if ( x.availableUnits < unitsNumber){
+                  // if ( x.availableUnits < unitsNumber){
+                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)   
@@ -286,7 +287,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   // }
                  break;  
                  case 2:
-                  if ( x.availableUnits < unitsNumber){
+                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                   
@@ -311,7 +312,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   // }      
                   break;
                  case 3:
-                  if ( x.availableUnits < unitsNumber){
+                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)          
@@ -335,7 +336,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   // }      
                   break;
                  case 4:  
-                 if ( x.availableUnits < unitsNumber){
+                 if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)  
@@ -459,7 +460,8 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
             text= 'הפנויות'
              break;
       }
-    
+      if(!avaliableUnits)
+      avaliableUnits=0
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {     
         width: '500px',
         // data: { message: 'מספר ה  '+name+" הפנויות בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
