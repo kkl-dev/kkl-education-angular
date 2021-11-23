@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
 import { UserDataService } from 'src/app/services/user-data.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
@@ -53,7 +54,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     private _dialog: MatDialog,
     private _facilitiesService: FacilitiesService,
     private _facilitiesConvertingService: FacilitiesConvertingService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -182,7 +184,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[i].get('tripDescription').value;
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
           this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
-          this.tripService.centerFieldObj=center;
+          this.tripService.centerFieldObj.next(this.squadAssemble.tripInfo.centerField);
+          localStorage.setItem('centerFieldObj', JSON.stringify(this.squadAssemble.tripInfo.centerField));
           this.squadAssemble.tripInfo.centerField.linkSite = '';
           let areaId= +this.squadAssemble.formsArray[i].get('areaTrip').value;
           this.squadAssemble.tripInfo.areaTrip= this.squadAssemble.originalRegionList.find(i=> i.id=== areaId); 
@@ -285,7 +288,12 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             ContactForm = false;
             continue;
           }
+          
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
+          if(!this.squadAssemble.formsArray[i].get('contactPhone').value){
+            ContactForm = false;
+            continue;
+          }
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
           ContactForm = true;
@@ -293,6 +301,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       }
        if(this.tripService.budgetByParam.budget.isByCity==1 ){
          if(!this.tripService.budgetByParam.budget.cityId){
+          this.setDialogMessage('שדה ישוב בחלק של התקצוב הינו חובה');
            flag =false;
            return flag;
          }
@@ -305,8 +314,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       
        if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
        flag=true
-       else
-       return flag;
+       else{
+         if(!ContactForm){
+          this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
+         }
+        return flag;
+       }
+     
+      
       if(this.squadAssemble.payerCustomer.name!= undefined)
       this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
       let date = new Date()
@@ -319,9 +334,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.tripService.isOneDayTrip=true;
            this.createTrip(this.steps[2].path);
        }
-
     }
-
     catch (error) {
       console.log(error);
       flag = false;
@@ -330,6 +343,17 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log('tripInfo obj is: ', this.squadAssemble.tripInfo);
     return flag;
   }
+
+
+   public findInvalidControls(formName) {
+        // const controls = this.AddCustomerForm.controls;
+        // for (const name in controls) {
+        //     if (controls[name].invalid) {
+        //         invalid.push(name);
+        //     }
+        // }
+        // return invalid;
+    }
 
 
 
@@ -361,14 +385,18 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     else {
       tripInfo.lodgingReservation = [];
     }
+    this.spinner.show();
     this.userService.createTrip(tripInfo).subscribe(res => {
+      this.spinner.hide();
       console.log('tripInfo from server is :', res);
       this.squadAssemble.tripInfofromService = res;
+      localStorage.setItem('tripId',res.trip.id.toString());
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
       this.router.navigateByUrl(
         `/education/order-tour/${route}`
       );
     }, (err) => {
+      this.spinner.hide();
       console.log(err);
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
@@ -378,9 +406,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createTripActivities(route) {
-    let userName = this.userDataService.user.name || 'שחר גל';
+    // this.router.navigateByUrl(
+    //       `/education/order-tour/${route}`
+    //     );
+        ////  ------   yak del since it is being called in facilities
+    //let userName = this.userDataService.user.name || 'שחר גל';
     let events = this._facilitiesService.calendarEventsArr.value;
-    let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events, userName);
+    let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events);
     this.createActivitiesSub = this.activitiyService.createTripActivities(eventsArr).subscribe(res => {
       console.log(res);
       this.router.navigateByUrl(

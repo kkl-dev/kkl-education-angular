@@ -1,6 +1,7 @@
 <div class="education" #container>
+  <p >version : 1.2.0</p>
   <div class="education__form">
-    <p >version : 1.0.0</p>
+   
     <p class="education__form-headline">בדיקת זמינות</p>
 
     <form #educationForm="ngForm">
@@ -94,11 +95,13 @@
         </label>
       </div>
 
-      <div class="education__link" (click)="printFormValues()">
+      <div class="education__link" (click)="printFormValues()" >
         <!-- <label class="education__form-group-label link-group">buffer</label> -->
-        <span routerLink="{{ routerLinkContinue }}" class="education__link-text"
-          >המשך</span
-        >
+        <!-- <span   routerLink="{{ routerLinkContinue }}" class="education__link-text"
+          >המשך</span> -->
+          <span    class="education__link-text"
+          >המשך</span>
+       
       </div>
     </form>
   </div>

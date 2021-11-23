@@ -18,6 +18,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class GeneralFormService {
   supplierList = [];
   itemsList = [];
+  tripId: number;
+  centerFieldObj;
+  tripInfo: any;
+  peopleInTrip: number
   public transportOrderList: TransportOrder[] = [];
 
   public economyOrderList: EconomyOrder[] =[];
@@ -383,7 +387,7 @@ export class GeneralFormService {
   }
 
   setDatesValues() {
-    let tripDetails = this.squadAssembleService.tripInfofromService.trip;
+    let tripDetails = this.tripInfo.trip;
     let startDate = tripDetails.tripStart;
     let endDate = tripDetails.tripEnding;
     let str = startDate.split("T");
@@ -409,10 +413,16 @@ export class GeneralFormService {
     let newDate = new Date(date1.setDate(date1.getDate()));
     let datesArr = [];
     for (let i = 0; i <= totalDays; i++) {
-      const newDateString = `${newDate.getDate()}/${(newDate.getMonth() + 1).toString()
+      let newDateString = `${newDate.getDate()}/${(newDate.getMonth() + 1).toString()
         }/${newDate.getFullYear()}`;
       // const newDateString = `${newDate.getFullYear()}-${(newDate.getMonth() + 1).toString()
       //   }-${newDate.getDate()}`;
+      let subNewDateString= newDateString.split('/');
+      if (+subNewDateString[0]<10)
+      subNewDateString[0]= 0+subNewDateString[0];
+      if (+subNewDateString[1]<10)
+      subNewDateString[1]= 0+subNewDateString[1];
+      newDateString= subNewDateString[0]+'/'+subNewDateString[1]+'/'+subNewDateString[2];
 
       datesArr.push({
         label: newDateString,
@@ -454,6 +464,10 @@ export class GeneralFormService {
   clearFormFields() {
     let itemIndex= this.details.findIndex(i => i.key === 'itemId');
     this.details[itemIndex].value='';
+    let statDateIndex = this.details.findIndex(i => i.key === 'startDate');
+    this.details[statDateIndex].value = '';
+    let endDateIndex= this.details.findIndex(i => i.key === 'endDate');
+    this.details[endDateIndex].value = '';
     let statHourIndex = this.details.findIndex(i => i.key === 'startHour');
     this.details[statHourIndex].value = '';
     let endHourIndex = this.details.findIndex(i => i.key === 'endHour');

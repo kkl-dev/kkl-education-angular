@@ -1264,6 +1264,7 @@ components:
           example: http://
         isActive: 
           type: boolean
+          nullable: true
           example: true
     AccommodationType:
       required:
@@ -2781,6 +2782,7 @@ components:
         properties:
          totalHours :
              type: number
+             nullable: true
              example: 5
          siteCode:
            type: integer
@@ -2857,6 +2859,7 @@ components:
          properties:
            totalHours:
              type: number
+             nullable: true
              example: 4.5
     
     OrderType:
@@ -2989,6 +2992,7 @@ components:
             nullable: true
         isNeedManagerApproval:
             type: boolean
+            nullable: true
              
 
     TripModel:
@@ -3057,6 +3061,7 @@ components:
         properties:
          isOccupancyProblem:
           type: boolean
+          nullable: true
          message:
           type: string
 

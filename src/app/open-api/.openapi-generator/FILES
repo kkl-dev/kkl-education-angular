@@ -32,6 +32,7 @@ model/economyOrder.ts
 model/facilityDate.ts
 model/facilityMapByDates.ts
 model/fieldForestCenter.ts
+model/groupGender.ts
 model/guidanceOrder.ts
 model/hostingOrder.ts
 model/itemsByTypeOrder.ts

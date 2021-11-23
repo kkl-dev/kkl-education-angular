@@ -44,7 +44,9 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   isItemOrderExist: boolean;
   isSupplierXemptedFromVat: boolean
   //isSaveOrderSucceededSub: Subscription;
-  ifCalculateBySumPeople : boolean;
+  itemOrderRecordId: number;
+  //ifCalculateBySumPeople : boolean;
+  ifCalculateByQuantity : boolean;
   valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
     hasGroups: true,
@@ -53,14 +55,13 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.tripId = this.generalFormService.tripId;
+    //this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-    //let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    //this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
-
-
+  
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
@@ -68,34 +69,17 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
-        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
-
       }
-     // this.generalFormService.setFormValues(this.item);
     }
-
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
-      //this.setformTemplate();
+      this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
     }
 
     this.getSupplierList(this.orderType, this.tripId, 0);
    
     this.generalFormService.setDatesValues();
-    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-    //   console.log('res from table data intransort is :',res);
-    //   this.tableData=res;
-    //   this.ifShowtable=true;
-    // })
-
-  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-  //     if(res)
-  //     this.editMode = true;
-  //     else
-  //     this.editMode = false;
-  //  })
-
+   
   }
 
   setformTemplate() {
@@ -167,16 +151,6 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
 
   getSupplierByOrderType() {
-    // let centerFieldId 
-    // if(this.squadAssembleService.tripInfofromService ! = undefined){
-    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    // }  
-    // else{
-    //   let retrievedObject = localStorage.getItem('tripInfofromService');
-    //   let retrievedObj = JSON.parse(retrievedObject);
-    //   centerFieldId= retrievedObj.trip.centerField.id;
-    // }
-    
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
       response => {
         console.log(response);
@@ -233,7 +207,8 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   public onSave(): void {
     if (this.form) {
       let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-        if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+        // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+          if(item?.amountLimit!= null){
           this.orderService.checkItemsExistInDateTime(this.tripId,
             this.centerFieldId, item).subscribe(res=>{
                if(res.message!= "false"){
@@ -244,74 +219,21 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
                 return;
                }
                else{
-                if (!this.additionsService.globalValidations(this.form)) { return; }
-                if (!this.validationsMusicActivation()) { return; }
-                this.mapFormFieldsToServer();
+                this.validationItem();
                }
             })
         }
         else{
-         if (!this.additionsService.globalValidations(this.form)) { return; }
-         if (!this.validationsMusicActivation()) { return; }
-         this.mapFormFieldsToServer();
+          this.validationItem();
        }
       
-      // let orderId;
-      // if (this.generalFormService.musicOrderList.length > 0) {
-      //   orderId = this.generalFormService.musicOrderList[0].order.orderId
-      // }
-      // let music = {} as MusicActivationOrder;
-      // music.globalParameters = {} as OrderItemCommonDetails;
-      // music.order = {} as Order;
-      // if (orderId != undefined && orderId)
-      // music.order.orderId = orderId;
-      // music.order.supplier = {} as Supplier;
-      // music.order.orderType = {} as OrderType;
-      // Object.keys(this.form.getRawValue().details).map((key, index) => {
-
-      //   if (key !== 'totalHours') {
-
-      //     if (key != 'startDate' && key != 'endDate') {
-      //       music.globalParameters[key] = this.form.getRawValue().details[key]
-      //     } else {
-      //       if (key == 'startDate') {
-      //         music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-      //       }
-      //       if (key == 'endDate') {
-      //         music.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-      //       }
-      //     }
-      //   }
-      //   else {
-      //     music.totalHours= this.form.getRawValue().details[key];
-      //   }
-
-      // });
-      // music.globalParameters['startHour'] = this.setDateTimeFormat(music.globalParameters.startDate, music.globalParameters.startHour);
-      // music.globalParameters['endHour'] = this.setDateTimeFormat(music.globalParameters.endDate, music.globalParameters.endHour);
-      // music.globalParameters['comments'] = this.form.getRawValue().comments.comments;
-      // music.globalParameters.orderId = orderId;
-      // music.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      // music.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      // music.order.orderType.name = 'מפעיל מוסיקלי';
-      // music.order.orderType.id = this.orderType;
-      // if(this.item!= undefined){
-      //   if (this.item.globalParameters.tempOrderIdentity != undefined)
-      //   music.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-      // }
-     
-      // if(!this.isEditable){
-      //   //this.generalFormService.addOrder(music, music.order.orderType.id);
-      //   this.addOrder(music);
-      // }
-      // else{
-      //   music.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-      //   //this.generalFormService.editOrder(music, music.order.orderType.id);
-      //   this.editOrder(music)
-      // }
-      
-      // this.form.disable({ emitEvent: false });
     }
+  }
+
+  validationItem(){
+    if (!this.additionsService.globalValidations(this.form)) { return; }
+    if (!this.validationsMusicActivation()) { return; }
+    this.mapFormFieldsToServer()
   }
 
   public mapFormFieldsToServer(){ 
@@ -351,7 +273,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
     music.globalParameters['comments'] = this.form.getRawValue().comments.comments;
     music.globalParameters.orderId = orderId;
     music.order.supplier.id = +this.form.getRawValue().details.supplierId;
-    music.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    music.order.tripId = this.tripId
     music.order.orderType.name = 'מפעיל מוסיקלי';
     music.order.orderType.id = this.orderType;
     if(this.item!= undefined){
@@ -364,7 +286,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       this.addOrder(music);
     }
     else{
-      music.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+      music.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
       //this.generalFormService.editOrder(music, music.order.orderType.id);
       this.editOrder(music)
     }
@@ -375,6 +297,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   addOrder(item){
     this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
       console.log(res); 
+      this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
       //this.tableData.next(res);
       this.tableData=res;
       this.ifShowtable=true;
@@ -457,10 +380,10 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       console.log(value)
       this.valueChangeIndex= this.valueChangeIndex+1;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
-      if (item.isSumPeopleOrAmount == 1)
-      this.ifCalculateBySumPeople= false;
+      if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
+      this.ifCalculateByQuantity= true;
       else
-      this.ifCalculateBySumPeople= true;
+      this.ifCalculateByQuantity= false;
       let itemCost;
       if(!item.cost){
         this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
@@ -480,15 +403,33 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
     });
 
-    if(!this.ifCalculateBySumPeople){
+    
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if(this.ifCalculateByQuantity){
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+      }
+      else
+      return;
 
     });
-  }
+  
+
+  
+    this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if(!this.ifCalculateByQuantity){
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      }
+      else
+      return;
+
+    });
+  
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
@@ -504,15 +445,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
     });
 
-    if(this.ifCalculateBySumPeople == true){
-      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-        console.log(value)
-        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-  
-      });
-    }
+   
     console.log(this.form)
   }
 

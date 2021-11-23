@@ -43,6 +43,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   valueChangeIndex= 0;
   public form: FormGroup;
   public columns: TableCellModel[];
+  itemOrderRecordId: number;
 
   public formTemplate: FormTemplate = {
     hasGroups: true,
@@ -52,12 +53,12 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
   
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.tripId = this.generalFormService.tripId;
+    //this.centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-    //let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    //this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
@@ -69,30 +70,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     }
     else {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value = this.squadAssembleService.peopleInTrip;
-      //this.setformTemplate();
+      this.generalFormService.details[peopleInTripIndex].value = (this.generalFormService.peopleInTrip).toString();
     }
     this.getSupplierList(this.orderType, this.tripId, 0);
     //this.getSettelments();
-    // if (this.editMode) {
-    //   this.generalFormService.setFormValues(this.order);
-    // }
-
-
     this.generalFormService.setDatesValues();
-
-    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-    //   console.log('res from table data intransort is :',res);
-    //   this.tableData=res;
-    //   this.ifShowtable=true;
-    // })
-
-  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-  //     if(res)
-  //     this.editMode = true;
-  //     else
-  //     this.editMode = false;
-  //  })
 
   }
 
@@ -125,9 +107,6 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
 
 
-
-  
-
   getSupplierList(orderTypeId, tripId, orderId) {
     this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
       response => {
@@ -153,15 +132,6 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   }
 
   getSupplierByOrderType() {
-    // let centerFieldId 
-    // if(this.squadAssembleService.tripInfofromService ! = undefined){
-    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    // }  
-    // else{
-    //   let retrievedObject = localStorage.getItem('tripInfofromService');
-    //   let retrievedObj = JSON.parse(retrievedObject);
-    //   centerFieldId= retrievedObj.trip.centerField.id;
-    // }
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
 
       response => {
@@ -234,10 +204,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   public onSave(): void {
     if (this.form) {
       let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-        if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+        // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+          if(item?.amountLimit!= null){
           this.orderService.checkItemsExistInDateTime(this.tripId,
             this.centerFieldId, item).subscribe(res=>{
-               if(res.message!= "false"){
+               if(res.isOccupancyProblem == true){
                 this._dialog.open(ConfirmDialogComponent, {
                   width: '500px',
                   data: { message: res, content: ''}
@@ -245,73 +216,22 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
                 return;
                }
                else{
-                if (!this.additionsService.globalValidations(this.form)) { return; }
-                if (!this.validationsEconomy()) { return; }
-                this.mapFormFieldsToServer()
+                this.validationItem();
                }
             })
          }
          else{
-            if (!this.additionsService.globalValidations(this.form)) { return; }
-            if (!this.validationsEconomy()) { return; }
-            this.mapFormFieldsToServer();
+             this.validationItem();
         }
     
-      // let orderId;
-      // if (this.generalFormService.economyOrderList.length > 0) {
-      //   orderId = this.generalFormService.economyOrderList[0].order.orderId
-      // }
-      // let eco = {} as EconomyOrder;
-      // eco.globalParameters = {} as OrderItemCommonDetails;
-      // eco.order = {} as Order;
-      // if (orderId != undefined && orderId)
-      // eco.order.orderId = orderId;
-      // eco.order.supplier = {} as Supplier;
-      // eco.order.orderType = {} as OrderType;
-      // Object.keys(this.form.getRawValue().details).map((key, index) => {
-      //   if (key !== 'regularDishesNumber' && key !== 'vegetarianDishesNumber' && key !== 'veganDishesNumber') {
-      //     if (key != 'startDate' && key != 'endDate') {
-      //       eco.globalParameters[key] = this.form.getRawValue().details[key]
-      //     } else {
-      //       if (key == 'startDate') {
-      //         eco.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-      //       }
-      //       if (key == 'endDate') {
-      //         eco.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-      //       }
-      //     }
-      //   } else {
-      //     eco.regularDishesNumber= this.form.getRawValue().details[key];
-      //     eco.veganDishesNumber= this.form.getRawValue().details[key];
-      //     eco.vegetarianDishesNumber= this.form.getRawValue().details[key];
-      //   }
-
-      // });
-      // eco.globalParameters['startHour'] = this.setDateTimeFormat(eco.globalParameters.startDate, eco.globalParameters.startHour);
-      // eco.globalParameters['endHour'] = this.setDateTimeFormat(eco.globalParameters.endDate, eco.globalParameters.endHour);
-      // eco.globalParameters['comments'] = this.form.getRawValue().comments.comments;
-      // eco.globalParameters.orderId = orderId;
-      // eco.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      // eco.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      // eco.order.orderType.name = 'כלכלה';
-      // eco.order.orderType.id = this.orderType;
-      // if(this.item!= undefined){
-      //   if (this.item.globalParameters.tempOrderIdentity != undefined)
-      //   eco.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-      // }
-    
-      // if(!this.isEditable){
-      //   //this.generalFormService.addOrder(eco, eco.order.orderType.id);
-      //   this.addOrder(eco);
-      // }
-      // else{
-      //   eco.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-      //   //this.generalFormService.editOrder(eco, eco.order.orderType.id);
-      //   this.editOrder(eco)
-      // }
-      
-      // this.form.disable({ emitEvent: false });
+  
     }
+  }
+
+  validationItem(){
+    if (!this.additionsService.globalValidations(this.form)) { return; }
+    if (!this.validationsEconomy()) { return; }
+    this.mapFormFieldsToServer()
   }
 
     public mapFormFieldsToServer(){ 
@@ -364,7 +284,8 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.addOrder(eco);
       }
       else{
-        eco.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+       
+        eco.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
         //this.generalFormService.editOrder(eco, eco.order.orderType.id);
         this.editOrder(eco)
       }
@@ -383,6 +304,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   addOrder(item){
    this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
       console.log(res); 
+      this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
       //this.tableData.next(res);
       this.tableData=res;
       this.ifShowtable=true;
@@ -455,9 +377,25 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       })
       return false;
     }
+   
+    let dishesSum=0    
+     if ( Number.isInteger(+this.form.getRawValue().details['regularDishesNumber'])) {
+       dishesSum= +this.form.getRawValue().details['regularDishesNumber']
+     }
+     if ( Number.isInteger(+this.form.getRawValue().details['veganDishesNumber'])) {
+       dishesSum= dishesSum+ (+this.form.getRawValue().details['veganDishesNumber']);
+    }
+    if ( Number.isInteger(+this.form.getRawValue().details['vegetarianDishesNumber'])) {
+      dishesSum= dishesSum+ (+this.form.getRawValue().details['vegetarianDishesNumber'])
+    }
+    if (dishesSum !== +this.form.value.details['quantity']) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'בהזמנת כלכלה סכום סוגי המנות שהוזנו צריך להיות זהה לכמות ', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      })
+      return false;
+    }
 
-     
-     
     let str = this.form.value.details['startDate'].split("/");
     let startDate1 = str[2] + '-' + str[1] + '-' + str[0];
     let startDate = new Date(startDate1);
@@ -484,15 +422,15 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       })
       return false;
     }
-    flag = false;
-    DaysArray.forEach(day => { if (day.getDay() === 5) { flag = true; } });
-    if (flag === false && !item.name.includes("שישי")) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'הטיול אינו חל ביום שישי - נבחרה מנה המתאימה ליום שישי! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
-      return false;
-    }
+    // flag = false;
+    // DaysArray.forEach(day => { if (day.getDay() === 5) { flag = true; } });
+    // if (flag === false && !item.name.includes("שישי")) {
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'הטיול אינו חל ביום שישי - נבחרה מנה המתאימה ליום שישי! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //   })
+    //   return false;
+    // }
     if ((this.form.value.details['startDate'] !== this.form.value.details['endDate']) && item.credit === 0) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
@@ -583,18 +521,18 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
     });
 
-    this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-    });
-    // this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    // this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
     //   console.log(value)
     //   let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
     //   this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
     //   this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
     // });
+    this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log(value)
+      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+    });
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);

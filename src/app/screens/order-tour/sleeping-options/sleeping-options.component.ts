@@ -94,11 +94,21 @@ export class SleepingOptionsComponent implements OnInit {
 
   deleteFilledNight(index: number) {
     //this.filledNightsArray.splice(index, 1);
+    if(this.filledNightsArray[index].lodgingDetailsList.length>1){
+      this.deleteFilledNightOption2(0);
+      return;
+    }
     this.filledNightsArray.splice(index, 1);
   }
+
+  deleteFilledNightOption2(indexOfOption: number) {
+    this.filledNightsArray[0].lodgingDetailsList.splice(indexOfOption, 1);
+  }
+  
   deleteFilledNightOption(indexOfOption: number, index: number) {
     //this.filledNightsArray[index].optionsArr.splice(indexOfOption, 1);
-    this.filledNightsArray[index].lodgingDetailsList.splice(indexOfOption, 1);
+    //this.filledNightsArray[index].lodgingDetailsList.splice(indexOfOption, 1);
+    this.filledNightsArray[0].lodgingDetailsList.splice(indexOfOption +1, 1);
   }
   editFilledNight(index: number) {
     this.editFormObj = [this.filledNightsArray[index], index];
@@ -197,7 +207,6 @@ export class SleepingOptionsComponent implements OnInit {
     if(this.squadAssembleService.filledNightsArray!= undefined){
       console.log('filledNightsArray is full');
       this.filledNightsArray= this.squadAssembleService.filledNightsArray;
-      //
       for (let i = 0; i < this.filledNightsArray.length; i++) {
         for (let j = 0; j < this.filledNightsArray[i].nightsCount.length; j++) {
           let utcDateFormat = this.filledNightsArray[i].nightsCount[j].date;
@@ -206,8 +215,6 @@ export class SleepingOptionsComponent implements OnInit {
           this.filledNightsArray[i].nightsCount[j].date = israelDateFormat;
         }
       }
-
-      //
       this.addSleepingNightDirty = true;
       this.addSleepingNight = false;
     }

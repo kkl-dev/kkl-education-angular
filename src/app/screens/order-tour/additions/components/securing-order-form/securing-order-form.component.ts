@@ -44,22 +44,23 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   isItemOrderExist: boolean;
   isSupplierXemptedFromVat: boolean;
   //isSaveOrderSucceededSub: Subscription;
-  ifCalculateBySumPeople : boolean;
+  //ifCalculateBySumPeople : boolean;
+  ifCalculateByQuantity : boolean;
   valueChangeIndex= 0;
+  itemOrderRecordId: number;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
   };
   ngOnInit(): void {
 
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.tripId = this.generalFormService.tripId;
+    //this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-    //let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    //this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
-
-
+    
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
@@ -67,38 +68,17 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
-        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
-
       }
-     // this.generalFormService.setFormValues(this.item);
     }
 
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
-      //this.setformTemplate();
+      this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
     }
 
     this.getSupplierList(this.orderType, this.tripId, 0);
-    //this.getSettelments();
-    // if (this.editMode) {
-    //   this.generalFormService.setFormValues(this.order);
-    // }
-
-   
     this.generalFormService.setDatesValues();
-  
-    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-    //   console.log('res from table data intransort is :',res);
-    //   this.tableData=res;
-    //   this.ifShowtable=true;
-    // })
-  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-  //     if(res)
-  //     this.editMode = true;
-  //     else
-  //     this.editMode = false;
-  //  })
+
   }
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
@@ -168,16 +148,6 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
 
 
   getSupplierByOrderType() {
-    // let centerFieldId 
-    // if(this.squadAssembleService.tripInfofromService ! = undefined){
-    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    // }  
-    // else{
-    //   let retrievedObject = localStorage.getItem('tripInfofromService');
-    //   let retrievedObj = JSON.parse(retrievedObject);
-    //   centerFieldId= retrievedObj.trip.centerField.id;
-    // }
-    
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
       response => {
         console.log(response);
@@ -234,7 +204,8 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   public onSave(): void {
     if (this.form) {
       let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-      if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+      // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+        if(item?.amountLimit!= null){
         this.orderService.checkItemsExistInDateTime(this.tripId,
           this.centerFieldId, item).subscribe(res=>{
              if(res.message!= "false"){
@@ -245,74 +216,20 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
               return;
              }
              else{
-              if (!this.additionsService.globalValidations(this.form)) { return; }
-              if (!this.validationsSecuring()) { return; }
-              this.mapFormFieldsToServer()
+              this.validationItem();
              }
           })
       }
       else{
-        if (!this.additionsService.globalValidations(this.form)) { return; }
-        if (!this.validationsSecuring()) { return; }
-        this.mapFormFieldsToServer();
+        this.validationItem();
       }
-    
-      // let orderId;
-      // if (this.generalFormService.securingOrderList.length > 0) {
-      //   orderId = this.generalFormService.securingOrderList[0].order.orderId
-      // }
-      // let securing = {} as SecuringOrder;
-      // securing.globalParameters = {} as OrderItemCommonDetails;
-      // securing.order = {} as Order;
-      // if (orderId != undefined && orderId)
-      // securing.order.orderId = orderId;
-      // securing.order.supplier = {} as Supplier;
-      // securing.order.orderType = {} as OrderType;
-      // Object.keys(this.form.getRawValue().details).map((key, index) => {
-
-      //   if (key !== 'scatterLocation') {
-
-      //     if (key != 'startDate' && key != 'endDate') {
-      //       securing.globalParameters[key] = this.form.getRawValue().details[key]
-      //     } else {
-      //       if (key == 'startDate') {
-      //         securing.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-      //       }
-      //       if (key == 'endDate') {
-      //         securing.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-      //       }
-      //     }
-      //   }
-      //   else {
-      //     securing.scatterLocation= this.form.getRawValue().details['scatterLocation'];
-      //   }
-
-      // });
-      // securing.globalParameters['startHour'] = this.setDateTimeFormat(securing.globalParameters.startDate, securing.globalParameters.startHour);
-      // securing.globalParameters['endHour'] = this.setDateTimeFormat(securing.globalParameters.endDate, securing.globalParameters.endHour);
-      // securing.globalParameters['comments'] = this.form.getRawValue().comments.comments;
-      // securing.globalParameters.orderId = orderId;
-      // securing.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      // securing.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-      // securing.order.orderType.name = '';
-      // securing.order.orderType.id = this.orderType;
-      // if(this.item!= undefined){
-      //   if (this.item.globalParameters.tempOrderIdentity != undefined)
-      //   securing.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-      // }
-      
-      // if(!this.isEditable){
-      //   //this.generalFormService.addOrder(securing, securing.order.orderType.id);
-      //   this.addOrder(securing);
-      // }    
-      // else{
-      //   securing.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
-      //   //this.generalFormService.editOrder(securing, securing.order.orderType.id);
-      //   this.editOrder(securing)
-      // }
-      
-      // this.form.disable({ emitEvent: false });
     }
+  }
+
+  validationItem(){
+    if (!this.additionsService.globalValidations(this.form)) { return; }
+    if (!this.validationsSecuring()) { return; }
+    this.mapFormFieldsToServer()
   }
 
   public mapFormFieldsToServer(){
@@ -352,7 +269,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     securing.globalParameters['comments'] = this.form.getRawValue().comments.comments;
     securing.globalParameters.orderId = orderId;
     securing.order.supplier.id = +this.form.getRawValue().details.supplierId;
-    securing.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    securing.order.tripId = this.tripId;
     securing.order.orderType.name = '';
     securing.order.orderType.id = this.orderType;
     if(this.item!= undefined){
@@ -365,7 +282,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       this.addOrder(securing);
     }    
     else{
-      securing.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+      securing.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
       //this.generalFormService.editOrder(securing, securing.order.orderType.id);
       this.editOrder(securing)
     }
@@ -377,6 +294,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   addOrder(item){
     this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
       console.log(res); 
+      this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
       //this.tableData.next(res);
       this.tableData=res;
       this.ifShowtable=true;
@@ -476,10 +394,10 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       this.valueChangeIndex= this.valueChangeIndex+1;
       console.log(value)
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
-      if (item.isSumPeopleOrAmount == 1)
-      this.ifCalculateBySumPeople= false;
+      if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
+      this.ifCalculateByQuantity= true;
       else
-      this.ifCalculateBySumPeople= true;
+      this.ifCalculateByQuantity= false;
       let itemCost;
       if(!item.cost){
         this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
@@ -498,14 +416,31 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
 
     });
-    if(!this.ifCalculateBySumPeople){
+    
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if(this.ifCalculateByQuantity){
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+      }
+      else
+      return;
     });
-  }
+
+   
+      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+        if(!this.ifCalculateByQuantity){
+        console.log(value)
+        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+        }
+        else
+        return;
+      });
+    
+  
 
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
@@ -521,15 +456,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
     });
-    if(this.ifCalculateBySumPeople == true){
-      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-        console.log(value)
-        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-  
-      });
-    }
+   
 
     console.log(this.form)
   }

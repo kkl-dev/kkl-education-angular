@@ -47,14 +47,14 @@
     </div>
   </div>
 
-  <ng-template #newClient let-group="group" let-formGroup="formGroup">
+  <ng-template #newClient let-group="group" let-formGroup="formGroup"  >
     <div
       fxLayout="row"
       fxLayoutAlign="end center"
       (click)="onAddClient()"
       class="button"
     >
-      <app-typography color="primary" class="underline">
+      <app-typography color="primary" class="underline" style="display: none;">
         הוסף לקוח חדש
       </app-typography>
     </div>

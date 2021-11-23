@@ -4,39 +4,34 @@
     <app-typography  [size]="18" [bold]="600" color="primary"  *ngIf="item" >
       <!-- יום {{ i }} : {{ item.globalParameters.startDate | date: "M/d/yy" }} -->
       <!-- יום {{ i }} : {{ item.globalParameters.startDate }} -->
-      יום {{ i }} : {{ date }}
+      <!-- יום {{ i }} : {{ date }} -->
+      פריט {{ i }} : {{ date }}
     </app-typography>
   </div>
   <div class="tour-days">
     <mat-accordion [displayMode]="'gutter'">
       <ng-container>
 
-          <app-expend-panel *ngFor="let location of locations"  class="small" matBadge="!" matBadgeSize="small"
+          <!-- <app-expend-panel *ngFor="let location of locations"  class="small" matBadge="!" matBadgeSize="small"
+          matBadgeColor="warn" variant="tour"> -->
+          <app-expend-panel   class="small" matBadge="!" [matBadgeHidden]="hidden" matBadgeSize="small"
           matBadgeColor="warn" variant="tour">
-          <div title fxLayout="row" fxLayoutAlign="start center">
+          
+          <!-- <div title fxLayout="row" fxLayoutAlign="start center">
             <app-typography color="text-light" [bold]="600" [size]="12" fxFlex="6" *ngIf="location.pickUpDate">{{
               location.pickUpDate | date: "HH:mm" }}</app-typography> 
             <app-typography [size]="18">{{  location.pickupLocation  }} -
               {{ location.dropdownLocation }}</app-typography>
-
+          </div> -->
+          <div title fxLayout="row" fxLayoutAlign="start center">
+            <app-typography color="text-light" [bold]="600" [size]="12" fxFlex="6" >
+            </app-typography> 
+            <app-typography [size]="18">
+              {{textHeader}}
+            </app-typography>
           </div>
         <div description></div>
         <!-- [location]="location" -->
-        <!-- <app-transport-form [order]="item" [editMode]="editMode" content>
-        </app-transport-form> -->
-        <!-- <ng-container [ngSwitch]="orderType">
-          <ng-container *ngSwitchCase="1">
-
-            <app-transport-form [order]="item" [editMode]="editMode"  content>
-            </app-transport-form>
-
-          </ng-container>
-  
-          <ng-container *ngSwitchCase="4">
-           
-          </ng-container>
-        </ng-container> -->
-
       
         <app-transport-form *ngIf="orderType==1" [item]="item" [orderType]="orderType" [editMode]="editMode"  content>
         </app-transport-form>

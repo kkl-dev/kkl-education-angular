@@ -8,7 +8,7 @@
             <div class="save-activity__header-icon" [fxFlex]="activity.img ? '30' : '10' ">
                 <!-- <div class="save-activity__header-icon" [fxFlex]="assets/images/{{ activity.iconPath}} ? '30' : '10' "> -->
                 <!-- <div class="save-activity__header-icon" [fxFlex]="assets/images/{{ activity.img}} ? '30' : '10' "> -->                    
-                    <img *ngIf="type" src="assets/images/{{ activity.img || activity.sitePicture }}" />
+                <img *ngIf="type" src="assets/images/{{ activity.img || activity.sitePicture }}" />
                 <!-- <img *ngIf="type" [src]='activity.img' />
                 <img *ngIf="type" [src]='activity.sitePicture' /> -->
                 <img *ngIf="!type" src="assets/images/{{ activity.svgUrl || activity.sitePicture }}" class="header__form-group-svg"/>

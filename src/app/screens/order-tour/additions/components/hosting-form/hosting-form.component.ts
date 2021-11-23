@@ -47,7 +47,9 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   occupancyValidation :OccupancyValidation;
   //isSaveOrderSucceededSub: Subscription;
   valueChangeIndex= 0;
-  ifCalculateBySumPeople : boolean;
+  //ifCalculateBySumPeople : boolean;
+  ifCalculateByQuantity : boolean;
+  itemOrderRecordId: number;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -55,13 +57,12 @@ export class HostingFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
    
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    this.tripId = this.generalFormService.tripId;
+    //this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
+    this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-    //let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
-    //this.generalFormService.details[itemIndex].inputProps.options = this.generalFormService.itemsList;
-
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
@@ -69,39 +70,22 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
-        //this.generalFormService.getOrderItemBySupplierId(this.supplierId);
       }
-     // this.generalFormService.setFormValues(this.item);
     }
 
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= this.squadAssembleService.peopleInTrip;
-      //this.setformTemplate();
+      this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
     }
 
     this.getSupplierList(this.orderType, this.tripId, 0);
-    
-    // this.generalFormService.setDatesValues();
-    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-    //   console.log('res from table data intransort is :',res);
-    //   this.tableData=res;
-    //   this.ifShowtable=true;
-    // })
-
-  //   this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-  //     if(res)
-  //     this.editMode = true;
-  //     else
-  //     this.editMode = false;
-  //  })
+  
   }
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
     let detailsArr = this.generalFormService.details;
     detailsArr = this.changeLabels(detailsArr);
-    //let hostingQuestions = detailsArr.concat(this.generalFormService.hosting);
     this.generalFormService.questionGroups[index].questions = detailsArr;
     this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
 
@@ -163,16 +147,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
 
 
   getSupplierByOrderType() {
-    // let centerFieldId 
-    // if(this.squadAssembleService.tripInfofromService ! = undefined){
-    //    centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
-    // }  
-    // else{
-    //   let retrievedObject = localStorage.getItem('tripInfofromService');
-    //   let retrievedObj = JSON.parse(retrievedObject);
-    //   centerFieldId= retrievedObj.trip.centerField.id;
-    // }
-    
     this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
 
       response => {
@@ -263,7 +237,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       hosting.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       hosting.globalParameters.orderId = orderId;
       hosting.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      hosting.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      hosting.order.tripId = this.tripId;
       hosting.order.orderType.name = 'פעילות/אירוח';
       hosting.order.orderType.id = this.orderType;
       if(this.item!= undefined){
@@ -276,7 +250,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         this.addOrder(hosting);
       } 
       else{
-        hosting.globalParameters.itemOrderRecordId= this.item.globalParameters.itemOrderRecordId;
+        hosting.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
         //this.generalFormService.editOrder(hosting, hosting.order.orderType.id);
         this.editOrder(hosting)
       }
@@ -288,6 +262,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   addOrder(item){
     this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
        console.log(res); 
+       this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
        //this.tableData.next(res);
        this.tableData=res;
        this.ifShowtable=true;
@@ -473,10 +448,10 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         this.valueChangeIndex= this.valueChangeIndex+1;
         console.log(value)
         let item = this.originalItemList.find(el => el.id === parseInt(value))
-        if (item.isSumPeopleOrAmount == 1)
-        this.ifCalculateBySumPeople= false;
+        if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
+        this.ifCalculateByQuantity= true;
         else
-        this.ifCalculateBySumPeople= true;
+        this.ifCalculateByQuantity= false;
         let itemCost;
         if(!item.cost){
           this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
@@ -495,15 +470,32 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
     });
 
-    if(!this.ifCalculateBySumPeople){
+   
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if(this.ifCalculateByQuantity){
       console.log(value)
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
-
+      }
+      else
+      return;
     });
-  }
+
+   
+      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+        if(!this.ifCalculateByQuantity){
+        console.log(value)
+        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+        }
+        else
+        return;
+  
+      });
+    
+  
 
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value)
@@ -519,15 +511,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
 
     });
-    if(this.ifCalculateBySumPeople == true){
-      this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-        console.log(value)
-        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-  
-      });
-    }
+    
     console.log(this.form)
   }
 
