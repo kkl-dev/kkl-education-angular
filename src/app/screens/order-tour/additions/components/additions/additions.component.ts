@@ -85,7 +85,7 @@ export class AdditionsComponent implements OnInit {
     // if (this.orderType === 1 && this.items.length > 10) {
     //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
     //     width: '500px',
-    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
     //   })
     // }
 
@@ -186,7 +186,7 @@ export class AdditionsComponent implements OnInit {
     // if (this.tempOrderReduce[1].length > 10) {
     //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
     //     width: '500px',
-    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
     //   })
     // }
   }

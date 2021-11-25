@@ -336,7 +336,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
    setDialogMessage(message){
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-       data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+       data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
      })
 
   }

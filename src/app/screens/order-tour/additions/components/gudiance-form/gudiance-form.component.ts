@@ -327,7 +327,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     setDialogMessage(message){
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-         data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+         data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
        })
     }
 
@@ -339,14 +339,14 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'בהזמנת הדרכה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          data: { message: 'בהזמנת הדרכה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
         })
         return false;
       }
       if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'בהזמנת הדרכה - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          data: { message: 'בהזמנת הדרכה - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
         })
         return false;
       }
@@ -358,7 +358,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     if (item.itemId == 234) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'חובה למלא הערה בפריט - תןוספת ריכוז', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'חובה למלא הערה בפריט - תןוספת ריכוז', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
@@ -369,7 +369,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       && this.generalFormService.tripInfo.trip.insideCenterFieldId == 2) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
@@ -379,7 +379,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     if (item.credit == 1) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'פריט מסוג זיכוי מצריך אישור חשב', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'פריט מסוג זיכוי מצריך אישור חשב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
@@ -388,7 +388,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     // if (item.need_att_manager_approval == 1) {
     //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
     //     width: '500px',
-    //     data: { message: 'פריט  מצריך אישור מנהל מחלקה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //     data: { message: 'פריט  מצריך אישור מנהל מחלקה', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
     //   })
     //   return false;
     // }
