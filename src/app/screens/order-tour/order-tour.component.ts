@@ -16,6 +16,7 @@ import { FacilitiesService } from 'src/app/services/facilities.service';
 import { FacilitiesConvertingService } from 'src/app/services/facilities-converting.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { SquadDetailsService } from './squad-assemble/components/squad-details/squad-details.service';
 
 
 @Component({
@@ -55,6 +56,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     private _facilitiesService: FacilitiesService,
     private _facilitiesConvertingService: FacilitiesConvertingService,
     private userDataService: UserDataService,
+    private squadDetailsService:SquadDetailsService,
     private spinner: NgxSpinnerService
   ) { }
 
@@ -233,7 +235,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           var attribute = this.squadAssemble.formsArray[i].get('attribute').value;
           this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
           var activityType = this.squadAssemble.formsArray[i].get('activityType').value;
-          this.squadAssemble.tripInfo.activity = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(activityType))[0];
+          this.squadAssemble.tripInfo.activity = this.squadDetailsService.activityByAttributeOriginal.filter(el => el.id === parseInt(activityType))[0];
           detalisForm = true;
         }
 
@@ -300,14 +302,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           ContactForm = true;
         }
       }
-       if(this.tripService.budgetByParam.budget.isByCity==1 ){
-         if(!this.tripService.budgetByParam.budget.cityId){
+       if(this.squadDetailsService.budget.isByCity==1 ){
+         if(!this.squadDetailsService.budget.cityId){
           this.setDialogMessage('שדה ישוב בחלק של התקצוב הינו חובה');
            flag =false;
            return flag;
          }
       }
-      this.squadAssemble.tripInfo.budget = this.tripService.budgetByParam.budget;
+      this.squadAssemble.tripInfo.budget = this.squadDetailsService.budget;
       budgetFlag=true;
        this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
        if (this.squadAssemble.tripInfo.customer.id != undefined)

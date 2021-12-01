@@ -245,6 +245,7 @@ export class SquadDetailsComponent implements OnInit {
      this.squadDetailsService.budgetByParam=this.budgetByParam;
      this.userService.getBadgetExpensesAndIncome(this.budgetByParam).subscribe(res=>{
         console.log('I am budget obj with income and expense',res);
+        this.squadDetailsService.budget=res;
         this.squadDetailsService.receiveSubBudget.next(res);
      })
     }

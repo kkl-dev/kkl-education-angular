@@ -16,19 +16,13 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     
-    //const isApiUrl= request.url.startsWith(environment.apiUrl) ;
-    // if ( isApiUrl){
-    //     request = request.clone({
-    //         withCredentials: true
-    //       });
-    // }
-    // headers: new HttpHeaders({'Accept': 'application/json'}) ,
-    request= request.clone({
-      withCredentials: true,    
-      setHeaders:{
-       'Accept': 'application/json',
-      }
-   })
+    
+  //   request= request.clone({
+  //     withCredentials: true,    
+  //     setHeaders:{
+  //      'Accept': 'application/json',
+  //     }
+  //  })
    
     return next.handle(request);
   }

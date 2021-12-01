@@ -10,6 +10,7 @@ import { AccommodationType, AvailableAccomodationDate } from 'src/app/open-api';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-education',
@@ -46,7 +47,7 @@ export class EducationComponent implements OnInit {
   };
 
   constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
-    private checkAvailabilltyService: CheckAvailabilityService) {
+    private checkAvailabilltyService: CheckAvailabilityService, private http: HttpClient) {
 
     this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
     this.options = {
@@ -67,6 +68,15 @@ export class EducationComponent implements OnInit {
       this.sleepingDates = this.tripService.sleepingDates;
       this.disableContinueBtn = false;
     }
+    //this.test();
+  }
+  test(){
+    let url='http://knf-appl-dev3/EducationApiTest/QueueTasks/Check';
+    this.http.get(url).subscribe(res=>{
+         console.log(res);
+    },(err)=>{
+      console.log(err);
+    })
   }
 
   selectChange(event: any) {

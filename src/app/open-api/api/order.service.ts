@@ -39,7 +39,8 @@ import { Configuration }                                     from '../configurat
 })
 export class OrderService {
 
-    protected basePath = 'http://knf-appl-dev3:8077';
+    //protected basePath = 'http://knf-appl-dev3:8077';
+    protected basePath= 'http://knf-appl-dev3/EducationApiTest';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
