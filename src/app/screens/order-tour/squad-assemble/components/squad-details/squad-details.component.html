@@ -12,7 +12,8 @@
       </app-form-container>
     </app-expend-panel>
 
-    <app-expend-panel variant="form" [expanded]="!expend" *ngIf="tripService.budget!==undefined">
+   
+      <app-expend-panel variant="form" [expanded]="!expend" *ngIf="squadDetailsService.budget!==undefined">
       <div title fxLayout="row" fxLayoutAlign="space-between center">
         <app-typography color="primary" bold="600" size="16">
           {{ budgetGroup.header.label }}
@@ -22,7 +23,7 @@
         </app-typography>
       </div>
       <app-form-container content [cols]="budgetGroup.cols" [questions]="budgetGroup.questions" [slots]="{location}"
-        (register)="logForm($event)">
+        (register)="logForm1($event)">
       </app-form-container>
     </app-expend-panel>
   </mat-accordion>
