@@ -174,7 +174,9 @@ export class SquadBudgetComponent implements OnInit {
      }
       onValueChange(){
         this.formGroup.controls["location"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-           console.log('I am location event!');
+           console.log('I am location event!',value.location);
+           if(!value.location)
+           return;
            this.getBudgetExpensesAndIncome(value.location)
        });
      }

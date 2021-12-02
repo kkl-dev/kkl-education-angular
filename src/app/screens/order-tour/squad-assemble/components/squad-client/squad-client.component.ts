@@ -80,6 +80,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
       .getClientObs()
       .subscribe((value: any) => {
         this.squadClientService.emitEditMode(true);
+        if(this.squadClientService.customerTypeSelected=='customer')
         this.updateClientForm(value);
       });
   }

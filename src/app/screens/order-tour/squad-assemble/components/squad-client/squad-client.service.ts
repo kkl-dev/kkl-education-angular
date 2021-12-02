@@ -16,6 +16,7 @@ export class SquadClientService {
     false
   );
   private $clientSelected: Subject<any> = new Subject<any>();
+  public customerTypeSelected: any;
 
   public questions: QuestionBase<string>[] = [
     new QuestionBase({
@@ -147,7 +148,8 @@ export class SquadClientService {
     return this.$editMode.asObservable();
   }
 
-  public emitClientSelected(value: any) {
+  public emitClientSelected(value: any,customerType) {
+    this.customerTypeSelected= customerType;
     this.$clientSelected.next(value);
   }
 

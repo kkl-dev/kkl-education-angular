@@ -172,13 +172,14 @@ export class AdditionsService {
       MultiplyByAmountOrPeople = itemOrder.quantity
     }
     else if(item?.orderType == 4){
-      ParticipantsOrAmount = "חישוב מכפלה לפי כמות:"
-      MultiplyByAmountOrPeople = itemOrder.quantity
+      ParticipantsOrAmount = "חישוב מכפלה לפי משתתפים:"
+      //MultiplyByAmountOrPeople = itemOrder.quantity
+      MultiplyByAmountOrPeople = itemOrder.peopleInTrip
     }
     else {  // calculate by participants
       ParticipantsOrAmount = "חישוב מכפלה לפי משתתפים:"
       //MultiplyByAmountOrPeople = itemOrder.peopleInTrip
-      if(itemOrder.peopleInTrip)
+      if(itemOrder?.peopleInTrip)
       MultiplyByAmountOrPeople = itemOrder.peopleInTrip;
       else{
         let index= this.generalFormService.details.findIndex(i=> i.key== 'peopleInTrip')
