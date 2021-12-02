@@ -8,9 +8,14 @@
 mat-sidenav-content{
   position: relative;
   overflow: hidden;
-
-
 }
+
+@media screen and (max-height: 500px) {
+  mat-sidenav-content {
+    overflow: scroll !important;
+  }
+}
+
 .sidenav {
   width: fit-content;
   margin-top: 88px;
