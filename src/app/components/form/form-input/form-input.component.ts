@@ -43,7 +43,7 @@ export class FormInputComponent implements OnInit {
   @Input() public icon!: string;
   @Input() public inputProps: {};
   @Input() public disabled: boolean;
-  @Input() public group: FormGroup;
+  //@Input() public group: FormGroup;
   @Input() public serverErrorMode!: boolean;
   public color: string;
   public value!: any;
@@ -52,7 +52,7 @@ export class FormInputComponent implements OnInit {
   name: any;
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter()
   @Output() select: EventEmitter<FormControl> = new EventEmitter()
-  @Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
+  //@Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
 
   constructor(private formService: FormService, public additionsService: AdditionsService, public transportService: TransportService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService
@@ -159,59 +159,59 @@ export class FormInputComponent implements OnInit {
     // if (this.control.parent.value.attribute) {
     //   this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
     // }
-    if (this.name === 'attribute') {
-      this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute);
-      this.group.controls['activityType'].setValue(undefined);//איפוס שדה פעילות
-      if (this.control.value === '12') {
-        var index;
-        for (var i in this.squadAssemble.formsArray) {
-          Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
-            if (key === 'ageGroup') { index = i; }
-          });
-        }
-        this.squadAssemble.formsArray[index].controls['ageGroup'].setValue(undefined)
-        // this.squadGroupService.mixedQuestions['ageGroup'].setValue(undefined)
-      }
-      var attr = this.tripService.attributesOriginal.filter(el => el.id === parseInt(this.control.value))[0];
-      if (attr.autoCustomerId !== null) {// שליפת לקוח והצבתו בלקוח רצוי 
-        this.tripService.getCustomer(attr.autoCustomerId);
-      }
-      this.tripService.budgetByParam.attribute = attr;
-      //find index 'dates'
-      var index;
-      for (var i in this.squadAssemble.formsArray) {
-        Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
-          // if (key === 'tripStart') { index = i; }
-          if (key === 'dates') { index = i; }
-        });
-      }
-      //let str = this.squadAssemble.formsArray[index].controls['tripStart'].value.split("/");
-      let tripDatesArr = this.squadAssemble.formsArray[index].controls['dates'].value.split("-");
-      let tripStart = tripDatesArr[0];
-      let tripStartArr = tripStart.split("/");
-      tripStart = tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
-      this.tripService.budgetByParam.tripStart = tripStart;
-      this.tripService.getBudgetKKl(this.tripService.budgetByParam);
-      // index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
-      // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.tripService.budget.listCity;
-    }
-    if (this.name === 'activityType') {
-      var act = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(this.control.value))[0];
-      this.tripService.budgetByParam.activity = act;
-      this.tripService.budgetByParam.budget = this.tripService.budget;
-      this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
-    }
-    if (this.name === 'location') {
-      let cityId= this.control.parent.value;
-      this.tripService.budgetByParam.budget.cityId= parseInt(cityId.location);
-      this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
-    }
-    if (this.name === 'budgetIncome') {
-      this.tripService.budgetByParam.budget.incomeId = parseInt(this.control.value);
-    }
-    if (this.name === 'budgetExpense') {
-      this.tripService.budgetByParam.budget.expensesId = parseInt(this.control.value);
-    }
+    // if (this.name === 'attribute') {
+    //   this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute);
+    //   this.group.controls['activityType'].setValue(undefined);//איפוס שדה פעילות
+    //   if (this.control.value === '12') {
+    //     var index;
+    //     for (var i in this.squadAssemble.formsArray) {
+    //       Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
+    //         if (key === 'ageGroup') { index = i; }
+    //       });
+    //     }
+    //     this.squadAssemble.formsArray[index].controls['ageGroup'].setValue(undefined)
+    //     // this.squadGroupService.mixedQuestions['ageGroup'].setValue(undefined)
+    //   }
+    //   var attr = this.tripService.attributesOriginal.filter(el => el.id === parseInt(this.control.value))[0];
+    //   if (attr.autoCustomerId !== null) {// שליפת לקוח והצבתו בלקוח רצוי 
+    //     this.tripService.getCustomer(attr.autoCustomerId);
+    //   }
+    //   this.tripService.budgetByParam.attribute = attr;
+    //   //find index 'dates'
+    //   var index;
+    //   for (var i in this.squadAssemble.formsArray) {
+    //     Object.keys(this.squadAssemble.formsArray[i].controls).forEach(key => {
+    //       // if (key === 'tripStart') { index = i; }
+    //       if (key === 'dates') { index = i; }
+    //     });
+    //   }
+    //   //let str = this.squadAssemble.formsArray[index].controls['tripStart'].value.split("/");
+    //   let tripDatesArr = this.squadAssemble.formsArray[index].controls['dates'].value.split("-");
+    //   let tripStart = tripDatesArr[0];
+    //   let tripStartArr = tripStart.split("/");
+    //   tripStart = tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
+    //   this.tripService.budgetByParam.tripStart = tripStart;
+    //   this.tripService.getBudgetKKl(this.tripService.budgetByParam);
+    //   // index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+    //   // this.squadBudgetService.questions[index].group.questions[0].inputProps.options = this.tripService.budget.listCity;
+    // }
+    // if (this.name === 'activityType') {
+    //   var act = this.tripService.activityByAttributeOriginal.filter(el => el.id === parseInt(this.control.value))[0];
+    //   this.tripService.budgetByParam.activity = act;
+    //   this.tripService.budgetByParam.budget = this.tripService.budget;
+    //   this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
+    // }
+    // if (this.name === 'location') {
+    //   let cityId= this.control.parent.value;
+    //   this.tripService.budgetByParam.budget.cityId= parseInt(cityId.location);
+    //   this.tripService.getBudgetExpensesAndIncome(this.tripService.budgetByParam);
+    // }
+    // if (this.name === 'budgetIncome') {
+    //   this.tripService.budgetByParam.budget.incomeId = parseInt(this.control.value);
+    // }
+    // if (this.name === 'budgetExpense') {
+    //   this.tripService.budgetByParam.budget.expensesId = parseInt(this.control.value);
+    // }
     // if (this.name === 'supplier') {
     //   this.generalFormService.getOrderItemBySupplierId();
     // }
@@ -225,7 +225,8 @@ export class FormInputComponent implements OnInit {
 
 
     this.select.emit(this.control);
-    this.groupEvent.emit(this.group);
+    console.log(this.control.value)
+    //this.groupEvent.emit(this.group);
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {

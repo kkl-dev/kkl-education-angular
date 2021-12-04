@@ -733,7 +733,7 @@ export class GeneralFormService {
       let temp= this.tempOrderReduce.value.tempOrderReduce;
       for (var i in temp[orderTypeId]) {
         for(var j in res ){
-          if(temp[orderTypeId][i].orderTempId==res[j].globalParameters.tempOrderIdentity){
+          if(temp[orderTypeId][i].tempOrderId==res[j].globalParameters.tempOrderIdentity){
             temp[orderTypeId].splice(i, 1);
             break;
 

@@ -72,7 +72,8 @@ export class AddFacilityComponent implements OnInit {
         'svgUrl': new FormControl('assets/images/' + data.iconPath || null),
         'facilityId': new FormControl(data.id || null),
         'tripActivityIdentity': new FormControl(data.tripActivityIdentity || null),
-        'orderTempId': new FormControl(data.orderTempId || null),
+        // 'orderTempId': new FormControl(data.orderTempId || null),
+        'tempOrderId': new FormControl(data.tempOrderId || null),    
         'orderId': new FormControl(data.orderId || null),
         'tempOrderList': new FormControl(data.tempOrderList || null)
       });

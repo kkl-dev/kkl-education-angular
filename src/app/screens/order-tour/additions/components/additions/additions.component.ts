@@ -102,7 +102,6 @@ export class AdditionsComponent implements OnInit {
     })
   }
   getTempOrder() {
-   // this.tripId= 52973;
     this.orderService.getTempOrders(this.tripId).subscribe(
       response => {
         console.log(response);
@@ -157,7 +156,7 @@ export class AdditionsComponent implements OnInit {
         order.globalParameters.startHour = startHour[1];
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
-        order.globalParameters.tempOrderIdentity = this.tempOrderReduce[orderTypId][i].orderTempId;
+        order.globalParameters.tempOrderIdentity = this.tempOrderReduce[orderTypId][i].tempOrderId;
         orderList.push(order);
       }
       // this.additionsService.emitItem(OrderList);

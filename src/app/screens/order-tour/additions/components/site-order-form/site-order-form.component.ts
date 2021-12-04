@@ -61,7 +61,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-   
+    this.setformTemplate();
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined){
         this.editMode=true;
@@ -76,7 +76,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     this.getSupplierList(this.orderType, this.tripId, 0);
     this.getSites();
     this.generalFormService.setDatesValues();
-    this.setformTemplate();
+    
   }
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
