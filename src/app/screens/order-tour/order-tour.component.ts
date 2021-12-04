@@ -17,6 +17,8 @@ import { FacilitiesConvertingService } from 'src/app/services/facilities-convert
 import { UserDataService } from 'src/app/services/user-data.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { SquadDetailsService } from './squad-assemble/components/squad-details/squad-details.service';
+import { SquadGroupService } from './squad-assemble/components/squad-group/squad-group.service';
+import { SquadClientService } from './squad-assemble/components/squad-client/squad-client.service';
 
 
 @Component({
@@ -57,7 +59,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     private _facilitiesConvertingService: FacilitiesConvertingService,
     private userDataService: UserDataService,
     private squadDetailsService:SquadDetailsService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private squadAgeGroupService :SquadGroupService,
+    private squadClientService: SquadClientService
   ) { }
 
   ngOnInit(): void {
@@ -172,11 +176,16 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     let ContactForm;
     let budgetFlag;
     let customerFlag;
+    let lastScheduleFormIndex ;
+    let lastContactFormIndex;
+    let lastAgeGroupFormIndex;
+    let lastDetailsFormIndex;
     try {
       let startDate;
       let endDate;
       for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
         if (this.squadAssemble.formsArray[i].controls.centerField) {
+          lastScheduleFormIndex=i;
           console.log('I am schedule');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
@@ -209,10 +218,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           scheduleForm = true;
         }
         if (this.squadAssemble.formsArray[i].controls.attribute) {
-
+          lastDetailsFormIndex=i;
           console.log('I am details');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
-            console.log('schedule is invalid');
+            console.log('details is invalid');
             detalisForm = false;
             continue;
           }
@@ -240,9 +249,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         if (this.squadAssemble.formsArray[i].controls.ageGroup) {
-          console.log('I am ageGroup');
+          lastAgeGroupFormIndex=i;
+            console.log('I am ageGroup');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
-            console.log('schedule is invalid');
+            console.log('ageGroup is invalid');
             ageGroupForm = false;
             continue;
           }
@@ -280,14 +290,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
               this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה מספר מדריכים');
               return false;
             }     
-          // if(this.squadAssemble.formsArray[i].get('medics').value)
-          // this.squadAssemble.tripInfo.numAccompaniedAndGuide = +this.squadAssemble.formsArray[i].get('medics').value;
           ageGroupForm = true;
         }
         if (this.squadAssemble.formsArray[i].controls.contactName) {
+          lastContactFormIndex=i;
           console.log('I am contact');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
-            console.log('schedule is invalid');
+            console.log('contact is invalid');
             ContactForm = false;
             continue;
           }
@@ -302,28 +311,63 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           ContactForm = true;
         }
       }
-       if(this.squadDetailsService.budget.isByCity==1 ){
-         if(!this.squadDetailsService.budget.cityId){
-          this.setDialogMessage('שדה ישוב בחלק של התקצוב הינו חובה');
-           flag =false;
-           return flag;
-         }
-      }
-      this.squadAssemble.tripInfo.budget = this.squadDetailsService.budget;
-      budgetFlag=true;
+  
        this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
        if (this.squadAssemble.tripInfo.customer.id != undefined)
        customerFlag= true;
+       else
+       customerFlag= false;
       
-       if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
-       flag=true
-       else{
-         if(!ContactForm){
-          this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
+      //  if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
+       if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true ){
+         
+        if(this.squadDetailsService?.budget?.isByCity==1 ){
+          if(!this.squadDetailsService.budget.cityId){
+           this.setDialogMessage('שדה ישוב בחלק של התקצוב הינו חובה');
+            return flag;
+          }
          }
-        return flag;
+         if(!this.squadDetailsService?.budget?.expensesId){
+          this.setDialogMessage('שדה תת סעיף תקציב הכנסות הינו חובה');
+          return flag;
+        }
+        if(!this.squadDetailsService?.budget?.incomeId){
+          this.setDialogMessage('שדה תת סעיף תקציב הוצאות הינו חובה');
+          return flag;
+        }
+        this.squadAssemble.tripInfo.budget = this.squadDetailsService?.budget;
+        budgetFlag=true; 
+        flag=true;
        }
-     
+       
+       else{
+        if(!scheduleForm){
+          this.test('schedule',lastScheduleFormIndex);
+          return flag;
+        }
+        if(!customerFlag){
+          this.setDialogMessage('שדה הקלד לקוח רצוי הינו חובה');
+          return flag;
+         }
+         if(!ContactForm){
+           if(this.squadAssemble.formsArray[lastContactFormIndex].status == 'INVALID')
+            this.test('contact',lastContactFormIndex);
+            else
+           this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
+          return flag;
+         }   
+         if(!ageGroupForm){
+          this.test('ageGroup',lastAgeGroupFormIndex);
+          return flag;
+         }
+       
+         if(!detalisForm){
+          this.test('details',lastDetailsFormIndex);
+          return flag;
+         }
+         
+       }
+      
       
       if(this.squadAssemble.payerCustomer.name!= undefined)
       this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
@@ -347,17 +391,52 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     return flag;
   }
 
-
-   public findInvalidControls(formName) {
-        // const controls = this.AddCustomerForm.controls;
-        // for (const name in controls) {
-        //     if (controls[name].invalid) {
-        //         invalid.push(name);
-        //     }
-        // }
-        // return invalid;
-    }
-
+   test(formName,index){
+      let ifControlFound= false;
+      for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
+        if(i===index  && !ifControlFound){
+          const invalid = [];
+          const controls = this.squadAssemble.formsArray[i].controls;
+          for (const name in controls) {
+              if (controls[name].invalid) {
+                let labelControl;
+                if (formName=='schedule'){
+                   labelControl= this.squadAssemble.scheduleQuestions.find(i=> i.key===name).label;
+                }
+                if(formName=='contact'){
+                  labelControl= this.squadClientService.questions[1].group.questions.find(i=> i.key===name).label;
+                  if (name =='contactPhone'){
+                    this.setDialogMessage('נא הזן מספר פלאפון תקין בשדה נייד איש קשר');
+                    ifControlFound=true;
+                    break;
+                  }
+                }
+                if(formName=='ageGroup'){
+                  labelControl= this.squadAgeGroupService.mixedQuestions.find(i=> i.key===name).label;
+                }
+                if(formName=='details'){
+                  labelControl= this.squadDetailsService.questions.find(i=> i.key===name).label;
+                }
+                
+                this.setDialogMessage('שדה ' + labelControl + ' הינו חובה');
+                ifControlFound=true;
+                break;
+                  //invalid.push(name);
+              }
+          }
+        }
+     }
+   }
+  //   public findInvalidControls() {
+  //     const invalid = [];
+  //     const controls = this.AddCustomerForm.controls;
+  //     for (const name in controls) {
+  //         if (controls[name].invalid) {
+  //             invalid.push(name);
+  //         }
+  //     }
+  //     return invalid;
+  // }
 
 
 

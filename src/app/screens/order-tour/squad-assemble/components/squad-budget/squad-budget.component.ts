@@ -93,6 +93,7 @@ export class SquadBudgetComponent implements OnInit {
        if(res==null)
        return
        this.budget=res;
+       this.squadDetailsService.budget=res;
        var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
        if(this.budget.listCity !== null){
           var list = [];
@@ -130,6 +131,7 @@ export class SquadBudgetComponent implements OnInit {
       if(res==null)
       return
       this.budget=res;
+      this.squadDetailsService.budget=res;
       if (this.budget.type !== undefined) {
         this.squadBudgetService.budget.type = this.budget.desc;
         this.squadBudgetService.budget.budget = this.budget.kklAmount;

@@ -8,6 +8,7 @@ import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
 import { TripService } from 'src/app/services/trip.service';
+import { BaseCustomer } from 'src/app/open-api';
 
 @Component({
   selector: 'app-squad-client',
@@ -129,5 +130,9 @@ export class SquadClientComponent implements OnInit, OnDestroy {
       contactPhone:  '',
       contactEmail:  '',
     });
+  }
+
+    onDeletePayer(event){
+      this.squadAssembleService.payerCustomer={} as BaseCustomer;
   }
 }

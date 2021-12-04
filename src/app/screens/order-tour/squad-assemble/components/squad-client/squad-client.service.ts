@@ -17,7 +17,7 @@ export class SquadClientService {
   );
   private $clientSelected: Subject<any> = new Subject<any>();
   public customerTypeSelected: any;
-
+  
   public questions: QuestionBase<string>[] = [
     new QuestionBase({
       key: 'client',
@@ -82,7 +82,7 @@ export class SquadClientService {
             key: 'contactPhone',
             label: 'נייד איש קשר',
             type: 'text',
-            validations: [Validators.required],
+            validations: [Validators.required,Validators.pattern(/\-?\d*\.?\d{1,2}/),Validators.minLength(10),Validators.maxLength(10)],
           }),
           new QuestionTextbox({
             key: 'contactEmail',
