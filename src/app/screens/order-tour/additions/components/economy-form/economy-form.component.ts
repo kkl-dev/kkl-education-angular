@@ -342,7 +342,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
    setDialogMessage(message){
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-       data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+       data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
      })
   }
 
@@ -352,28 +352,28 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'בהזמנת כלכלה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
     if (this.form.value.details['endHour'] === null || this.form.value.details['endHour'] === "" || this.form.value.details['endHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה - חובה למלא שעת סיום', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'בהזמנת כלכלה - חובה למלא שעת סיום', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
     if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'בהזמנת כלכלה - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
     if (+this.form.value.details['peopleInTrip'] !== +this.form.value.details['quantity']) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה - מספר המשתתפים חייב להיות זהה לכמות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'בהזמנת כלכלה - מספר המשתתפים חייב להיות זהה לכמות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
@@ -391,7 +391,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if (dishesSum !== +this.form.value.details['quantity']) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה סכום סוגי המנות שהוזנו צריך להיות זהה לכמות ', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'בהזמנת כלכלה סכום סוגי המנות שהוזנו צריך להיות זהה לכמות ', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
@@ -411,14 +411,14 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if (flag && !item.name.includes("שבת") && !item.name.includes("סעודה שלישית")) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'הטיול חל ביום שבת - יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'הטיול חל ביום שבת - יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
     if (flag === false && item.name.includes("שבת") && item.name.includes("סעודה שלישית")) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'הטיול אינו חל ביום שבת - נבחרה מנה המתאימה ליום שבת! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'הטיול אינו חל ביום שבת - נבחרה מנה המתאימה ליום שבת! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
@@ -427,14 +427,14 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     // if (flag === false && !item.name.includes("שישי")) {
     //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
     //     width: '500px',
-    //     data: { message: 'הטיול אינו חל ביום שישי - נבחרה מנה המתאימה ליום שישי! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //     data: { message: 'הטיול אינו חל ביום שישי - נבחרה מנה המתאימה ליום שישי! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
     //   })
     //   return false;
     // }
     if ((this.form.value.details['startDate'] !== this.form.value.details['endDate']) && item.credit === 0) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנה מסוג כלכלה - תאריך ההתחלה והסיום צריכים להיות זהים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'בהזמנה מסוג כלכלה - תאריך ההתחלה והסיום צריכים להיות זהים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
       })
       return false;
     }
@@ -446,7 +446,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       if (flag) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'בהזמנת כלכלה - לא ניתן להזמין מספר פריטים זהים באותו תאריך', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          data: { message: 'בהזמנת כלכלה - לא ניתן להזמין מספר פריטים זהים באותו תאריך', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
         })
         return false;
       }
@@ -456,7 +456,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     //   // אם תפוס - הודעת שגיאה ולבדוק אם צריך למחוק את כל הערכים בשדות 
     //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
     //     width: '500px',
-    //     data: { message: 'רק מנהל מרכז השדה יכול לאשר הזמנה זו,' + this.form.value.details['startDate'] + ' חדר האוכל תפוס בתאריכים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    //     data: { message: 'רק מנהל מרכז השדה יכול לאשר הזמנה זו,' + this.form.value.details['startDate'] + ' חדר האוכל תפוס בתאריכים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
     //   })
     //   return false;
     // }
