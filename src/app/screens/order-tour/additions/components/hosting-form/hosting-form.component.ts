@@ -207,6 +207,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.hostingItem = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
     }
     if (this.form) {
+      if (!this.additionsService.globalValidations(this.form)) { return; }
       if (!this.validationsHosting()) { return; }
       var centerFieldObj = JSON.parse(localStorage.getItem('centerFieldObj'));
       var typeSleep = centerFieldObj.accommodationList.filter(x => x.id == this.hostingItem.typeSleepId)[0];
@@ -236,7 +237,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
           if (res.isOccupancyProblem) {
             const dialogRef = this._dialog.open(ConfirmDialogComponent, {
               width: '500px',
-              data: { message: "מס יחידות הלינה המבוקשות גדול ממספר יחידות הלינה הזמינות במרכז שדה זה", content: '', leftButton: 'אישור' }
+              data: { message: res.message+ 'הודעת שגיאה - בדיקת בעיית תפוסה', content: '', leftButton: 'אישור' }
             }); return;
           }
           else {
@@ -264,7 +265,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   // }
 
   validationItem() {
-    if (!this.additionsService.globalValidations(this.form)) { return; }
     this.mapFormFieldsToServer();
   }
   mapFormFieldsToServer() {
