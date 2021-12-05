@@ -104,23 +104,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
     this.generalFormService.setDatesValues();
     this.getSupplierList(this.orderType, this.tripId, 0);
-    //this.getSettelments();
-    // if (this.editMode) {
-    //   this.generalFormService.setFormValues(this.order);
-    // }
-
-    // this.tableDataSub=this.generalFormService.tableData.subscribe(res=>{
-    //   console.log('res from table data intransort is :',res);
-    //   this.tableData=res;
-    //   this.ifShowtable=true;
-    // })
-    // this.isSaveOrderSucceededSub = this.generalFormService.isSaveOrderSucceeded.subscribe(res=>{
-    //    if(res)
-    //    this.editMode = true;
-    //    else
-    //    this.editMode = false;
-    // })
-
 
   }
 

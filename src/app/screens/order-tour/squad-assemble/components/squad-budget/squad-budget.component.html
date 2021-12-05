@@ -1,5 +1,6 @@
 <mat-grid-list [cols]="group.cols" rowHeight="2vh" dir="rtl">
-  <mat-grid-tile *ngIf="tripService.budget?.type!==undefined&&tripService.budget?.type!==null&&tripService.budget?.type!==0">
+  <!-- <mat-grid-tile *ngIf="tripService.budget?.type!==undefined&&tripService.budget?.type!==null&&tripService.budget?.type!==0"> -->
+    <mat-grid-tile *ngIf="squadDetailsService.budget?.type!==undefined&&squadDetailsService.budget?.type!==null&&squadDetailsService.budget?.type!==0 && squadDetailsService.budget?.listCity !== null">
     <div fxLayout="row" fxLayoutAlign="start center">
       <app-typography color="primary" bold="600">
         {{ group.label }} 
@@ -7,7 +8,8 @@
     </div>
   </mat-grid-tile>
   <mat-grid-tile *ngFor="let question of group.questions" [colspan]="question.cols" [rowspan]="question.rows">
-    <app-form-input *ngIf="tripService.budget?.type!==undefined&&tripService.budget?.type!==null&&tripService.budget?.type!==0"[control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
+    <!-- <app-form-input *ngIf="tripService.budget?.type!==undefined&&tripService.budget?.type!==null&&tripService.budget?.type!==0"[control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label" -->
+    <app-form-input *ngIf="squadDetailsService.budget?.type!==undefined&&squadDetailsService.budget?.type!==null&&squadDetailsService.budget?.type!==0 && squadDetailsService.budget?.listCity !== null "[control]="formGroup.controls[group.key].controls[question.key]" [label]="question.label"
       [disabled]="question.disabled" [split]="cols > question.cols" [type]="question.type" [label]="question.label"
       [icon]="question.icon" [options]="question.inputProps?.options" [dateOptions]="question.inputProps?.dateOptions"
       [controlType]="question.controlType" >
@@ -15,7 +17,8 @@
   </mat-grid-tile>
   <mat-grid-tile rowspan="12">
 
-    <mat-list *ngIf="tripService.budget?.type!==undefined&&tripService.budget?.type!==null&&tripService.budget?.type!==0">
+    <!-- <mat-list *ngIf="tripService.budget?.type!==undefined&&tripService.budget?.type!==null&&tripService.budget?.type!==0"> -->
+      <mat-list *ngIf="squadDetailsService.budget?.type!==undefined&&squadDetailsService.budget?.type!==null&&squadDetailsService.budget?.type!==0">
       <mat-list-item fxLayout="row" fxLayoutAlign="start center" *ngFor="let item of squadBudgetService.list">
         <div mat-line>
           <app-typography>

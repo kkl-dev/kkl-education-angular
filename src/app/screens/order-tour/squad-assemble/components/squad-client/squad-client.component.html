@@ -43,6 +43,7 @@
       <app-form-autocomplete
         [group]="payerQuestions.group"
         [formGroup]="formGroup.controls.payer"
+        (deleteCustomer)="onDeletePayer($event)"
       ></app-form-autocomplete>
     </div>
   </div>

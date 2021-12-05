@@ -3,7 +3,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveComponentModule } from '@ngrx/component';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -140,6 +140,7 @@ import { SecuringOrderFormComponent } from './screens/order-tour/additions/compo
 import { MusicActivationFormComponent } from './screens/order-tour/additions/components/music-activation-form/music-activation-form.component';
 import { TransportDetailsTableComponent } from './screens/order-tour/additions/transport-details-table/transport-details-table.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import {HttpRequestInterceptor} from '../app/interceptors/interceptor';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -289,6 +290,7 @@ FullCalendarModule.registerPlugins([
     NgxMaterialTimepickerModule.setLocale('he-IL'),
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS,useClass:HttpRequestInterceptor,multi:true},
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: TransportModel, useValue: new TransportModel() },
     DatePipe,

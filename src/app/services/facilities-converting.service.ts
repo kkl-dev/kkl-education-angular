@@ -74,6 +74,7 @@ export class FacilitiesConvertingService {
     let activity;
     let tripActivityIdentity = 0;
     let orderTempId = 0;
+    let tempOrderId = 0;
     let orderId = null;
     let orderItemIdentity = null;
     let hasAdditions: boolean = false;
@@ -81,7 +82,8 @@ export class FacilitiesConvertingService {
 
     for (let i = 0; i < arr.length; i++) {
       tripActivityIdentity = arr[i].tripActivityIdentity || null;
-      orderTempId = arr[i].orderTempId || 0;
+      // orderTempId = arr[i].orderTempId || 0;
+      tempOrderId = arr[i].tempOrderId || 0;
       orderId = arr[i].orderId || null;
       orderItemIdentity = arr[i].orderItemIdentity || null;
       try {
@@ -128,7 +130,8 @@ export class FacilitiesConvertingService {
                   break;
               }
               tempOrder = {
-                "orderTempId": orderTempId || 0,
+                // "orderTempId": orderTempId || 0,
+                "tempOrderId": tempOrderId || 0,
                 "orderId": orderId,
                 "orderItemIdentity": orderItemIdentity,
                 "tripId": tripId,
@@ -156,7 +159,8 @@ export class FacilitiesConvertingService {
             orderTypeName = 'אירוח/פעילות';
           }
           tempOrder = {
-            "orderTempId": arr[i].orderTempId || 0,
+            // "orderTempId": arr[i].orderTempId || 0,
+            "tempOrderId": arr[i].tempOrderId || 0,
             "orderId": arr[i].orderId,
             "orderItemIdentity": arr[i].orderItemIdentity,
             "tripId": tripId,
@@ -217,7 +221,8 @@ export class FacilitiesConvertingService {
       tripId: tempOrderList.tripId,
       orderTypeCode: tempOrderList.orderTypeCode,
       orderTypeName: tempOrderList.orderTypeName,
-      orderTempId: tempOrderList.orderTempId,
+      // orderTempId: tempOrderList.orderTempId,
+      tempOrderId: tempOrderList.tempOrderId,
       orderId: tempOrderList.orderId,
       orderItemIdentity: tempOrderList.orderItemIdentity,
       availability: [],

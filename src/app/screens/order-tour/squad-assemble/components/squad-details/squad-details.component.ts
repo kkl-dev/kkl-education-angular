@@ -7,8 +7,8 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { BreakpointService } from 'src/app/utilities/services/breakpoint.service';
 import { SquadDetailsService } from './squad-details.service';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { distinctUntilChanged, map } from 'rxjs/operators';
-import { UserService } from 'src/app/open-api';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { BudgetByParams, UserService } from 'src/app/open-api';
 
 @Component({
   selector: 'app-squad-details',
@@ -28,9 +28,12 @@ export class SquadDetailsComponent implements OnInit {
   public value$: Observable<string>;
   public questions$ = new Subject<QuestionBase<string | number | Date>[]>();
   public tablet$: Observable<boolean>;
+  attributeObjSelected;
+  budgetByParam = {} as BudgetByParams;
+ indexChange: number=0;
   
   constructor(private squadAssembleService: SquadAssembleService,public tripService: TripService, private breakpoints: BreakpointService,
-    private squadDetailsService: SquadDetailsService,private userService: UserService) { }
+    public squadDetailsService: SquadDetailsService,private userService: UserService) { }
 
   ngOnInit(): void {
     this.tablet$ = this.breakpoints.isTablet();
@@ -132,14 +135,119 @@ export class SquadDetailsComponent implements OnInit {
       return this.countriesList;
    }
   public logForm(form) {
-    this.form=form;
-    if(form.controls['department'].value =='8'){
-      this.form.controls['tripLocation'].patchValue('900', { emitEvent: false });
-      this.form.controls['tripLocation'].disable({ emitEvent: false }); 
-    }
+    // this.form=form;
+    // if(form.controls['department'].value =='8'){
+    //   this.form.controls['tripLocation'].patchValue('900', { emitEvent: false });
+    //   this.form.controls['tripLocation'].disable({ emitEvent: false }); 
+    // }
   
-    this.listenToRadioButton(form);
-    console.log('I am form details: ', form);
+    // this.listenToRadioButton(form);
+    // console.log('I am form details: ', form);
+    // this.squadAssembleService.updateFormArray(form);
+
+    console.log('I am form details event', form);
+    this.form=form;
     this.squadAssembleService.updateFormArray(form);
+    if (this.form.controls.attribute){
+      if(form.controls['department'].value =='8'){
+        this.form.controls['tripLocation'].patchValue('900', { emitEvent: false });
+        this.form.controls['tripLocation'].disable({ emitEvent: false }); 
+      }
+      this.listenToRadioButton(form);
+      this.form.controls["attribute"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+        this.form.controls["activityType"].patchValue('', { emitEvent: false });
+        this.indexChange=this.indexChange+1;
+        if(this.indexChange>1){
+         this.indexChange=0;
+         return;
+        }
+        //  if (value === '12')
+        //   this.resetAgeGroupField();
+          this.setAutoCustomer(value)
+          this.userService.getActivityByAttribute(value).subscribe(res=>{
+  
+            this.squadDetailsService.activityByAttributeOriginal = res;
+            this.squadDetailsService.activityByAttribute = [];
+            res.forEach(element => {
+              this.squadDetailsService.activityByAttribute.push({ label: element.name, value: element.id.toString() });
+            });
+            this.squadDetailsService.questions[1].inputProps.options=this.squadDetailsService.activityByAttribute;
+            console.log('activityByAttribute is :', this.squadDetailsService.activityByAttribute);
+  
+          })
+      });
+      this.form.controls["activityType"].valueChanges.pipe(debounceTime(0),distinctUntilChanged()).subscribe(value => {
+             this.indexChange=this.indexChange+1;
+             if(this.indexChange>1){
+              this.indexChange=0;
+              return;
+             }
+            console.log('I am activityType changed event');
+            let act = this.squadDetailsService.activityByAttributeOriginal.filter(el => el.id === parseInt(value))[0];
+             this.budgetByParam.activity = act;
+             this.budgetByParam.budget = this.squadDetailsService.budget;
+             if(this.budgetByParam.budget.isByCity !=1)
+             this.getBudgetExpensesAndIncome();
+         });    
+    }
+   
   }
+
+  public logForm1(form){
+    console.log('I am budget form  event', form);
+  }
+
+  setAutoCustomer(value){
+    var attr = this.tripService.attributesOriginal.filter(el => el.id === parseInt(value))[0];
+     this.attributeObjSelected= attr;
+     this.setBudgetParameters();
+     if (attr.autoCustomerId !== null) {// שליפת לקוח והצבתו בלקוח רצוי 
+      this.tripService.getCustomer(attr.autoCustomerId);
+   }
+ }
+ setBudgetParameters(){
+     this.budgetByParam.attribute= this.attributeObjSelected;
+      //find index 'dates'
+     var index;
+     for (var i in this.squadAssembleService.formsArray) {
+        Object.keys(this.squadAssembleService.formsArray[i].controls).forEach(key => {
+             if (key === 'dates') { index = i; }
+        });
+     }
+        let tripDatesArr = this.squadAssembleService.formsArray[index].controls['dates'].value.split("-");
+       let tripStart = tripDatesArr[0];
+       let tripStartArr = tripStart.split("/");
+       tripStart = tripStartArr[2] + '-' + tripStartArr[1] + '-' + tripStartArr[0];
+       this.budgetByParam.tripStart = tripStart;
+       this.getBudgetByKKL();
+    }
+         resetAgeGroupField(){
+         var index;
+         for (var i in this.squadAssembleService.formsArray) {
+           Object.keys(this.squadAssembleService.formsArray[i].controls).forEach(key => {
+             if (key === 'ageGroup') { index = i; }
+           });
+         }
+         this.squadAssembleService.formsArray[index].controls['ageGroup'].setValue(undefined)
+     }
+
+     getBudgetByKKL(){
+       this.squadDetailsService.budgetByParam=this.budgetByParam;
+       this.userService.getBadgetKKl(this.budgetByParam).subscribe(res=>{
+         this.squadDetailsService.budget = res;
+         console.log(res);
+         this.squadDetailsService.receiveKKLBudget.next(res);
+      })
+
+    }
+
+    getBudgetExpensesAndIncome() {
+     this.squadDetailsService.budgetByParam=this.budgetByParam;
+     this.userService.getBadgetExpensesAndIncome(this.budgetByParam).subscribe(res=>{
+        console.log('I am budget obj with income and expense',res);
+        this.squadDetailsService.budget=res;
+        this.squadDetailsService.receiveSubBudget.next(res);
+     })
+    }
+
 }
