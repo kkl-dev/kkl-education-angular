@@ -30,8 +30,9 @@ import { Configuration }                                     from '../configurat
   providedIn: 'root'
 })
 export class ActivitiesService {
-
-    protected basePath = 'http://knf-appl-dev3:8077';
+    
+    // protected basePath = 'http://knf-appl-dev3:8077';
+    protected basePath = 'http://knf-appl-dev3/EducationApiDev';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
