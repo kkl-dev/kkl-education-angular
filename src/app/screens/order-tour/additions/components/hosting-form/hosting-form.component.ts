@@ -147,7 +147,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     )
   }
 
-
   getSupplierByOrderType() {
     this.supplierSub = this.orderService.getSupplierByOrderType(this.orderType, this.centerFieldId).subscribe(
 
@@ -167,7 +166,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     )
 
   }
-
 
   getOrderItemBySupplierId() {
     this.itemListSub = this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
