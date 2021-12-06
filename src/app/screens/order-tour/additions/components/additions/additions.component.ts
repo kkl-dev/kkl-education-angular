@@ -50,6 +50,7 @@ export class AdditionsComponent implements OnInit {
       this.generalFormService.tripId= this.tripId;
       this.generalFormService.tripInfo= this.squadAssembleService.tripInfofromService;
       this.generalFormService.peopleInTrip= this.squadAssembleService.peopleInTrip;
+      this.generalFormService.isOneDayTrip= this.squadAssembleService.isOneDayTrip
     }
     else{
       this.tripId= parseInt(localStorage.getItem('tripId'));
@@ -60,10 +61,12 @@ export class AdditionsComponent implements OnInit {
       let retrievedObj = JSON.parse(retrievedObject);
        this.generalFormService.tripInfo= retrievedObj;
        console.log('retrievedObject: ', retrievedObj);
-
+       if(this.generalFormService.tripInfo.trip.tripStart===this.generalFormService.tripInfo.trip.tripEnding)
+       this.generalFormService.isOneDayTrip=true;
+       else
+       this.generalFormService.isOneDayTrip=false;
     }
-   
-    //this.tourTitle= this.squadAssembleService.tripInfofromService.trip.tripDescription;
+     
      this.tourTitle= this.generalFormService.tripInfo.trip.tripDescription;
     
 
