@@ -2,10 +2,10 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { UserService } from 'src/app/open-api/';
+import { UserService } from 'src/app/open-api';
 import { SelectOption } from '../components/form/logic/question-base';
 import { ForestCenter } from '../models/forest-center.model';
-import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer, ActivityType, BudgetByParams, Budget } from '../open-api';
+import { Area, FieldForestCenter, AgeGroup, TripAttribute, ParticipantType, Language, Country, Customer, BaseCustomer, ActivityType, BudgetByParams, Budget } from 'src/app/open-api';
 import { SquadBudgetService } from '../screens/order-tour/squad-assemble/components/squad-budget/squad-budget.service';
 import { SquadClientService } from '../screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
 

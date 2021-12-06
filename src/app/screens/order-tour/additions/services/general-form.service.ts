@@ -21,6 +21,7 @@ export class GeneralFormService {
   tripId: number;
   centerFieldObj;
   tripInfo: any;
+  isOneDayTrip: boolean;
   peopleInTrip: number
   public transportOrderList: TransportOrder[] = [];
 
@@ -462,6 +463,9 @@ export class GeneralFormService {
   }
 
   clearFormFields() {
+     let supplierIndex= this.details.findIndex(i => i.key === 'supplierId');
+     this.details[supplierIndex].inputProps.options=[];
+     this.supplierList = [];
     let itemIndex= this.details.findIndex(i => i.key === 'itemId');
     this.details[itemIndex].value='';
     let statDateIndex = this.details.findIndex(i => i.key === 'startDate');
@@ -565,7 +569,7 @@ export class GeneralFormService {
  
 
 
-  setOrderList(res, orderTypeId, operation) {
+  setOrderList(res, orderTypeId, operation,isTempurary) {
     switch (orderTypeId) {
       case 1:
         let t = {} as TransportOrder;
@@ -585,7 +589,7 @@ export class GeneralFormService {
            this.transportOrderList= tranArr;
            else
            this.transportOrderList.push(t);
-           if(operation=='adding')
+           if(operation=='adding' && isTempurary==true)
            this.updatetempOrderReduce(res,orderTypeId);
           break;
         case 2:
@@ -643,6 +647,7 @@ export class GeneralFormService {
           this.economyOrderList= ecoArr;
           else
           this.economyOrderList.push(economy);
+          if(operation=='adding' && isTempurary==true)
           this.updatetempOrderReduce(res,orderTypeId);
           break;
         case 6:
@@ -662,6 +667,7 @@ export class GeneralFormService {
             this.gudianceOrderList= guideArr;
             else
              this.gudianceOrderList.push(guidance);
+             if(operation=='adding' && isTempurary==true)
              this.updatetempOrderReduce(res,orderTypeId);
             break;
           case 7:
@@ -681,6 +687,7 @@ export class GeneralFormService {
               this.hostingOrderList= hostArr;
               else
                this.hostingOrderList.push(hosting);
+               if(operation=='adding' && isTempurary==true)
                this.updatetempOrderReduce(res,orderTypeId);
               break;
           case 10:

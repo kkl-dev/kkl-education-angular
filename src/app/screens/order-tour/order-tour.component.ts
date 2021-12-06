@@ -379,7 +379,12 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.squadAssemble.tripInfo.generateTime=dateFormat;
        if(startDate==endDate ){
           this.tripService.isOneDayTrip=true;
+          this.squadAssemble.isOneDayTrip=true;
            this.createTrip(this.steps[2].path);
+       }
+       else{
+        this.tripService.isOneDayTrip=false;
+        this.squadAssemble.isOneDayTrip=false;
        }
     }
     catch (error) {

@@ -23,8 +23,9 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     private userService: UserService) { }
   @Input() public item: any;
   @Input() public editMode: boolean;
-
   @Input() orderType: number;
+  public form: FormGroup;
+  public columns: TableCellModel[];
   tripId: number;
   supplierId: number;
   itemId: number;
@@ -32,26 +33,22 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   originalItemList = [];
   itemsList =[]
   supplierListSub: Subscription;
+  ifInitiateFormflag: boolean =false;
+  isEditable : boolean= false;
+  ifShowtable: boolean=false;
+  tableData: any;
+  isItemOrderExist: boolean;
+  isTempuraryItem : boolean;
+  isSupplierXemptedFromVat: boolean;
+  ifCalculateByQuantity : boolean;
+  itemOrderRecordId: number;
+  valueChangeIndex= 0;
+  // close subscribe:
   supplierSub: Subscription;
   itemListSub:  Subscription;
   languageSub: Subscription;
   addOrderSub: Subscription;
   editOrderSub: Subscription;
-  ifInitiateFormflag: boolean =false;
-  isEditable : boolean= false;
-
-  public form: FormGroup;
-  public columns: TableCellModel[];
-  ifShowtable: boolean=false;
-  //tableDataSub: Subscription;
-  tableData: any;
-  isItemOrderExist: boolean;
-  isSupplierXemptedFromVat: boolean;
-  //isSaveOrderSucceededSub: Subscription;
-  //ifCalculateBySumPeople : boolean;
-  ifCalculateByQuantity : boolean;
-  itemOrderRecordId: number;
-  valueChangeIndex= 0;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -59,30 +56,46 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
    
-    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.tripId = this.generalFormService.tripId;
-    //this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
-      if(this.item.globalParameters.supplierId!= undefined){
+      if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
+        this.isItemOrderExist = true;
+        this.isTempuraryItem=false;
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
       }
+      else
+      this.isTempuraryItem=true;
     }
 
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
     }
-    this.getSupplierList(this.orderType, this.tripId, 0); 
-    this.getLanguages();
     this.generalFormService.setDatesValues();
-   
+    if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
+    this.getSupplierList(this.orderType, this.tripId, 0);
+    else{
+      if( !this.isItemOrderExist)
+      this.getSupplierByOrderType();
+      else{
+          // need add field to order model
+          // let supplierName= this.item.order?.supplier.name;
+          //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
+          // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
+          // this.generalFormService.details[0].value = this.supplierId.toString();
+          this.getSupplierByOrderType(); // it's tempurary
+          //this.getOrderItemBySupplierId();
+      }
+    }
+    this.getLanguages();
+    
   }
 
   setformTemplate() {
@@ -163,7 +176,13 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
         else
         this.isSupplierXemptedFromVat=false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length>0)
+        this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        else{
+          this.generalFormService.supplierList.push({ label: response.name, value: response.id.toString() });
+          this.generalFormService.details[supplierIndex].inputProps.options= this.generalFormService.supplierList;
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        }
          this.getOrderItemBySupplierId();
 
       },
@@ -227,63 +246,91 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     if (this.form) {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
      //if (!this.validationsGudiance()) { return; }
-      let orderId;
-      if (this.generalFormService.gudianceOrderList.length > 0) {
-        orderId = this.generalFormService.gudianceOrderList[0].order.orderId
-      }
-      let guide = {} as GuidanceOrder;
-      guide.globalParameters = {} as OrderItemCommonDetails;
-      guide.order = {} as Order;
-      if (orderId != undefined && orderId)
-      guide.order.orderId = orderId;
-      guide.order.supplier = {} as Supplier;
-      guide.order.orderType = {} as OrderType;
-      Object.keys(this.form.getRawValue().details).map((key, index) => {
-        if (key !== 'scatterLocation' && key !== 'guideName' && key !== 'languageGuidance' && key !== 'guideInstructions') {
-          if (key != 'startDate' && key != 'endDate') {
-            guide.globalParameters[key] = this.form.getRawValue().details[key]
-          } else {
-            if (key == 'startDate') {
-              guide.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+     let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+     // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+       if(item?.amountLimit!= null){
+       this.orderService.checkItemsExistInDateTime(this.tripId,
+         this.centerFieldId, item).subscribe(res=>{
+            if(res.isOccupancyProblem == true){
+             this._dialog.open(ConfirmDialogComponent, {
+               width: '500px',
+               data: { message: res, content: ''}
+             })
+             return;
             }
-            if (key == 'endDate') {
-              guide.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+            else{
+             this.validationItem();
             }
+         })
+     }
+      else{
+        this.validationItem();
+     }
+   
+    }
+  }
+  validationItem(){
+    if (!this.additionsService.globalValidations(this.form)) { return; }
+    if (!this.validationsGudiance()) { return; }
+    this.mapFormFieldsToServer()
+  }
+  public mapFormFieldsToServer(){ 
+    let orderId;
+    if (this.generalFormService.gudianceOrderList.length > 0) {
+      orderId = this.generalFormService.gudianceOrderList[0].order.orderId
+    }
+    let guide = {} as GuidanceOrder;
+    guide.globalParameters = {} as OrderItemCommonDetails;
+    guide.order = {} as Order;
+    if (orderId != undefined && orderId)
+    guide.order.orderId = orderId;
+    guide.order.supplier = {} as Supplier;
+    guide.order.orderType = {} as OrderType;
+    Object.keys(this.form.getRawValue().details).map((key, index) => {
+      if (key !== 'scatterLocation' && key !== 'guideName' && key !== 'languageGuidance' && key !== 'guideInstructions') {
+        if (key != 'startDate' && key != 'endDate') {
+          guide.globalParameters[key] = this.form.getRawValue().details[key]
+        } else {
+          if (key == 'startDate') {
+            guide.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+          }
+          if (key == 'endDate') {
+            guide.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
           }
         }
-        else {
-          guide.scatterLocation= this.form.getRawValue().details['scatterLocation'];
-          guide.guideName=  this.form.getRawValue().details['guideName'];
-          guide.languageGuidance= this.form.getRawValue().details['languageGuidance'];
-          guide.guideInstructions= this.form.getRawValue().details['guideInstructions'];
-        }
+      }
+      else {
+        guide.scatterLocation= this.form.getRawValue().details['scatterLocation'];
+        guide.guideName=  this.form.getRawValue().details['guideName'];
+        guide.languageGuidance= this.form.getRawValue().details['languageGuidance'];
+        guide.guideInstructions= this.form.getRawValue().details['guideInstructions'];
+      }
 
-      });
-      guide.globalParameters['startHour'] = this.setDateTimeFormat(guide.globalParameters.startDate, guide.globalParameters.startHour);
-      guide.globalParameters['endHour'] = this.setDateTimeFormat(guide.globalParameters.endDate, guide.globalParameters.endHour);
-      guide.globalParameters['comments'] = this.form.getRawValue().comments.comments;
-      guide.globalParameters.orderId = orderId;
-      guide.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      guide.order.tripId = this.tripId;
-      guide.order.orderType.name = 'הדרכה';
-      guide.order.orderType.id = this.orderType;
-      if(this.item!= undefined){
-        if (this.item.globalParameters.tempOrderIdentity != undefined)
-        guide.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
-      }
-    
-      if(!this.isEditable){
-        //this.generalFormService.addOrder(guide, guide.order.orderType.id);
-        this.addOrder(guide);
-      }     
-      else{
-        guide.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
-        //this.generalFormService.editOrder(guide, guide.order.orderType.id);
-        this.editOrder(guide)
-      }
-     
-      this.form.disable({ emitEvent: false });
+    });
+    guide.globalParameters['startHour'] = this.setDateTimeFormat(guide.globalParameters.startDate, guide.globalParameters.startHour);
+    guide.globalParameters['endHour'] = this.setDateTimeFormat(guide.globalParameters.endDate, guide.globalParameters.endHour);
+    guide.globalParameters['comments'] = this.form.getRawValue().comments.comments;
+    guide.globalParameters.orderId = orderId;
+    guide.order.supplier.id = +this.form.getRawValue().details.supplierId;
+    guide.order.tripId = this.tripId;
+    guide.order.orderType.name = 'הדרכה';
+    guide.order.orderType.id = this.orderType;
+    if(this.item!= undefined){
+      if (this.item.globalParameters.tempOrderIdentity != undefined)
+      guide.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
     }
+  
+    if(!this.isEditable){
+      //this.generalFormService.addOrder(guide, guide.order.orderType.id);
+      this.addOrder(guide);
+    }     
+    else{
+      guide.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
+      //this.generalFormService.editOrder(guide, guide.order.orderType.id);
+      this.editOrder(guide)
+    }
+   
+    this.form.disable({ emitEvent: false });
   }
 
   addOrder(item){
@@ -296,7 +343,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
        this.generalFormService.enableButton.next(true);
        //this.isSaveOrderSucceeded.next(true);
        this.editMode = true;
-       this.generalFormService.setOrderList(res,this.orderType,'adding');
+       this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
        this.setDialogMessage('ההזמנה נשמרה בהצלחה');
      }, (err) => {
        console.log(err);
@@ -310,7 +357,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     editOrder(item){
     this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
        console.log(res);  
-       this.generalFormService.setOrderList(res, this.orderType,'updating');
+       this.generalFormService.setOrderList(res, this.orderType,'updating',false);
        //this.isSaveOrderSucceeded.next(true);
        this.editMode = true;
        this.setDialogMessage('ההזמנה עודכנה בהצלחה');
@@ -457,21 +504,15 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   }
 
   public onEdit() {
-    console.log('I am edit');
     this.editMode = false;
     this.isEditable=true;
     this.form.enable({ emitEvent: false });
+    this.disableFormFields();
   }
 
   public onValueChange(event) {
     this.form = event;
-
-    console.log('I am form Event');
-    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
-    this.form.controls["details"].get('guideName').disable({ emitEvent: false });
-    this.form.controls["details"].get('quantity').disable({ emitEvent: false });
+    this.disableFormFields();
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
@@ -485,11 +526,10 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
         this.isSupplierXemptedFromVat=false;
         if( this.valueChangeIndex>0)
         this.getOrderItemBySupplierId();
-        this.valueChangeIndex= this.valueChangeIndex+1;
+        this.valueChangeIndex++
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      this.valueChangeIndex= this.valueChangeIndex+1;
+      this.valueChangeIndex++;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
       if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
       this.ifCalculateByQuantity= true;
@@ -502,24 +542,19 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat==true)
-        itemCost = Math.floor(item.cost);
+      if(this.isSupplierXemptedFromVat==true){
+        itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
+      }
        else
-       itemCost = Math.floor(item.costVat);
+       itemCost = item.costVat;
       this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
-      console.log(this.form.value.details);
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
-
+      this.calculate();
     });
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(this.ifCalculateByQuantity){
-        console.log(value)
-        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
-        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+        console.log(value);
+        this.calculate();
       }
       else
       return;  
@@ -528,10 +563,8 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(!this.ifCalculateByQuantity){
-        console.log(value)
-        let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-        this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+        console.log(value);
+        this.calculate();
       }
       else
       return;
@@ -539,22 +572,32 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     });
   
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-
+      console.log(value);
+      this.calculate();
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-
+      console.log(value);
+      this.calculate();
     });
     console.log(this.form)
 
   }
+
+  calculate(){
+    let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+    this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
+    this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+  }
+
+ disableFormFields(){
+  this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+  this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+  this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+  this.form.controls["details"].get('guideName').disable({ emitEvent: false });
+  this.form.controls["details"].get('quantity').disable({ emitEvent: false });
+  if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
+  this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
+ }
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
