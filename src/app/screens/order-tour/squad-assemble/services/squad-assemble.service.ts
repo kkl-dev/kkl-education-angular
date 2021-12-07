@@ -31,7 +31,8 @@ export class SquadAssembleService {
   tripInfo = {} as TripInfo;
   isOneDayTrip: boolean;
   formsArray: FormGroup[] = [];
-  filledNightsArray: [];
+  //filledNightsArray: [];
+  filledNightsArray= [];
   Customer = {} as BaseCustomer;
   payerCustomer = {} as BaseCustomer;
   tripInfofromService: TripModel;

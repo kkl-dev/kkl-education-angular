@@ -230,20 +230,74 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
      console.log('nightSelected is: ', nightSelected)
      let avaliableSleepingOptionsByDates= this._tripService.AvailableSleepingOptionsByDay.value;
      console.log('avaliableSleepingOptionsByDates is :', avaliableSleepingOptionsByDates)
-    //  let maxCabinOccupancy=0;
-    //  let maxTentOccupancy =0;
-    //  let maxRoomOccupancy=0;
-    //  let maxCampingOccupancy=0;
-    //  let availableCabins=0;
-    //  let avaliableTents =0
-    //  let avaliableRooms =0;
-    //  let availableCampaign: 0;
-      //let isMoreThanOneDay : boolean;
+      let capturedCabins=0;
+      let capturedTents=0;
+      let capturedRooms=0;
+      let capturedCamping=0;
+      let preCabinLodgers=0;
+      let preTentLodgers=0;
+      let preRoomLodgers=0;
+      let preCampingLodgers=0;
+      //checking pre rows
+    //   for (let i = 0; i< nightSelected.length; i++) {
+    //     console.log('nightSelected is: ',nightSelected);
+    //     console.log('filledNightsArray is: ',this.squadAssembleService.filledNightsArray);
+    //     for (let j = 0; j< this.squadAssembleService.filledNightsArray?.length; j++) {
+    //       this.squadAssembleService.filledNightsArray[0].nightsCount[0].date
+    //          if(this.squadAssembleService.filledNightsArray[0].nightsCount[0].date== nightSelected.date){
+    //           switch(accomodationSelected) { 
+    //             case 1:          
+                 
+    //              break;
+    //             case 2:          
+                 
+    //              break;  
+    //             case 3:          
+                 
+    //              break;
+    //             case 4:          
+                 
+    //              break;     
+    //              capturedCabins = this.squadAssembleService.filledNightsArray[0].lodgingDetailsList[0].unitsNumber;
+    //             preCabinLodgers= this.squadAssembleService.filledNightsArray[0].lodgingDetailsList[0].lodgersNumber;
+    //          }
+    //     }
+    //   }
+    // }
+
+      // end pre rows
       for (let i = 0; i< nightSelected.length; i++) {
-          //  if( nightSelected.length>1)
-          //  isMoreThanOneDay=true;
-          //  else
-          //  isMoreThanOneDay==false;
+        if (this.squadAssembleService.filledNightsArray?.length>0){   
+        for (let k = 0; k< this.squadAssembleService.filledNightsArray?.length; k++) {
+          for (let m = 0; m< this.squadAssembleService.filledNightsArray[k].nightsCount.length; m++) {    
+             if(this.squadAssembleService.filledNightsArray[k].nightsCount[m].date== nightSelected[i].date){
+              for (let t = 0; t< this.squadAssembleService.filledNightsArray[k].lodgingDetailsList.length; t++) {
+              switch(accomodationSelected) { 
+                case 1:          
+                 capturedCabins= capturedCabins+ (this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
+                 preCabinLodgers= preCabinLodgers + (this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
+                 console.log('capturedCabins is :',capturedCabins);
+                 console.log('preCabinLodgers is :',preCabinLodgers);
+                 break;
+                case 2:          
+                capturedTents= capturedTents+ ( this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
+                preTentLodgers= preTentLodgers +(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
+                 break;  
+                case 3:          
+                 capturedRooms= capturedRooms+ (this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
+                 preRoomLodgers= preRoomLodgers + (this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
+                 break;
+                case 4:          
+                 capturedCamping = capturedCamping+ ( this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
+                 preCampingLodgers = preCampingLodgers +(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
+                 break;     
+              }
+             }
+            }
+        }
+      }
+    }
+    
          for (let j = 0; j< avaliableSleepingOptionsByDates.length; j++) {
              let sleepingDate= avaliableSleepingOptionsByDates[j].date;
              let subDate= sleepingDate.split("T");
@@ -261,79 +315,48 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
               
               switch(accomodationSelected) { 
                 case 1:          
-                  // if ( x.availableUnits < unitsNumber){
-                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
+                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < (unitsNumber +capturedCabins)){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)   
                     return  this.IsUnitsNumIsValid;           
                   } 
-                  // else if (nightSelected.length>1){
-                  //   availableCabins= availableCabins+x.availableUnits;
-                  // } 
-                  // else if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
-                  //   this.filledNightForm.get('unitsNumber').setValue('');
-                  //   this.filledNightForm.get('lodgersNumber').setValue('');
-                  //   this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
-                  // }
+               
                    if ( (lodgersNumber> (unitsNumber*x.maxOccupancy))){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy));
                     return  this.IsUnitsNumIsValid; 
                   }
-                  // else if (nightSelected.length>1){
-                  //   maxCabinOccupancy= x.maxOccupancy;
-                  // }
+                 
                  break;  
                  case 2:
-                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
+                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < (unitsNumber +capturedTents)){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                   
                   }
-                  // else if (nightSelected.length>1){
-                  //   avaliableTents= avaliableTents+x.availableUnits;
-                  // } 
-
+              
                   if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
-                  // else if (nightSelected.length>1){
-                  //   maxTentOccupancy= x.maxOccupancy;
-                  // }
-                  //  num= x.availableUnits * x.maxOccupancy
-                  // if(num<(lodgersNumber * unitsNumber)){
-                  //   this.IsUnitsNumIsValid=false;
-                  //   this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
-                  //   this.filledNightForm.get('lodgersNumber').setValue('');
-                  // }      
+                
                   break;
                  case 3:
-                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
+                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < (unitsNumber+ capturedRooms)){
                     this.IsUnitsNumIsValid=false;
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)          
                   }
-                  // else if (nightSelected.length>1){
-                  //   avaliableRooms= avaliableRooms+x.availableUnits;
-                  // } 
+                  
                   if ( lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
-                  // else if (nightSelected.length>1){
-                  //   maxRoomOccupancy= x.maxOccupancy;
-                  // }
-                  // num= x.availableUnits * x.maxOccupancy
-                  // if(num<(lodgersNumber* unitsNumber)){
-                  //   this.IsUnitsNumIsValid=false;
-                  //   this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
-                  //   this.filledNightForm.get('lodgersNumber').setValue('');
-                  // }      
+                  
                   break;
                  case 4:  
                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
@@ -341,90 +364,20 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.filledNightForm.get('unitsNumber').setValue('');
                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)  
                   }
-                  // else if (nightSelected.length>1){
-                  //   availableCampaign= availableCampaign+x.availableUnits;
-                  // } 
+                
                   if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
-                  // else if (nightSelected.length>1){
-                  //   maxCampingOccupancy= x.maxOccupancy;
-                  // }
-                  // num= x.availableUnits * x.maxOccupancy
-                  // if(num<(lodgersNumber* unitsNumber)){
-                  //   this.IsUnitsNumIsValid=false;
-                  //   this.displayMessage2(nightSelected[i].date,accomodationNameSelected,num);
-                  //   this.filledNightForm.get('lodgersNumber').setValue('');
-                  // }      
+                
                  break;
 
             }
           }     
          }
       } 
-      // if(isMoreThanOneDay){
-      //   switch(accomodationSelected) { 
-      //     case 1:  
-      //     if (unitsNumber> availableCabins){
-      //       console.log('there is an available occupancy problem ');
-      //       this.filledNightForm.get('unitsNumber').setValue('');
-      //       this.displayMessage1(accomodationNameSelected,availableCabins)
-      //     }
-      //     if (lodgersNumber> (availableCabins*maxCabinOccupancy)  ){
-      //          console.log('there is an occupancy problem');
-      //          this.filledNightForm.get('unitsNumber').setValue('');
-      //          this.filledNightForm.get('lodgersNumber').setValue('');
-      //          this.displayMessage4(accomodationNameSelected,unitsNumber,(unitsNumber*maxCabinOccupancy))
-      //     }
-      //     break;
-      //     case 2:
-      //       if (unitsNumber> avaliableTents){
-      //         console.log('there is an available occupancy problem ');
-      //         this.filledNightForm.get('unitsNumber').setValue('');
-      //         this.displayMessage1(accomodationNameSelected,avaliableTents)
-      //       }
-      //       if (lodgersNumber> (avaliableTents*maxTentOccupancy)  ){
-      //            console.log('there is an occupancy problem');
-      //            this.filledNightForm.get('unitsNumber').setValue('');
-      //            this.filledNightForm.get('lodgersNumber').setValue('');
-      //            this.displayMessage4(accomodationNameSelected,unitsNumber,(unitsNumber*maxTentOccupancy))
-      //       }
-      //     break;
-      //     case 3:
-      //       if (unitsNumber> avaliableRooms){
-      //         console.log('there is an available occupancy problem ');
-      //         this.filledNightForm.get('unitsNumber').setValue('');
-      //         this.displayMessage1(accomodationNameSelected,avaliableRooms)
-      //       }
-      //       if (lodgersNumber> (avaliableRooms*maxRoomOccupancy)  ){
-      //            console.log('there is an occupancy problem');
-      //            this.filledNightForm.get('unitsNumber').setValue('');
-      //            this.filledNightForm.get('lodgersNumber').setValue('');
-      //            this.displayMessage4(accomodationNameSelected,unitsNumber,(unitsNumber*maxRoomOccupancy))
-      //       }
-      //     break;
-      //     case 4:
-      //       if (unitsNumber> availableCampaign){
-      //         console.log('there is an available occupancy problem ');
-      //         this.filledNightForm.get('unitsNumber').setValue('');
-      //         this.displayMessage1(accomodationNameSelected,availableCampaign)
-      //       }
-      //       if (lodgersNumber> (availableCampaign*maxCampingOccupancy)  ){
-      //            console.log('there is an occupancy problem');
-      //            this.filledNightForm.get('unitsNumber').setValue('');
-      //            this.filledNightForm.get('lodgersNumber').setValue('');
-      //            this.displayMessage4(accomodationNameSelected,unitsNumber,(unitsNumber*maxCampingOccupancy))
-      //       }
-      //     break;
-
-      //  }      
-      
-  
-      // }
-      
-     
+   
     }
      
       return  this.IsUnitsNumIsValid;
