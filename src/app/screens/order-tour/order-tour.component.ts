@@ -595,4 +595,3 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.createActivitiesSub) { this.createActivitiesSub.unsubscribe(); }
   }
 }
-

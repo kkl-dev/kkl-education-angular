@@ -357,7 +357,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   addOrder(item) {
     this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
       console.log(res);
-      //this.tableData.next(res);
       this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
       this.tableData = res;
       this.ifShowtable = true;
@@ -383,7 +382,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }, (err) => {
       console.log(err);
       this.ifShowtable = false;
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');

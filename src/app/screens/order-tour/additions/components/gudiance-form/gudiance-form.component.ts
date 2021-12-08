@@ -358,13 +358,11 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
        console.log(res);  
        this.generalFormService.setOrderList(res, this.orderType,'updating',false);
-       //this.isSaveOrderSucceeded.next(true);
        this.editMode = true;
        this.setDialogMessage('ההזמנה עודכנה בהצלחה');
      }, (err) => {
        console.log(err);
        this.ifShowtable=false;
-        //this.isSaveOrderSucceeded.next(false);
         this.editMode = false;
         this.form.enable({ emitEvent: false });
         this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
