@@ -14,8 +14,6 @@ import SpatialReference from '@arcgis/core/geometry/SpatialReference';
 import Point from '@arcgis/core/geometry/Point';
 import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
 import { TripService } from 'src/app/services/trip.service';
-import { FakeService } from 'src/app/services/fake.service';
-
 import { HttpClient } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
@@ -44,13 +42,40 @@ export class MapsComponent implements OnInit {
 
   lodgingFacilityList: any = [];
   viewGenderIcons: boolean = false;
+  facilityListArray$: Observable<any>;
 
-  constructor(protected httpClient: HttpClient, public tripService: TripService, public fakeApi: FakeService) {
+
+  constructor(protected httpClient: HttpClient, public tripService: TripService) {
 
     this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
     }
+  }
+
+  ngOnInit() {
+    if (this.tripService.centerField) {
+      this.forestCenter = this.tripService.centerField;
+    }
+
+    this.loadWebMap();
+
+    // this.facilityListArray$ = this.facilitiesService.getSelectedFacility();
+    // this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
+    //   console.log('getCalendarEventsArr: ', value);
+
+    // });
+
+    // this.facilityListArray$ = this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
+      this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
+
+      console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
+      this.viewGenderIcons = false;
+      this.lodgingFacilityList = lodgingFacilityList;
+      this.rawservicedata = lodgingFacilityList;
+      this.queryandrender();
+
+    });
   }
 
   popupTrailheads: any = {
@@ -74,7 +99,6 @@ export class MapsComponent implements OnInit {
       }
       innerHTML += "<br><b>מִין:</b> " + gender;
       innerHTML += "<br><b>סטטוס:</b> " + status;
-
     }
 
     let attachmentsJSON;
@@ -90,7 +114,6 @@ export class MapsComponent implements OnInit {
       }
     }
     catch (er) { }
-
     return innerHTML;
   }
 
@@ -152,26 +175,6 @@ export class MapsComponent implements OnInit {
     this.myMap.add(this.graphicsLayer);
   }
 
-  ngOnInit() {
-    if (this.tripService.centerField) {
-      this.forestCenter = this.tripService.centerField;
-    }
-
-    this.loadWebMap();
-
-    this.tripService.lodgingFacilityListArrayObservable.subscribe(lodgingFacilityList => {
-
-      console.log('maps --> lodgingFacilityList result:', lodgingFacilityList);
-      this.viewGenderIcons = false;
-      this.lodgingFacilityList = lodgingFacilityList;
-      this.rawservicedata = lodgingFacilityList;
-      this.queryandrender();
-
-    });
-
-
-  }
-
   genderButtonDivClick() {
     this.viewGenderIcons = !this.viewGenderIcons;
     this.queryandrender();
@@ -218,7 +221,6 @@ export class MapsComponent implements OnInit {
   }
 
   onChangeForestCenter() {
-    //this.rawservicedata = this.fakeApi.getLodgingFacilityList(this.forestCenter.name);
     //this.lodgingFacilityForDay
     this.viewGenderIcons = false;
     this.rawservicedata = this.lodgingFacilityList;
