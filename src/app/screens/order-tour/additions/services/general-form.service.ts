@@ -579,7 +579,7 @@ export class GeneralFormService {
   }
 
 
-  setOrderList(res, orderTypeId, operation,isTempurary) {
+setOrderList(res, orderTypeId, operation,isTempurary) {
     switch (orderTypeId) {
       case 1:
         let t = {} as TransportOrder;
