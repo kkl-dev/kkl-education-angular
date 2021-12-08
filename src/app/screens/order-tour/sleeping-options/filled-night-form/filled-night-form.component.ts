@@ -273,23 +273,31 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
              if(this.squadAssembleService.filledNightsArray[k].nightsCount[m].date== nightSelected[i].date){
               for (let t = 0; t< this.squadAssembleService.filledNightsArray[k].lodgingDetailsList.length; t++) {
               switch(accomodationSelected) { 
-                case 1:          
+                case 1:  
+                if(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].accomodationType.id==1) {        
                  capturedCabins= capturedCabins+ (this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
                  preCabinLodgers= preCabinLodgers + (this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
                  console.log('capturedCabins is :',capturedCabins);
                  console.log('preCabinLodgers is :',preCabinLodgers);
+                }
                  break;
-                case 2:          
-                capturedTents= capturedTents+ ( this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
-                preTentLodgers= preTentLodgers +(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
+                case 2: 
+                if(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].accomodationType.id==2) {       
+                 capturedTents= capturedTents+ ( this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
+                 preTentLodgers= preTentLodgers +(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
+                }
                  break;  
-                case 3:          
+                case 3:  
+                if(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].accomodationType.id==3) {        
                  capturedRooms= capturedRooms+ (this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
                  preRoomLodgers= preRoomLodgers + (this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
+                }
                  break;
-                case 4:          
+                case 4:    
+                if(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].accomodationType.id==4) {       
                  capturedCamping = capturedCamping+ ( this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].unitsNumber);
                  preCampingLodgers = preCampingLodgers +(this.squadAssembleService.filledNightsArray[k].lodgingDetailsList[t].lodgersNumber);
+                }
                  break;     
               }
              }
