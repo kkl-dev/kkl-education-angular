@@ -28,26 +28,26 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   itemId: number;
   originalItemList = [];
   itemsList =[]
-  supplierListSub: Subscription;
-  supplierSub: Subscription;
-  itemListSub:  Subscription;
-  sitesSub: Subscription;
-  addOrderSub: Subscription;
-  editOrderSub: Subscription;
   centerFieldId: number;
   ifInitiateFormflag: boolean ;
    isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
   ifShowtable: boolean=false;
-  //tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist : boolean;
+  isTempuraryItem: boolean; 
   isSupplierXemptedFromVat: boolean;
   ifCalculateByQuantity : boolean;
-  //isSaveOrderSucceededSub: Subscription;
   valueChangeIndex= 0;
   itemOrderRecordId: number;
+  // close subsribe:
+  supplierListSub: Subscription;
+  supplierSub: Subscription;
+  itemListSub:  Subscription;
+  sitesSub: Subscription;
+  addOrderSub: Subscription;
+  editOrderSub: Subscription;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -55,27 +55,43 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   
-    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.tripId = this.generalFormService.tripId;
-    //this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
     this.setformTemplate();
     if (this.item != undefined && this.item != null ) {
-      if(this.item.globalParameters.supplierId!= undefined){
+      if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
+        this.isItemOrderExist = true;
+        this.isTempuraryItem=false;
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
       }
+      else
+      this.isTempuraryItem=true;
     }
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
     }
-    this.getSupplierList(this.orderType, this.tripId, 0);
-    this.getSites();
     this.generalFormService.setDatesValues();
+    if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
+    this.getSupplierList(this.orderType, this.tripId, 0);
+    else{
+      if( !this.isItemOrderExist)
+      this.getSupplierByOrderType();
+      else{
+          // need add field to order model
+        // let supplierName= this.item.order?.supplier.name;
+        //    this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
+        //   this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
+        //   this.generalFormService.details[0].value = this.supplierId.toString();
+          this.getSupplierByOrderType(); // it's tempurary
+          //this.getOrderItemBySupplierId();
+      }
+    }
+    this.getSites();
     
   }
   setformTemplate() {
@@ -155,7 +171,13 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         else
         this.isSupplierXemptedFromVat=false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length>0)
+        this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        else{
+          this.generalFormService.supplierList.push({ label: response.name, value: response.id.toString() });
+          this.generalFormService.details[supplierIndex].inputProps.options= this.generalFormService.supplierList;
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        }
          this.getOrderItemBySupplierId();
 
       },
@@ -203,8 +225,10 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     let tripStart= this.generalFormService.tripInfo.trip.tripStart;
     let tripStart1= tripStart.split("T");
     let subTripStart= tripStart1[0];
+    subTripStart= subTripStart.split("-");
     let year= parseInt(subTripStart[0]);
-    let chevelCode= this.generalFormService.tripInfo.trip.centerField.chevelCode
+    let centerFieldObj = JSON.parse(localStorage.getItem('centerFieldObj'));
+    let chevelCode= centerFieldObj.chevelCode
 
     this.sitesSub= this.orderService.getSites(year,chevelCode).subscribe(res=>{
       console.log(res);
@@ -221,69 +245,36 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
 
   public onSave(): void {
     if (this.form) {
-      if (this.form.status === 'VALID') {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
-        return;
-      }
-      if (!this.additionsService.globalValidations(this.form)) { return; }
-      if (!this.validationsSite()) { return; }
-      let orderId;
-      if (this.generalFormService.siteOrderList.length > 0) {
-        orderId = this.generalFormService.siteOrderList[0].order.orderId
-      }
-      var site = {} as SiteOrder;
-      site.globalParameters = {} as OrderItemCommonDetails;
-      site.order = {} as Order;
-      if (orderId != undefined && orderId)
-      site.order.orderId = orderId;
-      site.order.supplier = {} as Supplier;
-      site.order.orderType = {} as OrderType;
-      //this.form.value.details
-      Object.keys(this.form.getRawValue().details).map((key, index) => {
-        if (key !== 'siteCode' && key !== 'siteURL' && key !== 'totalHours' ) {
-          if (key != 'startDate' && key != 'endDate') {
-            site.globalParameters[key] = this.form.getRawValue().details[key]
-          } else {
-            if (key == 'startDate') {
-              site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-            }
-            if (key == 'endDate') {
-              site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
-            }
-          }
-        }
-        else {
-              site.siteCode= this.form.getRawValue().details['siteCode'];
-              site.siteURL= this.form.getRawValue().details['siteURL'];
-              site.totalHours= this.form.getRawValue().details['totalHours'];
-        }
-
-      });
-      site.globalParameters['startHour'] = this.setDateTimeFormat(site.globalParameters.startDate, site.globalParameters.startHour);
-      site.globalParameters['endHour'] = this.setDateTimeFormat(site.globalParameters.endDate, site.globalParameters.endHour);
-      site.globalParameters['comments'] = this.form.getRawValue().comments.comments;
-      site.globalParameters.orderId = orderId;
-      site.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      site.order.tripId = this.tripId;
-      site.order.orderType.name = 'אתרים';
-      site.order.orderType.id = this.orderType;
-      // if(this.item.globalParameters.tempOrderIdentity!= undefined)
-      //  site.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
-      if(!this.isEditable){
-        //this.generalFormService.addOrder(site, site.order.orderType.id);
-        this.addOrder(site);
+      let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+      // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+        if(item?.amountLimit!= null){
+        this.orderService.checkItemsExistInDateTime(this.tripId,
+          this.centerFieldId, item).subscribe(res=>{
+             if(res.isOccupancyProblem == true){
+              this._dialog.open(ConfirmDialogComponent, {
+                width: '500px',
+                data: { message: res, content: ''}
+              })
+              return;
+             }
+             else{
+              this.validationItem();
+             }
+          })
       }
       else{
-        site.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
-        //this.generalFormService.editOrder(site, site.order.orderType.id);
-        this.editOrder(site);
+        this.validationItem();
       }
-     
-      this.form.disable({ emitEvent: false });
+      // if (!this.additionsService.globalValidations(this.form)) { return; }
+      // if (!this.validationsSite()) { return; }
+  
     }
+  }
+
+  validationItem(){
+    if (!this.additionsService.globalValidations(this.form)) { return; }
+    if (!this.validationsSite()) { return; }
+    this.mapFormFieldsToServer()
   }
   validationsSite() {
     if (this.form.getRawValue().details['peopleInTrip'] === null || this.form.getRawValue().details['peopleInTrip'] === undefined || this.form.getRawValue().details['peopleInTrip'] === "") {
@@ -295,6 +286,64 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     }
     return true;
   }
+
+  public mapFormFieldsToServer(){ 
+    let orderId;
+    if (this.generalFormService.siteOrderList.length > 0) {
+      orderId = this.generalFormService.siteOrderList[0].order.orderId
+    }
+    var site = {} as SiteOrder;
+    site.globalParameters = {} as OrderItemCommonDetails;
+    site.order = {} as Order;
+    if (orderId != undefined && orderId)
+    site.order.orderId = orderId;
+    site.order.supplier = {} as Supplier;
+    site.order.orderType = {} as OrderType;
+    //this.form.value.details
+    Object.keys(this.form.getRawValue().details).map((key, index) => {
+      if (key !== 'siteCode' && key !== 'siteURL' && key !== 'totalHours' ) {
+        if (key != 'startDate' && key != 'endDate') {
+          site.globalParameters[key] = this.form.getRawValue().details[key]
+        } else {
+          if (key == 'startDate') {
+            site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+          }
+          if (key == 'endDate') {
+            site.globalParameters[key] = this.generalFormService.changeDateFormat(this.form.getRawValue().details[key], 'UTC')
+          }
+        }
+      }
+      else {
+            site.siteCode= this.form.getRawValue().details['siteCode'];
+            site.siteURL= this.form.getRawValue().details['siteURL'];
+            site.totalHours= this.form.getRawValue().details['totalHours'];
+      }
+
+    });
+    site.globalParameters['startHour'] = this.setDateTimeFormat(site.globalParameters.startDate, site.globalParameters.startHour);
+    site.globalParameters['endHour'] = this.setDateTimeFormat(site.globalParameters.endDate, site.globalParameters.endHour);
+    site.globalParameters['comments'] = this.form.getRawValue().comments.comments;
+    site.globalParameters.orderId = orderId;
+    site.order.supplier.id = +this.form.getRawValue().details.supplierId;
+    site.order.tripId = this.tripId;
+    site.order.orderType.name = 'אתרים';
+    site.order.orderType.id = this.orderType;
+    // if(this.item.globalParameters.tempOrderIdentity!= undefined)
+    //  site.globalParameters.tempOrderIdentity=this.item.globalParameters.tempOrderIdentity;
+    if(!this.isEditable){
+      //this.generalFormService.addOrder(site, site.order.orderType.id);
+      this.addOrder(site);
+    }
+    else{
+      site.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
+      //this.generalFormService.editOrder(site, site.order.orderType.id);
+      this.editOrder(site);
+    }
+   
+    this.form.disable({ emitEvent: false });
+  }
+
+  
   setDateTimeFormat(date, hour) {
     let str = date.split("T");
     let hourFormat = str[0] + 'T' + hour;
@@ -311,7 +360,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         this.generalFormService.enableButton.next(true);
         //this.isSaveOrderSucceeded.next(true);
         this.editMode = true;
-        this.generalFormService.setOrderList(res,this.orderType,'adding');
+        this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
         this.setDialogMessage('ההזמנה נשמרה בהצלחה');
       }, (err) => {
         console.log(err);
@@ -325,7 +374,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
      editOrder(item){
      this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
         console.log(res);  
-        this.generalFormService.setOrderList(res, this.orderType,'updating');
+        this.generalFormService.setOrderList(res, this.orderType,'updating',false);
         //this.isSaveOrderSucceeded.next(true);
         this.editMode = true;
         this.setDialogMessage('ההזמנה עודכנה בהצלחה');
@@ -353,13 +402,12 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     this.editMode = false;
     this.isEditable=true;
     this.form.enable({ emitEvent: false });
+    this.disableFormFields();
   }
 
   public onValueChange(event) {
     this.form = event;
-    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.disableFormFields();
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);
@@ -373,11 +421,10 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         this.isSupplierXemptedFromVat=false;
         if( this.valueChangeIndex>0)
         this.getOrderItemBySupplierId();
-        this.valueChangeIndex= this.valueChangeIndex+1;
+        this.valueChangeIndex++;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      this.valueChangeIndex= this.valueChangeIndex+1;
-      console.log(value)
+      this.valueChangeIndex++;
       let item = this.generalFormService.originalItemList.find(el => el.id === parseInt(value))
       if (item?.isSumPeopleOrAmount == 1 ) // by default is by num of participants unless the isSumPeopleOrAmount is 1
       this.ifCalculateByQuantity= true;
@@ -390,58 +437,56 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat==true)
-        itemCost = Math.floor(item.cost);
+      if(this.isSupplierXemptedFromVat==true){
+        itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
+      }
        else
-       itemCost = Math.floor(item.costVat);
-      this.form.controls["details"].get('itemCost').patchValue(itemCost);
-      console.log(this.form.value.details);
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
-
+       itemCost = item.costVat;
+      this.form.controls["details"].get('itemCost').patchValue(itemCost, { emitEvent: false });
+      this.calculate();
     });
   
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(this.ifCalculateByQuantity){
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+      console.log(value);
+      this.calculate();
       }
       else
       return;
     });
-  
   
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(!this.ifCalculateByQuantity){
       console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      this.calculate();
       }
       else
       return;
     });
   
-
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-
+      console.log(value);
+      this.calculate();
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      console.log(value);
+      this.calculate();
     });
-
     console.log(this.form)
+  }
 
+  calculate(){
+    let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+    this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
+    this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+  }
+
+  disableFormFields(){
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
+    this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
   }
 
   ngOnDestroy() {
