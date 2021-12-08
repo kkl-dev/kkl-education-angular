@@ -28,36 +28,33 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   itemId: number;
   centerFieldId: number;
   originalItemList = [];
-  itemsList =[]
-  supplierListSub: Subscription;
-  supplierSub: Subscription;
-  itemListSub:  Subscription;
-  addOrderSub: Subscription;
-  editOrderSub: Subscription;
+  itemsList =[];
   ifInitiateFormflag: boolean =false;
   isEditable : boolean= false;
   public form: FormGroup;
   public columns: TableCellModel[];
   ifShowtable: boolean=false;
-  //tableDataSub: Subscription;
   tableData: any;
   isItemOrderExist: boolean;
+  isTempuraryItem: boolean; 
   isSupplierXemptedFromVat: boolean
-  //isSaveOrderSucceededSub: Subscription;
   itemOrderRecordId: number;
-  //ifCalculateBySumPeople : boolean;
   ifCalculateByQuantity : boolean;
   valueChangeIndex= 0;
+  // close subscribe:
+  supplierListSub: Subscription;
+  supplierSub: Subscription;
+  itemListSub:  Subscription;
+  addOrderSub: Subscription;
+  editOrderSub: Subscription;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
   };
 
   ngOnInit(): void {
-  
-    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+
     this.tripId = this.generalFormService.tripId;
-    //this.centerFieldId= this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
@@ -65,20 +62,36 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
     this.setformTemplate();
 
     if (this.item != undefined && this.item != null ) {
-      if(this.item.globalParameters.supplierId!= undefined){
+      if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
+        this.isItemOrderExist = true;
+        this.isTempuraryItem=false;
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
         this.itemId= this.item.globalParameters.itemId;
       }
+      else
+      this.isTempuraryItem=true;
     }
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
     }
-
-    this.getSupplierList(this.orderType, this.tripId, 0);
-   
     this.generalFormService.setDatesValues();
+    if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
+    this.getSupplierList(this.orderType, this.tripId, 0);
+    else{
+      if( !this.isItemOrderExist)
+      this.getSupplierByOrderType();
+      else{
+          // need add field to order model
+          // let supplierName= this.item.order?.supplier.name;
+          //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
+          // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
+          // this.generalFormService.details[0].value = this.supplierId.toString();
+          this.getSupplierByOrderType(); // it's tempurary
+          //this.getOrderItemBySupplierId();
+      }
+    }
    
   }
 
@@ -160,7 +173,13 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
         else
         this.isSupplierXemptedFromVat=false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
+        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length>0)
+        this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        else{
+          this.generalFormService.supplierList.push({ label: response.name, value: response.id.toString() });
+          this.generalFormService.details[supplierIndex].inputProps.options= this.generalFormService.supplierList;
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        }
          this.getOrderItemBySupplierId();
 
       },
@@ -211,7 +230,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
           if(item?.amountLimit!= null){
           this.orderService.checkItemsExistInDateTime(this.tripId,
             this.centerFieldId, item).subscribe(res=>{
-               if(res.message!= "false"){
+               if(res.isOccupancyProblem == true){
                 this._dialog.open(ConfirmDialogComponent, {
                   width: '500px',
                   data: { message: res, content: ''}
@@ -304,7 +323,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       this.generalFormService.enableButton.next(true);
       //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
-      this.generalFormService.setOrderList(res,this.orderType,'adding');
+      this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
@@ -318,7 +337,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
    editOrder(item){
     this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
       console.log(res);  
-      this.generalFormService.setOrderList(res, this.orderType,'updating');
+      this.generalFormService.setOrderList(res, this.orderType,'updating',false);
       //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
@@ -353,14 +372,13 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
     this.editMode = false;
     this.isEditable=true;
     this.form.enable({ emitEvent: false });
+    this.disableFormFields();
   }
 
   public onValueChange(event) {
     this.form = event;
-    console.log('I am form Event');
-    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.disableFormFields();
+   
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
@@ -374,11 +392,10 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
         this.isSupplierXemptedFromVat=false;
         if( this.valueChangeIndex>0)
         this.getOrderItemBySupplierId();
-        this.valueChangeIndex= this.valueChangeIndex+1;
+        this.valueChangeIndex++;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      this.valueChangeIndex= this.valueChangeIndex+1;
+      this.valueChangeIndex++;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
       if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
       this.ifCalculateByQuantity= true;
@@ -391,39 +408,29 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat==true)
-        itemCost = Math.floor(item.cost);
+      if(this.isSupplierXemptedFromVat==true){
+        itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
+      }  
        else
-       itemCost = Math.floor(item.costVat);
+       itemCost = item.costVat;
       this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
-      console.log(this.form.value.details);
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
-
+      this.calculate();
     });
-
-    
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(this.ifCalculateByQuantity){
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+      console.log(value);
+      this.calculate();
       }
       else
       return;
-
     });
   
 
   
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(!this.ifCalculateByQuantity){
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      console.log(value);
+      this.calculate();
       }
       else
       return;
@@ -431,23 +438,30 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
     });
   
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-
+      console.log(value);
+      this.calculate();
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-
+      console.log(value);
+      this.calculate();
     });
-
-   
-    console.log(this.form)
   }
+
+  calculate(){
+    let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+    this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
+    this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+
+  }
+
+ disableFormFields(){
+      this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
+    this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
+ }
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }

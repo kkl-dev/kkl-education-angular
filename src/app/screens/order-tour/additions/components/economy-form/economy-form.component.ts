@@ -25,26 +25,25 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   supplierId: number;
   itemId: number;
   centerFieldId: number;
-
-  itemsList = [];
-  ifInitiateFormflag: boolean = false;
-  isEditable: boolean = false;
-  originalItemList = [];
-
-  supplierListSub: Subscription;
-  supplierSub: Subscription;
-  itemListSub: Subscription;
-  addOrderSub: Subscription;
-  editOrderSub: Subscription;
-  ifShowtable: boolean = false;
+  itemsList=[];
+  ifInitiateFormflag: boolean =false;
+  isEditable : boolean= false;
+  originalItemList=[];
+  ifShowtable: boolean=false;
   tableData: any;
   isItemOrderExist: boolean;
+  isTempuraryItem : boolean;
   isSupplierXemptedFromVat: boolean;
   valueChangeIndex = 0;
   public form: FormGroup;
   public columns: TableCellModel[];
   itemOrderRecordId: number;
-
+   // close subscribe:
+   supplierListSub: Subscription;
+  supplierSub: Subscription;
+  itemListSub:  Subscription;
+  addOrderSub: Subscription;
+  editOrderSub: Subscription;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -52,47 +51,53 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-
-    //this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.tripId = this.generalFormService.tripId;
-    //this.centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
     this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
     this.setformTemplate();
 
-    if (this.item != undefined && this.item != null) {
-      if (this.item.globalParameters.supplierId != undefined) {
-        this.editMode = true;
-        this.supplierId = this.item.globalParameters.supplierId;
-        this.itemId = this.item.globalParameters.itemId;
+    if (this.item != undefined && this.item != null ) {
+      if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
+        this.isItemOrderExist = true;
+        this.isTempuraryItem=false;
+        this.editMode=true;
+        this.supplierId= this.item.globalParameters.supplierId;
+        this.itemId= this.item.globalParameters.itemId;
       }
+      else
+      this.isTempuraryItem=true;
     }
     else {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value = (this.generalFormService.peopleInTrip).toString();
     }
-    let quantityIndex = this.generalFormService.details.findIndex(i => i.key === 'quantity');
-    this.generalFormService.details[quantityIndex].value = (this.generalFormService.peopleInTrip).toString();
-    let regularDishesNumberIndex = this.generalFormService.economy.findIndex(i => i.key === 'regularDishesNumber');
-    this.generalFormService.economy[regularDishesNumberIndex].value = (this.generalFormService.peopleInTrip).toString();
-
-    this.getSupplierList(this.orderType, this.tripId, 0);
-    //this.getSettelments();
     this.generalFormService.setDatesValues();
-
+    if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
+    this.getSupplierList(this.orderType, this.tripId, 0);
+    else{
+      if( !this.isItemOrderExist)
+      this.getSupplierByOrderType();
+      else{
+         // need add field to order model
+          // let supplierName= this.item.order?.supplier.name;
+          //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
+          // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
+          // this.generalFormService.details[0].value = this.supplierId.toString();
+          this.getSupplierByOrderType(); // it's tempurary
+          //this.getOrderItemBySupplierId();
+      }
+    }
+    
   }
 
   setformTemplate() {
     let index = this.generalFormService.questionGroups.findIndex(el => el.key === "details");
     this.generalFormService.questionGroups[index].questions = this.generalFormService.details;
-    //let detailsArr = this.generalFormService.details;
     let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
     let economyQuestions = detailsArr.concat(this.generalFormService.economy);
     this.generalFormService.questionGroups[index].questions = economyQuestions;
-    //this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
-
   }
   changeLabels(tempArr) {
     console.log('tempArr is :', tempArr);
@@ -147,7 +152,13 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         else
           this.isSupplierXemptedFromVat = false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length>0)
         this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        else{
+          this.generalFormService.supplierList.push({ label: response.name, value: response.id.toString() });
+          this.generalFormService.details[supplierIndex].inputProps.options= this.generalFormService.supplierList;
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        }
         this.getOrderItemBySupplierId();
       },
       error => console.log(error),       // error
@@ -307,7 +318,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.generalFormService.enableButton.next(true);
       //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
-      this.generalFormService.setOrderList(res, this.orderType, 'adding');
+      this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
@@ -318,10 +329,10 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     })
   }
 
-  editOrder(item) {
-    this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
-      console.log(res);
-      this.generalFormService.setOrderList(res, this.orderType, 'updating');
+   editOrder(item){
+   this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
+      console.log(res);  
+      this.generalFormService.setOrderList(res, this.orderType,'updating',false);
       //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
@@ -464,18 +475,15 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     return arr;
   };
   public onEdit() {
-    console.log('I am edit');
     this.editMode = false;
     this.isEditable = true;
     this.form.enable({ emitEvent: false });
+    this.disableFormFields();
   }
 
   public onValueChange(event) {
     this.form = event;
-    console.log('I am form Event');
-    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.disableFormFields();
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:', value);
@@ -486,14 +494,13 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         if (supplier.isXemptedFromVat == 1)
           this.isSupplierXemptedFromVat = true;
         else
-          this.isSupplierXemptedFromVat = false;
-        if (this.valueChangeIndex > 0)
-          this.getOrderItemBySupplierId();
-        this.valueChangeIndex = this.valueChangeIndex + 1;
+        this.isSupplierXemptedFromVat=false;
+        if( this.valueChangeIndex>0)
+        this.getOrderItemBySupplierId();
+        this.valueChangeIndex++;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      this.valueChangeIndex = this.valueChangeIndex + 1;
+      this.valueChangeIndex++;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost;
       if (!item.cost) {
@@ -502,54 +509,45 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if (this.isSupplierXemptedFromVat == true)
-        itemCost = Math.floor(item.cost);
-      else
-        itemCost = Math.floor(item.costVat);
+      if(this.isSupplierXemptedFromVat==true){
+        itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
+      }  
+       else
+       itemCost = item.costVat;
       this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
-      console.log(this.form.value.details);
-      let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      this.calculate();
     });
-    this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log('vegetarianDishesNumber')
-      this.calculateDishes(parseInt(value), 'vegetarianDishesNumber')
-    });
-    this.form.controls["details"].get('veganDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log('veganDishesNumber')
-      this.calculateDishes(parseInt(value), 'veganDishesNumber')
-    });
+
+    // this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      //this.calculate();
+    // });
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      this.calculate();
     });
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+      console.log(value);
+      this.calculate();
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value)
-      let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-
+      console.log(value);
+      this.calculate();
     });
-    console.log(this.form)
+    console.log(this.form);
   }
-  calculateDishes(value: any, type: any) {
-    if (value > this.form.controls["details"].get('regularDishesNumber').value) {
-      this.form.controls["details"].get(type).patchValue(this.form.controls["details"].get('regularDishesNumber').value.toString(), { emitEvent: false });
-       this.form.controls["details"].get('regularDishesNumber').patchValue('0', { emitEvent: false });
-      
-      this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');
-    }
-    else this.form.controls["details"].get('regularDishesNumber').patchValue((this.generalFormService.peopleInTrip - this.form.controls["details"].get('vegetarianDishesNumber').value - this.form.controls["details"].get('veganDishesNumber').value).toString(), { emitEvent: false });
+
+  calculate(){
+    let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+    this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
   }
+
+ disableFormFields(){
+  this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+  this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+  this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+  if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
+  this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
+ }
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
