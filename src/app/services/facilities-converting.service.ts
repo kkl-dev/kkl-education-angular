@@ -95,7 +95,11 @@ export class FacilitiesConvertingService {
 
       }
       if (!tripId) {
-        tripId = this.squadAssembleService.tripInfofromService.trip.id;
+        try {
+          tripId = this.squadAssembleService.tripInfofromService.trip.id;
+        } catch (error) {
+  
+        }
       }
       //console.log('arr ' + i + ': ', arr[i]);
       //check if valid start
@@ -302,7 +306,7 @@ export class FacilitiesConvertingService {
   // }
 
   //new from internal yakov
-  convertActivityListfromTripCalendarApi(activityList: any) {
+  convertActivityListfromTripCalendarApi(activityList: any, tempOrderList) {
     let newActivityListObj = {};
     let hasAdditions: boolean = false;
     //fix if date is from 1900
@@ -317,7 +321,9 @@ export class FacilitiesConvertingService {
     }
     if (activityList.additions) { //check if has additions for orders in activities
       hasAdditions = true;
-      let tempOrderList;
+      //let tempOrderList;
+      //let tempOrderList = this.facilities.tempOrderList;
+
       tempOrderList.forEach(element => {
         if (element.tripActivityIdentity === activityList.tripActivityIdentity) {
           //has the same tripActivityIdentity -- must build an obj with additions

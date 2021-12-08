@@ -396,7 +396,7 @@ export class FacilitiesComponent implements OnInit {
 
       for (let i = 0; i < this.activityList.length; i++) {
         //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
-        newTempActivityList = this.facilitiesConvertingService.convertActivityListfromTripCalendarApi(this.activityList[i]);
+        newTempActivityList = this.facilitiesConvertingService.convertActivityListfromTripCalendarApi(this.activityList[i], this.tempOrderList);
         // add to calender
         this.addToCalendar(newTempActivityList, true);
         this.calenderArray.push(newTempActivityList);

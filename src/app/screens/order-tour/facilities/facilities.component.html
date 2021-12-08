@@ -74,7 +74,7 @@
             <div class="info-card" id="activities">
                 <ng-container *ngFor="let item of activitiesArray; let i = index">
                     <app-info-card class="facilities-items-item" [item]="item" *ngIf='5 > i'
-                        (click)="updateChosenActivity(item) ; openModal('facility')">
+                        (click)="updateChosenFacility(item) ; openModal('facility')">
                     </app-info-card>
                 </ng-container>
                 <ng-container *ngFor="let item of activitiesArray2; let i = index">
