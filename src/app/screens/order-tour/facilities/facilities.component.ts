@@ -1,5 +1,3 @@
-//import { Component, OnInit } from '@angular/core';
-//import { Observable } from 'rxjs';
 import { ActivitiesCardInterface } from 'src/app/components/activities-card/activities-card.component';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { FacilitiesService } from 'src/app/services/facilities.service';
@@ -19,14 +17,11 @@ import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.
 import { Component, ComponentFactoryResolver, EmbeddedViewRef, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import timeGridPlugin from '@fullcalendar/timegrid';
-//import { EventInput } from '@fullcalendar/angular';
 import { Observable, Subscription } from 'rxjs';
-//import { FacilitiesService } from 'src/app/services/facilities.service';
 import heLocale from '@fullcalendar/core/locales/he';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarCardComponent } from './calendar/calendar-card/calendar-card.component';
 import { DynamicComponent } from 'src/app/components/dynamic/dynamic.component';
-//import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-facilities',
@@ -37,23 +32,19 @@ import { DynamicComponent } from 'src/app/components/dynamic/dynamic.component';
 export class FacilitiesComponent implements OnInit {
   calenderArray = [];
 
-  public eventsArr: EventInput[] = [...INITIAL_EVENTS];
-  public closeModal$: Observable<string>;
-  public selectedFacility$: Observable<any>;
-  public selectedActivity$: Observable<ActivitiesCardInterface>;
+  eventsArr: EventInput[] = [...INITIAL_EVENTS];
+  closeModal$: Observable<string>;
+  selectedFacility$: Observable<any>;
+  selectedActivity$: Observable<ActivitiesCardInterface>;
   //public calendarEventsArr$: Observable<EventInput[]>;
-  public timesArray: Array<string | number> = [];
-  public hiddenElements: any = { facilities: false, activities: false };
-  public colors = { green: '#37C56B', blue: '#448ECD' }
-  public activityIsUpComing: boolean = false;
+  timesArray: Array<string | number> = [];
+  hiddenElements: any = { facilities: false, activities: false };
+  colors = { green: '#37C56B', blue: '#448ECD' }
+  activityIsUpComing: boolean = false;
   formArray: QuestionBase<string | number>[];
-  tripId: number = 0;
-  // public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
-  // public facilitiesArray: InfoCard1[] = FACILITIES_ARRAY;
-  // public upComingActivitiesArray: ActivitiesCardInterface[] = UP_COMING_ACTIVITIES_ARRAY;
-  // public upComingActivitiesArray: any[];
+  //fix  temp
+  tripId: number = 57256;
   orderType: any;
-  //createForm: any;
   facilityForDay: any;
   facilitiesArray: any;
   tripActivities: any = [];
@@ -79,7 +70,9 @@ export class FacilitiesComponent implements OnInit {
       iconPath: 'restaurant.svg',
       name: 'ארוחת בוקר',
       itemId: 1
-    },
+    }
+  ];
+  activitiesArray2: any[] = [
     {
       iconPath: 'alarm.svg',
       name: 'השכמה',
@@ -120,7 +113,10 @@ export class FacilitiesComponent implements OnInit {
     // });
 
     try {
+      if(this.squadAssembleService.tripInfofromService)
       this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      else
+      this.tripId = parseInt(localStorage.getItem('tripId'));
     } catch (error) {
       console.log(error);
     }
@@ -293,9 +289,11 @@ export class FacilitiesComponent implements OnInit {
 
   getAvailableFacilities() {
     //let sleepingDates = this.tripService.convertDatesFromSlashToMinus();  
+
     //temp fixed dates and place
     this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
-    // this.usersService.getAvailableFacilities(1, '2021-10-20', '2021-10-21').subscribe((facilities: any) => {
+
+    // this.usersService.getAvailableFacilities(1, '2021-11-25', '2021-11-28').subscribe((facilities: any) => {
     //   console.log('get Available Facilities: ', facilities);
     //   let a = this.facilitiesConvertingService.convertFacilityActivity(facilities);
     //   if (facilities) {
@@ -385,12 +383,6 @@ export class FacilitiesComponent implements OnInit {
   }
 
   getTripCalendar() {
-    // let tripId = 0;
-    // try {
-    //   tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    // } catch (error) {
-    //   console.log(error);
-    // }
     this.activitiyService.getTripCalendar(this.tripId).subscribe((tripCalendar: any) => {
       console.log('get Trip Calendar: ', tripCalendar);
       //if (tripCalendar) {
@@ -398,25 +390,22 @@ export class FacilitiesComponent implements OnInit {
       this.tempOrderList = tripCalendar.tempOrderList;
       let newTempOrderObj: any;
       let newTempActivityList: any;
-      console.log("calendarEventsArr value ", this.facilitiesService.calendarEventsArr.value);
+      //console.log("calendarEventsArr value ", this.facilitiesService.calendarEventsArr.value);
       this.facilitiesService.calendarEventsArr.next([]);
-      console.log("calendarEventsArr value 2", this.facilitiesService.calendarEventsArr.value);
+      console.log("calendarEventsArr value", this.facilitiesService.calendarEventsArr.value);
 
-      // add to calender
+      for (let i = 0; i < this.activityList.length; i++) {
+        //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
+        newTempActivityList = this.facilitiesConvertingService.convertActivityListfromTripCalendarApi(this.activityList[i]);
+        // add to calender
+        this.addToCalendar(newTempActivityList, true);
+        this.calenderArray.push(newTempActivityList);
+      }
       for (let i = 0; i < this.tempOrderList.length; i++) {
         //console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
         newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListfromTripCalendarApi(this.tempOrderList[i]);
         this.addToCalendar(newTempOrderObj, true);
         this.calenderArray.push(newTempOrderObj);
-      }
-
-      for (let i = 0; i < this.activityList.length; i++) {
-        //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
-        newTempActivityList = this.facilitiesConvertingService.convertActivityListfromTripCalendarApi(this.activityList[i]);
-        // if(newTempActivityList.title) {
-        this.addToCalendar(newTempActivityList, true);
-        this.calenderArray.push(newTempActivityList);
-        //}
       }
       console.log('calenderArray', this.calenderArray);
 
@@ -458,7 +447,7 @@ export class FacilitiesComponent implements OnInit {
     const tmpObj: EventInput = {
       id: `${this.eventsArr.length}`,
       textColor: 'black',
-      editable: true,
+      //editable: true,  //seems not in use
     }
     for (const property in event) {
       tmpObj[property] = event[property];
@@ -499,8 +488,7 @@ export class FacilitiesComponent implements OnInit {
     console.log('onOptionSelected - e', e);
   }
 
-
-  //calender c 
+  //calender componant
   @ViewChild('calendar') myCalendarComponent: FullCalendarComponent;
   @ViewChild('dynamic', { read: DynamicComponent }) myDynamicComponent: DynamicComponent;
   value!: EventInput[];
