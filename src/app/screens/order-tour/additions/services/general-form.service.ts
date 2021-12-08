@@ -458,6 +458,10 @@ export class GeneralFormService {
   }
 
   clearFormFields() {
+
+    let supplierIndex = this.details.findIndex(i => i.key === 'supplierId');
+    this.details[supplierIndex].inputProps.options = [];
+    this.supplierList = [];
     let itemIndex = this.details.findIndex(i => i.key === 'itemId');
     this.details[itemIndex].value = '';
     let statDateIndex = this.details.findIndex(i => i.key === 'startDate');
@@ -574,7 +578,7 @@ export class GeneralFormService {
   }
 
 
-  setOrderList(res, orderTypeId, operation,isTempurary) {
+  setOrderList(res, orderTypeId, operation, isTempurary) {
     switch (orderTypeId) {
       case 1:
         let t = {} as TransportOrder;
@@ -589,131 +593,131 @@ export class GeneralFormService {
         else if (res.length == 1)
           t = res[0];
 
-           this.transportOrderList=[];
-           if(res.length>1)
-           this.transportOrderList= tranArr;
-           else
-           this.transportOrderList.push(t);
-           if(operation=='adding' && isTempurary==true)
-           this.updatetempOrderReduce(res,orderTypeId);
-          break;
-        case 2:
-            let securing = {} as SecuringOrder;
-            let securingArr : SecuringOrder[]=[];
-            if(res.length>1){
-              for (let i = 0; i < res.length; i++) {
-                 let securing1= {} as SecuringOrder;
-                 securing1= res[i];
-                 securingArr.push(securing1);
-              }
-           }
-           else if(res.length==1)
-           securing = res[0];
-            this.securingOrderList=[];
-            if(res.length>1)
-            this.securingOrderList= securingArr;
-            else
-             this.securingOrderList.push(securing);
-            break;
-      
-        case 3:
-            let site = {} as SiteOrder;
-            let siteArr: SiteOrder[]=[];
-            if(res.length>1){
-               for (let i = 0; i < res.length; i++) {
-                  let site1= {} as SiteOrder;
-                  site1= res[i];
-                  siteArr.push(site1);
-               }
-            }
-            else if(res.length==1)
-            site = res[0];
-            this.siteOrderList=[];
-            if(res.length>1)
-            this.siteOrderList= siteArr;
-            else
-             this.siteOrderList.push(site);
-            break;
-      
-        case 4:
-          let economy = {} as EconomyOrder;
-          let ecoArr: EconomyOrder[]=[];
-          if(res.length>1){
-             for (let i = 0; i < res.length; i++) {
-                let eco= {} as EconomyOrder;
-                eco= res[i];
-                ecoArr.push(eco);
-             }
+        this.transportOrderList = [];
+        if (res.length > 1)
+          this.transportOrderList = tranArr;
+        else
+          this.transportOrderList.push(t);
+        if (operation == 'adding' && isTempurary == true)
+          this.updatetempOrderReduce(res, orderTypeId);
+        break;
+      case 2:
+        let securing = {} as SecuringOrder;
+        let securingArr: SecuringOrder[] = [];
+        if (res.length > 1) {
+          for (let i = 0; i < res.length; i++) {
+            let securing1 = {} as SecuringOrder;
+            securing1 = res[i];
+            securingArr.push(securing1);
           }
-          else if(res.length==1)
-          economy = res[0]; 
-          this.economyOrderList=[];
-          if(res.length>1)
-          this.economyOrderList= ecoArr;
-          else
+        }
+        else if (res.length == 1)
+          securing = res[0];
+        this.securingOrderList = [];
+        if (res.length > 1)
+          this.securingOrderList = securingArr;
+        else
+          this.securingOrderList.push(securing);
+        break;
+
+      case 3:
+        let site = {} as SiteOrder;
+        let siteArr: SiteOrder[] = [];
+        if (res.length > 1) {
+          for (let i = 0; i < res.length; i++) {
+            let site1 = {} as SiteOrder;
+            site1 = res[i];
+            siteArr.push(site1);
+          }
+        }
+        else if (res.length == 1)
+          site = res[0];
+        this.siteOrderList = [];
+        if (res.length > 1)
+          this.siteOrderList = siteArr;
+        else
+          this.siteOrderList.push(site);
+        break;
+
+      case 4:
+        let economy = {} as EconomyOrder;
+        let ecoArr: EconomyOrder[] = [];
+        if (res.length > 1) {
+          for (let i = 0; i < res.length; i++) {
+            let eco = {} as EconomyOrder;
+            eco = res[i];
+            ecoArr.push(eco);
+          }
+        }
+        else if (res.length == 1)
+          economy = res[0];
+        this.economyOrderList = [];
+        if (res.length > 1)
+          this.economyOrderList = ecoArr;
+        else
           this.economyOrderList.push(economy);
-          if(operation=='adding' && isTempurary==true)
-          this.updatetempOrderReduce(res,orderTypeId);
-          break;
-        case 6:
-            let guidance = {} as GuidanceOrder;
-            let guideArr: GuidanceOrder[]=[];
-            if(res.length>1){
-               for (let i = 0; i < res.length; i++) {
-                  let guide= {} as GuidanceOrder;
-                  guide= res[i];
-                  guideArr.push(guide);
-               }
-            }
-            else if(res.length==1)
-            guidance = res[0]; 
-            this.gudianceOrderList=[];
-            if(res.length>1)
-            this.gudianceOrderList= guideArr;
-            else
-             this.gudianceOrderList.push(guidance);
-             if(operation=='adding' && isTempurary==true)
-             this.updatetempOrderReduce(res,orderTypeId);
-            break;
-          case 7:
-              let hosting = {} as HostingOrder;
-              let hostArr: HostingOrder[]=[];
-              if(res.length>1){
-                 for (let i = 0; i < res.length; i++) {
-                    let host= {} as HostingOrder;
-                    host= res[i];
-                    hostArr.push(host);
-                 }
-              }
-              else if(res.length==1)
-              hosting = res[0]; 
-              this.hostingOrderList=[];
-              if(res.length>1)
-              this.hostingOrderList= hostArr;
-              else
-               this.hostingOrderList.push(hosting);
-               if(operation=='adding' && isTempurary==true)
-               this.updatetempOrderReduce(res,orderTypeId);
-              break;
-          case 10:
-                let musicActivation = {} as MusicActivationOrder;
-                let musicArr: MusicActivationOrder[]=[];
-                if(res.length>1){
-                   for (let i = 0; i < res.length; i++) {
-                      let music= {} as MusicActivationOrder;
-                      music= res[i];
-                      musicArr.push(music);
-                   }
-                }
-                else if(res.length==1)
-                musicActivation = res[0]; 
-                this.musicOrderList=[];
-                if(res.length>1)
-                this.musicOrderList= musicArr;
-                else
-                 this.musicOrderList.push(musicActivation);
-                break;
-    
+
+        if (operation == 'adding' && isTempurary == true)
+          this.updatetempOrderReduce(res, orderTypeId);
+        break;
+      case 6:
+        let guidance = {} as GuidanceOrder;
+        let guideArr: GuidanceOrder[] = [];
+        if (res.length > 1) {
+          for (let i = 0; i < res.length; i++) {
+            let guide = {} as GuidanceOrder;
+            guide = res[i];
+            guideArr.push(guide);
+          }
+        }
+        else if (res.length == 1)
+          guidance = res[0];
+        this.gudianceOrderList = [];
+        if (res.length > 1)
+          this.gudianceOrderList = guideArr;
+        else
+          this.gudianceOrderList.push(guidance);
+        if (operation == 'adding' && isTempurary == true)
+          this.updatetempOrderReduce(res, orderTypeId);
+        break;
+      case 7:
+        let hosting = {} as HostingOrder;
+        let hostArr: HostingOrder[] = [];
+        if (res.length > 1) {
+          for (let i = 0; i < res.length; i++) {
+            let host = {} as HostingOrder;
+            host = res[i];
+            hostArr.push(host);
+          }
+        }
+        else if (res.length == 1)
+          hosting = res[0];
+        this.hostingOrderList = [];
+        if (res.length > 1)
+          this.hostingOrderList = hostArr;
+        else
+          this.hostingOrderList.push(hosting);
+        if (operation == 'adding' && isTempurary == true)
+          this.updatetempOrderReduce(res, orderTypeId);
+        break;
+      case 10:
+        let musicActivation = {} as MusicActivationOrder;
+        let musicArr: MusicActivationOrder[] = [];
+        if (res.length > 1) {
+          for (let i = 0; i < res.length; i++) {
+            let music = {} as MusicActivationOrder;
+            music = res[i];
+            musicArr.push(music);
+          }
+        }
+        else if (res.length == 1)
+          musicActivation = res[0];
+        this.musicOrderList = [];
+        if (res.length > 1)
+          this.musicOrderList = musicArr;
+        else
+          this.musicOrderList.push(musicActivation);
+        break;
 
     }
   }
@@ -732,19 +736,19 @@ export class GeneralFormService {
   //     }
   //     //this.updateTempOrderReduce(temp);
   //     //this.updateTempOrderReduce(temp,orderTypeId);
-     
+
   //   }
   //   this.updateTempOrderReduce(temp);
-   
+
   // }
 
-    updatetempOrderReduce(res, orderTypeId){
-      let temp= this.tempOrderReduce.value.tempOrderReduce;
-      for (var i in temp[orderTypeId]) {
-        for(var j in res ){
-          if(temp[orderTypeId][i].tempOrderId==res[j].globalParameters.tempOrderIdentity){
-            temp[orderTypeId].splice(i, 1);
-            break;
+  updatetempOrderReduce(res, orderTypeId) {
+    let temp = this.tempOrderReduce.value.tempOrderReduce;
+    for (var i in temp[orderTypeId]) {
+      for (var j in res) {
+        if (temp[orderTypeId][i].tempOrderId == res[j].globalParameters.tempOrderIdentity) {
+          temp[orderTypeId].splice(i, 1);
+          break;
 
         }
         //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
@@ -756,9 +760,9 @@ export class GeneralFormService {
       }
     }
 
-      //this.updateTempOrderReduce(temp)
-      this.updateTempOrderReduce(temp,orderTypeId);
-     // this.updateTempOrderReduce(temp);
+    //this.updateTempOrderReduce(temp)
+    this.updateTempOrderReduce(temp, orderTypeId);
+    // this.updateTempOrderReduce(temp);
   }
 
 

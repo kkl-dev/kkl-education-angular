@@ -25,23 +25,23 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   supplierId: number;
   itemId: number;
   centerFieldId: number;
-  itemsList=[];
-  ifInitiateFormflag: boolean =false;
-  isEditable : boolean= false;
-  originalItemList=[];
-  ifShowtable: boolean=false;
+  itemsList = [];
+  ifInitiateFormflag: boolean = false;
+  isEditable: boolean = false;
+  originalItemList = [];
+  ifShowtable: boolean = false;
   tableData: any;
   isItemOrderExist: boolean;
-  isTempuraryItem : boolean;
+  isTempuraryItem: boolean;
   isSupplierXemptedFromVat: boolean;
   valueChangeIndex = 0;
   public form: FormGroup;
   public columns: TableCellModel[];
   itemOrderRecordId: number;
-   // close subscribe:
-   supplierListSub: Subscription;
+  // close subscribe:
+  supplierListSub: Subscription;
   supplierSub: Subscription;
-  itemListSub:  Subscription;
+  itemListSub: Subscription;
   addOrderSub: Subscription;
   editOrderSub: Subscription;
   public formTemplate: FormTemplate = {
@@ -57,38 +57,47 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.generalFormService.itemsList = []
     this.setformTemplate();
 
-    if (this.item != undefined && this.item != null ) {
-      if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
+    if (this.item != undefined && this.item != null) {
+      if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.orderId) {
         this.isItemOrderExist = true;
-        this.isTempuraryItem=false;
-        this.editMode=true;
-        this.supplierId= this.item.globalParameters.supplierId;
-        this.itemId= this.item.globalParameters.itemId;
+        this.isTempuraryItem = false;
+        this.editMode = true;
+        this.supplierId = this.item.globalParameters.supplierId;
+        this.itemId = this.item.globalParameters.itemId;
       }
       else
-      this.isTempuraryItem=true;
+        this.isTempuraryItem = true;
     }
     else {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value = (this.generalFormService.peopleInTrip).toString();
     }
-    this.generalFormService.setDatesValues();
-    if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
+
+    let quantityIndex = this.generalFormService.details.findIndex(i => i.key === 'quantity');
+    this.generalFormService.details[quantityIndex].value = (this.generalFormService.peopleInTrip).toString();
+    let regularDishesNumberIndex = this.generalFormService.economy.findIndex(i => i.key === 'regularDishesNumber');
+    this.generalFormService.economy[regularDishesNumberIndex].value = (this.generalFormService.peopleInTrip).toString();
+
     this.getSupplierList(this.orderType, this.tripId, 0);
-    else{
-      if( !this.isItemOrderExist)
-      this.getSupplierByOrderType();
-      else{
-         // need add field to order model
-          // let supplierName= this.item.order?.supplier.name;
-          //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
-          // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
-          // this.generalFormService.details[0].value = this.supplierId.toString();
-          this.getSupplierByOrderType(); // it's tempurary
-          //this.getOrderItemBySupplierId();
+    //this.getSettelments();
+
+    this.generalFormService.setDatesValues();
+    if (this.generalFormService.tripInfo.trip.tripStatus.id != 10)
+      this.getSupplierList(this.orderType, this.tripId, 0);
+    else {
+      if (!this.isItemOrderExist)
+        this.getSupplierByOrderType();
+      else {
+        // need add field to order model
+        // let supplierName= this.item.order?.supplier.name;
+        //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
+        // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
+        // this.generalFormService.details[0].value = this.supplierId.toString();
+        this.getSupplierByOrderType(); // it's tempurary
+        //this.getOrderItemBySupplierId();
       }
     }
-    
+
   }
 
   setformTemplate() {
@@ -152,11 +161,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         else
           this.isSupplierXemptedFromVat = false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length>0)
-        this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
-        else{
+        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length > 0)
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        else {
           this.generalFormService.supplierList.push({ label: response.name, value: response.id.toString() });
-          this.generalFormService.details[supplierIndex].inputProps.options= this.generalFormService.supplierList;
+          this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
           this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
         }
         this.getOrderItemBySupplierId();
@@ -318,7 +327,9 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.generalFormService.enableButton.next(true);
       //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
-      this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
+
+      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem);
+
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
@@ -329,10 +340,10 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     })
   }
 
-   editOrder(item){
-   this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
-      console.log(res);  
-      this.generalFormService.setOrderList(res, this.orderType,'updating',false);
+  editOrder(item) {
+    this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
+      console.log(res);
+      this.generalFormService.setOrderList(res, this.orderType, 'updating', false);
       //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
@@ -368,7 +379,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       })
       return false;
     }
-    if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined|| +this.form.value.details['peopleInTrip'] === 0) {
+    if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined || +this.form.value.details['peopleInTrip'] === 0) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
         data: { message: 'בהזמנת כלכלה - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
@@ -494,9 +505,9 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         if (supplier.isXemptedFromVat == 1)
           this.isSupplierXemptedFromVat = true;
         else
-        this.isSupplierXemptedFromVat=false;
-        if( this.valueChangeIndex>0)
-        this.getOrderItemBySupplierId();
+          this.isSupplierXemptedFromVat = false;
+        if (this.valueChangeIndex > 0)
+          this.getOrderItemBySupplierId();
         this.valueChangeIndex++;
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
@@ -509,17 +520,26 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat==true){
+      if (this.isSupplierXemptedFromVat == true) {
         itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
-      }  
-       else
-       itemCost = item.costVat;
+      }
+      else
+        itemCost = item.costVat;
       this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
       this.calculate();
     });
 
+    this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log('vegetarianDishesNumber')
+      this.calculateDishes(parseInt(value), 'vegetarianDishesNumber')
+    });
+    this.form.controls["details"].get('veganDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log('veganDishesNumber')
+      this.calculateDishes(parseInt(value), 'veganDishesNumber')
+    });
+
     // this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      //this.calculate();
+    //this.calculate();
     // });
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
@@ -535,19 +555,30 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     console.log(this.form);
   }
 
-  calculate(){
-    let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
+
+  calculate() {
+    let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
     this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
     this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+
   }
 
- disableFormFields(){
-  this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-  this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-  this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
-  if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
-  this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
- }
+  calculateDishes(value: any, type: any) {
+    if (value > this.form.controls["details"].get('regularDishesNumber').value) {
+      this.form.controls["details"].get(type).patchValue(this.form.controls["details"].get('regularDishesNumber').value.toString(), { emitEvent: false });
+      this.form.controls["details"].get('regularDishesNumber').patchValue('0', { emitEvent: false });
+
+      this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');
+    }
+    else this.form.controls["details"].get('regularDishesNumber').patchValue((this.generalFormService.peopleInTrip - this.form.controls["details"].get('vegetarianDishesNumber').value - this.form.controls["details"].get('veganDishesNumber').value).toString(), { emitEvent: false });
+  }
+  disableFormFields() {
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    if (this.generalFormService.tripInfo.trip.tripStatus.id == 10)
+      this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
+  }
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
