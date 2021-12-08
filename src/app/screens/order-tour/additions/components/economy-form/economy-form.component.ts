@@ -577,7 +577,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');
     }
     else this.form.controls["details"].get('regularDishesNumber').patchValue((this.generalFormService.peopleInTrip - this.form.controls["details"].get('vegetarianDishesNumber').value - this.form.controls["details"].get('veganDishesNumber').value).toString(), { emitEvent: false });
-
+  }
  disableFormFields(){
   this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
   this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });

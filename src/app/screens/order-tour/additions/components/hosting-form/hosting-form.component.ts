@@ -55,8 +55,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     questionsGroups: [],
   };
 
-  hostingItem: any;
-
   ngOnInit(): void {
 
     this.tripId = this.generalFormService.tripId;
