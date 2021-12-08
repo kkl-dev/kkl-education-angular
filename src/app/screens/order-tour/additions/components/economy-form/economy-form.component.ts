@@ -572,13 +572,15 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     }
     else this.form.controls["details"].get('regularDishesNumber').patchValue((this.generalFormService.peopleInTrip - this.form.controls["details"].get('vegetarianDishesNumber').value - this.form.controls["details"].get('veganDishesNumber').value).toString(), { emitEvent: false });
   }
-  disableFormFields() {
-    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
-    if (this.generalFormService.tripInfo.trip.tripStatus.id == 10)
-      this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
-  }
+
+ disableFormFields(){
+  this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+  this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+  this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+  if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
+  this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
+ }
+
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
