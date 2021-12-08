@@ -25,25 +25,25 @@ export class GeneralFormService {
   peopleInTrip: number
   public transportOrderList: TransportOrder[] = [];
 
-  public economyOrderList: EconomyOrder[] =[];
-  public gudianceOrderList : GuidanceOrder[]=[];
-  public hostingOrderList : HostingOrder[] =[];
-  public siteOrderList : SiteOrder[] =[];
-  public securingOrderList: SecuringOrder[] =[];
-  public musicOrderList: MusicActivationOrder[]=[];
-  public settlementList=[];
-  public languageList =[];
+  public economyOrderList: EconomyOrder[] = [];
+  public gudianceOrderList: GuidanceOrder[] = [];
+  public hostingOrderList: HostingOrder[] = [];
+  public siteOrderList: SiteOrder[] = [];
+  public securingOrderList: SecuringOrder[] = [];
+  public musicOrderList: MusicActivationOrder[] = [];
+  public settlementList = [];
+  public languageList = [];
   originalItemList = [];
-  originalSupplierList =[];
-  public siteList =[];
-  tripOrdersList :OrderEvent[];
- 
+  originalSupplierList = [];
+  public siteList = [];
+  tripOrdersList: OrderEvent[];
+
   //public tempOrderReduce = new BehaviorSubject<any>(null)
-  public tempOrderReduce = new BehaviorSubject<{tempOrderReduce:any,orderType:any}>(null)
+  public tempOrderReduce = new BehaviorSubject<{ tempOrderReduce: any, orderType: any }>(null)
   public tableData = new Subject();
-  public enableButton =new Subject<boolean>();
+  public enableButton = new Subject<boolean>();
   //public isSaveOrderSucceeded = new Subject<boolean>();
- 
+
 
   //centerFieldId = this.squadAssembleService.tripInfofromService.trip.centerField.id;
   constructor(private orderService: OrderService, private squadAssembleService: SquadAssembleService, private _dialog: MatDialog,
@@ -55,7 +55,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-          options: this.supplierList,    
+        options: this.supplierList,
       },
     }),
     new QuestionSelect({
@@ -171,7 +171,6 @@ export class GeneralFormService {
     }),
   ];
   public transport: QuestionBase<string>[] = [
-
     new QuestionTextbox({
       key: 'scatterLocation',
       label: 'מקום פיזור',
@@ -194,7 +193,6 @@ export class GeneralFormService {
 
   ]
   public economy: QuestionBase<string>[] = [
-
     new QuestionTextbox({
       key: 'regularDishesNumber',
       label: 'מספר מנות רגילות',
@@ -269,7 +267,7 @@ export class GeneralFormService {
       type: 'select',
       validations: [Validators.required],
       inputProps: {
-        options: this.siteList,  
+        options: this.siteList,
       },
     }),
     new QuestionTextbox({
@@ -283,7 +281,7 @@ export class GeneralFormService {
       value: '',
 
     }),
-  
+
   ]
 
 
@@ -329,14 +327,14 @@ export class GeneralFormService {
     {
       key: 'comments',
       questions: this.comments,
-      hasBottomButton : true,
+      hasBottomButton: true,
       cols: 8,
     },
   ];
 
   public setInitialValues(
     questions: QuestionBase<string | number | Date | QuestionGroup>[],
-    data: any,isItemOrderExist
+    data: any, isItemOrderExist
   ) {
     questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
       // control.value = data[control.key]
@@ -376,14 +374,14 @@ export class GeneralFormService {
     });
   }
 
-  public updateTempOrderReduce(temp,orderType) {
-    this.tempOrderReduce.next({tempOrderReduce:temp,orderType: orderType});
+  public updateTempOrderReduce(temp, orderType) {
+    this.tempOrderReduce.next({ tempOrderReduce: temp, orderType: orderType });
     //this.tempOrderReduce.next(temp);
   }
 
-  public setFormValues(data: any,isItemOrderExist) {
+  public setFormValues(data: any, isItemOrderExist) {
     this.questionGroups.map((group: QuestionGroup) => {
-      this.setInitialValues(group.questions, data,isItemOrderExist);
+      this.setInitialValues(group.questions, data, isItemOrderExist);
     });
   }
 
@@ -418,12 +416,12 @@ export class GeneralFormService {
         }/${newDate.getFullYear()}`;
       // const newDateString = `${newDate.getFullYear()}-${(newDate.getMonth() + 1).toString()
       //   }-${newDate.getDate()}`;
-      let subNewDateString= newDateString.split('/');
-      if (+subNewDateString[0]<10)
-      subNewDateString[0]= 0+subNewDateString[0];
-      if (+subNewDateString[1]<10)
-      subNewDateString[1]= 0+subNewDateString[1];
-      newDateString= subNewDateString[0]+'/'+subNewDateString[1]+'/'+subNewDateString[2];
+      let subNewDateString = newDateString.split('/');
+      if (+subNewDateString[0] < 10)
+        subNewDateString[0] = 0 + subNewDateString[0];
+      if (+subNewDateString[1] < 10)
+        subNewDateString[1] = 0 + subNewDateString[1];
+      newDateString = subNewDateString[0] + '/' + subNewDateString[1] + '/' + subNewDateString[2];
 
       datesArr.push({
         label: newDateString,
@@ -438,8 +436,6 @@ export class GeneralFormService {
     this.details[endDateIndex].inputProps.options = datesArr;
   }
 
-
- 
   setTimeFormat(hour) {
     let hourStr = hour.split("T");
     let hourFormat = hourStr[1];
@@ -463,6 +459,7 @@ export class GeneralFormService {
   }
 
   clearFormFields() {
+
      let supplierIndex= this.details.findIndex(i => i.key === 'supplierId');
      this.details[supplierIndex].inputProps.options=[];
      this.supplierList = [];
@@ -470,7 +467,7 @@ export class GeneralFormService {
     this.details[itemIndex].value='';
     let statDateIndex = this.details.findIndex(i => i.key === 'startDate');
     this.details[statDateIndex].value = '';
-    let endDateIndex= this.details.findIndex(i => i.key === 'endDate');
+    let endDateIndex = this.details.findIndex(i => i.key === 'endDate');
     this.details[endDateIndex].value = '';
     let statHourIndex = this.details.findIndex(i => i.key === 'startHour');
     this.details[statHourIndex].value = '';
@@ -492,14 +489,14 @@ export class GeneralFormService {
 
   mapOrderList(orderList) {
     //this.tripOrdersList= orderList;
-    
-    this.transportOrderList=[];
-    this.securingOrderList=[];
-    this.siteOrderList=[];
-    this.economyOrderList=[];
-    this.gudianceOrderList=[];
-    this.hostingOrderList=[];
-    this.musicOrderList=[];
+
+    this.transportOrderList = [];
+    this.securingOrderList = [];
+    this.siteOrderList = [];
+    this.economyOrderList = [];
+    this.gudianceOrderList = [];
+    this.hostingOrderList = [];
+    this.musicOrderList = [];
     orderList.forEach(element => {
       if (element.order.orderType.id == 1) {
         this.transportOrderList.push(element)
@@ -564,9 +561,22 @@ export class GeneralFormService {
   //       })
 
   //     })
-    
+
   // }
- 
+  findInvalidControls(form: any) {
+    const controls = form.controls.details.controls;
+    var indx = 0;
+    for (const key in controls) {
+      if (controls[key].invalid) {
+        var name = this.questionGroups[0].questions[indx].label;
+        if (name === 'בחר פריט') name = 'פריט';
+        if (name === 'בחר אתר') name = 'אתר';
+        return name;
+      }
+      indx++;
+    }
+    return null;
+  }
 
 
   setOrderList(res, orderTypeId, operation,isTempurary) {
@@ -639,14 +649,17 @@ export class GeneralFormService {
                 eco= res[i];
                 ecoArr.push(eco);
              }
+
           }
-          else if(res.length==1)
-          economy = res[0]; 
-          this.economyOrderList=[];
-          if(res.length>1)
-          this.economyOrderList= ecoArr;
-          else
+        }
+        else if (res.length == 1)
+          economy = res[0];
+        this.economyOrderList = [];
+        if (res.length > 1)
+          this.economyOrderList = ecoArr;
+        else
           this.economyOrderList.push(economy);
+
           if(operation=='adding' && isTempurary==true)
           this.updatetempOrderReduce(res,orderTypeId);
           break;
@@ -708,8 +721,7 @@ export class GeneralFormService {
                 else
                  this.musicOrderList.push(musicActivation);
                 break;
-    
-
+   
     }
   }
 
@@ -729,20 +741,20 @@ export class GeneralFormService {
   //     }
   //     //this.updateTempOrderReduce(temp);
   //     //this.updateTempOrderReduce(temp,orderTypeId);
-     
+
   //   }
   //   this.updateTempOrderReduce(temp);
-   
+
   // }
 
 
-    updatetempOrderReduce(res, orderTypeId){
-      let temp= this.tempOrderReduce.value.tempOrderReduce;
-      for (var i in temp[orderTypeId]) {
-        for(var j in res ){
-          if(temp[orderTypeId][i].tempOrderId==res[j].globalParameters.tempOrderIdentity){
-            temp[orderTypeId].splice(i, 1);
-            break;
+  updatetempOrderReduce(res, orderTypeId) {
+    let temp = this.tempOrderReduce.value.tempOrderReduce;
+    for (var i in temp[orderTypeId]) {
+      for (var j in res) {
+        if (temp[orderTypeId][i].tempOrderId == res[j].globalParameters.tempOrderIdentity) {
+          temp[orderTypeId].splice(i, 1);
+          break;
 
         }
         //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
@@ -754,9 +766,9 @@ export class GeneralFormService {
       }
     }
 
-      //this.updateTempOrderReduce(temp)
-      this.updateTempOrderReduce(temp,orderTypeId);
-     // this.updateTempOrderReduce(temp);
+    //this.updateTempOrderReduce(temp)
+    this.updateTempOrderReduce(temp, orderTypeId);
+    // this.updateTempOrderReduce(temp);
   }
 
 

@@ -54,7 +54,9 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     hasGroups: true,
     questionsGroups: [],
   };
-  
+
+  hostingItem: any;
+
   ngOnInit(): void {
 
     this.tripId = this.generalFormService.tripId;
@@ -160,7 +162,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     )
   }
 
-
   getSupplierByOrderType() {
     this.supplierSub = this.orderService.getSupplierByOrderType(this.orderType, this.centerFieldId).subscribe(
 
@@ -186,7 +187,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     )
 
   }
-
 
   getOrderItemBySupplierId() {
     this.itemListSub = this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
@@ -224,10 +224,11 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   }
 
   public onSave(): void {
-    if (this.generalFormService.originalItemList.length > 0) {
-      this.hostingItem = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-    }
+    // if (this.generalFormService.originalItemList.length > 0) {
+    //   this.hostingItem = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+    // }
     if (this.form) {
+      if (!this.additionsService.globalValidations(this.form)) { return; }
       if (!this.validationsHosting()) { return; }
       var centerFieldObj = JSON.parse(localStorage.getItem('centerFieldObj'));
       var typeSleep = centerFieldObj.accommodationList.filter(x => x.id == this.hostingItem.typeSleepId)[0];
@@ -239,55 +240,46 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.occupancyValidation.quantityItem = this.form.value.details['quantity'];
       this.occupancyValidation.startHour = this.setDateTimeFormat(this.occupancyValidation.startDate, this.form.getRawValue().details['startHour']);
       this.occupancyValidation.endHour = this.setDateTimeFormat(this.occupancyValidation.endDate, this.form.getRawValue().details['endHour']);
+      if (this.isEditable) {
+        this.occupancyValidation.orderId = this.item.globalParameters.orderId;
+        this.occupancyValidation.itemOrderRecordId = this.item.globalParameters.itemOrderRecordId;
+      }
       if (this.hostingItem.classroomTypeId !== null) {//כיתה
         this.occupancyValidation.classCode = this.hostingItem.classroomTypeId;
         this.orderService.checkClassOccupancy(this.occupancyValidation).subscribe(res => {
           if (res.isOccupancyProblem) {
-            const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-              width: '500px',
-              data: { message: res.message, content: '', leftButton: 'אישור' }
-            }); return;
+            this.setDialogMessage(res.message); return;
           }
-          else { this.validationItem() }
+          else {
+            if (this.hostingItem.numHoursNeeded !== null) {
+              var hours = (new Date(this.occupancyValidation.endHour).getTime() - new Date(this.occupancyValidation.startHour).getTime()) / 3600000;
+              if (hours > this.hostingItem.numHoursNeeded) {
+                this.setDialogMessage('פריט זה אינו זמין למספר השעות שנבחרו'); return;
+              }
+            }
+            this.mapFormFieldsToServer()
+          }
         })
       }
       else if (this.hostingItem.typeSleepId !== null) {//לילי
         this.occupancyValidation.typeSleepId = this.hostingItem.typeSleepId;
         this.orderService.checkHostingOccupancy(this.occupancyValidation).subscribe(res => {
           if (res.isOccupancyProblem) {
-            const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-              width: '500px',
-              data: { message: "מס יחידות הלינה המבוקשות גדול ממספר יחידות הלינה הזמינות במרכז שדה זה", content: '', leftButton: 'אישור' }
-            }); return;
+            this.setDialogMessage(res.message); return;
           }
           else {
             this.orderService.checkHoursOccupancyPerItemInOrder(this.occupancyValidation).subscribe(res => {
               if (res.isOccupancyProblem) {
-                const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-                  width: '500px',
-                  data: { message: res.message + 'הודעת שגיאה - בדיקת שעות תפוסה', content: '', leftButton: 'אישור' }
-                }); return;
+                this.setDialogMessage(res.message); return;
               }
-              else { this.validationItem() }
+              else { this.mapFormFieldsToServer() }
             })
           }
         })
       }
     }
   }
-  //אם מספר יחידות הלינה המבוקש גדול ממספר יחידות הלינה הזמינות
-  // if (this.form.value.details['quantity'] > typeSleep.totalUnits) {
-  //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //     width: '500px',
-  //     data: { message: "מס יחידות הלינה המבוקשות גדול ממספר יחידות הלינה הזמינות במרכז שדה זה", content: '', leftButton: 'אישור' }
-  //   })
-  //   return false;
-  // }
 
-  validationItem() {
-    if (!this.additionsService.globalValidations(this.form)) { return; }
-    this.mapFormFieldsToServer();
-  }
   mapFormFieldsToServer() {
     let orderId;
     if (this.generalFormService.hostingOrderList.length > 0) {
@@ -397,7 +389,13 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       })
       return false;
     }
-
+    if (this.form.value.details['endHour'] < this.form.value.details['startHour']) {
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'אין למלא שעת סיום קטנה משעת התחלה', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+      })
+      return false;
+    }
     // אם הפריט מסוג כיתה- לא יכול להיות בטווח של כמה ימים
     if (this.form.value.details['startDate'] !== this.form.value.details['endDate'] && this.hostingItem.classroomTypeId !== null) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
@@ -417,38 +415,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     }
     return true;
   }
-
-  // CheckHostingOccupancy(occupancyValidation) {
-  //   this.orderService.checkHostingOccupancy(occupancyValidation).subscribe(res => {
-  //     console.log(res);
-  //     if (res.isOccupancyProblem === true) {
-  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //         width: '500px',
-  //         data: { message: "מס יחידות הלינה המבוקשות גדול ממספר יחידות הלינה הזמינות במרכז שדה זה", content: '', leftButton: 'אישור' }
-  //       }); return false;
-  //     } else return true;
-  //   }, (err) => {
-  //     console.log(err);
-  //   })
-  // }
-
-  // CheckClassOccupancy(occupancyValidation) {
-  //   this.orderService.checkClassOccupancy(occupancyValidation).subscribe(res => {
-  //     console.log(res);
-  //   }, (err) => {
-  //     console.log(err);
-  //   })
-  // }
-
-  // CheckHoursOccupancyPerItemInOrder(occupancyValidation) {
-  //   this.orderService.checkHoursOccupancyPerItemInOrder().subscribe(res => {
-  //     console.log(res);
-  //   }, (err) => {
-  //     console.log(err);
-  //   })
-  // }
-
-
 
   setDateTimeFormat(date, hour) {
     let str = date.split("T");
@@ -484,6 +450,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
+      this.hostingItem = item;
       if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
         this.ifCalculateByQuantity = true;
       else
@@ -504,6 +471,11 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.calculate();
     });
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      if (this.hostingItem.amountLimit !== null && +value > this.hostingItem.amountLimit) {
+        this.setDialogMessage(' :לא ניתן לבחור יותר ממגבלת הכמות ' + this.hostingItem.amountLimit);
+        this.form.controls["details"].get('quantity').patchValue(this.hostingItem.amountLimit, { emitEvent: false });
+      }
+
       if (this.ifCalculateByQuantity) {
         console.log(value);
         this.calculate();
@@ -519,6 +491,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       else
         return;
     });
+
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value);
       this.calculate();
