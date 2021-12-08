@@ -1,44 +1,21 @@
 <div class="education" #container>
-  <p >version : 1.2.4</p>
+  <p>version : 1.2.4</p>
   <div class="education__form">
-   
+
     <p class="education__form-headline">בדיקת זמינות</p>
 
     <form #educationForm="ngForm">
       <div class="education__form-field" disableOptionCentering="false">
         <label class="education__form-field-label">איפה ישנים</label>
         <mat-form-field>
-          <mat-select
-            #select
-            [(ngModel)]="forestCenterId"
-            name="sleepingPlace"
-            (selectionChange)="selectChange($event)"
-            (opened)="hideSelectPlaceholder(select)"
-            (closed)="showSelectPlaceholder(select)"
-          >
-          <!-- <mat-option
-          value="ששדשד"
-        >
-          <span class="education__select-option">
-            <img
-              [src]="'assets/images/userImage.jpg'"
-              class="education__select-option-svg"
-            />
-            <span class="education__select-option-text">ציפורי</span>
-          </span>
-        </mat-option> -->
-            <mat-option
-              value="{{ option.id }}"
-              *ngFor="let option of tripService.formOptions"
-            >
+          <mat-select #select [(ngModel)]="forestCenterId" name="sleepingPlace" (selectionChange)="selectChange($event)"
+            (opened)="hideSelectPlaceholder(select)" (closed)="showSelectPlaceholder(select)">
+            <mat-option [value]="option.id" *ngFor="let option of tripService.formOptions">
               <span class="education__select-option">
-                <img
-                  [src]="option.iconPath"
-                  class="education__select-option-svg"
-                />
+                <img [src]="option.iconPath" class="education__select-option-svg" />
                 <span class="education__select-option-text">{{
                   option.name
-                }}</span>
+                  }}</span>
               </span>
             </mat-option>
           </mat-select>
@@ -48,62 +25,38 @@
       <div class="education__form-field-pseudo">
         <label class="education__form-field-pseudo-label">מתאריך</label>
 
-        <label
-          class="education__form-field-pseudo-input label-input"
-          for="calendar-input"
-        >
-          <svg-icon
-            src="assets/images/calendar.svg"
-            class="education__form-field-svg"
-          ></svg-icon>
-          <input
-            class="header__form-field-input"
-            airbnb-calendar
-            (newDate)="newDateRecived($event)"
-            [disabled]="disableDates"
-            (sleepingPlace)="newSleepingPlaceRecived($event)"
-            (prevDate)="prevDateRecived($event)"
-            (closeCalendar)="closeCalendarHandler($event)"
-            type="text"
-            autocomplete="off"
-            [(ngModel)]="date"
-            [options]="options"
-            (ngModelChange)="dateObjChanged($event)"
-            name="calendar-input"
-            id="calendar-input"
-          />
+        <label class="education__form-field-pseudo-input label-input" for="calendar-input">
+          <svg-icon src="assets/images/calendar.svg" class="education__form-field-svg"></svg-icon>
+          <input class="header__form-field-input" airbnb-calendar (newDate)="newDateRecived($event)"
+            [disabled]="disableDates" (sleepingPlace)="newSleepingPlaceRecived($event)"
+            (prevDate)="prevDateRecived($event)" (closeCalendar)="closeCalendarHandler($event)" type="text"
+            autocomplete="off" [(ngModel)]="date" [options]="options" (ngModelChange)="dateObjChanged($event)"
+            name="calendar-input" id="calendar-input" />
           <span class="education__form-field-pseudo-input-value">
-            {{ sleepingDates.from }}</span
-          >
+            {{ sleepingDates.from }}</span>
         </label>
       </div>
 
       <div class="education__form-field-pseudo">
         <label class="education__form-field-pseudo-label">עד תאריך</label>
 
-        <label
-          class="education__form-field-pseudo-input label-input"
-          for="calendar-input"
-        >
-          <svg-icon
-            src="assets/images/calendar.svg"
-            class="education__form-field-svg"
-          ></svg-icon>
+        <label class="education__form-field-pseudo-input label-input" for="calendar-input">
+          <svg-icon src="assets/images/calendar.svg" class="education__form-field-svg"></svg-icon>
           <span class="education__form-field-pseudo-input-value">
-            {{ sleepingDates.till }}</span
-          >
+            {{ sleepingDates.till }}</span>
         </label>
       </div>
 
-      <div class="education__link" (click)="printFormValues()" >
+      <div class="education__link" (click)="printFormValues()">
         <!-- <label class="education__form-group-label link-group">buffer</label> -->
         <!-- <span   routerLink="{{ routerLinkContinue }}" class="education__link-text"
           >המשך</span> -->
-          <span    class="education__link-text"
-          >המשך</span>
-       
+        <span class="education__link-text">המשך</span>
+
       </div>
     </form>
   </div>
 </div>
-
+<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#448ecd" type="ball-scale-multiple">
+  <p style="color:#448ecd; font-size: 18px; font-weight: 600; text-align: center;">אנא המתן לטעינת הנתונים</p>
+</ngx-spinner>

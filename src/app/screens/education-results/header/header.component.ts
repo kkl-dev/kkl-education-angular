@@ -29,24 +29,11 @@ export class HeaderComponent implements OnInit {
   forestCenterId: number;
   formOptions: any;
   AvailableDates!: AvailableAccomodationDate[];
-  // AcommodationType = 'בקתה';
-  //disableDates = true;
   location = '';
   options!: CalendarOptions;
-
   freeSpacesArray: FreeSpace[] = [];
-  // options: CalendarOptions = {
-  //   firstCalendarDay: 0,
-  //   format: 'LL/dd/yyyy',
-  //   closeOnSelected: true,
-  //   maxDate: new Date(2022, 11, 15),
-  //   minYear: 2019,
-  //   maxYear: 2021,
-  //   freeSpacesArray: this.freeSpacesArray,
-  // };
 
-  constructor(public usersService: UserService, private userDataService: UserDataService,
-    private checkAvailabilityService: CheckAvailabilityService, public tripService: TripService, public fakeApi: FakeService) {
+  constructor(public usersService: UserService, private userDataService: UserDataService, public tripService: TripService, public fakeApi: FakeService) {
 
     this.freeSpacesArray = this.tripService.freeSpacesArray;
     this.tripService.getAvailableSleepingOptions();
@@ -58,7 +45,6 @@ export class HeaderComponent implements OnInit {
     let yearEnd= +str2[2];
     let monthEnd = (+str2[1])-1
     let dayEnd=  +str2[0];
-    // this.dateObjChanged(this.checkAvailabilityService.checkAvailabilltyValues.calendarInput);
     this.options = {
       firstCalendarDay: 0,
       format: 'dd/LL/yyyy',
@@ -69,21 +55,19 @@ export class HeaderComponent implements OnInit {
       fromToDate:{from: new Date(yearFrom,monthFrom,dayFrom) , to : new Date(yearEnd,monthEnd,dayEnd)},
       freeSpacesArray: this.freeSpacesArray,
     };
-
   }
 
   ngOnInit() {
     this.forestCenterOptions = this.tripService.formOptions;
-    console.log('forestCenterOptions: ', this.forestCenterOptions);
+    console.log('forest Center Options: ', this.forestCenterOptions);
     this.forestCenterOptions = this.forestCenterOptions.filter(aco => aco.accommodationList.length > 0);
     this.forestCenterId = this.tripService.centerField.id;
     this.forestCenter = this.tripService.centerField;
     this.sleepingDates = this.tripService.sleepingDates;
-    if (typeof (Storage) !== "undefined") {
-      // localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
-      // localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
-
-    }
+    // if (typeof (Storage) !== "undefined") {
+    //   // localStorage.setItem("sleepingDateStart",this.sleepingDates.from);
+    //   // localStorage.setItem("sleepingDateTill",this.sleepingDates.till);
+    // }
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
 
@@ -117,16 +101,11 @@ export class HeaderComponent implements OnInit {
     let freeSpacesArray = [];
     start.setDate(start.getDate() - 1);
     while (start < end && i <= this.AvailableDates.length) {
-     // while (start < end && i < this.AvailableDates.length) {
-
-      // for (var j in this.AvailableDates[i].freeSpace) {
       freeSpacesArray.push({
         date: start,
         freeSpace: this.AvailableDates[i].freeSpace
       });
       start = new Date(start.setDate(start.getDate() + 1)); i++;
-
-     // start = new Date(start.setDate(start.getDate())); i++;
     }
     return freeSpacesArray;
   }
@@ -135,20 +114,8 @@ export class HeaderComponent implements OnInit {
     this.forestCenter = this.forestCenterOptions.find((center: { id: any; }) => center.id === id);
     this.tripService.centerField = this.forestCenter;
     this.tripService.updateForestCenter(this.forestCenter);
-    //console.log('update ForestCenter obj =>', this.forestCenter);
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
   }
-
-  // getDaysArray(start: any, end: any) {
-  //   for (
-  //     var arr = [], dt = new Date(start);
-  //     dt <= end;
-  //     dt.setDate(dt.getDate() + 1)
-  //   ) {
-  //     arr.push(new Date(dt));
-  //   }
-  //   return arr;
-  // }
 
   dateObjChanged(e: string) {
     if (e && e.includes('-')) {
@@ -164,7 +131,6 @@ export class HeaderComponent implements OnInit {
       const dateFormat2 = tempDateArr[1].split('/').reverse();
       dateFormat2[1] = (+dateFormat2[1]).toString();
       dateFormat2[2] = (+dateFormat2[2]).toString();
-
 
       if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
         this.sleepingDates.from = tempDateArr[0];
@@ -195,6 +161,5 @@ export class HeaderComponent implements OnInit {
 
   newSleepingPlaceRecived(sleepingPlace: any) {
     console.log('sleepingPlace: ' + sleepingPlace);
-
   }
 }

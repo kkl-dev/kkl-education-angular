@@ -44,6 +44,7 @@ export class AddFacilityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //test yakovs feature
     this.selectedFacility$ = this.facilitiesServices.getSelectedFacility();
     this.subscribeToFacility = this.selectedFacility$.subscribe(data => {
       //this.createForm(data);
