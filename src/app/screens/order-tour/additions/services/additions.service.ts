@@ -378,6 +378,10 @@ export class AdditionsService {
         return false;
       }
     }
+    if (item.credit == 1) {
+      this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
+      return false;
+    }
     // פריט מוגבל לכמות אחת בלבד
     if (item?.amountLimit != null) {
       if (item?.amountLimit < form.value.details['quantity']) {

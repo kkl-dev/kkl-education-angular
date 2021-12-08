@@ -31,21 +31,21 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   itemId: number;
   centerFieldId: number;
   originalItemList = [];
-  itemsList =[]
+  itemsList = []
   supplierListSub: Subscription;
-  ifInitiateFormflag: boolean =false;
-  isEditable : boolean= false;
-  ifShowtable: boolean=false;
+  ifInitiateFormflag: boolean = false;
+  isEditable: boolean = false;
+  ifShowtable: boolean = false;
   tableData: any;
   isItemOrderExist: boolean;
-  isTempuraryItem : boolean;
+  isTempuraryItem: boolean;
   isSupplierXemptedFromVat: boolean;
-  ifCalculateByQuantity : boolean;
+  ifCalculateByQuantity: boolean;
   itemOrderRecordId: number;
-  valueChangeIndex= 0;
+  valueChangeIndex = 0;
   // close subscribe:
   supplierSub: Subscription;
-  itemListSub:  Subscription;
+  itemListSub: Subscription;
   languageSub: Subscription;
   addOrderSub: Subscription;
   editOrderSub: Subscription;
@@ -55,47 +55,44 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-   
     this.tripId = this.generalFormService.tripId;
     this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
     this.setformTemplate();
-
-    if (this.item != undefined && this.item != null ) {
-      if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
+    if (this.item != undefined && this.item != null) {
+      if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.orderId) {
         this.isItemOrderExist = true;
-        this.isTempuraryItem=false;
-        this.editMode=true;
-        this.supplierId= this.item.globalParameters.supplierId;
-        this.itemId= this.item.globalParameters.itemId;
+        this.isTempuraryItem = false;
+        this.editMode = true;
+        this.supplierId = this.item.globalParameters.supplierId;
+        this.itemId = this.item.globalParameters.itemId;
       }
       else
-      this.isTempuraryItem=true;
+        this.isTempuraryItem = true;
     }
-
-    else{
-      let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
-      this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
+    else {
+      let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
+      this.generalFormService.details[peopleInTripIndex].value = (this.generalFormService.peopleInTrip).toString();
     }
     this.generalFormService.setDatesValues();
-    if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
-    this.getSupplierList(this.orderType, this.tripId, 0);
-    else{
-      if( !this.isItemOrderExist)
-      this.getSupplierByOrderType();
-      else{
-          // need add field to order model
-          // let supplierName= this.item.order?.supplier.name;
-          //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
-          // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
-          // this.generalFormService.details[0].value = this.supplierId.toString();
-          this.getSupplierByOrderType(); // it's tempurary
-          //this.getOrderItemBySupplierId();
+    if (this.generalFormService.tripInfo.trip.tripStatus.id != 10)
+      this.getSupplierList(this.orderType, this.tripId, 0);
+    else {
+      if (!this.isItemOrderExist)
+        this.getSupplierByOrderType();
+      else {
+        // need add field to order model
+        // let supplierName= this.item.order?.supplier.name;
+        //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
+        // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
+        // this.generalFormService.details[0].value = this.supplierId.toString();
+        this.getSupplierByOrderType(); // it's tempurary
+        //this.getOrderItemBySupplierId();
       }
     }
     this.getLanguages();
-    
+
   }
 
   setformTemplate() {
@@ -107,7 +104,6 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     let guideQuestions = detailsArr.concat(this.generalFormService.guidance);
     this.generalFormService.questionGroups[index].questions = guideQuestions;
     //this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
-
   }
   changeLabels(tempArr) {
     console.log('tempArr is :', tempArr);
@@ -124,42 +120,42 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     return tempArr;
   }
 
-  initiateForm(){
-    this.ifInitiateFormflag=true;
-    this.formTemplate.questionsGroups= this.generalFormService.questionGroups;
-     console.log('this.formTemplate.questionsGroups:',this.formTemplate.questionsGroups)
+  initiateForm() {
+    this.ifInitiateFormflag = true;
+    this.formTemplate.questionsGroups = this.generalFormService.questionGroups;
+    console.log('this.formTemplate.questionsGroups:', this.formTemplate.questionsGroups)
   }
 
-  displayTable(){
-    let transArr= this.generalFormService.gudianceOrderList;
-    let currentObj= transArr.find(i=> (i.globalParameters.itemOrderRecordId)=== (this.item.globalParameters.itemOrderRecordId) && (i.globalParameters.supplierId)=== (this.item.globalParameters.supplierId) );
-    let arr=[]
+  displayTable() {
+    let transArr = this.generalFormService.gudianceOrderList;
+    let currentObj = transArr.find(i => (i.globalParameters.itemOrderRecordId) === (this.item.globalParameters.itemOrderRecordId) && (i.globalParameters.supplierId) === (this.item.globalParameters.supplierId));
+    let arr = []
     arr.push(currentObj);
-    this.tableData=arr;
-    this.ifShowtable=true;
+    this.tableData = arr;
+    this.ifShowtable = true;
 
- }
+  }
 
   getSupplierList(orderTypeId, tripId, orderId) {
 
-    this.supplierListSub=this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
+    this.supplierListSub = this.orderService.getSupplierList(orderTypeId, tripId, orderId).subscribe(
 
       response => {
         console.log(response);
         this.generalFormService.supplierList = [];
-        this.generalFormService.originalSupplierList=response;
+        this.generalFormService.originalSupplierList = response;
         response.forEach(element => {
           this.generalFormService.supplierList.push({ label: element.name, value: element.id.toString() });
         });
-         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-         this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
-         if(this.supplierId== undefined)
-           this.getSupplierByOrderType();
-           else{
-            this.generalFormService.details[supplierIndex].value= this.supplierId.toString();
-            this.getOrderItemBySupplierId()
-           }
-           
+        let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
+        this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
+        if (this.supplierId == undefined)
+          this.getSupplierByOrderType();
+        else {
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+          this.getOrderItemBySupplierId()
+        }
+
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -167,23 +163,23 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   }
 
   getSupplierByOrderType() {
-    this.supplierSub= this.orderService.getSupplierByOrderType(this.orderType,this.centerFieldId).subscribe(
+    this.supplierSub = this.orderService.getSupplierByOrderType(this.orderType, this.centerFieldId).subscribe(
       response => {
         console.log(response);
-        this.supplierId= response.id;
-        if(response.isXemptedFromVat==1)
-        this.isSupplierXemptedFromVat=true;
+        this.supplierId = response.id;
+        if (response.isXemptedFromVat == 1)
+          this.isSupplierXemptedFromVat = true;
         else
-        this.isSupplierXemptedFromVat=false;
+          this.isSupplierXemptedFromVat = false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length>0)
-        this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
-        else{
+        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length > 0)
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        else {
           this.generalFormService.supplierList.push({ label: response.name, value: response.id.toString() });
-          this.generalFormService.details[supplierIndex].inputProps.options= this.generalFormService.supplierList;
+          this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList;
           this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
         }
-         this.getOrderItemBySupplierId();
+        this.getOrderItemBySupplierId();
 
       },
       error => console.log(error),       // error
@@ -192,34 +188,32 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
   }
 
-
-  
   getOrderItemBySupplierId() {
-    this.itemListSub= this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+    this.itemListSub = this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
       response => {
         console.log(response);
-        this.itemsList=[];
+        this.itemsList = [];
         this.originalItemList = response;
-        this.generalFormService.originalItemList=response;
+        this.generalFormService.originalItemList = response;
         response.forEach(element => {
           this.itemsList.push({ label: element.name, value: element.id.toString() });
         });
-        let itemIndex= this.generalFormService.details.findIndex(i => i.key==='itemId');
-        this.generalFormService.details[itemIndex].inputProps.options= this.itemsList;
-        if(this.form)
-        return;
-        if(this.itemId!= undefined)
-        this.generalFormService.details[itemIndex].value= this.itemId.toString();
-        if (this.item != undefined && this.item != null ) {
-            this.item.globalParameters.supplierId=this.supplierId.toString();
-            if(this.item.globalParameters.orderId)
-            this.isItemOrderExist=true;
-            this.generalFormService.setFormValues(this.item, this.isItemOrderExist);
+        let itemIndex = this.generalFormService.details.findIndex(i => i.key === 'itemId');
+        this.generalFormService.details[itemIndex].inputProps.options = this.itemsList;
+        if (this.form)
+          return;
+        if (this.itemId != undefined)
+          this.generalFormService.details[itemIndex].value = this.itemId.toString();
+        if (this.item != undefined && this.item != null) {
+          this.item.globalParameters.supplierId = this.supplierId.toString();
+          if (this.item.globalParameters.orderId)
+            this.isItemOrderExist = true;
+          this.generalFormService.setFormValues(this.item, this.isItemOrderExist);
         }
         this.initiateForm();
         if (this.item != undefined && this.item != null) {
-          if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId!= undefined)
-           this.displayTable();
+          if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId != undefined)
+            this.displayTable();
         }
       },
       error => console.log(error),       // error
@@ -227,54 +221,55 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     )
   }
 
-  getLanguages(){
-     this.languageSub= this.userService.getLanguages().subscribe(res=>{
-        console.log(res);
-        res.forEach(element =>{
-          this.generalFormService.languageList.push({label:element.name,value :element.id}); 
-        })
-        let languageIndex= this.generalFormService.details.findIndex(i => i.key==='languageGuidance');
-        this.generalFormService.details[languageIndex].inputProps.options= this.generalFormService.languageList;
-     },(err)=>{
+  getLanguages() {
+    this.languageSub = this.userService.getLanguages().subscribe(res => {
+      console.log(res);
+      res.forEach(element => {
+        this.generalFormService.languageList.push({ label: element.name, value: element.id });
+      })
+      let languageIndex = this.generalFormService.details.findIndex(i => i.key === 'languageGuidance');
+      this.generalFormService.details[languageIndex].inputProps.options = this.generalFormService.languageList;
+    }, (err) => {
 
       console.log(err);
     })
   }
 
-
   public onSave(): void {
     if (this.form) {
       //if (!this.additionsService.globalValidations(this.form)) { return; }
-     //if (!this.validationsGudiance()) { return; }
-     let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-     // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
-       if(item?.amountLimit!= null){
-       this.orderService.checkItemsExistInDateTime(this.tripId,
-         this.centerFieldId, item).subscribe(res=>{
-            if(res.isOccupancyProblem == true){
-             this._dialog.open(ConfirmDialogComponent, {
-               width: '500px',
-               data: { message: res, content: ''}
-             })
-             return;
+      //if (!this.validationsGudiance()) { return; }
+      let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+      // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+      if (item?.amountLimit != null) {
+        this.orderService.checkItemsExistInDateTime(this.tripId,
+          this.centerFieldId, item).subscribe(res => {
+            if (res.isOccupancyProblem == true) {
+              this._dialog.open(ConfirmDialogComponent, {
+                width: '500px',
+                data: { message: res, content: '' }
+              })
+              return;
             }
-            else{
-             this.validationItem();
+            else {
+              this.validationItem();
             }
-         })
-     }
-      else{
+          })
+      }
+      else {
         this.validationItem();
-     }
-   
+      }
+
     }
   }
-  validationItem(){
+
+  validationItem() {
     if (!this.additionsService.globalValidations(this.form)) { return; }
     if (!this.validationsGudiance()) { return; }
     this.mapFormFieldsToServer()
   }
-  public mapFormFieldsToServer(){ 
+
+  public mapFormFieldsToServer() {
     let orderId;
     if (this.generalFormService.gudianceOrderList.length > 0) {
       orderId = this.generalFormService.gudianceOrderList[0].order.orderId
@@ -283,7 +278,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     guide.globalParameters = {} as OrderItemCommonDetails;
     guide.order = {} as Order;
     if (orderId != undefined && orderId)
-    guide.order.orderId = orderId;
+      guide.order.orderId = orderId;
     guide.order.supplier = {} as Supplier;
     guide.order.orderType = {} as OrderType;
     Object.keys(this.form.getRawValue().details).map((key, index) => {
@@ -300,10 +295,10 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
         }
       }
       else {
-        guide.scatterLocation= this.form.getRawValue().details['scatterLocation'];
-        guide.guideName=  this.form.getRawValue().details['guideName'];
-        guide.languageGuidance= this.form.getRawValue().details['languageGuidance'];
-        guide.guideInstructions= this.form.getRawValue().details['guideInstructions'];
+        guide.scatterLocation = this.form.getRawValue().details['scatterLocation'];
+        guide.guideName = this.form.getRawValue().details['guideName'];
+        guide.languageGuidance = this.form.getRawValue().details['languageGuidance'];
+        guide.guideInstructions = this.form.getRawValue().details['guideInstructions'];
       }
 
     });
@@ -315,68 +310,68 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     guide.order.tripId = this.tripId;
     guide.order.orderType.name = 'הדרכה';
     guide.order.orderType.id = this.orderType;
-    if(this.item!= undefined){
+    if (this.item != undefined) {
       if (this.item.globalParameters.tempOrderIdentity != undefined)
-      guide.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
+        guide.globalParameters.tempOrderIdentity = this.item.globalParameters.tempOrderIdentity;
     }
-  
-    if(!this.isEditable){
+
+    if (!this.isEditable) {
       //this.generalFormService.addOrder(guide, guide.order.orderType.id);
       this.addOrder(guide);
-    }     
-    else{
-      guide.globalParameters.itemOrderRecordId= this.itemOrderRecordId;
+    }
+    else {
+      guide.globalParameters.itemOrderRecordId = this.itemOrderRecordId;
       //this.generalFormService.editOrder(guide, guide.order.orderType.id);
       this.editOrder(guide)
     }
-   
+
     this.form.disable({ emitEvent: false });
   }
 
-  addOrder(item){
-    this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
-       console.log(res); 
-       //this.tableData.next(res);
-       this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
-       this.tableData=res;
-       this.ifShowtable=true;
-       this.generalFormService.enableButton.next(true);
-       //this.isSaveOrderSucceeded.next(true);
-       this.editMode = true;
-       this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
-       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
-     }, (err) => {
-       console.log(err);
-       //this.isSaveOrderSucceeded.next(false);
-       this.editMode = false;
-       this.form.enable({ emitEvent: false });
-       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
-     })
-   }
- 
-    editOrder(item){
-    this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
-       console.log(res);  
-       this.generalFormService.setOrderList(res, this.orderType,'updating',false);
-       //this.isSaveOrderSucceeded.next(true);
-       this.editMode = true;
-       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
-     }, (err) => {
-       console.log(err);
-       this.ifShowtable=false;
-        //this.isSaveOrderSucceeded.next(false);
-        this.editMode = false;
-        this.form.enable({ emitEvent: false });
-        this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
-      })
-    }
- 
-    setDialogMessage(message){
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-         data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-       })
-    }
+  addOrder(item) {
+    this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
+      console.log(res);
+      //this.tableData.next(res);
+      this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
+      this.tableData = res;
+      this.ifShowtable = true;
+      this.generalFormService.enableButton.next(true);
+      //this.isSaveOrderSucceeded.next(true);
+      this.editMode = true;
+      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem);
+      this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+    }, (err) => {
+      console.log(err);
+      //this.isSaveOrderSucceeded.next(false);
+      this.editMode = false;
+      this.form.enable({ emitEvent: false });
+      this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
+    })
+  }
+
+  editOrder(item) {
+    this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
+      console.log(res);
+      this.generalFormService.setOrderList(res, this.orderType, 'updating', false);
+      //this.isSaveOrderSucceeded.next(true);
+      this.editMode = true;
+      this.setDialogMessage('ההזמנה עודכנה בהצלחה');
+    }, (err) => {
+      console.log(err);
+      this.ifShowtable = false;
+      //this.isSaveOrderSucceeded.next(false);
+      this.editMode = false;
+      this.form.enable({ emitEvent: false });
+      this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
+    })
+  }
+
+  setDialogMessage(message) {
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+    })
+  }
 
   validationsGudiance() {
     if (this.generalFormService.originalItemList.length > 0) {
@@ -384,71 +379,50 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     }
     if (item.credit === 0) {
       if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'בהזמנת הדרכה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-        })
+        this.setDialogMessage('בהזמנת הדרכה - חובה למלא שעת התייצבות');
         return false;
       }
       if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'בהזמנת הדרכה - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-        })
+        this.setDialogMessage('בהזמנת הדרכה - חובה למלא מקום התייצבות');
         return false;
       }
-
     }
-    // chani
-
     // אם הפריט הוא תוספת ריכוז חובה להכניס הערה
-    if (item.itemId == 234) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'חובה למלא הערה בפריט - תןוספת ריכוז', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      })
-      return false;
+    if (item.id == 234) {
+      if (this.form.value.comments['comments'] === null || this.form.value.comments['comments'] === "" || this.form.value.comments['comments'] === undefined) {
+        this.setDialogMessage('חובה למלא הערה בפריט - תוספת ריכוז');
+        return false;
+      }
     }
     // הרד קודד - צריך עדכון DB
     // אם הפריט הוא ריכוז מחנה וגם הטיול חוץ מרכז שדה לא לאפשר לשבץ מדריך לפריט זה
-    if ((item.itemId == 25 || item.itemId == 152 || item.itemId == 218 ||
-      item.itemId == 219 || item.itemId == 229 || item.itemId == 235 || item.itemId == 271)
+    if ((item.id == 25 || item.id == 152 || item.id == 218 ||
+      item.id == 219 || item.id == 229 || item.id == 235 || item.id == 271)
       && this.generalFormService.tripInfo.trip.insideCenterFieldId == 2) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      })
+      this.setDialogMessage('לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה');
       return false;
     }
+
+    // chani
+
     // צריך טיפול בהרשאות- בינתיים , מתייחסים להרשאה כהרשאה קבועה - משווק
     // צריך תנאי האם ההרשאה היא אכן משווק
     // אם הפריט זיכוי (וההרשאה משווק)
     if (item.credit == 1) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'פריט מסוג זיכוי מצריך אישור חשב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      })
+      this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
       return false;
     }
-    // חסר בYAML צריך להוסיך את השדה הזה
     // אם הפריט מצריך אישור של מנהל מחלקה וגם אם הוא מסוג זיכוי
-    // if (item.need_att_manager_approval == 1) {
-    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-    //     width: '500px',
-    //     data: { message: 'פריט  מצריך אישור מנהל מחלקה', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-    //   })
-    //   return false;
-    // }
-
-    // לא לכל ההרשאות
-    if (item.itemId = 220) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'אין לך הרשאה לקלוט פריט זה', content: '', }
-      })
+    if (item.isNeedManagerApproval == 1) {
+      this.setDialogMessage('פריט  מצריך אישור מנהל מחלקה');
       return false;
     }
-
+    // לא לכל ההרשאות
+    if (item.id == 220) {
+      this.setDialogMessage('אין לך הרשאה לקלוט פריט זה');
+      return false;
+    }
+    // typeSleepId
     // בדיקה שהפריט שישי שבת
     // או חג
     if (item.itemId == 219) {
@@ -472,7 +446,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
     // אין להוסיף פריטים "תוספת לינה" ו"תוספת פעילות לילה" (419, 177) לאותו לילה בטיול
     // צרך בדיקה אם זה אכן מבצע את הבדיקה הזאת בצורה נכונה
-    if (item.itemId == 117 || item.itemId == 419) {
+    if (item.id == 117 || item.id == 419) {
       if (this.generalFormService.guidance.filter(x => x["itemId"].itemId == item.itemId &&
         x["startDate"].getDate() == item.startDate &&
         x["startDate"].getDate() < item.endDate) != null) {
@@ -486,7 +460,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     return true;
   }
 
-   // chani- from PB
+  // chani- from PB
   // צריך להיות כללי
   isHoliday() {
     // var hebrewDate = require("hebrew-date");
@@ -505,7 +479,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
   public onEdit() {
     this.editMode = false;
-    this.isEditable=true;
+    this.isEditable = true;
     this.form.enable({ emitEvent: false });
     this.disableFormFields();
   }
@@ -515,62 +489,62 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.disableFormFields();
     this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
-        console.log('supplier changed:',value);
-        this.supplierId=value;
-        if( this.valueChangeIndex>0)
-        this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
-        let supplier= this.generalFormService.originalSupplierList.find(i=> i.id=== +value);
-        if(supplier.isXemptedFromVat==1)
-        this.isSupplierXemptedFromVat=true;
+        console.log('supplier changed:', value);
+        this.supplierId = value;
+        if (this.valueChangeIndex > 0)
+          this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
+        let supplier = this.generalFormService.originalSupplierList.find(i => i.id === +value);
+        if (supplier.isXemptedFromVat == 1)
+          this.isSupplierXemptedFromVat = true;
         else
-        this.isSupplierXemptedFromVat=false;
-        if( this.valueChangeIndex>0)
-        this.getOrderItemBySupplierId();
+          this.isSupplierXemptedFromVat = false;
+        if (this.valueChangeIndex > 0)
+          this.getOrderItemBySupplierId();
         this.valueChangeIndex++
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
       if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
-      this.ifCalculateByQuantity= true;
+        this.ifCalculateByQuantity = true;
       else
-      this.ifCalculateByQuantity= true;
+        this.ifCalculateByQuantity = true;
       let itemCost;
-      if(!item.cost){
+      if (!item.cost) {
         this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
         this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
         this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
-      if(this.isSupplierXemptedFromVat==true){
+      if (this.isSupplierXemptedFromVat == true) {
         itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
       }
-       else
-       itemCost = item.costVat;
-      this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
+      else
+        itemCost = item.costVat;
+      this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
       this.calculate();
     });
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      if(this.ifCalculateByQuantity){
+      if (this.ifCalculateByQuantity) {
         console.log(value);
         this.calculate();
       }
       else
-      return;  
+        return;
     });
 
 
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      if(!this.ifCalculateByQuantity){
+      if (!this.ifCalculateByQuantity) {
         console.log(value);
         this.calculate();
       }
       else
-      return;
-     
+        return;
+
     });
-  
+
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log(value);
       this.calculate();
@@ -583,27 +557,27 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
   }
 
-  calculate(){
-    let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
-    this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier,{emitEvent: false});
-    this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
+  calculate() {
+    let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
+    this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
   }
 
- disableFormFields(){
-  this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-  this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-  this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
-  this.form.controls["details"].get('guideName').disable({ emitEvent: false });
-  this.form.controls["details"].get('quantity').disable({ emitEvent: false });
-  if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
-  this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
- }
+  disableFormFields() {
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    this.form.controls["details"].get('guideName').disable({ emitEvent: false });
+    this.form.controls["details"].get('quantity').disable({ emitEvent: false });
+    if (this.generalFormService.tripInfo.trip.tripStatus.id == 10)
+      this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
+  }
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }
     if (this.itemListSub) { this.itemListSub.unsubscribe(); }
-    if(this.addOrderSub) {this.addOrderSub.unsubscribe();}
-    if(this.editOrderSub){this.editOrderSub.unsubscribe()}
+    if (this.addOrderSub) { this.addOrderSub.unsubscribe(); }
+    if (this.editOrderSub) { this.editOrderSub.unsubscribe() }
   }
 }

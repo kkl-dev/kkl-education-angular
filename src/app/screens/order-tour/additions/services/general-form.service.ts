@@ -21,6 +21,7 @@ export class GeneralFormService {
   tripId: number;
   centerFieldObj;
   tripInfo: any;
+  isOneDayTrip: boolean;
   peopleInTrip: number
   public transportOrderList: TransportOrder[] = [];
 

@@ -531,7 +531,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
 
     this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log('vegetarianDishesNumber')
-      this.calculateDishes(parseInt(value), 'vegetarianDishesNumber')
+      this.calculateDishes(parseInt(value), 'vegetarianDishesNumber');
     });
     this.form.controls["details"].get('veganDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log('veganDishesNumber')
@@ -566,7 +566,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   calculateDishes(value: any, type: any) {
     if (value > this.form.controls["details"].get('regularDishesNumber').value) {
       this.form.controls["details"].get(type).patchValue(this.form.controls["details"].get('regularDishesNumber').value.toString(), { emitEvent: false });
-      this.form.controls["details"].get('regularDishesNumber').patchValue('0', { emitEvent: false });
+      // this.form.controls["details"].get('regularDishesNumber').patchValue('0', { emitEvent: false });
 
       this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');
     }
