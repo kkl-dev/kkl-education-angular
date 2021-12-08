@@ -328,15 +328,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.tableData = res;
       this.ifShowtable = true;
       this.generalFormService.enableButton.next(true);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
-
       this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
-
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
@@ -348,14 +344,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
    this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
       console.log(res);  
       this.generalFormService.setOrderList(res, this.orderType,'updating',false);
-
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
     }, (err) => {
       console.log(err);
       this.ifShowtable = false;
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
@@ -577,7 +570,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');
     }
     else this.form.controls["details"].get('regularDishesNumber').patchValue((this.generalFormService.peopleInTrip - this.form.controls["details"].get('vegetarianDishesNumber').value - this.form.controls["details"].get('veganDishesNumber').value).toString(), { emitEvent: false });
-
+  }
  disableFormFields(){
   this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
   this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });

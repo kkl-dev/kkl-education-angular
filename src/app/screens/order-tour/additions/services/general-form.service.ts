@@ -649,17 +649,14 @@ export class GeneralFormService {
                 eco= res[i];
                 ecoArr.push(eco);
              }
-
           }
-        }
-        else if (res.length == 1)
-          economy = res[0];
-        this.economyOrderList = [];
-        if (res.length > 1)
-          this.economyOrderList = ecoArr;
-        else
+          else if(res.length==1)
+          economy = res[0]; 
+          this.economyOrderList=[];
+          if(res.length>1)
+          this.economyOrderList= ecoArr;
+          else
           this.economyOrderList.push(economy);
-
           if(operation=='adding' && isTempurary==true)
           this.updatetempOrderReduce(res,orderTypeId);
           break;
@@ -721,7 +718,8 @@ export class GeneralFormService {
                 else
                  this.musicOrderList.push(musicActivation);
                 break;
-   
+    
+
     }
   }
 
@@ -741,20 +739,20 @@ export class GeneralFormService {
   //     }
   //     //this.updateTempOrderReduce(temp);
   //     //this.updateTempOrderReduce(temp,orderTypeId);
-
+     
   //   }
   //   this.updateTempOrderReduce(temp);
-
+   
   // }
 
 
-  updatetempOrderReduce(res, orderTypeId) {
-    let temp = this.tempOrderReduce.value.tempOrderReduce;
-    for (var i in temp[orderTypeId]) {
-      for (var j in res) {
-        if (temp[orderTypeId][i].tempOrderId == res[j].globalParameters.tempOrderIdentity) {
-          temp[orderTypeId].splice(i, 1);
-          break;
+    updatetempOrderReduce(res, orderTypeId){
+      let temp= this.tempOrderReduce.value.tempOrderReduce;
+      for (var i in temp[orderTypeId]) {
+        for(var j in res ){
+          if(temp[orderTypeId][i].tempOrderId==res[j].globalParameters.tempOrderIdentity){
+            temp[orderTypeId].splice(i, 1);
+            break;
 
         }
         //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
@@ -766,11 +764,11 @@ export class GeneralFormService {
       }
     }
 
-    //this.updateTempOrderReduce(temp)
-    this.updateTempOrderReduce(temp, orderTypeId);
-    // this.updateTempOrderReduce(temp);
+      //this.updateTempOrderReduce(temp)
+      this.updateTempOrderReduce(temp,orderTypeId);
+     // this.updateTempOrderReduce(temp);
   }
 
 
-
+  
 }
