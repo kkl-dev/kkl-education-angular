@@ -67,7 +67,7 @@ export class SleepingOptionsFormComponent implements OnInit {
         freeSpace: [
           {
             accomodationName: 'ימית',
-            availableBeds: +Math.floor(Math.random() * 8).toString(),
+            availableBeds: +Math.floor(Math.random() * 300).toString(),
           },
           {
             accomodationName: '2000',
