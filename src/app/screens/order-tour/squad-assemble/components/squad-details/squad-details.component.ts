@@ -38,10 +38,10 @@ export class SquadDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.tablet$ = this.breakpoints.isTablet();
     this.setSquadDetails();
-    this.tripService.activityByAttr.subscribe(res=>{
-       console.log(res); 
-       this.squadDetailsService.questions[1].inputProps.options=res;
-    })
+    // this.tripService.activityByAttr.subscribe(res=>{
+    //    console.log(res); 
+    //    this.squadDetailsService.questions[1].inputProps.options=res;
+    // })
     // this.tripService.activityByAttr.subscribe(res=>{
     //   console.log('I am activities from tripService', res);
     // })
