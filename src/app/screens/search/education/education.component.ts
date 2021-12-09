@@ -68,16 +68,9 @@ export class EducationComponent implements OnInit {
       this.sleepingDates = this.tripService.sleepingDates;
       this.disableContinueBtn = false;
     }
-    //this.test();
+   
   }
-  test(){
-    let url='http://knf-appl-dev3/EducationApiTest/QueueTasks/Check';
-    this.http.get(url).subscribe(res=>{
-         console.log(res);
-    },(err)=>{
-      console.log(err);
-    })
-  }
+ 
 
   selectChange(event: any) {
     this.tripService.centerField = this.tripService.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
