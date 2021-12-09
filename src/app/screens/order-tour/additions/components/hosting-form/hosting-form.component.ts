@@ -240,6 +240,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.occupancyValidation.startHour = this.setDateTimeFormat(this.occupancyValidation.startDate, this.form.getRawValue().details['startHour']);
       this.occupancyValidation.endHour = this.setDateTimeFormat(this.occupancyValidation.endDate, this.form.getRawValue().details['endHour']);
       if (this.isEditable) {
+
         if (this.isItemOrderExist) {
           this.occupancyValidation.orderId = this.item.globalParameters.orderId;
           this.occupancyValidation.itemOrderRecordId = this.item.globalParameters.itemOrderRecordId;
@@ -248,6 +249,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
           this.occupancyValidation.orderId = this.orderId;
           this.occupancyValidation.itemOrderRecordId = this.itemOrderRecordId;
         }
+
       }
       if (this.hostingItem.classroomTypeId !== null) {//כיתה
         this.occupancyValidation.classCode = this.hostingItem.classroomTypeId;
@@ -338,17 +340,15 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       console.log(res);
       this.orderId = res[0].globalParameters.orderId;
       this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
-      //this.tableData.next(res);
+      this.orderId= res[0].globalParameters.orderId;
       this.tableData = res;
       this.ifShowtable = true;
       this.generalFormService.enableButton.next(true);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
@@ -358,14 +358,12 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   editOrder(item) {
     this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
       console.log(res);
-      this.generalFormService.setOrderList(res, this.orderType, 'updating', false);
-      //this.isSaveOrderSucceeded.next(true);
+      this.generalFormService.setOrderList(res, this.orderType, 'updating',false);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
     }, (err) => {
       console.log(err);
       this.ifShowtable = false;
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');

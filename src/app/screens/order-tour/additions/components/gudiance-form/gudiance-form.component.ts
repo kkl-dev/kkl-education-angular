@@ -328,50 +328,50 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.form.disable({ emitEvent: false });
   }
 
-  addOrder(item) {
-    this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
-      console.log(res);
-      //this.tableData.next(res);
-      this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
-      this.tableData = res;
-      this.ifShowtable = true;
-      this.generalFormService.enableButton.next(true);
-      //this.isSaveOrderSucceeded.next(true);
-      this.editMode = true;
-      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem);
-      this.setDialogMessage('ההזמנה נשמרה בהצלחה');
-    }, (err) => {
-      console.log(err);
-      //this.isSaveOrderSucceeded.next(false);
-      this.editMode = false;
-      this.form.enable({ emitEvent: false });
-      this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
-    })
-  }
 
-  editOrder(item) {
-    this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
-      console.log(res);
-      this.generalFormService.setOrderList(res, this.orderType, 'updating', false);
-      //this.isSaveOrderSucceeded.next(true);
-      this.editMode = true;
-      this.setDialogMessage('ההזמנה עודכנה בהצלחה');
-    }, (err) => {
-      console.log(err);
-      this.ifShowtable = false;
-      //this.isSaveOrderSucceeded.next(false);
-      this.editMode = false;
-      this.form.enable({ emitEvent: false });
-      this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
-    })
-  }
+  addOrder(item){
+    this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
+       console.log(res); 
+       //this.tableData.next(res);
+       this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
+       this.tableData=res;
+       this.ifShowtable=true;
+       this.generalFormService.enableButton.next(true);
+       //this.isSaveOrderSucceeded.next(true);
+       this.editMode = true;
+       this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
+       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+     }, (err) => {
+       console.log(err);
+       //this.isSaveOrderSucceeded.next(false);
+       this.editMode = false;
+       this.form.enable({ emitEvent: false });
+       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
+     })
+   }
+ 
+    editOrder(item){
+    this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
+       console.log(res);  
+       this.generalFormService.setOrderList(res, this.orderType,'updating',false);
+       this.editMode = true;
+       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
+     }, (err) => {
+       console.log(err);
+       this.ifShowtable=false;
+        this.editMode = false;
+        this.form.enable({ emitEvent: false });
+        this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
+      })
+    }
+ 
+    setDialogMessage(message){
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+         data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+       })
+    }
 
-  setDialogMessage(message) {
-    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-      width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-    })
-  }
 
   validationsGudiance() {
     if (this.generalFormService.originalItemList.length > 0) {

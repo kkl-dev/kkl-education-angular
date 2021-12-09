@@ -205,7 +205,7 @@ export class SleepingOptionsComponent implements OnInit {
 
   setValues(){
     // if(this.squadAssembleService.filledNightsArray!= undefined){
-      if(this.squadAssembleService.filledNightsArray?.length>0){
+    if(this.squadAssembleService.filledNightsArray?.length>0){
       console.log('filledNightsArray is full');
       this.filledNightsArray= this.squadAssembleService.filledNightsArray;
       for (let i = 0; i < this.filledNightsArray.length; i++) {

@@ -317,17 +317,14 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
       console.log(res); 
       this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
-      //this.tableData.next(res);
       this.tableData=res;
       this.ifShowtable=true;
       this.generalFormService.enableButton.next(true);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
@@ -338,13 +335,11 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
    this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
       console.log(res);  
       this.generalFormService.setOrderList(res, this.orderType,'updating',false);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
     }, (err) => {
       console.log(err);
       this.ifShowtable=false;
-       //this.isSaveOrderSucceeded.next(false);
        this.editMode = false;
        this.form.enable({ emitEvent: false });
        this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');

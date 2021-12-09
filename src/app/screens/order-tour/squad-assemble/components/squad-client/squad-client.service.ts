@@ -82,7 +82,7 @@ export class SquadClientService {
             key: 'contactPhone',
             label: 'נייד איש קשר',
             type: 'text',
-            validations: [Validators.required,Validators.pattern(/\-?\d*\.?\d{1,2}/),Validators.minLength(10),Validators.maxLength(10)],
+            validations: [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern("^[0-9]*$")],
           }),
           new QuestionTextbox({
             key: 'contactEmail',

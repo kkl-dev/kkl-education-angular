@@ -579,7 +579,9 @@ export class GeneralFormService {
   }
 
 
+
   setOrderList(res, orderTypeId, operation, isTempurary) {
+
     switch (orderTypeId) {
       case 1:
         let t = {} as TransportOrder;
@@ -648,7 +650,6 @@ export class GeneralFormService {
                 eco= res[i];
                 ecoArr.push(eco);
              }
-
           }
           else if(res.length==1)
           economy = res[0]; 
@@ -657,7 +658,6 @@ export class GeneralFormService {
           this.economyOrderList= ecoArr;
           else
           this.economyOrderList.push(economy);
-
           if(operation=='adding' && isTempurary==true)
           this.updatetempOrderReduce(res,orderTypeId);
           break;
@@ -720,7 +720,8 @@ export class GeneralFormService {
                  this.musicOrderList.push(musicActivation);
                 break;
     
-
+    }
+  }
 
     }
   }
@@ -755,7 +756,6 @@ export class GeneralFormService {
             temp[orderTypeId].splice(i, 1);
             break;
 
-
         }
         //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
         //  if(temp[orderTypeId][i].orderTempId==tempOrderId){
@@ -772,5 +772,5 @@ export class GeneralFormService {
   }
 
 
-
+  
 }

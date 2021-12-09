@@ -230,6 +230,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
      console.log('nightSelected is: ', nightSelected)
      let avaliableSleepingOptionsByDates= this._tripService.AvailableSleepingOptionsByDay.value;
      console.log('avaliableSleepingOptionsByDates is :', avaliableSleepingOptionsByDates)
+
      let capturedCabins=0;
      let capturedTents=0;
      let capturedRooms=0;
@@ -280,6 +281,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
       }
 
 
+
          for (let j = 0; j< avaliableSleepingOptionsByDates.length; j++) {
              let sleepingDate= avaliableSleepingOptionsByDates[j].date;
              let subDate= sleepingDate.split("T");
@@ -303,7 +305,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)   
                     return  this.IsUnitsNumIsValid;           
                   } 
-                
+
                    if ( (lodgersNumber> (unitsNumber*x.maxOccupancy))){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
@@ -318,13 +320,13 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)                   
                   }
-                 
+
                   if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
-                 
+
                   break;
                  case 3:
                   if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < (unitsNumber+ capturedRooms)){
@@ -332,13 +334,13 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)          
                   }
-                 
+
                   if ( lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
-                 
+
                   break;
                  case 4:  
                  if ( (Number.isInteger(x.availableUnits)?x.availableUnits:0) < unitsNumber){
@@ -346,20 +348,20 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                     this.filledNightForm.get('unitsNumber').setValue('');
                    this.displayMessage(nightSelected[i].date,accomodationNameSelected,x.availableUnits)  
                   }
-                  
+
                   if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
                     this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
-                  
+
                  break;
 
             }
           }     
          }
       } 
-     
+
     }
      
       return  this.IsUnitsNumIsValid;
