@@ -348,7 +348,8 @@ export class GeneralFormService {
           control.value = data.globalParameters[control.key].toString();
       }
       if (control.key == 'peopleInTrip' && !isItemOrderExist) {
-        control.value = this.squadAssembleService.peopleInTrip;
+        //control.value = this.squadAssembleService.peopleInTrip;
+        control.value = this.peopleInTrip;
       }
       if (control.key == 'startHour' && data.globalParameters[control.key].includes('T')) {
         control.value = this.setTimeFormat(data.globalParameters[control.key]);
@@ -364,6 +365,9 @@ export class GeneralFormService {
       }
       if (control.key == 'quantity' && data.globalParameters[control.key] == undefined) {
         control.value = '1';
+      }
+      if(data.order.orderType.id==4 && control.key == 'quantity' ){
+        control.value=this.questionGroups[0].questions[3].value;
       }
       // if (control.key === 'comments') {
       //   control.value = data;
@@ -526,47 +530,20 @@ export class GeneralFormService {
   }
 
 
-  //  addOrder(item: any,orderType) {  
-  //     this.orderService.addOrder( item).subscribe(res => {
-  //       console.log(res); 
-  //       this.tableData.next(res);
-  //       this.enableButton.next(true);
-  //       //this.isSaveOrderSucceeded.next(true);
-  //       this.setOrderList(res,orderType,'adding');
-  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //         width: '500px',
-  //         data: { message: 'ההזמנה נשמרה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //       })
-  //     }, (err) => {
-  //       console.log(err);
-  //       //this.isSaveOrderSucceeded.next(false);
-  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //         width: '500px',
-  //         data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //       })
-  //     })
-  //   }
-  //   editOrder(item: any,orderType) { 
-  //     this.orderService.editOrder(item).subscribe(res => {
-  //       console.log(res);  
-  //       this.setOrderList(res, orderType,'updating');
-  //       //this.isSaveOrderSucceeded.next(true);
-  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //         width: '500px',
-  //         data: { message: 'ההזמנה עודכנה בהצלחה', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //       })
-  //     }, (err) => {
-  //       console.log(err);
-  //       //this.isSaveOrderSucceeded.next(false);
-  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //         width: '500px',
-  //         data: { message: 'אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-  //       })
-
-  //     })
-    
-  // }
- 
+  findInvalidControls(form: any) {
+    const controls = form.controls.details.controls;
+    var indx = 0;
+    for (const key in controls) {
+      if (controls[key].invalid) {
+        var name = this.questionGroups[0].questions[indx].label;
+        if (name === 'בחר פריט') name = 'פריט';
+        if (name === 'בחר אתר') name = 'אתר';
+        return name;
+      }
+      indx++;
+    }
+    return null;
+  }
 
 
   setOrderList(res, orderTypeId, operation,isTempurary) {

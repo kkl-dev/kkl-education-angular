@@ -72,6 +72,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value = (this.generalFormService.peopleInTrip).toString();
     }
+    let quantityIndex = this.generalFormService.details.findIndex(i => i.key === 'quantity');
+    this.generalFormService.details[quantityIndex].value = (this.generalFormService.peopleInTrip).toString();
+    let regularDishesNumberIndex = this.generalFormService.economy.findIndex(i => i.key === 'regularDishesNumber');
+    this.generalFormService.economy[regularDishesNumberIndex].value = (this.generalFormService.peopleInTrip).toString();
+
     this.generalFormService.setDatesValues();
     if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
     this.getSupplierList(this.orderType, this.tripId, 0);
@@ -188,6 +193,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
           this.item.globalParameters.supplierId = this.supplierId.toString();
           if(this.item.globalParameters.orderId)
           this.isItemOrderExist=true;
+         
           this.generalFormService.setFormValues(this.item, this.isItemOrderExist);
         }
         this.initiateForm();
@@ -529,6 +535,14 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.calculate();
     });
 
+    this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log('vegetarianDishesNumber')
+      this.calculateDishes(parseInt(value), 'vegetarianDishesNumber');
+    });
+    this.form.controls["details"].get('veganDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      console.log('veganDishesNumber')
+      this.calculateDishes(parseInt(value), 'veganDishesNumber')
+    });
     // this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       //this.calculate();
     // });
@@ -550,6 +564,16 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
     this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
     this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+  }
+
+  calculateDishes(value: any, type: any) {
+    if (value > this.form.controls["details"].get('regularDishesNumber').value) {
+      this.form.controls["details"].get(type).patchValue(this.form.controls["details"].get('regularDishesNumber').value.toString(), { emitEvent: false });
+      // this.form.controls["details"].get('regularDishesNumber').patchValue('0', { emitEvent: false });
+
+      this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');
+    }
+    else this.form.controls["details"].get('regularDishesNumber').patchValue((this.generalFormService.peopleInTrip - this.form.controls["details"].get('vegetarianDishesNumber').value - this.form.controls["details"].get('veganDishesNumber').value).toString(), { emitEvent: false });
   }
 
  disableFormFields(){

@@ -384,71 +384,50 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     }
     if (item.credit === 0) {
       if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'בהזמנת הדרכה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-        })
+        this.setDialogMessage('בהזמנת הדרכה - חובה למלא שעת התייצבות');
         return false;
       }
       if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'בהזמנת הדרכה - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-        })
+        this.setDialogMessage('בהזמנת הדרכה - חובה למלא מקום התייצבות');
         return false;
       }
-
     }
-    // chani
-
     // אם הפריט הוא תוספת ריכוז חובה להכניס הערה
-    if (item.itemId == 234) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'חובה למלא הערה בפריט - תןוספת ריכוז', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      })
-      return false;
+    if (item.id == 234) {
+      if (this.form.value.comments['comments'] === null || this.form.value.comments['comments'] === "" || this.form.value.comments['comments'] === undefined) {
+        this.setDialogMessage('חובה למלא הערה בפריט - תוספת ריכוז');
+        return false;
+      }
     }
     // הרד קודד - צריך עדכון DB
     // אם הפריט הוא ריכוז מחנה וגם הטיול חוץ מרכז שדה לא לאפשר לשבץ מדריך לפריט זה
-    if ((item.itemId == 25 || item.itemId == 152 || item.itemId == 218 ||
-      item.itemId == 219 || item.itemId == 229 || item.itemId == 235 || item.itemId == 271)
+    if ((item.id == 25 || item.id == 152 || item.id == 218 ||
+      item.id == 219 || item.id == 229 || item.id == 235 || item.id == 271)
       && this.generalFormService.tripInfo.trip.insideCenterFieldId == 2) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      })
+      this.setDialogMessage('לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה');
       return false;
     }
+
+    // chani
+
     // צריך טיפול בהרשאות- בינתיים , מתייחסים להרשאה כהרשאה קבועה - משווק
     // צריך תנאי האם ההרשאה היא אכן משווק
     // אם הפריט זיכוי (וההרשאה משווק)
     if (item.credit == 1) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'פריט מסוג זיכוי מצריך אישור חשב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      })
+      this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
       return false;
     }
-    // חסר בYAML צריך להוסיך את השדה הזה
     // אם הפריט מצריך אישור של מנהל מחלקה וגם אם הוא מסוג זיכוי
-    // if (item.need_att_manager_approval == 1) {
-    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-    //     width: '500px',
-    //     data: { message: 'פריט  מצריך אישור מנהל מחלקה', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-    //   })
-    //   return false;
-    // }
-
-    // לא לכל ההרשאות
-    if (item.itemId = 220) {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'אין לך הרשאה לקלוט פריט זה', content: '', }
-      })
+    if (item.isNeedManagerApproval == 1) {
+      this.setDialogMessage('פריט  מצריך אישור מנהל מחלקה');
       return false;
     }
-
+    // לא לכל ההרשאות
+    if (item.id == 220) {
+      this.setDialogMessage('אין לך הרשאה לקלוט פריט זה');
+      return false;
+    }
+    // typeSleepId
     // בדיקה שהפריט שישי שבת
     // או חג
     if (item.itemId == 219) {
@@ -472,7 +451,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
     // אין להוסיף פריטים "תוספת לינה" ו"תוספת פעילות לילה" (419, 177) לאותו לילה בטיול
     // צרך בדיקה אם זה אכן מבצע את הבדיקה הזאת בצורה נכונה
-    if (item.itemId == 117 || item.itemId == 419) {
+    if (item.id == 117 || item.id == 419) {
       if (this.generalFormService.guidance.filter(x => x["itemId"].itemId == item.itemId &&
         x["startDate"].getDate() == item.startDate &&
         x["startDate"].getDate() < item.endDate) != null) {

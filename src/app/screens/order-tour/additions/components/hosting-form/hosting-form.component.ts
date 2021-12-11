@@ -43,6 +43,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   valueChangeIndex = 0;
   ifCalculateByQuantity: boolean;
   itemOrderRecordId: number;
+  orderId: number;
   hostingItem: any;
   // close subsribe:
   supplierListSub: Subscription;
@@ -224,10 +225,11 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   }
 
   public onSave(): void {
-    if (this.generalFormService.originalItemList.length > 0) {
-      this.hostingItem = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-    }
+       // if (this.generalFormService.originalItemList.length > 0) {
+    //   this.hostingItem = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+    // }
     if (this.form) {
+      if (!this.additionsService.globalValidations(this.form)) { return; }
       if (!this.validationsHosting()) { return; }
       var centerFieldObj = JSON.parse(localStorage.getItem('centerFieldObj'));
       var typeSleep = centerFieldObj.accommodationList.filter(x => x.id == this.hostingItem.typeSleepId)[0];
@@ -236,58 +238,57 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.occupancyValidation.tripId = this.tripId;
       this.occupancyValidation.startDate = this.generalFormService.changeDateFormat(this.form.getRawValue().details['startDate'], 'UTC')
       this.occupancyValidation.endDate = this.generalFormService.changeDateFormat(this.form.getRawValue().details['endDate'], 'UTC')
-      this.occupancyValidation.quantityItem = this.form.value.details['quantity'];
+      this.occupancyValidation.quantityItem = +this.form.value.details['quantity'];
       this.occupancyValidation.startHour = this.setDateTimeFormat(this.occupancyValidation.startDate, this.form.getRawValue().details['startHour']);
       this.occupancyValidation.endHour = this.setDateTimeFormat(this.occupancyValidation.endDate, this.form.getRawValue().details['endHour']);
+      if (this.isEditable) {
+
+        if (this.isItemOrderExist) {
+          this.occupancyValidation.orderId = this.item.globalParameters.orderId;
+          this.occupancyValidation.itemOrderRecordId = this.item.globalParameters.itemOrderRecordId;
+        }
+        else {
+          this.occupancyValidation.orderId = this.orderId;
+          this.occupancyValidation.itemOrderRecordId = this.itemOrderRecordId;
+        }
+
+      }
       if (this.hostingItem.classroomTypeId !== null) {//כיתה
         this.occupancyValidation.classCode = this.hostingItem.classroomTypeId;
         this.orderService.checkClassOccupancy(this.occupancyValidation).subscribe(res => {
           if (res.isOccupancyProblem) {
-            const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-              width: '500px',
-              data: { message: res.message, content: '', leftButton: 'אישור' }
-            }); return;
+            this.setDialogMessage(res.message + 'checkClassOccupancy'); return;
           }
-          else { this.validationItem() }
+          else {
+            if (this.hostingItem.numHoursNeeded !== null) {
+              var hours = (new Date(this.occupancyValidation.endHour).getTime() - new Date(this.occupancyValidation.startHour).getTime()) / 3600000;
+              if (hours > this.hostingItem.numHoursNeeded) {
+                this.setDialogMessage('פריט זה אינו זמין למספר השעות שנבחרו'); return;
+              }
+            }
+            this.mapFormFieldsToServer()
+          }
         })
       }
       else if (this.hostingItem.typeSleepId !== null) {//לילי
         this.occupancyValidation.typeSleepId = this.hostingItem.typeSleepId;
         this.orderService.checkHostingOccupancy(this.occupancyValidation).subscribe(res => {
           if (res.isOccupancyProblem) {
-            const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-              width: '500px',
-              data: { message: "מס יחידות הלינה המבוקשות גדול ממספר יחידות הלינה הזמינות במרכז שדה זה", content: '', leftButton: 'אישור' }
-            }); return;
+            this.setDialogMessage(res.message + 'checkHostingOccupancy'); return;
           }
           else {
             this.orderService.checkHoursOccupancyPerItemInOrder(this.occupancyValidation).subscribe(res => {
               if (res.isOccupancyProblem) {
-                const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-                  width: '500px',
-                  data: { message: res.message + 'הודעת שגיאה - בדיקת שעות תפוסה', content: '', leftButton: 'אישור' }
-                }); return;
+                this.setDialogMessage(res.message + 'checkHoursOccupancyPerItemInOrder'); return;
               }
-              else { this.validationItem() }
+              else { this.mapFormFieldsToServer() }
             })
           }
         })
       }
     }
   }
-  //אם מספר יחידות הלינה המבוקש גדול ממספר יחידות הלינה הזמינות
-  // if (this.form.value.details['quantity'] > typeSleep.totalUnits) {
-  //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //     width: '500px',
-  //     data: { message: "מס יחידות הלינה המבוקשות גדול ממספר יחידות הלינה הזמינות במרכז שדה זה", content: '', leftButton: 'אישור' }
-  //   })
-  //   return false;
-  // }
-
-  validationItem() {
-    if (!this.additionsService.globalValidations(this.form)) { return; }
-    this.mapFormFieldsToServer();
-  }
+ 
   mapFormFieldsToServer() {
     let orderId;
     if (this.generalFormService.hostingOrderList.length > 0) {
@@ -339,18 +340,16 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   addOrder(item) {
     this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
       console.log(res);
+      this.orderId= res[0].globalParameters.orderId;
       this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
-      //this.tableData.next(res);
       this.tableData = res;
       this.ifShowtable = true;
       this.generalFormService.enableButton.next(true);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.generalFormService.setOrderList(res, this.orderType, 'adding',this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
@@ -361,13 +360,11 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
       console.log(res);
       this.generalFormService.setOrderList(res, this.orderType, 'updating',false);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
     }, (err) => {
       console.log(err);
       this.ifShowtable = false;
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');

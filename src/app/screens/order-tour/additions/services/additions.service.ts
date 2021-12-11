@@ -247,11 +247,13 @@ export class AdditionsService {
       //   // itemOrder.billingSupplier = (currentVat / 100) + 1
       //   itemOrder.billingSupplier *= currentVat;
       // } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
-     
+      var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
+      MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides : MultiplyByAmountOrPeople
+ 
       if (item?.isSumPeopleOrAmount == 2 && this.generalFormService.tripInfo.trip.attribute.subsidization1To25 == 1 && this.generalFormService.tripInfo.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
-        var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
-          MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides : MultiplyByAmountOrPeople
+        // var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
+        //   MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides : MultiplyByAmountOrPeople
 
         // }
         // חישוב מספר משתתפים לחיוב - לאחר סבסוד
@@ -267,7 +269,8 @@ export class AdditionsService {
       }
       else // פריט שמוגדר לפי כמות או טיול של השתלמות מדריכים
       {
-        itemOrder.billingCustomer = item?.costCustomer * MultiplyByAmountOrPeople    // חישוב חיוב לקוח  
+        //itemOrder.billingCustomer = item?.costCustomer * MultiplyByAmountOrPeople 
+        itemOrder.billingCustomer = item?.costCustomer * MultiplyByPeopleMinusGuides;    // חישוב חיוב לקוח  
         addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAmountOrPeople?.toString() + "*" + item?.costCustomer
         itemOrder.internalComment = ParticipantsOrAmount + "סה''כ ארוחות לחישוב" + itemOrder.quantity + addToCommentMultipleStr
         // סבסוד עלות ללקוח מופעל רק עבור פריטים שמוגדרים לפי משתתפים
@@ -349,15 +352,24 @@ export class AdditionsService {
     // end itiel
     return itemOrder;
   }
+  setDialogMessage(message) {
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+    })
+  }
+
   globalValidations(form) {
     if (this.generalFormService.originalItemList.length > 0) {
       var item = this.generalFormService.originalItemList.find(el => el.id.toString() === form.value.details['itemId']);
     }
     if (form.status !== 'VALID') {
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      })
+      // const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      //   width: '500px',
+      //   data: { message: 'יש למלא את כל שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      // })
+      var name = this.generalFormService.findInvalidControls(form);
+      if (name !== null) this.setDialogMessage(' שדה ' + name + ' הינו חובה ');
       return false;
     }
     if(item?.participantsLimit != null){
@@ -368,6 +380,10 @@ export class AdditionsService {
       })
       return false;
     }
+  }
+  if (item.credit == 1) {
+    this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
+    return false;
   }
     // פריט מוגבל לכמות אחת בלבד
     if(item?.amountLimit!= null){

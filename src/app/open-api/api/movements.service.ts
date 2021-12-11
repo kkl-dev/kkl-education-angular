@@ -31,8 +31,8 @@ export class MovementsService {
 
 
     //protected basePath = 'http://knf-appl-dev3:8077';
-    //protected basePath= 'http://knf-appl-dev3/EducationApiDev';
-    protected basePath= 'http://knf-appl-dev3/EducationApiTest';
+    protected basePath= 'http://knf-appl-dev3/EducationApiDev';
+    //protected basePath= 'http://knf-appl-dev3/EducationApiTest';
     //protected basePath= 'http://knf-appl-dev3/EducationApiProd';
 
     public defaultHeaders = new HttpHeaders();

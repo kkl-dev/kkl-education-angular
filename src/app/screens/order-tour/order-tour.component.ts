@@ -578,6 +578,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   public changeActiveStepPrevNavigation(): void {
+    const routeIndex =
+    this.steps.findIndex(
+      (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
+    ) + 1;
+    if (routeIndex === 4){
+      console.log('is not avaliable');
+      return;
+    }
     this.activeStep = +this.activeStep--;
     this.location.back();
   }

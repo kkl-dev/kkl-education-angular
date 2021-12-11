@@ -150,6 +150,10 @@ export class AdditionsComponent implements OnInit {
         // if (this.tempOrderReduce[orderTypId][i].orderId)
           continue;
         var order = {} as OrderEvent;
+         //test
+         order.order ={} as Order;
+         order.order.orderType = {} as OrderType;
+         //end test
         order.globalParameters = {} as OrderItemCommonDetails;
         let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate, 'israel');
         order.globalParameters.startDate = startDate;
@@ -160,6 +164,9 @@ export class AdditionsComponent implements OnInit {
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
         order.globalParameters.tempOrderIdentity = this.tempOrderReduce[orderTypId][i].tempOrderId;
+        //test
+        order.order.orderType.id= this.orderType;
+        //end test
         orderList.push(order);
       }
       // this.additionsService.emitItem(OrderList);
@@ -287,10 +294,11 @@ export class AdditionsComponent implements OnInit {
         //this.disabled=true;
         break;
     }
+    this.orderType = event;
     if (event == 1 || event == 4 || event == 6 || event == 7) {
       this.mapTempOrder(event);
     }
-    this.orderType = event;
+    
   }
 
 }
