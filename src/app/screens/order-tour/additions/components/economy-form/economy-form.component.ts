@@ -8,7 +8,7 @@ import { SquadAssembleService } from '../../../squad-assemble/services/squad-ass
 import { GeneralFormService } from '../../services/general-form.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-economy-form',
@@ -60,6 +60,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
         this.isItemOrderExist = true;
+        this.itemOrderRecordId=this.item.globalParameters.itemOrderRecordId;
         this.isTempuraryItem=false;
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
@@ -326,7 +327,8 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   addOrder(item){
    this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
       console.log(res); 
-      this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
+      //this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
+      this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
       //this.tableData.next(res);
       this.tableData=res;
       this.ifShowtable=true;
@@ -521,9 +523,10 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       let item = this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost;
       if(!item.cost){
-        this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+        this.setZeroVal();
+        // this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+        // this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+        // this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
       if(this.isSupplierXemptedFromVat==true){
@@ -535,12 +538,12 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.calculate();
     });
 
-    this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log('vegetarianDishesNumber')
+    this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(debounceTime(2000),distinctUntilChanged()).subscribe(value => {
+      console.log('vegetarianDishesNumber',value)
       this.calculateDishes(parseInt(value), 'vegetarianDishesNumber');
     });
     this.form.controls["details"].get('veganDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log('veganDishesNumber')
+      console.log('veganDishesNumber',value);
       this.calculateDishes(parseInt(value), 'veganDishesNumber')
     });
     // this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
@@ -566,9 +569,17 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
   }
 
+  setZeroVal(){
+    this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+  }
+
   calculateDishes(value: any, type: any) {
-    if (value > this.form.controls["details"].get('regularDishesNumber').value) {
-      this.form.controls["details"].get(type).patchValue(this.form.controls["details"].get('regularDishesNumber').value.toString(), { emitEvent: false });
+    //if (value > this.form.controls["details"].get('regularDishesNumber').value ) {
+      if (value > this.form.controls["details"].get('peopleInTrip').value ) {
+      //this.form.controls["details"].get(type).patchValue(this.form.controls["details"].get('regularDishesNumber').value.toString(), { emitEvent: false });
+      this.form.controls["details"].get(type).patchValue(0, { emitEvent: false });
       // this.form.controls["details"].get('regularDishesNumber').patchValue('0', { emitEvent: false });
 
       this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');

@@ -44,6 +44,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   ifCalculateByQuantity: boolean;
   valueChangeIndex = 0;
   itemOrderRecordId: number;
+  selectedItemDetails;
   // close subsribe:
   supplierListSub: Subscription;
   settlementSub: Subscription;
@@ -72,6 +73,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if (this.item != undefined && this.item != null) {
       if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.orderId) {
         this.isItemOrderExist = true;
+        this.itemOrderRecordId=this.item.globalParameters.itemOrderRecordId;
         this.isTempuraryItem=false;
         this.editMode = true;
         this.supplierId = this.item.globalParameters.supplierId;
@@ -358,7 +360,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
       console.log(res);
       //this.tableData.next(res);
-      this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
+      //this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
+      this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
       this.tableData = res;
       this.ifShowtable = true;
       this.editMode = true;
@@ -503,15 +506,17 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
+      this.selectedItemDetails=item;
       if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
         this.ifCalculateByQuantity = true;
       else
         this.ifCalculateByQuantity = false;
       let itemCost;
       if (!item.cost) {
-        this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+        this.setZeroVal();
+        // this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+        // this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+        // this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
       if (this.isSupplierXemptedFromVat == true) {
@@ -552,11 +557,18 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     });
     console.log(this.form)
   }
+
     
     calculate(){
       let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+    }
+
+    setZeroVal(){
+      this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+      this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+      this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
     }
 
     disableFormFields(){

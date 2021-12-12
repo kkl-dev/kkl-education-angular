@@ -63,6 +63,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     if (this.item != undefined && this.item != null ) {
       if(this.item.globalParameters.supplierId!= undefined && this.item.globalParameters.orderId){
         this.isItemOrderExist = true;
+        this.itemOrderRecordId=this.item.globalParameters.itemOrderRecordId;
         this.isTempuraryItem =false;
         this.editMode=true;
         this.supplierId= this.item.globalParameters.supplierId;
@@ -316,7 +317,8 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   addOrder(item){
     this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
       console.log(res); 
-      this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
+      //this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
+      this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
       //this.tableData.next(res);
       this.tableData=res;
       this.ifShowtable=true;
@@ -421,9 +423,10 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       this.ifCalculateByQuantity= false;
       let itemCost;
       if(!item.cost){
-        this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+        this.setZeroVal();
+        // this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+        // this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+        // this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
       if(this.isSupplierXemptedFromVat==true){
@@ -471,6 +474,12 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
       this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier);
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer);
+  }
+
+  setZeroVal(){
+    this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
   }
 
   disableFormFields(){

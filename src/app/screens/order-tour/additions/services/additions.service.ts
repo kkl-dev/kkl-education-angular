@@ -249,6 +249,7 @@ export class AdditionsService {
       // } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
       var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
       MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides : MultiplyByAmountOrPeople
+      
  
       if (item?.isSumPeopleOrAmount == 2 && this.generalFormService.tripInfo.trip.attribute.subsidization1To25 == 1 && this.generalFormService.tripInfo.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
@@ -386,7 +387,7 @@ export class AdditionsService {
     return false;
   }
     // פריט מוגבל לכמות אחת בלבד
-    if(item?.amountLimit!= null){
+    if(item?.amountLimit!= null && item?.amountLimit!= 0 ){
       if (item?.amountLimit < form.value.details['quantity']) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',

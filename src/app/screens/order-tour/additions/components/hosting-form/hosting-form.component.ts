@@ -67,6 +67,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     if (this.item != undefined && this.item != null) {
       if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.orderId) {
         this.isItemOrderExist = true;
+        this.itemOrderRecordId=this.item.globalParameters.itemOrderRecordId;
         this.isTempuraryItem=false;
         this.editMode = true;
         this.supplierId = this.item.globalParameters.supplierId;
@@ -225,9 +226,9 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   }
 
   public onSave(): void {
-       // if (this.generalFormService.originalItemList.length > 0) {
-    //   this.hostingItem = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-    // }
+       if (this.generalFormService.originalItemList.length > 0) {
+      this.hostingItem = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+    }
     if (this.form) {
       if (!this.additionsService.globalValidations(this.form)) { return; }
       if (!this.validationsHosting()) { return; }
@@ -279,12 +280,16 @@ export class HostingFormComponent implements OnInit, OnDestroy {
           else {
             this.orderService.checkHoursOccupancyPerItemInOrder(this.occupancyValidation).subscribe(res => {
               if (res.isOccupancyProblem) {
-                this.setDialogMessage(res.message + 'checkHoursOccupancyPerItemInOrder'); return;
+                //this.setDialogMessage(res.message + 'checkHoursOccupancyPerItemInOrder'); return;
+                this.setDialogMessage(res.message ); return;
               }
               else { this.mapFormFieldsToServer() }
             })
           }
         })
+      }
+      else{
+        this.mapFormFieldsToServer();
       }
     }
   }
@@ -340,7 +345,8 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   addOrder(item) {
     this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
       console.log(res);
-      this.orderId= res[0].globalParameters.orderId;
+      //this.orderId= res[0].globalParameters.orderId;
+      this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId;
       this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
       this.tableData = res;
       this.ifShowtable = true;
@@ -405,7 +411,8 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     }
 
     // חובה להזין לפחות לילה אחד בפריט שלא מסוג כיתה או בישול
-    if (this.form.value.details["itemId"] !== 250 && this.hostingItem.classroomTypeId === null && this.form.value.details['startDate'] === this.form.value.details['endDate']) {
+    // if (this.form.value.details["itemId"] !== 250 && this.hostingItem.classroomTypeId === null && this.form.value.details['startDate'] === this.form.value.details['endDate']) {
+      if (this.form.value.details["itemId"] !== 250 && this.hostingItem.typeSleepId != null && this.hostingItem.typeSleepId != 0 && this.hostingItem.classroomTypeId === null && this.form.value.details['startDate'] === this.form.value.details['endDate']) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
         data: { message: 'בהזמנת אירוח- חובה לציין בטווח התאריכים לילה אחד לפחות. מלבד אם הפריט הוא כיתה או פריט "בישול עצמי בשטח הגיחה" (פריט 250)', content: '', leftButton: 'אישור' }
@@ -481,15 +488,17 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
       let item = this.originalItemList.find(el => el.id === parseInt(value))
+      this.hostingItem=item;
       if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
         this.ifCalculateByQuantity = true;
       else
         this.ifCalculateByQuantity = false;
       let itemCost;
       if (!item.cost) {
-        this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-        this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+        this.setZeroVal();
+        // this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+        // this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+        // this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
         return;
       }
       if (this.isSupplierXemptedFromVat == true){
@@ -531,6 +540,12 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
     this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
     this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+  }
+
+  setZeroVal(){
+    this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
   }
 
  disableFormFields(){

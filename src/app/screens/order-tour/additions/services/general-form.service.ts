@@ -369,6 +369,9 @@ export class GeneralFormService {
       if(data.order.orderType.id==4 && control.key == 'quantity' ){
         control.value=this.questionGroups[0].questions[3].value;
       }
+      if(data.order.orderType.id==4 && control.key == 'regularDishesNumber' ){
+        control.value=this.questionGroups[0].questions[3].value;
+      }
       // if (control.key === 'comments') {
       //   control.value = data;
       // }
