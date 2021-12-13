@@ -107,18 +107,6 @@ export class FacilitiesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
-    //   console.log('getCalendarEventsArr: ', value)
-    //   if (this.myCalendarComponent) {
-    //     this.myCalendarComponent.options.events = value;
-    //   } else {
-    //     setTimeout(() => {
-    //       this.myCalendarComponent.options.events = value;
-    //     }, 500);
-    //   }
-    // });
-
     try {
       this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     } catch (error) {
@@ -133,23 +121,9 @@ export class FacilitiesComponent implements OnInit {
     this.getOrderService();
     this.getTripCalendar();
 
-    //  this.calendarEventsArr$ = this.facilitiesService.getCalendarEventsArr();
-    //  console.log('calendarEventsArr.value',  this.calendarEventsArr$);
     this.closeModal$ = this.facilitiesService.getCloseModalObs();
     this.selectedFacility$ = this.facilitiesService.getSelectedFacility();
     this.selectedActivity$ = this.facilitiesService.getSelectedActivity();
-
-    //for calender c
-    // this.valueSub = this.facilitiesService.getCalendarEventsArr().subscribe(value => {
-    //   //console.log('this.value Sub', value)
-    //   if (this.myCalendarComponent) {
-    //     this.myCalendarComponent.options.events = value;
-    //   } else {
-    //     setTimeout(() => {
-    //       this.myCalendarComponent.options.events = value;
-    //     }, 500);
-    //   }
-    // });
 
     this.calendarOptions = {
       plugins: [timeGridPlugin, interactionPlugin],
@@ -385,12 +359,8 @@ export class FacilitiesComponent implements OnInit {
   }
 
   getTripCalendar() {
-    // let tripId = 0;
-    // try {
-    //   tripId = this.squadAssembleService.tripInfofromService.trip.id;
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    this.facilitiesService.calendarEventsArr.next([]);
+
     this.activitiyService.getTripCalendar(this.tripId).subscribe((tripCalendar: any) => {
       console.log('get Trip Calendar: ', tripCalendar);
       //if (tripCalendar) {
@@ -398,8 +368,7 @@ export class FacilitiesComponent implements OnInit {
       this.tempOrderList = tripCalendar.tempOrderList;
       let newTempOrderObj: any;
       let newTempActivityList: any;
-      console.log("calendarEventsArr value ", this.facilitiesService.calendarEventsArr.value);
-      this.facilitiesService.calendarEventsArr.next([]);
+
       console.log("calendarEventsArr value 2", this.facilitiesService.calendarEventsArr.value);
 
       // add to calender

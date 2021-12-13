@@ -5,6 +5,9 @@ import { ActivitiesCardInterface } from 'src/app/components/activities-card/acti
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { TripService } from 'src/app/services/trip.service';
 import { DAYS } from 'src/mock_data/facilities';
+import { ActivitiesService } from 'src/app/open-api';
+import { TripActivity } from 'src/app/open-api';
+import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 
 @Component({
   selector: 'app-save-activity',
@@ -13,7 +16,7 @@ import { DAYS } from 'src/mock_data/facilities';
 })
 export class SaveActivityComponent implements OnInit {
 
-  constructor(private facilitiesServices: FacilitiesService, private tripService: TripService) { }
+  constructor(private facilitiesServices: FacilitiesService, private tripService: TripService, private activitiyService: ActivitiesService, private squadAssembleService: SquadAssembleService) { }
 
   selectedActivity$: Observable<ActivitiesCardInterface>;
   subscribeToActivity: Subscription;
@@ -80,9 +83,31 @@ export class SaveActivityComponent implements OnInit {
       this.facilitiesServices.closeModal('close');
       return;
     }
+
+    this.CreateActivity();
+
     this.emitFormValues.emit(this.form.value);
     this.facilitiesServices.closeModal('close');
   }
+
+  CreateActivity() {
+    let newActivity = {} as TripActivity;
+    newActivity.activityId = this.form.value.itemId;
+    newActivity.activityName = this.form.value.title;
+    newActivity.date = this.form.value.start;
+    newActivity.description = this.form.value.title;
+    newActivity.fromHour = this.form.value.start;
+    newActivity.tillHour = this.form.value.end;
+    newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+
+    this.activitiyService.createTripActivity(newActivity).subscribe((res: any) => {
+      console.log(res);
+    }, (error) => {
+      console.log(error)
+    }
+    );
+  }
+
   orderingCustomerHandler() {
     this.orderingCustomer = !this.orderingCustomer;
   }
@@ -108,7 +133,7 @@ export class SaveActivityComponent implements OnInit {
     const [date, time] = args.split('T');
     return time;
   }
-  
+
   createForm(data): void {
     if (!data.start) {
       this.updateForm = false;

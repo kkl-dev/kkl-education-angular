@@ -58,9 +58,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     private _facilitiesService: FacilitiesService,
     private _facilitiesConvertingService: FacilitiesConvertingService,
     private userDataService: UserDataService,
-    private squadDetailsService:SquadDetailsService,
+    private squadDetailsService: SquadDetailsService,
     private spinner: NgxSpinnerService,
-    private squadAgeGroupService :SquadGroupService,
+    private squadAgeGroupService: SquadGroupService,
     private squadClientService: SquadClientService
   ) { }
 
@@ -71,7 +71,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getActiveStep();
     this.setActiveStep();
     this.subscribeToNewClient();
-}
+  }
 
   ngAfterViewInit() { }
 
@@ -176,7 +176,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     let ContactForm;
     let budgetFlag;
     let customerFlag;
-    let lastScheduleFormIndex ;
+    let lastScheduleFormIndex;
     let lastContactFormIndex;
     let lastAgeGroupFormIndex;
     let lastDetailsFormIndex;
@@ -185,7 +185,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       let endDate;
       for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
         if (this.squadAssemble.formsArray[i].controls.centerField) {
-          lastScheduleFormIndex=i;
+          lastScheduleFormIndex = i;
           console.log('I am schedule');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('schedule is invalid');
@@ -196,11 +196,11 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
           this.squadAssemble.tripInfo.centerField = this.tripService.fieldForestCentersOriginal.filter((el: { id: number; }) => el.id === parseInt(center))[0];
           this.tripService.centerFieldObj.next(this.squadAssemble.tripInfo.centerField);
-          this.tripService.centerField= this.squadAssemble.tripInfo.centerField;
+          this.tripService.centerField = this.squadAssemble.tripInfo.centerField;
           localStorage.setItem('centerFieldObj', JSON.stringify(this.squadAssemble.tripInfo.centerField));
           this.squadAssemble.tripInfo.centerField.linkSite = '';
-          let areaId= +this.squadAssemble.formsArray[i].get('areaTrip').value;
-          this.squadAssemble.tripInfo.areaTrip= this.squadAssemble.originalRegionList.find(i=> i.id=== areaId); 
+          let areaId = +this.squadAssemble.formsArray[i].get('areaTrip').value;
+          this.squadAssemble.tripInfo.areaTrip = this.squadAssemble.originalRegionList.find(i => i.id === areaId);
           let tripDates = this.squadAssemble.formsArray[i].get('dates').value;
           let subTripDates = tripDates.split("-");
           startDate = subTripDates[0];
@@ -218,7 +218,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           scheduleForm = true;
         }
         if (this.squadAssemble.formsArray[i].controls.attribute) {
-          lastDetailsFormIndex=i;
+          lastDetailsFormIndex = i;
           console.log('I am details');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('details is invalid');
@@ -230,16 +230,16 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           this.squadAssemble.tripInfo.departmentId = parseInt(this.squadAssemble.formsArray[i].get('department').value);
 
           // if ( this.squadAssemble.tripInfo.departmentId==1){
-           
-            let countryId= this.squadAssemble.formsArray[i].get('tripLocation').value;
-            let countryObj;
-            if (countryId != "900"){
-               countryObj= this.tripService.countries.find(i=> i.id=== countryId);
-            } 
-            else{
-              countryObj = {id: countryId ,name:'ישראל'};
-            }
-            this.squadAssemble.tripInfo.country= countryObj;
+
+          let countryId = this.squadAssemble.formsArray[i].get('tripLocation').value;
+          let countryObj;
+          if (countryId != "900") {
+            countryObj = this.tripService.countries.find(i => i.id === countryId);
+          }
+          else {
+            countryObj = { id: countryId, name: 'ישראל' };
+          }
+          this.squadAssemble.tripInfo.country = countryObj;
           // }
           var attribute = this.squadAssemble.formsArray[i].get('attribute').value;
           this.squadAssemble.tripInfo.attribute = this.tripService.attributesOriginal.filter(el => el.id === parseInt(attribute))[0];
@@ -249,8 +249,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         if (this.squadAssemble.formsArray[i].controls.ageGroup) {
-          lastAgeGroupFormIndex=i;
-            console.log('I am ageGroup');
+          lastAgeGroupFormIndex = i;
+          console.log('I am ageGroup');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('ageGroup is invalid');
             ageGroupForm = false;
@@ -259,50 +259,50 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           var ageGroup = this.squadAssemble.formsArray[i].get('ageGroup').value;
           this.squadAssemble.tripInfo.ageGroup = this.tripService.ageGroupOriginal.filter(el => el.id === parseInt(ageGroup))[0];
           if (this.squadAssemble.formsArray[i].get('numAdultAndYoung').value)
-             if(parseInt(this.squadAssemble.formsArray[i].get('numAdultAndYoung').value)>=0)
-            this.squadAssemble.tripInfo.numAdultAndYoung = +this.squadAssemble.formsArray[i].get('numAdultAndYoung').value;
-            else{
+            if (parseInt(this.squadAssemble.formsArray[i].get('numAdultAndYoung').value) >= 0)
+              this.squadAssemble.tripInfo.numAdultAndYoung = +this.squadAssemble.formsArray[i].get('numAdultAndYoung').value;
+            else {
               this.squadAssemble.formsArray[i].get('numAdultAndYoung').setValue('');
               this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה ילדים/מבוגרים');
               return false;
-            }      
+            }
           if (this.squadAssemble.formsArray[i].get('numDrivers').value)
-          if (parseInt(this.squadAssemble.formsArray[i].get('numDrivers').value)>=0)
-            this.squadAssemble.tripInfo.numDrivers = +this.squadAssemble.formsArray[i].get('numDrivers').value;
-            else{
+            if (parseInt(this.squadAssemble.formsArray[i].get('numDrivers').value) >= 0)
+              this.squadAssemble.tripInfo.numDrivers = +this.squadAssemble.formsArray[i].get('numDrivers').value;
+            else {
               this.squadAssemble.formsArray[i].get('numDrivers').setValue('');
               this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה מספר נהגים');
               return false;
-            }      
+            }
           if (this.squadAssemble.formsArray[i].get('numAccompanied').value)
-          if (parseInt(this.squadAssemble.formsArray[i].get('numAccompanied').value)>= 0)
-            this.squadAssemble.tripInfo.numAccompanied = +this.squadAssemble.formsArray[i].get('numAccompanied').value;
-            else{
+            if (parseInt(this.squadAssemble.formsArray[i].get('numAccompanied').value) >= 0)
+              this.squadAssemble.tripInfo.numAccompanied = +this.squadAssemble.formsArray[i].get('numAccompanied').value;
+            else {
               this.squadAssemble.formsArray[i].get('numAccompanied').setValue('');
               this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה מספר מלווים');
               return false;
-            }      
+            }
           if (this.squadAssemble.formsArray[i].get('numGuides').value)
-          if (parseInt(this.squadAssemble.formsArray[i].get('numGuides').value) >= 0)
-            this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[i].get('numGuides').value;
-            else{
+            if (parseInt(this.squadAssemble.formsArray[i].get('numGuides').value) >= 0)
+              this.squadAssemble.tripInfo.numGuides = +this.squadAssemble.formsArray[i].get('numGuides').value;
+            else {
               this.squadAssemble.formsArray[i].get('numGuides').setValue('');
               this.setDialogMessage('לא ניתן להזין מספר שלילי בשדה מספר מדריכים');
               return false;
-            }     
+            }
           ageGroupForm = true;
         }
         if (this.squadAssemble.formsArray[i].controls.contactName) {
-          lastContactFormIndex=i;
+          lastContactFormIndex = i;
           console.log('I am contact');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
             console.log('contact is invalid');
             ContactForm = false;
             continue;
           }
-          
+
           this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
-          if(!this.squadAssemble.formsArray[i].get('contactPhone').value){
+          if (!this.squadAssemble.formsArray[i].get('contactPhone').value) {
             ContactForm = false;
             continue;
           }
@@ -311,81 +311,81 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           ContactForm = true;
         }
       }
-  
-       this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
-       if (this.squadAssemble.tripInfo.customer.id != undefined)
-       customerFlag= true;
-       else
-       customerFlag= false;
-      
+
+      this.squadAssemble.tripInfo.customer = this.squadAssemble.Customer;
+      if (this.squadAssemble.tripInfo.customer.id != undefined)
+        customerFlag = true;
+      else
+        customerFlag = false;
+
       //  if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
-       if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true ){
-         
-        if(this.squadDetailsService?.budget?.isByCity==1 ){
-          if(!this.squadDetailsService.budget.cityId){
-           this.setDialogMessage('שדה ישוב בחלק של התקצוב הינו חובה');
+      if (scheduleForm == true && ContactForm == true && ageGroupForm == true && detalisForm == true && customerFlag == true) {
+
+        if (this.squadDetailsService?.budget?.isByCity == 1) {
+          if (!this.squadDetailsService.budget.cityId) {
+            this.setDialogMessage('שדה ישוב בחלק של התקצוב הינו חובה');
             return flag;
           }
-         }
-         if(!this.squadDetailsService?.budget?.expensesId){
+        }
+        if (!this.squadDetailsService?.budget?.expensesId) {
           this.setDialogMessage('שדה תת סעיף תקציב הכנסות הינו חובה');
           return flag;
         }
-        if(!this.squadDetailsService?.budget?.incomeId){
+        if (!this.squadDetailsService?.budget?.incomeId) {
           this.setDialogMessage('שדה תת סעיף תקציב הוצאות הינו חובה');
           return flag;
         }
         this.squadAssemble.tripInfo.budget = this.squadDetailsService?.budget;
-        budgetFlag=true; 
-        flag=true;
-       }
-       
-       else{
-        if(!scheduleForm){
-          this.test('schedule',lastScheduleFormIndex);
+        budgetFlag = true;
+        flag = true;
+      }
+
+      else {
+        if (!scheduleForm) {
+          this.test('schedule', lastScheduleFormIndex);
           return flag;
         }
-        if(!customerFlag){
+        if (!customerFlag) {
           this.setDialogMessage('שדה הקלד לקוח רצוי הינו חובה');
           return flag;
-         }
-         if(!ContactForm){
-           if(this.squadAssemble.formsArray[lastContactFormIndex].status == 'INVALID')
-            this.test('contact',lastContactFormIndex);
-            else
-           this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
+        }
+        if (!ContactForm) {
+          if (this.squadAssemble.formsArray[lastContactFormIndex].status == 'INVALID')
+            this.test('contact', lastContactFormIndex);
+          else
+            this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
           return flag;
-         }   
-         if(!ageGroupForm){
-          this.test('ageGroup',lastAgeGroupFormIndex);
+        }
+        if (!ageGroupForm) {
+          this.test('ageGroup', lastAgeGroupFormIndex);
           return flag;
-         }
-       
-         if(!detalisForm){
-          this.test('details',lastDetailsFormIndex);
+        }
+
+        if (!detalisForm) {
+          this.test('details', lastDetailsFormIndex);
           return flag;
-         }
-         
-       }
-      
-      
-      if(this.squadAssemble.payerCustomer.name!= undefined)
-      this.squadAssemble.tripInfo.customerPay= this.squadAssemble.payerCustomer;
+        }
+
+      }
+
+
+      if (this.squadAssemble.payerCustomer.name != undefined)
+        this.squadAssemble.tripInfo.customerPay = this.squadAssemble.payerCustomer;
       let date = new Date()
-      let year= date.getFullYear();
-      let month= date.getMonth()+1;
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
       let day = date.getDate();
-      let dateFormat= year+'-'+(month)+'-'+day;
-      this.squadAssemble.tripInfo.generateTime=dateFormat;
-       if(startDate==endDate ){
-          this.tripService.isOneDayTrip=true;
-          this.squadAssemble.isOneDayTrip=true;
-           this.createTrip(this.steps[2].path);
-       }
-       else{
-        this.tripService.isOneDayTrip=false;
-        this.squadAssemble.isOneDayTrip=false;
-       }
+      let dateFormat = year + '-' + (month) + '-' + day;
+      this.squadAssemble.tripInfo.generateTime = dateFormat;
+      if (startDate == endDate) {
+        this.tripService.isOneDayTrip = true;
+        this.squadAssemble.isOneDayTrip = true;
+        this.createTrip(this.steps[2].path);
+      }
+      else {
+        this.tripService.isOneDayTrip = false;
+        this.squadAssemble.isOneDayTrip = false;
+      }
     }
     catch (error) {
       console.log(error);
@@ -396,52 +396,52 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     return flag;
   }
 
-   test(formName,index){
-      let ifControlFound= false;
-      for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
-        if(i===index  && !ifControlFound){
-          const invalid = [];
-          const controls = this.squadAssemble.formsArray[i].controls;
-          for (const name in controls) {
-              if (controls[name].invalid) {
-                let labelControl;
-                if (formName=='schedule'){
-                   labelControl= this.squadAssemble.scheduleQuestions.find(i=> i.key===name).label;
-                }
-                if(formName=='contact'){
-                  labelControl= this.squadClientService.questions[1].group.questions.find(i=> i.key===name).label;
-                  if (name =='contactPhone'){
-                    this.setDialogMessage('נא הזן מספר פלאפון תקין בשדה נייד איש קשר');
-                    ifControlFound=true;
-                    break;
-                  }
-                }
-                if(formName=='ageGroup'){
-                  labelControl= this.squadAgeGroupService.mixedQuestions.find(i=> i.key===name).label;
-                }
-                if(formName=='details'){
-                  labelControl= this.squadDetailsService.questions.find(i=> i.key===name).label;
-                }
-                
-                this.setDialogMessage('שדה ' + labelControl + ' הינו חובה');
-                ifControlFound=true;
+  test(formName, index) {
+    let ifControlFound = false;
+    for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
+      if (i === index && !ifControlFound) {
+        const invalid = [];
+        const controls = this.squadAssemble.formsArray[i].controls;
+        for (const name in controls) {
+          if (controls[name].invalid) {
+            let labelControl;
+            if (formName == 'schedule') {
+              labelControl = this.squadAssemble.scheduleQuestions.find(i => i.key === name).label;
+            }
+            if (formName == 'contact') {
+              labelControl = this.squadClientService.questions[1].group.questions.find(i => i.key === name).label;
+              if (name == 'contactPhone') {
+                this.setDialogMessage('נא הזן מספר פלאפון תקין בשדה נייד איש קשר');
+                ifControlFound = true;
                 break;
-                  //invalid.push(name);
               }
+            }
+            if (formName == 'ageGroup') {
+              labelControl = this.squadAgeGroupService.mixedQuestions.find(i => i.key === name).label;
+            }
+            if (formName == 'details') {
+              labelControl = this.squadDetailsService.questions.find(i => i.key === name).label;
+            }
+
+            this.setDialogMessage('שדה ' + labelControl + ' הינו חובה');
+            ifControlFound = true;
+            break;
+            //invalid.push(name);
           }
         }
-     }
-   }
- 
+      }
+    }
+  }
+
   createTrip(route) {
 
-    if (this.squadAssemble.tripInfofromService != undefined ){
+    if (this.squadAssemble.tripInfofromService != undefined) {
       this.router.navigateByUrl(
         `/education/order-tour/${route}`
       );
       return;
     }
-  
+
     let tripInfo = this.squadAssemble.tripInfo;
     let obj = this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation = obj;
@@ -464,7 +464,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.spinner.hide();
       console.log('tripInfo from server is :', res);
       this.squadAssemble.tripInfofromService = res;
-      localStorage.setItem('tripId',res.trip.id.toString());
+      localStorage.setItem('tripId', res.trip.id.toString());
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
       this.router.navigateByUrl(
         `/education/order-tour/${route}`
@@ -483,7 +483,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.router.navigateByUrl(
     //       `/education/order-tour/${route}`
     //     );
-        ////  ------   yak del since it is being called in facilities
+    ////  ------   yak del since it is being called in facilities
     //let userName = this.userDataService.user.name || 'שחר גל';
     let events = this._facilitiesService.calendarEventsArr.value;
     let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events);
@@ -528,7 +528,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     if (routeIndex < this.steps.length) {
       if (routeIndex == 1) {
         let flag = this.syncToTripInfo();
-        if (flag == false ) {
+        if (flag == false) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
             data: { message: 'נא מלא את שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
@@ -538,9 +538,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           );
           return;
         }
-        else{
-          if( this.tripService.isOneDayTrip==true)
-          return;
+        else {
+          if (this.tripService.isOneDayTrip == true)
+            return;
         }
       }
       if (routeIndex == 2) {
@@ -566,10 +566,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   public changeActiveStepPrevNavigation(): void {
     const routeIndex =
-    this.steps.findIndex(
-      (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
-    ) + 1;
-    if (routeIndex === 4){
+      this.steps.findIndex(
+        (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
+      ) + 1;
+    if (routeIndex === 4) {
       console.log('is not avaliable');
       return;
     }
@@ -577,11 +577,11 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.location.back();
   }
 
-  setDialogMessage(message){
+  setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-       data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-     })
+      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+    })
 
   }
 
