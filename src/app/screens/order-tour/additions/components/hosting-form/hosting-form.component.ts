@@ -422,37 +422,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  // CheckHostingOccupancy(occupancyValidation) {
-  //   this.orderService.checkHostingOccupancy(occupancyValidation).subscribe(res => {
-  //     console.log(res);
-  //     if (res.isOccupancyProblem === true) {
-  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //         width: '500px',
-  //         data: { message: "מס יחידות הלינה המבוקשות גדול ממספר יחידות הלינה הזמינות במרכז שדה זה", content: '', leftButton: 'אישור' }
-  //       }); return false;
-  //     } else return true;
-  //   }, (err) => {
-  //     console.log(err);
-  //   })
-  // }
-
-  // CheckClassOccupancy(occupancyValidation) {
-  //   this.orderService.checkClassOccupancy(occupancyValidation).subscribe(res => {
-  //     console.log(res);
-  //   }, (err) => {
-  //     console.log(err);
-  //   })
-  // }
-
-  // CheckHoursOccupancyPerItemInOrder(occupancyValidation) {
-  //   this.orderService.checkHoursOccupancyPerItemInOrder().subscribe(res => {
-  //     console.log(res);
-  //   }, (err) => {
-  //     console.log(err);
-  //   })
-  // }
-
-
+  
 
   setDateTimeFormat(date, hour) {
     let str = date.split("T");
