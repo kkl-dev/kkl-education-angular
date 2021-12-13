@@ -815,9 +815,9 @@ paths:
     delete: 
         tags:
         - activities
-        operationId: DeleteOrderItemFromCalendar
+        operationId: DeleteCalendarOrderItem
         parameters:
-        - name: itemRecordIdentity
+        - name: tempOrderId
           description: the identity record of tempurary Order  in  data base
           in: path
           required: true
