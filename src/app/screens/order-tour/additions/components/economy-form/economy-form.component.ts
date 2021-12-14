@@ -38,6 +38,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public columns: TableCellModel[];
   itemOrderRecordId: number;
+  selectedItem :any;
    // close subscribe:
    supplierListSub: Subscription;
   supplierSub: Subscription;
@@ -294,7 +295,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       eco.globalParameters['comments'] = this.form.getRawValue().comments.comments;
       eco.globalParameters.orderId = orderId;
       eco.order.supplier.id = +this.form.getRawValue().details.supplierId;
-      eco.order.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+      eco.order.tripId = this.tripId;
       eco.order.orderType.name = 'כלכלה';
       eco.order.orderType.id = this.orderType;
       if(this.item!= undefined){
@@ -329,17 +330,14 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       console.log(res); 
       //this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
       this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
-      //this.tableData.next(res);
       this.tableData=res;
       this.ifShowtable=true;
       this.generalFormService.enableButton.next(true);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
@@ -350,13 +348,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
    this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
       console.log(res);  
       this.generalFormService.setOrderList(res, this.orderType,'updating',false);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
     }, (err) => {
       console.log(err);
       this.ifShowtable=false;
-       //this.isSaveOrderSucceeded.next(false);
        this.editMode = false;
        this.form.enable({ emitEvent: false });
        this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
@@ -520,22 +516,21 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
-      let item = this.originalItemList.find(el => el.id === parseInt(value))
+      this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost;
-      if(!item.cost){
-        this.setZeroVal();
-        // this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-        // this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-        // this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
-        return;
-      }
       if(this.isSupplierXemptedFromVat==true){
-        itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
+        itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
       }  
        else
-       itemCost = item.costVat;
+       itemCost = this.selectedItem.costVat;
       this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
 
     this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(debounceTime(2000),distinctUntilChanged()).subscribe(value => {
@@ -546,19 +541,33 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       console.log('veganDishesNumber',value);
       this.calculateDishes(parseInt(value), 'veganDishesNumber')
     });
-    // this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      //this.calculate();
-    // });
+    
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value);
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value);
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     console.log(this.form);
   }
@@ -569,12 +578,15 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
   }
 
-  setZeroVal(){
+ 
+  setSupplierBillingZero(){
     this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
     this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-    this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
   }
 
+  setCustomerBillingZero(){
+    this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+  }
   calculateDishes(value: any, type: any) {
     //if (value > this.form.controls["details"].get('regularDishesNumber').value ) {
       if (value > this.form.controls["details"].get('peopleInTrip').value ) {

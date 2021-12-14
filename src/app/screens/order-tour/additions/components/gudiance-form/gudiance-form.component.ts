@@ -42,6 +42,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   isSupplierXemptedFromVat: boolean;
   ifCalculateByQuantity : boolean;
   itemOrderRecordId: number;
+  selectedItem :any;
   valueChangeIndex= 0;
   // close subscribe:
   supplierSub: Subscription;
@@ -337,19 +338,16 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   addOrder(item){
     this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
        console.log(res); 
-       //this.tableData.next(res);
        //this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
        this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
        this.tableData=res;
        this.ifShowtable=true;
        this.generalFormService.enableButton.next(true);
-       //this.isSaveOrderSucceeded.next(true);
        this.editMode = true;
        this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
        this.setDialogMessage('ההזמנה נשמרה בהצלחה');
      }, (err) => {
        console.log(err);
-       //this.isSaveOrderSucceeded.next(false);
        this.editMode = false;
        this.form.enable({ emitEvent: false });
        this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');
@@ -360,13 +358,11 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.editOrderSub= this.orderService.editOrder(item).subscribe(res => {
        console.log(res);  
        this.generalFormService.setOrderList(res, this.orderType,'updating',false);
-       //this.isSaveOrderSucceeded.next(true);
        this.editMode = true;
        this.setDialogMessage('ההזמנה עודכנה בהצלחה');
      }, (err) => {
        console.log(err);
        this.ifShowtable=false;
-        //this.isSaveOrderSucceeded.next(false);
         this.editMode = false;
         this.form.enable({ emitEvent: false });
         this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
@@ -379,6 +375,94 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
          data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
        })
     }
+
+  // validationsGudiance() {
+
+  //   if (this.generalFormService.originalItemList.length > 0) {
+  //     var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
+  //   }
+  //   if (item.credit === 0) {
+  //     if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
+  //       this.setDialogMessage('בהזמנת הדרכה - חובה למלא שעת התייצבות');
+  //       return false;
+  //     }
+  //     if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
+  //       this.setDialogMessage('בהזמנת הדרכה - חובה למלא מקום התייצבות');
+  //       return false;
+  //     }
+  //   }
+  //   // אם הפריט הוא תוספת ריכוז חובה להכניס הערה
+  //   if (item.id == 234) {
+  //     if (this.form.value.comments['comments'] === null || this.form.value.comments['comments'] === "" || this.form.value.comments['comments'] === undefined) {
+  //       this.setDialogMessage('חובה למלא הערה בפריט - תוספת ריכוז');
+  //       return false;
+  //     }
+  //   }
+  //   // הרד קודד - צריך עדכון DB
+  //   // אם הפריט הוא ריכוז מחנה וגם הטיול חוץ מרכז שדה לא לאפשר לשבץ מדריך לפריט זה
+  //   if ((item.id == 25 || item.id == 152 || item.id == 218 ||
+  //     item.id == 219 || item.id == 229 || item.id == 235 || item.id == 271)
+  //     && this.generalFormService.tripInfo.trip.insideCenterFieldId == 2) {
+  //     this.setDialogMessage('לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה');
+  //     return false;
+  //   }
+
+  //   // chani
+
+  //   // צריך טיפול בהרשאות- בינתיים , מתייחסים להרשאה כהרשאה קבועה - משווק
+  //   // צריך תנאי האם ההרשאה היא אכן משווק
+  //   // אם הפריט זיכוי (וההרשאה משווק)
+  //   if (item.credit == 1) {
+  //     this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
+  //     return false;
+  //   }
+  //   // אם הפריט מצריך אישור של מנהל מחלקה וגם אם הוא מסוג זיכוי
+  //   if (item.isNeedManagerApproval == 1) {
+  //     this.setDialogMessage('פריט  מצריך אישור מנהל מחלקה');
+  //     return false;
+  //   }
+  //   // לא לכל ההרשאות
+  //   if (item.id == 220) {
+  //     this.setDialogMessage('אין לך הרשאה לקלוט פריט זה');
+  //     return false;
+  //   }
+  //   // typeSleepId
+  //   // בדיקה שהפריט שישי שבת
+  //   // או חג
+  //   if (item.itemId == 219) {
+  //     if (item.startDate.getDay() != 6 || item.endDate.getDay() != 7) {
+  //       // בדיקה שזה לא יוצא חג- ואם כן שאלה האם להמשיך , צריך לברר מול חיה
+  //       if (this.isHoliday()) {
+  //         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //           width: '500px',
+  //           data: { message: ' ', content: '', }
+  //         })
+  //       }
+  //       else {
+  //         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //           width: '500px',
+  //           data: { message: '"פריט זה לא מתאים לתאריכי הטיול" ', content: '', }
+  //         })
+  //         return false;
+  //       }
+  //     }
+  //   }
+
+  //   // אין להוסיף פריטים "תוספת לינה" ו"תוספת פעילות לילה" (419, 177) לאותו לילה בטיול
+  //   // צרך בדיקה אם זה אכן מבצע את הבדיקה הזאת בצורה נכונה
+  //   if (item.id == 117 || item.id == 419) {
+  //     if (this.generalFormService.guidance.filter(x => x["itemId"].itemId == item.itemId &&
+  //       x["startDate"].getDate() == item.startDate &&
+  //       x["startDate"].getDate() < item.endDate) != null) {
+  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //         width: '500px',
+  //         data: { message: "אין להזין את הפריטים: תוספת לינת לילה ותוספת פעילות לילה לאותו לילה בטיול", content: '', }
+  //       })
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // }
 
   validationsGudiance() {
     if (this.generalFormService.originalItemList.length > 0) {
@@ -409,16 +493,19 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       this.setDialogMessage('לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה');
       return false;
     }
-
+    if (this.generalFormService.isOneDayTrip && item.isNight === 1) {
+      this.setDialogMessage('לא ניתן להוסיף פריט לינה לטיול חד יומי');
+      return false;
+    }
     // chani
 
     // צריך טיפול בהרשאות- בינתיים , מתייחסים להרשאה כהרשאה קבועה - משווק
     // צריך תנאי האם ההרשאה היא אכן משווק
     // אם הפריט זיכוי (וההרשאה משווק)
-    if (item.credit == 1) {
-      this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
-      return false;
-    }
+    // if (item.credit == 1) {
+    //   this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
+    //   return false;
+    // }
     // אם הפריט מצריך אישור של מנהל מחלקה וגם אם הוא מסוג זיכוי
     if (item.isNeedManagerApproval == 1) {
       this.setDialogMessage('פריט  מצריך אישור מנהל מחלקה');
@@ -453,19 +540,16 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
     // אין להוסיף פריטים "תוספת לינה" ו"תוספת פעילות לילה" (419, 177) לאותו לילה בטיול
     // צרך בדיקה אם זה אכן מבצע את הבדיקה הזאת בצורה נכונה
-    if (item.id == 117 || item.id == 419) {
-      if (this.generalFormService.guidance.filter(x => x["itemId"].itemId == item.itemId &&
-        x["startDate"].getDate() == item.startDate &&
-        x["startDate"].getDate() < item.endDate) != null) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: "אין להזין את הפריטים: תוספת לינת לילה ותוספת פעילות לילה לאותו לילה בטיול", content: '', }
-        })
-        return false;
-      }
+    if (item.id === 177 || item.id === 419) {
+      var arr=this.generalFormService.gudianceOrderList.filter(item => item.globalParameters.itemId === 177 || item.globalParameters.itemId === 419) 
+      //   if() {
+      //   this.setDialogMessage('אין להזין את הפריטים: תוספת לינת לילה ותוספת פעילות לילה לאותו לילה בטיול')
+      //   return false;
+      // }
     }
     return true;
   }
+
 
    // chani- from PB
   // צריך להיות כללי
@@ -511,32 +595,37 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
-      let item = this.originalItemList.find(el => el.id === parseInt(value))
-      if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
+      //let item = this.originalItemList.find(el => el.id === parseInt(value))
+      this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value))
+      if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
       this.ifCalculateByQuantity= true;
       else
       this.ifCalculateByQuantity= true;
       let itemCost;
-      if(!item.cost){
-        this.setZeroVal();
-        // this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-        // this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-        // this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
-        return;
-      }
       if(this.isSupplierXemptedFromVat==true){
-        itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
+        itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
       }
        else
-       itemCost = item.costVat;
+       itemCost = this.selectedItem.costVat;
       this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(this.ifCalculateByQuantity){
-        console.log(value);
         this.calculate();
+        if (!this.selectedItem.cost) {
+          this.setSupplierBillingZero();
+        }
+        if (!this.selectedItem.costCustomer) {
+          this.setCustomerBillingZero();
+        }
       }
       else
       return;  
@@ -545,8 +634,13 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(!this.ifCalculateByQuantity){
-        console.log(value);
         this.calculate();
+        if (!this.selectedItem.cost) {
+          this.setSupplierBillingZero();
+        }
+        if (!this.selectedItem.costCustomer) {
+          this.setCustomerBillingZero();
+        }
       }
       else
       return;
@@ -554,12 +648,22 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     });
   
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value);
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value);
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     console.log(this.form)
 
@@ -571,9 +675,12 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
   }
 
-  setZeroVal(){
+  setSupplierBillingZero(){
     this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
     this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+  }
+
+  setCustomerBillingZero(){
     this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
   }
  

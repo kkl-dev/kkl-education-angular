@@ -241,16 +241,26 @@ export class AdditionsService {
     //---------------------------כלכלה------------------------------------------------
     else if (item?.orderType == 4) {
       // בהזמנות כלכלה שורה של פריט היא תמיד ליום אחד
-      //itemOrder.billingSupplier = item?.cost * +MultiplyByAmountOrPeople // חישוב חיוב ספק
+      itemOrder.billingSupplier = item?.cost * +MultiplyByAmountOrPeople // חישוב חיוב ספק
+      if(!isXemptedFromVat && item?.credit !== 1){
+        itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+      } 
       // if (item.costVat == 1) {
       // if (itemOrder.isVat == 1) {
       //   // itemOrder.billingSupplier = (currentVat / 100) + 1
       //   itemOrder.billingSupplier *= currentVat;
       // } // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
-      var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
-      MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides : MultiplyByAmountOrPeople
-      
- 
+           var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
+           MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides : MultiplyByAmountOrPeople   
+            //הורדת מדריכים ונהגים
+            let numGuides= this.generalFormService.tripInfo.trip.numGuides>0?this.generalFormService.tripInfo.trip.numGuides:0
+            let numDrivers= this.generalFormService.tripInfo.trip.numDrivers>0?this.generalFormService.tripInfo.trip.numDrivers:0
+            let numPeopleMinusNumGuidesAndDrivers: any
+             numPeopleMinusNumGuidesAndDrivers = MultiplyByAmountOrPeople - (numGuides+ numDrivers);
+            var MultiplyByPeopleMinusGuides= numPeopleMinusNumGuidesAndDrivers; 
+            // var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > (this.generalFormService.tripInfo.trip.numGuides + this.generalFormService.tripInfo.trip.numDrivers) ?
+            // MultiplyByAmountOrPeople - this.generalFormService.tripInfo.trip.numGuides - this.generalFormService.tripInfo.trip.numDrivers : MultiplyByAmountOrPeople
+
       if (item?.isSumPeopleOrAmount == 2 && this.generalFormService.tripInfo.trip.attribute.subsidization1To25 == 1 && this.generalFormService.tripInfo.trip.activity.id !== 2) {// פריט שמוגדר לפי משתתפים - בטיול שאינו השתלמות מדריכים
         // if (MultiplyByAmountOrPeople > this.squadAssembleService.tripInfofromService.trip.numGuides) {
         // var MultiplyByPeopleMinusGuides = MultiplyByAmountOrPeople > this.generalFormService.tripInfo.trip.numGuides ?
