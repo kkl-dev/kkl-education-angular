@@ -8,7 +8,7 @@ import { SquadAssembleService } from '../../../squad-assemble/services/squad-ass
 import { GeneralFormService } from '../../services/general-form.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import {  distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-economy-form',
@@ -533,7 +533,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(debounceTime(2000),distinctUntilChanged()).subscribe(value => {
+    this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       console.log('vegetarianDishesNumber',value)
       this.calculateDishes(parseInt(value), 'vegetarianDishesNumber');
     });
@@ -588,13 +588,9 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
   }
   calculateDishes(value: any, type: any) {
-    //if (value > this.form.controls["details"].get('regularDishesNumber').value ) {
       if (value > this.form.controls["details"].get('peopleInTrip').value ) {
-      //this.form.controls["details"].get(type).patchValue(this.form.controls["details"].get('regularDishesNumber').value.toString(), { emitEvent: false });
       this.form.controls["details"].get(type).patchValue(0, { emitEvent: false });
-      // this.form.controls["details"].get('regularDishesNumber').patchValue('0', { emitEvent: false });
-
-      this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');
+     // this.setDialogMessage('לא ניתן לבחור כמות הגדולה מסך כמות המשתתפים');
     }
     else this.form.controls["details"].get('regularDishesNumber').patchValue((this.generalFormService.peopleInTrip - this.form.controls["details"].get('vegetarianDishesNumber').value - this.form.controls["details"].get('veganDishesNumber').value).toString(), { emitEvent: false });
   }

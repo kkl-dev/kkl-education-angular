@@ -791,12 +791,17 @@ paths:
         "400": 
           description: invalid data
 
-  /deleteCalendarActivityItem/{tripActivityIdentity}: 
+  /deleteCalendarActivityItem/{tripId}/{tripActivityIdentity}: 
     delete: 
         tags:
         - activities
         operationId: DeleteCalendarActivityItem
         parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: integer
         - name: tripActivityIdentity
           description: indentity record on trip activities table in data base
           in: path
@@ -811,12 +816,17 @@ paths:
           description: id not found
          '500' : 
           description: internal server error
-  /deleteCalendarOrderItem/{tempOrderId}: 
+  /deleteCalendarOrderItem/{tripId}//{tempOrderId}: 
     delete: 
         tags:
         - activities
         operationId: DeleteCalendarOrderItem
         parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: integer
         - name: tempOrderId
           description: the identity record of tempurary Order  in  data base
           in: path

@@ -33,10 +33,8 @@ import { Configuration }                                     from '../configurat
 })
 export class ActivitiesService {
 
-      //protected basePath = 'http://knf-appl-dev3:8077';
-       protected basePath = 'http://knf-appl-dev3/EducationApiDev';
-       //protected basePath= 'http://knf-appl-dev3/EducationApiTest';
-        //protected basePath= 'http://knf-appl-dev3/EducationApiProd';
+    protected basePath= 'http://knf-appl-dev3/EducationApiDev';
+    //protected basePath= 'http://knf-appl-dev3/EducationApiTest';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -249,14 +247,18 @@ export class ActivitiesService {
 
     /**
      * Delete activity item from calendar  by id
+     * @param tripId 
      * @param tripActivityIdentity indentity record on trip activities table in data base
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteCalendarActivityItem(tripActivityIdentity: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
-    public deleteCalendarActivityItem(tripActivityIdentity: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
-    public deleteCalendarActivityItem(tripActivityIdentity: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
-    public deleteCalendarActivityItem(tripActivityIdentity: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+    public deleteCalendarActivityItem(tripId: number, tripActivityIdentity: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public deleteCalendarActivityItem(tripId: number, tripActivityIdentity: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public deleteCalendarActivityItem(tripId: number, tripActivityIdentity: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public deleteCalendarActivityItem(tripId: number, tripActivityIdentity: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+        if (tripId === null || tripId === undefined) {
+            throw new Error('Required parameter tripId was null or undefined when calling deleteCalendarActivityItem.');
+        }
         if (tripActivityIdentity === null || tripActivityIdentity === undefined) {
             throw new Error('Required parameter tripActivityIdentity was null or undefined when calling deleteCalendarActivityItem.');
         }
@@ -280,7 +282,7 @@ export class ActivitiesService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarActivityItem/${encodeURIComponent(String(tripActivityIdentity))}`,
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarActivityItem/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(tripActivityIdentity))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -293,14 +295,18 @@ export class ActivitiesService {
 
     /**
      * Delete tempurary order item from calendar by id
+     * @param tripId 
      * @param tempOrderId the identity record of tempurary Order  in  data base
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteCalendarOrderItem(tempOrderId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
-    public deleteCalendarOrderItem(tempOrderId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
-    public deleteCalendarOrderItem(tempOrderId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
-    public deleteCalendarOrderItem(tempOrderId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+    public deleteCalendarOrderItem(tripId: number, tempOrderId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public deleteCalendarOrderItem(tripId: number, tempOrderId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public deleteCalendarOrderItem(tripId: number, tempOrderId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public deleteCalendarOrderItem(tripId: number, tempOrderId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+        if (tripId === null || tripId === undefined) {
+            throw new Error('Required parameter tripId was null or undefined when calling deleteCalendarOrderItem.');
+        }
         if (tempOrderId === null || tempOrderId === undefined) {
             throw new Error('Required parameter tempOrderId was null or undefined when calling deleteCalendarOrderItem.');
         }
@@ -324,7 +330,7 @@ export class ActivitiesService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarOrderItem/${encodeURIComponent(String(tempOrderId))}`,
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarOrderItem/${encodeURIComponent(String(tripId))}//${encodeURIComponent(String(tempOrderId))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

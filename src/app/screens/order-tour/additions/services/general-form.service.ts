@@ -382,7 +382,9 @@ export class GeneralFormService {
         control.value= data.veganDishesNumber;
       }
       if(control.key == 'exitPoint'){
-         control.value= data.exitPoint;
+        
+         control.value= data.exitPoint+='';
+        
       }
       // if (control.key === 'comments') {
       //   control.value = data;
