@@ -3,7 +3,6 @@
   width: 100% !important;
   z-index: 100;
 
-
   ::ng-deep .form {
     overflow: visible !important;
     height: fit-content !important;
@@ -14,9 +13,9 @@
   }
 
   .title-span {
-    color: #448ecd;
     font-size: 16px;
     font-weight: 600;
+    display: flex;
   }
   hr {
     border: 1px solid #0572ba2b;
@@ -30,19 +29,19 @@
       // margin: 10px;
     }
     .add {
-      text-decoration: underline;
       font-weight: 500;
+      padding: 5px;
+      border: 2px solid #448ecd;
+      color: #448ecd;
     }
     .chosen {
-      border-bottom: 1px solid #448ecd;
     }
   }
 }
 
-.form-btn { 
+.form-btn {
   width: fit-content;
   background-color: white;
-  color: #448ecd;
   border: 3px solid #448ecd;
   padding: 10px 15px;
 }
@@ -56,15 +55,13 @@
   // background-color: red;
 }
 
-
 @media screen and (max-width: 1024px) {
-  
-    ::ng-deep .mat-select-value-text,
-    ::ng-deep .mat-select-min-line,
-    ::ng-deep .mat-option-text {
-      font-size: 14px !important;
-    }
-  
+  ::ng-deep .mat-select-value-text,
+  ::ng-deep .mat-select-min-line,
+  ::ng-deep .mat-option-text {
+    font-size: 14px !important;
+  }
+
   .sleeping-options {
     ::ng-deep .SOBD__days-paginatior {
       width: 100%;

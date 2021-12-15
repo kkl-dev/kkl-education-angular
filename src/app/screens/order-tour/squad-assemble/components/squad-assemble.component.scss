@@ -14,8 +14,33 @@ app-squad-details,
   width: 100%;
 }
 
+@media screen and (max-width: "1024px") {
+  .row {
+    .schedule {
+      order: 2 !important;
+    }
+    .client {
+      order: 1 !important;
+    }
+    .details {
+      order: 3 !important;
+    }
+    .group {
+      order: 4 !important;
+    }
+    // flex-direction: row-reverse;
+  }
+}
+
 .assemble-container {
   padding-left: spacing(3);
+}
+
+@media screen and (max-width: "1024px") {
+  .assemble-container {
+    overflow: scroll;
+    padding-left: spacing(3);
+  }
 }
 
 .divider {
@@ -25,12 +50,26 @@ app-squad-details,
   border-right: 1px solid color(border);
 }
 
-@media only screen and (max-width : 1024px) {
-
+@media only screen and (max-width: 1024px) {
   .client,
   .schedule,
   .newClient {
     margin-top: 2rem;
   }
+}
 
+.form-container {
+}
+
+.schedule {
+  order: 4;
+}
+.client {
+  order: 3;
+}
+.details {
+  order: 1;
+}
+.group {
+  order: 2; 
 }

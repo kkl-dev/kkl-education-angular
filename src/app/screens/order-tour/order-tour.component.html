@@ -1,9 +1,14 @@
-<!-- <div
+<div
   class="order-tour"
   [ngClass]="{
     'sleeping-width': activeStep === 1 || currentRoute === 'sleeping'
   }"
 >
+<!-- <app-sleeping-map class="app-sleeping-map"
+[ngClass]="{'display-none': activeStep !== 1 && currentRoute !== 'sleeping'}">
+<app-maps></app-maps>
+</app-sleeping-map> -->
+
   <app-drawer *ngIf="currentRoute === 'squad-assemble'"></app-drawer>
   <div>
     <div
@@ -28,6 +33,7 @@
           <ng-content></ng-content>
         </div>
       </div>
+      <!-- (previous)="changeActiveStepPrevNavigation()" -->
       <div fxFlex="10" fxFlex.xs="15" class="bottom-navigation" dir="rtl">
         <app-bottom-navigation
           previousUrl="prevPage"
@@ -41,7 +47,10 @@
         ></app-bottom-navigation>
       </div>
     </div>
-  </div> -->
+  </div>
+  <ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#448ecd" type="ball-scale-multiple">
+    <p style="color:#448ecd; font-size: 18px; font-weight: 600; text-align: center;">אנא המתן לטעינת הנתונים</p>
+  </ngx-spinner>
   
   <app-drawer *ngIf="currentRoute === 'squad-assemble'"></app-drawer>
   <div>
@@ -82,8 +91,3 @@
     </div>
   </div>
 </div>
-
-<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#448ecd" type="ball-scale-multiple">
-  <p style="color:#448ecd; font-size: 18px; font-weight: 600; text-align: center;">אנא המתן לטעינת הנתונים</p>
-</ngx-spinner>
-
