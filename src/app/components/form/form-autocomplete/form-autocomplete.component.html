@@ -33,7 +33,7 @@
       fxLayoutAlign="space-between center"
     >
       <app-typography>
-        {{ option.label }}
+        {{ option.label }} - {{option.value}}
       </app-typography>
       <button mat-icon-button (click)="onDelete(option)">
         <mat-icon color="warn">clear</mat-icon>

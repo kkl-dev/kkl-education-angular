@@ -6,6 +6,7 @@ import { QuestionGroup } from '../logic/question-group';
 import { SquadClientService } from 'src/app/screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
 import { Observable, of } from 'rxjs';
 import { SelectOption } from '../logic/question-base';
+import { QuestionAutocomplete } from '../logic/question-autocomplete';
 
 @Component({
   selector: 'app-form-autocomplete',
@@ -21,8 +22,7 @@ export class FormAutocompleteComponent implements OnInit {
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
   @Output() select: EventEmitter<FormControl> = new EventEmitter();
   @Output() delete: EventEmitter<SelectOption> = new EventEmitter();
-  @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> =
-    new EventEmitter();
+  @Output() optionSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(private formService: FormService) {}
 
@@ -43,7 +43,17 @@ export class FormAutocompleteComponent implements OnInit {
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
-    this.optionSelected.emit(event);
+    const autocomplete: QuestionAutocomplete = this.group.questions.find(
+      (q) => q instanceof QuestionAutocomplete
+    );
+    const option = autocomplete.inputProps.options.find(
+      (opt) => opt.value === event.option.value
+    );
+
+
+    console.log(option);
+
+    this.optionSelected.emit({ key: autocomplete.key, option });
   }
   public onDelete(option: SelectOption) {
     this.delete.emit(option);
