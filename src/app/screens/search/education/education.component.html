@@ -27,10 +27,14 @@
             <span class="education__select-option-text">ציפורי</span>
           </span>
         </mat-option> -->
-            <mat-option
+            <!-- <mat-option
               value="{{ option.id }}"
               *ngFor="let option of tripService.formOptions"
-            >
+            > -->
+            <mat-option
+            value="{{ option.id }}"
+            *ngFor="let option of fieldForestCentersLookUp"
+           >
               <span class="education__select-option">
                 <img
                   [src]="option.iconPath"

@@ -10,7 +10,6 @@ import { AccommodationType, AvailableAccomodationDate } from 'src/app/open-api';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
@@ -26,7 +25,7 @@ export class EducationComponent implements OnInit {
 
   checked = false;
   //sleepingPlace: any;
-  forestCenterId: number = null;
+  forestCenterId: any;
   disableDates: boolean = true;
   disableContinueBtn = true;
   checkedSingleDay = false;
@@ -35,6 +34,7 @@ export class EducationComponent implements OnInit {
   AvailableDates!: AvailableAccomodationDate[];
   AcommodationTypes!: AccommodationType[];
   AcommodationType = 'בקתה';
+  fieldForestCentersLookUp;
   date: string | null = null;
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[] = [];
@@ -48,7 +48,7 @@ export class EducationComponent implements OnInit {
   };
 
   constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
-    private checkAvailabilltyService: CheckAvailabilityService,private spinner: NgxSpinnerService ,private http: HttpClient) {
+    private checkAvailabilltyService: CheckAvailabilityService,private spinner: NgxSpinnerService ) {
 
     this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
     this.options = {
@@ -62,15 +62,35 @@ export class EducationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tripService.getLookupFieldForestCenters();
-    this.forestCenterId = this.tripService.centerField.id || null;
-    if (this.forestCenterId != 0 && this.forestCenterId != null) {
-      this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
-      this.sleepingDates = this.tripService.sleepingDates;
-      this.disableContinueBtn = false;
-    }
+    //this.tripService.getLookupFieldForestCenters();
+    this.getLookupFieldForestCenters();
+    //this.forestCenterId = this.tripService.centerField.id || null;
+    // if (this.forestCenterId != 0 && this.forestCenterId != null) {
+    //   this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+    //   this.sleepingDates = this.tripService.sleepingDates;
+    //   this.disableContinueBtn = false;
+    // }
    
   }
+
+  //test
+  getLookupFieldForestCenters(){
+     this.usersService.getLookupFieldForestCenters().subscribe(res=>{
+        this.fieldForestCentersLookUp=res;
+        this.fieldForestCentersLookUp = res.filter(aco => aco.accommodationList.length > 0);
+        this.tripService.formOptions=this.fieldForestCentersLookUp;
+        this.forestCenterId = this.tripService.centerField.id.toString() || null;
+        if (this.forestCenterId != 0 && this.forestCenterId != null) {
+          this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+          this.sleepingDates = this.tripService.sleepingDates;
+          this.disableContinueBtn = false;
+        }
+     },(err)=>{
+       console.log(err);
+     })
+  }
+
+  //end test
  
 
   selectChange(event: any) {
