@@ -34,6 +34,8 @@ export class FormComponent implements OnInit {
   constructor(private formService: FormService) {}
 
   ngOnInit() {
+    // console.log(this.slots);
+    
     this.form = this.formService.setFormGroup(this.formTemplate);
 
 
