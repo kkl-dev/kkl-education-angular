@@ -64,22 +64,23 @@ export class FacilitiesComponent implements OnInit {
   pagesAmount: any = 5;
   areas: any = [];
   activityCategories: any = [];
-  activitiesArray: any[] = [
-    {
-      iconPath: 'fruits.svg',
-      name: 'ארוחת ערב',
-      itemId: 3
-    },
-    {
-      iconPath: 'roast-chicken.svg',
-      name: 'ארוחת צהריים',
-      itemId: 164
-    },
+  mealArray: any[] = [
     {
       iconPath: 'restaurant.svg',
       name: 'ארוחת בוקר',
       itemId: 1
     },
+    {
+      iconPath: 'roast-chicken.svg',
+      name: 'ארוחת צהריים',
+      itemId: 164
+    }, {
+      iconPath: 'fruits.svg',
+      name: 'ארוחת ערב',
+      itemId: 3
+    }
+  ];
+  activitiesArray: any[] = [
     {
       iconPath: 'alarm.svg',
       name: 'השכמה',

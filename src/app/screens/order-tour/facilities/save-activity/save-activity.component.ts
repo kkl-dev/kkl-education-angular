@@ -29,9 +29,9 @@ export class SaveActivityComponent implements OnInit {
 
   @Input() type: string;
   @Input() public additonsType: any[] = [
-    { name: 'הסעה', completed: false, svg: 'bus' },
+    // { name: 'הסעה', completed: false, svg: 'bus' },
     // { name: 'אבטחה', completed: false , svg:'shield' },
-    { name: 'הדרכה', completed: false, svg: 'man-with-bag' },
+    // { name: 'הדרכה', completed: false, svg: 'man-with-bag' },
     { name: 'כלכלה', completed: false, svg: 'dinner' },
     // { name: 'הפעלה מוסיקלית', completed: false , svg:'music' },
   ];
@@ -63,6 +63,9 @@ export class SaveActivityComponent implements OnInit {
   deleteItem(event): void {
     event.preventDefault();
     const id = this.form.controls['id'].value;
+
+    this.activitiyService.deleteCalendarActivityItem(this.squadAssembleService.tripInfofromService.trip.id, this.form.value.tripActivityIdentity);
+
     this.facilitiesServices.deleteItemFromArray(id);
     this.facilitiesServices.closeModal('close');
   }
@@ -86,8 +89,8 @@ export class SaveActivityComponent implements OnInit {
 
     this.CreateActivity();
 
-    this.emitFormValues.emit(this.form.value);
-    this.facilitiesServices.closeModal('close');
+    // this.emitFormValues.emit(this.form.value);
+    // this.facilitiesServices.closeModal('close');
   }
 
   CreateActivity() {
@@ -101,9 +104,14 @@ export class SaveActivityComponent implements OnInit {
     newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
 
     this.activitiyService.createTripActivity(newActivity).subscribe((res: any) => {
+      this.form.value.tripActivityIdentity = res.activityId; //.tripActivityIdentity;
       console.log(res);
+
+      this.emitFormValues.emit(this.form.value);
+      this.facilitiesServices.closeModal('close');
     }, (error) => {
-      console.log(error)
+      console.log(error);
+      this.facilitiesServices.closeModal('close');
     }
     );
   }

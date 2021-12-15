@@ -42,9 +42,11 @@ export class AddActivityComponent implements OnInit {
     this.form.controls['selectedDay'].setValue(this.selectedDay);
     this.form.controls['start'].setValue(this.arrangeTime('start'));
     this.form.controls['end'].setValue(this.arrangeTime('end'));
-    this.emitFormValues.emit(this.form.value);
+
     this.CreateActivity();
-    this.facilitiesServices.closeModal('close');
+
+    // this.emitFormValues.emit(this.form.value);    
+    // this.facilitiesServices.closeModal('close');
   }
 
   CreateActivity() {
@@ -58,9 +60,14 @@ export class AddActivityComponent implements OnInit {
     newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
 
     this.activitiyService.createTripActivity(newActivity).subscribe((res: any) => {
+      this.form.value.tripActivityIdentity = res.activityId; //.tripActivityIdentity;
       console.log(res);
+
+      this.emitFormValues.emit(this.form.value);
+      this.facilitiesServices.closeModal('close');
     }, (error) => {
-      console.log(error)
+      console.log(error);
+      this.facilitiesServices.closeModal('close');
     }
     );
   }

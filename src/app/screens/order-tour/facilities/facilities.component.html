@@ -23,12 +23,12 @@
                 <!-- <app-calendar></app-calendar> -->
                 <!-- start app-calendar -->
                 <full-calendar #calendar [options]="calendarOptions">
-                </full-calendar>                
+                </full-calendar>
                 <div class="calendar-hide">
                     <app-dynamic #dynamic></app-dynamic>
                 </div>
                 <!-- end app-calendar -->
-                
+
             </div>
         </div>
     </div>
@@ -39,7 +39,8 @@
                 <button fxFlex='20' (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
             </div>
             <div class="forms" fxFlex='100'>
-                <app-form-container [questions]='formArray' [cols]='3' (register)="logForm($event)" (optionSelected)="onOptionSelected($event)">
+                <app-form-container [questions]='formArray' [cols]='3' (register)="logForm($event)"
+                    (optionSelected)="onOptionSelected($event)">
                 </app-form-container>
             </div>
         </div>
@@ -72,22 +73,24 @@
                 <p>פעילויות קבועות</p>
             </div>
             <div class="info-card" id="activities">
-                <ng-container *ngFor="let item of activitiesArray; let i = index">
+                <ng-container *ngFor="let item of mealArray; let i = index">
                     <app-info-card class="facilities-items-item" [item]="item" *ngIf='5 > i'
-                        (click)="updateChosenActivity(item) ; openModal('activity')">
+                        (click)="updateChosenFacility(item) ; openModal('facility')">
                     </app-info-card>
                 </ng-container>
-                <!-- yak del for now -- theres only 5 (green) activities -->
-                <!-- <ng-container *ngFor="let item of activitiesArray; let i = index">
+                <ng-container *ngFor="let item of activitiesArray; let i = index">
                     <app-info-card class="facilities-items-item" [item]="item"
-                    *ngIf='i >= 5 && hiddenElements.activities'
-                    (click)="updateChosenActivity(item) ; openModal('activity')">
-                </app-info-card>
-                </ng-container> -->
+                        *ngIf='5 > i && item.name != "התייצבות"; else notShow'
+                        (click)="updateChosenActivity(item) ; openModal('activity')">
+                    </app-info-card>
+                    <ng-template #notShow>
+                        <div style="background-color: gray; opacity: 0.3;">
+                            <app-info-card class="facilities-items-item" [item]="item" *ngIf='5 > i'>
+                            </app-info-card>
+                        </div>
+                    </ng-template>
+                </ng-container>
             </div>
-            <!-- <p class="full-list"
-                (click)="hiddenElements.activities ? hiddenElements.activities = false : hiddenElements.activities = true">
-                {{hiddenElements.activities ? 'סגור רשימה' : 'לרשימה המלאה'}}</p> -->
         </div>
         <div class="cards" fxFlex='100' fxLayout="column">
             <div class="titles">

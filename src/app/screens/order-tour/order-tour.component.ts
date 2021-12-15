@@ -479,27 +479,27 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  createTripActivities(route) {
-    // this.router.navigateByUrl(
-    //       `/education/order-tour/${route}`
-    //     );
-    ////  ------   yak del since it is being called in facilities
-    //let userName = this.userDataService.user.name || 'שחר גל';
-    let events = this._facilitiesService.calendarEventsArr.value;
-    let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events);
-    this.createActivitiesSub = this.activitiyService.createTripActivities(eventsArr).subscribe(res => {
-      console.log(res);
-      this.router.navigateByUrl(
-        `/education/order-tour/${route}`
-      );
-    }, (err) => {
-      console.log(err);
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'אירעה שגיאה בשליחת הנתונים, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      })
-    })
-  }
+  // createTripActivities(route) {
+  //   // this.router.navigateByUrl(
+  //   //       `/education/order-tour/${route}`
+  //   //     );
+  //   ////  ------   yak del since it is being called in facilities
+  //   //let userName = this.userDataService.user.name || 'שחר גל';
+  //   let events = this._facilitiesService.calendarEventsArr.value;
+  //   let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events);
+  //   this.createActivitiesSub = this.activitiyService.createTripActivities(eventsArr).subscribe(res => {
+  //     console.log(res);
+  //     this.router.navigateByUrl(
+  //       `/education/order-tour/${route}`
+  //     );
+  //   }, (err) => {
+  //     console.log(err);
+  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //       width: '500px',
+  //       data: { message: 'אירעה שגיאה בשליחת הנתונים, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+  //     })
+  //   })
+  // }
 
   // AddOrder() {
   //   if (this.additionsService.orderList.length > 0) {
@@ -548,10 +548,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
       if (routeIndex == 3) {
-        if (this._facilitiesService.calendarEventsArr.value.length > 0) {
-          this.createTripActivities(this.steps[routeIndex].path);
-          return;
-        }
+        // if (this._facilitiesService.calendarEventsArr.value.length > 0) {
+        //   this.createTripActivities(this.steps[routeIndex].path);
+        //   return;
+        // }
       }
       // if (routeIndex === 4) this.AddOrder();
       this.router.navigateByUrl(

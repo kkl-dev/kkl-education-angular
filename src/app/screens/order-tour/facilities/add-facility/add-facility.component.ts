@@ -8,6 +8,10 @@ import { UserDataService } from 'src/app/utilities/services/user-data.service';
 import { DAYS } from 'src/mock_data/facilities';
 import { FacilityModel, FacilitiesList, OccupiedHours } from '../models/facility.model';
 
+import { ActivitiesService } from 'src/app/open-api';
+import { TempOrder } from 'src/app/open-api';
+import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
+
 export interface OccupiedBarModel {
   fromHour: number;
   tillHour: number;
@@ -39,7 +43,7 @@ export class AddFacilityComponent implements OnInit {
   username: string = ''
   defaultImage: string = 'defaultFacility.svg';
 
-  constructor(private userDataService: UserDataService, private facilitiesServices: FacilitiesService, private tripService: TripService) {
+  constructor(private userDataService: UserDataService, private facilitiesServices: FacilitiesService, private tripService: TripService, private activitiyService: ActivitiesService, private squadAssembleService: SquadAssembleService) {
     this.username = this.userDataService.user.name;
   }
 
@@ -73,25 +77,25 @@ export class AddFacilityComponent implements OnInit {
         'facilityId': new FormControl(data.id || null),
         'tripActivityIdentity': new FormControl(data.tripActivityIdentity || null),
         // 'orderTempId': new FormControl(data.orderTempId || null),
-        'tempOrderId': new FormControl(data.tempOrderId || null),    
+        'tempOrderId': new FormControl(data.tempOrderId || null),
         'orderId': new FormControl(data.orderId || null),
         'tempOrderList': new FormControl(data.tempOrderList || null)
       });
 
 
-//       endDate: "2021-11-18T13:00:00"
-// fromHour: "2021-11-18T10:00:00"
-// itemId: 642
-// orderId: null
-// orderItemIdentity: null
-// orderItemName: "ציפורי- מדשאה (עד 250 איש)"
-// orderTempId: 794
-// orderTypeCode: 7
-// orderTypeName: "אירוח/פעילות"
-// startDate: "2021-11-18T10:00:00"
-// tillHour: "2021-11-18T13:00:00"
-// tripId: 57256
-      
+      //       endDate: "2021-11-18T13:00:00"
+      // fromHour: "2021-11-18T10:00:00"
+      // itemId: 642
+      // orderId: null
+      // orderItemIdentity: null
+      // orderItemName: "ציפורי- מדשאה (עד 250 איש)"
+      // orderTempId: 794
+      // orderTypeCode: 7
+      // orderTypeName: "אירוח/פעילות"
+      // startDate: "2021-11-18T10:00:00"
+      // tillHour: "2021-11-18T13:00:00"
+      // tripId: 57256
+
       //console.log('this form => ', this.addFacilityForm);
 
     } else {
@@ -100,10 +104,10 @@ export class AddFacilityComponent implements OnInit {
       if (data.start.includes("T")) {
         data.start = this.separateTimeFromDate(data.start);
       }
-       if (data.end.includes("T")) {
+      if (data.end.includes("T")) {
         data.end = this.separateTimeFromDate(data.end);
       }
-     
+
       this.addFacilityForm = new FormGroup({});
       for (const property in data) {
         this.addFacilityForm.addControl(property, new FormControl(data[property]));
@@ -126,13 +130,46 @@ export class AddFacilityComponent implements OnInit {
       return;
     }
 
-    this.emitFormValues.emit(this.addFacilityForm.value);
-    this.closeModal();
+    this.createFacility();
+
+    // this.emitFormValues.emit(this.addFacilityForm.value);
+    // this.closeModal();
+  }
+
+  createFacility() {
+    let newTempOrder = {} as TempOrder;
+
+    newTempOrder.tempOrderId = null;
+    newTempOrder.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+
+    newTempOrder.itemId = this.addFacilityForm.value.itemId;
+    newTempOrder.orderItemName = this.addFacilityForm.value.title;
+
+    // newTempOrder.tripActivityIdentity = null;
+    newTempOrder.startDate = this.addFacilityForm.value.start;
+    newTempOrder.endDate = this.addFacilityForm.value.end;
+    newTempOrder.fromHour = this.addFacilityForm.value.start;
+    newTempOrder.tillHour = this.addFacilityForm.value.end;
+
+    this.activitiyService.createTempOrder(newTempOrder).subscribe((res: any) => {
+      this.addFacilityForm.value.tripActivityIdentity = res;
+
+      this.emitFormValues.emit(this.addFacilityForm.value);
+      this.closeModal();
+      console.log(res);
+    }, (error) => {
+      console.log(error);
+      this.closeModal();
+    }
+    );
   }
 
   deleteItem(event): void {
     event.preventDefault();
     const id = this.addFacilityForm.controls['id'].value;
+
+    this.activitiyService.deleteCalendarOrderItem(this.squadAssembleService.tripInfofromService.trip.id, this.addFacilityForm.value.tripActivityIdentity);
+
     this.facilitiesServices.deleteItemFromArray(id);
     this.facilitiesServices.closeModal('close');
   }
