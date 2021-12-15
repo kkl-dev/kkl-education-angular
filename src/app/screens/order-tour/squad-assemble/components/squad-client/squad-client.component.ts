@@ -65,7 +65,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.$saveMode = this.squadAssembleService.getSaveModeObs();
     this.formGroup = this.formService.setFormGroup(this.group);
 
-    this.setSchoolOptions()
+    this.setSchoolOptions();
   }
 
   ngOnDestroy(): void {
@@ -136,23 +136,18 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public onSelect(control: FormControl) {}
 
-  public onOptionSelected(event: MatAutocompleteSelectedEvent) {
-    this.squadClientService.emitClientSelected(event.option.value);
-    const { value } = event.option;
-    const option = this.formatOption(value);
+  // return event : {key : string, option : {label, value}}
+  public onOptionSelected(event: any) {
+    const { option, key } = event;
+    const client = `${option.value} - ${option.label}`;
+    this.formGroup.controls.client['controls'][key].patchValue(client);
+    this.squadClientService.emitClientSelected(client);
     this.subjectSchool.next(option);
 
     // TODO - SERVER SIDE
   }
   public onDelete(option: SelectOption) {
-
-    console.log(option)
-
-  }
-
-  public formatOption(value: string): SelectOption {
-    const arr = value.split('-');
-    return { value: arr[0], label: arr[1] };
+    console.log(option);
   }
 
   private setSchoolOptions() {
