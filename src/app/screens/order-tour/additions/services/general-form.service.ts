@@ -372,6 +372,20 @@ export class GeneralFormService {
       if(data.order.orderType.id==4 && control.key == 'regularDishesNumber' ){
         control.value=this.questionGroups[0].questions[3].value;
       }
+      if(control.key == 'scatterLocation'){
+        control.value= data.scatterLocation;
+      }
+      if(control.key == 'vegetarianDishesNumber'){
+        control.value= data.vegetarianDishesNumber;
+      }
+      if(control.key == 'veganDishesNumber'){
+        control.value= data.veganDishesNumber;
+      }
+      if(control.key == 'exitPoint'){
+        
+         control.value= data.exitPoint+='';
+        
+      }
       // if (control.key === 'comments') {
       //   control.value = data;
       // }

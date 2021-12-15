@@ -44,7 +44,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   ifCalculateByQuantity: boolean;
   valueChangeIndex = 0;
   itemOrderRecordId: number;
-  selectedItem;
+  selectedItem :any;
   // close subsribe:
   supplierListSub: Subscription;
   settlementSub: Subscription;
@@ -203,7 +203,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
             this.generalFormService.details[itemIndex].value = this.itemId.toString();
             if (this.generalFormService.settlementList.length > 0 && this.item.exitPoint != undefined) {
               let exitLocationIndex = this.generalFormService.questionGroups[0].questions.findIndex(i => i.key === 'exitPoint');
-              this.generalFormService.questionGroups[0].questions[exitLocationIndex].value = this.item.exitPoint;
+              this.generalFormService.questionGroups[0].questions[exitLocationIndex].value = this.item.exitPoint.toString();
               this.setForm();
               return;
             }
@@ -225,6 +225,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       })
       let exitLocationIndex = this.generalFormService.questionGroups[0].questions.findIndex(i => i.key === 'exitPoint');
       this.generalFormService.questionGroups[0].questions[exitLocationIndex].inputProps.options = this.generalFormService.settlementList;
+      if(this.isItemOrderExist)
+      this.generalFormService.questionGroups[0].questions[exitLocationIndex].value = this.item.exitPoint.toString();
       this.setForm();
 
     }, (err) => {
@@ -343,23 +345,18 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
 
     if (!this.isEditable) {
-      //this.generalFormService.addOrder(t, t.order.orderType.id);
       this.addOrder(t);
     }
     else {
       t.globalParameters.itemOrderRecordId = this.itemOrderRecordId;
-      //this.generalFormService.editOrder(t, t.order.orderType.id);
       this.editOrder(t)
     }
-
     this.form.disable({ emitEvent: false });
-    //this.editMode = true;
   }
 
   addOrder(item) {
     this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
       console.log(res);
-      //this.tableData.next(res);
       //this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
       this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
       this.tableData = res;
@@ -386,7 +383,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }, (err) => {
       console.log(err);
       this.ifShowtable = false;
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בעדכון ההזמנה, נא פנה למנהל המערכת');
@@ -408,6 +404,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     return hourFormat;
   }
 
+  
+
   validationsTransport() {
     if (this.generalFormService.originalItemList.length > 0) {
       var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
@@ -415,47 +413,29 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if (item.credit === 0) {
       if (!item.name.includes("נסיעות")) {
         if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
-          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-            width: '500px',
-            data: { message: 'בהזמנת היסעים - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-          })
-          return false;
+          this.setDialogMessage( 'בהזמנת היסעים - חובה למלא שעת התייצבות');
+           return false;
         }
         if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
-          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-            width: '500px',
-            data: { message: 'בהזמנת היסעים - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-          })
+          this.setDialogMessage('בהזמנת היסעים - חובה למלא מקום התייצבות');
           return false;
         }
       }
       if (this.form.value.details['exitPoint'] === null || this.form.value.details['exitPoint'] === "" || this.form.value.details['exitPoint'] === undefined) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'בהזמנת היסעים - חובה לציין נקודת יציאה לחישוב', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
+        this.setDialogMessage('בהזמנת היסעים - חובה לציין נקודת יציאה לחישוב');
         return false;
       }
       if (this.form.value.details['scatterLocation'] === null || this.form.value.details['scatterLocation'] === "" || this.form.value.details['scatterLocation'] === undefined) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'בהזמנת היסעים - חובה לציין מקום פיזור', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
+        this.setDialogMessage('בהזמנת היסעים - חובה לציין מקום פיזור');
         return false;
       }
       if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'בהזמנת היסעים - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
+        this.setDialogMessage('בהזמנת היסעים - חובה למלא מספר משתתפים');
         return false;
       }
 
-      if (item.participantsLimit < this.form.value.details['peopleInTrip'] && item.participantsLimit != null) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'מספר המשתתפים גדול מסך המקומות באוטובוס - יש להוסיף אוטובוס נוסף', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        })
+      if (item.numSeat < this.form.value.details['peopleInTrip'] && item.numSeat != null) {
+        this.setDialogMessage('מספר המשתתפים גדול מסך המקומות באוטובוס - יש להוסיף אוטובוס נוסף');
         return false;
       }
       var people = parseInt(this.form.value.details['peopleInTrip'])
@@ -464,10 +444,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         console.log(Math.floor(people / item.participantsLimit))
         if (((people % item.participantsLimit) > 0) && (Math.floor(people / item.participantsLimit) > 0)) {
           if (Math.floor(people / item.participantsLimit) < parseInt(this.form.value.details['quantity'])) {
-            const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-              width: '500px',
-              data: { message: 'מספר המשתתפים קטן מסך מספר המקומות בכל האוטובוסים יחד - שים לב שלא הוזמן אוטובוס מיותר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-            })
+            this.setDialogMessage('מספר המשתתפים קטן מסך מספר המקומות בכל האוטובוסים יחד - שים לב שלא הוזמן אוטובוס מיותר');
             return false;
           }
         }
@@ -475,6 +452,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
     return true;
   }
+
 
   public onEdit() {
     this.editMode = false;
@@ -512,10 +490,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       else
         this.ifCalculateByQuantity = false;
       let itemCost;
-      if (!this.selectedItem.cost) {
-        this.setZeroVal();
-        //return;
-      }
       if (this.isSupplierXemptedFromVat == true) {
         itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
       }
@@ -523,12 +497,24 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         itemCost = this.selectedItem.costVat;
       this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
 
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (this.ifCalculateByQuantity) {
         console.log(value)
         this.calculate();
+        if (!this.selectedItem.cost) {
+          this.setSupplierBillingZero();
+        }
+        if (!this.selectedItem.costCustomer) {
+          this.setCustomerBillingZero();
+        }
       }
       else
         return;
@@ -536,11 +522,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (!this.ifCalculateByQuantity) {
-        console.log(value);
-        // if (!this.selectedItem.cost) {
-        //   this.setZeroVal();
-        // }
         this.calculate();
+        if (!this.selectedItem.cost) {
+          this.setSupplierBillingZero();
+        }
+        if (!this.selectedItem.costCustomer) {
+          this.setCustomerBillingZero();
+        }
       }
       else
         return;
@@ -548,16 +536,22 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
 
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      if (!this.selectedItem.cost) {
-        this.setZeroVal();
-      }
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      if (!this.selectedItem.cost) {
-        this.setZeroVal();
-      }
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     console.log(this.form)
   }
@@ -569,10 +563,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
     }
 
-    setZeroVal(){
+     setSupplierBillingZero(){
       this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
       this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-      //this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+    }
+
+    setCustomerBillingZero(){
+      this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
     }
 
     disableFormFields(){

@@ -39,6 +39,7 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   isTempuraryItem: boolean; 
   isSupplierXemptedFromVat: boolean
   itemOrderRecordId: number;
+  selectedItem :any;
   ifCalculateByQuantity : boolean;
   valueChangeIndex= 0;
   // close subscribe:
@@ -398,31 +399,35 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
       });
     this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
-      let item = this.originalItemList.find(el => el.id === parseInt(value))
-      if (item?.isSumPeopleOrAmount == 1 || item?.isSumPeopleOrAmount == 0 || item?.isSumPeopleOrAmount == null)
+      this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value))
+      if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
       this.ifCalculateByQuantity= true;
       else
       this.ifCalculateByQuantity= false;
       let itemCost;
-      if(!item.cost){
-        this.setZeroVal();
-        // this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-        // this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-        // this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
-        return;
-      }
       if(this.isSupplierXemptedFromVat==true){
-        itemCost = (Math.round(item.cost * 100) / 100).toFixed(2);
+        itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
       }  
        else
-       itemCost = item.costVat;
+       itemCost = this.selectedItem.costVat;
       this.form.controls["details"].get('itemCost').setValue(itemCost,{emitEvent: false });
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(this.ifCalculateByQuantity){
-      console.log(value);
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+       }
       }
       else
       return;
@@ -432,8 +437,13 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   
     this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if(!this.ifCalculateByQuantity){
-      console.log(value);
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+       }
       }
       else
       return;
@@ -441,12 +451,22 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
     });
   
     this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value);
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
     this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      console.log(value);
       this.calculate();
+      if (!this.selectedItem.cost) {
+        this.setSupplierBillingZero();
+      }
+      if (!this.selectedItem.costCustomer) {
+        this.setCustomerBillingZero();
+      }
     });
   }
 
@@ -456,11 +476,15 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer,{emitEvent: false});
   }
 
-  setZeroVal(){
+  setSupplierBillingZero(){
     this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
     this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+  }
+
+  setCustomerBillingZero(){
     this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
   }
+
 
  disableFormFields(){
       this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
