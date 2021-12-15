@@ -136,6 +136,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public onSelect(control: FormControl) {}
 
+  // return event : {key : string, option : {label, value}}
   public onOptionSelected(event: any) {
     const { option, key } = event;
     const client = `${option.value} - ${option.label}`;
