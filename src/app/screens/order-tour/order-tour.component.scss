@@ -1,3 +1,72 @@
+// @import "../../../styles.scss";
+
+// .order-tour {
+//   background-color: color(paper);
+// }
+
+// div {
+//   height: 100%;
+// }
+
+// .stepper {
+//   background: transparent linear-gradient(0deg, #ffffff 0%, #f3f3f3 100%) 0% 0%
+//     no-repeat padding-box;
+//   text-align: center !important;
+//   app-working-steps {
+//     width: 100%;
+//     height: 100%;
+//   }
+// }
+
+// .display-none{
+//   display: none;
+// }
+
+
+// app-bottom-navigation {
+//   width: 100%;
+//   background-color: #f5f5f5;
+// }
+
+// ::ng-deep .bottom-navigation {
+//   box-sizing: border-box;
+//   align-self: stretch;
+// }
+
+// div.sleeping-width {
+//   width: 50%;
+//   margin-left: 50%;
+//   :ng-deep .stepper{ 
+//     background-color: brown !important;
+//   }
+// }
+
+// app-sleeping-options {
+//   height: inherit;
+//   box-sizing: border-box;
+//   width: 100%;
+// }
+
+// mat-grid-list.sleeping-width {
+//   width: 50% !important;
+//   margin-left: 50%;
+// }
+
+// div.steps-container {
+//   padding-right: 5%;
+//   padding-left: 5%;
+//   background-color: color(paper);
+//   overflow: auto;
+// }
+
+// /* iPads (landscape) ----------- */
+// @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+//   div.steps-container {
+//     padding-left: 6%;
+//   }
+// }
+
+
 @import "../../../styles.scss";
 
 .order-tour {
@@ -28,7 +97,7 @@ div {
 //   left: 0;
 //   width: 50%;
 //   height: 100%;
-//   // background-color: red;
+//   background-color: red;
 // }
 app-bottom-navigation {
   width: 100%;
@@ -38,6 +107,7 @@ app-bottom-navigation {
 ::ng-deep .bottom-navigation {
   box-sizing: border-box;
   align-self: stretch;
+  // padding-bottom: 40px; 
 }
 
 div.sleeping-width {
@@ -72,4 +142,5 @@ div.steps-container {
     padding-left: 6%;
   }
 }
+
 
