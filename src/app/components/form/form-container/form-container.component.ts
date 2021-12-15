@@ -49,7 +49,6 @@ export class FormContainerComponent implements OnInit {
     this.subscribeToFormValues();
     this.disableForm()
 
-    console.log(this.group)
   }
 
   private initFormGroup() {

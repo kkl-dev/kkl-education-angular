@@ -2,7 +2,7 @@
   <div fxFlex="35">
     <app-form
       [formTemplate]="formTemplate"
-      [slots]="{ button: formButton }"
+      [slots]="{ button: formButton, pickUpHour,dropDownHour }"
       [editMode]="editMode"
       (register)="onRegister($event)"
     ></app-form>
@@ -15,6 +15,32 @@
   </div>
 </div>
 
+<ng-template  #pickUpHour>
+  <div fxLayout='column' class="ngx-timepicker-field"> 
+    <span>עד שעה</span>
+    
+    <ngx-timepicker-field
+    [format]="24"
+    defaultTime="09:00" 
+    controlOnly="false"
+    (timeChanged)='endTimeChanged($event)'
+    ></ngx-timepicker-field>
+  </div>
+</ng-template>
+
+
+<ng-template class="ngx-timepicker-field-example" #dropDownHour>
+  <div fxLayout='column'  class="ngx-timepicker-field">
+    <span>עד שעה</span> 
+    
+    <ngx-timepicker-field
+    [format]="24"
+    defaultTime="09:00" 
+    controlOnly="false"
+    (timeChanged)='startTimeChanged($event)'
+    ></ngx-timepicker-field>
+  </div>
+</ng-template>
 <ng-template #formButton>
   <div class="button-container" fxLayout="column" fxLayoutAlign="end end">
     <button

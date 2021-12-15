@@ -20,7 +20,15 @@
         </ng-container>
 
         <mat-grid-tile
-          *ngIf="!question?.isGroup"
+          *ngIf="question.type === 'custom'"
+          [colspan]="question.fullWidth ? cols : question.cols"
+          [rowspan]="question.rows || 4"
+        >
+          <ng-container *ngTemplateOutlet="slots[question?.key]"></ng-container>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          *ngIf="!question?.isGroup && question.type !== 'custom'"
           [colspan]="question.fullWidth ? cols : question.cols"
           [rowspan]="question.rows || 4"
         >
@@ -49,7 +57,7 @@
           </ng-container>
         </mat-grid-tile>
 
-        <ng-container *ngIf="question?.isGroup">
+        <ng-container *ngIf="question?.isGroup && question.type !== 'custom'">
           <mat-grid-tile
             [colspan]="question.group?.cols || 1"
             [rowspan]="question.rows || 20"
