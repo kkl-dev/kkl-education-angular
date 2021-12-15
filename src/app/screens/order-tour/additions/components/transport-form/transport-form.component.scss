@@ -23,3 +23,21 @@ button.edit-button {
     border-radius: 20% !important;
   }
 }
+
+.ngx-timepicker-field {
+  display: flex;
+  flex-direction: row-reverse;
+  span {
+    text-align: right;
+  }
+
+  ::ng-deep .ngx-timepicker{
+    flex-direction: row-reverse !important;
+  }
+  ::ng-deep .ngx-timepicker-control__input {
+    font-size: 1.6rem;
+  }
+  ::ng-deep .ngx-timepicker-control__arrows {
+    top: -5px;
+  }
+}

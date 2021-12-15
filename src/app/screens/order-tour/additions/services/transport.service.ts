@@ -104,8 +104,8 @@ export class TransportService {
       key: 'pickUpHour',
       label: 'שעת איסוף',
       icon: 'schedule',
-      type: 'time',
-      validations: [Validators.required],
+      type: 'custom',
+      validations: [Validators.required], 
     }),
 
     new QuestionTextbox({
@@ -150,7 +150,7 @@ export class TransportService {
       key: 'dropDownHour',
       label: 'שעת פיזור',
       icon: 'schedule',
-      type: 'time',
+      type: 'custom',
       validations: [Validators.required],
       inputProps: {
         // labelSize: 's5',

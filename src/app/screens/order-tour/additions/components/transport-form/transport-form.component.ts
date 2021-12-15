@@ -16,6 +16,10 @@ export class TransportFormComponent implements OnInit {
   @Input() public transport: TransportModel;
   @Input() public editMode: boolean;
 
+  //time inputs
+  public pickUpHour: string;
+  public dropDownHour: string;
+
   public form: FormGroup;
   public columns: TableCellModel[];
 
@@ -27,11 +31,13 @@ export class TransportFormComponent implements OnInit {
   constructor(private transportService: TransportService) {}
 
   ngOnInit(): void {
+    
     if (this.editMode) {
       this.transportService.setFormValues(this.transport);
     }
-
+    
     this.formTemplate.questionsGroups = this.transportService.questionGroups;
+    console.log(this.form);
   }
 
   public onSave(): void {
@@ -39,6 +45,12 @@ export class TransportFormComponent implements OnInit {
       this.editMode = true;
       this.form.disable();
     }
+
+    console.log(this.pickUpHour);
+    console.log(this.dropDownHour);
+    
+    console.log(this.form);
+
     // find if object already in a schedule
   }
 
@@ -56,5 +68,20 @@ export class TransportFormComponent implements OnInit {
     this.form.controls['details']
       .get('supplier')
       .valueChanges.pipe(map((value) => console.log(value)));
+  }
+
+  public startTimeChanged(event: string) {
+    console.log(this.form);
+    this.dropDownHour=event
+    console.log(this.form.controls[0]);
+    
+    
+    // this.form.controls['pickUpHour'].setValue(event);
+  } 
+  
+  public endTimeChanged(event: string) {
+    this.pickUpHour=event
+    console.log(this.form.controls.locations);
+    // this.form.controls['dropDownHour'].patchValue(event);
   }
 }

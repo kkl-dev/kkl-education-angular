@@ -44,7 +44,6 @@ export class FormContainerComponent implements OnInit {
   constructor(private formService: FormService) { }
 
   ngOnInit() {
-    console.log(this.slots['pickUpHour1']);
     this.initFormGroup();
     this.subscribeToQuestions();
     this.subscribeToFormValues();
