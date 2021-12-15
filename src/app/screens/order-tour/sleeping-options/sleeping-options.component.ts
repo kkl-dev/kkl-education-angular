@@ -6,6 +6,7 @@ import { AccommodationType, LodgingReservation, ParticipantType, TripInfo, UserS
 import { CheckAvailabilityService } from 'src/app/utilities/services/check-availability.service';
 import { SleepingServiceService } from 'src/app/utilities/services/sleeping-service.service';
 import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.service';
+import { MapsComponent } from 'src/app/screens/education-results/maps/maps.component';
 
 export interface formGroupGrid {
   title: string;
@@ -39,6 +40,7 @@ export class SleepingOptionsComponent implements OnInit {
   ]
  
   @ViewChild('filledNightsForm') filledNightsForm: FormContainerComponent;
+  @ViewChild(MapsComponent) child: MapsComponent;
 
   public indexToPatch: number = -1;
   filledNightsArray1: {
@@ -227,4 +229,9 @@ export class SleepingOptionsComponent implements OnInit {
   ngOnInit(): void {
     this.setValues();
    }
+
+   currentDayHandler(newCurrentDay: number) {
+    this.child.currentDayHandler(newCurrentDay);
+  }
+
 }

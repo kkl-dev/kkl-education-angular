@@ -683,7 +683,7 @@ paths:
       tags:
       - activities
       operationId: CreateTripActivities
-      description:  adding activities ,orderFacilities, and temporary orders
+      description:  adding activities ,orderFacilities, and tempurary orders
       requestBody:
         content:
           application/json:
@@ -706,7 +706,7 @@ paths:
       tags:
       - activities
       operationId: CreateTripActivity
-      description:  adding activity to trip sometimes with several tempurary orders connected
+      description:  adding activity to trip 
       requestBody:
         content:
           application/json:
@@ -2389,9 +2389,9 @@ components:
        orderItemName:
          type: string
          example: אוטובוס
-       tripActivityIdentity:
-         type: integer
-         description : need for activity with additions of temp orders
+      #  tripActivityIdentity:
+      #    type: integer
+      #    description : need for activity with additions of temp orders
          nullable: true
        startDate: 
           type: string
@@ -2449,11 +2449,11 @@ components:
         tripId:
           type: integer
           example: 2
-        additions: 
-          description : for activity with several tempurary orders connected
-          type: array
-          items:
-            $ref: '#/components/schemas/TempOrder'
+        # additions: 
+        #   description : for activity with several tempurary orders connected
+        #   type: array
+        #   items:
+        #     $ref: '#/components/schemas/TempOrder'
          
         
     TripActivityLookup:

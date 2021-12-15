@@ -142,7 +142,7 @@ export class ActivitiesService {
     }
 
     /**
-     * adding activities ,orderFacilities, and temporary orders
+     * adding activities ,orderFacilities, and tempurary orders
      * @param tripCalendar 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -194,7 +194,7 @@ export class ActivitiesService {
     }
 
     /**
-     * adding activity to trip sometimes with several tempurary orders connected
+     * adding activity to trip
      * @param tripActivity 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.

@@ -346,9 +346,8 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   addOrder(item) {
     this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
       console.log(res);
-      //this.orderId= res[0].globalParameters.orderId;
       this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId;
-      this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
+      this.orderId = res[res.length-1].globalParameters.itemOrderRecordId;
       this.tableData = res;
       this.ifShowtable = true;
       this.generalFormService.enableButton.next(true);

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-education',
@@ -47,7 +48,7 @@ export class EducationComponent implements OnInit {
   };
 
   constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
-    private checkAvailabilltyService: CheckAvailabilityService, private http: HttpClient) {
+    private checkAvailabilltyService: CheckAvailabilityService,private spinner: NgxSpinnerService ,private http: HttpClient) {
 
     this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
     this.options = {
@@ -82,8 +83,10 @@ export class EducationComponent implements OnInit {
     fromDate = fromDate.substring(0, 10);
     tillDate = tillDate.substring(0, 10);
     // tillDate = '2021-11-30'
+    this.spinner.show();
     this.usersService.getAvailableAccomodationDates(this.tripService.centerField.id, fromDate, tillDate).subscribe(
       response => {
+        this.spinner.hide();
         console.log(response)
         this.AvailableDates = response;
         this.AvailableDates.forEach(element => element.freeSpace.forEach(element => { if (element.availableBeds === undefined) { element.availableBeds = 0; } }));
