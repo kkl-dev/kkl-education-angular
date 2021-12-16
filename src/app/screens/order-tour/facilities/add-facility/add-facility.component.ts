@@ -79,7 +79,8 @@ export class AddFacilityComponent implements OnInit {
         // 'orderTempId': new FormControl(data.orderTempId || null),
         'tempOrderId': new FormControl(data.tempOrderId || null),
         'orderId': new FormControl(data.orderId || null),
-        'tempOrderList': new FormControl(data.tempOrderList || null)
+        'tempOrderList': new FormControl(data.tempOrderList || null),
+        'orderTypeCode': new FormControl(data.orderTypeCode || null)
       });
     } else {
       this.updateForm = true;
@@ -135,7 +136,7 @@ export class AddFacilityComponent implements OnInit {
     newTempOrder.endDate = this.addFacilityForm.value.end;
     newTempOrder.fromHour = this.addFacilityForm.value.start;
     newTempOrder.tillHour = this.addFacilityForm.value.end;
-
+    newTempOrder.orderTypeCode = this.addFacilityForm.value.orderTypeCode;
     if (this.updateForm) {
       this.activitiyService.editCalendarOrderItem(newTempOrder).subscribe((res: any) => {
         this.addFacilityForm.value.tempOrderId = res;

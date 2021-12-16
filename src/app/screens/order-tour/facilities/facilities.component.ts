@@ -68,16 +68,19 @@ export class FacilitiesComponent implements OnInit {
     {
       iconPath: 'restaurant.svg',
       name: 'ארוחת בוקר',
-      itemId: 1
+      itemId: 1,
+      orderTypeCode: 4
     },
     {
       iconPath: 'roast-chicken.svg',
       name: 'ארוחת צהריים',
-      itemId: 164
+      itemId: 164,
+      orderTypeCode: 4
     }, {
       iconPath: 'fruits.svg',
       name: 'ארוחת ערב',
-      itemId: 3
+      itemId: 3,
+      orderTypeCode: 4
     }
   ];
   activitiesArray: any[] = [
@@ -268,6 +271,7 @@ export class FacilitiesComponent implements OnInit {
 
   getAvailableFacilities() {
     this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
+    this.facilitiesArray.map(n => { n.orderTypeCode = 7 });
   }
 
   logForm(form) {
@@ -359,7 +363,7 @@ export class FacilitiesComponent implements OnInit {
       for (let i = 0; i < this.tempOrderList.length; i++) {
         //console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
         newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListfromTripCalendarApi(this.tempOrderList[i]);
-        this.addToCalendar(newTempOrderObj, true);
+        this.addToCalendar(newTempOrderObj, true, false);
         this.calenderArray.push(newTempOrderObj);
       }
 
@@ -367,7 +371,7 @@ export class FacilitiesComponent implements OnInit {
         //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
         newTempActivityList = this.facilitiesConvertingService.convertActivityListfromTripCalendarApi(this.activityList[i]);
         // if(newTempActivityList.title) {
-        this.addToCalendar(newTempActivityList, true);
+        this.addToCalendar(newTempActivityList, true, true);
         this.calenderArray.push(newTempActivityList);
         //}
       }
@@ -406,12 +410,12 @@ export class FacilitiesComponent implements OnInit {
     this.pagesAmount = quotient + remainder;
   }
 
-  addToCalendar(event: any, fromTripCalendarApi: boolean): void {
+  addToCalendar(event: any, fromTripCalendarApi: boolean, isEditable: boolean): void {
     //console.log("addToCalendar: ", event);
     const tmpObj: EventInput = {
       id: `${this.eventsArr.length}`,
       textColor: 'black',
-      editable: true,
+      editable: isEditable,
     }
     for (const property in event) {
       tmpObj[property] = event[property];
