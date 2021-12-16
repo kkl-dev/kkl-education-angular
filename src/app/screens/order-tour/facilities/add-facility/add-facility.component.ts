@@ -81,26 +81,10 @@ export class AddFacilityComponent implements OnInit {
         'orderId': new FormControl(data.orderId || null),
         'tempOrderList': new FormControl(data.tempOrderList || null)
       });
-
-
-      //       endDate: "2021-11-18T13:00:00"
-      // fromHour: "2021-11-18T10:00:00"
-      // itemId: 642
-      // orderId: null
-      // orderItemIdentity: null
-      // orderItemName: "ציפורי- מדשאה (עד 250 איש)"
-      // orderTempId: 794
-      // orderTypeCode: 7
-      // orderTypeName: "אירוח/פעילות"
-      // startDate: "2021-11-18T10:00:00"
-      // tillHour: "2021-11-18T13:00:00"
-      // tripId: 57256
-
-      //console.log('this form => ', this.addFacilityForm);
-
     } else {
       this.updateForm = true;
       this.selectedDay = data.selectedDay;
+
       if (data.start.includes("T")) {
         data.start = this.separateTimeFromDate(data.start);
       }
@@ -124,13 +108,13 @@ export class AddFacilityComponent implements OnInit {
     this.addFacilityForm.controls['end'].setValue(this.arrangeTime('end'));
     this.addFacilityForm.controls['selectedDay'].setValue(this.selectedDay);
 
-    if (this.updateForm) {
-      this.facilitiesServices.updateItemInArrayOfCalendar(this.addFacilityForm.value);
-      this.closeModal();
-      return;
-    }
-
     this.createFacility();
+
+    // if (this.updateForm) {
+    //   this.facilitiesServices.updateItemInArrayOfCalendar(this.addFacilityForm.value);
+    //   this.closeModal();
+    //   return;
+    // }
 
     // this.emitFormValues.emit(this.addFacilityForm.value);
     // this.closeModal();
@@ -139,38 +123,56 @@ export class AddFacilityComponent implements OnInit {
   createFacility() {
     let newTempOrder = {} as TempOrder;
 
-    newTempOrder.tempOrderId = null;
     newTempOrder.tripId = this.squadAssembleService.tripInfofromService.trip.id;
 
     newTempOrder.itemId = this.addFacilityForm.value.itemId;
     newTempOrder.orderItemName = this.addFacilityForm.value.title;
 
-    // newTempOrder.tripActivityIdentity = null;
+    if (this.updateForm && this.addFacilityForm.value.tempOrderId)
+      newTempOrder.tempOrderId = this.addFacilityForm.value.tempOrderId;
+
     newTempOrder.startDate = this.addFacilityForm.value.start;
     newTempOrder.endDate = this.addFacilityForm.value.end;
     newTempOrder.fromHour = this.addFacilityForm.value.start;
     newTempOrder.tillHour = this.addFacilityForm.value.end;
 
-    this.activitiyService.createTempOrder(newTempOrder).subscribe((res: any) => {
-      this.addFacilityForm.value.tripActivityIdentity = res;
+    if (this.updateForm) {
+      this.activitiyService.editCalendarOrderItem(newTempOrder).subscribe((res: any) => {
+        this.addFacilityForm.value.tempOrderId = res;
 
-      this.emitFormValues.emit(this.addFacilityForm.value);
-      this.closeModal();
-      console.log(res);
-    }, (error) => {
-      console.log(error);
-      this.closeModal();
+        this.facilitiesServices.updateItemInArrayOfCalendar(this.addFacilityForm.value);
+        this.closeModal();
+        console.log(res);
+      }, (error) => {
+        console.log(error);
+        this.closeModal();
+      });
     }
-    );
+    else {
+      this.activitiyService.createTempOrder(newTempOrder).subscribe((res: any) => {
+        this.addFacilityForm.value.tempOrderId = res;
+
+        this.emitFormValues.emit(this.addFacilityForm.value);
+        this.closeModal();
+        console.log(res);
+      }, (error) => {
+        console.log(error);
+        this.closeModal();
+      });
+    }
   }
 
   deleteItem(event): void {
     event.preventDefault();
     const id = this.addFacilityForm.controls['id'].value;
 
-    this.activitiyService.deleteCalendarOrderItem(this.squadAssembleService.tripInfofromService.trip.id, this.addFacilityForm.value.tripActivityIdentity);
+    this.activitiyService.deleteCalendarOrderItem(this.squadAssembleService.tripInfofromService.trip.id, this.addFacilityForm.value.tempOrderId).subscribe((res: any) => {
+      console.log(res);
+      this.facilitiesServices.deleteItemFromArray(id);
+    }, (error) => {
+      console.log(error);
+    });
 
-    this.facilitiesServices.deleteItemFromArray(id);
     this.facilitiesServices.closeModal('close');
   }
 

@@ -60,7 +60,7 @@ export class AddActivityComponent implements OnInit {
     newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
 
     this.activitiyService.createTripActivity(newActivity).subscribe((res: any) => {
-      this.form.value.tripActivityIdentity = res.activityId; //.tripActivityIdentity;
+      this.form.value.tripActivityIdentity = res;
       console.log(res);
 
       this.emitFormValues.emit(this.form.value);

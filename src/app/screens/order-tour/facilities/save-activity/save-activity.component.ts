@@ -64,9 +64,13 @@ export class SaveActivityComponent implements OnInit {
     event.preventDefault();
     const id = this.form.controls['id'].value;
 
-    this.activitiyService.deleteCalendarActivityItem(this.squadAssembleService.tripInfofromService.trip.id, this.form.value.tripActivityIdentity);
+    this.activitiyService.deleteCalendarActivityItem(this.squadAssembleService.tripInfofromService.trip.id, this.form.value.tripActivityIdentity).subscribe((res: any) => {
+      console.log(res);
+      this.facilitiesServices.deleteItemFromArray(id);
+    }, (error) => {
+      console.log(error);
+    });
 
-    this.facilitiesServices.deleteItemFromArray(id);
     this.facilitiesServices.closeModal('close');
   }
 
@@ -81,13 +85,13 @@ export class SaveActivityComponent implements OnInit {
     this.form.controls['start'].setValue(this.arrangeTime('start'));
     this.form.controls['end'].setValue(this.arrangeTime('end'));
 
-    if (this.updateForm) {
-      this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
-      this.facilitiesServices.closeModal('close');
-      return;
-    }
-
     this.CreateActivity();
+
+    // if (this.updateForm) {
+    //   this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
+    //   this.facilitiesServices.closeModal('close');
+    //   return;
+    // }
 
     // this.emitFormValues.emit(this.form.value);
     // this.facilitiesServices.closeModal('close');
@@ -95,7 +99,7 @@ export class SaveActivityComponent implements OnInit {
 
   CreateActivity() {
     let newActivity = {} as TripActivity;
-    newActivity.activityId = this.form.value.itemId;
+    newActivity.activityId = this.form.value.activityId;
     newActivity.activityName = this.form.value.title;
     newActivity.date = this.form.value.start;
     newActivity.description = this.form.value.title;
@@ -103,17 +107,32 @@ export class SaveActivityComponent implements OnInit {
     newActivity.tillHour = this.form.value.end;
     newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
 
-    this.activitiyService.createTripActivity(newActivity).subscribe((res: any) => {
-      this.form.value.tripActivityIdentity = res.activityId; //.tripActivityIdentity;
-      console.log(res);
+    if (this.updateForm && this.form.value.tripActivityIdentity)
+      newActivity.tripActivityIdentity = this.form.value.tripActivityIdentity;
 
-      this.emitFormValues.emit(this.form.value);
-      this.facilitiesServices.closeModal('close');
-    }, (error) => {
-      console.log(error);
-      this.facilitiesServices.closeModal('close');
+    if (this.updateForm) {
+      this.activitiyService.editCalendarActivityItem(newActivity).subscribe((res: any) => {
+        this.form.value.tripActivityIdentity = res.tripActivityIdentity;
+        console.log(res);
+
+        this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
+        this.facilitiesServices.closeModal('close');
+      }, (error) => {
+        console.log(error);
+        this.facilitiesServices.closeModal('close');
+      });
     }
-    );
+    else {
+      this.activitiyService.createTripActivity(newActivity).subscribe((res: any) => {
+        this.form.value.tripActivityIdentity = res;
+        console.log(res);
+        this.emitFormValues.emit(this.form.value);
+        this.facilitiesServices.closeModal('close');
+      }, (error) => {
+        console.log(error);
+        this.facilitiesServices.closeModal('close');
+      });
+    }
   }
 
   orderingCustomerHandler() {

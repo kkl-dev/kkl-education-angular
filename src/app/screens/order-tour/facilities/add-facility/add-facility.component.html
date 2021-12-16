@@ -30,7 +30,12 @@
                 </div>
                 <button class="add-facility__form-button delete-button" *ngIf='updateForm'
                     (click)="deleteItem($event)">מחיקה</button>
-                <button class="add-facility__form-button">{{updateForm ? 'שמירה' : 'שריין'}}</button>
+                <button *ngIf="!updateForm" class="add-facility__form-button">{{updateForm ? 'שמירה' :
+                    'שריין'}}</button>
+            </div>
+            <div class="add-facility__form-inputs" *ngIf="updateForm">
+                <span style="color:red;margin: 5px;">בשלב זה לא ניתן לערוך פריט זה ביומן , נא ערוך פריט זה במסך
+                    תוספות</span>
             </div>
         </form>
 
