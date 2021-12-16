@@ -13,18 +13,12 @@ import { SquadClientService } from '../screens/order-tour/squad-assemble/compone
   providedIn: 'root'
 })
 export class TripService {
-
-  // public activityByAttr = new Subject([] any);
   public activityByAttr = new BehaviorSubject<any[]>(null)
-  constructor(private userService: UserService, private squadBudgetService: SquadBudgetService, public squadClientService: SquadClientService) { }
-  // 
-  //  forestCenters: any = {};
-
+  constructor(private userService: UserService, private squadBudgetService: SquadBudgetService, public squadClientService: SquadClientService) {}
   centerField: FieldForestCenter = {
     id: 0,
     name: ''
   };
-
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[];
   isOneDayTrip: boolean;
@@ -44,32 +38,15 @@ export class TripService {
           "structureId": 850,
           "gender": "מעורב",
           "status": "פנוי"
-        },
-        {
-          "structureId": 851,
-          "gender": "בנות",
-          "status": "תפוס"
-        },
-        {
-          "structureId": 852,
-          "gender": "בנים",
-          "status": "תפוס"
-        },
-        {
-          "structureId": 853,
-          "gender": "מעורב",
-          "status": "פנוי"
-        },
-        {
-          "structureId": 1195,
-          "gender": "בנות",
-          "status": "פנוי"
         }
       ]
     }
   ]);
 
-  totalAvailableUnits: any = []
+  availableCabins = 0;
+  availableRooms = 0;
+  availableTents = 0;
+  availableGicha = 0;
 
   centerFieldObj = new BehaviorSubject<any>({
     "id": 1,
@@ -111,12 +88,10 @@ export class TripService {
 
   setFreeSpacesArray(freeSpacesArray: any) {
     this.freeSpacesArray = freeSpacesArray;
-    //console.log('this.freeSpacesArray: ', this.freeSpacesArray);
   }
 
   setfacilitiesArray(facilitiesArray: any) {
     this.facilitiesArray = facilitiesArray;
-    //console.log('facilitiesArray: ', this.facilitiesArray);
   }
 
   updateForestCenter(forestCenter: any) {
@@ -124,10 +99,6 @@ export class TripService {
     console.log('this. center  Field Obj: ', this.centerFieldObj);
     this.getAvailableSleepingOptions();
   }
-
-  // updateSleepingDates() {
-  //   this.getAvailableSleepingOptions()
-  // }
 
   convertDatesFromSlashToMinus() {
     let str = this.sleepingDates.from.split("/");
@@ -139,12 +110,6 @@ export class TripService {
     return sleepingDateObj;
   }
 
-
-  availableCabins = 0;
-  availableRooms = 0;
-  availableTents = 0;
-  availableGicha = 0;
-
   getAvailableSleepingOptions() {
     let str = this.sleepingDates.from.split("/");
     let str2 = this.sleepingDates.till.split("/");
@@ -152,48 +117,11 @@ export class TripService {
     let till = str2[2] + '-' + str2[1] + '-' + str2[0];
 
     this.userService.getAvailableSleepingOptionsByDates(this.centerField.id, from, till).subscribe((sleepingAvailability: any) => {
-      //console.log('sleeping Availability ==>', { sleepingAvailability });
       if (sleepingAvailability) {
         this.availableSleepingOptions = sleepingAvailability;
         //for maps
         this.availableUnitsForMap(0);
         this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
-
-
-        // this.availableCabins = 0;
-        // this.availableRooms = 0;
-        // this.availableTents = 0;
-        // this.availableGicha = 0;
-        // this.totalAvailableUnits = sleepingAvailability[0].sleepingOptions[0].maxOccupancy;
-        // console.log("totalAvailableUnits: " + this.totalAvailableUnits)
-
-        // let max = [];
-        // sleepingAvailability[0].sleepingOptions.forEach(element => {
-        //   max.push({ acoomodationTypeName: element.acoomodationTypeName, availableUnits: element.availableUnits });
-
-        //   if (element.acoomodationTypeName == 'בקתה') {
-        //     // console.log("totalAvailableUnits: " + element.availableUnits);
-        //     this.availableCabins = element.availableUnits;
-        //   }
-        //   if (element.acoomodationTypeName == 'אוהל') {
-        //     // console.log("totalAvailableUnits: " + element.availableUnits);
-        //     this.availableTents = element.availableUnits;
-        //   }
-        //   if (element.acoomodationTypeName == 'חדר') {  //room
-        //     //console.log("totalAvailableUnits: " + element.availableUnits);
-        //     this.availableRooms = element.availableUnits;
-        //   }
-        //   if (element.acoomodationTypeName == 'גיחה') {
-        //     // console.log("totalAvailableUnits: " + element.availableUnits);
-        //     this.availableGicha = element.availableUnits;
-        //   }
-        // });
-        // this.totalAvailableUnits = max;
-        // console.log("totalAvailableUnits: ", this.totalAvailableUnits);
-
-        // this.AvailableSleepingOptionsByDay.next(sleepingAvailability);
-
-        // this.getMapFacilities(this.centerField.id, from, till);
       }
     },
       error => {
@@ -207,34 +135,21 @@ export class TripService {
     this.availableRooms = 0;
     this.availableTents = 0;
     this.availableGicha = 0;
-    this.totalAvailableUnits = this.availableSleepingOptions[day].sleepingOptions[0].maxOccupancy;
-    //console.log("totalAvailableUnits: " + this.totalAvailableUnits)
 
-    let max = [];
     this.availableSleepingOptions[day].sleepingOptions.forEach(element => {
-      max.push({ acoomodationTypeName: element.acoomodationTypeName, availableUnits: element.availableUnits });
-
       if (element.acoomodationTypeName == 'בקתה') {
-        // console.log("totalAvailableUnits: " + element.availableUnits);
         this.availableCabins = element.availableUnits;
       }
       if (element.acoomodationTypeName == 'אוהל') {
-        // console.log("totalAvailableUnits: " + element.availableUnits);
         this.availableTents = element.availableUnits;
       }
       if (element.acoomodationTypeName == 'חדר') {  //room
-        //console.log("totalAvailableUnits: " + element.availableUnits);
         this.availableRooms = element.availableUnits;
       }
       if (element.acoomodationTypeName == 'גיחה') {
-        // console.log("totalAvailableUnits: " + element.availableUnits);
         this.availableGicha = element.availableUnits;
       }
     });
-    this.totalAvailableUnits = max;
-    //console.log("totalAvailableUnits: ", this.totalAvailableUnits);
-
-
     this.getMapFacilities(this.centerField.id, "2022-10-19", "2022-10-19");
   }
 
@@ -244,12 +159,6 @@ export class TripService {
       //console.log('lodging Facility List Array ==>', { lodgingList });
       this.lodgingFacilityListArray = [];
       let temp = []
-      // let totalUnits = {
-      //   cabin: 0,
-      //   room: 0,
-      //   tent: 0,
-      //   camping: 0
-      // };
       let centerFieldName = '';
 
       switch (this.centerField.name) {
@@ -259,15 +168,9 @@ export class TripService {
         case 'ציפורי':
           centerFieldName = 'מרכז שדה ציפורי'
           break;
-        // case 'אילנות':
-        //   centerFieldName = 'אילנות מערב'
-        //   break;
         case 'שוני':
           centerFieldName = 'מרכז שדה שוני'
           break;
-        // case 'בית אש\"ל':
-        //   centerFieldName = 'מצפה בית אשל'
-        //   break;
         case 'יתיר':
           centerFieldName = 'מרכז שדה יתיר'
           break;
@@ -278,27 +181,12 @@ export class TripService {
           centerFieldName = 'מרכז שדה לביא';
           break;
       }
-
-
-      // for (let index = 0; index < this.totalAvailableUnits.length; index++) {
-      //   if (this.totalAvailableUnits[index].acoomodationTypeName == 'בקתה' ) {
-      //     availableRooms = this.totalAvailableUnits[index].availableUnits;
-      //   }
-
-      // }
-      console.log("totalAvailableUnits: ", this.totalAvailableUnits);
       let availableCabins = this.availableCabins;
       let availableRooms = this.availableRooms;
       let availableTents = this.availableTents;
       let availableGicha = this.availableGicha;
 
-      //lodgingList[0].lodgingFacilityList = lodgingList[0].lodgingFacilityList.filter(aco => aco.structureType);
       lodgingList[0].lodgingFacilityList.forEach(element => {
-        //console.log(element.structureType);
-        //get totalAvailableUnits of each accumondation type
-        // for (let index = 0; index < this.totalAvailableUnits[0].availableUnits; index++) {
-        //   temp.push({structureId: element.structureId, gender: "בנות", status: "פנוי" });
-        // }
         let gender: string;
         const rand = Math.floor(Math.random() * 3)
         if (rand == 0)
@@ -344,23 +232,21 @@ export class TripService {
         }
       });
       this.lodgingFacilityListArray.push({ fieldForestCenterName: centerFieldName }, { lodgingFacilityList: temp });
-      //console.log("this.lodgingFacilityListArray", this.lodgingFacilityListArray);
       this.lodgingFacilityListArrayObservable.next(this.lodgingFacilityListArray);
-
-
     },
       error => {
         console.log({ error });
       });
   }
+  
   payerCustomer = {} as BaseCustomer;
   Customer = {} as BaseCustomer;
   ageGroup = [];//to convert to model of comrax
   ageGroupOriginal: AgeGroup[];
   fieldForestCenters = [];//to convert to model of comrax
   fieldForestCentersOriginal: FieldForestCenter[];
-  activityByAttribute = [];
-  activityByAttributeOriginal: ActivityType[]
+  // activityByAttribute = [];
+  // activityByAttributeOriginal: ActivityType[]
   customers = [];
   customersOriginal: BaseCustomer[];
   baseCustomer: BaseCustomer;
@@ -371,11 +257,11 @@ export class TripService {
   participantTypes: ParticipantType[];
   languages: Language[];
   countries: Country[];
-  budget: Budget;
-  budgetExpensesAndIncome: Budget;
-  budgetExpenses = [];
-  budgetIncome = [];
-  budgetByParam = {} as BudgetByParams;
+  // budget: Budget;
+  // budgetExpensesAndIncome: Budget;
+  // budgetExpenses = [];
+  // budgetIncome = [];
+  // budgetByParam = {} as BudgetByParams;
 
   getLookupFieldForestCenters() {
     this.userService.getLookupFieldForestCenters().subscribe(
@@ -390,150 +276,150 @@ export class TripService {
     )
   }
 
-  getActivityLookupsByAttribute(attributeId: number) {
-    this.userService.getActivityByAttribute(attributeId).subscribe(
-      response => {
-        this.activityByAttributeOriginal = response;
-        this.activityByAttribute = [];
-        response.forEach(element => {
-          this.activityByAttribute.push({ label: element.name, value: element.id.toString() });
-        });
-        console.log('activityByAttribute is :', this.activityByAttribute);
-        this.activityByAttr.next(this.activityByAttribute);
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  // getActivityLookupsByAttribute(attributeId: number) {
+  //   this.userService.getActivityByAttribute(attributeId).subscribe(
+  //     response => {
+  //       this.activityByAttributeOriginal = response;
+  //       this.activityByAttribute = [];
+  //       response.forEach(element => {
+  //         this.activityByAttribute.push({ label: element.name, value: element.id.toString() });
+  //       });
+  //       console.log('activityByAttribute is :', this.activityByAttribute);
+  //       this.activityByAttr.next(this.activityByAttribute);
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 
-  getBudgetKKl1(budgetByParam: any) {
-    this.userService.getBadgetKKl(budgetByParam).subscribe(
-      response => {
-        console.log('response', response)
-        this.budget = response;
-        if (this.budget.listCity !== null) {
-          var list = [];
-          this.budget.listCity.forEach(element => {
-            list.push({ label: element.name, value: element.id.toString() });
-          });
-          var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
-          if (list.length === 1) {
-            this.squadBudgetService.questions[index].group.questions[0].value = list[0].value;
-            this.squadBudgetService.questions[index].group.questions[0].label = list[0].label;
-          }
-          else { this.squadBudgetService.questions[index].group.questions[0].inputProps.options = list; }
-          if (this.budget.type !== undefined) {
-            this.squadBudgetService.budget.type = this.budget.desc;
-            this.squadBudgetService.budget.budget = this.budget.kklAmount;
-            this.squadBudgetService.budget.expense = this.budget.customerAmount;
-            this.squadBudgetService.budget.deliver = this.budget.execution;
-            this.squadBudgetService.budget.overflow = this.budget.balanceFin;
-            this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
-          }
-        }
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  // getBudgetKKl1(budgetByParam: any) {
+  //   this.userService.getBadgetKKl(budgetByParam).subscribe(
+  //     response => {
+  //       console.log('response', response)
+  //       this.budget = response;
+  //       if (this.budget.listCity !== null) {
+  //         var list = [];
+  //         this.budget.listCity.forEach(element => {
+  //           list.push({ label: element.name, value: element.id.toString() });
+  //         });
+  //         var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+  //         if (list.length === 1) {
+  //           this.squadBudgetService.questions[index].group.questions[0].value = list[0].value;
+  //           this.squadBudgetService.questions[index].group.questions[0].label = list[0].label;
+  //         }
+  //         else { this.squadBudgetService.questions[index].group.questions[0].inputProps.options = list; }
+  //         if (this.budget.type !== undefined) {
+  //           this.squadBudgetService.budget.type = this.budget.desc;
+  //           this.squadBudgetService.budget.budget = this.budget.kklAmount;
+  //           this.squadBudgetService.budget.expense = this.budget.customerAmount;
+  //           this.squadBudgetService.budget.deliver = this.budget.execution;
+  //           this.squadBudgetService.budget.overflow = this.budget.balanceFin;
+  //           this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
+  //         }
+  //       }
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 
 
-  getBudgetKKl(budgetByParam: any) {
-    this.userService.getBadgetKKl(budgetByParam).subscribe(
-      response => {
-        console.log('response', response)
-        this.budget = response;
-        if (this.budget.listCity !== null) {
-          var list = [];
-          this.budget.listCity.forEach(element => {
-            list.push({ label: element.name, value: element.id.toString() });
-          });
-          var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
-          if (list.length === 1) {
-            this.squadBudgetService.questions[index].group.questions[0].value = list[0].value;
-            this.squadBudgetService.questions[index].group.questions[0].label = list[0].label;
-          }
-          else { this.squadBudgetService.questions[index].group.questions[0].inputProps.options = list; }
-        }
-        let incomeIndex= this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
-        let expenseIndex= this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
-        if(this.squadBudgetService.questions[incomeIndex].inputProps.options.length>0){
-          this.squadBudgetService.questions[incomeIndex].value='';
-          this.squadBudgetService.questions[incomeIndex].label='תת סעיף תקציב הכנסות';
-          this.squadBudgetService.questions[incomeIndex].inputProps.options = [];
-        }
+  // getBudgetKKl(budgetByParam: any) {
+  //   this.userService.getBadgetKKl(budgetByParam).subscribe(
+  //     response => {
+  //       console.log('response', response)
+  //       this.budget = response;
+  //       if (this.budget.listCity !== null) {
+  //         var list = [];
+  //         this.budget.listCity.forEach(element => {
+  //           list.push({ label: element.name, value: element.id.toString() });
+  //         });
+  //         var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
+  //         if (list.length === 1) {
+  //           this.squadBudgetService.questions[index].group.questions[0].value = list[0].value;
+  //           this.squadBudgetService.questions[index].group.questions[0].label = list[0].label;
+  //         }
+  //         else { this.squadBudgetService.questions[index].group.questions[0].inputProps.options = list; }
+  //       }
+  //       let incomeIndex= this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
+  //       let expenseIndex= this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
+  //       if(this.squadBudgetService.questions[incomeIndex].inputProps.options.length>0){
+  //         this.squadBudgetService.questions[incomeIndex].value='';
+  //         this.squadBudgetService.questions[incomeIndex].label='תת סעיף תקציב הכנסות';
+  //         this.squadBudgetService.questions[incomeIndex].inputProps.options = [];
+  //       }
        
-        if(this.squadBudgetService.questions[expenseIndex].inputProps.options.length>0){
-          this.squadBudgetService.questions[expenseIndex].value='';
-          this.squadBudgetService.questions[expenseIndex].label='תת סעיף תקציב הוצאות';
-          this.squadBudgetService.questions[expenseIndex].inputProps.options = [];
-        }
+  //       if(this.squadBudgetService.questions[expenseIndex].inputProps.options.length>0){
+  //         this.squadBudgetService.questions[expenseIndex].value='';
+  //         this.squadBudgetService.questions[expenseIndex].label='תת סעיף תקציב הוצאות';
+  //         this.squadBudgetService.questions[expenseIndex].inputProps.options = [];
+  //       }
       
-          if (this.budget.type !== undefined) {
-            this.squadBudgetService.budget.type = this.budget.desc;
-            this.squadBudgetService.budget.budget = this.budget.kklAmount;
-            this.squadBudgetService.budget.expense = this.budget.customerAmount;
-            this.squadBudgetService.budget.deliver = this.budget.execution;
-            this.squadBudgetService.budget.overflow = this.budget.balanceFin;
-            this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
-          }
+  //         if (this.budget.type !== undefined) {
+  //           this.squadBudgetService.budget.type = this.budget.desc;
+  //           this.squadBudgetService.budget.budget = this.budget.kklAmount;
+  //           this.squadBudgetService.budget.expense = this.budget.customerAmount;
+  //           this.squadBudgetService.budget.deliver = this.budget.execution;
+  //           this.squadBudgetService.budget.overflow = this.budget.balanceFin;
+  //           this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
+  //         }
         
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 
 
-  getBudgetExpensesAndIncome(budgetByParam: any) {
-    this.userService.getBadgetExpensesAndIncome(budgetByParam).subscribe(
-      response => {
-        console.log('response', response)
-        this.budgetExpensesAndIncome = response;
-        if (this.budget.type !== undefined) {
-          this.squadBudgetService.budget.budget = this.budgetExpensesAndIncome.kklAmount;
-          this.squadBudgetService.budget.expense = this.budgetExpensesAndIncome.customerAmount;
-          this.squadBudgetService.budget.deliver = this.budgetExpensesAndIncome.execution;
-          this.squadBudgetService.budget.overflow = this.budgetExpensesAndIncome.balanceFin;
-          this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
-        }
-        let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
-        let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
-        this.squadBudgetService.questions[index1].inputProps.options=[];
-        this.squadBudgetService.questions[index1].value='';
-        this.squadBudgetService.questions[index2].inputProps.options=[];
-        this.squadBudgetService.questions[index2].value='';
-        // if (this.budget.type == 1) {
-        if (this.budget.type != undefined) {
-          this.budgetIncome=[];
-          this.budgetExpenses=[];
-          response.subBudgetIncomeList.forEach(element => {
-            this.budgetIncome.push({ label: element.name, value: element.id.toString() });
-          });
-          this.squadBudgetService.questions[index1].inputProps.options = this.budgetIncome;
-          this.squadBudgetService.questions[index1].value = response.incomeId.toString();
-          this.squadBudgetService.questions[index1].label= response.incomeName;
-          response.subBudgetExpenseList.forEach(element => {
-            this.budgetExpenses.push({ label: element.name, value: element.id.toString() });
-          });
-          this.squadBudgetService.questions[index2].inputProps.options = this.budgetExpenses;
-          this.squadBudgetService.questions[index2].value = response.expensesId.toString();
-          this.squadBudgetService.questions[index2].label= response.expensesName;
-        }
-         else {
-        this.squadBudgetService.questions[index1].value = response.incomeId.toString();
-        this.squadBudgetService.questions[index1].label = response.incomeName;
-        this.squadBudgetService.questions[index2].value = response.expensesId.toString();
-        this.squadBudgetService.questions[index2].label = response.expensesName;
-       }
-        this.budgetByParam.budget.cityId = response.cityId
-        this.budgetByParam.budget.expensesId = response.expensesId
-        this.budgetByParam.budget.incomeId = response.incomeId
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  // getBudgetExpensesAndIncome(budgetByParam: any) {
+  //   this.userService.getBadgetExpensesAndIncome(budgetByParam).subscribe(
+  //     response => {
+  //       console.log('response', response)
+  //       this.budgetExpensesAndIncome = response;
+  //       if (this.budget.type !== undefined) {
+  //         this.squadBudgetService.budget.budget = this.budgetExpensesAndIncome.kklAmount;
+  //         this.squadBudgetService.budget.expense = this.budgetExpensesAndIncome.customerAmount;
+  //         this.squadBudgetService.budget.deliver = this.budgetExpensesAndIncome.execution;
+  //         this.squadBudgetService.budget.overflow = this.budgetExpensesAndIncome.balanceFin;
+  //         this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
+  //       }
+  //       let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
+  //       let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
+  //       this.squadBudgetService.questions[index1].inputProps.options=[];
+  //       this.squadBudgetService.questions[index1].value='';
+  //       this.squadBudgetService.questions[index2].inputProps.options=[];
+  //       this.squadBudgetService.questions[index2].value='';
+  //       // if (this.budget.type == 1) {
+  //       if (this.budget.type != undefined) {
+  //         this.budgetIncome=[];
+  //         this.budgetExpenses=[];
+  //         response.subBudgetIncomeList.forEach(element => {
+  //           this.budgetIncome.push({ label: element.name, value: element.id.toString() });
+  //         });
+  //         this.squadBudgetService.questions[index1].inputProps.options = this.budgetIncome;
+  //         this.squadBudgetService.questions[index1].value = response.incomeId.toString();
+  //         this.squadBudgetService.questions[index1].label= response.incomeName;
+  //         response.subBudgetExpenseList.forEach(element => {
+  //           this.budgetExpenses.push({ label: element.name, value: element.id.toString() });
+  //         });
+  //         this.squadBudgetService.questions[index2].inputProps.options = this.budgetExpenses;
+  //         this.squadBudgetService.questions[index2].value = response.expensesId.toString();
+  //         this.squadBudgetService.questions[index2].label= response.expensesName;
+  //       }
+  //        else {
+  //       this.squadBudgetService.questions[index1].value = response.incomeId.toString();
+  //       this.squadBudgetService.questions[index1].label = response.incomeName;
+  //       this.squadBudgetService.questions[index2].value = response.expensesId.toString();
+  //       this.squadBudgetService.questions[index2].label = response.expensesName;
+  //      }
+  //       this.budgetByParam.budget.cityId = response.cityId
+  //       this.budgetByParam.budget.expensesId = response.expensesId
+  //       this.budgetByParam.budget.incomeId = response.incomeId
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
 
   getCustomersByParameters(customer, clientPool, indx1, indx2) {
     this.userService.getCustomersByParameters(customer, clientPool).subscribe(

@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { TempOrder } from './tempOrder';
 
 
 export interface TripActivity { 
@@ -27,9 +26,5 @@ export interface TripActivity {
     fromHour?: string;
     tillHour?: string;
     tripId?: number;
-    /**
-     * for activity with several tempurary orders connected
-     */
-    additions?: Array<TempOrder>;
 }
 

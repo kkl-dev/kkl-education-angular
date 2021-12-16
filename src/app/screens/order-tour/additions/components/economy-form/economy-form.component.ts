@@ -328,7 +328,6 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   addOrder(item){
    this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
       console.log(res); 
-      //this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
       this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
       this.tableData=res;
       this.ifShowtable=true;

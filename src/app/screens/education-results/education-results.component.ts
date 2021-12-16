@@ -32,7 +32,8 @@ export interface InfoCard {
 })
 
 export class EducationResultsComponent implements OnInit {
-  //@ViewChild(MapsComponent) child: MapsComponent;
+  @ViewChild(MapsComponent) child: MapsComponent;
+  
   forestCenter: any | undefined;
   //forestCenter: any | undefined = this.tripService.centerField || {};
   sleepingDates: any;
@@ -277,9 +278,9 @@ export class EducationResultsComponent implements OnInit {
 
   currentDayHandler(newCurrentDay: number) {
     //this.emitCurrentDay.emit(newCurrentDay);
-   // this.child.currentDayHandler(newCurrentDay);
 
-    console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
+    this.child.currentDayHandler(newCurrentDay);
+    console.log('facility For Day: ', this.facilitiesArray[newCurrentDay].facilitiesList);
     //this.facilitiesArray = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day);
     //console.log('facilitiesArray', this.facilitiesArray);
     this.facilityForDay = this.facilitiesArray[newCurrentDay].facilitiesList;

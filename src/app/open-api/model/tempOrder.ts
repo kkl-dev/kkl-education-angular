@@ -25,11 +25,7 @@ export interface TempOrder {
      * the unique item order id;
      */
     itemId?: number | null;
-    orderItemName?: string;
-    /**
-     * need for activity with additions of temp orders
-     */
-    tripActivityIdentity?: number | null;
+    orderItemName?: string | null;
     startDate?: string;
     endDate?: string;
     fromHour?: string;

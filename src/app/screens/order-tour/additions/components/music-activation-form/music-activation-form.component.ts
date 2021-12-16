@@ -318,19 +318,15 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
   addOrder(item){
     this.addOrderSub= this.orderService.addOrder( item).subscribe(res => {
       console.log(res); 
-      //this.itemOrderRecordId= res[0].globalParameters.itemOrderRecordId;
       this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
-      //this.tableData.next(res);
       this.tableData=res;
       this.ifShowtable=true;
       this.generalFormService.enableButton.next(true);
-      //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
     }, (err) => {
       console.log(err);
-      //this.isSaveOrderSucceeded.next(false);
       this.editMode = false;
       this.form.enable({ emitEvent: false });
       this.setDialogMessage('אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת');

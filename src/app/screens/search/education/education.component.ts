@@ -10,7 +10,7 @@ import { AccommodationType, AvailableAccomodationDate } from 'src/app/open-api';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-education',
@@ -25,7 +25,7 @@ export class EducationComponent implements OnInit {
 
   checked = false;
   //sleepingPlace: any;
-  forestCenterId: number = null;
+  forestCenterId: any;
   disableDates: boolean = true;
   disableContinueBtn = true;
   checkedSingleDay = false;
@@ -34,6 +34,7 @@ export class EducationComponent implements OnInit {
   AvailableDates!: AvailableAccomodationDate[];
   AcommodationTypes!: AccommodationType[];
   AcommodationType = 'בקתה';
+  fieldForestCentersLookUp;
   date: string | null = null;
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[] = [];
@@ -47,7 +48,7 @@ export class EducationComponent implements OnInit {
   };
 
   constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
-    private checkAvailabilltyService: CheckAvailabilityService, private http: HttpClient) {
+    private checkAvailabilltyService: CheckAvailabilityService,private spinner: NgxSpinnerService ) {
 
     this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
     this.options = {
@@ -61,15 +62,35 @@ export class EducationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tripService.getLookupFieldForestCenters();
-    this.forestCenterId = this.tripService.centerField.id || null;
-    if (this.forestCenterId != 0 && this.forestCenterId != null) {
-      this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
-      this.sleepingDates = this.tripService.sleepingDates;
-      this.disableContinueBtn = false;
-    }
+    //this.tripService.getLookupFieldForestCenters();
+    this.getLookupFieldForestCenters();
+    //this.forestCenterId = this.tripService.centerField.id || null;
+    // if (this.forestCenterId != 0 && this.forestCenterId != null) {
+    //   this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+    //   this.sleepingDates = this.tripService.sleepingDates;
+    //   this.disableContinueBtn = false;
+    // }
    
   }
+
+  //test
+  getLookupFieldForestCenters(){
+     this.usersService.getLookupFieldForestCenters().subscribe(res=>{
+        this.fieldForestCentersLookUp=res;
+        this.fieldForestCentersLookUp = res.filter(aco => aco.accommodationList.length > 0);
+        this.tripService.formOptions=this.fieldForestCentersLookUp;
+        this.forestCenterId = this.tripService.centerField.id.toString() || null;
+        if (this.forestCenterId != 0 && this.forestCenterId != null) {
+          this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+          this.sleepingDates = this.tripService.sleepingDates;
+          this.disableContinueBtn = false;
+        }
+     },(err)=>{
+       console.log(err);
+     })
+  }
+
+  //end test
  
 
   selectChange(event: any) {
@@ -82,8 +103,10 @@ export class EducationComponent implements OnInit {
     fromDate = fromDate.substring(0, 10);
     tillDate = tillDate.substring(0, 10);
     // tillDate = '2021-11-30'
+    this.spinner.show();
     this.usersService.getAvailableAccomodationDates(this.tripService.centerField.id, fromDate, tillDate).subscribe(
       response => {
+        this.spinner.hide();
         console.log(response)
         this.AvailableDates = response;
         this.AvailableDates.forEach(element => element.freeSpace.forEach(element => { if (element.availableBeds === undefined) { element.availableBeds = 0; } }));

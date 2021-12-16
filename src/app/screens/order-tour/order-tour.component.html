@@ -1,53 +1,56 @@
-<div
-  class="order-tour"
-  [ngClass]="{
-    'sleeping-width': activeStep === 1 || currentRoute === 'sleeping'
-  }"
+
+ <div
+ class="order-tour"
+ [ngClass]="{
+   'sleeping-width': activeStep === 1 || currentRoute === 'sleeping'
+ }"
 >
 <!-- <app-sleeping-map class="app-sleeping-map"
-[ngClass]="{'display-none': activeStep !== 1 && currentRoute !== 'sleeping'}">
-<app-maps></app-maps>
-</app-sleeping-map> -->
+[ngClass]="{
+ 'display-none': activeStep !== 1 && currentRoute !== 'sleeping' 
+}"
 
-  <app-drawer *ngIf="currentRoute === 'squad-assemble'"></app-drawer>
-  <div>
-    <div
-      class="content"
-      fxLayout="column"
-      fxLayoutAlign="stretch"
-      fxLayout.xs="column"
-      fxFlexFill
-    >
-      <div fxFlex="15"  class="stepper">
-        <app-working-steps
-        [isSleep]="currentRoute === 'sleeping'"
-          [steps]="steps"
-          [divider]="true"
-          (changeActiveStep)="changeActiveStep($event)"
-          (changStep)="onChangeStep($event)"
-        >
-        </app-working-steps>
-      </div>
-      <div fxFlex="65">
-        <div class="steps-container">
-          <ng-content></ng-content>
-        </div>
-      </div>
-      <!-- (previous)="changeActiveStepPrevNavigation()" -->
-      <div fxFlex="10" fxFlex.xs="15" class="bottom-navigation" dir="rtl">
-        <app-bottom-navigation
-          previousUrl="prevPage"
-          nextUrl="nextPage"
-          (changePage)="changeActiveStepBottomNavigation($event)"
-          [text]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"
-          [hasSave]="hasSave"
-          [hasNext]="true"
-          (next)="changeActiveStepNextNavigation()"
-          (previous)="changeActiveStepPrevNavigation()"
-        ></app-bottom-navigation>
-      </div>
-    </div>
-  </div>
-  <ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#51b848" type="ball-scale-multiple">
-    <p style="color:#926427; font-size: 18px; font-weight: 600; text-align: center;">אנא המתן לשמירת הנתונים</p>
-  </ngx-spinner>
+></app-sleeping-map> -->
+ <app-drawer *ngIf="currentRoute === 'squad-assemble'"></app-drawer>
+ <div>
+   <div
+     class="content"
+     fxLayout="column"
+     fxLayoutAlign="stretch"
+     fxLayout.xs="column"
+     fxFlexFill
+   > 
+     <div fxFlex="20"  class="stepper">
+       <app-working-steps
+       [isSleep]="currentRoute === 'sleeping'"
+         [steps]="steps"
+         [divider]="true"
+         (changeActiveStep)="changeActiveStep($event)"
+         (changStep)="onChangeStep($event)"
+       >
+       </app-working-steps>
+     </div>
+     <div fxFlex="60">
+       <div class="steps-container">
+         <ng-content></ng-content>
+       </div>  
+     </div>
+     <div fxFlex="10" fxFlex.xs="15" class="bottom-navigation" dir="rtl">
+       <app-bottom-navigation
+         previousUrl="prevPage"
+         nextUrl="nextPage"
+         (changePage)="changeActiveStepBottomNavigation($event)"
+         [text]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"
+         [hasSave]="hasSave"
+         [hasNext]="true"
+         (next)="changeActiveStepNextNavigation()"
+         (previous)="changeActiveStepPrevNavigation()"
+       ></app-bottom-navigation>
+     </div>
+   </div>
+ </div>
+</div>
+ <ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#51b848" type="ball-scale-multiple">
+   <p style="color:#926427; font-size: 18px; font-weight: 600; text-align: center;">אנא המתן לשמירת הנתונים</p>
+ </ngx-spinner>
+

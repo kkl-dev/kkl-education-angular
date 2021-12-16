@@ -27,10 +27,14 @@
             <span class="education__select-option-text">ציפורי</span>
           </span>
         </mat-option> -->
-            <mat-option
+            <!-- <mat-option
               value="{{ option.id }}"
               *ngFor="let option of tripService.formOptions"
-            >
+            > -->
+            <mat-option
+            value="{{ option.id }}"
+            *ngFor="let option of fieldForestCentersLookUp"
+           >
               <span class="education__select-option">
                 <img
                   [src]="option.iconPath"
@@ -107,3 +111,6 @@
   </div>
 </div>
 
+<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#448ecd" type="ball-scale-multiple">
+  <p style="color:#448ecd; font-size: 18px; font-weight: 600; text-align: center;">אנא המתן לטעינת הנתונים</p>
+</ngx-spinner>

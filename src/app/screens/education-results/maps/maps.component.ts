@@ -208,10 +208,14 @@ export class MapsComponent implements OnInit {
     });
   };
 
-  currentDayHandler(newCurrentDay: number) {
-    console.log('new Current Day: ', newCurrentDay);
+  currentDayHandler(day: number) {
+    console.log('new Current Day: ', day);
     //    console.log('facilityForDay: ', this.facilitiesArray[newCurrentDay].facilitiesList);
     this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray;
+    //add func to change map accomodation by date
+    this.tripService.availableUnitsForMap(day);
+    //this.tripService.availableSleepingOptions
+
     //this.lodgingFacilityForDay = this.tripService.lodgingFacilityListArray[newCurrentDay].lodgingFacilityList;
     //this.rawservicedata = this.lodgingFacilityForDay;
     // this.queryandrender();
