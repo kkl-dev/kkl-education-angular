@@ -376,91 +376,113 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     }
 
  
-  validationsGudiance() {
-    if (this.generalFormService.originalItemList.length > 0) {
-      var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-    }
-    if (item.credit === 0) {
-      if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
-        this.setDialogMessage('בהזמנת הדרכה - חובה למלא שעת התייצבות');
-        return false;
+    validationsGudiance() {
+      if (this.generalFormService.originalItemList.length > 0) {
+        var item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
       }
-      if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
-        this.setDialogMessage('בהזמנת הדרכה - חובה למלא מקום התייצבות');
-        return false;
-      }
-    }
-    // אם הפריט הוא תוספת ריכוז חובה להכניס הערה
-    if (item.id == 234) {
-      if (this.form.value.comments['comments'] === null || this.form.value.comments['comments'] === "" || this.form.value.comments['comments'] === undefined) {
-        this.setDialogMessage('חובה למלא הערה בפריט - תוספת ריכוז');
-        return false;
-      }
-    }
-    // הרד קודד - צריך עדכון DB
-    // אם הפריט הוא ריכוז מחנה וגם הטיול חוץ מרכז שדה לא לאפשר לשבץ מדריך לפריט זה
-    if ((item.id == 25 || item.id == 152 || item.id == 218 ||
-      item.id == 219 || item.id == 229 || item.id == 235 || item.id == 271)
-      && this.generalFormService.tripInfo.trip.insideCenterFieldId == 2) {
-      this.setDialogMessage('לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה');
-      return false;
-    }
-    if (this.generalFormService.isOneDayTrip && item.isNight === 1) {
-      this.setDialogMessage('לא ניתן להוסיף פריט לינה לטיול חד יומי');
-      return false;
-    }
-    // chani
-
-    // צריך טיפול בהרשאות- בינתיים , מתייחסים להרשאה כהרשאה קבועה - משווק
-    // צריך תנאי האם ההרשאה היא אכן משווק
-    // אם הפריט זיכוי (וההרשאה משווק)
-    // if (item.credit == 1) {
-    //   this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
-    //   return false;
-    // }
-    // אם הפריט מצריך אישור של מנהל מחלקה וגם אם הוא מסוג זיכוי
-    if (item.isNeedManagerApproval == 1) {
-      this.setDialogMessage('פריט  מצריך אישור מנהל מחלקה');
-      return false;
-    }
-    // לא לכל ההרשאות
-    if (item.id == 220) {
-      this.setDialogMessage('אין לך הרשאה לקלוט פריט זה');
-      return false;
-    }
-    // typeSleepId
-    // בדיקה שהפריט שישי שבת
-    // או חג
-    if (item.itemId == 219) {
-      if (item.startDate.getDay() != 6 || item.endDate.getDay() != 7) {
-        // בדיקה שזה לא יוצא חג- ואם כן שאלה האם להמשיך , צריך לברר מול חיה
-        if (this.isHoliday()) {
-          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-            width: '500px',
-            data: { message: ' ', content: '', }
-          })
+      if (item.credit === 0) {
+        if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
+          this.setDialogMessage('בהזמנת הדרכה - חובה למלא שעת התייצבות');
+          return false;
         }
-        else {
-          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-            width: '500px',
-            data: { message: '"פריט זה לא מתאים לתאריכי הטיול" ', content: '', }
-          })
+        if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
+          this.setDialogMessage('בהזמנת הדרכה - חובה למלא מקום התייצבות');
           return false;
         }
       }
-    }
-
-    // אין להוסיף פריטים "תוספת לינה" ו"תוספת פעילות לילה" (419, 177) לאותו לילה בטיול
-    // צרך בדיקה אם זה אכן מבצע את הבדיקה הזאת בצורה נכונה
-    if (item.id === 177 || item.id === 419) {
-      var arr=this.generalFormService.gudianceOrderList.filter(item => item.globalParameters.itemId === 177 || item.globalParameters.itemId === 419) 
-      //   if() {
-      //   this.setDialogMessage('אין להזין את הפריטים: תוספת לינת לילה ותוספת פעילות לילה לאותו לילה בטיול')
+      // אם הפריט הוא תוספת ריכוז חובה להכניס הערה
+      if (item.id == 234) {
+        if (this.form.value.comments['comments'] === null || this.form.value.comments['comments'] === "" || this.form.value.comments['comments'] === undefined) {
+          this.setDialogMessage('חובה למלא הערה בפריט - תוספת ריכוז');
+          return false;
+        }
+      }
+      // הרד קודד - צריך עדכון DB
+      // אם הפריט הוא ריכוז מחנה וגם הטיול חוץ מרכז שדה לא לאפשר לשבץ מדריך לפריט זה
+      if ((item.id == 25 || item.id == 152 || item.id == 218 ||
+        item.id == 219 || item.id == 229 || item.id == 235 || item.id == 271)
+        && this.generalFormService.tripInfo.trip.insideCenterFieldId == 2) {
+        this.setDialogMessage('לא ניתן לשבץ מדריך לטיול שהוא חוץ מרכז שדה בפריט ריכוז מחנה');
+        return false;
+      }
+      if (this.generalFormService.isOneDayTrip && item.isNight === 1) {
+        this.setDialogMessage('לא ניתן להוסיף פריט לינה לטיול חד יומי');
+        return false;
+      }
+      // chani
+  
+      // צריך טיפול בהרשאות- בינתיים , מתייחסים להרשאה כהרשאה קבועה - משווק
+      // צריך תנאי האם ההרשאה היא אכן משווק
+      // אם הפריט זיכוי (וההרשאה משווק)
+      // if (item.credit == 1) {
+      //   this.setDialogMessage('פריט מסוג זיכוי מצריך אישור חשב');
       //   return false;
       // }
+      // אם הפריט מצריך אישור של מנהל מחלקה וגם אם הוא מסוג זיכוי
+      if (item.isNeedManagerApproval == 1) {
+        this.setDialogMessage('פריט  מצריך אישור מנהל מחלקה');
+        return false;
+      }
+      // לא לכל ההרשאות
+      if (item.id == 220) {
+        this.setDialogMessage('אין לך הרשאה לקלוט פריט זה');
+        return false;
+      }
+      // typeSleepId
+      // בדיקה שהפריט שישי שבת
+      // או חג
+      if (item.itemId == 219) {
+        if (item.startDate.getDay() != 6 || item.endDate.getDay() != 7) {
+          // בדיקה שזה לא יוצא חג- ואם כן שאלה האם להמשיך , צריך לברר מול חיה
+          if (this.isHoliday()) {
+            const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+              width: '500px',
+              data: { message: ' ', content: '', }
+            })
+          }
+          else {
+            const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+              width: '500px',
+              data: { message: '"פריט זה לא מתאים לתאריכי הטיול" ', content: '', }
+            })
+            return false;
+          }
+        }
+      }
+  
+      // אין להוסיף פריטים "תוספת לינה" ו"תוספת פעילות לילה" (419, 177) לאותו לילה בטיול
+      // צרך בדיקה אם זה אכן מבצע את הבדיקה הזאת בצורה נכונה
+      if (item.id === 177 || item.id === 419) {
+        var arr = this.generalFormService.gudianceOrderList.filter(item => item.globalParameters.itemId === 177 || item.globalParameters.itemId === 419)
+        //   if() {
+        //   this.setDialogMessage('אין להזין את הפריטים: תוספת לינת לילה ותוספת פעילות לילה לאותו לילה בטיול')
+        //   return false;
+        // }
+      }
+      var listDays = this.getDaysArray(this.convertToDate(this.form.value.details['startDate']), this.convertToDate(this.form.value.details['endDate']));
+      var isWeekend = listDays.forEach(day => { if (day.getDay() === 6 || day.getDay() === 0) return true; else return false; })
+      // if(isWeekend&&item.id//sat or fri)
+      // this.setDialogMessage('פריט  שבת חג');
+      //       return false;
+      return true;
     }
-    return true;
-  }
+    getDaysArray(startDate, endDate) {
+      var dateArray = new Array();
+      var currentDate = startDate;
+      while (currentDate <= endDate) {
+        dateArray.push(new Date(currentDate));
+        currentDate = currentDate.setDate(currentDate.getDate() + 1);
+      }
+      return dateArray;
+    }
+    convertToDate(dateString) {
+      //  Convert a "dd/MM/yyyy" string into a Date object
+      let d = dateString.split("/");
+      let dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
+      return dat;
+    }
+  
+  
 
 
    // chani- from PB

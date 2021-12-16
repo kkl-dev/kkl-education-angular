@@ -264,9 +264,13 @@ export class HostingFormComponent implements OnInit, OnDestroy {
           else {
             if (this.hostingItem.numHoursNeeded !== null) {
               var hours = (new Date(this.occupancyValidation.endHour).getTime() - new Date(this.occupancyValidation.startHour).getTime()) / 3600000;
-              if (hours > this.hostingItem.numHoursNeeded) {
-                this.setDialogMessage('פריט זה אינו זמין למספר השעות שנבחרו'); return;
+              if (hours !== 3 && hours !== 8) {
+                this.setDialogMessage('  פריט זה אינו זמין למספר השעות שנבחרו - בבחירת כיתות יש לבחור כיתה ל - 3 שעות או ל - 8 שעות'); return;
               }
+              if (hours !== this.hostingItem.numHoursNeeded) {
+                this.setDialogMessage(' פריט זה ניתן לבחור רק עבור ' + this.hostingItem.numHoursNeeded + ' שעות '); return;
+              }
+
             }
             this.mapFormFieldsToServer()
           }
