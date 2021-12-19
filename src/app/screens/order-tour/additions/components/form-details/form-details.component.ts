@@ -239,7 +239,9 @@ export class FormDetailsComponent implements OnInit {
       this.detailsSubject.value.rows[0][0].value= res[0].order.orderType.name
       this.detailsSubject.value.rows[0][1].value = res[0].order.status?res[0].order.status.name:'';
       this.detailsSubject.value.rows[1][0].value =  res[0].order.supplier.name;
-
+      this.detailsSubject.value.rows[1][9].value = res[0].order.userInfo;//הזמנה אושרה ע''י
+      this.detailsSubject.value.rows[1][10].value = res[0].order.confirmDate;//תאריך אישור
+      this.detailsSubject.value.rows[1][11].value = res[0].order.confirmUserTz;//ת.ז. מאשר
      this.flag=true;
    }
   
