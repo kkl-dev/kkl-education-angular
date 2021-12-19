@@ -330,7 +330,7 @@ export class ActivitiesService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarOrderItem/${encodeURIComponent(String(tripId))}//${encodeURIComponent(String(tempOrderId))}`,
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarOrderItem/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(tempOrderId))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

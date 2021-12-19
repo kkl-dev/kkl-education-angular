@@ -816,7 +816,7 @@ paths:
           description: id not found
          '500' : 
           description: internal server error
-  /deleteCalendarOrderItem/{tripId}//{tempOrderId}: 
+  /deleteCalendarOrderItem/{tripId}/{tempOrderId}: 
     delete: 
         tags:
         - activities
