@@ -4,25 +4,16 @@
             (emitCurrentDay)='getDay($event)' [currentDay]='selectedDay'>
         </app-sleeping-options-by-day>
         <div class="add-facility__header">
-            <!-- <div class="save-activity__header-icon" [fxFlex]="activity.img ? '30' : '10' ">              
-                <img *ngIf="type" [src]='activity.img' />
-                <svg-icon *ngIf="!type" [src]="activity.svgUrl" class="header__form-group-svg"></svg-icon>
-            </div> -->
-
             <div class="add-facility__header-icon">
                 <svg-icon src="{{ item.svgUrl || defaultImage }}" class="header__form-group-svg"></svg-icon>
                 <svg-icon src="assets/images/{{ item.iconPath || defaultImage }}" class="header__form-group-svg">
                 </svg-icon>
-                <!-- <svg-icon [src]="item.svgUrl" class="header__form-group-svg"></svg-icon> -->
             </div>
             <div class="add-facility__header-content">
                 <div class="add-facility__header-content-heading">
                     <span class="add-facility__header-content-heading-constant">שריין מתקן:</span>
                     <span class="add-facility__header-content-heading-input">{{item.name}}</span>
                 </div>
-                <!-- <div class="add-facility__header-content-heading-remarks">
-                    <span>{{item.maxOccupancy}}</span>
-                </div> -->
             </div>
         </div>
         <form class="add-facility__form" [formGroup]="addFacilityForm" (ngSubmit)='onSubmit()'>
@@ -39,7 +30,12 @@
                 </div>
                 <button class="add-facility__form-button delete-button" *ngIf='updateForm'
                     (click)="deleteItem($event)">מחיקה</button>
-                <button class="add-facility__form-button">{{updateForm ? 'שמירה' : 'שריין'}}</button>
+                <button *ngIf="!updateForm" class="add-facility__form-button">{{updateForm ? 'שמירה' :
+                    'שריין'}}</button>
+            </div>
+            <div class="add-facility__form-inputs" *ngIf="updateForm">
+                <span style="color:red;margin: 5px;">בשלב זה לא ניתן לערוך פריט זה ביומן , נא ערוך פריט זה במסך
+                    תוספות</span>
             </div>
         </form>
 

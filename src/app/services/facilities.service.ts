@@ -7,13 +7,15 @@ import { ActivitiesCardInterface } from '../components/activities-card/activitie
 import { FacilityModel } from '../screens/order-tour/facilities/models/facility.model';
 import { FacilitiesConvertingService } from './facilities-converting.service';
 import { ActivitiesService } from 'src/app/open-api';
+import { TripActivity } from 'src/app/open-api';
+import { SquadAssembleService } from '../screens/order-tour/squad-assemble/services/squad-assemble.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FacilitiesService {
 
-  constructor(private facilitiesConvertingService: FacilitiesConvertingService, private activitiyService: ActivitiesService) { }
+  constructor(private facilitiesConvertingService: FacilitiesConvertingService, private activitiyService: ActivitiesService, private squadAssembleService: SquadAssembleService) { }
 
   private closeModalObs = new BehaviorSubject('');
   //private calendarEventsArr = new BehaviorSubject<EventInput[] | any>(INITIAL_EVENTS);
@@ -109,6 +111,29 @@ export class FacilitiesService {
     const [start, end] = dates;
     arr[index].start = start;
     arr[index].end = end;
+
+    this.UpdateActivity(arr[index]);
+
     this.calendarEventsArr.next(arr);
   }
+
+  UpdateActivity(nActivity) {
+    let newActivity = {} as TripActivity;
+    newActivity.activityId = nActivity.activityId;
+    newActivity.activityName = nActivity.title;
+    newActivity.date = nActivity.start;
+    newActivity.description = nActivity.title;
+    newActivity.fromHour = nActivity.start;
+    newActivity.tillHour = nActivity.end;
+    newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+
+    newActivity.tripActivityIdentity = nActivity.tripActivityIdentity;
+
+    this.activitiyService.editCalendarActivityItem(newActivity).subscribe((res: any) => {
+      console.log(res);
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
 }

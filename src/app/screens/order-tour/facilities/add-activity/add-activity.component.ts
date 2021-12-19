@@ -3,6 +3,9 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { TripService } from 'src/app/services/trip.service';
 import { DAYS } from 'src/mock_data/facilities';
+import { ActivitiesService } from 'src/app/open-api';
+import { TripActivity } from 'src/app/open-api';
+import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 
 @Component({
   selector: 'app-add-activity',
@@ -18,7 +21,7 @@ export class AddActivityComponent implements OnInit {
   public showSleepAreas: boolean = false;
   public selectedDay: number = 0;
 
-  constructor(private facilitiesServices: FacilitiesService, private tripService: TripService) { }
+  constructor(private facilitiesServices: FacilitiesService, private tripService: TripService, private activitiyService: ActivitiesService, private squadAssembleService: SquadAssembleService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -39,8 +42,34 @@ export class AddActivityComponent implements OnInit {
     this.form.controls['selectedDay'].setValue(this.selectedDay);
     this.form.controls['start'].setValue(this.arrangeTime('start'));
     this.form.controls['end'].setValue(this.arrangeTime('end'));
-    this.emitFormValues.emit(this.form.value);
-    this.facilitiesServices.closeModal('close');
+
+    this.CreateActivity();
+
+    // this.emitFormValues.emit(this.form.value);    
+    // this.facilitiesServices.closeModal('close');
+  }
+
+  CreateActivity() {
+    let newActivity = {} as TripActivity;
+    newActivity.activityId = this.form.value.itemId;
+    newActivity.activityName = this.form.value.title;
+    newActivity.date = this.form.value.start;
+    newActivity.description = this.form.value.title;
+    newActivity.fromHour = this.form.value.start;
+    newActivity.tillHour = this.form.value.end;
+    newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+
+    this.activitiyService.createTripActivity(newActivity).subscribe((res: any) => {
+      this.form.value.tripActivityIdentity = res;
+      console.log(res);
+
+      this.emitFormValues.emit(this.form.value);
+      this.facilitiesServices.closeModal('close');
+    }, (error) => {
+      console.log(error);
+      this.facilitiesServices.closeModal('close');
+    }
+    );
   }
 
   getDay(event: any): void {

@@ -5,6 +5,9 @@ import { ActivitiesCardInterface } from 'src/app/components/activities-card/acti
 import { FacilitiesService } from 'src/app/services/facilities.service';
 import { TripService } from 'src/app/services/trip.service';
 import { DAYS } from 'src/mock_data/facilities';
+import { ActivitiesService } from 'src/app/open-api';
+import { TripActivity } from 'src/app/open-api';
+import { SquadAssembleService } from '../../squad-assemble/services/squad-assemble.service';
 
 @Component({
   selector: 'app-save-activity',
@@ -13,7 +16,7 @@ import { DAYS } from 'src/mock_data/facilities';
 })
 export class SaveActivityComponent implements OnInit {
 
-  constructor(private facilitiesServices: FacilitiesService, private tripService: TripService) { }
+  constructor(private facilitiesServices: FacilitiesService, private tripService: TripService, private activitiyService: ActivitiesService, private squadAssembleService: SquadAssembleService) { }
 
   selectedActivity$: Observable<ActivitiesCardInterface>;
   subscribeToActivity: Subscription;
@@ -26,9 +29,9 @@ export class SaveActivityComponent implements OnInit {
 
   @Input() type: string;
   @Input() public additonsType: any[] = [
-    { name: 'הסעה', completed: false, svg: 'bus' },
+    // { name: 'הסעה', completed: false, svg: 'bus' },
     // { name: 'אבטחה', completed: false , svg:'shield' },
-    { name: 'הדרכה', completed: false, svg: 'man-with-bag' },
+    // { name: 'הדרכה', completed: false, svg: 'man-with-bag' },
     { name: 'כלכלה', completed: false, svg: 'dinner' },
     // { name: 'הפעלה מוסיקלית', completed: false , svg:'music' },
   ];
@@ -60,7 +63,14 @@ export class SaveActivityComponent implements OnInit {
   deleteItem(event): void {
     event.preventDefault();
     const id = this.form.controls['id'].value;
-    this.facilitiesServices.deleteItemFromArray(id);
+
+    this.activitiyService.deleteCalendarActivityItem(this.squadAssembleService.tripInfofromService.trip.id, this.form.value.tripActivityIdentity).subscribe((res: any) => {
+      console.log(res);
+      this.facilitiesServices.deleteItemFromArray(id);
+    }, (error) => {
+      console.log(error);
+    });
+
     this.facilitiesServices.closeModal('close');
   }
 
@@ -75,14 +85,56 @@ export class SaveActivityComponent implements OnInit {
     this.form.controls['start'].setValue(this.arrangeTime('start'));
     this.form.controls['end'].setValue(this.arrangeTime('end'));
 
-    if (this.updateForm) {
-      this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
-      this.facilitiesServices.closeModal('close');
-      return;
-    }
-    this.emitFormValues.emit(this.form.value);
-    this.facilitiesServices.closeModal('close');
+    this.CreateActivity();
+
+    // if (this.updateForm) {
+    //   this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
+    //   this.facilitiesServices.closeModal('close');
+    //   return;
+    // }
+
+    // this.emitFormValues.emit(this.form.value);
+    // this.facilitiesServices.closeModal('close');
   }
+
+  CreateActivity() {
+    let newActivity = {} as TripActivity;
+    newActivity.activityId = this.form.value.activityId;
+    newActivity.activityName = this.form.value.title;
+    newActivity.date = this.form.value.start;
+    newActivity.description = this.form.value.title;
+    newActivity.fromHour = this.form.value.start;
+    newActivity.tillHour = this.form.value.end;
+    newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+
+    if (this.updateForm && this.form.value.tripActivityIdentity)
+      newActivity.tripActivityIdentity = this.form.value.tripActivityIdentity;
+
+    if (this.updateForm) {
+      this.activitiyService.editCalendarActivityItem(newActivity).subscribe((res: any) => {
+        this.form.value.tripActivityIdentity = res.tripActivityIdentity;
+        console.log(res);
+
+        this.facilitiesServices.updateItemInArrayOfCalendar(this.form.value);
+        this.facilitiesServices.closeModal('close');
+      }, (error) => {
+        console.log(error);
+        this.facilitiesServices.closeModal('close');
+      });
+    }
+    else {
+      this.activitiyService.createTripActivity(newActivity).subscribe((res: any) => {
+        this.form.value.tripActivityIdentity = res;
+        console.log(res);
+        this.emitFormValues.emit(this.form.value);
+        this.facilitiesServices.closeModal('close');
+      }, (error) => {
+        console.log(error);
+        this.facilitiesServices.closeModal('close');
+      });
+    }
+  }
+
   orderingCustomerHandler() {
     this.orderingCustomer = !this.orderingCustomer;
   }
@@ -108,7 +160,7 @@ export class SaveActivityComponent implements OnInit {
     const [date, time] = args.split('T');
     return time;
   }
-  
+
   createForm(data): void {
     if (!data.start) {
       this.updateForm = false;
