@@ -80,7 +80,8 @@ export class AddFacilityComponent implements OnInit {
         'tempOrderId': new FormControl(data.tempOrderId || null),
         'orderId': new FormControl(data.orderId || null),
         'tempOrderList': new FormControl(data.tempOrderList || null),
-        'orderTypeCode': new FormControl(data.orderTypeCode || null)
+        'orderTypeCode': new FormControl(data.orderTypeCode || null),
+        'itemId': new FormControl(data.itemId || null)
       });
     } else {
       this.updateForm = true;
@@ -127,6 +128,7 @@ export class AddFacilityComponent implements OnInit {
     newTempOrder.tripId = this.squadAssembleService.tripInfofromService.trip.id;
 
     newTempOrder.itemId = this.addFacilityForm.value.itemId;
+    newTempOrder.orderId = this.addFacilityForm.value.orderId;
     newTempOrder.orderItemName = this.addFacilityForm.value.title;
 
     if (this.updateForm && this.addFacilityForm.value.tempOrderId)
