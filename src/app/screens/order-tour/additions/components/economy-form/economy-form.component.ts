@@ -45,6 +45,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   itemListSub:  Subscription;
   addOrderSub: Subscription;
   editOrderSub: Subscription;
+  supplierIdEventSub:Subscription;
+  itemIdEventSub: Subscription;
+  startDateEventSub:Subscription;
+  endDateEventSub: Subscription;
+  peopleInTripEventSub: Subscription;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -103,6 +108,12 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.generalFormService.questionGroups[index].questions = this.generalFormService.details;
     let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
+    let regDishesIndex= this.generalFormService.economy.findIndex(i=>i.key=='regularDishesNumber')
+    this.generalFormService.economy[regDishesIndex].value='';
+    let vegetarianDishesNumberIndex= this.generalFormService.economy.findIndex(i=>i.key=='vegetarianDishesNumber')
+    this.generalFormService.economy[vegetarianDishesNumberIndex].value='';
+    let veganDishesNumberIndex= this.generalFormService.economy.findIndex(i=>i.key=='veganDishesNumber')
+    this.generalFormService.economy[veganDishesNumberIndex].value='';
     let economyQuestions = detailsArr.concat(this.generalFormService.economy);
     this.generalFormService.questionGroups[index].questions = economyQuestions;
   }
@@ -330,11 +341,11 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       console.log(res); 
       this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
       this.tableData=res;
-      this.ifShowtable=true;
-      this.generalFormService.enableButton.next(true);
+      this.ifShowtable=true; 
       this.editMode = true;
       this.generalFormService.setOrderList(res,this.orderType,'adding',this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+      this.generalFormService.enableButton.next(true);
     }, (err) => {
       console.log(err);
       this.editMode = false;
@@ -498,7 +509,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     this.disableFormFields();
-    this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
+    this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
         this.supplierId=value;
@@ -513,7 +524,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.getOrderItemBySupplierId();
         this.valueChangeIndex++;
       });
-    this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    this.itemIdEventSub = this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
       this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value))
       let itemCost;
@@ -541,7 +552,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       this.calculateDishes(parseInt(value), 'veganDishesNumber')
     });
     
-    this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.peopleInTripEventSub= this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
       if (!this.selectedItem.cost) {
         this.setSupplierBillingZero();
@@ -550,7 +561,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.setCustomerBillingZero();
       }
     });
-    this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.startDateEventSub=  this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
       if (!this.selectedItem.cost) {
         this.setSupplierBillingZero();
@@ -559,7 +570,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.setCustomerBillingZero();
       }
     });
-    this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.endDateEventSub = this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
       if (!this.selectedItem.cost) {
         this.setSupplierBillingZero();
@@ -607,5 +618,10 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if (this.itemListSub) { this.itemListSub.unsubscribe(); }
     if(this.addOrderSub) {this.addOrderSub.unsubscribe();}
     if(this.editOrderSub){this.editOrderSub.unsubscribe()}
+    if( this.supplierIdEventSub) {this.supplierIdEventSub.unsubscribe()}
+    if(this.itemIdEventSub){this.itemIdEventSub.unsubscribe()}
+    if(this.startDateEventSub) {this.startDateEventSub.unsubscribe()}
+    if(this.endDateEventSub) {this.endDateEventSub.unsubscribe()}
+    if(this.peopleInTripEventSub) {this.peopleInTripEventSub.unsubscribe()}
   }
 }

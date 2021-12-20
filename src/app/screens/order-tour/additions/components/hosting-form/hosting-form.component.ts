@@ -52,6 +52,12 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   itemListSub: Subscription;
   addOrderSub: Subscription;
   editOrderSub: Subscription;
+  supplierIdEventSub:Subscription;
+  itemIdEventSub: Subscription;
+  startDateEventSub:Subscription;
+  endDateEventSub: Subscription;
+  quantityEventSub: Subscription;
+  peopleInTripEventSub: Subscription;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -354,10 +360,10 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.orderId = res[res.length-1].globalParameters.itemOrderRecordId;
       this.tableData = res;
       this.ifShowtable = true;
-      this.generalFormService.enableButton.next(true);
       this.editMode = true;
       this.generalFormService.setOrderList(res, this.orderType, 'adding',this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
+      this.generalFormService.enableButton.next(true);
     }, (err) => {
       console.log(err);
       this.editMode = false;
@@ -444,7 +450,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     this.disableFormFields();
-    this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
+    this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:', value);
         this.supplierId = value;
@@ -459,7 +465,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
           this.getOrderItemBySupplierId();
           this.valueChangeIndex++;
       });
-    this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.itemIdEventSub = this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
       this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value));
       if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
@@ -481,7 +487,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         this.setCustomerBillingZero();
       }
     });
-    this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.quantityEventSub= this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (this.ifCalculateByQuantity) {
         this.calculate();
         if (!this.selectedItem.cost) {
@@ -494,7 +500,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       else
         return;
     });
-    this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.peopleInTripEventSub= this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (!this.ifCalculateByQuantity) {
         this.calculate();
         if (!this.selectedItem.cost) {
@@ -507,7 +513,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       else
         return;
     });
-    this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.startDateEventSub= this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
       if (!this.selectedItem.cost) {
         this.setSupplierBillingZero();
@@ -516,7 +522,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
         this.setCustomerBillingZero();
       }
     });
-    this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.endDateEventSub = this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
       if (!this.selectedItem.cost) {
         this.setSupplierBillingZero();
@@ -557,7 +563,12 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     if (this.itemListSub) { this.itemListSub.unsubscribe(); }
     if (this.addOrderSub) { this.addOrderSub.unsubscribe(); }
     if (this.editOrderSub) { this.editOrderSub.unsubscribe() }
-
+    if( this.supplierIdEventSub) {this.supplierIdEventSub.unsubscribe()}
+    if(this.itemIdEventSub){this.itemIdEventSub.unsubscribe()}
+    if(this.startDateEventSub) {this.startDateEventSub.unsubscribe()}
+    if(this.endDateEventSub) {this.endDateEventSub.unsubscribe()}
+    if(this.quantityEventSub){this.quantityEventSub.unsubscribe()}
+    if(this.peopleInTripEventSub) {this.peopleInTripEventSub.unsubscribe()}
   }
 
 }

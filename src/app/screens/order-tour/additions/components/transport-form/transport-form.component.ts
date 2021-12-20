@@ -12,9 +12,8 @@ import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm
 import { MatDialog } from '@angular/material/dialog';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { keyframes } from '@angular/animations';
 import { Subscription } from 'rxjs';
-import { details, summery, supplier, transportColumns } from 'src/mock_data/additions';
+
 
 @Component({
   selector: 'app-transport-form',
@@ -52,6 +51,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   addOrderSub: Subscription;
   editOrderSub: Subscription;
   itemListSub: Subscription;
+  supplierIdEventSub:Subscription;
+  itemIdEventSub: Subscription;
+  startDateEventSub:Subscription;
+  endDateEventSub: Subscription;
+  quantityEventSub: Subscription;
+  peopleInTripEventSub: Subscription;
   public formTemplate: FormTemplate = {
     hasGroups: true,
     questionsGroups: [],
@@ -112,6 +117,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.generalFormService.questionGroups[index].questions = this.generalFormService.details;
     let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
+    //test 
+    let scatterLocationIndex= this.generalFormService.transport.findIndex(i=>i.key=='scatterLocation')
+    this.generalFormService.transport[scatterLocationIndex].value='';
+    let exitPointIndex= this.generalFormService.transport.findIndex(i=>i.key=='exitPoint')
+    this.generalFormService.transport[exitPointIndex].value='';
+    //end test
     let transportQuestions = detailsArr.concat(this.generalFormService.transport);
     this.generalFormService.questionGroups[index].questions = transportQuestions;
    
@@ -465,9 +476,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.form = event;
     console.log('I am form Event');
     this.disableFormFields();
-    this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
+   this.supplierIdEventSub= this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
-        console.log('supplier changed:', value);
         this.supplierId = value;
         if (this.valueChangeIndex > 0)
           this.form.controls["details"].get('itemId').patchValue('', { emitEvent: false });
@@ -481,9 +491,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
            this.valueChangeIndex++;
 
       });
-    this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.itemIdEventSub= this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
-      //let item = this.originalItemList.find(el => el.id === parseInt(value))
       this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value))
       if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
         this.ifCalculateByQuantity = true;
@@ -505,7 +514,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.quantityEventSub= this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (this.ifCalculateByQuantity) {
         console.log(value)
         this.calculate();
@@ -520,7 +529,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         return;
     });
 
-    this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.peopleInTripEventSub= this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (!this.ifCalculateByQuantity) {
         this.calculate();
         if (!this.selectedItem.cost) {
@@ -535,7 +544,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     });
 
 
-    this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+   this.startDateEventSub= this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
       if (!this.selectedItem.cost) {
         this.setSupplierBillingZero();
@@ -544,7 +553,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.setCustomerBillingZero();
       }
     });
-    this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    this.endDateEventSub = this.form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
       if (!this.selectedItem.cost) {
         this.setSupplierBillingZero();
@@ -588,6 +597,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if (this.settlementSub) { this.settlementSub.unsubscribe(); }
     if (this.addOrderSub) { this.addOrderSub.unsubscribe(); }
     if (this.editOrderSub) { this.editOrderSub.unsubscribe() }
+    if( this.supplierIdEventSub) {this.supplierIdEventSub.unsubscribe()}
+    if(this.itemIdEventSub){this.itemIdEventSub.unsubscribe()}
+    if(this.startDateEventSub) {this.startDateEventSub.unsubscribe()}
+    if(this.endDateEventSub) {this.endDateEventSub.unsubscribe()}
+    if(this.quantityEventSub){this.quantityEventSub.unsubscribe()}
+    if(this.peopleInTripEventSub) {this.peopleInTripEventSub.unsubscribe()}
   }
 
 

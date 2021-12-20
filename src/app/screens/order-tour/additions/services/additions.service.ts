@@ -193,7 +193,13 @@ export class AdditionsService {
     itemOrder.billingSupplier = item?.cost * MultiplyByAmountOrPeople * MultiplyByDays //ספק
     //if (item?.orderType === 1 && item?.credit !== 1) itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
     if(!isXemptedFromVat && item?.credit !== 1){
-      itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+      //test
+       if(item?.costVat)
+       itemOrder.billingSupplier = item?.costVat * MultiplyByAmountOrPeople * MultiplyByDays  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+       else
+       itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat
+      // end test
+      //itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
     } 
     itemOrder.billingCustomer = item?.costCustomer * MultiplyByAmountOrPeople * MultiplyByDays   //לקוח  
     var addToCommentMultipleStr = "מכפלת החיוב" + MultiplyByAmountOrPeople?.toString() + "*" + item?.costCustomer + "*" + MultiplyByDays
@@ -243,7 +249,13 @@ export class AdditionsService {
       // בהזמנות כלכלה שורה של פריט היא תמיד ליום אחד
       itemOrder.billingSupplier = item?.cost * +MultiplyByAmountOrPeople // חישוב חיוב ספק
       if(!isXemptedFromVat && item?.credit !== 1){
-        itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+        //test
+        if(item?.costVat)
+        itemOrder.billingSupplier = item?.costVat * MultiplyByAmountOrPeople// אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
+        else
+        itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat
+        //end test
+        //itemOrder.billingSupplier = itemOrder.billingSupplier * currentVat  // אם כולל מעמ - יש להוסיף את עלות המע"מ בחיוב לספק
       } 
       // if (item.costVat == 1) {
       // if (itemOrder.isVat == 1) {

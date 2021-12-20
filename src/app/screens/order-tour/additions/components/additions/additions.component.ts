@@ -66,33 +66,19 @@ export class AdditionsComponent implements OnInit {
        else
        this.generalFormService.isOneDayTrip=false;
     }
-     
+
      this.tourTitle= this.generalFormService.tripInfo.trip.tripDescription;
-    
-
     this.getOrders();
-    //this.getTempOrder();
-    // this.tourService.setTour(TourModel.create(tourTransport));
-    // this.tour = this.tourService.getTour();
-
-    // this.additionsService.emitSchedule(this.tour.schedule);
-    //this.onAdd();
      this.generalFormService.enableButton.subscribe(res=>{
        this.disabled=!res;
+       this.addItem = false;
+       this.change(this.orderType);
      })
   }
 
   public onAdd() {
-    // this.item = {} as OrderEvent;
-
-    // if (this.orderType === 1 && this.items.length > 10) {
-    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-    //     width: '500px',
-    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-    //   })
-    // }
-
     this.addItem = true;
+    this.disabled=true;
   }
 
   getOrders() {
