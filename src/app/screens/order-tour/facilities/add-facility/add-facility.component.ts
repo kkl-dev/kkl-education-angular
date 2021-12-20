@@ -81,7 +81,7 @@ export class AddFacilityComponent implements OnInit {
         'orderId': new FormControl(data.orderId || null),
         'tempOrderList': new FormControl(data.tempOrderList || null),
         'orderTypeCode': new FormControl(data.orderTypeCode || null),
-        'itemId': new FormControl(data.itemId || null)
+        'itemId': new FormControl(data.itemId || data.id)
       });
     } else {
       this.updateForm = true;
