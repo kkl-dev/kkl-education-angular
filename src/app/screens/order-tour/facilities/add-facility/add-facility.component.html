@@ -33,7 +33,7 @@
                 <button *ngIf="!updateForm" class="add-facility__form-button">{{updateForm ? 'שמירה' :
                     'שריין'}}</button>
             </div>
-            <div class="add-facility__form-inputs" *ngIf="updateForm">
+            <div class="add-facility__form-inputs" *ngIf="updateForm && orderId!=null">
                 <span style="color:red;margin: 5px;">בשלב זה לא ניתן לערוך פריט זה ביומן , נא ערוך פריט זה במסך
                     תוספות</span>
             </div>

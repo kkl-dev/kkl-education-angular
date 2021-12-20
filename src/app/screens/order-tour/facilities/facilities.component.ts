@@ -363,7 +363,8 @@ export class FacilitiesComponent implements OnInit {
       for (let i = 0; i < this.tempOrderList.length; i++) {
         //console.log('this.tempOrderList no. ' + i + ": ", this.tempOrderList[i]);
         newTempOrderObj = this.facilitiesConvertingService.convertTempOrderListfromTripCalendarApi(this.tempOrderList[i]);
-        this.addToCalendar(newTempOrderObj, true, false);
+
+        this.addToCalendar(newTempOrderObj, true);
         this.calenderArray.push(newTempOrderObj);
       }
 
@@ -371,7 +372,7 @@ export class FacilitiesComponent implements OnInit {
         //console.log('this.activityList no. ' + i + ": ", this.activityList[i]);
         newTempActivityList = this.facilitiesConvertingService.convertActivityListfromTripCalendarApi(this.activityList[i]);
         // if(newTempActivityList.title) {
-        this.addToCalendar(newTempActivityList, true, true);
+        this.addToCalendar(newTempActivityList, true);
         this.calenderArray.push(newTempActivityList);
         //}
       }
@@ -410,13 +411,15 @@ export class FacilitiesComponent implements OnInit {
     this.pagesAmount = quotient + remainder;
   }
 
-  addToCalendar(event: any, fromTripCalendarApi: boolean, isEditable: boolean): void {
+  addToCalendar(event: any, fromTripCalendarApi: boolean): void {
     //console.log("addToCalendar: ", event);
+    let isEditable: boolean = (event.orderId) ? false : true;
     const tmpObj: EventInput = {
       id: `${this.eventsArr.length}`,
       textColor: 'black',
       editable: isEditable,
     }
+
     for (const property in event) {
       tmpObj[property] = event[property];
     }
