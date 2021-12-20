@@ -14,7 +14,7 @@ app-squad-details,
   width: 100%;
 }
 
-@media screen and (max-width: "1024px") {
+@media screen and (max-width: "1280px") {
   .row {
     .schedule {
       order: 2 !important;
@@ -36,7 +36,7 @@ app-squad-details,
   padding-left: spacing(3);
 }
 
-@media screen and (max-width: "1024px") {
+@media screen and (max-width: "1280px") {
   .assemble-container {
     overflow: scroll;
     padding-left: spacing(3);
@@ -50,7 +50,7 @@ app-squad-details,
   border-right: 1px solid color(border);
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1280px) {
   .client,
   .schedule,
   .newClient {
