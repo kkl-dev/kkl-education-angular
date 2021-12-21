@@ -116,7 +116,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.generalFormService.guidance[guideNameIndex].value='';
     let languageGuidanceIndex= this.generalFormService.guidance.findIndex(i=>i.key=='languageGuidance')
     this.generalFormService.guidance[languageGuidanceIndex].value='';
-    let guideInstructionsIndex= this.generalFormService.guidance.findIndex(i=>i.key=='guideInstructionsIndex')
+    let guideInstructionsIndex= this.generalFormService.guidance.findIndex(i=>i.key=='guideInstructions')
     this.generalFormService.guidance[guideInstructionsIndex].value='';
     let guideQuestions = detailsArr.concat(this.generalFormService.guidance);
     this.generalFormService.questionGroups[index].questions = guideQuestions;

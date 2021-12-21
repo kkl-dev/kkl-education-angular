@@ -107,7 +107,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     this.generalFormService.questionGroups[index].questions = this.generalFormService.details;
     let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
-    let siteCodeIndex= this.generalFormService.site.findIndex(i=>i.key=='siteCodeIndex')
+    let siteCodeIndex= this.generalFormService.site.findIndex(i=>i.key=='siteCode')
     this.generalFormService.site[siteCodeIndex].value='';
     let siteURLIndex= this.generalFormService.site.findIndex(i=>i.key=='siteURL')
     this.generalFormService.site[siteURLIndex].value='';
