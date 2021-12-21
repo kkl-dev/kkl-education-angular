@@ -31,6 +31,9 @@ export class TourPanelComponent implements OnInit {
       console.log('changes is: ',changes.orderType.currentValue);
       this.setHeaderText(changes.orderType.currentValue);
     }
+    if (changes.item != null && changes.item != undefined && (changes.orderType.currentValue === 4 || changes.orderType.currentValue === 7)) {
+      this.textHeader = changes.item.currentValue.globalParameters.orderItemDetails.name;
+    }
   }
    setDateFormat(){
        

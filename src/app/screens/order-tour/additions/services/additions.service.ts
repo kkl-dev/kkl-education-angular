@@ -420,6 +420,19 @@ export class AdditionsService {
       }
     }
    
+    if (form.value.details['startDate'] === form.value.details['endDate'] && form.value.details['startHour'] > form.value.details['endHour']) {
+      this.setDialogMessage('שעת התחלה חייבת להיות לפני שעת הסיום');
+      return false;
+    }
+    var arrStartDate = form.value.details['startDate'].split("/");
+    var date1 = new Date(arrStartDate[2], arrStartDate[1], arrStartDate[0]);
+    var arrEndDate = form.value.details['endDate'].split("/");
+    var date2 = new Date(arrEndDate[2], arrEndDate[1], arrEndDate[0]);
+    if (date1 > date2) {
+      this.setDialogMessage('תאריך התחלה חייב להיות לפני תאריך הסיום');
+      return false;
+    }
+
 
     // בדיקה עם הפריט מסוג תוספות
     // ואם יש הרשאה -  למשווק אין
@@ -434,21 +447,7 @@ export class AdditionsService {
     //   return false;
     // }
 
-      // בדיקה שהפריט לא קיים באותה שעה ובאותם תאריכים
-    // חוץ מפריט זיכוי או כיתה
-    // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null))
-    // this.orderService.checkItemsExistInDateTime(this.squadAssembleService.tripInfofromService.trip.id,
-    //   this.squadAssembleService.tripInfofromService.trip.centerField.id, item).subscribe(
-    //     response => {
-    //       if (response != "") {
-    //         this._dialog.open(ConfirmDialogComponent, {
-    //           width: '500px',
-    //           data: { message: response, content: ''}
-    //         })
-    //          return false
-    //       }
-    //     },err=> console.log(err))
-
+     
     return true;
   }
 

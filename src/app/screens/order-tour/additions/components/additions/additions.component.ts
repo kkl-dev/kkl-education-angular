@@ -7,7 +7,7 @@ import { TourModel } from '../../models/tour.model';
 import { tourTransport } from 'src/mock_data/transport';
 import { TourService } from '../../services/tour.service';
 import { SquadAssembleService } from '../../../squad-assemble/services/squad-assemble.service';
-import { OrderService, Order, OrderEvent, TransportOrder, OrderItemCommonDetails, OrderType } from 'src/app/open-api';
+import { OrderService, Order, OrderEvent, TransportOrder, OrderItemCommonDetails, OrderType, ItemsByTypeOrder } from 'src/app/open-api';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { GeneralFormService } from '../../services/general-form.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
@@ -133,13 +133,10 @@ export class AdditionsComponent implements OnInit {
     }  
       for (var i in this.tempOrderReduce[orderTypId]) {
          if (this.tempOrderReduce[orderTypId][i].orderId != undefined && this.tempOrderReduce[orderTypId][i].orderId && this.tempOrderReduce[orderTypId][i].orderId!=0 )
-        // if (this.tempOrderReduce[orderTypId][i].orderId)
           continue;
         var order = {} as OrderEvent;
-         //test
          order.order ={} as Order;
          order.order.orderType = {} as OrderType;
-         //end test
         order.globalParameters = {} as OrderItemCommonDetails;
         let startDate = this.generalFormService.changeDateFormat(this.tempOrderReduce[orderTypId][i].startDate, 'israel');
         order.globalParameters.startDate = startDate;
@@ -149,10 +146,13 @@ export class AdditionsComponent implements OnInit {
         order.globalParameters.startHour = startHour[1];
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
+        order.globalParameters.itemId = this.tempOrderReduce[orderTypId][i].itemId
+        order.globalParameters.orderItemDetails = {} as ItemsByTypeOrder;
+        order.globalParameters.orderItemDetails.name =this.tempOrderReduce[orderTypId][i].orderItemName;
+
+
         order.globalParameters.tempOrderIdentity = this.tempOrderReduce[orderTypId][i].tempOrderId;
-        //test
         order.order.orderType.id= this.orderType;
-        //end test
         orderList.push(order);
       }
       // this.additionsService.emitItem(OrderList);

@@ -450,6 +450,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     this.disableFormFields();
+    if (this.isTempuraryItem && this.valueChangeIndex === 0) { this.calculateByItemId(this.item.globalParameters.itemId) }
     this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:', value);
@@ -466,26 +467,27 @@ export class HostingFormComponent implements OnInit, OnDestroy {
           this.valueChangeIndex++;
       });
    this.itemIdEventSub = this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      this.valueChangeIndex++;
-      this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value));
-      if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
-        this.ifCalculateByQuantity = true;
-      else
-        this.ifCalculateByQuantity = false;
-      let itemCost;
-      if (this.isSupplierXemptedFromVat == true){
-        itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
-      }    
-      else
-        itemCost = this.selectedItem.costVat;
-      this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
-      this.calculate();
-      if (!this.selectedItem.cost) {
-        this.setSupplierBillingZero();
-      }
-      if (!this.selectedItem.costCustomer) {
-        this.setCustomerBillingZero();
-      }
+      // this.valueChangeIndex++;
+      // this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value));
+      // if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
+      //   this.ifCalculateByQuantity = true;
+      // else
+      //   this.ifCalculateByQuantity = false;
+      // let itemCost;
+      // if (this.isSupplierXemptedFromVat == true){
+      //   itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
+      // }    
+      // else
+      //   itemCost = this.selectedItem.costVat;
+      // this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
+      // this.calculate();
+      // if (!this.selectedItem.cost) {
+      //   this.setSupplierBillingZero();
+      // }
+      // if (!this.selectedItem.costCustomer) {
+      //   this.setCustomerBillingZero();
+      // }
+      this.calculateByItemId(value);
     });
    this.quantityEventSub= this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (this.ifCalculateByQuantity) {
@@ -532,6 +534,29 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+
+  calculateByItemId(id) {
+    this.valueChangeIndex++;
+    this.selectedItem = this.originalItemList.find(el => el.id === parseInt(id))
+    if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
+    this.ifCalculateByQuantity = true;
+    else
+    this.ifCalculateByQuantity = false;
+    let itemCost;
+    if (this.isSupplierXemptedFromVat == true) {
+      itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
+    }
+    else
+      itemCost = this.selectedItem.costVat;
+    this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
+    this.calculate();
+    if (!this.selectedItem.cost) {
+      this.setSupplierBillingZero();
+    }
+    if (!this.selectedItem.costCustomer) {
+      this.setCustomerBillingZero();
+    }
   }
 
   calculate(){

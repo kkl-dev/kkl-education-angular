@@ -509,6 +509,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     this.disableFormFields();
+    if (this.isTempuraryItem && this.valueChangeIndex === 0) { this.calculateByItemId(this.item.globalParameters.itemId) }
     this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);
@@ -525,22 +526,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
         this.valueChangeIndex++;
       });
     this.itemIdEventSub = this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      this.valueChangeIndex++;
-      this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value))
-      let itemCost;
-      if(this.isSupplierXemptedFromVat==true){
-        itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
-      }  
-       else
-       itemCost = this.selectedItem.costVat;
-      this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
-      this.calculate();
-      if (!this.selectedItem.cost) {
-        this.setSupplierBillingZero();
-      }
-      if (!this.selectedItem.costCustomer) {
-        this.setCustomerBillingZero();
-      }
+      this.calculateByItemId(value);
     });
 
     this.form.controls["details"].get('vegetarianDishesNumber').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
@@ -581,6 +567,26 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     });
     console.log(this.form);
   }
+
+  calculateByItemId(id) {
+    this.valueChangeIndex++;
+    this.selectedItem = this.originalItemList.find(el => el.id === parseInt(id))
+    let itemCost;
+    if (this.isSupplierXemptedFromVat == true) {
+      itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
+    }
+    else
+      itemCost = this.selectedItem.costVat;
+    this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
+    this.calculate();
+    if (!this.selectedItem.cost) {
+      this.setSupplierBillingZero();
+    }
+    if (!this.selectedItem.costCustomer) {
+      this.setCustomerBillingZero();
+    }
+  }
+
 
   calculate(){
     let form = this.additionsService.calculateBillings(this.form.value.details,this.isSupplierXemptedFromVat);
