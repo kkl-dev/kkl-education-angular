@@ -9,6 +9,7 @@ import { FacilitiesConvertingService } from './facilities-converting.service';
 import { ActivitiesService } from 'src/app/open-api';
 import { TripActivity } from 'src/app/open-api';
 import { SquadAssembleService } from '../screens/order-tour/squad-assemble/services/squad-assemble.service';
+import { TempOrder } from 'src/app/open-api';
 
 @Injectable({
   providedIn: 'root'
@@ -112,9 +113,35 @@ export class FacilitiesService {
     arr[index].start = start;
     arr[index].end = end;
 
-    this.UpdateActivity(arr[index]);
+    if (arr[index].orderTypeCode)
+      this.updateFacility(arr[index]);
+    else
+      this.UpdateActivity(arr[index]);
 
     this.calendarEventsArr.next(arr);
+  }
+
+  updateFacility(nTempOrder) {
+    let newTempOrder = {} as TempOrder;
+
+    newTempOrder.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+
+    newTempOrder.itemId = nTempOrder.itemId;
+    newTempOrder.orderId = nTempOrder.orderId;
+    newTempOrder.orderItemName = nTempOrder.title;
+
+    newTempOrder.tempOrderId = nTempOrder.tempOrderId;
+
+    newTempOrder.startDate = nTempOrder.start;
+    newTempOrder.endDate = nTempOrder.end;
+    newTempOrder.fromHour = nTempOrder.start;
+    newTempOrder.tillHour = nTempOrder.end;
+    newTempOrder.orderTypeCode = nTempOrder.orderTypeCode;
+    this.activitiyService.editCalendarOrderItem(newTempOrder).subscribe((res: any) => {
+      console.log(res);
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   UpdateActivity(nActivity) {

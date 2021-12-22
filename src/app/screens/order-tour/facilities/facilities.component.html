@@ -1,11 +1,10 @@
 <div class="facilities" div fxLayout="row" fxLayoutAlign="space-evenly none" fxFlex='100'>
-    <app-add-activity (emitFormValues)='addToCalendar($event, false,true)'
-        *ngIf="(closeModal$ | async) === 'addActivity'">
+    <app-add-activity (emitFormValues)='addToCalendar($event, false)' *ngIf="(closeModal$ | async) === 'addActivity'">
     </app-add-activity>
-    <app-save-activity (emitFormValues)='addToCalendar($event, false,true)' *ngIf="(closeModal$ | async) === 'activity'"
+    <app-save-activity (emitFormValues)='addToCalendar($event, false)' *ngIf="(closeModal$ | async) === 'activity'"
         [activity]='(selectedActivity$ | async)' [type]='activityIsUpComing'>
     </app-save-activity>
-    <app-add-facility [facility]='(selectedFacility$ | async)' (emitFormValues)='addToCalendar($event, false,false)'
+    <app-add-facility [facility]='(selectedFacility$ | async)' (emitFormValues)='addToCalendar($event, false)'
         *ngIf="(closeModal$ | async) === 'facility'">
     </app-add-facility>
     <div class="content-1" fxFlex='50'>
