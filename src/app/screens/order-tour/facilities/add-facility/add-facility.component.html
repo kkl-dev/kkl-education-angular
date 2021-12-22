@@ -11,7 +11,10 @@
             </div>
             <div class="add-facility__header-content">
                 <div class="add-facility__header-content-heading">
-                    <span class="add-facility__header-content-heading-constant">שריין מתקן:</span>
+                    <span class="add-facility__header-content-heading-constant" *ngIf="item.orderTypeCode != 4">שריין
+                        מתקן:</span>
+                    <span class="add-facility__header-content-heading-constant" *ngIf="item.orderTypeCode == 4">שריין
+                        פעילות:</span>
                     <span class="add-facility__header-content-heading-input">{{item.name}}</span>
                 </div>
             </div>
@@ -30,7 +33,7 @@
                 </div>
                 <button class="add-facility__form-button delete-button" *ngIf='updateForm'
                     (click)="deleteItem($event)">מחיקה</button>
-                <button *ngIf="!updateForm" class="add-facility__form-button">{{updateForm ? 'שמירה' :
+                <button *ngIf="item.orderId == null" class="add-facility__form-button">{{updateForm ? 'שמירה' :
                     'שריין'}}</button>
             </div>
             <div class="add-facility__form-inputs" *ngIf="updateForm && orderId!=null">
