@@ -511,7 +511,23 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   //   })
   // }
 
- 
+  // AddOrder() {
+  //   if (this.additionsService.orderList.length > 0) {
+  //     this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
+  //       console.log(res);
+  //     }, (err) => {
+  //       console.log(err);
+  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //         width: '500px',
+  //         data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+  //       })
+  //     })
+  //   }
+
+
+  // }
+
+
 
   public changeActiveStepNextNavigation(): void {
     this.activeStep = +this.activeStep++;
@@ -563,10 +579,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-    // if (routeIndex === 4) {
-    //   console.log('is not avaliable');
-    //   return;
-    // }
+    if (routeIndex === 4) {
+      console.log('is not avaliable');
+      return;
+    }
     this.activeStep = +this.activeStep--;
     this.location.back();
   }
