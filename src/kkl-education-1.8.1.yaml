@@ -463,6 +463,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BaseCustomer' 
+  /checkIfCustomerHasDebt/{customerCode}:
+    get:
+      tags:
+      - user
+      operationId: CheckIfCustomerHasDebt
+      parameters:
+      - name: customerCode
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 'success'
+          content:
+            text/plain:
+              schema:
+                type: boolean
+                nullable: true
+        '404':
+          description: customerCode not found
+        '500' : 
+          description: internal server error
+
+
+
 
   /customers/{custAutoComplete}/{filterParam}:
     get:

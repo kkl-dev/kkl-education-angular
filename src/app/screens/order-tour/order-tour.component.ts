@@ -342,7 +342,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
       else {
         if (!scheduleForm) {
-          this.test('schedule', lastScheduleFormIndex);
+          //this.test('schedule', lastScheduleFormIndex);
+          this.checkWhichControlIsInvalid('schedule', lastScheduleFormIndex);
           return flag;
         }
         if (!customerFlag) {
@@ -351,18 +352,18 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         if (!ContactForm) {
           if (this.squadAssemble.formsArray[lastContactFormIndex].status == 'INVALID')
-            this.test('contact', lastContactFormIndex);
+            this.checkWhichControlIsInvalid('contact', lastContactFormIndex);
           else
             this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
           return flag;
         }
         if (!ageGroupForm) {
-          this.test('ageGroup', lastAgeGroupFormIndex);
+          this.checkWhichControlIsInvalid('ageGroup', lastAgeGroupFormIndex);
           return flag;
         }
 
         if (!detalisForm) {
-          this.test('details', lastDetailsFormIndex);
+          this.checkWhichControlIsInvalid('details', lastDetailsFormIndex);
           return flag;
         }
 
@@ -396,7 +397,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     return flag;
   }
 
-  test(formName, index) {
+  checkWhichControlIsInvalid(formName, index) {
     let ifControlFound = false;
     for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
       if (i === index && !ifControlFound) {
@@ -454,6 +455,15 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
           tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
         }
+      }
+      if (tripInfo.lodgingReservation.length==0){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        })
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          console.log('dialogResult is : ' +dialogResult );
+        });
       }
     }
     else {

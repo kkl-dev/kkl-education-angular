@@ -7,6 +7,9 @@ import { SquadClientService } from 'src/app/screens/order-tour/squad-assemble/co
 import { TripService } from 'src/app/services/trip.service';
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { SquadDetailsService } from 'src/app/screens/order-tour/squad-assemble/components/squad-details/squad-details.service';
+import { UserService } from 'src/app/open-api';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-form-autocomplete',
@@ -25,7 +28,9 @@ export class FormAutocompleteComponent implements OnInit {
     private squadClientService: SquadClientService,
     public tripService: TripService,
     public squadDetailsService: SquadDetailsService,
-    public squadAssembleService: SquadAssembleService
+    public squadAssembleService: SquadAssembleService,
+    private userService:UserService,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -89,12 +94,43 @@ export class FormAutocompleteComponent implements OnInit {
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent, question: any) {
-    if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    this.squadClientService.emitClientSelected(event.option.value,question);
-    var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
-    this.list.push(customer);
-   console.log('clientQuestions is:' ,this.squadClientService.questions)
+    let customerCode;
+    if (question === 'customer') {
+       let customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0];
+       customerCode= customer.id;
+    }
+     else  if (question === 'payerPoll'){
+        let customer= this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; 
+        customerCode= customer.id;
+     }
+    
+    this.userService.checkIfCustomerHasDebt(customerCode).subscribe(res=>{
+        let stringTrue: string = res.toString();  
+         if (stringTrue == 'true'){
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: 'לא ניתן לבחור לקוח זה בשל יתרת חוב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          })
+         }
+         else{
+          if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
+          if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
+          this.squadClientService.emitClientSelected(event.option.value,question);
+          var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
+          this.list.push(customer);
+          console.log('clientQuestions is:' ,this.squadClientService.questions)
+         }
+    },(err)=>{
+      console.log(err);
+    })
+    // in comment for test
+    // if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
+    // if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
+    // this.squadClientService.emitClientSelected(event.option.value,question);
+    // var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
+    // this.list.push(customer);
+    // console.log('clientQuestions is:' ,this.squadClientService.questions)
+    // end comment for test
   }
   public onDelete(item: any) {
     this.list = this.list.filter(function (el) { return el.value != item.value; });
@@ -103,4 +139,13 @@ export class FormAutocompleteComponent implements OnInit {
         this.deleteCustomer.emit('customer is deleted');
     
   }
+
+  stringToBoolean(stringValue: string): boolean | undefined {  
+    try {  
+        return JSON.parse(stringValue);  
+    }  
+    catch (e) {  
+        return undefined;  
+    }  
+ }  
 }

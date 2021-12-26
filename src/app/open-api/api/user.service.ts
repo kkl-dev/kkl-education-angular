@@ -50,7 +50,7 @@ import { Configuration }                                     from '../configurat
 export class UserService {
 
     protected basePath= 'http://knf-appl-dev3/EducationApiDev';
-    //protected basePath= 'http://knf-appl-dev3/EducationApiTest';
+    // protected basePath= 'http://knf-appl-dev3/EducationApiTest';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -145,6 +145,50 @@ export class UserService {
 
         return this.httpClient.post<any>(`${this.configuration.basePath}/cancelTrip`,
             cancelTrip,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param customerCode 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public checkIfCustomerHasDebt(customerCode: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<boolean>;
+    public checkIfCustomerHasDebt(customerCode: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<boolean>>;
+    public checkIfCustomerHasDebt(customerCode: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<boolean>>;
+    public checkIfCustomerHasDebt(customerCode: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+        if (customerCode === null || customerCode === undefined) {
+            throw new Error('Required parameter customerCode was null or undefined when calling checkIfCustomerHasDebt.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'text/plain'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.get<boolean>(`${this.configuration.basePath}/checkIfCustomerHasDebt/${encodeURIComponent(String(customerCode))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
