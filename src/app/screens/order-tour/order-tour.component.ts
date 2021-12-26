@@ -456,15 +456,15 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
         }
       }
-      if (tripInfo.lodgingReservation.length==0){
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-        })
-        dialogRef.afterClosed().subscribe(dialogResult => {
-          console.log('dialogResult is : ' +dialogResult );
-        });
-      }
+      // if (tripInfo.lodgingReservation.length==0){
+      //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      //     width: '500px',
+      //     data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+      //   })
+      //   dialogRef.afterClosed().subscribe(dialogResult => {
+      //     console.log('dialogResult is : ' +dialogResult );
+      //   });
+      // }
     }
     else {
       tripInfo.lodgingReservation = [];

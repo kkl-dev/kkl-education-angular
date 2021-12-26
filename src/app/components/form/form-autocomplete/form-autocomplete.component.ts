@@ -7,7 +7,7 @@ import { SquadClientService } from 'src/app/screens/order-tour/squad-assemble/co
 import { TripService } from 'src/app/services/trip.service';
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { SquadDetailsService } from 'src/app/screens/order-tour/squad-assemble/components/squad-details/squad-details.service';
-import { UserService } from 'src/app/open-api';
+import { BaseCustomer, UserService } from 'src/app/open-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 
@@ -107,6 +107,10 @@ export class FormAutocompleteComponent implements OnInit {
     this.userService.checkIfCustomerHasDebt(customerCode).subscribe(res=>{
         let stringTrue: string = res.toString();  
          if (stringTrue == 'true'){
+          if (question === 'customer')
+          this.squadAssembleService.Customer={} as BaseCustomer;
+          else if (question === 'payerPoll')
+          this.squadAssembleService.payerCustomer={} as BaseCustomer;
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
             data: { message: 'לא ניתן לבחור לקוח זה בשל יתרת חוב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
