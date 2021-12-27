@@ -7,7 +7,7 @@ import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { SquadAssembleService } from './squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
-import { ActivitiesService, UserService } from 'src/app/open-api';
+import { ActivitiesService, OrderService, UserService } from 'src/app/open-api';
 import { Location } from '@angular/common';
 import { AdditionsService } from './additions/services/additions.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
@@ -45,8 +45,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   createActivitiesSub: Subscription;
 
   constructor(
-    private router: Router,
-    private orderTourService: OrderTourService,
+    private router: Router, private squadAssembleService: SquadAssembleService,
+    private orderTourService: OrderTourService, private orderService: OrderService,
     private squadAssemble: SquadAssembleService,
     private tripService: TripService,
     private userService: UserService,
@@ -501,7 +501,30 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   //   })
   // }
 
- 
+  sendToOrderCenter() {
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: { message: this.squadAssembleService.transactionMessage, rightButton: "אישור", leftButton: "ביטול" }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.orderService.sendToOrderCenter(this.squadAssembleService.transaction.tripId, this.squadAssembleService.transaction.description, this.squadAssembleService.transaction.typeId, this.squadAssembleService.tripStatus).subscribe(status => {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '250px',
+            data: { message: 'טיול הועבר למרכז הזמנות בהצלחה!', rightButton: "אישור" }
+          });
+          // this.movementsService.addMove(this.squadAssembleService.transaction).subscribe(x => {
+          //   this.tripDetails.movementsList.push(x)
+          // })
+
+        }, err => {
+          this.setDialogMessage('העברת טיול למרכז הזמנות - נכשל!');
+        })
+
+      }
+    })
+    this.orderTourService.getNewClientObs()
+  }
 
   public changeActiveStepNextNavigation(): void {
     this.activeStep = +this.activeStep++;
@@ -538,6 +561,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         // }
       }
       // if (routeIndex === 4) this.AddOrder();
+      if (routeIndex === 5) this.sendToOrderCenter();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
       );
