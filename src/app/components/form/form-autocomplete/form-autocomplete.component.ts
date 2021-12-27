@@ -22,6 +22,7 @@ export class FormAutocompleteComponent implements OnInit {
   @Output() deleteCustomer: EventEmitter<string> = new EventEmitter();
 
   public list: any[] = [];
+  flag :boolean=false;
 
   constructor(
     private formService: FormService,
@@ -64,20 +65,25 @@ export class FormAutocompleteComponent implements OnInit {
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === 'customer');
         if (control.parent.value.clientPool !== 'kklWorker') {
-          this.tripService.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
+          //this.tripService.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
+          this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
         }
-        else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
+        //else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
+        else { this.getKKLWorkers(control.value, indx1, indx2); }
       }
 
       else {//if choose payer customer
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerPoll");
         if (control.parent.value.payerName !== 'kklWorker') {
-          this.tripService.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
+          //this.tripService.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
+          this.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
         }
-        else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
+        //else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
+        else { this.getKKLWorkers(control.value, indx1, indx2); }
       }
     }
+   
   }
   public onSelect(control: FormControl) {
     var index;
@@ -106,15 +112,25 @@ export class FormAutocompleteComponent implements OnInit {
     
     this.userService.checkIfCustomerHasDebt(customerCode).subscribe(res=>{
         let stringTrue: string = res.toString();  
-         if (stringTrue == 'true'){
-          if (question === 'customer')
-          this.squadAssembleService.Customer={} as BaseCustomer;
-          else if (question === 'payerPoll')
-          this.squadAssembleService.payerCustomer={} as BaseCustomer;
+         if (stringTrue == 'true'){    
+           this.flag =true;  
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
             data: { message: 'לא ניתן לבחור לקוח זה בשל יתרת חוב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
           })
+          if (question === 'customer'){
+            //   this.tripService.customers=[];
+            //   let index1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
+            //  let index2 = this.squadClientService.questions[index1].group.questions.findIndex(o => o.key === 'customer');
+            //  this.squadClientService.questions[index1].group.questions[index2].inputProps.options=[];
+            //  this.squadAssembleService.Customer={} as BaseCustomer;
+              this.onDelete(undefined);
+            }   
+            else if (question === 'payerPoll'){
+              this.onDelete(undefined);
+              //this.squadAssembleService.payerCustomer={} as BaseCustomer;
+            }
+           
          }
          else{
           if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
@@ -137,19 +153,52 @@ export class FormAutocompleteComponent implements OnInit {
     // end comment for test
   }
   public onDelete(item: any) {
-    this.list = this.list.filter(function (el) { return el.value != item.value; });
-    
+      if (item)
+      this.list = this.list.filter(function (el) { return el.value != item.value; });   
       this.tripService.customers=[];
-        this.deleteCustomer.emit('customer is deleted');
-    
+      this.deleteCustomer.emit('customer is deleted');    
   }
 
-  stringToBoolean(stringValue: string): boolean | undefined {  
-    try {  
-        return JSON.parse(stringValue);  
-    }  
-    catch (e) {  
-        return undefined;  
-    }  
- }  
+  getCustomersByParameters(customer, clientPool, indx1, indx2) {
+    this.flag =false;
+    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
+      response => {
+        console.log('response', response)
+        this.tripService.customersOriginal = response;
+        this.tripService.customers = [];
+        response.forEach(element => {
+          this.tripService.customers.push({ label: element.name, value: element.id.toString() });
+        });
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.tripService.customers;
+        if (this.flag ==true ){
+          this.onDelete(undefined);
+        }
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+  getKKLWorkers(customer, indx1, indx2) {
+    this.userService.getKKLWorkers(customer).subscribe(
+      response => {
+        console.log('response', response)
+        this.tripService.customersOriginal = response;
+        this.tripService.customers = [];
+        response.forEach(element => {
+          this.tripService.customers.push({ label: element.name, value: element.id.toString() });
+        });
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.tripService.customers;
+        if (this.flag ==true ){
+          this.onDelete(undefined);
+        }
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+
+
+ 
 }

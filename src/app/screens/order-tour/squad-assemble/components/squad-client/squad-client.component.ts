@@ -125,6 +125,10 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   onDelete(event){
     console.log('I am delete event', event);
+    this.squadAssembleService.Customer={} as BaseCustomer;
+     let index1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
+     let index2 = this.squadClientService.questions[index1].group.questions.findIndex(o => o.key === 'customer');
+    this.squadClientService.questions[index1].group.questions[index2].inputProps.options=[];
     this.formGroup.controls.contact.patchValue({
       contactName:  '',
       contactPhone:  '',
@@ -133,6 +137,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   }
 
     onDeletePayer(event){
+      this.squadClientService.questions[2].group.questions[0].inputProps.options=[];
       this.squadAssembleService.payerCustomer={} as BaseCustomer;
   }
 }
