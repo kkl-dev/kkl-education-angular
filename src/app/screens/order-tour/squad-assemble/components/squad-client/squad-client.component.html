@@ -14,7 +14,11 @@
       <app-form-autocomplete
         [group]="clientQuestions.group"
         [formGroup]="formGroup.controls.client"
-        (deleteCustomer)="onDelete($event)"
+        [options$]="schoolOptions$"
+        (autocomplete)="onAutocomplete($event)"
+        (select)="onSelect($event)"
+        (optionSelected)="onOptionSelected($event)"
+        (delete)="onDelete($event)"
       ></app-form-autocomplete>
     </div>
 
@@ -43,7 +47,6 @@
       <app-form-autocomplete
         [group]="payerQuestions.group"
         [formGroup]="formGroup.controls.payer"
-        (deleteCustomer)="onDeletePayer($event)"
       ></app-form-autocomplete>
     </div>
   </div>

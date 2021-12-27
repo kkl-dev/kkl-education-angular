@@ -7,6 +7,7 @@ import { QuestionAutocomplete } from 'src/app/components/form/logic/question-aut
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
+import { BaseCustomer, UserService } from 'src/app/open-api';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,9 @@ export class SquadClientService {
   );
   private $clientSelected: Subject<any> = new Subject<any>();
   public customerTypeSelected: any;
+  customers = [];
+  customersOriginal: BaseCustomer[];
+  baseCustomer: BaseCustomer;
   
   public questions: QuestionBase<string>[] = [
     new QuestionBase({
@@ -52,9 +56,7 @@ export class SquadClientService {
             validations: [Validators.required],
             inputProps: {
               options: [
-                // { value: '521829121', label: '521829121 בית ספר תמיר' },
-                // { value: '320382983', label: '320382983 מתנס אבן יהודה' },
-                // { value: '428948934', label: '428948934 הגימנסיה הריאלית' },
+             
               ],
             },
           }),
@@ -127,10 +129,7 @@ export class SquadClientService {
             value: '',
             inputProps: {
               options: [
-                // { label: 'שם נוסף', value: 'שם נוסף' },
-                // { label: 'עוד לקוח', value: 'עוד לקוח' },
-                // { label: 'לקוח מספר שלוש', value: 'לקוח מספר שלוש' },
-                // { label: 'לקוח מספר ארבע', value: 'לקוח מספר ארבע' },
+               
               ],
             },
           }),
@@ -139,7 +138,7 @@ export class SquadClientService {
     }),
   ];
 
-  constructor() {}
+  constructor(private userService:UserService) {}
 
   public emitEditMode(value: boolean) {
     this.$editMode.next(value);
@@ -148,12 +147,16 @@ export class SquadClientService {
     return this.$editMode.asObservable();
   }
 
-  public emitClientSelected(value: any,customerType) {
-    this.customerTypeSelected= customerType;
+  
+  public emitClientSelected(value: any) {
     this.$clientSelected.next(value);
   }
 
   public getClientObs(): Observable<any> {
     return this.$clientSelected.asObservable();
   }
+
+ 
+
+
 }
