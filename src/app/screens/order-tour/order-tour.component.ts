@@ -474,9 +474,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       tripInfo.lodgingReservation = [];
       this.sendTripToServer(route,tripInfo);
     }
-    //test
-    //this.test(route,tripInfo)
-    //end
+    
     // this.spinner.show();
     // this.userService.createTrip(tripInfo).subscribe(res => {
     //   this.spinner.hide();
