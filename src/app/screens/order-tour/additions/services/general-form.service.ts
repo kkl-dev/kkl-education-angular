@@ -134,7 +134,8 @@ export class GeneralFormService {
       key: 'startHour',
       label: 'שעת איסוף',
       icon: 'schedule',
-      type: 'time',
+      type: 'custom',
+      // type: 'time',
       // validations: [Validators.required],
       // inputProps: {
       //   // labelSize: 's5',
@@ -145,7 +146,8 @@ export class GeneralFormService {
       key: 'endHour',
       label: 'שעת פיזור',
       icon: 'schedule',
-      type: 'time',
+      type: 'custom',
+      // type: 'time',
       // validations: [Validators.required],
     }),
     new QuestionTextbox({
@@ -351,11 +353,27 @@ export class GeneralFormService {
         //control.value = this.squadAssembleService.peopleInTrip;
         control.value = this.peopleInTrip;
       }
-      if (control.key == 'startHour' && data.globalParameters[control.key].includes('T')) {
-        control.value = this.setTimeFormat(data.globalParameters[control.key]);
+      // if (control.key == 'startHour' && data.globalParameters[control.key].includes('T')) {
+      //   control.value = this.setTimeFormat(data.globalParameters[control.key]);
+      // }
+      if (control.key == 'startHour') {
+        let IfIncludeTime:boolean;
+        if(data.globalParameters[control.key].includes('T'))
+        IfIncludeTime=true;
+        else
+        false
+        control.value = this.setTimeFormat(data.globalParameters[control.key],IfIncludeTime);
       }
-      if (control.key == 'endHour' && data.globalParameters[control.key].includes('T')) {
-        control.value = this.setTimeFormat(data.globalParameters[control.key]);
+      // if (control.key == 'endHour' && data.globalParameters[control.key].includes('T')) {
+      //   control.value = this.setTimeFormat(data.globalParameters[control.key]);
+      // }
+      if (control.key == 'endHour') {
+        let IfIncludeTime:boolean;
+        if(data.globalParameters[control.key].includes('T'))
+        IfIncludeTime=true;
+        else
+        false
+        control.value = this.setTimeFormat(data.globalParameters[control.key],IfIncludeTime);
       }
       if (control.key == 'startDate' && (data.globalParameters[control.key]).includes('T')) {
         control.value = this.changeDateFormat(data.globalParameters[control.key], 'israel');
@@ -461,10 +479,28 @@ export class GeneralFormService {
 
 
  
-  setTimeFormat(hour) {
-    let hourStr = hour.split("T");
-    let hourFormat = hourStr[1];
-    return hourFormat;
+  // setTimeFormat(hour) {
+  //   let hourStr = hour.split("T");
+  //   //test
+  //   let hourFormat = hourStr[1];
+  //   let hourFormatArr = hourFormat.split(':');
+  //   let subHourFormat = hourFormatArr[0]+':'+hourFormatArr[1]
+  //   //end test
+  //   return subHourFormat;
+  // }
+
+  setTimeFormat(hour,ifIncludeTime) {
+    let hourStr;
+    let hourFormat
+    if(ifIncludeTime==true){
+       hourStr = hour.split("T");
+       hourFormat = hourStr[1];
+    }
+    else
+    hourFormat=hour;  
+    let hourFormatArr = hourFormat.split(':');
+    let subHourFormat = hourFormatArr[0]+':'+hourFormatArr[1] 
+    return subHourFormat;
   }
 
   changeDateFormat(date, format) {
