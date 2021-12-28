@@ -448,14 +448,6 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     tripInfo.lodgingReservation = obj;
     if (!this.tripService.isOneDayTrip) {
       tripInfo.lodgingReservation = obj;
-      for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
-        for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
-          let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
-          let dateArray = dateFormat.split("/");
-          dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
-          tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
-        }
-      }
       if (tripInfo.lodgingReservation.length==0){
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
@@ -464,11 +456,24 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         })
         dialogRef.afterClosed().subscribe(dialogResult => {
           console.log('dialogResult is : ' +dialogResult );
-          if(dialogResult){
+          if(dialogResult==true){
             this.sendTripToServer(route,tripInfo);
           }
         });
       }
+      else{
+        for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
+          for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
+            let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
+            let dateArray = dateFormat.split("/");
+            dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+            tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
+          }
+        }
+        this.sendTripToServer(route,tripInfo);
+      }
+     
+     
     }
     else {
       tripInfo.lodgingReservation = [];
@@ -538,23 +543,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   //   })
   // }
 
-  // AddOrder() {
-  //   if (this.additionsService.orderList.length > 0) {
-  //     this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
-  //       console.log(res);
-  //     }, (err) => {
-  //       console.log(err);
-  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //         width: '500px',
-  //         data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-  //       })
-  //     })
-  //   }
-
-
-  // }
-
-
+  
 
   public changeActiveStepNextNavigation(): void {
     this.activeStep = +this.activeStep++;
@@ -606,10 +595,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-    if (routeIndex === 4) {
-      console.log('is not avaliable');
-      return;
-    }
+   
     this.activeStep = +this.activeStep--;
     this.location.back();
   }
