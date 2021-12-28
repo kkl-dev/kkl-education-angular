@@ -456,19 +456,48 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
         }
       }
-      // if (tripInfo.lodgingReservation.length==0){
-      //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-      //     width: '500px',
-      //     data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      //   })
-      //   dialogRef.afterClosed().subscribe(dialogResult => {
-      //     console.log('dialogResult is : ' +dialogResult );
-      //   });
-      // }
+      if (tripInfo.lodgingReservation.length==0){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          // data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'אישור', leftButton: 'ביטול' }
+        })
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          console.log('dialogResult is : ' +dialogResult );
+          if(dialogResult){
+            this.sendTripToServer(route,tripInfo);
+          }
+        });
+      }
     }
     else {
       tripInfo.lodgingReservation = [];
+      this.sendTripToServer(route,tripInfo);
     }
+    //test
+    //this.test(route,tripInfo)
+    //end
+    // this.spinner.show();
+    // this.userService.createTrip(tripInfo).subscribe(res => {
+    //   this.spinner.hide();
+    //   console.log('tripInfo from server is :', res);
+    //   this.squadAssemble.tripInfofromService = res;
+    //   localStorage.setItem('tripId', res.trip.id.toString());
+    //   localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
+    //   this.router.navigateByUrl(
+    //     `/education/order-tour/${route}`
+    //   );
+    // }, (err) => {
+    //   this.spinner.hide();
+    //   console.log(err);
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+    //   })
+    // })
+  }
+
+  sendTripToServer(route,tripInfo){
     this.spinner.show();
     this.userService.createTrip(tripInfo).subscribe(res => {
       this.spinner.hide();

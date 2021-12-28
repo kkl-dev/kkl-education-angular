@@ -23,7 +23,6 @@ export class ConfirmDialogComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
-    console.log('I am not confirm');
   }
   onYesClick() {
 
