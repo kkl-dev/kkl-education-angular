@@ -390,7 +390,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+      data: { message: message, content: '',  leftButton: 'אישור' }
     })
   }
   validationsHosting() {
@@ -398,7 +398,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת ארוח - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת ארוח - חובה למלא שעת התייצבות', content: '', leftButton: 'אישור' }
       })
       return false;
     }
@@ -406,7 +406,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     if (this.form.value.details['endHour'] === null || this.form.value.details['endHour'] === "" || this.form.value.details['endHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת ארוח - חובה למלא שעת סיום', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת ארוח - חובה למלא שעת סיום', content: '',  leftButton: 'אישור' }
       })
       return false;
     }

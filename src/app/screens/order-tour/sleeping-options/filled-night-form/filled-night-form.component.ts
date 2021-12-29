@@ -214,7 +214,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
       if (lodgersNumber> this.totalAmount){
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {   
           width: '500px',
-          data: { message: 'לתשומת ליבך מספר הלנים שהוזן אינו תואם את המספר שהזנת במסך הקודם' , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          data: { message: 'לתשומת ליבך מספר הלנים שהוזן אינו תואם את המספר שהזנת במסך הקודם' , content: '', leftButton: 'המשך' }
         })
       }
     }
@@ -401,7 +401,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {     
         width: '500px',
         // data: { message: 'מספר ה  '+name+" הפנויות בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        data: { message: 'מספר ה  '+name+" " +text+" בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'מספר ה  '+name+" " +text+" בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', leftButton: 'המשך' }
       })
      
    }
@@ -441,7 +441,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {     
       width: '500px',
       // data: { message: 'מספר ה  '+name+" הפנויות בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      data: { message: 'מספר ה  '+name+" " +text+" בתאריכים שהוזנו הינו  "  + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      data: { message: 'מספר ה  '+name+" " +text+" בתאריכים שהוזנו הינו  "  + avaliableUnits , content: '',  leftButton: 'המשך' }
     })
    
  }
@@ -472,7 +472,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
   }
   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
     width: '500px',
-    data: { message: 'כמות התפוסה עבור ' + unitsNumber+ ' '+ name +' הינה' + maxOccupancy, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    data: { message: 'כמות התפוסה עבור ' + unitsNumber+ ' '+ name +' הינה' + maxOccupancy, content: '',  leftButton: 'המשך' }
   })
  
 }
@@ -494,7 +494,7 @@ displayMessage4(name,unitsNumber,maxOccupancy){
   }
   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
     width: '500px',
-    data: { message: 'כמות התפוסה עבור ' + unitsNumber+ ' '+ name +' בתאריכים שהוזנו הינה' + maxOccupancy, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+    data: { message: 'כמות התפוסה עבור ' + unitsNumber+ ' '+ name +' בתאריכים שהוזנו הינה' + maxOccupancy, content: '',  leftButton: 'המשך' }
   })
  
 }
