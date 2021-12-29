@@ -524,7 +524,10 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     this.disableFormFields();
-    this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
+
+    if(this.isItemOrderExist && this.editMode==true)
+    this.form.disable({ emitEvent: false });
+    this.supplierIdEventSub= this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:', value);
         this.supplierId = value;
@@ -630,6 +633,46 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
   }
 
+  // new am-pm
+ setDefaultTime(question) {
+  console.log('question of startHour is : ',question);
+  if(!question.value)
+  return "00:00";
+  else{
+    return question.value;  
+  }
+}
+setDefaultTime1(question) {
+  console.log('question of endHour is : ',question);
+  if(!question.value)
+  return "00:00";
+  else{
+    return question.value;
+  } 
+}
+
+public startTimeChanged(event: string) {
+  let timeFormat = this.setTimeFormat(event);
+  this.form.controls["details"].get('startHour').patchValue(timeFormat, { emitEvent: false });
+}
+
+public endTimeChanged(event: string) {
+  let timeFormat = this.setTimeFormat(event);
+  this.form.controls["details"].get('endHour').patchValue(timeFormat, { emitEvent: false });
+}
+setTimeFormat(event) {
+  let timeArr = event.split(':');
+  let hour = timeArr[0];
+  let timeFormat;
+  if (+hour < 10) {
+    hour = 0 + hour;
+    timeFormat = hour + ':' + timeArr[1];
+  }
+  else
+    timeFormat = event;
+  return timeFormat;
+}
+// end new am-pm
 
   disableFormFields() {
     this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
@@ -640,6 +683,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     if (this.generalFormService.tripInfo.trip.tripStatus.id == 10)
       this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
   }
+
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
