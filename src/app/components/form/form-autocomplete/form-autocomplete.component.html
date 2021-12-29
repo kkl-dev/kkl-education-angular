@@ -25,19 +25,26 @@
     </div>
   </form>
 
-  <div class="data-container" fxLayout="column" fxLayoutAlign="start center" dir="rtl">
+  <ng-container *ngIf="options$ | async as options">
     <div
-      *ngFor="let option of options$ | async"
-      class="autocomplete"
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
+      class="data-container"
+      fxLayout="column"
+      fxLayoutAlign="start center"
+      dir="rtl"
     >
-      <app-typography>
-        {{ option.label }} - {{option.value}}
-      </app-typography>
-      <button mat-icon-button (click)="onDelete(option)">
-        <mat-icon color="warn">clear</mat-icon>
-      </button>
+      <div
+        *ngFor="let option of options"
+        class="autocomplete"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+      >
+        <app-typography>
+          {{ option.label }} - {{ option.value }}
+        </app-typography>
+        <button mat-icon-button (click)="onDelete(option)">
+          <mat-icon color="warn">clear</mat-icon>
+        </button>
+      </div>
     </div>
-  </div>
+  </ng-container>
 </div>

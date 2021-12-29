@@ -114,7 +114,7 @@ export class SquadClientService {
         rows: 12,
         questions: [
           new QuestionSelect({
-            key: 'payerName',
+            key: 'payerPull',
             type: 'select',
             label: 'הכול',
             inputProps: {
@@ -127,7 +127,7 @@ export class SquadClientService {
             },
           }),
           new QuestionAutocomplete({
-            key: 'payerPoll',
+            key: 'payerName',
             label: 'לקוח משלם',
             type: 'autocomplete',
             cols: 2,

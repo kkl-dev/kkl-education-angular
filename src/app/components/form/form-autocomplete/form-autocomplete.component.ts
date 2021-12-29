@@ -57,7 +57,6 @@ export class FormAutocompleteComponent implements OnInit {
     const autocomplete: QuestionAutocomplete = this.group.questions.find(
       (q) => q instanceof QuestionAutocomplete
     );
-    console.log(autocomplete);
-    this.delete.emit({ option, question: autocomplete });
+    this.delete.emit({ optionToDelete : option, question: autocomplete });
   }
 }
