@@ -7,7 +7,7 @@ import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { SquadAssembleService } from './squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
-import { ActivitiesService, UserService } from 'src/app/open-api';
+import { ActivitiesService, OrderService, UserService } from 'src/app/open-api';
 import { Location } from '@angular/common';
 import { AdditionsService } from './additions/services/additions.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
@@ -45,8 +45,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   createActivitiesSub: Subscription;
 
   constructor(
-    private router: Router,
-    private orderTourService: OrderTourService,
+    private router: Router, private squadAssembleService: SquadAssembleService,
+    private orderTourService: OrderTourService, private orderService: OrderService,
     private squadAssemble: SquadAssembleService,
     private tripService: TripService,
     private userService: UserService,
@@ -146,7 +146,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       if (flag == false) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'נא מלא את שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
         })
         step.path = 'squad-assemble';
         this.router.navigateByUrl(`/education/order-tour/${step.path}`)
@@ -516,7 +516,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(err);
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '',  leftButton: 'אישור' }
       })
     })
   }
@@ -543,7 +543,35 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   //   })
   // }
 
-  
+
+  sendToOrderCenter() {
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: { message: this.squadAssembleService.transactionMessage, rightButton: "ביטול", leftButton: "אישור" }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.orderService.sendToOrderCenter(this.squadAssembleService.transaction.tripId, this.squadAssembleService.transaction.description, this.squadAssembleService.transaction.typeId, this.squadAssembleService.tripStatus).subscribe(status => {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '250px',
+            data: { message: 'טיול הועבר למרכז הזמנות בהצלחה!', leftButton: "אישור" }
+          });
+          this.router.navigateByUrl(
+            `/education/order-tour/${this.steps[5].path}`
+          );
+          // this.movementsService.addMove(this.squadAssembleService.transaction).subscribe(x => {
+          //   this.tripDetails.movementsList.push(x)
+          // })
+
+        }, err => {
+          this.setDialogMessage('העברת טיול למרכז הזמנות - נכשל!');
+        })
+
+      }
+    })
+    this.orderTourService.getNewClientObs()
+  }
+
 
   public changeActiveStepNextNavigation(): void {
     this.activeStep = +this.activeStep++;
@@ -551,13 +579,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-    if (routeIndex < this.steps.length) {
+    if (routeIndex <= this.steps.length) {
       if (routeIndex == 1) {
         let flag = this.syncToTripInfo();
         if (flag == false) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
-            data: { message: 'נא מלא את שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+            data: { message: 'נא מלא את שדות החובה בטופס', content: '',  leftButton: 'אישור' }
           })
           this.router.navigateByUrl(
             `/education/order-tour/${this.steps[0].path}`
@@ -580,6 +608,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         // }
       }
       // if (routeIndex === 4) this.AddOrder();
+      if (routeIndex === 5)
+        this.sendToOrderCenter();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
       );
@@ -603,7 +633,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+      data: { message: message, content: '',  leftButton: 'אישור' }
     })
 
   }

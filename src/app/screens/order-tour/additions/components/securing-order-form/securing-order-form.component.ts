@@ -360,7 +360,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
        setDialogMessage(message){
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-           data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+           data: { message: message, content: '', leftButton: 'אישור' }
          })
 
       }
@@ -373,14 +373,14 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'בהזמנת אבטחה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          data: { message: 'בהזמנת אבטחה - חובה למלא שעת התייצבות', content: '',  leftButton: 'אישור' }
         })
         return false;
       }
       if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'בהזמנת אבטחה - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          data: { message: 'בהזמנת אבטחה - חובה למלא מקום התייצבות', content: '',  leftButton: 'אישור' }
         })
         return false;
       }
