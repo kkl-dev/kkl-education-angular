@@ -6,12 +6,20 @@ import {
   SelectOption,
 } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
-import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
+import {
+  Subject,
+  Observable,
+  Subscription,
+  BehaviorSubject,
+  iif,
+  of,
+  merge,
+} from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { map, switchMap } from 'rxjs/operators';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 
 @Component({
   selector: 'app-squad-client',
@@ -33,12 +41,16 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   public formGroup: FormGroup;
 
   private subjectSchool: Subject<SelectOption>;
-  public schools$: Observable<SelectOption>;
+  private subjectPayer: Subject<SelectOption>;
 
-  private subjectOptions: BehaviorSubject<SelectOption[]>;
-  public options$: Observable<SelectOption[]>;
+  private removeSchool: Subject<string>;
+  private removePayer: Subject<string>;
+
+  private subjectSchoolOptions: BehaviorSubject<SelectOption[]>;
+  private subjectPayerOptions: BehaviorSubject<SelectOption[]>;
 
   public schoolOptions$: Observable<SelectOption[]>;
+  public payerOptions$: Observable<SelectOption[]>;
 
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
@@ -52,10 +64,12 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subjectSchool = new Subject<SelectOption>();
-    this.schools$ = this.subjectSchool.asObservable();
+    this.removeSchool = new Subject<string>();
+    this.subjectSchoolOptions = new BehaviorSubject<SelectOption[]>([]);
 
-    this.subjectOptions = new BehaviorSubject<SelectOption[]>([]);
-    this.options$ = this.subjectOptions.asObservable();
+    this.subjectPayer = new Subject<SelectOption>();
+    this.removePayer = new Subject<string>();
+    this.subjectPayerOptions = new BehaviorSubject<SelectOption[]>([]);
 
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
     this.setQuestions();
@@ -65,7 +79,8 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.$saveMode = this.squadAssembleService.getSaveModeObs();
     this.formGroup = this.formService.setFormGroup(this.group);
 
-    this.schoolOptions$ = this.setSchoolOptions();
+    this.schoolOptions$ = merge(this.setSchoolOptions(), this.onDeleteSchool());
+    this.payerOptions$ = merge(this.setPayerOptions(), this.onDeletePayer());
   }
 
   ngOnDestroy(): void {
@@ -137,29 +152,106 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   public onSelect(control: FormControl) {}
 
   // return event : {key : string, option : {label, value}}
-  public onOptionSelected(event: any) {
+  public onOptionSelected(event: any, groupKey: string) {
     const { option, key } = event;
-    const client = `${option.value} - ${option.label}`;
-    this.formGroup.controls.client['controls'][key].patchValue(client);
-    this.squadClientService.emitClientSelected(client);
-    this.subjectSchool.next(option);
+    const label = `${option.value} - ${option.label}`;
+    this.formGroup.controls[groupKey]['controls'][key].patchValue(label);
+    this.squadClientService.emitClientSelected(label);
+
+    if (groupKey === 'client') {
+      this.subjectSchool.next(option);
+    }
+    if (groupKey === 'payer') {
+      this.subjectPayer.next(option);
+    }
 
     // TODO - SERVER SIDE
   }
-  public onDelete(option: SelectOption) {
-    console.log(option);
+  public onDelete(option: {
+    optionToDelete: SelectOption;
+    question: QuestionAutocomplete;
+  }) {
+    const { question, optionToDelete } = option;
+
+    // TODO - server logic here
+
+    const { key } = question;
+
+
+    if (key === 'clientName') {
+      this.removeSchool.next(optionToDelete.value);
+    }
+    if (key === 'payerName') {
+      this.removePayer.next(optionToDelete.value);
+    }
   }
 
-  private setSchoolOptions() {
-    return this.options$.pipe(
-      switchMap((options: SelectOption[]) => {
-        return this.schools$.pipe(
-          map((option: SelectOption) => {
-            options.push(option);
+  private onDeleteSchool(): Observable<SelectOption[]> {
+    return this.removeSchool.asObservable().pipe(
+      switchMap((value: string) => {
+        return this.subjectSchoolOptions.asObservable().pipe(
+          map((options: SelectOption[]) => {
+            const index = options.findIndex((option) => option.value === value);
+            options.splice(index, 1);
             return options;
           })
         );
       })
     );
+  }
+  private onDeletePayer(): Observable<SelectOption[]> {
+    return this.removePayer.asObservable().pipe(
+      switchMap((value: string) => {
+        return this.subjectPayerOptions.asObservable().pipe(
+          map((options: SelectOption[]) => {
+            const index = options.findIndex((option) => option.value === value);
+            options.splice(index, 1);
+            return options;
+          })
+        );
+      })
+    );
+  }
+
+  private setSchoolOptions() {
+    return this.subjectSchool.asObservable().pipe(
+      switchMap((option: SelectOption) => {
+        return this.subjectSchoolOptions.asObservable().pipe(
+          switchMap((options: SelectOption[]) => {
+            return of(this.findOption(options, option)).pipe(
+              map((found: boolean) => {
+                found ? options : options.push(option);
+                return options;
+              })
+            );
+          })
+        );
+      })
+    );
+  }
+  private setPayerOptions() {
+    return this.subjectPayer.asObservable().pipe(
+      startWith({ value: '', label: '' }),
+      switchMap((option: SelectOption) => {
+        return this.subjectPayerOptions.asObservable().pipe(
+          switchMap((options: SelectOption[]) => {
+            return of(this.findOption(options, option)).pipe(
+              map((found: boolean) => {
+                found ? options : options.push(option);
+                return options;
+              })
+            );
+          })
+        );
+      })
+    );
+  }
+
+  private findOption(options: SelectOption[], option: SelectOption): boolean {
+    if (option.value) {
+      return !!options.find((item) => item.value === option.value);
+    } else {
+      return true;
+    }
   }
 }

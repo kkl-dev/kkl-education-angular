@@ -17,7 +17,7 @@
         [options$]="schoolOptions$"
         (autocomplete)="onAutocomplete($event)"
         (select)="onSelect($event)"
-        (optionSelected)="onOptionSelected($event)"
+        (optionSelected)="onOptionSelected($event, clientQuestions.group.key)"
         (delete)="onDelete($event)"
       ></app-form-autocomplete>
     </div>
@@ -47,6 +47,12 @@
       <app-form-autocomplete
         [group]="payerQuestions.group"
         [formGroup]="formGroup.controls.payer"
+        [options$]="payerOptions$"
+        (autocomplete)="onAutocomplete($event)"
+        (select)="onSelect($event)"
+        (optionSelected)="onOptionSelected($event, payerQuestions.group.key)"
+        (delete)="onDelete($event)"
+
       ></app-form-autocomplete>
     </div>
   </div>
