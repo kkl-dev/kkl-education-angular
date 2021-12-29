@@ -20,8 +20,8 @@ export class FormAutocompleteComponent implements OnInit {
   @Input() public options$: Observable<SelectOption[]>;
 
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
-  @Output() select: EventEmitter<FormControl> = new EventEmitter();
-  @Output() delete: EventEmitter<SelectOption> = new EventEmitter();
+  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
   @Output() optionSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(private formService: FormService) {}
@@ -50,12 +50,14 @@ export class FormAutocompleteComponent implements OnInit {
       (opt) => opt.value === event.option.value
     );
 
-
-    console.log(option);
-
     this.optionSelected.emit({ key: autocomplete.key, option });
   }
+
   public onDelete(option: SelectOption) {
-    this.delete.emit(option);
+    const autocomplete: QuestionAutocomplete = this.group.questions.find(
+      (q) => q instanceof QuestionAutocomplete
+    );
+    console.log(autocomplete);
+    this.delete.emit({ option, question: autocomplete });
   }
 }

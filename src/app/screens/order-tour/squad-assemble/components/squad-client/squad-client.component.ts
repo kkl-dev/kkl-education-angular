@@ -65,7 +65,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.$saveMode = this.squadAssembleService.getSaveModeObs();
     this.formGroup = this.formService.setFormGroup(this.group);
 
-    this.setSchoolOptions();
+    this.schoolOptions$ = this.setSchoolOptions();
   }
 
   ngOnDestroy(): void {
@@ -151,7 +151,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   }
 
   private setSchoolOptions() {
-    this.schoolOptions$ = this.options$.pipe(
+    return this.options$.pipe(
       switchMap((options: SelectOption[]) => {
         return this.schools$.pipe(
           map((option: SelectOption) => {
