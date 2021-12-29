@@ -378,7 +378,7 @@ export class AdditionsService {
   setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+      data: { message: message, content: '',  leftButton: 'אישור' }
     })
   }
 
@@ -399,7 +399,7 @@ export class AdditionsService {
     if (item?.participantsLimit < form.value.details['peopleInTrip'] ) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'פריט זה מוגבל במספר משתתפים: ' + item?.participantsLimit, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'פריט זה מוגבל במספר משתתפים: ' + item?.participantsLimit, content: '',  leftButton: 'אישור' }
       })
       return false;
     }
@@ -414,7 +414,7 @@ export class AdditionsService {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
           // data: { message: 'פריט זה מוגבל לכמות 1 בלבד: ' + item?.participantsLimit }
-          data: { message: 'פריט זה מוגבל ל: ' + item?.amountLimit +' בלבד' }
+          data: { message: 'פריט זה מוגבל ל: ' + item?.amountLimit +' בלבד' , content: '',  leftButton: 'אישור' }
         })
         return false;
       }

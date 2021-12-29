@@ -167,7 +167,7 @@ export class SummaryComponent implements OnInit {
   setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+      data: { message: message, content: '', leftButton: 'אישור' }
     })
   }
   checkIfNeedCustomerSign() {

@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { buildDayTableModel } from '@fullcalendar/daygrid';
 import { BehaviorSubject } from 'rxjs';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
@@ -107,7 +107,7 @@ export const supplier1: TableCellModel[] = [
   },
 ];
 
-export const summery1 : TableCellModel[] = [
+export const summery1: TableCellModel[] = [
   {
     key: 'contact',
     label: 'נקלט ע"י',
@@ -140,7 +140,7 @@ export const summery1 : TableCellModel[] = [
     key: 'comments',
     label: 'הערה',
     value: '',
-    cols : 2,
+    cols: 2,
   },
 
 ]
@@ -157,12 +157,12 @@ export interface TableData {
 
 export class FormDetailsComponent implements OnInit {
 
-  flag:boolean= false;
+  flag: boolean = false;
   @Input() public tableData: any;
- 
+
   //public columns: TableCellModel[] = transportColumns;
   public columns: TableCellModel[] = transportColumns1;
-  
+
 
   public title: string = 'פרטים נוספים';
   public editMode: boolean = false;
@@ -228,23 +228,31 @@ export class FormDetailsComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.tableData.currentValue !=null && changes.tableData.currentValue!= undefined) {
-      console.log('changes is: ',changes.tableData.currentValue);
+    if (changes.tableData.currentValue != null && changes.tableData.currentValue != undefined) {
+      console.log('changes is: ', changes.tableData.currentValue);
       this.setTableData(changes.tableData.currentValue);
     }
   }
 
-   setTableData(res){
-    this.detailsSubject.value.columns[0].value= res[0].order.tripId;
-      this.detailsSubject.value.rows[0][0].value= res[0].order.orderType.name
-      this.detailsSubject.value.rows[0][1].value = res[0].order.status?res[0].order.status.name:'';
-      this.detailsSubject.value.rows[1][0].value =  res[0].order.supplier.name;
-      this.detailsSubject.value.rows[1][9].value = res[0].order.userInfo;//הזמנה אושרה ע''י
-      this.detailsSubject.value.rows[1][10].value = res[0].order.confirmDate;//תאריך אישור
-      this.detailsSubject.value.rows[1][11].value = res[0].order.confirmUserTz;//ת.ז. מאשר
-     this.flag=true;
-   }
-  
+  setTableData(res) {
+    this.detailsSubject.value.columns[0].value = res[0].order.tripId;
+    this.detailsSubject.value.rows[0][0].value = res[0].order.orderType.name
+    this.detailsSubject.value.rows[0][1].value = res[0].order.status ? res[0].order.status.name : '';
+    this.detailsSubject.value.rows[1][0].value = res[0].order.supplier.name;
+    this.detailsSubject.value.rows[1][1].value = res[0].order.supplier.name;
+    this.detailsSubject.value.rows[1][2].value = res[0].order.supplier.name;
+    this.detailsSubject.value.rows[1][3].value = res[0].order.supplier.address;
+    this.detailsSubject.value.rows[1][4].value = res[0].order.supplier.contact;
+    this.detailsSubject.value.rows[1][5].value = res[0].order.supplier.phone;
+    this.detailsSubject.value.rows[1][6].value = res[0].order.supplier.fax;
+    this.detailsSubject.value.rows[1][7].value = res[0].order.supplier.email;
+    this.detailsSubject.value.rows[1][8].value = res[0].order.supplier;//processId - לבדוק מה זה
+    this.detailsSubject.value.rows[1][9].value = res[0].order.userInfo;//הזמנה אושרה ע''י
+    this.detailsSubject.value.rows[1][10].value = res[0].order.confirmDate;//תאריך אישור
+    this.detailsSubject.value.rows[1][11].value = res[0].order.confirmUserTz;//ת.ז. מאשר
+    this.flag = true;
+  }
+
   public openCancelForm() {
     this.rows.push(this.cancellationForm);
     this.columns.push(this.cancelColumn);

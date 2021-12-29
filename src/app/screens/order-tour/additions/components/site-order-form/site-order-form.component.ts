@@ -294,7 +294,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     if (this.form.getRawValue().details['peopleInTrip'] === null || this.form.getRawValue().details['peopleInTrip'] === undefined || this.form.getRawValue().details['peopleInTrip'] === "") {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'חובה לציין את מספר המשתתפים באתר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'חובה לציין את מספר המשתתפים באתר', content: '',  leftButton: 'אישור' }
       })
       return false;
     }
@@ -302,14 +302,14 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
     if (this.form.getRawValue().details['startHour'] === null || this.form.getRawValue().details['startHour'] === undefined || this.form.getRawValue().details['startHour'] === "") {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'חובה לציין את שעת כניסה לאתר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'חובה לציין את שעת כניסה לאתר', content: '',  leftButton: 'אישור' }
       })
       return false;
     }
     if (this.form.getRawValue().details['endHour'] === null || this.form.getRawValue().details['endHour'] === undefined || this.form.getRawValue().details['endHour'] === "") {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'חובה לציין את שעת יציאה מהאתר', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+        data: { message: 'חובה לציין את שעת יציאה מהאתר', content: '',  leftButton: 'אישור' }
       })
       return false;
     }
@@ -418,7 +418,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      data: { message: message, content: '', leftButton: 'אישור' }
     })
 
   }
