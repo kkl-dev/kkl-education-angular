@@ -390,7 +390,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+      data: { message: message, content: '',  leftButton: 'אישור' }
     })
   }
   validationsHosting() {
@@ -398,7 +398,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת ארוח - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת ארוח - חובה למלא שעת התייצבות', content: '', leftButton: 'אישור' }
       })
       return false;
     }
@@ -406,7 +406,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     if (this.form.value.details['endHour'] === null || this.form.value.details['endHour'] === "" || this.form.value.details['endHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת ארוח - חובה למלא שעת סיום', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת ארוח - חובה למלא שעת סיום', content: '',  leftButton: 'אישור' }
       })
       return false;
     }
@@ -450,6 +450,8 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     this.disableFormFields();
+    if(this.isItemOrderExist && this.editMode==true)
+    this.form.disable({ emitEvent: false });
     if (this.isTempuraryItem && this.valueChangeIndex === 0) { this.calculateByItemId(this.item.globalParameters.itemId) }
     this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
@@ -467,26 +469,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
           this.valueChangeIndex++;
       });
    this.itemIdEventSub = this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      // this.valueChangeIndex++;
-      // this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value));
-      // if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
-      //   this.ifCalculateByQuantity = true;
-      // else
-      //   this.ifCalculateByQuantity = false;
-      // let itemCost;
-      // if (this.isSupplierXemptedFromVat == true){
-      //   itemCost = (Math.round(this.selectedItem.cost * 100) / 100).toFixed(2);
-      // }    
-      // else
-      //   itemCost = this.selectedItem.costVat;
-      // this.form.controls["details"].get('itemCost').setValue(itemCost, { emitEvent: false });
-      // this.calculate();
-      // if (!this.selectedItem.cost) {
-      //   this.setSupplierBillingZero();
-      // }
-      // if (!this.selectedItem.costCustomer) {
-      //   this.setCustomerBillingZero();
-      // }
+      
       this.calculateByItemId(value);
     });
    this.quantityEventSub= this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
@@ -581,6 +564,47 @@ export class HostingFormComponent implements OnInit, OnDestroy {
   if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
   this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
  }
+
+ // new am-pm
+ setDefaultTime(question) {
+  console.log('question of startHour is : ',question);
+  if(!question.value)
+  return "00:00";
+  else{
+    return question.value;  
+  }
+}
+setDefaultTime1(question) {
+  console.log('question of endHour is : ',question);
+  if(!question.value)
+  return "00:00";
+  else{
+    return question.value;
+  } 
+}
+
+public startTimeChanged(event: string) {
+  let timeFormat = this.setTimeFormat(event);
+  this.form.controls["details"].get('startHour').patchValue(timeFormat, { emitEvent: false });
+}
+
+public endTimeChanged(event: string) {
+  let timeFormat = this.setTimeFormat(event);
+  this.form.controls["details"].get('endHour').patchValue(timeFormat, { emitEvent: false });
+}
+setTimeFormat(event) {
+  let timeArr = event.split(':');
+  let hour = timeArr[0];
+  let timeFormat;
+  if (+hour < 10) {
+    hour = 0 + hour;
+    timeFormat = hour + ':' + timeArr[1];
+  }
+  else
+    timeFormat = event;
+  return timeFormat;
+}
+// end new am-pm
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }

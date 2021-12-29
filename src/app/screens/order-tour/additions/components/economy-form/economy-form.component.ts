@@ -372,7 +372,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
    setDialogMessage(message){
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-       data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+       data: { message: message, content: '',  leftButton: 'אישור' }
      })
   }
 
@@ -382,28 +382,28 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת כלכלה - חובה למלא שעת התייצבות', content: '',  leftButton: 'אישור' }
       })
       return false;
     }
     if (this.form.value.details['endHour'] === null || this.form.value.details['endHour'] === "" || this.form.value.details['endHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה - חובה למלא שעת סיום', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת כלכלה - חובה למלא שעת סיום', content: '',leftButton: 'אישור' }
       })
       return false;
     }
     if (this.form.value.details['peopleInTrip'] === null || this.form.value.details['peopleInTrip'] === "" || this.form.value.details['peopleInTrip'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה - חובה למלא מספר משתתפים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת כלכלה - חובה למלא מספר משתתפים', content: '',  leftButton: 'אישור' }
       })
       return false;
     }
     if (+this.form.value.details['peopleInTrip'] !== +this.form.value.details['quantity']) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה - מספר המשתתפים חייב להיות זהה לכמות', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת כלכלה - מספר המשתתפים חייב להיות זהה לכמות', content: '',  leftButton: 'אישור' }
       })
       return false;
     }
@@ -421,7 +421,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if (dishesSum !== +this.form.value.details['quantity']) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנת כלכלה סכום סוגי המנות שהוזנו צריך להיות זהה לכמות ', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנת כלכלה סכום סוגי המנות שהוזנו צריך להיות זהה לכמות ', content: '', leftButton: 'אישור' }
       })
       return false;
     }
@@ -441,14 +441,14 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if (flag && !item.name.includes("שבת") && !item.name.includes("סעודה שלישית")) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'הטיול חל ביום שבת - יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'הטיול חל ביום שבת - יש לבדוק שהזנת הפריטים תואמים', content: '', leftButton: 'אישור' }
       })
       return false;
     }
     if (flag === false && item.name.includes("שבת") && item.name.includes("סעודה שלישית")) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'הטיול אינו חל ביום שבת - נבחרה מנה המתאימה ליום שבת! יש לבדוק שהזנת הפריטים תואמים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'הטיול אינו חל ביום שבת - נבחרה מנה המתאימה ליום שבת! יש לבדוק שהזנת הפריטים תואמים', content: '', leftButton: 'אישור' }
       })
       return false;
     }
@@ -464,7 +464,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     if ((this.form.value.details['startDate'] !== this.form.value.details['endDate']) && item.credit === 0) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'בהזמנה מסוג כלכלה - תאריך ההתחלה והסיום צריכים להיות זהים', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'בהזמנה מסוג כלכלה - תאריך ההתחלה והסיום צריכים להיות זהים', content: '',leftButton: 'אישור' }
       })
       return false;
     }
@@ -476,7 +476,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
       if (flag) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'בהזמנת כלכלה - לא ניתן להזמין מספר פריטים זהים באותו תאריך', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          data: { message: 'בהזמנת כלכלה - לא ניתן להזמין מספר פריטים זהים באותו תאריך', content: '',  leftButton: 'אישור' }
         })
         return false;
       }
@@ -509,6 +509,8 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     this.disableFormFields();
+    if(this.isItemOrderExist && this.editMode==true)
+    this.form.disable({ emitEvent: false });
     if (this.isTempuraryItem && this.valueChangeIndex === 0) { this.calculateByItemId(this.item.globalParameters.itemId) }
     this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
@@ -618,6 +620,46 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
   if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
   this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
  }
+     // new am-pm
+ setDefaultTime(question) {
+  console.log('question of startHour is : ',question);
+  if(!question.value)
+  return "00:00";
+  else{
+    return question.value;  
+  }
+}
+setDefaultTime1(question) {
+  console.log('question of endHour is : ',question);
+  if(!question.value)
+  return "00:00";
+  else{
+    return question.value;
+  } 
+}
+
+public startTimeChanged(event: string) {
+  let timeFormat = this.setTimeFormat(event);
+  this.form.controls["details"].get('startHour').patchValue(timeFormat, { emitEvent: false });
+}
+
+public endTimeChanged(event: string) {
+  let timeFormat = this.setTimeFormat(event);
+  this.form.controls["details"].get('endHour').patchValue(timeFormat, { emitEvent: false });
+}
+setTimeFormat(event) {
+  let timeArr = event.split(':');
+  let hour = timeArr[0];
+  let timeFormat;
+  if (+hour < 10) {
+    hour = 0 + hour;
+    timeFormat = hour + ':' + timeArr[1];
+  }
+  else
+    timeFormat = event;
+  return timeFormat;
+}
+// end new am-pm
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
     if (this.supplierSub) { this.supplierSub.unsubscribe(); }

@@ -360,7 +360,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
        setDialogMessage(message){
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-           data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+           data: { message: message, content: '', leftButton: 'אישור' }
          })
 
       }
@@ -373,14 +373,14 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
       if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'בהזמנת אבטחה - חובה למלא שעת התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          data: { message: 'בהזמנת אבטחה - חובה למלא שעת התייצבות', content: '',  leftButton: 'אישור' }
         })
         return false;
       }
       if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'בהזמנת אבטחה - חובה למלא מקום התייצבות', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+          data: { message: 'בהזמנת אבטחה - חובה למלא מקום התייצבות', content: '',  leftButton: 'אישור' }
         })
         return false;
       }
@@ -402,6 +402,8 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   public onValueChange(event) {
     this.form = event;
     this.disableFormFields();
+    if(this.isItemOrderExist && this.editMode==true)
+    this.form.disable({ emitEvent: false });
    this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log(value);
@@ -512,6 +514,47 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
     this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
   }
+
+   // new am-pm
+   setDefaultTime(question) {
+    console.log('question of startHour is : ',question);
+    if(!question.value)
+    return "00:00";
+    else{
+      return question.value;  
+    }
+  }
+  setDefaultTime1(question) {
+    console.log('question of endHour is : ',question);
+    if(!question.value)
+    return "00:00";
+    else{
+      return question.value;
+    } 
+  }
+
+  public startTimeChanged(event: string) {
+    let timeFormat = this.setTimeFormat(event);
+    this.form.controls["details"].get('startHour').patchValue(timeFormat, { emitEvent: false });
+  }
+
+  public endTimeChanged(event: string) {
+    let timeFormat = this.setTimeFormat(event);
+    this.form.controls["details"].get('endHour').patchValue(timeFormat, { emitEvent: false });
+  }
+  setTimeFormat(event) {
+    let timeArr = event.split(':');
+    let hour = timeArr[0];
+    let timeFormat;
+    if (+hour < 10) {
+      hour = 0 + hour;
+      timeFormat = hour + ':' + timeArr[1];
+    }
+    else
+      timeFormat = event;
+    return timeFormat;
+  }
+ // end new am-pm
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
