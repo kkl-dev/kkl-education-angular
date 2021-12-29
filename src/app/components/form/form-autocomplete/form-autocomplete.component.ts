@@ -7,6 +7,9 @@ import { SquadClientService } from 'src/app/screens/order-tour/squad-assemble/co
 import { TripService } from 'src/app/services/trip.service';
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { SquadDetailsService } from 'src/app/screens/order-tour/squad-assemble/components/squad-details/squad-details.service';
+import { BaseCustomer, UserService } from 'src/app/open-api';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-form-autocomplete',
@@ -19,13 +22,16 @@ export class FormAutocompleteComponent implements OnInit {
   @Output() deleteCustomer: EventEmitter<string> = new EventEmitter();
 
   public list: any[] = [];
+  flag :boolean=false;
 
   constructor(
     private formService: FormService,
     private squadClientService: SquadClientService,
     public tripService: TripService,
     public squadDetailsService: SquadDetailsService,
-    public squadAssembleService: SquadAssembleService
+    public squadAssembleService: SquadAssembleService,
+    private userService:UserService,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -59,20 +65,25 @@ export class FormAutocompleteComponent implements OnInit {
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === 'customer');
         if (control.parent.value.clientPool !== 'kklWorker') {
-          this.tripService.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
+          //this.tripService.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
+          this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
         }
-        else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
+        //else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
+        else { this.getKKLWorkers(control.value, indx1, indx2); }
       }
 
       else {//if choose payer customer
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerPoll");
         if (control.parent.value.payerName !== 'kklWorker') {
-          this.tripService.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
+          //this.tripService.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
+          this.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
         }
-        else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
+        //else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
+        else { this.getKKLWorkers(control.value, indx1, indx2); }
       }
     }
+   
   }
   public onSelect(control: FormControl) {
     var index;
@@ -89,18 +100,105 @@ export class FormAutocompleteComponent implements OnInit {
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent, question: any) {
-    if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    this.squadClientService.emitClientSelected(event.option.value,question);
-    var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
-    this.list.push(customer);
-   console.log('clientQuestions is:' ,this.squadClientService.questions)
+    let customerCode;
+    if (question === 'customer') {
+       let customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0];
+       customerCode= customer.id;
+    }
+     else  if (question === 'payerPoll'){
+        let customer= this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; 
+        customerCode= customer.id;
+     }
+    
+    this.userService.checkIfCustomerHasDebt(customerCode).subscribe(res=>{
+        let stringTrue: string = res.toString();  
+         if (stringTrue == 'true'){    
+           this.flag =true;  
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: 'לא ניתן לבחור לקוח זה בשל יתרת חוב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          })
+          if (question === 'customer'){
+            //   this.tripService.customers=[];
+            //   let index1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
+            //  let index2 = this.squadClientService.questions[index1].group.questions.findIndex(o => o.key === 'customer');
+            //  this.squadClientService.questions[index1].group.questions[index2].inputProps.options=[];
+            //  this.squadAssembleService.Customer={} as BaseCustomer;
+              this.onDelete(undefined);
+            }   
+            else if (question === 'payerPoll'){
+              this.onDelete(undefined);
+              //this.squadAssembleService.payerCustomer={} as BaseCustomer;
+            }
+           
+         }
+         else{
+          if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
+          if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
+          this.squadClientService.emitClientSelected(event.option.value,question);
+          var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
+          this.list.push(customer);
+          console.log('clientQuestions is:' ,this.squadClientService.questions)
+         }
+    },(err)=>{
+      console.log(err);
+    })
+    // in comment for test
+    // if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
+    // if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
+    // this.squadClientService.emitClientSelected(event.option.value,question);
+    // var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
+    // this.list.push(customer);
+    // console.log('clientQuestions is:' ,this.squadClientService.questions)
+    // end comment for test
   }
   public onDelete(item: any) {
-    this.list = this.list.filter(function (el) { return el.value != item.value; });
-    
+      if (item)
+      this.list = this.list.filter(function (el) { return el.value != item.value; });   
       this.tripService.customers=[];
-        this.deleteCustomer.emit('customer is deleted');
-    
+      this.deleteCustomer.emit('customer is deleted');    
   }
+
+  getCustomersByParameters(customer, clientPool, indx1, indx2) {
+    this.flag =false;
+    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
+      response => {
+        console.log('response', response)
+        this.tripService.customersOriginal = response;
+        this.tripService.customers = [];
+        response.forEach(element => {
+          this.tripService.customers.push({ label: element.name, value: element.id.toString() });
+        });
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.tripService.customers;
+        if (this.flag ==true ){
+          this.onDelete(undefined);
+        }
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+  getKKLWorkers(customer, indx1, indx2) {
+    this.userService.getKKLWorkers(customer).subscribe(
+      response => {
+        console.log('response', response)
+        this.tripService.customersOriginal = response;
+        this.tripService.customers = [];
+        response.forEach(element => {
+          this.tripService.customers.push({ label: element.name, value: element.id.toString() });
+        });
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.tripService.customers;
+        if (this.flag ==true ){
+          this.onDelete(undefined);
+        }
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+
+
+ 
 }

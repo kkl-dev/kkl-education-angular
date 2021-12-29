@@ -342,7 +342,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
       else {
         if (!scheduleForm) {
-          this.test('schedule', lastScheduleFormIndex);
+          //this.test('schedule', lastScheduleFormIndex);
+          this.checkWhichControlIsInvalid('schedule', lastScheduleFormIndex);
           return flag;
         }
         if (!customerFlag) {
@@ -351,18 +352,18 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         if (!ContactForm) {
           if (this.squadAssemble.formsArray[lastContactFormIndex].status == 'INVALID')
-            this.test('contact', lastContactFormIndex);
+            this.checkWhichControlIsInvalid('contact', lastContactFormIndex);
           else
             this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
           return flag;
         }
         if (!ageGroupForm) {
-          this.test('ageGroup', lastAgeGroupFormIndex);
+          this.checkWhichControlIsInvalid('ageGroup', lastAgeGroupFormIndex);
           return flag;
         }
 
         if (!detalisForm) {
-          this.test('details', lastDetailsFormIndex);
+          this.checkWhichControlIsInvalid('details', lastDetailsFormIndex);
           return flag;
         }
 
@@ -396,7 +397,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     return flag;
   }
 
-  test(formName, index) {
+  checkWhichControlIsInvalid(formName, index) {
     let ifControlFound = false;
     for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
       if (i === index && !ifControlFound) {
@@ -447,18 +448,59 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     tripInfo.lodgingReservation = obj;
     if (!this.tripService.isOneDayTrip) {
       tripInfo.lodgingReservation = obj;
-      for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
-        for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
-          let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
-          let dateArray = dateFormat.split("/");
-          dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
-          tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
-        }
+      if (tripInfo.lodgingReservation.length==0){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          // data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'אישור', leftButton: 'ביטול' }
+        })
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          console.log('dialogResult is : ' +dialogResult );
+          if(dialogResult==true){
+            this.sendTripToServer(route,tripInfo);
+          }
+        });
       }
+      else{
+        for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
+          for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
+            let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
+            let dateArray = dateFormat.split("/");
+            dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+            tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
+          }
+        }
+        this.sendTripToServer(route,tripInfo);
+      }
+     
+     
     }
     else {
       tripInfo.lodgingReservation = [];
+      this.sendTripToServer(route,tripInfo);
     }
+    
+    // this.spinner.show();
+    // this.userService.createTrip(tripInfo).subscribe(res => {
+    //   this.spinner.hide();
+    //   console.log('tripInfo from server is :', res);
+    //   this.squadAssemble.tripInfofromService = res;
+    //   localStorage.setItem('tripId', res.trip.id.toString());
+    //   localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
+    //   this.router.navigateByUrl(
+    //     `/education/order-tour/${route}`
+    //   );
+    // }, (err) => {
+    //   this.spinner.hide();
+    //   console.log(err);
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+    //   })
+    // })
+  }
+
+  sendTripToServer(route,tripInfo){
     this.spinner.show();
     this.userService.createTrip(tripInfo).subscribe(res => {
       this.spinner.hide();
@@ -501,6 +543,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   //   })
   // }
 
+
   sendToOrderCenter() {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '250px',
@@ -528,6 +571,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     })
     this.orderTourService.getNewClientObs()
   }
+
 
   public changeActiveStepNextNavigation(): void {
     this.activeStep = +this.activeStep++;
@@ -581,10 +625,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-    // if (routeIndex === 4) {
-    //   console.log('is not avaliable');
-    //   return;
-    // }
+   
     this.activeStep = +this.activeStep--;
     this.location.back();
   }

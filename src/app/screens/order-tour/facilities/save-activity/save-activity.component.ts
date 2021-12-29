@@ -32,7 +32,7 @@ export class SaveActivityComponent implements OnInit {
     // { name: 'הסעה', completed: false, svg: 'bus' },
     // { name: 'אבטחה', completed: false , svg:'shield' },
     // { name: 'הדרכה', completed: false, svg: 'man-with-bag' },
-    { name: 'כלכלה', completed: false, svg: 'dinner' },
+    // { name: 'כלכלה', completed: false, svg: 'dinner' },
     // { name: 'הפעלה מוסיקלית', completed: false , svg:'music' },
   ];
   @Input() public additonsType2: any[] = [

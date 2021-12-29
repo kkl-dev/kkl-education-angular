@@ -25,14 +25,15 @@ export class ConfirmDialogComponent implements OnInit {
     this.dialogRef.close(false);
   }
   onYesClick() {
-
+    
     // if (this.data.isWithFillField != true)
-    this.dialogRef.close(true);
+      this.dialogRef.close(true);
     // else {
-    // if (this.messageToReturn != " ")
-    //   this.dialogRef.close(this.messageToReturn)
-    // else
-    //   this.invalid = true
+    //   if (this.messageToReturn != " ")
+    //     this.dialogRef.close(this.messageToReturn)
+    //   else
+    //     this.invalid = true
+
     // }
   }
 }
