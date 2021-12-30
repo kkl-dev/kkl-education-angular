@@ -29,7 +29,8 @@ export class SummaryComponent implements OnInit {
     this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
     this.userService.getTripDetails(this.tripId).subscribe(TM => {
       this.tripDetails = TM;
-      this.SetArrays(); this.moveOrderCenterInDb();
+      this.SetArrays(); 
+      //this.moveOrderCenterInDb();
     });
 
   }

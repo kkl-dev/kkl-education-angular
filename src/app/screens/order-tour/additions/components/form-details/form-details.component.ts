@@ -235,22 +235,15 @@ export class FormDetailsComponent implements OnInit {
   }
 
   setTableData(res) {
-    this.detailsSubject.value.columns[0].value = res[0].order.tripId;
-    this.detailsSubject.value.rows[0][0].value = res[0].order.orderType.name
-    this.detailsSubject.value.rows[0][1].value = res[0].order.status ? res[0].order.status.name : '';
-    this.detailsSubject.value.rows[1][0].value = res[0].order.supplier.name;
-    this.detailsSubject.value.rows[1][1].value = res[0].order.supplier.name;
-    this.detailsSubject.value.rows[1][2].value = res[0].order.supplier.name;
-    this.detailsSubject.value.rows[1][3].value = res[0].order.supplier.address;
-    this.detailsSubject.value.rows[1][4].value = res[0].order.supplier.contact;
-    this.detailsSubject.value.rows[1][5].value = res[0].order.supplier.phone;
-    this.detailsSubject.value.rows[1][6].value = res[0].order.supplier.fax;
-    this.detailsSubject.value.rows[1][7].value = res[0].order.supplier.email;
-    this.detailsSubject.value.rows[1][8].value = res[0].order.supplier;//processId - לבדוק מה זה
+   
+    this.detailsSubject.value.columns[0].value= res[0].order.tripId;
+    this.detailsSubject.value.rows[0][0].value= res[0].order.orderType.name
+    this.detailsSubject.value.rows[0][1].value = res[0].order.status?res[0].order.status.name:'';
+    this.detailsSubject.value.rows[1][0].value =  res[0].order.supplier.name;
     this.detailsSubject.value.rows[1][9].value = res[0].order.userInfo;//הזמנה אושרה ע''י
     this.detailsSubject.value.rows[1][10].value = res[0].order.confirmDate;//תאריך אישור
     this.detailsSubject.value.rows[1][11].value = res[0].order.confirmUserTz;//ת.ז. מאשר
-    this.flag = true;
+   this.flag=true;
   }
 
   public openCancelForm() {

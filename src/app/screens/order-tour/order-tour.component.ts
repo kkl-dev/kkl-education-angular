@@ -29,7 +29,7 @@ import { SquadClientService } from './squad-assemble/components/squad-client/squ
 })
 export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   public activeStep: number;
-
+  //public activeRouteUrl:string
   public $activeStep = new Subject<number>();
 
   public nextPage: string = 'education/search';
@@ -80,6 +80,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
+        //this.activeRouteUrl=event.url
         this.formatUrl(event.url);
         this.handleSleepStatus();
         this.getActiveStep();
@@ -607,9 +608,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         //   return;
         // }
       }
-      // if (routeIndex === 4) this.AddOrder();
-      if (routeIndex === 5)
-        this.sendToOrderCenter();
+      // if (routeIndex === 5)
+      //   this.sendToOrderCenter();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
       );

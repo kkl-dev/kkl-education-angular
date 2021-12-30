@@ -15,7 +15,7 @@
       (sleepingPlace)="newSleepingPlaceReceived($event)" (prevDate)="prevDateReceived($event)" [options]="dateOptions"
       airbnb-calendar control="control" [(ngModel)]="control.value" dir="rtl" autocomplete="chrome-off" />
 
-    <mat-select color="primary" [formControl]="control" *ngIf="controlType === 'select'"
+    <mat-select  color="primary" [formControl]="control" *ngIf="controlType === 'select'"
       (selectionChange)="onSelectChange()" (openedChange)="validate()">
       <mat-option>{{ label }}</mat-option>
       <mat-option *ngFor="let option of options" [value]="option.value">

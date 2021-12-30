@@ -511,7 +511,7 @@ export class EconomyFormComponent implements OnInit, OnDestroy {
     this.disableFormFields();
     if(this.isItemOrderExist && this.editMode==true)
     this.form.disable({ emitEvent: false });
-    if (this.isTempuraryItem && this.valueChangeIndex === 0) { this.calculateByItemId(this.item.globalParameters.itemId) }
+    //if (this.isTempuraryItem && this.valueChangeIndex === 0) { this.calculateByItemId(this.item.globalParameters.itemId) }
     this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         console.log('supplier changed:',value);

@@ -146,10 +146,10 @@ export class AdditionsComponent implements OnInit {
         order.globalParameters.startHour = startHour[1];
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
+        if(this.orderType==7)
         order.globalParameters.itemId = this.tempOrderReduce[orderTypId][i].itemId
         order.globalParameters.orderItemDetails = {} as ItemsByTypeOrder;
         order.globalParameters.orderItemDetails.name =this.tempOrderReduce[orderTypId][i].orderItemName;
-
 
         order.globalParameters.tempOrderIdentity = this.tempOrderReduce[orderTypId][i].tempOrderId;
         order.order.orderType.id= this.orderType;
