@@ -141,7 +141,7 @@ export class AddFacilityComponent implements OnInit {
     newTempOrder.orderTypeCode = this.addFacilityForm.value.orderTypeCode;
     if (this.updateForm) {
       this.activitiyService.editCalendarOrderItem(newTempOrder).subscribe((res: any) => {
-        this.addFacilityForm.value.tempOrderId = res;
+        this.addFacilityForm.value.tempOrderId = res.tempOrderId;
 
         this.facilitiesServices.updateItemInArrayOfCalendar(this.addFacilityForm.value);
         this.closeModal();
@@ -153,7 +153,7 @@ export class AddFacilityComponent implements OnInit {
     }
     else {
       this.activitiyService.createTempOrder(newTempOrder).subscribe((res: any) => {
-        this.addFacilityForm.value.tempOrderId = res;
+        this.addFacilityForm.value.tempOrderId = res.tempOrderId;
 
         this.emitFormValues.emit(this.addFacilityForm.value);
         this.closeModal();

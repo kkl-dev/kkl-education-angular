@@ -146,10 +146,10 @@ export class AdditionsComponent implements OnInit {
         order.globalParameters.startHour = startHour[1];
         let tillHour = (this.tempOrderReduce[orderTypId][i].tillHour).split('T');
         order.globalParameters.endHour = tillHour[1];
+        if(this.orderType==7)
         order.globalParameters.itemId = this.tempOrderReduce[orderTypId][i].itemId
         order.globalParameters.orderItemDetails = {} as ItemsByTypeOrder;
         order.globalParameters.orderItemDetails.name =this.tempOrderReduce[orderTypId][i].orderItemName;
-
 
         order.globalParameters.tempOrderIdentity = this.tempOrderReduce[orderTypId][i].tempOrderId;
         order.order.orderType.id= this.orderType;
@@ -174,16 +174,9 @@ export class AdditionsComponent implements OnInit {
           }
           else{
             this.addItem = true;
-          }
-              
+          }            
       }
     }
-    // if (this.tempOrderReduce[1].length > 10) {
-    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-    //     width: '500px',
-    //     data: { message: 'שים לב שכמות הפריטים בהזמנת היסעים גדולה מ - 10', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-    //   })
-    // }
   }
   change(event) {
     switch (event) {
@@ -198,7 +191,6 @@ export class AdditionsComponent implements OnInit {
           this.addItem = true;
           this.disabled=true;
         }
-        //this.disabled=true;
         break;
       case 2:
         if (this.generalFormService.securingOrderList.length > 0) {
@@ -211,7 +203,6 @@ export class AdditionsComponent implements OnInit {
           this.addItem = true;
           this.disabled=true;
         }
-        //this.disabled=true;
         break;
       case 3:
 
@@ -225,7 +216,6 @@ export class AdditionsComponent implements OnInit {
           this.addItem = true;
           this.disabled=true;
         }
-        //this.disabled=true;
         break;
       case 4:
         if (this.generalFormService.economyOrderList.length > 0) {
@@ -238,7 +228,6 @@ export class AdditionsComponent implements OnInit {
           this.addItem = true;
           this.disabled=true;
         }
-        //this.disabled=true;
         break;
       case 6:
         if (this.generalFormService.gudianceOrderList.length > 0) {
@@ -251,7 +240,6 @@ export class AdditionsComponent implements OnInit {
           this.addItem = true;
           this.disabled=true;
         }
-        //this.disabled=true;
         break;
       case 7:
         if (this.generalFormService.hostingOrderList.length > 0) {
@@ -264,7 +252,6 @@ export class AdditionsComponent implements OnInit {
           this.addItem = true;
           this.disabled=true;
         }
-        //this.disabled=true;
         break;
       case 10:
         if (this.generalFormService.musicOrderList.length > 0) {
@@ -277,7 +264,6 @@ export class AdditionsComponent implements OnInit {
           this.addItem = true;
           this.disabled=true;
         }
-        //this.disabled=true;
         break;
     }
     this.orderType = event;

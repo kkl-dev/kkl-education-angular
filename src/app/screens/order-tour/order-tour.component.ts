@@ -7,7 +7,7 @@ import { filter } from 'rxjs/operators';
 import { StepModel } from 'src/app/utilities/models/step.model';
 import { SquadAssembleService } from './squad-assemble/services/squad-assemble.service';
 import { TripService } from 'src/app/services/trip.service';
-import { ActivitiesService, UserService } from 'src/app/open-api';
+import { ActivitiesService, OrderService, UserService } from 'src/app/open-api';
 import { Location } from '@angular/common';
 import { AdditionsService } from './additions/services/additions.service';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
@@ -29,7 +29,7 @@ import { SquadClientService } from './squad-assemble/components/squad-client/squ
 })
 export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   public activeStep: number;
-
+  //public activeRouteUrl:string
   public $activeStep = new Subject<number>();
 
   public nextPage: string = 'education/search';
@@ -45,8 +45,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   createActivitiesSub: Subscription;
 
   constructor(
-    private router: Router,
-    private orderTourService: OrderTourService,
+    private router: Router, private squadAssembleService: SquadAssembleService,
+    private orderTourService: OrderTourService, private orderService: OrderService,
     private squadAssemble: SquadAssembleService,
     private tripService: TripService,
     private userService: UserService,
@@ -80,6 +80,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
+        //this.activeRouteUrl=event.url
         this.formatUrl(event.url);
         this.handleSleepStatus();
         this.getActiveStep();
@@ -146,7 +147,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       if (flag == false) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '500px',
-          data: { message: 'נא מלא את שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
         })
         step.path = 'squad-assemble';
         this.router.navigateByUrl(`/education/order-tour/${step.path}`)
@@ -448,27 +449,59 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     tripInfo.lodgingReservation = obj;
     if (!this.tripService.isOneDayTrip) {
       tripInfo.lodgingReservation = obj;
-      for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
-        for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
-          let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
-          let dateArray = dateFormat.split("/");
-          dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
-          tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
-        }
+      if (tripInfo.lodgingReservation.length==0){
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          // data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'אישור', leftButton: 'ביטול' }
+        })
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          console.log('dialogResult is : ' +dialogResult );
+          if(dialogResult==true){
+            this.sendTripToServer(route,tripInfo);
+          }
+        });
       }
-      // if (tripInfo.lodgingReservation.length==0){
-      //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-      //     width: '500px',
-      //     data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה ,האם להמשיך?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-      //   })
-      //   dialogRef.afterClosed().subscribe(dialogResult => {
-      //     console.log('dialogResult is : ' +dialogResult );
-      //   });
-      // }
+      else{
+        for (let i = 0; i < tripInfo.lodgingReservation.length; i++) {
+          for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
+            let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
+            let dateArray = dateFormat.split("/");
+            dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+            tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
+          }
+        }
+        this.sendTripToServer(route,tripInfo);
+      }
+     
+     
     }
     else {
       tripInfo.lodgingReservation = [];
+      this.sendTripToServer(route,tripInfo);
     }
+    
+    // this.spinner.show();
+    // this.userService.createTrip(tripInfo).subscribe(res => {
+    //   this.spinner.hide();
+    //   console.log('tripInfo from server is :', res);
+    //   this.squadAssemble.tripInfofromService = res;
+    //   localStorage.setItem('tripId', res.trip.id.toString());
+    //   localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
+    //   this.router.navigateByUrl(
+    //     `/education/order-tour/${route}`
+    //   );
+    // }, (err) => {
+    //   this.spinner.hide();
+    //   console.log(err);
+    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+    //   })
+    // })
+  }
+
+  sendTripToServer(route,tripInfo){
     this.spinner.show();
     this.userService.createTrip(tripInfo).subscribe(res => {
       this.spinner.hide();
@@ -484,7 +517,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(err);
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
-        data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '',  leftButton: 'אישור' }
       })
     })
   }
@@ -511,22 +544,34 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   //   })
   // }
 
-  // AddOrder() {
-  //   if (this.additionsService.orderList.length > 0) {
-  //     this.addOrderSub = this.orderService.addOrder(4, this.additionsService.orderList).subscribe(res => {
-  //       console.log(res);
-  //     }, (err) => {
-  //       console.log(err);
-  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //         width: '500px',
-  //         data: { message: 'אירעה שגיאה בשמירת ההזמנה, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-  //       })
-  //     })
-  //   }
 
+  sendToOrderCenter() {
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: { message: this.squadAssembleService.transactionMessage, rightButton: "ביטול", leftButton: "אישור" }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.orderService.sendToOrderCenter(this.squadAssembleService.transaction.tripId, this.squadAssembleService.transaction.description, this.squadAssembleService.transaction.typeId, this.squadAssembleService.tripStatus).subscribe(status => {
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '250px',
+            data: { message: 'טיול הועבר למרכז הזמנות בהצלחה!', leftButton: "אישור" }
+          });
+          this.router.navigateByUrl(
+            `/education/order-tour/${this.steps[5].path}`
+          );
+          // this.movementsService.addMove(this.squadAssembleService.transaction).subscribe(x => {
+          //   this.tripDetails.movementsList.push(x)
+          // })
 
-  // }
+        }, err => {
+          this.setDialogMessage('העברת טיול למרכז הזמנות - נכשל!');
+        })
 
+      }
+    })
+    this.orderTourService.getNewClientObs()
+  }
 
 
   public changeActiveStepNextNavigation(): void {
@@ -535,13 +580,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-    if (routeIndex < this.steps.length) {
+    if (routeIndex <= this.steps.length) {
       if (routeIndex == 1) {
         let flag = this.syncToTripInfo();
         if (flag == false) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
-            data: { message: 'נא מלא את שדות החובה בטופס', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+            data: { message: 'נא מלא את שדות החובה בטופס', content: '',  leftButton: 'אישור' }
           })
           this.router.navigateByUrl(
             `/education/order-tour/${this.steps[0].path}`
@@ -563,7 +608,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         //   return;
         // }
       }
-      // if (routeIndex === 4) this.AddOrder();
+      // if (routeIndex === 5)
+      //   this.sendToOrderCenter();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
       );
@@ -579,10 +625,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-    if (routeIndex === 4) {
-      console.log('is not avaliable');
-      return;
-    }
+   
     this.activeStep = +this.activeStep--;
     this.location.back();
   }
@@ -590,7 +633,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+      data: { message: message, content: '',  leftButton: 'אישור' }
     })
 
   }

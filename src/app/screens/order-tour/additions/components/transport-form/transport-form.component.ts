@@ -38,12 +38,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   ifShowtable: boolean = false;
   tableData: any;
   isItemOrderExist: boolean;
-  isTempuraryItem: boolean 
+  isTempuraryItem: boolean
   isSupplierXemptedFromVat: boolean;
   ifCalculateByQuantity: boolean;
   valueChangeIndex = 0;
   itemOrderRecordId: number;
-  selectedItem :any;
+  selectedItem: any;
   // close subsribe:
   supplierListSub: Subscription;
   settlementSub: Subscription;
@@ -51,9 +51,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   addOrderSub: Subscription;
   editOrderSub: Subscription;
   itemListSub: Subscription;
-  supplierIdEventSub:Subscription;
+  supplierIdEventSub: Subscription;
   itemIdEventSub: Subscription;
-  startDateEventSub:Subscription;
+  startDateEventSub: Subscription;
   endDateEventSub: Subscription;
   quantityEventSub: Subscription;
   peopleInTripEventSub: Subscription;
@@ -71,21 +71,21 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.centerFieldId = this.generalFormService.tripInfo.trip.centerField.id;
     this.generalFormService.clearFormFields();
     this.generalFormService.itemsList = []
-  
+
     this.setformTemplate();
 
 
     if (this.item != undefined && this.item != null) {
       if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.orderId) {
         this.isItemOrderExist = true;
-        this.itemOrderRecordId=this.item.globalParameters.itemOrderRecordId;
-        this.isTempuraryItem=false;
+        this.itemOrderRecordId = this.item.globalParameters.itemOrderRecordId;
+        this.isTempuraryItem = false;
         this.editMode = true;
         this.supplierId = this.item.globalParameters.supplierId;
         this.itemId = this.item.globalParameters.itemId;
       }
-      else{
-        this.isTempuraryItem=true;
+      else {
+        this.isTempuraryItem = true;
       }
     }
     else {
@@ -93,22 +93,22 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       this.generalFormService.details[peopleInTripIndex].value = (this.generalFormService.peopleInTrip).toString();
     }
     this.generalFormService.setDatesValues();
-    if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
-    this.getSupplierList(this.orderType, this.tripId, 0);
-    else{
-      if( !this.isItemOrderExist)
-      this.getSupplierByOrderType();
-      else{
-           // need add field to order model
-          //  let supplierName= this.item.order?.supplier.name;
-          //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
-          // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
-          // this.generalFormService.details[0].value = this.supplierId.toString();
-          this.getSupplierByOrderType(); // it's tempurary
-          //this.getOrderItemBySupplierId(); 
+    if (this.generalFormService.tripInfo.trip.tripStatus.id != 10)
+      this.getSupplierList(this.orderType, this.tripId, 0);
+    else {
+      if (!this.isItemOrderExist)
+        this.getSupplierByOrderType();
+      else {
+        // need add field to order model
+        //  let supplierName= this.item.order?.supplier.name;
+        //  this.generalFormService.supplierList.push({ label: supplierName, value: this.supplierId.toString() });
+        // this.generalFormService.details[0].inputProps.options= this.generalFormService.supplierList
+        // this.generalFormService.details[0].value = this.supplierId.toString();
+        this.getSupplierByOrderType(); // it's tempurary
+        //this.getOrderItemBySupplierId(); 
       }
     }
-   
+
 
   }
 
@@ -118,14 +118,14 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     let detailsArr = this.generalFormService.questionGroups[index].questions;
     detailsArr = this.changeLabels(detailsArr);
     //test 
-    let scatterLocationIndex= this.generalFormService.transport.findIndex(i=>i.key=='scatterLocation')
-    this.generalFormService.transport[scatterLocationIndex].value='';
-    let exitPointIndex= this.generalFormService.transport.findIndex(i=>i.key=='exitPoint')
-    this.generalFormService.transport[exitPointIndex].value='';
+    let scatterLocationIndex = this.generalFormService.transport.findIndex(i => i.key == 'scatterLocation')
+    this.generalFormService.transport[scatterLocationIndex].value = '';
+    let exitPointIndex = this.generalFormService.transport.findIndex(i => i.key == 'exitPoint')
+    this.generalFormService.transport[exitPointIndex].value = '';
     //end test
     let transportQuestions = detailsArr.concat(this.generalFormService.transport);
     this.generalFormService.questionGroups[index].questions = transportQuestions;
-   
+
   }
 
   changeLabels(tempArr) {
@@ -178,11 +178,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         else
           this.isSupplierXemptedFromVat = false;
         let supplierIndex = this.generalFormService.details.findIndex(i => i.key === 'supplierId');
-        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length>0)
-        this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
-        else{
+        if (this.generalFormService.details[supplierIndex].inputProps?.options?.length > 0)
+          this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
+        else {
           this.generalFormService.supplierList.push({ label: response.name, value: response.id.toString() });
-          this.generalFormService.details[supplierIndex].inputProps.options= this.generalFormService.supplierList
+          this.generalFormService.details[supplierIndex].inputProps.options = this.generalFormService.supplierList
           this.generalFormService.details[supplierIndex].value = this.supplierId.toString();
         }
         this.getOrderItemBySupplierId();
@@ -195,7 +195,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
 
   getOrderItemBySupplierId() {
-    this.itemListSub = this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId,this.generalFormService.isOneDayTrip).subscribe(
+    this.itemListSub = this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, this.generalFormService.isOneDayTrip).subscribe(
       response => {
         console.log(response);
         this.itemsList = [];
@@ -236,8 +236,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       })
       let exitLocationIndex = this.generalFormService.questionGroups[0].questions.findIndex(i => i.key === 'exitPoint');
       this.generalFormService.questionGroups[0].questions[exitLocationIndex].inputProps.options = this.generalFormService.settlementList;
-      if(this.isItemOrderExist)
-      this.generalFormService.questionGroups[0].questions[exitLocationIndex].value = this.item.exitPoint.toString();
+      if (this.isItemOrderExist)
+        this.generalFormService.questionGroups[0].questions[exitLocationIndex].value = this.item.exitPoint.toString();
       this.setForm();
 
     }, (err) => {
@@ -369,11 +369,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.addOrderSub = this.orderService.addOrder(item).subscribe(res => {
       console.log(res);
       //this.itemOrderRecordId = res[0].globalParameters.itemOrderRecordId;
-      this.itemOrderRecordId= res[res.length-1].globalParameters.itemOrderRecordId
+      this.itemOrderRecordId = res[res.length - 1].globalParameters.itemOrderRecordId
       this.tableData = res;
       this.ifShowtable = true;
       this.editMode = true;
-      this.generalFormService.setOrderList(res, this.orderType, 'adding',this.isTempuraryItem);
+      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
       this.generalFormService.enableButton.next(true);
 
@@ -388,7 +388,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   editOrder(item) {
     this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
       console.log(res);
-      this.generalFormService.setOrderList(res, this.orderType, 'updating',false);
+      this.generalFormService.setOrderList(res, this.orderType, 'updating', false);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
     }, (err) => {
@@ -404,7 +404,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   setDialogMessage(message) {
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      data: { message: message, content: '', rightButton: 'ביטול', leftButton: 'המשך' }
+      data: { message: message, content: '', leftButton: 'אישור' }
     })
 
   }
@@ -415,7 +415,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     return hourFormat;
   }
 
-  
+
 
   validationsTransport() {
     if (this.generalFormService.originalItemList.length > 0) {
@@ -424,8 +424,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if (item.credit === 0) {
       if (!item.name.includes("נסיעות")) {
         if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
-          this.setDialogMessage( 'בהזמנת היסעים - חובה למלא שעת התייצבות');
-           return false;
+          this.setDialogMessage('בהזמנת היסעים - חובה למלא שעת התייצבות');
+          return false;
         }
         if (this.form.value.details['location'] === null || this.form.value.details['location'] === "" || this.form.value.details['location'] === undefined) {
           this.setDialogMessage('בהזמנת היסעים - חובה למלא מקום התייצבות');
@@ -445,21 +445,21 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         return false;
       }
 
-      if (item.numSeat < this.form.value.details['peopleInTrip'] && item.numSeat != null) {
+      if ((item.numSeat * this.form.value.details['quantity']) < this.form.value.details['peopleInTrip'] && item.numSeat != null) {
         this.setDialogMessage('מספר המשתתפים גדול מסך המקומות באוטובוס - יש להוסיף אוטובוס נוסף');
         return false;
       }
-      var people = parseInt(this.form.value.details['peopleInTrip'])
-      if (item.participantsLimit != null) {
-        console.log(people % item.participantsLimit)
-        console.log(Math.floor(people / item.participantsLimit))
-        if (((people % item.participantsLimit) > 0) && (Math.floor(people / item.participantsLimit) > 0)) {
-          if (Math.floor(people / item.participantsLimit) < parseInt(this.form.value.details['quantity'])) {
-            this.setDialogMessage('מספר המשתתפים קטן מסך מספר המקומות בכל האוטובוסים יחד - שים לב שלא הוזמן אוטובוס מיותר');
-            return false;
-          }
-        }
-      }
+      // var people = parseInt(this.form.value.details['peopleInTrip'])
+      // if (item.numSeat != null) {
+      //   console.log(people % item.numSeat)
+      //   console.log(Math.floor(people / item.numSeat))
+      //   if (((people % item.numSeat) > 0) && (Math.floor(people / item.numSeat) > 0)) {
+      //     if (Math.floor(people / item.numSeat) < parseInt(this.form.value.details['quantity'])) {
+      //       this.setDialogMessage('מספר המשתתפים קטן מסך מספר המקומות בכל האוטובוסים יחד - שים לב שלא הוזמן אוטובוס מיותר');
+      //       return false;
+      //     }
+      //   }
+      // }
     }
     return true;
   }
@@ -476,6 +476,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.form = event;
     console.log('I am form Event');
     this.disableFormFields();
+    if(this.isItemOrderExist && this.editMode==true)
+    this.form.disable({ emitEvent: false });
    this.supplierIdEventSub= this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         this.supplierId = value;
@@ -488,12 +490,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           this.isSupplierXemptedFromVat = false;
         if (this.valueChangeIndex > 0)
           this.getOrderItemBySupplierId();
-           this.valueChangeIndex++;
+        this.valueChangeIndex++;
 
       });
-   this.itemIdEventSub= this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    this.itemIdEventSub = this.form.controls["details"].get('itemId').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.valueChangeIndex++;
-      this.selectedItem=this.originalItemList.find(el => el.id === parseInt(value))
+      this.selectedItem = this.originalItemList.find(el => el.id === parseInt(value))
       if (this.selectedItem?.isSumPeopleOrAmount == 1 || this.selectedItem?.isSumPeopleOrAmount == 0 || this.selectedItem?.isSumPeopleOrAmount == null)
         this.ifCalculateByQuantity = true;
       else
@@ -514,7 +516,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       }
     });
 
-   this.quantityEventSub= this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    this.quantityEventSub = this.form.controls["details"].get('quantity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (this.ifCalculateByQuantity) {
         console.log(value)
         this.calculate();
@@ -529,7 +531,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         return;
     });
 
-   this.peopleInTripEventSub= this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    this.peopleInTripEventSub = this.form.controls["details"].get('peopleInTrip').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       if (!this.ifCalculateByQuantity) {
         this.calculate();
         if (!this.selectedItem.cost) {
@@ -544,7 +546,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     });
 
 
-   this.startDateEventSub= this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    this.startDateEventSub = this.form.controls["details"].get('startDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.calculate();
       if (!this.selectedItem.cost) {
         this.setSupplierBillingZero();
@@ -565,30 +567,70 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     console.log(this.form)
   }
 
-    
-    calculate(){
-      let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
-      this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
-    }
 
-     setSupplierBillingZero(){
-      this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
-      this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
-    }
+  calculate() {
+    let form = this.additionsService.calculateBillings(this.form.value.details, this.isSupplierXemptedFromVat);
+    this.form.controls["details"].get('billingSupplier').patchValue(form.billingSupplier, { emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').patchValue(form.billingCustomer, { emitEvent: false });
+  }
 
-    setCustomerBillingZero(){
-      this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
-    }
+  setSupplierBillingZero() {
+    this.form.controls["details"].get('itemCost').setValue(0, { emitEvent: false });
+    this.form.controls["details"].get('billingSupplier').patchValue(0, { emitEvent: false });
+  }
 
-    disableFormFields(){
-      this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
-      this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
-      this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
-      if(this.generalFormService.tripInfo.trip.tripStatus.id == 10)
+  setCustomerBillingZero() {
+    this.form.controls["details"].get('billingCustomer').patchValue(0, { emitEvent: false });
+  }
+
+  disableFormFields() {
+    this.form.controls["details"].get('billingSupplier').disable({ emitEvent: false });
+    this.form.controls["details"].get('billingCustomer').disable({ emitEvent: false });
+    this.form.controls["details"].get('itemCost').disable({ emitEvent: false });
+    if (this.generalFormService.tripInfo.trip.tripStatus.id == 10)
       this.form.controls["details"].get('supplierId').disable({ emitEvent: false });
+  }
+
+  // new am-pm
+    setDefaultTime(question) {
+      console.log('question of startHour is : ',question);
+      if(!question.value)
+      return "00:00";
+      else{
+        return question.value;  
+      }
+    }
+    setDefaultTime1(question) {
+      console.log('question of endHour is : ',question);
+      if(!question.value)
+      return "00:00";
+      else{
+        return question.value;
+      } 
     }
 
+    public startTimeChanged(event: string) {
+      let timeFormat = this.setTimeFormat(event);
+      this.form.controls["details"].get('startHour').patchValue(timeFormat, { emitEvent: false });
+    }
+  
+    public endTimeChanged(event: string) {
+      let timeFormat = this.setTimeFormat(event);
+      this.form.controls["details"].get('endHour').patchValue(timeFormat, { emitEvent: false });
+    }
+    setTimeFormat(event) {
+      let timeArr = event.split(':');
+      let hour = timeArr[0];
+      let timeFormat;
+      if (+hour < 10) {
+        hour = 0 + hour;
+        timeFormat = hour + ':' + timeArr[1];
+      }
+      else
+        timeFormat = event;
+      return timeFormat;
+    }
+   // end new am-pm
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
@@ -597,12 +639,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if (this.settlementSub) { this.settlementSub.unsubscribe(); }
     if (this.addOrderSub) { this.addOrderSub.unsubscribe(); }
     if (this.editOrderSub) { this.editOrderSub.unsubscribe() }
-    if( this.supplierIdEventSub) {this.supplierIdEventSub.unsubscribe()}
-    if(this.itemIdEventSub){this.itemIdEventSub.unsubscribe()}
-    if(this.startDateEventSub) {this.startDateEventSub.unsubscribe()}
-    if(this.endDateEventSub) {this.endDateEventSub.unsubscribe()}
-    if(this.quantityEventSub){this.quantityEventSub.unsubscribe()}
-    if(this.peopleInTripEventSub) {this.peopleInTripEventSub.unsubscribe()}
+    if (this.supplierIdEventSub) { this.supplierIdEventSub.unsubscribe() }
+    if (this.itemIdEventSub) { this.itemIdEventSub.unsubscribe() }
+    if (this.startDateEventSub) { this.startDateEventSub.unsubscribe() }
+    if (this.endDateEventSub) { this.endDateEventSub.unsubscribe() }
+    if (this.quantityEventSub) { this.quantityEventSub.unsubscribe() }
+    if (this.peopleInTripEventSub) { this.peopleInTripEventSub.unsubscribe() }
   }
 
 

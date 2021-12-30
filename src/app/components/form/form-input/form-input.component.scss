@@ -36,9 +36,3 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media screen and (max-width: 1024px) {
 }
 
-select{
-
-  ::ng-deep .cdk-overlay-pane{
-    width: max-content !important;
-  }
-}

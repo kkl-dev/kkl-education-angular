@@ -22,19 +22,18 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
-    console.log('I am not confirm');
+    this.dialogRef.close(false);
   }
   onYesClick() {
+    
+    // if (this.data.isWithFillField != true)
+      this.dialogRef.close(true);
+    // else {
+    //   if (this.messageToReturn != " ")
+    //     this.dialogRef.close(this.messageToReturn)
+    //   else
+    //     this.invalid = true
 
-    if (this.data.isWithFillField != true)
-      this.dialogRef.close(1);
-    else {
-      if (this.messageToReturn != " ")
-        this.dialogRef.close(this.messageToReturn)
-      else
-        this.invalid = true
-
-    }
+    // }
   }
 }

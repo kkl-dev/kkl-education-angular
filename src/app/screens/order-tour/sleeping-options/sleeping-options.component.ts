@@ -212,10 +212,12 @@ export class SleepingOptionsComponent implements OnInit {
       this.filledNightsArray= this.squadAssembleService.filledNightsArray;
       for (let i = 0; i < this.filledNightsArray.length; i++) {
         for (let j = 0; j < this.filledNightsArray[i].nightsCount.length; j++) {
-          let utcDateFormat = this.filledNightsArray[i].nightsCount[j].date;
-          let dateArray = utcDateFormat.split("-");
-          let israelDateFormat = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
-          this.filledNightsArray[i].nightsCount[j].date = israelDateFormat;
+            if((this.filledNightsArray[i].nightsCount[j].date).includes('-')){
+              let utcDateFormat = this.filledNightsArray[i].nightsCount[j].date;
+              let dateArray = utcDateFormat.split("-");
+              let israelDateFormat = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0];
+              this.filledNightsArray[i].nightsCount[j].date = israelDateFormat;
+            }
         }
       }
       this.addSleepingNightDirty = true;

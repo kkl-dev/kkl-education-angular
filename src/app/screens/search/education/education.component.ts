@@ -263,8 +263,8 @@ export class EducationComponent implements OnInit {
       if (!flag) {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '300px',
-          data: { message: 'אחד  הימים בטווח התאריכים אינו פנוי', content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-        }); console.log('אחד  הימים בטווח התאריכים אינו פנוי'); return flag;
+          data: { message: 'אחד  הימים בטווח התאריכים אינו פנוי', content: '', leftButton: 'המשך' }
+        });  return flag;
       }
     }
     return flag;
