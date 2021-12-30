@@ -12,13 +12,13 @@
 
     <div class="form-autocomplete">
       <app-form-autocomplete
-        [group]="clientQuestions.group"
-        [formGroup]="formGroup.controls.client"
-        [options$]="schoolOptions$"
-        (autocomplete)="onAutocomplete($event)"
-        (select)="onSelect($event)"
-        (optionSelected)="onOptionSelected($event)"
-        (delete)="onDelete($event)"
+      [group]="clientQuestions.group"
+      [formGroup]="formGroup.controls.client"
+      [options$]="schoolOptions$"
+      (autocomplete)="onAutocomplete($event)"
+      (select)="onSelect($event)"
+      (optionSelected)="onOptionSelected($event, clientQuestions.group.key)"
+      (delete)="onDelete($event)"
       ></app-form-autocomplete>
     </div>
 
@@ -45,8 +45,14 @@
 
     <div class="form-autocomplete">
       <app-form-autocomplete
-        [group]="payerQuestions.group"
-        [formGroup]="formGroup.controls.payer"
+      [group]="payerQuestions.group"
+      [formGroup]="formGroup.controls.payer"
+      [options$]="payerOptions$"
+      (autocomplete)="onAutocomplete($event)"
+      (select)="onSelect($event)"
+      (optionSelected)="onOptionSelected($event, payerQuestions.group.key)"
+      (delete)="onDelete($event)"
+
       ></app-form-autocomplete>
     </div>
   </div>

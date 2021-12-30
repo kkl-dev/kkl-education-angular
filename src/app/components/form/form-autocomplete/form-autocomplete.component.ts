@@ -25,7 +25,7 @@ export class FormAutocompleteComponent implements OnInit {
 
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
   @Output() select: EventEmitter<FormControl> = new EventEmitter();
-  @Output() delete: EventEmitter<SelectOption> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
   @Output() optionSelected: EventEmitter<any> = new EventEmitter();
   //internal
   //@Output() deleteCustomer: EventEmitter<string> = new EventEmitter();
@@ -92,7 +92,10 @@ export class FormAutocompleteComponent implements OnInit {
   }
   
   public onDelete(option: SelectOption) {
-    this.delete.emit(option);
+    const autocomplete: QuestionAutocomplete = this.group.questions.find(
+      (q) => q instanceof QuestionAutocomplete
+    );
+    this.delete.emit({ optionToDelete : option, question: autocomplete });
   }
 
  

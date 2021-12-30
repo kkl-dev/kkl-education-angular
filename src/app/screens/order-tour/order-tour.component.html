@@ -35,14 +35,14 @@
          <ng-content></ng-content>
        </div>  
      </div>
-     <!-- [text]="activeRouteUrl == '/education/order-tour/summary' ? 'העבר למרכז הזמנות' : 'המשך'" -->
     
+     <!-- [text]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'" -->
      <div fxFlex="10" fxFlex.xs="15" class="bottom-navigation" dir="rtl">
        <app-bottom-navigation
          previousUrl="prevPage"
          nextUrl="nextPage"
          (changePage)="changeActiveStepBottomNavigation($event)"    
-         [text]="activeStep == 4 ? 'העבר למרכז הזמנות' : 'המשך'"
+         [text]="activeRouteUrl == '/education/order-tour/summary' ? 'העבר למרכז הזמנות' : 'המשך'"
          [hasSave]="hasSave"
          [hasNext]="true"
          (next)="changeActiveStepNextNavigation()"

@@ -21,7 +21,7 @@ export class WizardComponent implements OnInit {
   public changeWizardItem(index: number): void {
     this.chosenWizardItem = +index;
   }
-
+  
   constructor(
     private route: ActivatedRoute,
     private userDataService: UserDataService) {

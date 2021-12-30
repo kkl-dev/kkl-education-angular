@@ -108,7 +108,7 @@ export class SquadClientService {
         rows: 12,
         questions: [
           new QuestionSelect({
-            key: 'payerName',
+            key: 'payerPull',
             type: 'select',
             label: 'הכול',
             value:'all',
@@ -122,7 +122,7 @@ export class SquadClientService {
             },
           }),
           new QuestionAutocomplete({
-            key: 'payerPoll',
+            key: 'payerName',
             label: 'לקוח משלם',
             type: 'autocomplete',
             cols: 2,
@@ -148,8 +148,14 @@ export class SquadClientService {
   }
 
   
-  public emitClientSelected(value: any) {
+  // public emitClientSelected(value: any) {
+  //   this.$clientSelected.next(value);
+  // }
+
+  public emitClientSelected(value: any,key:any) {
+    this.customerTypeSelected=key;
     this.$clientSelected.next(value);
+    
   }
 
   public getClientObs(): Observable<any> {

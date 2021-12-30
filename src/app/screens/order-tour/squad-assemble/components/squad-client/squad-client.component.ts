@@ -3,13 +3,22 @@ import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { QuestionBase, SelectOption } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
-import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
+import {
+  Subject,
+  Observable,
+  Subscription,
+  BehaviorSubject,
+  iif,
+  of,
+  merge,
+} from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
 import { TripService } from 'src/app/services/trip.service';
 import { BaseCustomer, UserService } from 'src/app/open-api';
-import { map, switchMap } from 'rxjs/operators';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 
@@ -34,15 +43,20 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   public formGroup: FormGroup;
 
   private subjectSchool: Subject<SelectOption>;
-  public schools$: Observable<SelectOption>;
+  private subjectPayer: Subject<SelectOption>;
 
-  private subjectOptions: BehaviorSubject<SelectOption[]>;
-  public options$: Observable<SelectOption[]>;
+  private removeSchool: Subject<string>;
+  private removePayer: Subject<string>;
+
+  private subjectSchoolOptions: BehaviorSubject<SelectOption[]>;
+  private subjectPayerOptions: BehaviorSubject<SelectOption[]>;
 
   public schoolOptions$: Observable<SelectOption[]>;
+  public payerOptions$: Observable<SelectOption[]>;
 
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
+  flag :boolean=false;
 
   constructor(
     private formService: FormService,
@@ -56,10 +70,17 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subjectSchool = new Subject<SelectOption>();
-    this.schools$ = this.subjectSchool.asObservable();
+    
+    this.removeSchool = new Subject<string>();
+    this.subjectSchoolOptions = new BehaviorSubject<SelectOption[]>([]);
+    
 
-    this.subjectOptions = new BehaviorSubject<SelectOption[]>([]);
-    this.options$ = this.subjectOptions.asObservable();
+    this.subjectPayer = new Subject<SelectOption>();
+    this.removePayer = new Subject<string>();
+    this.subjectPayerOptions = new BehaviorSubject<SelectOption[]>([]);
+   
+    
+
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
     this.setQuestions();
     this.subscribeToEditMode();
@@ -67,7 +88,10 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
     this.$saveMode = this.squadAssembleService.getSaveModeObs();
     this.formGroup = this.formService.setFormGroup(this.group);
-    this.setSchoolOptions();
+
+    this.schoolOptions$ = merge(this.setSchoolOptions(), this.onDeleteSchool());
+    
+    this.payerOptions$ = merge(this.setPayerOptions(), this.onDeletePayer());
   }
 
   
@@ -101,7 +125,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
       .getClientObs()
       .subscribe((value: any) => {
         this.squadClientService.emitEditMode(true);
-        // if(this.squadClientService.customerTypeSelected=='customer')
+         if(this.squadClientService.customerTypeSelected=='customer')
         this.updateClientForm(value);
       });
   }
@@ -140,26 +164,24 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   }
 
   public onAutocomplete(control: FormControl) {
-    console.log('I am onAutocomplete event');
-    // old code
     console.log("onAutocomplete: ", control);
     if (control.value.length > 1) {
       if (control.parent.controls.hasOwnProperty('customer')) {//if choose customer
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === 'customer');
         if (control.parent.value.clientPool !== 'kklWorker') {
-          this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
+          this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2,'customer')
         }
-        else { this.getKKLWorkers(control.value, indx1, indx2); }
+        else { this.getKKLWorkers(control.value, indx1, indx2,'customer'); }
       }
 
       else {//if choose payer customer
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
-        var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerPoll");
+        var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerName");
         if (control.parent.value.payerName !== 'kklWorker') {
-          this.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
+          this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
         }
-        else { this.getKKLWorkers(control.value, indx1, indx2); }
+        else { this.getKKLWorkers(control.value, indx1, indx2,'payer'); }
       }
     }
     // end old code
@@ -167,7 +189,6 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public onSelect(control: FormControl) {
     console.log('I am onSelect event');
-    // old code
     var index;
     for (var i in this.squadAssembleService.formsArray) {
       Object.keys(this.squadAssembleService.formsArray[i].controls).forEach(key => {
@@ -179,94 +200,97 @@ export class SquadClientComponent implements OnInit, OnDestroy {
       this.squadAssembleService.formsArray[index].controls['attribute'].disable();
     }
     else { this.squadAssembleService.formsArray[index].controls['attribute'].enable(); }
-    // end old code
   }
 
   
   // return event : {key : string, option : {label, value}}
-  public onOptionSelected(event: any) {
+  public onOptionSelected(event: any, groupKey: string) {
     console.log('I am onOptionSelected event');
     //old code
-    // let customerCode;
-    // let field
-    // if (field === 'customer') {
-    //    let customer = this.squadClientService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0];
-    //    customerCode= customer.id;
-    // }
-    //  else  if (field === 'payerPoll'){
-    //     let customer= this.squadClientService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; 
-    //     customerCode= customer.id;
-    //  }
+    let customerCode;
+    if (groupKey === 'client') {
+       customerCode= event.option.value;
+    }
+     else  if (groupKey === 'payer'){
+        customerCode= event.option.value;
+     }
     
-    // this.userService.checkIfCustomerHasDebt(customerCode).subscribe(res=>{
-    //     let stringTrue: string = res.toString();  
-    //      if (stringTrue == 'true'){    
-    //        //this.flag =true;  
-    //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-    //         width: '500px',
-    //         data: { message: 'לא ניתן לבחור לקוח זה בשל יתרת חוב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-    //       })
-    //       if (field === 'customer'){
-           
-    //           //this.onDelete(undefined);
-    //         }   
-    //         else if (field === 'payerPoll'){
-    //           //this.onDelete(undefined);
-    //           //this.squadAssembleService.payerCustomer={} as BaseCustomer;
-    //         }
-           
-    //      }
-    //      else{
-    //       if (field === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    //       if (field === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    //       this.squadClientService.emitClientSelected(event.option.value);
-    //       //var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
-    //       //this.list.push(customer);
-    //       console.log('clientQuestions is:' ,this.squadClientService.questions)
-    //      }
-    // },(err)=>{
-    //   console.log(err);
-    // })
-    // in comment for test
-    // if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    // if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    // this.squadClientService.emitClientSelected(event.option.value,question);
-    // var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
-    // this.list.push(customer);
-    // console.log('clientQuestions is:' ,this.squadClientService.questions)
-    // end comment for test
-
-
-    //end old code
+    this.userService.checkIfCustomerHasDebt(customerCode).subscribe(res=>{
+        let stringTrue: string = res.toString();  
+         if (stringTrue == 'true'){    
+           this.flag =true;  
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: 'לא ניתן לבחור לקוח זה בשל יתרת חוב', content: '',  leftButton: 'אישור' }
+          })
+          if (groupKey === 'client'){   
+            this.removeSchool.next(event.option.value); 
+            this.clearCustomerFields();
+            this.formGroup.get('client')['controls'].customer.patchValue(undefined, { emitEvent: false });
+            }   
+            else if (groupKey === 'payer'){
+              this.removePayer.next(event.option.value);
+              this.clearPayerFields();
+              this.formGroup.get('payer')['controls'].payerName.patchValue(undefined, { emitEvent: false });
+            }  
+            return;     
+         }
+     
+    },(err)=>{
+      console.log(err);
+    })
+ 
     const { option, key } = event;
-    const client = `${option.value} - ${option.label}`;
-    //this.formGroup.controls.client['controls'][key].patchValue(client);
-    //test
-    if(key=='customer')
-    this.formGroup.controls.client['controls'][key].patchValue(client);
-    else if (key=='payerPoll')
-    this.formGroup.controls.payer['controls'][key].patchValue(client);
-    //end test
-    this.squadClientService.emitClientSelected(client);
-    console.log('I am before next');
-    this.subjectSchool.next(option);
+    const label = `${option.value} - ${option.label}`;
+    this.formGroup.controls[groupKey]['controls'][key].patchValue(label);
+    this.squadClientService.emitClientSelected(label,key);
+
+    if (groupKey === 'client') {
+      this.subjectSchool.next(option);
+      this.squadAssembleService.Customer.id=option.value;
+      this.squadAssembleService.Customer.name= option.label;
+    }
+    if (groupKey === 'payer') {
+      this.subjectPayer.next(option);
+      this.squadAssembleService.payerCustomer.id=option.value;
+      this.squadAssembleService.payerCustomer.name= option.label;
+    }
 
       // TODO - SERVER SIDE
   }
 
-  public onDelete(option: SelectOption) {
-    console.log(option);
-    //this.formGroup.controls.client['controls']['customer'].patchValue(undefined);
+ 
+  public onDelete(option: {
+    optionToDelete: SelectOption;
+    question: QuestionAutocomplete;
+  }) {
+    const { question, optionToDelete } = option;
+
+    // TODO - server logic here
+
+    const { key } = question;
+
+
+    if (key === 'customer') {
+      this.removeSchool.next(optionToDelete.value);
+      this.clearCustomerFields();
+     this.formGroup.get('client')['controls'].customer.patchValue(undefined, { emitEvent: false });
+   
+    }
+    if (key === 'payerName') {
+      this.removePayer.next(optionToDelete.value);
+      this.clearPayerFields();
+      this.formGroup.get('payer')['controls'].payerName.patchValue(undefined, { emitEvent: false });
+    }
   }
 
-
-  private setSchoolOptions() {
-    this.schoolOptions$ = this.options$.pipe(
-      switchMap((options: SelectOption[]) => {
-        return this.schools$.pipe(
-          map((option: SelectOption) => {
-            console.log('I am option: ', option);
-            options.push(option);
+  private onDeleteSchool(): Observable<SelectOption[]> {
+    return this.removeSchool.asObservable().pipe(
+      switchMap((value: string) => {
+        return this.subjectSchoolOptions.asObservable().pipe(
+          map((options: SelectOption[]) => {
+            const index = options.findIndex((option) => option.value === value);
+            options.splice(index, 1);
             return options;
           })
         );
@@ -274,15 +298,72 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     );
   }
 
-  
+  private onDeletePayer(): Observable<SelectOption[]> {
+    return this.removePayer.asObservable().pipe(
+      switchMap((value: string) => {
+        return this.subjectPayerOptions.asObservable().pipe(
+          map((options: SelectOption[]) => {
+            const index = options.findIndex((option) => option.value === value);
+            options.splice(index, 1);
+            return options;
+          })
+        );
+      })
+    );
+  }
+
+  private setSchoolOptions() {
+    return this.subjectSchool.asObservable().pipe(
+      switchMap((option: SelectOption) => {
+        return this.subjectSchoolOptions.asObservable().pipe(
+          switchMap((options: SelectOption[]) => {
+            return of(this.findOption(options, option)).pipe(
+              map((found: boolean) => {
+                found ? options : options.push(option);
+                return options;
+              })
+            );
+          })
+        );
+      })
+    );
+  }
+
+ 
+
+  private setPayerOptions() {
+    return this.subjectPayer.asObservable().pipe(
+      startWith({ value: '', label: '' }),
+      switchMap((option: SelectOption) => {
+        return this.subjectPayerOptions.asObservable().pipe(
+          switchMap((options: SelectOption[]) => {
+            return of(this.findOption(options, option)).pipe(
+              map((found: boolean) => {
+                found ? options : options.push(option);
+                return options;
+              })
+            );
+          })
+        );
+      })
+    );
+  }
+
+  private findOption(options: SelectOption[], option: SelectOption): boolean {
+    if (option.value) {
+      return !!options.find((item) => item.value === option.value);
+    } else {
+      return true;
+    }
+  }
 
   public logForm(form) {
     this.squadAssembleService.updateFormArray(form);
   }
 
   // internal functions
-  getCustomersByParameters(customer, clientPool, indx1, indx2) {
-    //this.flag =false;
+  getCustomersByParameters(customer, clientPool, indx1, indx2,type) {
+    this.flag =false;
     this.userService.getCustomersByParameters(customer, clientPool).subscribe(
       response => {
         console.log('response', response)
@@ -292,9 +373,12 @@ export class SquadClientComponent implements OnInit, OnDestroy {
           this.squadClientService.customers.push({ label: element.name, value: element.id.toString() });
         });
         this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.squadClientService.customers;
-        // if (this.flag ==true ){
-        //   this.onDelete(undefined);
-        // }
+        if (this.flag ==true ){
+          if(type=='customer')
+           this.clearCustomerFields();
+          else if(type=='payer')
+          this.clearPayerFields();
+        }
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
@@ -302,7 +386,8 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   }
 
   
-  getKKLWorkers(customer, indx1, indx2) {
+  getKKLWorkers(customer, indx1, indx2,type) {
+    this.flag =false;
     this.userService.getKKLWorkers(customer).subscribe(
       response => {
         console.log('response', response)
@@ -312,17 +397,19 @@ export class SquadClientComponent implements OnInit, OnDestroy {
           this.squadClientService.customers.push({ label: element.name, value: element.id.toString() });
         });
         this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.squadClientService.customers;
-        // if (this.flag ==true ){
-        //   this.onDelete(undefined);
-        // }
+        if (this.flag ==true ){
+          if(type=='customer')
+           this.clearCustomerFields();
+          else if(type=='payer')
+          this.clearPayerFields();
+        }
       },
       error => console.log(error),       // error
       () => console.log('completed')     // complete
     )
   }
 
-  onDelete1(event){
-    console.log('I am delete event', event);
+  clearCustomerFields(){
     this.squadAssembleService.Customer={} as BaseCustomer;
      let index1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
      let index2 = this.squadClientService.questions[index1].group.questions.findIndex(o => o.key === 'customer');
@@ -334,8 +421,10 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     });
   }
 
-    onDeletePayer(event){
-      this.squadClientService.questions[2].group.questions[0].inputProps.options=[];
+   clearPayerFields(){
+      let index1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
+      let index2 = this.squadClientService.questions[index1].group.questions.findIndex(o => o.key === 'payerName');
+      this.squadClientService.questions[index1].group.questions[index2].inputProps.options=[];
       this.squadAssembleService.payerCustomer={} as BaseCustomer;
   }
 }
