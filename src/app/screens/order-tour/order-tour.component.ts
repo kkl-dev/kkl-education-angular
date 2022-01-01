@@ -29,7 +29,7 @@ import { SquadClientService } from './squad-assemble/components/squad-client/squ
 })
 export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   public activeStep: number;
-  //public activeRouteUrl:string
+  public activeRouteUrl:string
   public $activeStep = new Subject<number>();
 
   public nextPage: string = 'education/search';
@@ -80,7 +80,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        //this.activeRouteUrl=event.url
+        this.activeRouteUrl=event.url
         this.formatUrl(event.url);
         this.handleSleepStatus();
         this.getActiveStep();
@@ -301,12 +301,13 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             ContactForm = false;
             continue;
           }
-
-          this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
-          if (!this.squadAssemble.formsArray[i].get('contactPhone').value) {
+      
+          if (!this.squadAssemble.formsArray[i].get('contactPhone').value || !this.squadAssemble.formsArray[i].get('contactName').value ||
+           !this.squadAssemble.formsArray[i].get('contactEmail').value) {
             ContactForm = false;
             continue;
           }
+          this.squadAssemble.tripInfo.contactName = this.squadAssemble.formsArray[i].get('contactName').value;
           this.squadAssemble.tripInfo.contactPhone = this.squadAssemble.formsArray[i].get('contactPhone').value;
           this.squadAssemble.tripInfo.contactEmail = this.squadAssemble.formsArray[i].get('contactEmail').value;
           ContactForm = true;
@@ -355,7 +356,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           if (this.squadAssemble.formsArray[lastContactFormIndex].status == 'INVALID')
             this.checkWhichControlIsInvalid('contact', lastContactFormIndex);
           else
-            this.setDialogMessage('שדה טלפון של איש קשר הינו חובה');
+            this.setDialogMessage('נא הזן פרטים מלאים של איש קשר');
           return flag;
         }
         if (!ageGroupForm) {
@@ -438,6 +439,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   createTrip(route) {
 
     if (this.squadAssemble.tripInfofromService != undefined) {
+     
       this.router.navigateByUrl(
         `/education/order-tour/${route}`
       );
@@ -509,6 +511,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.squadAssemble.tripInfofromService = res;
       localStorage.setItem('tripId', res.trip.id.toString());
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'פרטי הטיול נשמרו בהצלחה', content: '', leftButton: 'אישור' }
+      })
       this.router.navigateByUrl(
         `/education/order-tour/${route}`
       );
@@ -608,8 +614,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         //   return;
         // }
       }
-      // if (routeIndex === 5)
-      //   this.sendToOrderCenter();
+      if (routeIndex === 5)
+        this.sendToOrderCenter();
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
       );

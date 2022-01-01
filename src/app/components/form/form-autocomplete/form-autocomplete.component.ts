@@ -3,13 +3,15 @@ import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { QuestionGroup } from '../logic/question-group';
+import { Observable, of } from 'rxjs';
+import { SelectOption } from '../logic/question-base';
+import { QuestionAutocomplete } from '../logic/question-autocomplete';
+
 import { SquadClientService } from 'src/app/screens/order-tour/squad-assemble/components/squad-client/squad-client.service';
 import { TripService } from 'src/app/services/trip.service';
 import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { SquadDetailsService } from 'src/app/screens/order-tour/squad-assemble/components/squad-details/squad-details.service';
 import { BaseCustomer, UserService } from 'src/app/open-api';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-form-autocomplete',
@@ -19,10 +21,18 @@ import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm
 export class FormAutocompleteComponent implements OnInit {
   @Input() group: QuestionGroup;
   @Input() public formGroup: FormGroup = null;
-  @Output() deleteCustomer: EventEmitter<string> = new EventEmitter();
+  @Input() public options$: Observable<SelectOption[]>;
 
-  public list: any[] = [];
-  flag :boolean=false;
+  @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
+  @Output() select: EventEmitter<FormControl> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
+  @Output() optionSelected: EventEmitter<any> = new EventEmitter();
+  //internal
+  //@Output() deleteCustomer: EventEmitter<string> = new EventEmitter();
+ 
+
+  //public list: any[] = [];
+  //flag :boolean=false;
 
   constructor(
     private formService: FormService,
@@ -31,7 +41,7 @@ export class FormAutocompleteComponent implements OnInit {
     public squadDetailsService: SquadDetailsService,
     public squadAssembleService: SquadAssembleService,
     private userService:UserService,
-    private _dialog: MatDialog
+    
   ) { }
 
   ngOnInit(): void {
@@ -41,164 +51,52 @@ export class FormAutocompleteComponent implements OnInit {
         questions: this.group.questions,
       });
   }
-  getName(control: AbstractControl): string | null {
-    let group = <FormGroup>control.parent;
-    if (!group) {
-      return null;
-    }
-    let name: string;
-    Object.keys(group.controls).forEach(key => {
-      let childControl = group.get(key);
-      if (childControl !== control) {
-        return;
-      }
-      name = key;
-    });
-    return name;
-  }
+  // getName(control: AbstractControl): string | null {
+  //   let group = <FormGroup>control.parent;
+  //   if (!group) {
+  //     return null;
+  //   }
+  //   let name: string;
+  //   Object.keys(group.controls).forEach(key => {
+  //     let childControl = group.get(key);
+  //     if (childControl !== control) {
+  //       return;
+  //     }
+  //     name = key;
+  //   });
+  //   return name;
+  // }
 
   public onAutocomplete(control: FormControl) {
-    console.log("onAutocomplete: ", control);
-    if (control.value.length > 1) {
-      var name = this.getName(control)
-      if (name === 'customer') {//if choose customer
-        var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
-        var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === 'customer');
-        if (control.parent.value.clientPool !== 'kklWorker') {
-          //this.tripService.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
-          this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2)
-        }
-        //else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
-        else { this.getKKLWorkers(control.value, indx1, indx2); }
-      }
-
-      else {//if choose payer customer
-        var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
-        var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerPoll");
-        if (control.parent.value.payerName !== 'kklWorker') {
-          //this.tripService.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
-          this.getCustomersByParameters(control.value, control.parent.value.payerName, indx1, indx2)
-        }
-        //else { this.tripService.getKKLWorkers(control.value, indx1, indx2); }
-        else { this.getKKLWorkers(control.value, indx1, indx2); }
-      }
-    }
    
+    this.autocomplete.emit(control);
   }
   public onSelect(control: FormControl) {
-    var index;
-    for (var i in this.squadAssembleService.formsArray) {
-      Object.keys(this.squadAssembleService.formsArray[i].controls).forEach(key => {
-        if (key === 'attribute') { index = i; }
-      });
-    }
-    if (control.value === "kklWorker") {
-      this.squadAssembleService.formsArray[index].controls['attribute'].setValue("12");
-      this.squadAssembleService.formsArray[index].controls['attribute'].disable();
-    }
-    else { this.squadAssembleService.formsArray[index].controls['attribute'].enable(); }
+  
+    this.select.emit(control);
   }
 
-  public onOptionSelected(event: MatAutocompleteSelectedEvent, question: any) {
-    let customerCode;
-    if (question === 'customer') {
-       let customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0];
-       customerCode= customer.id;
-    }
-     else  if (question === 'payerPoll'){
-        let customer= this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; 
-        customerCode= customer.id;
-     }
-    
-    this.userService.checkIfCustomerHasDebt(customerCode).subscribe(res=>{
-        let stringTrue: string = res.toString();  
-         if (stringTrue == 'true'){    
-           this.flag =true;  
-          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-            width: '500px',
-            data: { message: 'לא ניתן לבחור לקוח זה בשל יתרת חוב', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-          })
-          if (question === 'customer'){
-            //   this.tripService.customers=[];
-            //   let index1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
-            //  let index2 = this.squadClientService.questions[index1].group.questions.findIndex(o => o.key === 'customer');
-            //  this.squadClientService.questions[index1].group.questions[index2].inputProps.options=[];
-            //  this.squadAssembleService.Customer={} as BaseCustomer;
-              this.onDelete(undefined);
-            }   
-            else if (question === 'payerPoll'){
-              this.onDelete(undefined);
-              //this.squadAssembleService.payerCustomer={} as BaseCustomer;
-            }
-           
-         }
-         else{
-          if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-          if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-          this.squadClientService.emitClientSelected(event.option.value,question);
-          var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
-          this.list.push(customer);
-          console.log('clientQuestions is:' ,this.squadClientService.questions)
-         }
-    },(err)=>{
-      console.log(err);
-    })
-    // in comment for test
-    // if (question === 'payerPoll') { this.squadAssembleService.payerCustomer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    // if (question === 'customer') { this.squadAssembleService.Customer = this.tripService.customersOriginal.filter(el => el.id === parseInt(event.option.value))[0]; }
-    // this.squadClientService.emitClientSelected(event.option.value,question);
-    // var customer = this.tripService.customers.filter(el => el.value === event.option.value)[0]
-    // this.list.push(customer);
-    // console.log('clientQuestions is:' ,this.squadClientService.questions)
-    // end comment for test
-  }
-  public onDelete(item: any) {
-      if (item)
-      this.list = this.list.filter(function (el) { return el.value != item.value; });   
-      this.tripService.customers=[];
-      this.deleteCustomer.emit('customer is deleted');    
-  }
-
-  getCustomersByParameters(customer, clientPool, indx1, indx2) {
-    this.flag =false;
-    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
-      response => {
-        console.log('response', response)
-        this.tripService.customersOriginal = response;
-        this.tripService.customers = [];
-        response.forEach(element => {
-          this.tripService.customers.push({ label: element.name, value: element.id.toString() });
-        });
-        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.tripService.customers;
-        if (this.flag ==true ){
-          this.onDelete(undefined);
-        }
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
-
-  getKKLWorkers(customer, indx1, indx2) {
-    this.userService.getKKLWorkers(customer).subscribe(
-      response => {
-        console.log('response', response)
-        this.tripService.customersOriginal = response;
-        this.tripService.customers = [];
-        response.forEach(element => {
-          this.tripService.customers.push({ label: element.name, value: element.id.toString() });
-        });
-        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.tripService.customers;
-        if (this.flag ==true ){
-          this.onDelete(undefined);
-        }
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
+  public onOptionSelected(event: MatAutocompleteSelectedEvent) {
+   
+    const autocomplete: QuestionAutocomplete = this.group.questions.find(
+      (q) => q instanceof QuestionAutocomplete
+    );
+    const option = autocomplete.inputProps.options.find(
+      (opt) => opt.value === event.option.value
+    );
 
 
+    console.log(option);
+
+    this.optionSelected.emit({ key: autocomplete.key, option });
+  }
+  
+  public onDelete(option: SelectOption) {
+    const autocomplete: QuestionAutocomplete = this.group.questions.find(
+      (q) => q instanceof QuestionAutocomplete
+    );
+    this.delete.emit({ optionToDelete : option, question: autocomplete });
+  }
 
  
 }

@@ -247,9 +247,9 @@ export class TripService {
   fieldForestCentersOriginal: FieldForestCenter[];
   // activityByAttribute = [];
   // activityByAttributeOriginal: ActivityType[]
-  customers = [];
-  customersOriginal: BaseCustomer[];
-  baseCustomer: BaseCustomer;
+  // customers = [];
+  // customersOriginal: BaseCustomer[];
+  // baseCustomer: BaseCustomer;
   areasOriginal: Area[];
   areas: any[];
   attributes = [];
@@ -263,194 +263,6 @@ export class TripService {
   // budgetIncome = [];
   // budgetByParam = {} as BudgetByParams;
 
-  getLookupFieldForestCenters() {
-    this.userService.getLookupFieldForestCenters().subscribe(
-      response => {
-        console.log(response);
-        this.formOptions = response;
-        //filter for showing only forest center with accommodationList
-        this.formOptions = this.formOptions.filter(aco => aco.accommodationList.length > 0);
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
-
-  // getActivityLookupsByAttribute(attributeId: number) {
-  //   this.userService.getActivityByAttribute(attributeId).subscribe(
-  //     response => {
-  //       this.activityByAttributeOriginal = response;
-  //       this.activityByAttribute = [];
-  //       response.forEach(element => {
-  //         this.activityByAttribute.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //       console.log('activityByAttribute is :', this.activityByAttribute);
-  //       this.activityByAttr.next(this.activityByAttribute);
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
-
-  // getBudgetKKl1(budgetByParam: any) {
-  //   this.userService.getBadgetKKl(budgetByParam).subscribe(
-  //     response => {
-  //       console.log('response', response)
-  //       this.budget = response;
-  //       if (this.budget.listCity !== null) {
-  //         var list = [];
-  //         this.budget.listCity.forEach(element => {
-  //           list.push({ label: element.name, value: element.id.toString() });
-  //         });
-  //         var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
-  //         if (list.length === 1) {
-  //           this.squadBudgetService.questions[index].group.questions[0].value = list[0].value;
-  //           this.squadBudgetService.questions[index].group.questions[0].label = list[0].label;
-  //         }
-  //         else { this.squadBudgetService.questions[index].group.questions[0].inputProps.options = list; }
-  //         if (this.budget.type !== undefined) {
-  //           this.squadBudgetService.budget.type = this.budget.desc;
-  //           this.squadBudgetService.budget.budget = this.budget.kklAmount;
-  //           this.squadBudgetService.budget.expense = this.budget.customerAmount;
-  //           this.squadBudgetService.budget.deliver = this.budget.execution;
-  //           this.squadBudgetService.budget.overflow = this.budget.balanceFin;
-  //           this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
-  //         }
-  //       }
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
-
-
-  // getBudgetKKl(budgetByParam: any) {
-  //   this.userService.getBadgetKKl(budgetByParam).subscribe(
-  //     response => {
-  //       console.log('response', response)
-  //       this.budget = response;
-  //       if (this.budget.listCity !== null) {
-  //         var list = [];
-  //         this.budget.listCity.forEach(element => {
-  //           list.push({ label: element.name, value: element.id.toString() });
-  //         });
-  //         var index = this.squadBudgetService.questions.findIndex(o => o.key === 'location');
-  //         if (list.length === 1) {
-  //           this.squadBudgetService.questions[index].group.questions[0].value = list[0].value;
-  //           this.squadBudgetService.questions[index].group.questions[0].label = list[0].label;
-  //         }
-  //         else { this.squadBudgetService.questions[index].group.questions[0].inputProps.options = list; }
-  //       }
-  //       let incomeIndex= this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
-  //       let expenseIndex= this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
-  //       if(this.squadBudgetService.questions[incomeIndex].inputProps.options.length>0){
-  //         this.squadBudgetService.questions[incomeIndex].value='';
-  //         this.squadBudgetService.questions[incomeIndex].label='תת סעיף תקציב הכנסות';
-  //         this.squadBudgetService.questions[incomeIndex].inputProps.options = [];
-  //       }
-       
-  //       if(this.squadBudgetService.questions[expenseIndex].inputProps.options.length>0){
-  //         this.squadBudgetService.questions[expenseIndex].value='';
-  //         this.squadBudgetService.questions[expenseIndex].label='תת סעיף תקציב הוצאות';
-  //         this.squadBudgetService.questions[expenseIndex].inputProps.options = [];
-  //       }
-      
-  //         if (this.budget.type !== undefined) {
-  //           this.squadBudgetService.budget.type = this.budget.desc;
-  //           this.squadBudgetService.budget.budget = this.budget.kklAmount;
-  //           this.squadBudgetService.budget.expense = this.budget.customerAmount;
-  //           this.squadBudgetService.budget.deliver = this.budget.execution;
-  //           this.squadBudgetService.budget.overflow = this.budget.balanceFin;
-  //           this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
-  //         }
-        
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
-
-
-  // getBudgetExpensesAndIncome(budgetByParam: any) {
-  //   this.userService.getBadgetExpensesAndIncome(budgetByParam).subscribe(
-  //     response => {
-  //       console.log('response', response)
-  //       this.budgetExpensesAndIncome = response;
-  //       if (this.budget.type !== undefined) {
-  //         this.squadBudgetService.budget.budget = this.budgetExpensesAndIncome.kklAmount;
-  //         this.squadBudgetService.budget.expense = this.budgetExpensesAndIncome.customerAmount;
-  //         this.squadBudgetService.budget.deliver = this.budgetExpensesAndIncome.execution;
-  //         this.squadBudgetService.budget.overflow = this.budgetExpensesAndIncome.balanceFin;
-  //         this.squadBudgetService.list = this.squadBudgetService.setList(this.squadBudgetService.list);
-  //       }
-  //       let index1 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetIncome');
-  //       let index2 = this.squadBudgetService.questions.findIndex(o => o.key === 'budgetExpense');
-  //       this.squadBudgetService.questions[index1].inputProps.options=[];
-  //       this.squadBudgetService.questions[index1].value='';
-  //       this.squadBudgetService.questions[index2].inputProps.options=[];
-  //       this.squadBudgetService.questions[index2].value='';
-  //       // if (this.budget.type == 1) {
-  //       if (this.budget.type != undefined) {
-  //         this.budgetIncome=[];
-  //         this.budgetExpenses=[];
-  //         response.subBudgetIncomeList.forEach(element => {
-  //           this.budgetIncome.push({ label: element.name, value: element.id.toString() });
-  //         });
-  //         this.squadBudgetService.questions[index1].inputProps.options = this.budgetIncome;
-  //         this.squadBudgetService.questions[index1].value = response.incomeId.toString();
-  //         this.squadBudgetService.questions[index1].label= response.incomeName;
-  //         response.subBudgetExpenseList.forEach(element => {
-  //           this.budgetExpenses.push({ label: element.name, value: element.id.toString() });
-  //         });
-  //         this.squadBudgetService.questions[index2].inputProps.options = this.budgetExpenses;
-  //         this.squadBudgetService.questions[index2].value = response.expensesId.toString();
-  //         this.squadBudgetService.questions[index2].label= response.expensesName;
-  //       }
-  //        else {
-  //       this.squadBudgetService.questions[index1].value = response.incomeId.toString();
-  //       this.squadBudgetService.questions[index1].label = response.incomeName;
-  //       this.squadBudgetService.questions[index2].value = response.expensesId.toString();
-  //       this.squadBudgetService.questions[index2].label = response.expensesName;
-  //      }
-  //       this.budgetByParam.budget.cityId = response.cityId
-  //       this.budgetByParam.budget.expensesId = response.expensesId
-  //       this.budgetByParam.budget.incomeId = response.incomeId
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
-
-  getCustomersByParameters(customer, clientPool, indx1, indx2) {
-    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
-      response => {
-        console.log('response', response)
-        this.customersOriginal = response;
-        this.customers = [];
-        response.forEach(element => {
-          this.customers.push({ label: element.name, value: element.id.toString() });
-        });
-        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.customers;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
-  getKKLWorkers(customer, indx1, indx2) {
-    this.userService.getKKLWorkers(customer).subscribe(
-      response => {
-        console.log('response', response)
-        this.customersOriginal = response;
-        this.customers = [];
-        response.forEach(element => {
-          this.customers.push({ label: element.name, value: element.id.toString() });
-        });
-        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.customers;
-      },
-      error => console.log(error),       // error
-      () => console.log('completed')     // complete
-    )
-  }
   getCustomer(customerId) {
     this.userService.getCustomer(customerId).subscribe(
       response => {
@@ -461,6 +273,8 @@ export class TripService {
       () => console.log('completed')     // complete
     )
   }
+
+  
   getLookUp() {
     this.userService.getLookupFieldForestCenters().subscribe(
       response => {

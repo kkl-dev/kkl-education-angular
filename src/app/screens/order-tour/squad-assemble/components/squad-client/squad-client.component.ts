@@ -1,14 +1,27 @@
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/components/form/logic/form.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { QuestionBase } from 'src/app/components/form/logic/question-base';
+import { QuestionBase, SelectOption } from 'src/app/components/form/logic/question-base';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
-import { Subject, Observable, Subscription } from 'rxjs';
+import {
+  Subject,
+  Observable,
+  Subscription,
+  BehaviorSubject,
+  iif,
+  of,
+  merge,
+} from 'rxjs';
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
 import { TripService } from 'src/app/services/trip.service';
-import { BaseCustomer } from 'src/app/open-api';
+import { BaseCustomer, UserService } from 'src/app/open-api';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
+
 
 @Component({
   selector: 'app-squad-client',
@@ -29,18 +42,45 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
 
+  private subjectSchool: Subject<SelectOption>;
+  private subjectPayer: Subject<SelectOption>;
+
+  private removeSchool: Subject<string>;
+  private removePayer: Subject<string>;
+
+  private subjectSchoolOptions: BehaviorSubject<SelectOption[]>;
+  private subjectPayerOptions: BehaviorSubject<SelectOption[]>;
+
+  public schoolOptions$: Observable<SelectOption[]>;
+  public payerOptions$: Observable<SelectOption[]>;
+
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
+  flag :boolean=false;
 
   constructor(
     private formService: FormService,
     private squadClientService: SquadClientService,
     private squadNewClientService: SquadNewClientService,
     private squadAssembleService: SquadAssembleService,
-    public tripService: TripService
+    public tripService: TripService,
+    private userService: UserService,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    this.subjectSchool = new Subject<SelectOption>();
+    
+    this.removeSchool = new Subject<string>();
+    this.subjectSchoolOptions = new BehaviorSubject<SelectOption[]>([]);
+    
+
+    this.subjectPayer = new Subject<SelectOption>();
+    this.removePayer = new Subject<string>();
+    this.subjectPayerOptions = new BehaviorSubject<SelectOption[]>([]);
+   
+    
+
     this.$questions = new Subject<QuestionBase<string | number | Date>[]>();
     this.setQuestions();
     this.subscribeToEditMode();
@@ -48,6 +88,10 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
     this.$saveMode = this.squadAssembleService.getSaveModeObs();
     this.formGroup = this.formService.setFormGroup(this.group);
+
+    this.schoolOptions$ = merge(this.setSchoolOptions(), this.onDeleteSchool());
+    
+    this.payerOptions$ = merge(this.setPayerOptions(), this.onDeletePayer());
   }
 
   
@@ -81,7 +125,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
       .getClientObs()
       .subscribe((value: any) => {
         this.squadClientService.emitEditMode(true);
-        if(this.squadClientService.customerTypeSelected=='customer')
+         if(this.squadClientService.customerTypeSelected=='customer')
         this.updateClientForm(value);
       });
   }
@@ -93,7 +137,7 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   }
 
   private updateClientForm(value?: string): void {
-    var customer = this.tripService.customersOriginal.filter(el => el.id ===  parseInt(value))[0]
+    var customer = this.squadClientService.customersOriginal.filter(el => el.id ===  parseInt(value))[0]
     this.formGroup.controls.contact.patchValue({
       contactName: customer.contactName || '',
       contactPhone: customer.contactMobile || '',
@@ -119,12 +163,253 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.formGroup.controls.contact.disable();
   }
 
+  public onAutocomplete(control: FormControl) {
+    console.log("onAutocomplete: ", control);
+    if (control.value.length > 1) {
+      if (control.parent.controls.hasOwnProperty('customer')) {//if choose customer
+        var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
+        var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === 'customer');
+        if (control.parent.value.clientPool !== 'kklWorker') {
+          this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2,'customer')
+        }
+        else { this.getKKLWorkers(control.value, indx1, indx2,'customer'); }
+      }
+
+      else {//if choose payer customer
+        var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
+        var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerName");
+        if (control.parent.value.payerName !== 'kklWorker') {
+          this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
+        }
+        else { this.getKKLWorkers(control.value, indx1, indx2,'payer'); }
+      }
+    }
+    // end old code
+  }
+
+  public onSelect(control: FormControl) {
+    console.log('I am onSelect event');
+    var index;
+    for (var i in this.squadAssembleService.formsArray) {
+      Object.keys(this.squadAssembleService.formsArray[i].controls).forEach(key => {
+        if (key === 'attribute') { index = i; }
+      });
+    }
+    if (control.value === "kklWorker") {
+      this.squadAssembleService.formsArray[index].controls['attribute'].setValue("12");
+      this.squadAssembleService.formsArray[index].controls['attribute'].disable();
+    }
+    else { this.squadAssembleService.formsArray[index].controls['attribute'].enable(); }
+  }
+
+  
+  // return event : {key : string, option : {label, value}}
+  public onOptionSelected(event: any, groupKey: string) {
+    console.log('I am onOptionSelected event');
+    //old code
+    let customerCode;
+    if (groupKey === 'client') {
+       customerCode= event.option.value;
+    }
+     else  if (groupKey === 'payer'){
+        customerCode= event.option.value;
+     }
+    
+    this.userService.checkIfCustomerHasDebt(customerCode).subscribe(res=>{
+        let stringTrue: string = res.toString();  
+         if (stringTrue == 'true'){    
+           this.flag =true;  
+          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: 'לא ניתן לבחור לקוח זה בשל יתרת חוב', content: '',  leftButton: 'אישור' }
+          })
+          if (groupKey === 'client'){   
+            this.removeSchool.next(event.option.value); 
+            this.clearCustomerFields();
+            this.formGroup.get('client')['controls'].customer.patchValue(undefined, { emitEvent: false });
+            }   
+            else if (groupKey === 'payer'){
+              this.removePayer.next(event.option.value);
+              this.clearPayerFields();
+              this.formGroup.get('payer')['controls'].payerName.patchValue(undefined, { emitEvent: false });
+            }  
+            return;     
+         }
+     
+    },(err)=>{
+      console.log(err);
+    })
+ 
+    const { option, key } = event;
+    const label = `${option.value} - ${option.label}`;
+    this.formGroup.controls[groupKey]['controls'][key].patchValue(label);
+    this.squadClientService.emitClientSelected(label,key);
+
+    if (groupKey === 'client') {
+      this.subjectSchool.next(option);
+      this.squadAssembleService.Customer.id=option.value;
+      this.squadAssembleService.Customer.name= option.label;
+    }
+    if (groupKey === 'payer') {
+      this.subjectPayer.next(option);
+      this.squadAssembleService.payerCustomer.id=option.value;
+      this.squadAssembleService.payerCustomer.name= option.label;
+    }
+
+      // TODO - SERVER SIDE
+  }
+
+ 
+  public onDelete(option: {
+    optionToDelete: SelectOption;
+    question: QuestionAutocomplete;
+  }) {
+    const { question, optionToDelete } = option;
+
+    // TODO - server logic here
+
+    const { key } = question;
+
+
+    if (key === 'customer') {
+      this.removeSchool.next(optionToDelete.value);
+      this.clearCustomerFields();
+     this.formGroup.get('client')['controls'].customer.patchValue(undefined, { emitEvent: false });
+   
+    }
+    if (key === 'payerName') {
+      this.removePayer.next(optionToDelete.value);
+      this.clearPayerFields();
+      this.formGroup.get('payer')['controls'].payerName.patchValue(undefined, { emitEvent: false });
+    }
+  }
+
+  private onDeleteSchool(): Observable<SelectOption[]> {
+    return this.removeSchool.asObservable().pipe(
+      switchMap((value: string) => {
+        return this.subjectSchoolOptions.asObservable().pipe(
+          map((options: SelectOption[]) => {
+            const index = options.findIndex((option) => option.value === value);
+            options.splice(index, 1);
+            return options;
+          })
+        );
+      })
+    );
+  }
+
+  private onDeletePayer(): Observable<SelectOption[]> {
+    return this.removePayer.asObservable().pipe(
+      switchMap((value: string) => {
+        return this.subjectPayerOptions.asObservable().pipe(
+          map((options: SelectOption[]) => {
+            const index = options.findIndex((option) => option.value === value);
+            options.splice(index, 1);
+            return options;
+          })
+        );
+      })
+    );
+  }
+
+  private setSchoolOptions() {
+    return this.subjectSchool.asObservable().pipe(
+      switchMap((option: SelectOption) => {
+        return this.subjectSchoolOptions.asObservable().pipe(
+          switchMap((options: SelectOption[]) => {
+            return of(this.findOption(options, option)).pipe(
+              map((found: boolean) => {
+                found ? options : options.push(option);
+                return options;
+              })
+            );
+          })
+        );
+      })
+    );
+  }
+
+ 
+
+  private setPayerOptions() {
+    return this.subjectPayer.asObservable().pipe(
+      startWith({ value: '', label: '' }),
+      switchMap((option: SelectOption) => {
+        return this.subjectPayerOptions.asObservable().pipe(
+          switchMap((options: SelectOption[]) => {
+            return of(this.findOption(options, option)).pipe(
+              map((found: boolean) => {
+                found ? options : options.push(option);
+                return options;
+              })
+            );
+          })
+        );
+      })
+    );
+  }
+
+  private findOption(options: SelectOption[], option: SelectOption): boolean {
+    if (option.value) {
+      return !!options.find((item) => item.value === option.value);
+    } else {
+      return true;
+    }
+  }
+
   public logForm(form) {
     this.squadAssembleService.updateFormArray(form);
   }
 
-  onDelete(event){
-    console.log('I am delete event', event);
+  // internal functions
+  getCustomersByParameters(customer, clientPool, indx1, indx2,type) {
+    this.flag =false;
+    this.userService.getCustomersByParameters(customer, clientPool).subscribe(
+      response => {
+        console.log('response', response)
+        this.squadClientService.customersOriginal = response;
+        this.squadClientService.customers = [];
+        response.forEach(element => {
+          this.squadClientService.customers.push({ label: element.name, value: element.id.toString() });
+        });
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.squadClientService.customers;
+        if (this.flag ==true ){
+          if(type=='customer')
+           this.clearCustomerFields();
+          else if(type=='payer')
+          this.clearPayerFields();
+        }
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+  
+  getKKLWorkers(customer, indx1, indx2,type) {
+    this.flag =false;
+    this.userService.getKKLWorkers(customer).subscribe(
+      response => {
+        console.log('response', response)
+        this.squadClientService.customersOriginal = response;
+        this.squadClientService.customers = [];
+        response.forEach(element => {
+          this.squadClientService.customers.push({ label: element.name, value: element.id.toString() });
+        });
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.squadClientService.customers;
+        if (this.flag ==true ){
+          if(type=='customer')
+           this.clearCustomerFields();
+          else if(type=='payer')
+          this.clearPayerFields();
+        }
+      },
+      error => console.log(error),       // error
+      () => console.log('completed')     // complete
+    )
+  }
+
+  clearCustomerFields(){
     this.squadAssembleService.Customer={} as BaseCustomer;
      let index1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
      let index2 = this.squadClientService.questions[index1].group.questions.findIndex(o => o.key === 'customer');
@@ -136,8 +421,10 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     });
   }
 
-    onDeletePayer(event){
-      this.squadClientService.questions[2].group.questions[0].inputProps.options=[];
+   clearPayerFields(){
+      let index1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
+      let index2 = this.squadClientService.questions[index1].group.questions.findIndex(o => o.key === 'payerName');
+      this.squadClientService.questions[index1].group.questions[index2].inputProps.options=[];
       this.squadAssembleService.payerCustomer={} as BaseCustomer;
   }
 }

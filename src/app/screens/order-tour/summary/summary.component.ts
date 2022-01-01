@@ -30,7 +30,7 @@ export class SummaryComponent implements OnInit {
     this.userService.getTripDetails(this.tripId).subscribe(TM => {
       this.tripDetails = TM;
       this.SetArrays(); 
-      //this.moveOrderCenterInDb();
+      this.moveOrderCenterInDb();
     });
 
   }

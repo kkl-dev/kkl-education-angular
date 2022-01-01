@@ -85,10 +85,23 @@ export class SquadAssembleComponent implements OnInit {
         label: this.squadAssembleService.tripInfo.customer.name,
         value : this.squadAssembleService.tripInfo.customer.id.toString()
       }
+      let payerCust={label:'',value:''}
+      if(this.squadAssembleService.tripInfo.customerPay?.id){
+        payerCust.value= this.squadAssembleService.tripInfo.customerPay.id.toString()
+        payerCust.label = this.squadAssembleService.tripInfo.customerPay.name
+      }
       let custArr= [];
       custArr.push(custObj);
-      this.squadClientService.questions[0].group.questions[0].inputProps.options=custArr;
+      let payerCustArr=[];
+     
+      this.squadClientService.questions[0].group.questions[0].inputProps.options=custArr;     
       this.squadClientService.questions[0].group.questions[0].value=custObj.value;
+      //this.squadClientService.questions[0].group.questions[0].value= `${custObj.value} - ${custObj.label}`;
+      if(this.squadAssembleService.tripInfo.customerPay?.id){
+        payerCustArr.push(payerCust);
+        this.squadClientService.questions[2].group.questions[0].inputProps.options=payerCustArr;
+        this.squadClientService.questions[2].group.questions[0].value=payerCust.value;
+      }
       let contactGroupIndex=  this.squadClientService.questions.findIndex(i => i.key=='contact');
       let contactGroup = this.squadClientService.questions.find(i => i.key=='contact');
       let contactNameIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactName');

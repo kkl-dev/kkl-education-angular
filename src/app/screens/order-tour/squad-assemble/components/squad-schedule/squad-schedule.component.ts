@@ -195,7 +195,7 @@ export class SquadScheduleComponent implements OnInit {
     });
 
     form.controls["dates"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-     
+      console.log('I am calendar date',value);
     });
     this.squadAssembleService.updateFormArray(form);
   }

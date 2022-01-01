@@ -26,6 +26,7 @@ import heLocale from '@fullcalendar/core/locales/he';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarCardComponent } from './calendar/calendar-card/calendar-card.component';
 import { DynamicComponent } from 'src/app/components/dynamic/dynamic.component';
+import { distinctUntilChanged } from 'rxjs/operators';
 //import { TripService } from 'src/app/services/trip.service';
 
 @Component({
@@ -307,6 +308,11 @@ export class FacilitiesComponent implements OnInit {
     this.setFormArray();
     this.calculatePages(this.tripActivitiesFilter.length);
     this.pagesToShow(1);
+    //test
+     form.controls["activity"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+        console.log('I am activity change!');
+    });
+    //end test
   }
 
   newPageEmit(page) {
