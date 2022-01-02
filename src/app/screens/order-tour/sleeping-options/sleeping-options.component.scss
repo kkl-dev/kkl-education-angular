@@ -9,7 +9,9 @@
   }
 
   &::ng-deep .airbnb-calendar-container {
-    left: 0 !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -30%);
   }
 
   .title-span {

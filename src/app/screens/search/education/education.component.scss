@@ -8,8 +8,10 @@
   display: flex;
   width: 100% !important;
 
-  ::ng-deep .airbnb-calendar-container {
-    left: -45rem;
+  ::ng-deep .airbnb-calendar-container{position:fixed;
+    left: 50% !important;
+    top: 50% !important; 
+    transform: translate(-50%, -30%);
   }
 
   &__select-option {
@@ -29,234 +31,233 @@
       margin-left: auto;
     }
   }
-    &__link {
-      text-decoration: none;
-      height: 5.1rem;
-      margin-top: 2.5rem;
-      width: 90% !important; 
-      color: #ffffff;
-      border: none;
-      font-size: 1.4rem;
-      background-color: $primary;
-      border-radius: 1rem;
-      z-index: 5;
-      display: flex;
-      box-shadow: 5px 5px 17px 2px rgba($primary, 0.3);
-      cursor: pointer !important;
+  &__link {
+    text-decoration: none;
+    height: 5.1rem;
+    margin-top: 2.5rem;
+    width: 90% !important;
+    color: #ffffff;
+    border: none;
+    font-size: 1.4rem;
+    background-color: $primary;
+    border-radius: 1rem;
+    z-index: 5;
+    display: flex;
+    box-shadow: 5px 5px 17px 2px rgba($primary, 0.3);
+    cursor: pointer !important;
 
-      &-text {
-        margin: auto;
-        font-size: 1.8rem;
-      }
+    &-text {
+      margin: auto;
+      font-size: 1.8rem;
     }
+  }
 
-    &__form {
-      position: absolute;
-      top: calc(50% - 9rem);
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba($color: #ffffff, $alpha: 0.82);
-      direction: rtl;
-      border-radius: 1rem;
-      width: fit-content;
-      padding: 3rem 6rem 2rem 6rem;
-      z-index: 5;
-      box-sizing: border-box;
-      width: calc(100% - 200px);
+  &__form {
+    position: absolute;
+    top: calc(50% - 9rem);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba($color: #ffffff, $alpha: 0.82);
+    direction: rtl;
+    border-radius: 1rem;
+    width: fit-content;
+    padding: 3rem 6rem 2rem 6rem;
+    z-index: 5;
+    box-sizing: border-box;
+    width: calc(100% - 200px);
 
-      &-field {
+    &-field {
+      grid-column: span 1;
+
+      &-pseudo {
         grid-column: span 1;
-
-        &-pseudo {
-          grid-column: span 1;
-          display: flex;
-          flex-direction: column;
-          margin-bottom: 1.25em;
-          &-input {
-            width: 90%;
-            height: 100%;
-            border: 1px solid #a2a2a2;
-            border: none !important;
-            border-radius: 5px;
-            background-color: #ffffff;
-            cursor: pointer;
-            position: relative;
-            &-value {
-              position: absolute;
-              top: 50%;
-              right: 5px;
-              transform: translateY(-50%);
-            }
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.25em;
+        &-input {
+          width: 90%;
+          height: 100%;
+          border: 1px solid #a2a2a2;
+          border: none !important;
+          border-radius: 5px;
+          background-color: #ffffff;
+          cursor: pointer;
+          position: relative;
+          &-value {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
           }
         }
-        &-svg {
-          position: absolute;
-          top: 50%;
-          left: 1rem;
-          transform: translateY(-50%);
-          border-radius: 50%;
+      }
+      &-svg {
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-50%);
+        border-radius: 50%;
+        height: 2.5rem;
+        width: 2.5rem;
+        & * {
           height: 2.5rem;
           width: 2.5rem;
-          & * {
-            height: 2.5rem;
-            width: 2.5rem;
-          }
-        }
-        &-text {
-          align-self: center;
         }
       }
-      &-headline {
-        font-size: 3.5rem;
-        position: absolute;
-        margin-bottom: 20px;
-        top: -20%;
-        right: 0%;
-        font-weight: bolder;
+      &-text {
+        align-self: center;
       }
-
-      &__field-label {
-        z-index: 5;
-        font-weight: bold;
-        height: 100%;
-        margin-bottom: -1rem;
-      }
-
-      cursor: pointer !important;
     }
+    &-headline {
+      font-size: 3.5rem;
+      position: absolute;
+      margin-bottom: 20px;
+      top: -20%;
+      right: 0%;
+      font-weight: bolder;
+    }
+
+    &__field-label {
+      z-index: 5;
+      font-weight: bold;
+      height: 100%;
+      margin-bottom: -1rem;
+    }
+
+    cursor: pointer !important;
+  }
+}
+
+form {
+  display: grid;
+  // width: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 3rem;
+  box-sizing: border-box;
+}
+
+mat-select {
+  text-align: center;
+  border-radius: 5px;
+}
+
+#input {
+  margin-top: 1.8rem;
+}
+
+mat-select,
+#input {
+  background-color: #ffffff;
+  border: 1px solid #a2a2a2;
+  border-bottom: 1px solid #a2a2a2;
+  height: 5.1rem;
+  text-align: right;
+}
+
+.text-input {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__label {
+    font-weight: bold;
   }
 
-  form {
-    display: grid;
-    // width: 100%;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 3rem;
-    box-sizing: border-box;
-  }
-
-  mat-select {
-    text-align: center;
-    border-radius: 5px;
-  }
-
-  #input {
-    margin-top: 1.8rem;
-  }
-
-  mat-select,
-  #input {
-    background-color: #ffffff;
+  &__input {
+    height: 4rem;
     border: 1px solid #a2a2a2;
-    border-bottom: 1px solid #a2a2a2;
-    height: 5.1rem;
+  }
+
+  &__input:active,
+  &__input:focus {
+    outline: none;
+  }
+}
+
+.education {
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+
+  ::ng-deep .mat-form-field {
+    width: 90%;
+  }
+  ::ng-deep .mat-form-field-infix {
+    width: 90%;
+    border-top: 0 !important;
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    // width: 80% !important;
     text-align: right;
   }
 
-  .text-input {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
-    &__label {
-      font-weight: bold;
-    }
-
-    &__input {
-      height: 4rem;
-      border: 1px solid #a2a2a2;
-    }
-
-    &__input:active,
-    &__input:focus {
-      outline: none;
+  ::ng-deep .mat-select-arrow {
+    border: 0 !important;
+    &:before {
+      border-style: solid;
+      border-width: 0.15em 0.15em 0 0;
+      content: "";
+      display: inline-block;
+      height: 0.7em;
+      left: 2rem;
+      position: relative;
+      top: -7px;
+      transform: rotate(135deg);
+      vertical-align: top;
+      width: 0.7em;
+      color: $primary;
     }
   }
 
-  .education {
-    ::ng-deep .mat-form-field-underline {
-      display: none;
-    }
-
-    ::ng-deep .mat-form-field {
-      width: 90%;
-    }
-    ::ng-deep .mat-form-field-infix {
-      width: 90%;
-      border-top: 0 !important;
-    }
-
-    ::ng-deep .mat-form-field-wrapper {
-      // width: 80% !important;
-      text-align: right;
-    }
-
-    ::ng-deep .mat-select-arrow {
-      border: 0 !important;
-      &:before {
-        border-style: solid;
-        border-width: 0.15em 0.15em 0 0;
-        content: "";
-        display: inline-block;
-        height: 0.7em;
-        left: 2rem;
-        position: relative;
-        top: -7px;
-        transform: rotate(135deg);
-        vertical-align: top;
-        width: 0.7em;
-        color: $primary;
-      }
-    }
-
-    ::ng-deep .mat-select-value,
-    ::ng-deep .mat-select-value-text,
-    ::ng-deep .mat-select-min-line {
-      height: 5rem !important;
-      vertical-align: middle;
-      padding-right: 5px;
-    }
-
-    ::ng-deep .mat-select-value-text {
-      margin: auto;
-    }
-    ::ng-deep .mat-select-min-line {
-      height: 4rem !important;
-    }
-
-    .mat-select-panel .mat-primary {
-      text-align: right;
-      // width: 26.1rem !important;
-    }
-
-    ::ng-deep .mat-select-panel {
-      // min-width: 26.1rem !important;
-    }
-
-    ::ng-deep .cdk-overlay-pane {
-      text-align: right;
-      transform: translateX(0) !important;
-      transform: translatey(5.1rem) !important;
-    }
-  }
-  ::ng-deep .mat-option {
-    height: max-content !important;
-    direction: rtl;
+  ::ng-deep .mat-select-value,
+  ::ng-deep .mat-select-value-text,
+  ::ng-deep .mat-select-min-line {
+    height: 5rem !important;
+    vertical-align: middle;
+    padding-right: 5px;
   }
 
-  .header__form-field-input {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    right: 0;
-    visibility: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    margin-top: 50px;
-    margin-right: 50px;
+  ::ng-deep .mat-select-value-text {
+    margin: auto;
+  }
+  ::ng-deep .mat-select-min-line {
+    height: 4rem !important;
   }
 
-  .label-input {
-    margin: 0.4375em 0;
+  .mat-select-panel .mat-primary {
+    text-align: right;
+    // width: 26.1rem !important;
   }
 
+  ::ng-deep .mat-select-panel {
+    // min-width: 26.1rem !important;
+  }
+
+  ::ng-deep .cdk-overlay-pane {
+    text-align: right;
+    transform: translateX(0) !important;
+    transform: translatey(5.1rem) !important;
+  }
+}
+::ng-deep .mat-option {
+  height: max-content !important;
+  direction: rtl;
+}
+
+.header__form-field-input {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  visibility: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-top: 50px;
+  margin-right: 50px;
+}
+
+.label-input {
+  margin: 0.4375em 0;
+}

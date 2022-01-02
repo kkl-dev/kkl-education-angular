@@ -52,6 +52,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.formatUrl(event.url);
+        console.log(event.url.includes('sleeping'));
+    this.sleepStatus = event.url.includes('sleeping');
+        
         this.handleSleepStatus();
         this.getActiveStep();
         this.setActiveStep();
@@ -110,6 +113,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
   }
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
+
     this.activeStep = +newActiveStep;
   }
 
@@ -119,19 +123,18 @@ export class OrderTourComponent implements OnInit, AfterViewInit {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-    if(routeIndex<this.steps.length){
+    if (routeIndex < this.steps.length) {
       this.router.navigateByUrl(
         `/education/order-tour/${this.steps[routeIndex].path}`
       );
-   }else{
-     console.log('last route navigate to next page');
-     this.router.navigateByUrl(
-      `/education/search`
-    );
-   }
+    } else {
+      console.log('last route navigate to next page');
+      this.router.navigateByUrl(`/education/search`);
+    }
   }
   public changeActiveStepPrevNavigation(): void {
     this.activeStep = +this.activeStep--;
+    
     this.location.back();
   }
 }

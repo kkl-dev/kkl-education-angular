@@ -25,10 +25,8 @@
     &-text {
       align-self: center;
       margin-left: auto;
-
     }
   }
-
 
   &__form {
     margin: auto;
@@ -76,7 +74,7 @@
 
       &-input {
         opacity: 0;
-       width: 0;
+        width: 0;
         cursor: pointer;
       }
 
@@ -113,7 +111,6 @@
 }
 
 .header {
-
   ::ng-deep .mat-select-value-text {
     margin: auto;
   }
@@ -198,13 +195,15 @@
     height: 100%;
   }
 
-  ::ng-deep .airbnb-calendar-container {
-    left: -550px !important;
+  ::ng-deep .airbnb-calendar-container{position:fixed;
+    left: 50vw !important;
+    top: 50vh !important;
+    transform: translate(-50%, -50%);
   }
-  
-::ng-deep mat-form-field{
-  width: 100% !important;
-}
+
+  ::ng-deep mat-form-field {
+    width: 100% !important;
+  }
 }
 
 .mat-select-panel .mat-primary {
