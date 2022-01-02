@@ -17,12 +17,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     
     
-  //   request= request.clone({
-  //     withCredentials: true,    
-  //     setHeaders:{
-  //      'Accept': 'application/json',
-  //     }
-  //  })
+    request= request.clone({
+      withCredentials: true,    
+      setHeaders:{
+       'Accept': 'application/json',
+      }
+   })
    
     return next.handle(request);
   }

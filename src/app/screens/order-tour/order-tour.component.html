@@ -1,9 +1,15 @@
 
- <div
+ <!-- <div
  class="order-tour"
  [ngClass]="{
    'sleeping-width': activeStep === 1 || currentRoute === 'sleeping'
  }"
+> -->
+<div
+  class="order-tour"
+  [ngClass]="{
+    'sleeping-width': sleepStatus
+  }"
 >
 <!-- <app-sleeping-map class="app-sleeping-map"
 [ngClass]="{
@@ -20,9 +26,10 @@
      fxLayout.xs="column"
      fxFlexFill
    > 
+   <!-- [isSleep]="currentRoute === 'sleeping'" -->
      <div fxFlex="20"  class="stepper">
        <app-working-steps
-       [isSleep]="currentRoute === 'sleeping'"
+       [isSleep]="sleepStatus"
          [steps]="steps"
          [divider]="true"
          (changeActiveStep)="changeActiveStep($event)"

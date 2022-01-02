@@ -40,8 +40,13 @@
   //   text-align: left !important;
   // }
 
-  ::ng-deep .airbnb-calendar-container {
-    left: -500px !important;
+  // ::ng-deep .airbnb-calendar-container {
+  //   left: -500px !important;
+  // }
+  ::ng-deep .airbnb-calendar-container{position:fixed;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -30%);
   }
   @media screen and (max-width: 1024px) {
     ::ng-deep .mat-select-min-line {

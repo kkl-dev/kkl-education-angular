@@ -156,16 +156,15 @@ export class SquadDetailsComponent implements OnInit {
       this.listenToRadioButton(form);
       this.form.controls["attribute"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
         this.form.controls["activityType"].patchValue('', { emitEvent: false });
-        this.indexChange=this.indexChange+1;
+        this.indexChange++;
         if(this.indexChange>1){
          this.indexChange=0;
          return;
         }
         //  if (value === '12')
         //   this.resetAgeGroupField();
-          this.setAutoCustomer(value)
-          this.userService.getActivityByAttribute(value).subscribe(res=>{
-  
+        //   this.setAutoCustomer(value)
+          this.userService.getActivityByAttribute(value).subscribe(res=>{ 
             this.squadDetailsService.activityByAttributeOriginal = res;
             this.squadDetailsService.activityByAttribute = [];
             res.forEach(element => {
@@ -175,9 +174,12 @@ export class SquadDetailsComponent implements OnInit {
             console.log('activityByAttribute is :', this.squadDetailsService.activityByAttribute);
   
           })
+          if (value === '12')
+          this.resetAgeGroupField();
+          this.setAutoCustomer(value)
       });
-      this.form.controls["activityType"].valueChanges.pipe(debounceTime(0),distinctUntilChanged()).subscribe(value => {
-             this.indexChange=this.indexChange+1;
+        this.form.controls["activityType"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+             this.indexChange++;
              if(this.indexChange>1){
               this.indexChange=0;
               return;
@@ -193,7 +195,7 @@ export class SquadDetailsComponent implements OnInit {
    
   }
 
-  public logForm1(form){
+  public logBudgetForm(form){
     console.log('I am budget form  event', form);
   }
 
@@ -201,9 +203,9 @@ export class SquadDetailsComponent implements OnInit {
     var attr = this.tripService.attributesOriginal.filter(el => el.id === parseInt(value))[0];
      this.attributeObjSelected= attr;
      this.setBudgetParameters();
-     if (attr.autoCustomerId !== null) {// שליפת לקוח והצבתו בלקוח רצוי 
-      this.tripService.getCustomer(attr.autoCustomerId);
-   }
+  //    if (attr.autoCustomerId !== null) {// שליפת לקוח והצבתו בלקוח רצוי 
+  //     this.tripService.getCustomer(attr.autoCustomerId);
+  //  }
  }
  setBudgetParameters(){
      this.budgetByParam.attribute= this.attributeObjSelected;

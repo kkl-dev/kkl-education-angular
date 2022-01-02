@@ -82,6 +82,10 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((event: any) => {
         this.activeRouteUrl=event.url
         this.formatUrl(event.url);
+        //test
+        console.log(event.url.includes('sleeping'));
+        this.sleepStatus = event.url.includes('sleeping');
+        // end test
         this.handleSleepStatus();
         this.getActiveStep();
         this.setActiveStep();

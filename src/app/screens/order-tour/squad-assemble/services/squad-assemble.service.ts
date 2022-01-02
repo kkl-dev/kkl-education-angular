@@ -38,6 +38,8 @@ export class SquadAssembleService {
   filledNightsArray = [];
   Customer = {} as BaseCustomer;
   payerCustomer = {} as BaseCustomer;
+  kklWorkerId;
+  kklWorkerName;
   tripInfofromService: TripModel;
   peopleInTrip;
   options!: CalendarOptions;
