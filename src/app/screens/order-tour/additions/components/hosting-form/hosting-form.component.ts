@@ -394,7 +394,6 @@ export class HostingFormComponent implements OnInit, OnDestroy {
     })
   }
   validationsHosting() {
-
     if (this.form.value.details['startHour'] === null || this.form.value.details['startHour'] === "" || this.form.value.details['startHour'] === undefined) {
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
         width: '500px',
