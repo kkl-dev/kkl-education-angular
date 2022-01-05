@@ -11,7 +11,7 @@ import { FacilitiesConvertingService } from 'src/app/services/facilities-convert
 import { ActivitiesService, UserService, OrderService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.service';
@@ -289,15 +289,26 @@ export class FacilitiesComponent implements OnInit {
     }
     //for autocmplete filter
     if (obj.activity) {
-      tripActivities = tripActivities.filter((a: any) =>
-        //a.name == obj.activity);
-        a.activityId == obj.activity);
-
+      
+        tripActivities = tripActivities.filter(i=>  i.name.includes(obj.activity))
+          
       if (tripActivities == []) {
         console.log('tripActivities emty must use auto complete: ')
       }
     }
 
+    // if (obj.activity) {
+    //   tripActivities = tripActivities.filter((a: any) =>
+    //     //a.name == obj.activity);
+    //     // a.activityId == obj.activity);
+    //     a.name == obj.activity);
+
+    //   if (tripActivities == []) {
+    //     console.log('tripActivities emty must use auto complete: ')
+    //   }
+    // }
+    
+   
     this.tripActivitiesFilter = tripActivities;
     this.tripActivitiesInfo = tripActivities;
     this.tripActivitiesShow = [];
@@ -308,12 +319,10 @@ export class FacilitiesComponent implements OnInit {
     this.setFormArray();
     this.calculatePages(this.tripActivitiesFilter.length);
     this.pagesToShow(1);
-    //test
-     form.controls["activity"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-        console.log('I am activity change!');
-    });
-    //end test
+   
   }
+
+  
 
   newPageEmit(page) {
     //console.log("page: ", page);
@@ -463,6 +472,21 @@ export class FacilitiesComponent implements OnInit {
 
   onOptionSelected(e: any) {
     console.log('onOptionSelected - e', e);
+  }
+
+  // onOptionSelected(event: any, groupKey: string) {
+  //   console.log('onOptionSelected :', event );
+  //   console.log('onOptionSelected :', groupKey );
+  // }
+
+  
+  public onAutocomplete(control: FormControl) {
+    // console.log('I am auto complete from facilities',control);
+    // this.tripActivitiesShow=[];
+    // this.tripActivitiesShow= this.tripActivitiesInfoTotal.filter(i=>i.name.includes(control.value));
+    // console.log(this.tripActivitiesShow);
+    //  this.formArray[2].inputProps.options=[];
+    //   this.formArray[2].inputProps.options=this.tripActivitiesShow;
   }
 
 

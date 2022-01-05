@@ -7,8 +7,10 @@ import {
   ElementRef,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { FormService } from '../logic/form.service';
+import { QuestionAutocomplete } from '../logic/question-autocomplete';
 import { QuestionBase } from '../logic/question-base';
 import { QuestionGroup } from '../logic/question-group';
 
@@ -42,6 +44,7 @@ export class FormContainerComponent implements OnInit {
 
   @Output() register: EventEmitter<FormGroup> = new EventEmitter();
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
+ // @Output() optionSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(private formService: FormService) { }
 
@@ -100,4 +103,19 @@ export class FormContainerComponent implements OnInit {
     console.log("onAutocomplete: ", control);
     this.autocomplete.emit(control);
   }
+
+  // public onOptionSelected(event: MatAutocompleteSelectedEvent) {
+   
+  //   const autocomplete: QuestionAutocomplete = this.formGroup.find(
+  //     (q) => q instanceof QuestionAutocomplete
+  //   );
+  //   const option = autocomplete.inputProps.options.find(
+  //     (opt) => opt.value === event.option.value
+  //   );
+
+
+  //   console.log(option);
+
+  //   this.optionSelected.emit({ key: autocomplete.key, option });
+  // }
 }
