@@ -44,7 +44,7 @@ export class FormContainerComponent implements OnInit {
 
   @Output() register: EventEmitter<FormGroup> = new EventEmitter();
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
- // @Output() optionSelected: EventEmitter<any> = new EventEmitter();
+  //@Output() optionSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(private formService: FormService) { }
 
@@ -106,7 +106,7 @@ export class FormContainerComponent implements OnInit {
 
   // public onOptionSelected(event: MatAutocompleteSelectedEvent) {
    
-  //   const autocomplete: QuestionAutocomplete = this.formGroup.find(
+  //   const autocomplete: QuestionAutocomplete = this.questions.find(
   //     (q) => q instanceof QuestionAutocomplete
   //   );
   //   const option = autocomplete.inputProps.options.find(

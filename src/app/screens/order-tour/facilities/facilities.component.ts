@@ -48,6 +48,8 @@ export class FacilitiesComponent implements OnInit {
   public colors = { green: '#37C56B', blue: '#448ECD' }
   public activityIsUpComing: boolean = false;
   formArray: QuestionBase<string | number>[];
+  flag: boolean= false;
+  tripActivitiesArr:any=[];
   tripId: number = 0;
   // public formArray: QuestionBase<string | number>[] = FORM_ARRAY;
   // public facilitiesArray: InfoCard1[] = FACILITIES_ARRAY;
@@ -122,7 +124,7 @@ export class FacilitiesComponent implements OnInit {
     this.getAreas();
     this.getActivityCategories();
     this.getTripActivities();
-    this.setFormArray();
+    //this.setFormArray();
     this.getOrderService();
     this.getTripCalendar();
 
@@ -194,38 +196,40 @@ export class FacilitiesComponent implements OnInit {
   }
 
   private setFormArray() {
-    // console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
-    this.formArray = [
-      //// not in use for now
-      // new QuestionSelect({
-      //   key: 'durationOfActivity',
-      //   label: 'משך פעילות',
-      //   validations: [Validators.required],
-      //   inputProps: { options: [{ label: 'אירוח', value: '2' }] }
-      // }),
-      new QuestionSelect({
-        key: 'areas',
-        label: 'אזור',
-        // validations: [Validators.required],
-        inputProps: { options: this.areas }
-      }),
-      new QuestionSelect({
-        key: 'typeOfActivity',
-        label: 'סוג פעילות',
-        // validations: [Validators.required],
-        inputProps: { options: this.activityCategories }
-      }),
-      new QuestionAutocomplete({
-        key: 'activity',
-        label: 'חפש פעילות',
-        cols: 1,
-        value: '',
-        // validations: [Validators.required],
-        inputProps: {
-          options: this.tripActivitiesShow
-        },
-      }),
-    ];
+    // // console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
+    // this.formArray = [
+    //   //// not in use for now
+    //   // new QuestionSelect({
+    //   //   key: 'durationOfActivity',
+    //   //   label: 'משך פעילות',
+    //   //   validations: [Validators.required],
+    //   //   inputProps: { options: [{ label: 'אירוח', value: '2' }] }
+    //   // }),
+    //   new QuestionSelect({
+    //     key: 'areas',
+    //     label: 'אזור',
+    //     // validations: [Validators.required],
+    //     inputProps: { options: this.areas }
+    //   }),
+    //   new QuestionSelect({
+    //     key: 'typeOfActivity',
+    //     label: 'סוג פעילות',
+    //     // validations: [Validators.required],
+    //     inputProps: { options: this.activityCategories }
+    //   }),
+    //   new QuestionAutocomplete({
+    //     key: 'activity',
+    //     label: 'חפש פעילות',
+    //     cols: 1,
+    //     value: '',
+    //     // validations: [Validators.required],
+    //     inputProps: {
+    //       options: this.tripActivitiesShow
+    //     },
+    //   }),
+    // ];
+    this.formArray=this.facilitiesService.formArray;
+    this.flag=true;
   }
 
   getAreas() {
@@ -233,7 +237,8 @@ export class FacilitiesComponent implements OnInit {
       console.log('getAreas: ', areas);
       if (areas) {
         areas.forEach(element => {
-          this.areas.push({ label: element.name, value: element.id.toString() });
+          //this.areas.push({ label: element.name, value: element.id.toString() });
+          this.facilitiesService.areas.push({ label: element.name, value: element.id.toString() });
         });
       }
     },
@@ -246,6 +251,7 @@ export class FacilitiesComponent implements OnInit {
     this.activitiyService.getActivityCategories().subscribe((res) => {
       res.forEach(element => {
         this.activityCategories.push({ label: element.name, value: element.id.toString() })
+        this.facilitiesService.activityCategories.push({ label: element.name, value: element.id.toString() })
       });
     },
       error => {
@@ -263,10 +269,12 @@ export class FacilitiesComponent implements OnInit {
       this.tripActivitiesFilter = res;
       this.pagesToShow(1);
       // this.pagesAmount = res.length + 1
-      res.forEach(element => {
-        //this.tripActivities.push({ label: element.name, value: element.activityId.toString() })
-        this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+      res.forEach(element => {  
+        //this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+        this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
       });
+      this.setFormArray();
+
     })
   }
 
@@ -278,24 +286,82 @@ export class FacilitiesComponent implements OnInit {
   logForm(form) {
     console.log("facility - form: ", form);
     let obj = form.value;
-    let tripActivities = this.tripActivitiesInfoTotal;
-    if (obj.areas) {
-      tripActivities = tripActivities.filter(a =>
-        a.regionId == obj.areas);
-    }
-    if (obj.typeOfActivity) {
-      tripActivities = tripActivities.filter((a: { activityId: any; }) =>
-        a.activityId == obj.typeOfActivity);
-    }
+    //let tripActivities = this.tripActivitiesInfoTotal;
+    if(this.tripActivitiesArr.length==0)
+    this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+    //this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+    form.get('areas').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      this.tripActivitiesArr=[];
+      this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+      if( form.controls["areas"].value){
+        this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+          a.regionId == form.controls["areas"].value);
+      }  
+        if(form.get('typeOfActivity').value){
+          this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+            a.activityId == form.controls["typeOfActivity"].value);
+        }
+       form.get('activity').patchValue('', { emitEvent: false });
+    });
+    // if (obj.areas) {
+    //   tripActivities = tripActivities.filter(a =>
+    //     a.regionId == obj.areas);
+    //    form.get('activity').patchValue('', { emitEvent: false });
+    // }
+    form.get('typeOfActivity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      this.tripActivitiesArr=[];
+      this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+     if(form.controls["typeOfActivity"].value){
+      this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+        a.activityId == form.controls["typeOfActivity"].value);
+     }   
+        if(form.get('areas').value){
+          this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+            a.regionId == form.controls["areas"].value);
+        }
+       form.get('activity').patchValue('', { emitEvent: false });
+    });
+    // if (obj.typeOfActivity) {
+    //   tripActivities = tripActivities.filter((a: { activityId: any; }) =>
+    //     a.activityId == obj.typeOfActivity);
+    //     form.get('activity').patchValue('', { emitEvent: false });
+    // }
     //for autocmplete filter
-    if (obj.activity) {
+  //  if (!obj.areas && !obj.typeOfActivity){
+  //   //let tripActivities = this.tripActivitiesInfoTotal;
+  //   this.tripActivitiesArr=[];
+  //   this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+  //   if (obj.activity) {
+  //     if ( !Number.isInteger(parseInt(obj.activity)))
+  //       //tripActivities = tripActivities.filter(i=>  i.name.includes(obj.activity))
+  //       this.tripActivitiesArr =  this.tripActivitiesArr.filter(i=>  i.name.includes(obj.activity))
+  //      else{
+  //       //tripActivities= this.tripActivitiesInfoTotal.filter(i=> i.activityId === parseInt(obj.activity) )
+  //       this.tripActivitiesArr= this.tripActivitiesInfoTotal.filter(i=> i.activityId === parseInt(obj.activity) )
+  //      }
       
-        tripActivities = tripActivities.filter(i=>  i.name.includes(obj.activity))
-          
-      if (tripActivities == []) {
-        console.log('tripActivities emty must use auto complete: ')
-      }
+  //     // if (tripActivities == []) {
+  //     //   console.log('tripActivities emty must use auto complete: ')
+  //     // }
+  //   }
+  // }
+  
+  form.get('activity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+    if ( !Number.isInteger(parseInt(form.get('activity').value))){
+       if(this.tripActivitiesArr.length>0){
+        this.tripActivitiesArr =  this.tripActivitiesArr.filter(i=>  i.name.includes(value))
+       }
+       else{
+         this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+         this.tripActivitiesArr =  this.tripActivitiesArr.filter(i=>  i.name.includes(value))
+       }
     }
+    else{
+      this.tripActivitiesArr=[];
+      this.tripActivitiesArr= this.tripActivitiesInfoTotal.filter(i=> i.activityId === parseInt(form.get('activity').value)) 
+    }
+   
+  });
 
     // if (obj.activity) {
     //   tripActivities = tripActivities.filter((a: any) =>
@@ -309,14 +375,20 @@ export class FacilitiesComponent implements OnInit {
     // }
     
    
-    this.tripActivitiesFilter = tripActivities;
-    this.tripActivitiesInfo = tripActivities;
+    //this.tripActivitiesFilter = tripActivities;
+    this.tripActivitiesFilter = this.tripActivitiesArr;
+    //this.tripActivitiesInfo = tripActivities;
+    this.tripActivitiesInfo = this.tripActivitiesArr;
     this.tripActivitiesShow = [];
+    this.facilitiesService.tripActivitiesShow = [];
+    this.facilitiesService.formArray[2].inputProps.options=[];
     this.tripActivitiesFilter.forEach(element => {
-      this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+      //this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+      this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
     });
+    this.facilitiesService.formArray[2].inputProps.options= this.facilitiesService.tripActivitiesShow;
     //console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
-    this.setFormArray();
+    //this.setFormArray();
     this.calculatePages(this.tripActivitiesFilter.length);
     this.pagesToShow(1);
    

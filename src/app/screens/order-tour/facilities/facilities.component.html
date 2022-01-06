@@ -42,7 +42,7 @@
             <!-- (optionSelected)="onOptionSelected($event, formArray[2].key)" -->
             
             <div class="forms" fxFlex='100'>
-                <app-form-container [questions]='formArray' [cols]='3' (register)="logForm($event)"
+                <app-form-container *ngIf="flag" [questions]='formArray' [cols]='3' (register)="logForm($event)"
                 (optionSelected)="onOptionSelected($event)"   (autocomplete)="onAutocomplete($event)" >
                 </app-form-container>
             </div>
