@@ -287,21 +287,31 @@ export class FacilitiesComponent implements OnInit {
     console.log("facility - form: ", form);
     let obj = form.value;
     //let tripActivities = this.tripActivitiesInfoTotal;
-    if(this.tripActivitiesArr.length==0)
-    this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+    // if(this.tripActivitiesArr.length==0)
+    // this.tripActivitiesArr = this.tripActivitiesInfoTotal;
     //this.tripActivitiesArr = this.tripActivitiesInfoTotal;
     form.get('areas').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
       this.tripActivitiesArr=[];
       this.tripActivitiesArr = this.tripActivitiesInfoTotal;
       if( form.controls["areas"].value){
-        this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
-          a.regionId == form.controls["areas"].value);
-      }  
         if(form.get('typeOfActivity').value){
           this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
-            a.activityId == form.controls["typeOfActivity"].value);
+            a.regionId == form.controls["areas"].value && a.categoryId == form.controls["typeOfActivity"].value);
         }
+        else{
+          this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+            a.regionId == form.controls["areas"].value);
+        }     
+      } 
+      else{
+        if(form.controls["typeOfActivity"].value){
+          this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+            a.categoryId == form.controls["typeOfActivity"].value);
+        }
+      } 
+    
        form.get('activity').patchValue('', { emitEvent: false });
+       this.resetActivities(this.tripActivitiesArr)
     });
     // if (obj.areas) {
     //   tripActivities = tripActivities.filter(a =>
@@ -312,14 +322,23 @@ export class FacilitiesComponent implements OnInit {
       this.tripActivitiesArr=[];
       this.tripActivitiesArr = this.tripActivitiesInfoTotal;
      if(form.controls["typeOfActivity"].value){
-      this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
-        a.activityId == form.controls["typeOfActivity"].value);
+       if(form.controls["areas"].value){
+        this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+          a.categoryId == form.controls["typeOfActivity"].value && a.regionId == form.controls["areas"].value);
+       }
+       else{
+        this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+          a.categoryId == form.controls["typeOfActivity"].value);
+       } 
+     }
+     else{
+       if(form.controls["areas"].value){
+        this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
+          a.regionId == form.controls["areas"].value);
+       }
      }   
-        if(form.get('areas').value){
-          this.tripActivitiesArr = this.tripActivitiesArr.filter(a =>
-            a.regionId == form.controls["areas"].value);
-        }
        form.get('activity').patchValue('', { emitEvent: false });
+       this.resetActivities(this.tripActivitiesArr)
     });
     // if (obj.typeOfActivity) {
     //   tripActivities = tripActivities.filter((a: { activityId: any; }) =>
@@ -348,18 +367,26 @@ export class FacilitiesComponent implements OnInit {
   
   form.get('activity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
     if ( !Number.isInteger(parseInt(form.get('activity').value))){
-       if(this.tripActivitiesArr.length>0){
-        this.tripActivitiesArr =  this.tripActivitiesArr.filter(i=>  i.name.includes(value))
-       }
-       else{
-         this.tripActivitiesArr = this.tripActivitiesInfoTotal;
-         this.tripActivitiesArr =  this.tripActivitiesArr.filter(i=>  i.name.includes(value))
-       }
+      if(form.get('activity').value){
+        if(this.tripActivitiesArr.length>0){
+          this.tripActivitiesArr =  this.tripActivitiesArr.filter(i=>  i.name.includes(value))
+         }
+         else{
+           this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+           this.tripActivitiesArr =  this.tripActivitiesArr.filter(i=>  i.name.includes(value))
+         }
+      }
+      else{
+         if(!form.controls["areas"].value && !form.controls["typeOfActivity"].value){
+          this.tripActivitiesArr = this.tripActivitiesInfoTotal;
+         }
+      }   
     }
     else{
       this.tripActivitiesArr=[];
       this.tripActivitiesArr= this.tripActivitiesInfoTotal.filter(i=> i.activityId === parseInt(form.get('activity').value)) 
     }
+    this.resetActivities(this.tripActivitiesArr)
    
   });
 
@@ -375,7 +402,28 @@ export class FacilitiesComponent implements OnInit {
     // }
     
    
-    //this.tripActivitiesFilter = tripActivities;
+    // //this.tripActivitiesFilter = tripActivities;
+    // this.tripActivitiesFilter = this.tripActivitiesArr;
+    // //this.tripActivitiesInfo = tripActivities;
+    // this.tripActivitiesInfo = this.tripActivitiesArr;
+    // this.tripActivitiesShow = [];
+    // this.facilitiesService.tripActivitiesShow = [];
+    // this.facilitiesService.formArray[2].inputProps.options=[];
+    // this.tripActivitiesFilter.forEach(element => {
+    //   //this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+    //   this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+    // });
+    // this.facilitiesService.formArray[2].inputProps.options= this.facilitiesService.tripActivitiesShow;
+    //console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
+    //this.setFormArray();
+    this.calculatePages(this.tripActivitiesFilter.length);
+    this.pagesToShow(1);
+   
+  }
+
+  //test
+   resetActivities(tripActivitiesArr){
+      //this.tripActivitiesFilter = tripActivities;
     this.tripActivitiesFilter = this.tripActivitiesArr;
     //this.tripActivitiesInfo = tripActivities;
     this.tripActivitiesInfo = this.tripActivitiesArr;
@@ -387,14 +435,9 @@ export class FacilitiesComponent implements OnInit {
       this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
     });
     this.facilitiesService.formArray[2].inputProps.options= this.facilitiesService.tripActivitiesShow;
-    //console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
-    //this.setFormArray();
-    this.calculatePages(this.tripActivitiesFilter.length);
-    this.pagesToShow(1);
-   
-  }
+   }
 
-  
+  //end test
 
   newPageEmit(page) {
     //console.log("page: ", page);

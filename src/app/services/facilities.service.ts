@@ -183,7 +183,7 @@ export class FacilitiesService {
     // }),
     new QuestionSelect({
       key: 'areas',
-      label: 'אזור',
+      label: 'אזור',   
       // validations: [Validators.required],
       inputProps: { options: this.areas }
     }),
