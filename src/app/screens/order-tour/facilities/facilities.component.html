@@ -38,9 +38,12 @@
                 <p fxFlex='80'>הוספת מתקנים ופעילויות ללו"ז</p>
                 <button fxFlex='20' (click)="openModal('addActivity')">הוספת פעילות חדשה +</button>
             </div>
+            
+            <!-- (optionSelected)="onOptionSelected($event, formArray[2].key)" -->
+            
             <div class="forms" fxFlex='100'>
-                <app-form-container [questions]='formArray' [cols]='3' (register)="logForm($event)"
-                    (optionSelected)="onOptionSelected($event)">
+                <app-form-container *ngIf="flag" [questions]='formArray' [cols]='3' (register)="logForm($event)"
+                (optionSelected)="onOptionSelected($event)"   (autocomplete)="onAutocomplete($event)" >
                 </app-form-container>
             </div>
         </div>

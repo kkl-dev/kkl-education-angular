@@ -10,6 +10,9 @@ import { ActivitiesService } from 'src/app/open-api';
 import { TripActivity } from 'src/app/open-api';
 import { SquadAssembleService } from '../screens/order-tour/squad-assemble/services/squad-assemble.service';
 import { TempOrder } from 'src/app/open-api';
+import { QuestionBase } from '../components/form/logic/question-base';
+import { QuestionSelect } from '../components/form/logic/question-select';
+import { QuestionAutocomplete } from '../components/form/logic/question-autocomplete';
 
 @Injectable({
   providedIn: 'root'
@@ -162,5 +165,44 @@ export class FacilitiesService {
       console.log(error);
     });
   }
+  tripActivities: any = [];
+  tripActivitiesShow: any = [];
+  tripActivitiesFilter: any = [];
+  tripActivitiesInfoTotal: any = [];
+  tripActivitiesInfo: any = [];
+  areas: any = [];
+  activityCategories: any = [];
+  formArray: QuestionBase<string | number>[]=
+  [
+    //// not in use for now
+    // new QuestionSelect({
+    //   key: 'durationOfActivity',
+    //   label: 'משך פעילות',
+    //   validations: [Validators.required],
+    //   inputProps: { options: [{ label: 'אירוח', value: '2' }] }
+    // }),
+    new QuestionSelect({
+      key: 'areas',
+      label: 'אזור',   
+      // validations: [Validators.required],
+      inputProps: { options: this.areas }
+    }),
+    new QuestionSelect({
+      key: 'typeOfActivity',
+      label: 'סוג פעילות',
+      // validations: [Validators.required],
+      inputProps: { options: this.activityCategories }
+    }),
+    new QuestionAutocomplete({
+      key: 'activity',
+      label: 'חפש פעילות',
+      cols: 1,
+      value: '',
+      // validations: [Validators.required],
+      inputProps: {
+        options: this.tripActivitiesShow
+      },
+    }),
+  ];
 
 }
