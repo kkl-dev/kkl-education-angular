@@ -570,11 +570,34 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   public startTimeChanged(event: string) {
     let timeFormat = this.setTimeFormat(event);
     this.form.controls["details"].get('startHour').patchValue(timeFormat, { emitEvent: false });
+    var dateStart = this.form.controls["details"].get('startDate').value !== "" ? this.form.controls["details"].get('startDate').value : new Date();
+    var timeStart = this.form.controls["details"].get('startHour').value.split(/\:|\-/g);
+    dateStart.setHours(timeStart[0]);
+    dateStart.setMinutes(timeStart[1]);
+    var dateEnd = this.form.controls["details"].get('endDate').value !== "" ? this.form.controls["details"].get('endDate').value : new Date();
+    var timeEnd = this.form.controls["details"].get('endHour').value !== "" ? this.form.controls["details"].get('endHour').value.split(/\:|\-/g) : "00:00";
+    dateEnd.setHours(timeEnd[0]);
+    dateEnd.setMinutes(timeEnd[1]);
+    var difference = dateEnd.getTime() - dateStart.getTime();
+    var hours = difference / 1000 / 3600;
+    this.form.controls["details"].get('totalHours').patchValue(hours.toFixed(2), { emitEvent: false });
   }
 
   public endTimeChanged(event: string) {
     let timeFormat = this.setTimeFormat(event);
     this.form.controls["details"].get('endHour').patchValue(timeFormat, { emitEvent: false });
+    var dateStart = this.form.controls["details"].get('startDate').value !== "" ? this.form.controls["details"].get('startDate').value : new Date();
+    var timeStart = this.form.controls["details"].get('startHour').value !== "" ? this.form.controls["details"].get('startHour').value.split(/\:|\-/g) : "00:00";
+    dateStart.setHours(timeStart[0]);
+    dateStart.setMinutes(timeStart[1]);
+    var dateEnd = this.form.controls["details"].get('endDate').value !== "" ? this.form.controls["details"].get('endDate').value : new Date();
+    var timeEnd = this.form.controls["details"].get('endHour').value.split(/\:|\-/g);
+    dateEnd.setHours(timeEnd[0]);
+    dateEnd.setMinutes(timeEnd[1]);
+    var difference = dateEnd.getTime() - dateStart.getTime();
+    var hours = difference / 1000 / 3600;
+    this.form.controls["details"].get('totalHours').patchValue(hours.toFixed(2), { emitEvent: false });
+
   }
   setTimeFormat(event) {
     let timeArr = event.split(':');
