@@ -40,7 +40,7 @@
             </div>
             <div class="forms" fxFlex='100'>
                 <app-form-container [questions]='formArray' [cols]='3' (register)="logForm($event)"
-                    (optionSelected)="onOptionSelected($event)">
+                    (optionSelected)="onOptionSelected($event)" (autocomplete)="onAutocomplete($event)">
                 </app-form-container>
             </div>
         </div>

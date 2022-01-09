@@ -11,7 +11,7 @@ import { FacilitiesConvertingService } from 'src/app/services/facilities-convert
 import { ActivitiesService, UserService, OrderService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.service';
@@ -463,6 +463,11 @@ export class FacilitiesComponent implements OnInit {
 
   onOptionSelected(e: any) {
     console.log('onOptionSelected - e', e);
+  }
+  public onAutocomplete(control: FormControl) {
+    console.log('I am auto complete from facilities',control);
+    this.tripActivitiesShow=[];
+    this.tripActivitiesShow= this.tripActivitiesInfoTotal.filter(i=>i.name.includes(control.value));
   }
 
 
