@@ -66,6 +66,7 @@ export class EducationComponent implements OnInit {
     this.getLookupFieldForestCenters();
   }
 
+ 
   
   getLookupFieldForestCenters(){
      this.usersService.getLookupFieldForestCenters().subscribe(res=>{

@@ -43,6 +43,10 @@ select{
   }
 }
 
+::ng-deep .mat-select-panel{
+  min-width: max-content !important;
+}
+
 ::ng-deep .cdk-overlay-pane{
   width: max-content !important;
 }
