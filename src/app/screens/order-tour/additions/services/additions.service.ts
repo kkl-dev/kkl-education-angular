@@ -432,10 +432,6 @@ export class AdditionsService {
       this.setDialogMessage('תאריך התחלה חייב להיות לפני תאריך הסיום');
       return false;
     }
-    if (form.value.details['startDate'] === form.value.details['endDate'] && form.value.details['startHour'] > form.value.details['endHour']) {
-      this.setDialogMessage('שעת התחלה חייבת להיות לפני שעת הסיום');
-      return false;
-    }
 
     // בדיקה עם הפריט מסוג תוספות
     // ואם יש הרשאה -  למשווק אין

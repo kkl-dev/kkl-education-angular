@@ -239,7 +239,7 @@ export class GeneralFormService {
       key: 'languageGuidance',
       label: 'שפת הדרכה',
       type: 'select',
-      validations: [Validators.required],
+      // validations: [Validators.required],
       inputProps: {
         options: this.languageList
       },
@@ -283,14 +283,11 @@ export class GeneralFormService {
       key: 'totalHours',
       label: 'סה"כ שעות',
       value: '',
-
-    }),
-  
+    }),  
   ]
 
 
   public securing: QuestionBase<string>[] = [
-
     new QuestionTextbox({
       key: 'scatterLocation',
       label: 'מקום פיזור',
@@ -305,9 +302,7 @@ export class GeneralFormService {
     //   key: 'guardName',
     //   label: 'שם המאבטח',
     //   value: '',
-
     // }),
-
   ]
 
   public musicActivation: QuestionBase<string>[] = [
@@ -400,9 +395,7 @@ export class GeneralFormService {
         control.value= data.veganDishesNumber;
       }
       if(control.key == 'exitPoint'){
-        
          control.value= data.exitPoint+='';
-        
       }
       // if (control.key === 'comments') {
       //   control.value = data;

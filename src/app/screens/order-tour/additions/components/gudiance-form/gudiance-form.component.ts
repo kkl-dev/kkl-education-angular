@@ -483,6 +483,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     var currentDate = startDate;
     while (currentDate <= endDate) {
       dateArray.push(new Date(currentDate));
+      currentDate=new Date(currentDate)
       currentDate = currentDate.setDate(currentDate.getDate() + 1);
     }
     return dateArray;
@@ -502,7 +503,6 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   isHoliday() {
     // var hebrewDate = require("hebrew-date");
     // console.log(hebrewDate(2016, 10, 2));
-
     // רשימה של חגים בלוח השנה העברי
     // מחזיר האם
     return true;

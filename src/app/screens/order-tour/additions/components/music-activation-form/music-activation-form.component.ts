@@ -369,7 +369,10 @@ export class MusicActivationFormComponent implements OnInit, OnDestroy {
 
   }
 
-  validationsMusicActivation() { return true; }
+  validationsMusicActivation() {
+    if (this.form.controls["details"].get('totalHours').value < 0) { this.setDialogMessage('סה"כ שעות אינו הגיוני - צריך להיות גדול מ - 0'); return false; }
+    return true;
+  }
   setDateTimeFormat(date, hour) {
     let str = date.split("T");
     let hourFormat = str[0] + 'T' + hour;

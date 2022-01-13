@@ -588,6 +588,11 @@ export class FacilitiesComponent implements OnInit {
   onOptionSelected(e: any) {
     console.log('onOptionSelected - e', e);
   }
+  public onAutocomplete(control: FormControl) {
+    console.log('I am auto complete from facilities',control);
+    this.tripActivitiesShow=[];
+    this.tripActivitiesShow= this.tripActivitiesInfoTotal.filter(i=>i.name.includes(control.value));
+  }
 
   // onOptionSelected(event: any, groupKey: string) {
   //   console.log('onOptionSelected :', event );
