@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/utilities/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from "ngx-spinner";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-education',
@@ -48,7 +49,7 @@ export class EducationComponent implements OnInit {
   };
 
   constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
-    private checkAvailabilltyService: CheckAvailabilityService,private spinner: NgxSpinnerService ) {
+    private checkAvailabilltyService: CheckAvailabilityService,private spinner: NgxSpinnerService, private http:HttpClient ) {
 
     this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
     this.options = {
@@ -62,23 +63,16 @@ export class EducationComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.tripService.getLookupFieldForestCenters();
     this.getLookupFieldForestCenters();
-    //this.forestCenterId = this.tripService.centerField.id || null;
-    // if (this.forestCenterId != 0 && this.forestCenterId != null) {
-    //   this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
-    //   this.sleepingDates = this.tripService.sleepingDates;
-    //   this.disableContinueBtn = false;
-    // }
-   
   }
 
-  //test
+  
   getLookupFieldForestCenters(){
      this.usersService.getLookupFieldForestCenters().subscribe(res=>{
         this.fieldForestCentersLookUp=res;
         this.fieldForestCentersLookUp = res.filter(aco => aco.accommodationList.length > 0);
         this.tripService.formOptions=this.fieldForestCentersLookUp;
+        console.log('fieldForestCentersLookUp after filter is: ',this.tripService.formOptions)
         this.forestCenterId = this.tripService.centerField.id.toString() || null;
         if (this.forestCenterId != 0 && this.forestCenterId != null) {
           this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());

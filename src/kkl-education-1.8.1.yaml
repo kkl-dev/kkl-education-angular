@@ -351,6 +351,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TripActivityLookup'
+ 
   /activityCategories:
     get:
       tags:

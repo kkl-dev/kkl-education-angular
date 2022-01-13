@@ -508,6 +508,14 @@ displayMessage4(name,unitsNumber,maxOccupancy){
     this.valuesForEdit = null;
   }
   onSubmit() {
+    if(!(Array.isArray(this.filledNightForm.controls["nightsCount"].value))){
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'חובה לבחור ערך בשדה בחר לילות', content: '',  leftButton: 'המשך' }
+      })
+      return;
+    }
+    
     let IsValid=this.validateUnitsNumber();
     if (!IsValid)
      return;
