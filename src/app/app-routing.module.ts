@@ -44,6 +44,10 @@ const routes: Routes = [
         component: SquadAssembleComponent,
       },
       {
+        path: 'squad-assemble/:id',
+        component: SquadAssembleComponent,
+      },
+      {
         path: 'sleeping',
         component: SleepingOptionsComponent,
       },

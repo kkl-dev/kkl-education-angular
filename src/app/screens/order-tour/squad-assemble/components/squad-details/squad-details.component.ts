@@ -47,18 +47,45 @@ export class SquadDetailsComponent implements OnInit {
     // })
   }
 
+  // setSquadDetails(){
+  //   if(this.squadAssembleService.tripInfo.tripStart!=undefined){
+  //     console.log('trip info is full');
+  //     let attributeIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='attribute');
+  //     this.squadDetailsService.questions[attributeIndex].value= this.squadAssembleService.tripInfo.attribute.id.toString();
+  //     let activityIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='activityType');
+  //     this.squadDetailsService.questions[activityIndex].value= this.squadAssembleService.tripInfo.activity.id.toString();
+  //     // let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='departmentId');
+  //     // this.squadDetailsService.questions[departmentIdIndex].value= this.squadAssembleService.tripInfo.departmentId.toString();
+  //     let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='department');
+  //     this.squadDetailsService.questions[departmentIdIndex].value= this.squadAssembleService.tripInfo.departmentId.toString();
+  //     let tripLocationIndex = this.squadDetailsService.questions.findIndex(i => i.key ==='tripLocation');
+  //     if(this.squadAssembleService.tripInfo.departmentId.toString() =='8')
+  //     this.squadDetailsService.questions[tripLocationIndex].value ='8';
+  //     else if(this.squadAssembleService.tripInfo.departmentId.toString() =='1'){
+  //       this.squadDetailsService.questions[tripLocationIndex].inputProps.options=[];
+  //       this.countriesList = this.setCountryList(this.tripService.countries)
+  //       this.squadDetailsService.questions[tripLocationIndex].inputProps.options = this.countriesList;
+  //       this.squadDetailsService.questions[tripLocationIndex].value= this.squadAssembleService.tripInfo.country.id.toString();
+  //     }
+  //     let insideCenterFieldIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='insideCenterFieldId');
+  //     this.squadDetailsService.questions[insideCenterFieldIdIndex].value= this.squadAssembleService.tripInfo.insideCenterFieldId.toString();
+      
+  //   }
+  //   else{
+  //    console.log('trip info is undefined');
+  //   }
+  // }
+
   setSquadDetails(){
-    if(this.squadAssembleService.tripInfo.tripStart!=undefined){
-      console.log('trip info is full');
-      let attributeIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='attribute');
-      this.squadDetailsService.questions[attributeIndex].value= this.squadAssembleService.tripInfo.attribute.id.toString();
-      let activityIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='activityType');
+    let attributeIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='attribute');
+    let activityIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='activityType');
+    let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='department');
+    let tripLocationIndex = this.squadDetailsService.questions.findIndex(i => i.key ==='tripLocation');
+    let insideCenterFieldIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='insideCenterFieldId');
+    if(this.squadAssembleService.tripInfo?.tripStart!=undefined && !this.squadAssembleService.isRouteToNewTrip ){
+      this.squadDetailsService.questions[attributeIndex].value= this.squadAssembleService.tripInfo.attribute.id.toString();  
       this.squadDetailsService.questions[activityIndex].value= this.squadAssembleService.tripInfo.activity.id.toString();
-      // let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='departmentId');
-      // this.squadDetailsService.questions[departmentIdIndex].value= this.squadAssembleService.tripInfo.departmentId.toString();
-      let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='department');
       this.squadDetailsService.questions[departmentIdIndex].value= this.squadAssembleService.tripInfo.departmentId.toString();
-      let tripLocationIndex = this.squadDetailsService.questions.findIndex(i => i.key ==='tripLocation');
       if(this.squadAssembleService.tripInfo.departmentId.toString() =='8')
       this.squadDetailsService.questions[tripLocationIndex].value ='8';
       else if(this.squadAssembleService.tripInfo.departmentId.toString() =='1'){
@@ -67,13 +94,20 @@ export class SquadDetailsComponent implements OnInit {
         this.squadDetailsService.questions[tripLocationIndex].inputProps.options = this.countriesList;
         this.squadDetailsService.questions[tripLocationIndex].value= this.squadAssembleService.tripInfo.country.id.toString();
       }
-      let insideCenterFieldIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='insideCenterFieldId');
       this.squadDetailsService.questions[insideCenterFieldIdIndex].value= this.squadAssembleService.tripInfo.insideCenterFieldId.toString();
     }
-    else{
-     console.log('trip info is undefined');
+    else if( this.squadAssembleService.isRouteToNewTrip){
+      this.squadDetailsService.questions[attributeIndex].value= undefined; 
+      this.squadDetailsService.questions[1].inputProps.options=[];
+      this.squadDetailsService.questions[activityIndex].value= undefined; 
+      this.squadDetailsService.questions[departmentIdIndex].value= '8'; 
+      this.squadDetailsService.questions[insideCenterFieldIdIndex].value= undefined;
+      this.squadDetailsService.budgetByParam = undefined;
+      this.squadDetailsService.budget= undefined;
     }
   }
+
+
 
   public onBudget() {
   }
@@ -161,9 +195,6 @@ export class SquadDetailsComponent implements OnInit {
          this.indexChange=0;
          return;
         }
-        //  if (value === '12')
-        //   this.resetAgeGroupField();
-        //   this.setAutoCustomer(value)
           this.userService.getActivityByAttribute(value).subscribe(res=>{ 
             this.squadDetailsService.activityByAttributeOriginal = res;
             this.squadDetailsService.activityByAttribute = [];

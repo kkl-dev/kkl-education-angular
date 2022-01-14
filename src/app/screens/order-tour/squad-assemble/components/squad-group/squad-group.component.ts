@@ -40,23 +40,45 @@ export class SquadGroupComponent {
     this.setSquadGroupDetails();
   }
 
-  setSquadGroupDetails(){
-    if(this.squadAssembleService.tripInfo.tripStart!=undefined){
-      console.log('trip info is full');
-      let ageGroupIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='ageGroup');
-      this.squadGroupService.mixedQuestions[ageGroupIndex].value= this.squadAssembleService.tripInfo.ageGroup.id.toString();
-      let numAccompaniedIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAccompanied');
-      this.squadGroupService.mixedQuestions[numAccompaniedIndex].value= this.squadAssembleService.tripInfo.numAccompanied;
-      let numAdultAndYoungIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAdultAndYoung');
-      this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value= this.squadAssembleService.tripInfo.numAdultAndYoung;
-      let numDriversIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numDrivers');
-      this.squadGroupService.mixedQuestions[numDriversIndex].value= this.squadAssembleService.tripInfo.numDrivers;
-      let numGuidesIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numGuides');
-      this.squadGroupService.mixedQuestions[numGuidesIndex].value= this.squadAssembleService.tripInfo.numGuides;
+  // setSquadGroupDetails(){
+  //   if(this.squadAssembleService.tripInfo.tripStart!=undefined){
+  //     console.log('trip info is full');
+  //     let ageGroupIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='ageGroup');
+  //     this.squadGroupService.mixedQuestions[ageGroupIndex].value= this.squadAssembleService.tripInfo.ageGroup.id.toString();
+  //     let numAccompaniedIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAccompanied');
+  //     this.squadGroupService.mixedQuestions[numAccompaniedIndex].value= this.squadAssembleService.tripInfo.numAccompanied;
+  //     let numAdultAndYoungIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAdultAndYoung');
+  //     this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value= this.squadAssembleService.tripInfo.numAdultAndYoung;
+  //     let numDriversIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numDrivers');
+  //     this.squadGroupService.mixedQuestions[numDriversIndex].value= this.squadAssembleService.tripInfo.numDrivers;
+  //     let numGuidesIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numGuides');
+  //     this.squadGroupService.mixedQuestions[numGuidesIndex].value= this.squadAssembleService.tripInfo.numGuides;
 
+  //   }
+  //   else{
+  //    console.log('trip info is undefined');
+  //   }
+  // }
+
+  setSquadGroupDetails(){
+    let ageGroupIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='ageGroup');
+    let numAccompaniedIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAccompanied');
+    let numAdultAndYoungIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAdultAndYoung');
+    let numDriversIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numDrivers');
+    let numGuidesIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numGuides');
+    if(this.squadAssembleService.tripInfo?.tripStart!=undefined && !this.squadAssembleService.isRouteToNewTrip ){
+      this.squadGroupService.mixedQuestions[ageGroupIndex].value= this.squadAssembleService.tripInfo.ageGroup.id.toString();
+      this.squadGroupService.mixedQuestions[numAccompaniedIndex].value= this.squadAssembleService.tripInfo.numAccompanied;
+      this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value= this.squadAssembleService.tripInfo.numAdultAndYoung;
+      this.squadGroupService.mixedQuestions[numDriversIndex].value= this.squadAssembleService.tripInfo.numDrivers;
+      this.squadGroupService.mixedQuestions[numGuidesIndex].value= this.squadAssembleService.tripInfo.numGuides;
     }
-    else{
-     console.log('trip info is undefined');
+    else if( this.squadAssembleService.isRouteToNewTrip){
+      this.squadGroupService.mixedQuestions[ageGroupIndex].value= undefined;
+      this.squadGroupService.mixedQuestions[numAccompaniedIndex].value= undefined;
+      this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value= undefined;
+      this.squadGroupService.mixedQuestions[numDriversIndex].value= undefined;
+      this.squadGroupService.mixedQuestions[numGuidesIndex].value= undefined;
     }
   }
 

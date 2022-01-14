@@ -90,49 +90,101 @@ export class SquadScheduleComponent implements OnInit {
 
    
 
-    setSchedulSquadValues(){
-      if(this.squadAssembleService.tripInfo.tripStart!=undefined){
-      // if(this.squadAssembleService.tripInfo !=undefined){
-        console.log('trip info is full');
-        let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
-        this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
-        let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
-        this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
-        if(this.squadAssembleService.tripInfo.areaTrip !=undefined){
-          this.squadAssembleService.scheduleQuestions[3].value= this.squadAssembleService.tripInfo.areaTrip.id.toString();
-        }
-      }
+  //   setSchedulSquadValues(){
+  //     if(this.squadAssembleService.tripInfo.tripStart!=undefined){
+  //     // if(this.squadAssembleService.tripInfo !=undefined){
+  //       console.log('trip info is full');
+  //       let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
+  //       this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
+  //       let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
+  //       this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
+  //       if(this.squadAssembleService.tripInfo.areaTrip !=undefined){
+  //         this.squadAssembleService.scheduleQuestions[3].value= this.squadAssembleService.tripInfo.areaTrip.id.toString();
+  //       }
+  //     }
      
-        if (this.tripService.centerField.id != 0) {
-          this.centerFieldId=this.tripService.centerField.id
-          this.squadAssembleService.scheduleQuestions[1].value= this.tripService.centerField.id.toString();
-          if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
-            localStorage.setItem("centerFieldName", this.tripService.centerField.name);
-          }
-        }
-        else { 
-          this.squadAssembleService.scheduleQuestions[1].value= localStorage.getItem("centerFieldId");
-          this.centerFieldId= parseInt(localStorage.getItem("centerFieldId"));
-        }        
-         let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
-          if(!this.options.freeSpacesArray)
-           this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),this.centerFieldId);
-           else
-          this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
-         if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
-          this.squadAssembleService.scheduleQuestions[datesIndex].value=this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till;
-          if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
-          }
-        }
-        else {
-          this.squadAssembleService.scheduleQuestions[datesIndex].value= localStorage.getItem("sleepingDates");
-        }
+  //       if (this.tripService.centerField.id != 0) {
+  //         this.centerFieldId=this.tripService.centerField.id
+  //         this.squadAssembleService.scheduleQuestions[1].value= this.tripService.centerField.id.toString();
+  //         if (typeof (Storage) !== "undefined") {
+  //           localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
+  //           localStorage.setItem("centerFieldName", this.tripService.centerField.name);
+  //         }
+  //       }
+  //       else { 
+  //         this.squadAssembleService.scheduleQuestions[1].value= localStorage.getItem("centerFieldId");
+  //         this.centerFieldId= parseInt(localStorage.getItem("centerFieldId"));
+  //       }        
+  //        let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
+  //         if(!this.options.freeSpacesArray)
+  //          this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),this.centerFieldId);
+  //          else
+  //         this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
+  //        if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
+  //         this.squadAssembleService.scheduleQuestions[datesIndex].value=this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till;
+  //         if (typeof (Storage) !== "undefined") {
+  //           localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+  //         }
+  //       }
+  //       else {
+  //         this.squadAssembleService.scheduleQuestions[datesIndex].value= localStorage.getItem("sleepingDates");
+  //       }
         
         
       
-   }
+  //  }
+
+   setSchedulSquadValues(){
+    let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
+    let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
+    if(this.squadAssembleService.tripInfo?.tripStart!=undefined && !this.squadAssembleService.isRouteToNewTrip ){
+      console.log('trip info is full');
+      this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
+      this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
+      if(this.squadAssembleService.tripInfo.areaTrip !=undefined){
+        this.squadAssembleService.scheduleQuestions[3].value= this.squadAssembleService.tripInfo.areaTrip.id.toString();
+      }
+    }
+    else if( this.squadAssembleService.isRouteToNewTrip){
+      this.squadAssembleService.scheduleQuestions[tripDescIndex].value= undefined;
+      this.squadAssembleService.scheduleQuestions[commentIndex].value= undefined;
+      if(this.squadAssembleService.tripInfo.areaTrip !=undefined){
+        this.squadAssembleService.regionList=[];
+        this.squadAssembleService.scheduleQuestions[3].inputProps.options=[];
+        this.squadAssembleService.scheduleQuestions[3].value= undefined;
+      }
+
+    }
+   
+      if (this.tripService.centerField.id != 0) {
+        this.centerFieldId=this.tripService.centerField.id
+        this.squadAssembleService.scheduleQuestions[1].value= this.tripService.centerField.id.toString();
+        if (typeof (Storage) !== "undefined") {
+          localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
+          localStorage.setItem("centerFieldName", this.tripService.centerField.name);
+        }
+      }
+      else { 
+        this.squadAssembleService.scheduleQuestions[1].value= localStorage.getItem("centerFieldId");
+        this.centerFieldId= parseInt(localStorage.getItem("centerFieldId"));
+      }        
+       let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
+        if(!this.options.freeSpacesArray)
+         this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),this.centerFieldId);
+         else
+        this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
+       if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
+        this.squadAssembleService.scheduleQuestions[datesIndex].value=this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till;
+        if (typeof (Storage) !== "undefined") {
+          localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
+        }
+      }
+      else {
+        this.squadAssembleService.scheduleQuestions[datesIndex].value= localStorage.getItem("sleepingDates");
+      }
+     
+ }
+
 
    getAvailableDates(fromDate: string, tillDate: string,centerFieldId) {
     fromDate = fromDate.substring(0, 10);

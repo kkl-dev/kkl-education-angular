@@ -45,6 +45,7 @@ export class SquadAssembleService {
   options!: CalendarOptions;
   regionList = [];
   originalRegionList = [];
+  isRouteToNewTrip: boolean=false;
 
   // public freeSpacesArrayGenarator(start: Date, end: Date) {
   //   const i = 0;
