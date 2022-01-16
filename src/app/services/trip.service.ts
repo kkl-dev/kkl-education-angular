@@ -22,7 +22,7 @@ export class TripService {
   sleepingDates: { from: string; till: string } = { from: '', till: '' };
   freeSpacesArray: FreeSpace[];
   isOneDayTrip: boolean;
-  formGroupSquadAssembles = [];
+  //formGroupSquadAssembles = [];
   dateRange: any;
   formOptions!: FieldForestCenter[];
   lodgingFacilityListArrayObservable: any = new BehaviorSubject<any>([
@@ -239,8 +239,8 @@ export class TripService {
       });
   }
   
-  payerCustomer = {} as BaseCustomer;
-  Customer = {} as BaseCustomer;
+  //payerCustomer = {} as BaseCustomer;
+  //Customer = {} as BaseCustomer;
   ageGroup = [];//to convert to model of comrax
   ageGroupOriginal: AgeGroup[];
   fieldForestCenters = [];//to convert to model of comrax
@@ -290,6 +290,7 @@ export class TripService {
     this.userService.getAgeGroup().subscribe(
       response => {
         this.ageGroupOriginal = response;
+        //this.ageGroup=[];
         response.forEach(element => {
           this.ageGroup.push({ label: element.name, value: element.id.toString() });
         });
@@ -311,6 +312,7 @@ export class TripService {
     this.userService.getAttributes().subscribe(
       response => {
         this.attributesOriginal = response;
+        //this.attributes=[];
         response.forEach(element => {
           this.attributes.push({ label: element.name, value: element.id.toString() });
         });

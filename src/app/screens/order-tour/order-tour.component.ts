@@ -513,6 +513,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.spinner.hide();
       console.log('tripInfo from server is :', res);
       this.squadAssemble.tripInfofromService = res;
+      //test
+      this.squadAssembleService.isRouteToNewTrip=false;
+      //end test
       localStorage.setItem('tripId', res.trip.id.toString());
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {

@@ -37,16 +37,24 @@ export class SquadDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.tablet$ = this.breakpoints.isTablet();
+    // if(this.squadDetailsService.attributes.length>0)
     this.setSquadDetails();
-    // this.tripService.activityByAttr.subscribe(res=>{
-    //    console.log(res); 
-    //    this.squadDetailsService.questions[1].inputProps.options=res;
-    // })
-    // this.tripService.activityByAttr.subscribe(res=>{
-    //   console.log('I am activities from tripService', res);
-    // })
+   
   }
-
+  // getAttributes(){
+  //   this.userService.getAttributes().subscribe(
+  //     response => {
+  //       this.squadDetailsService.attributesOriginal = response;
+  //       this.squadDetailsService.attributes=[];
+  //       response.forEach(element => {
+  //         this.squadDetailsService.attributes.push({ label: element.name, value: element.id.toString() });
+  //       });
+  //       this.setSquadDetails();
+  //     },
+  //     error => console.log(error),       // error
+  //     () => console.log('completed')     // complete
+  //   )
+  // }
   // setSquadDetails(){
   //   if(this.squadAssembleService.tripInfo.tripStart!=undefined){
   //     console.log('trip info is full');
