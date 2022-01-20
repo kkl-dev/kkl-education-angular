@@ -83,6 +83,11 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
     else{
       let peopleInTripIndex= this.generalFormService.details.findIndex(i => i.key==='peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value= (this.generalFormService.peopleInTrip).toString();
+    }  if (this.generalFormService.isOneDayTrip) {
+      let startDateIndex = this.generalFormService.details.findIndex(i => i.key === 'startDate');
+      this.generalFormService.details[startDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripStart, 'israel');;
+      let endDateIndex = this.generalFormService.details.findIndex(i => i.key === 'endDate');
+      this.generalFormService.details[endDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripEnding, 'israel');;
     }
     this.generalFormService.setDatesValues();
     if(this.generalFormService.tripInfo.trip.tripStatus.id != 10)
