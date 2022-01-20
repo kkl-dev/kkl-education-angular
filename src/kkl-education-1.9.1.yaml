@@ -351,6 +351,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TripActivityLookup'
+ 
   /activityCategories:
     get:
       tags:
@@ -463,6 +464,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BaseCustomer' 
+  /checkIfCustomerHasDebt/{customerCode}:
+    get:
+      tags:
+      - user
+      operationId: CheckIfCustomerHasDebt
+      parameters:
+      - name: customerCode
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 'success'
+          content:
+            text/plain:
+              schema:
+                type: boolean
+                nullable: true
+        '404':
+          description: customerCode not found
+        '500' : 
+          description: internal server error
+
+
+
 
   /customers/{custAutoComplete}/{filterParam}:
     get:
@@ -678,35 +705,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TripModel' 
-  /createTripActivities:
-    post:
-      tags:
-      - activities
-      operationId: CreateTripActivities
-      description:  adding activities ,orderFacilities, and temporary orders
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TripCalendar'
-      responses:
-        "201":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripCalendar'
-        "500":
-          description: internal server error
-        "400": 
-          description: invalid data
+  # /createTripActivities:
+  #   post:
+  #     tags:
+  #     - activities
+  #     operationId: CreateTripActivities
+  #     description:  adding activities ,orderFacilities, and tempurary orders
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/TripCalendar'
+  #     responses:
+  #       "201":
+  #         description: successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/TripCalendar'
+  #       "500":
+  #         description: internal server error
+  #       "400": 
+  #         description: invalid data
   
   /createActivity:
     post:
       tags:
       - activities
       operationId: CreateTripActivity
-      description:  adding activity to trip sometimes with several tempurary orders connected
+      description:  adding activity to trip 
       requestBody:
         content:
           application/json:
@@ -791,12 +818,17 @@ paths:
         "400": 
           description: invalid data
 
-  /deleteCalendarActivityItem/{tripActivityIdentity}: 
+  /deleteCalendarActivityItem/{tripId}/{tripActivityIdentity}: 
     delete: 
         tags:
         - activities
         operationId: DeleteCalendarActivityItem
         parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: integer
         - name: tripActivityIdentity
           description: indentity record on trip activities table in data base
           in: path
@@ -811,13 +843,19 @@ paths:
           description: id not found
          '500' : 
           description: internal server error
-  /deleteCalendarOrderItem/{tempOrderId}: 
+  /deleteCalendarTempOrderItem/{tripId}/{tempOrderId}: 
     delete: 
         tags:
         - activities
-        operationId: DeleteOrderItemFromCalendar
+        operationId: DeleteCalendarTempOrderItem
+        description: delete tempurary order item from calendar
         parameters:
-        - name: itemRecordIdentity
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: tempOrderId
           description: the identity record of tempurary Order  in  data base
           in: path
           required: true
@@ -831,31 +869,62 @@ paths:
           description: id not found
          '500' : 
           description: internal server error
-
-  /updateTrip:
-    put:
-      tags:
+  /deleteCalendarOrderItem/{tripId}/{orderId}/{orderItemIdentity}: 
+    delete: 
+        tags:
         - activities
-      operationId: UpdateTripActivities
-      description:  update activities ,orderFacilities, and Start an order
-      requestBody:
-        required: true
-        description: a tripCalendar to be updated
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TripCalendar'
-      responses:
-        "200":
-          description: seker object
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripCalendar'
-        "400":
-          description: invalid data
-        "500":
+        operationId: DeleteCalendarOrderItem
+        parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: orderId
+          description: Order record ID
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: orderItemIdentity
+          description: refers to identity of item index on the order table
+          in: path
+          required: true
+          schema:
+            type: integer
+        summary: Delete  order item from calendar by id
+        responses:
+         '204':
+          description: Deleted
+         '404':
+          description: id not found
+         '500' : 
           description: internal server error
+
+  # /updateTrip:
+  #   put:
+  #     tags:
+  #       - activities
+  #     operationId: UpdateTripActivities
+  #     description:  update activities ,orderFacilities, and Start an order
+  #     requestBody:
+  #       required: true
+  #       description: a tripCalendar to be updated
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/TripCalendar'
+  #     responses:
+  #       "200":
+  #         description: seker object
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/TripCalendar'
+  #       "400":
+  #         description: invalid data
+  #       "500":
+  #         description: internal server error
 
 
   /tripCalendar/{tripId}:
@@ -2368,7 +2437,7 @@ components:
          nullable: true
        orderItemIdentity:
          type: integer
-         description: refers to indentity record on the order table
+         description: refers to identity of item index on the order table
          example : 12345
          nullable: true
        itemId:
@@ -2379,10 +2448,10 @@ components:
        orderItemName:
          type: string
          example: אוטובוס
-       tripActivityIdentity:
-         type: integer
-         description : need for activity with additions of temp orders
-         nullable: true
+      #  tripActivityIdentity:
+      #    type: integer
+      #    description : need for activity with additions of temp orders
+      #    nullable: true
        startDate: 
           type: string
           format: date-time
@@ -2439,11 +2508,11 @@ components:
         tripId:
           type: integer
           example: 2
-        additions: 
-          description : for activity with several tempurary orders connected
-          type: array
-          items:
-            $ref: '#/components/schemas/TempOrder'
+        # additions: 
+        #   description : for activity with several tempurary orders connected
+        #   type: array
+        #   items:
+        #     $ref: '#/components/schemas/TempOrder'
          
         
     TripActivityLookup:
@@ -2895,9 +2964,9 @@ components:
         openDate:
           type: string
           format: date-time
-        isVat:
-           type: boolean
-           nullable: true 
+        # isVat:
+        #    type: boolean
+        #    nullable: true 
         userInfo:
           type: string
 

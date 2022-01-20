@@ -382,7 +382,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       let year = date.getFullYear();
       let month = date.getMonth() + 1;
       let day = date.getDate();
-      let dateFormat = year + '-' + (month) + '-' + day;
+      let dateFormat = year + '-' +'0'+ (month) + '-' + day;
       this.squadAssemble.tripInfo.generateTime = dateFormat;
       if (startDate == endDate) {
         this.tripService.isOneDayTrip = true;
