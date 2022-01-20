@@ -91,6 +91,14 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     else {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value = (this.generalFormService.peopleInTrip).toString();
+      if (this.generalFormService.isOneDayTrip) {
+        let startDateIndex = this.generalFormService.details.findIndex(i => i.key === 'startDate');
+        this.generalFormService.details[startDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripStart, 'israel');;
+        let endDateIndex = this.generalFormService.details.findIndex(i => i.key === 'endDate');
+        this.generalFormService.details[endDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripEnding, 'israel');;
+      }
+
+
     }
     this.generalFormService.setDatesValues();
     if (this.generalFormService.tripInfo.trip.tripStatus.id != 10)
@@ -476,9 +484,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.form = event;
     console.log('I am form Event');
     this.disableFormFields();
-    if(this.isItemOrderExist && this.editMode==true)
-    this.form.disable({ emitEvent: false });
-   this.supplierIdEventSub= this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
+    if (this.isItemOrderExist && this.editMode == true)
+      this.form.disable({ emitEvent: false });
+    this.supplierIdEventSub = this.form.controls["details"].get('supplierId').valueChanges.pipe(distinctUntilChanged())
       .subscribe(value => {
         this.supplierId = value;
         if (this.valueChangeIndex > 0)
@@ -592,45 +600,45 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   }
 
   // new am-pm
-    setDefaultTime(question) {
-      console.log('question of startHour is : ',question);
-      if(!question.value)
+  setDefaultTime(question) {
+    console.log('question of startHour is : ', question);
+    if (!question.value)
       return "00:00";
-      else{
-        return question.value;  
-      }
+    else {
+      return question.value;
     }
-    setDefaultTime1(question) {
-      console.log('question of endHour is : ',question);
-      if(!question.value)
+  }
+  setDefaultTime1(question) {
+    console.log('question of endHour is : ', question);
+    if (!question.value)
       return "00:00";
-      else{
-        return question.value;
-      } 
+    else {
+      return question.value;
     }
+  }
 
-    public startTimeChanged(event: string) {
-      let timeFormat = this.setTimeFormat(event);
-      this.form.controls["details"].get('startHour').patchValue(timeFormat, { emitEvent: false });
+  public startTimeChanged(event: string) {
+    let timeFormat = this.setTimeFormat(event);
+    this.form.controls["details"].get('startHour').patchValue(timeFormat, { emitEvent: false });
+  }
+
+  public endTimeChanged(event: string) {
+    let timeFormat = this.setTimeFormat(event);
+    this.form.controls["details"].get('endHour').patchValue(timeFormat, { emitEvent: false });
+  }
+  setTimeFormat(event) {
+    let timeArr = event.split(':');
+    let hour = timeArr[0];
+    let timeFormat;
+    if (+hour < 10) {
+      hour = 0 + hour;
+      timeFormat = hour + ':' + timeArr[1];
     }
-  
-    public endTimeChanged(event: string) {
-      let timeFormat = this.setTimeFormat(event);
-      this.form.controls["details"].get('endHour').patchValue(timeFormat, { emitEvent: false });
-    }
-    setTimeFormat(event) {
-      let timeArr = event.split(':');
-      let hour = timeArr[0];
-      let timeFormat;
-      if (+hour < 10) {
-        hour = 0 + hour;
-        timeFormat = hour + ':' + timeArr[1];
-      }
-      else
-        timeFormat = event;
-      return timeFormat;
-    }
-   // end new am-pm
+    else
+      timeFormat = event;
+    return timeFormat;
+  }
+  // end new am-pm
 
   ngOnDestroy() {
     if (this.supplierListSub) { this.supplierListSub.unsubscribe(); }
