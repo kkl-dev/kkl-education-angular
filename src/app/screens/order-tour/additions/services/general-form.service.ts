@@ -598,7 +598,7 @@ export class GeneralFormService {
   }
 
 
-  setOrderList(res, orderTypeId, operation, isTempurary) {
+  setOrderList(res, orderTypeId, operation, isTempurary,tempOrderIdentity) {
     switch (orderTypeId) {
       case 1:
         let t = {} as TransportOrder;
@@ -619,7 +619,7 @@ export class GeneralFormService {
         else
           this.transportOrderList.push(t);
         if (operation == 'adding' && isTempurary == true)
-          this.updatetempOrderReduce(res, orderTypeId);
+          this.updatetempOrderReduce(res, orderTypeId,tempOrderIdentity);
         break;
       case 2:
         let securing = {} as SecuringOrder;
@@ -677,7 +677,7 @@ export class GeneralFormService {
         else
           this.economyOrderList.push(economy);
         if (operation == 'adding' && isTempurary == true)
-          this.updatetempOrderReduce(res, orderTypeId);
+          this.updatetempOrderReduce(res, orderTypeId,tempOrderIdentity);
         break;
       case 6:
         let guidance = {} as GuidanceOrder;
@@ -697,7 +697,7 @@ export class GeneralFormService {
         else
           this.gudianceOrderList.push(guidance);
         if (operation == 'adding' && isTempurary == true)
-          this.updatetempOrderReduce(res, orderTypeId);
+          this.updatetempOrderReduce(res, orderTypeId,tempOrderIdentity);
         break;
       case 7:
         let hosting = {} as HostingOrder;
@@ -717,7 +717,7 @@ export class GeneralFormService {
         else
           this.hostingOrderList.push(hosting);
         if (operation == 'adding' && isTempurary == true)
-          this.updatetempOrderReduce(res, orderTypeId);
+          this.updatetempOrderReduce(res, orderTypeId,tempOrderIdentity);
         break;
       case 10:
         let musicActivation = {} as MusicActivationOrder;
@@ -765,29 +765,23 @@ export class GeneralFormService {
   // }
 
 
-  updatetempOrderReduce(res, orderTypeId) {
+  updatetempOrderReduce(res, orderTypeId,tempOrderIdentity) {
     let temp = this.tempOrderReduce.value.tempOrderReduce;
     for (var i in temp[orderTypeId]) {
-      for (var j in res) {
-        if (temp[orderTypeId][i].tempOrderId == res[j].globalParameters.tempOrderIdentity) {
-          temp[orderTypeId].splice(i, 1);
-          break;
-
-        }
-        //  let tempOrderId= res[i].globalParameters.tempOrderIdentity;
-        //  if(temp[orderTypeId][i].orderTempId==tempOrderId){
-        //   //temp[orderTypeId][i].orderId= res[0].globalParameters.orderId;
-        //   //temp[orderTypeId][i].orderItemIdentity= res[0].globalParameters.itemOrderRecordId;
-        //   temp[orderTypeId].splice(i, 1);
-        //  }
-      }
+      // for (var j in res) {
+      //   if (temp[orderTypeId][i].tempOrderId == res[j].globalParameters.tempOrderIdentity) {
+      //     temp[orderTypeId].splice(i, 1);
+      //     break;     
+      //   }     
+      // }     
+       if (temp[orderTypeId][i].tempOrderId == tempOrderIdentity) {
+            temp[orderTypeId].splice(i, 1);
+            break;
+       }
     }
-
-    //this.updateTempOrderReduce(temp)
     this.updateTempOrderReduce(temp, orderTypeId);
-    // this.updateTempOrderReduce(temp);
   }
 
-
+  
 
 }

@@ -382,7 +382,17 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       let year = date.getFullYear();
       let month = date.getMonth() + 1;
       let day = date.getDate();
-      let dateFormat = year + '-' +'0'+ (month) + '-' + day;
+      let monthStr;
+      if(month<10)
+       monthStr='0'+month
+       else
+       monthStr=month;
+       let dayStr;
+       if(day<10)
+       dayStr='0'+day;
+       else
+       dayStr=day;
+      let dateFormat = year + '-' +monthStr + '-' + dayStr;   
       this.squadAssemble.tripInfo.generateTime = dateFormat;
       if (startDate == endDate) {
         this.tripService.isOneDayTrip = true;
@@ -473,7 +483,16 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           for (let j = 0; j < tripInfo.lodgingReservation[i].nightsCount.length; j++) {
             let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
             let dateArray = dateFormat.split("/");
-            dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+            //test
+             if (parseInt(dateArray[0]) <10 && (parseInt(dateArray[1])<10))
+             dateFormat = dateArray[2] + '-' +'0'+ dateArray[1] + '-' +'0'+dateArray[0];
+             else if(parseInt(dateArray[0]) <10 && parseInt(dateArray[1]) >10)
+             dateFormat = dateArray[2] + '-'+ dateArray[1] + '-' +'0'+dateArray[0];
+             else if(parseInt(dateArray[1]) <10 && parseInt(dateArray[0]) >10)
+             dateFormat = dateArray[2] + '-'+'0'+ dateArray[1] + '-'+dateArray[0];
+             else
+             dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+           
             tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
           }
         }
