@@ -27,7 +27,7 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 
-""
+
 @Injectable({
   providedIn: 'root'
 })
@@ -142,58 +142,6 @@ export class ActivitiesService {
     }
 
     /**
-     * adding activities ,orderFacilities, and tempurary orders
-     * @param tripCalendar 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public createTripActivities(tripCalendar?: TripCalendar, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripCalendar>;
-    public createTripActivities(tripCalendar?: TripCalendar, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripCalendar>>;
-    public createTripActivities(tripCalendar?: TripCalendar, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripCalendar>>;
-    public createTripActivities(tripCalendar?: TripCalendar, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType_ = 'text';
-        }
-
-        return this.httpClient.post<TripCalendar>(`${this.configuration.basePath}/createTripActivities`,
-            tripCalendar,
-            {
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * adding activity to trip
      * @param tripActivity 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -294,21 +242,25 @@ export class ActivitiesService {
     }
 
     /**
-     * Delete tempurary order item from calendar by id
+     * Delete  order item from calendar by id
      * @param tripId 
-     * @param tempOrderId the identity record of tempurary Order  in  data base
+     * @param orderId Order record ID
+     * @param orderItemIdentity refers to identity of item index on the order table
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteCalendarOrderItem(tripId: number, tempOrderId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
-    public deleteCalendarOrderItem(tripId: number, tempOrderId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
-    public deleteCalendarOrderItem(tripId: number, tempOrderId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
-    public deleteCalendarOrderItem(tripId: number, tempOrderId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+    public deleteCalendarOrderItem(tripId: number, orderId: number, orderItemIdentity: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public deleteCalendarOrderItem(tripId: number, orderId: number, orderItemIdentity: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public deleteCalendarOrderItem(tripId: number, orderId: number, orderItemIdentity: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public deleteCalendarOrderItem(tripId: number, orderId: number, orderItemIdentity: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
         if (tripId === null || tripId === undefined) {
             throw new Error('Required parameter tripId was null or undefined when calling deleteCalendarOrderItem.');
         }
-        if (tempOrderId === null || tempOrderId === undefined) {
-            throw new Error('Required parameter tempOrderId was null or undefined when calling deleteCalendarOrderItem.');
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling deleteCalendarOrderItem.');
+        }
+        if (orderItemIdentity === null || orderItemIdentity === undefined) {
+            throw new Error('Required parameter orderItemIdentity was null or undefined when calling deleteCalendarOrderItem.');
         }
 
         let headers = this.defaultHeaders;
@@ -330,7 +282,56 @@ export class ActivitiesService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarOrderItem/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(tempOrderId))}`,
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarOrderItem/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(orderId))}/${encodeURIComponent(String(orderItemIdentity))}`,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Delete tempurary order item from calendar by id
+     * delete tempurary order item from calendar
+     * @param tripId 
+     * @param tempOrderId the identity record of tempurary Order  in  data base
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteCalendarTempOrderItem(tripId: number, tempOrderId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public deleteCalendarTempOrderItem(tripId: number, tempOrderId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public deleteCalendarTempOrderItem(tripId: number, tempOrderId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public deleteCalendarTempOrderItem(tripId: number, tempOrderId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+        if (tripId === null || tripId === undefined) {
+            throw new Error('Required parameter tripId was null or undefined when calling deleteCalendarTempOrderItem.');
+        }
+        if (tempOrderId === null || tempOrderId === undefined) {
+            throw new Error('Required parameter tempOrderId was null or undefined when calling deleteCalendarTempOrderItem.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/deleteCalendarTempOrderItem/${encodeURIComponent(String(tripId))}/${encodeURIComponent(String(tempOrderId))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -559,61 +560,6 @@ export class ActivitiesService {
         }
 
         return this.httpClient.get<TripCalendar>(`${this.configuration.basePath}/tripCalendar/${encodeURIComponent(String(tripId))}`,
-            {
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * update activities ,orderFacilities, and Start an order
-     * @param tripCalendar a tripCalendar to be updated
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateTripActivities(tripCalendar: TripCalendar, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TripCalendar>;
-    public updateTripActivities(tripCalendar: TripCalendar, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TripCalendar>>;
-    public updateTripActivities(tripCalendar: TripCalendar, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TripCalendar>>;
-    public updateTripActivities(tripCalendar: TripCalendar, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (tripCalendar === null || tripCalendar === undefined) {
-            throw new Error('Required parameter tripCalendar was null or undefined when calling updateTripActivities.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType_ = 'text';
-        }
-
-        return this.httpClient.put<TripCalendar>(`${this.configuration.basePath}/updateTrip`,
-            tripCalendar,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
