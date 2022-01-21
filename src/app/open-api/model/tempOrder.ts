@@ -18,14 +18,14 @@ export interface TempOrder {
     orderTypeName?: string;
     orderId?: number | null;
     /**
-     * refers to indentity record on the order table
+     * refers to identity of item index on the order table
      */
     orderItemIdentity?: number | null;
     /**
      * the unique item order id;
      */
     itemId?: number | null;
-    orderItemName?: string | null;
+    orderItemName?: string;
     startDate?: string;
     endDate?: string;
     fromHour?: string;
