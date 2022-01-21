@@ -391,7 +391,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
       this.tableData = res;
       this.ifShowtable = true;
       this.editMode = true;
-      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem);
+      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem, undefined);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
       this.generalFormService.enableButton.next(true);
     }, (err) => {
@@ -405,7 +405,7 @@ export class SiteOrderFormComponent implements OnInit, OnDestroy {
   editOrder(item) {
     this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
       console.log(res);
-      this.generalFormService.setOrderList(res, this.orderType, 'updating', false);
+      this.generalFormService.setOrderList(res, this.orderType, 'updating', false,undefined);
       //this.isSaveOrderSucceeded.next(true);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');

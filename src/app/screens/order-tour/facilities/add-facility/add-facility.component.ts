@@ -169,7 +169,7 @@ export class AddFacilityComponent implements OnInit {
     event.preventDefault();
     const id = this.addFacilityForm.controls['id'].value;
 
-    this.activitiyService.deleteCalendarOrderItem(this.squadAssembleService.tripInfofromService.trip.id, this.addFacilityForm.value.tempOrderId).subscribe((res: any) => {
+    this.activitiyService.deleteCalendarTempOrderItem(this.squadAssembleService.tripInfofromService.trip.id, this.addFacilityForm.value.tempOrderId).subscribe((res: any) => {
       console.log(res);
       this.facilitiesServices.deleteItemFromArray(id);
     }, (error) => {

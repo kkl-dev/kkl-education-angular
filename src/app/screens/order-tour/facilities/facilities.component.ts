@@ -465,15 +465,15 @@ export class FacilitiesComponent implements OnInit {
   updateTrip() {
     //let userInfo = this.userDataService.user.name || 'שחר גל';
     let events: any = this.eventsArr;
-    this.activitiyService.updateTripActivities(events).subscribe((tripCalendar: any) => {
-      //console.log('update Trip Activities: ', tripCalendar);
-      if (tripCalendar) {
-        //....
-      }
-    },
-      error => {
-        console.log("error: ", { error });
-      });
+    // this.activitiyService.updateTripActivities(events).subscribe((tripCalendar: any) => {
+    //   //console.log('update Trip Activities: ', tripCalendar);
+    //   if (tripCalendar) {
+    //     //....
+    //   }
+    // },
+    //   error => {
+    //     console.log("error: ", { error });
+    //   });
   }
 
   getTripCalendar() {
