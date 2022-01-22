@@ -177,9 +177,12 @@ export class SquadAssembleComponent implements OnInit {
 
 }
 resetTripInfoObj(){
+  this.squadAssembleService.formsArray=[];
   this.squadAssembleService.tripInfo= {} as TripInfo;
   this.squadAssembleService.tripInfofromService= undefined;
    this.squadAssembleService.filledNightsArray= [];
+   this.tripService.centerField={ id: 0,name: ''};
+    this.tripService.sleepingDates={ from: '', till: '' };
    localStorage.clear();
 }
   private subscribeToNewClient() {

@@ -138,7 +138,6 @@ export class SquadScheduleComponent implements OnInit {
     let tripDescIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='tripDescription');
     let commentIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='commentManager');
     if(this.squadAssembleService.tripInfo?.tripStart!=undefined && !this.squadAssembleService.isRouteToNewTrip ){
-      console.log('trip info is full');
       this.squadAssembleService.scheduleQuestions[tripDescIndex].value= this.squadAssembleService.tripInfo.tripDescription;
       this.squadAssembleService.scheduleQuestions[commentIndex].value= this.squadAssembleService.tripInfo.commentManager;
       if(this.squadAssembleService.tripInfo.areaTrip !=undefined){
