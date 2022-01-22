@@ -1,11 +1,11 @@
 import { FormService } from 'src/app/components/form/logic/form.service';
-import { Attribute, Injectable } from '@angular/core';
+import {  Injectable } from '@angular/core';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionRadio } from 'src/app/components/form/logic/question-radio';
 import { TripService } from 'src/app/services/trip.service';
 import { FormGroup, Validators } from '@angular/forms';
-import { ActivityType, Budget, BudgetByParams } from 'src/app/open-api';
+import { ActivityType, Budget, BudgetByParams, TripAttribute } from 'src/app/open-api';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -13,8 +13,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SquadDetailsService {
   
-  //activitiesByAttr=[]
-  attributeOriginal : Attribute[];
+ 
+  // attributes = [];
+  // attributesOriginal: TripAttribute[];
   activityByAttribute = [];
   activityByAttributeOriginal: ActivityType[]
   budgetByParam = {} as BudgetByParams;
@@ -32,7 +33,7 @@ export class SquadDetailsService {
       type: 'select',
       inputProps: {
          options: this.tripService.attributes,
-    
+        //  options:  this.attributes    
       },
       validations: [Validators.required],
     }),

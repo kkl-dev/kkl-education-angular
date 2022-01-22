@@ -382,16 +382,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       let year = date.getFullYear();
       let month = date.getMonth() + 1;
       let day = date.getDate();
-      let monthStr;
-      if(month<10)
-       monthStr='0'+month
-       else
-       monthStr=month;
-       let dayStr;
-       if(day<10)
-       dayStr='0'+day;
-       else
-       dayStr=day;
+       let monthStr=month>=10?month:'0'+month;
+        let dayStr=day>=10?day:'0'+day;
       let dateFormat = year + '-' +monthStr + '-' + dayStr;   
       this.squadAssemble.tripInfo.generateTime = dateFormat;
       if (startDate == endDate) {
@@ -532,6 +524,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.spinner.hide();
       console.log('tripInfo from server is :', res);
       this.squadAssemble.tripInfofromService = res;
+      //test
+      this.squadAssembleService.isRouteToNewTrip=false;
+      //end test
       localStorage.setItem('tripId', res.trip.id.toString());
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
@@ -610,17 +605,19 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
+      // if(this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id')
     if (routeIndex <= this.steps.length) {
-      if (routeIndex == 1) {
+      if (routeIndex == 1 || this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id') {
+        routeIndex == 1
         let flag = this.syncToTripInfo();
-        if (flag == false) {
+        if (!flag ) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
             data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
           })
-          this.router.navigateByUrl(
-            `/education/order-tour/${this.steps[0].path}`
-          );
+          // this.router.navigateByUrl(
+          //   `/education/order-tour/${this.steps[0].path}`
+          // );
           return;
         }
         else {

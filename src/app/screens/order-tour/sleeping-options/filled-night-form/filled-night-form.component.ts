@@ -307,7 +307,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                    if ( (lodgersNumber> (unitsNumber*x.maxOccupancy))){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
-                    this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy));
+                    this.displayMessage1(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy));
                     return  this.IsUnitsNumIsValid; 
                   }
                  
@@ -322,7 +322,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
-                    this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
+                    this.displayMessage1(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
                  
                   break;
@@ -336,7 +336,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   if ( lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
-                    this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
+                    this.displayMessage1(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
                  
                   break;
@@ -350,7 +350,7 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
                   if (lodgersNumber> (unitsNumber*x.maxOccupancy)){
                     this.filledNightForm.get('unitsNumber').setValue('');
                     this.filledNightForm.get('lodgersNumber').setValue('');
-                    this.displayMessage3(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
+                    this.displayMessage1(accomodationNameSelected,unitsNumber,(unitsNumber*x.maxOccupancy))
                   }
                 
                  break;
@@ -406,56 +406,9 @@ export class FilledNightFormComponent implements OnInit, OnChanges {
      
    }
 
-   displayMessage1(name, avaliableUnits){
-    switch (name) {
-      case 'בקתה':
-        name= 'בקתות'
-        break;
-        case 'חדר':
-          name= 'חדרים'
-          break;
-        case 'אוהל':
-           name= 'אוהלים'
-          break;
-        case 'גיחה':
-          name= 'גיחות'
-           break;
-    }
-   
-    let text ="";
-    switch (name) {
-      case 'בקתות':
-        text= 'הפנויות'
-        break;
-        case 'חדרים':
-          text= 'הפנויים'
-          break;
-        case 'אוהלים':
-          text= 'הפנויים'
-          break;
-        case 'גיחות':
-          text= 'הפנויות'
-           break;
-    }
   
-    const dialogRef = this._dialog.open(ConfirmDialogComponent, {     
-      width: '500px',
-      // data: { message: 'מספר ה  '+name+" הפנויות בתאריך " +date +'  הינו  ' + avaliableUnits , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-      data: { message: 'מספר ה  '+name+" " +text+" בתאריכים שהוזנו הינו  "  + avaliableUnits , content: '',  leftButton: 'המשך' }
-    })
-   
- }
 
- 
-//    displayMessage2(date,name, num){
-//     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-//       width: '500px',
-//       data: { message: ' מספר הלנים המקסימלי ב ' +name+" בתאריך "+date +'  הינו  ' + num , content: '', rightButton: 'ביטול', leftButton: 'המשך' }
-//     })
-   
-//  }
-
- displayMessage3(name,unitsNumber,maxOccupancy){
+ displayMessage1(name,unitsNumber,maxOccupancy){
   switch (name) {
     case 'בקתה':
       name= 'בקתות'

@@ -32,11 +32,11 @@ export class WizardComponent implements OnInit {
       //   text: 'הטיולים שלי',
       //   link: '',
       // },
-      // {
-      //   src: 'assets/images/button.svg',
-      //   text: 'טיול חדש',
-      //   link: '/education/order-tour/squad-assemble'
-      // },
+      {
+        src: 'assets/images/button.svg',
+        text: 'טיול חדש',
+        link: '/education/order-tour/squad-assemble/newTrip'
+      },
       {
         src: 'assets/images/report.svg',
         text: 'דוחות',
