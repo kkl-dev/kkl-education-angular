@@ -2,10 +2,11 @@ import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { buildDayTableModel } from '@fullcalendar/daygrid';
 import { BehaviorSubject } from 'rxjs';
 import { TableCellModel } from 'src/app/utilities/models/TableCell';
-import { transportColumns, details, summery, supplier } from 'src/mock_data/additions';
+//import { transportColumns, details, summery, supplier } from 'src/mock_data/additions';
 import { GeneralFormService } from '../../services/general-form.service';
 
-export const transportColumns1: TableCellModel[] = [
+// export const transportColumns: TableCellModel[] = [
+export const orderColumns: TableCellModel[] = [
   {
     key: 'tourId',
     label: 'מספר טיול',
@@ -25,7 +26,7 @@ export const transportColumns1: TableCellModel[] = [
 ];
 
 
-export const details1: TableCellModel[] = [
+export const details: TableCellModel[] = [
   {
     key: 'orderType',
     label: 'סוג',
@@ -43,7 +44,7 @@ export const details1: TableCellModel[] = [
   },
 ]
 
-export const supplier1: TableCellModel[] = [
+export const supplier: TableCellModel[] = [
   {
     key: 'name',
     label: 'שם הספק הנבחר',
@@ -107,7 +108,7 @@ export const supplier1: TableCellModel[] = [
   },
 ];
 
-export const summery1: TableCellModel[] = [
+export const summery: TableCellModel[] = [
   {
     key: 'contact',
     label: 'נקלט ע"י',
@@ -161,12 +162,13 @@ export class FormDetailsComponent implements OnInit {
   @Input() public tableData: any;
 
   //public columns: TableCellModel[] = transportColumns;
-  public columns: TableCellModel[] = transportColumns1;
+  public columns: TableCellModel[] = orderColumns;
 
 
   public title: string = 'פרטים נוספים';
   public editMode: boolean = false;
-  public rows: TableCellModel[][] = [details1, supplier1, summery1];
+  //public rows: TableCellModel[][] = [details1, supplier1, summery1];
+  public rows: TableCellModel[][] = [details, supplier, summery];
 
   public detailsSubject = new BehaviorSubject<TableData>({
     columns: this.columns,
@@ -240,6 +242,11 @@ export class FormDetailsComponent implements OnInit {
     this.detailsSubject.value.rows[0][0].value= res[0].order.orderType.name
     this.detailsSubject.value.rows[0][1].value = res[0].order.status?res[0].order.status.name:'';
     this.detailsSubject.value.rows[1][0].value =  res[0].order.supplier.name;
+     this.detailsSubject.value.rows[1][3].value = res[0].order.supplier.address;
+    this.detailsSubject.value.rows[1][4].value = res[0].order.supplier.contact;
+    this.detailsSubject.value.rows[1][5].value = res[0].order.supplier.phone;
+    this.detailsSubject.value.rows[1][6].value = res[0].order.supplier.fax;
+    this.detailsSubject.value.rows[1][7].value = res[0].order.supplier.email;
     this.detailsSubject.value.rows[1][9].value = res[0].order.userInfo;//הזמנה אושרה ע''י
     this.detailsSubject.value.rows[1][10].value = res[0].order.confirmDate;//תאריך אישור
     this.detailsSubject.value.rows[1][11].value = res[0].order.confirmUserTz;//ת.ז. מאשר
