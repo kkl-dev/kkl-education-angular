@@ -340,30 +340,6 @@ export class FacilitiesComponent implements OnInit {
        form.get('activity').patchValue('', { emitEvent: false });
        this.resetActivities(this.tripActivitiesArr)
     });
-    // if (obj.typeOfActivity) {
-    //   tripActivities = tripActivities.filter((a: { activityId: any; }) =>
-    //     a.activityId == obj.typeOfActivity);
-    //     form.get('activity').patchValue('', { emitEvent: false });
-    // }
-    //for autocmplete filter
-  //  if (!obj.areas && !obj.typeOfActivity){
-  //   //let tripActivities = this.tripActivitiesInfoTotal;
-  //   this.tripActivitiesArr=[];
-  //   this.tripActivitiesArr = this.tripActivitiesInfoTotal;
-  //   if (obj.activity) {
-  //     if ( !Number.isInteger(parseInt(obj.activity)))
-  //       //tripActivities = tripActivities.filter(i=>  i.name.includes(obj.activity))
-  //       this.tripActivitiesArr =  this.tripActivitiesArr.filter(i=>  i.name.includes(obj.activity))
-  //      else{
-  //       //tripActivities= this.tripActivitiesInfoTotal.filter(i=> i.activityId === parseInt(obj.activity) )
-  //       this.tripActivitiesArr= this.tripActivitiesInfoTotal.filter(i=> i.activityId === parseInt(obj.activity) )
-  //      }
-      
-  //     // if (tripActivities == []) {
-  //     //   console.log('tripActivities emty must use auto complete: ')
-  //     // }
-  //   }
-  // }
   
   form.get('activity').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
     if ( !Number.isInteger(parseInt(form.get('activity').value))){
@@ -390,32 +366,7 @@ export class FacilitiesComponent implements OnInit {
    
   });
 
-    // if (obj.activity) {
-    //   tripActivities = tripActivities.filter((a: any) =>
-    //     //a.name == obj.activity);
-    //     // a.activityId == obj.activity);
-    //     a.name == obj.activity);
-
-    //   if (tripActivities == []) {
-    //     console.log('tripActivities emty must use auto complete: ')
-    //   }
-    // }
-    
-   
-    // //this.tripActivitiesFilter = tripActivities;
-    // this.tripActivitiesFilter = this.tripActivitiesArr;
-    // //this.tripActivitiesInfo = tripActivities;
-    // this.tripActivitiesInfo = this.tripActivitiesArr;
-    // this.tripActivitiesShow = [];
-    // this.facilitiesService.tripActivitiesShow = [];
-    // this.facilitiesService.formArray[2].inputProps.options=[];
-    // this.tripActivitiesFilter.forEach(element => {
-    //   //this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
-    //   this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
-    // });
-    // this.facilitiesService.formArray[2].inputProps.options= this.facilitiesService.tripActivitiesShow;
-    //console.log('this.tripActivitiesShow: ', this.tripActivitiesShow)
-    //this.setFormArray();
+ 
     this.calculatePages(this.tripActivitiesFilter.length);
     this.pagesToShow(1);
    
@@ -597,7 +548,7 @@ export class FacilitiesComponent implements OnInit {
 
   
   public onAutocomplete(control: FormControl) {
-    // console.log('I am auto complete from facilities',control);
+     console.log('I am auto complete from facilities',control);
     // this.tripActivitiesShow=[];
     // this.tripActivitiesShow= this.tripActivitiesInfoTotal.filter(i=>i.name.includes(control.value));
     // console.log(this.tripActivitiesShow);

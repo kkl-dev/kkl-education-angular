@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 })
 export class QueuetasksService {
 
-    protected basePath= 'http://knf-appl-dev3/EducationApiDev';
+     protected basePath= 'http://knf-appl-dev3/EducationApiDev';
      //protected basePath= 'http://knf-appl-dev3/EducationApiTest';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();

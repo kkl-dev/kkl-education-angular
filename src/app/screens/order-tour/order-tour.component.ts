@@ -193,9 +193,27 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           lastScheduleFormIndex = i;
           console.log('I am schedule');
           if (this.squadAssemble.formsArray[i].status == 'INVALID') {
+            let invalid= this.findInvalidControls('schedule',lastScheduleFormIndex);
+            let isContinue: boolean ;
+            if(invalid.length==1){
+               if (invalid[0]=='dates'){
+                 if(this.squadAssemble.formsArray[i].get('dates').value){
+                  isContinue==false;
+                 }  
+                 else{
+                  isContinue==true;
+                 }    
+               }
+            }
+            else{
+              isContinue==true
+            }
             console.log('schedule is invalid');
-            scheduleForm = false;
-            continue;
+            if(isContinue==true){
+              scheduleForm = false;
+              continue;
+            }
+           
           }
           this.squadAssemble.tripInfo.tripDescription = this.squadAssemble.formsArray[i].get('tripDescription').value;
           var center = this.squadAssemble.formsArray[i].get('centerField').value;
@@ -405,6 +423,18 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     return flag;
   }
 
+  public findInvalidControls(formName, index) {
+    const invalid = [];
+
+    const controls = this.squadAssemble.formsArray[index].controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    return invalid;
+}
+
   checkWhichControlIsInvalid(formName, index) {
     let ifControlFound = false;
     for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
@@ -601,14 +631,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public changeActiveStepNextNavigation(): void {
     this.activeStep = +this.activeStep++;
-    const routeIndex =
+    let routeIndex =
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
       // if(this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id')
     if (routeIndex <= this.steps.length) {
       if (routeIndex == 1 || this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id') {
-        routeIndex == 1
+        routeIndex = 1
         let flag = this.syncToTripInfo();
         if (!flag ) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
@@ -630,10 +660,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
       if (routeIndex == 3) {
-        // if (this._facilitiesService.calendarEventsArr.value.length > 0) {
-        //   this.createTripActivities(this.steps[routeIndex].path);
-        //   return;
-        // }
+       
       }
       if (routeIndex === 5)
         this.sendToOrderCenter();

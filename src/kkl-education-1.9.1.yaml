@@ -5,7 +5,7 @@ info:
   description: Education new project|
   contact:
     email: yochai@one1.co.il
-  version: 1.8.1
+  version: 1.10.1
 servers:
 # - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
 - url: http://knf-appl-dev3:8077
@@ -1738,6 +1738,9 @@ components:
         name:
           type: string
           example: סמינר הקיבוצים
+        addresss:
+           type: string
+           example: לביא
         lastName:
           type: string
           example: kkl

@@ -37,7 +37,7 @@ export class SquadAssembleComponent implements OnInit {
   
   ngOnInit(): void {
     let param= this._activeRoute.snapshot.params["id"];
-    if(param){
+    if(param ){
       console.log('I am route to new trip');
       this.squadAssembleService.isRouteToNewTrip=true;
       this.resetTripInfoObj()

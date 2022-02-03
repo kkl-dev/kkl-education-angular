@@ -366,7 +366,7 @@ export class HostingFormComponent implements OnInit, OnDestroy {
       this.tableData = res;
       this.ifShowtable = true;
       this.editMode = true;
-      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem,item?.tempOrderIdentity);
+      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem,item.globalParameters.tempOrderIdentity);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
       this.generalFormService.enableButton.next(true);
     }, (err) => {
