@@ -14,26 +14,29 @@ export class ConfirmDialogComponent implements OnInit {
   @Input() btnCancelText: string;
   messageToReturn: string;
   invalid: boolean = false;
-
+  flagCangeDates: boolean = false;
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialog) { }
   ngOnInit(): void {
-    this.dialogRef.updateSize('250px')
+    this.dialogRef.updateSize('250px');
+    if (this.message === "נא הזן את סיבת שינוי תאריכי הטיול:") { this.flagCangeDates = true }
   }
 
   onNoClick(): void {
     this.dialogRef.close(false);
   }
   onYesClick() {
-    
-    // if (this.data.isWithFillField != true)
-      this.dialogRef.close(true);
-    // else {
-    //   if (this.messageToReturn != " ")
-    //     this.dialogRef.close(this.messageToReturn)
-    //   else
-    //     this.invalid = true
 
-    // }
+    if (this.data.isWithFillField !== true)
+      this.dialogRef.close(true);
+    else {
+      if (this.messageToReturn !== " ")
+        this.dialogRef.close(this.messageToReturn)
+      else
+        this.messageToReturn = undefined;
+      return;
+      // this.invalid = true
+
+    }
   }
 }

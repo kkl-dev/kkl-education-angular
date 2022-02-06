@@ -9,15 +9,14 @@
     <textarea #fill matInput autocomplete="off" [(ngModel)]="messageToReturn" rows="2"></textarea>
   </mat-form-field>
 </div>
-<!-- <p class="message" *ngIf="invalid">{{M.MUST_FILL_CAUSE_OF_CANCEL}}</p> -->
+<p *ngIf="flagCangeDates && messageToReturn===undefined" style="font-size: 16px;font-weight:bold ;color:red">חובה להזין
+  סיבת
+  שינוי תאריכי הטיול</p>
 <div class="container d-flex flex-row" mat-dialog-actions>
 
-  <!-- <button *ngIf="data.leftButton!=null" mat-button class="button-next"
-    (click)="onNoClick()">{{data.leftButton}}</button> -->
-    <button *ngIf="data.leftButton!=null" mat-button class="button-next"
+  <button *ngIf="data.leftButton!=null" mat-button class="button-next"
     (click)="onNoClick()">{{data.rightButton}}</button>
-  
-  <button mat-button class="button-bottom" cdkFocusInitial
-    (click)="onYesClick()">{{data.leftButton}}</button>
+
+  <button mat-button class="button-bottom" cdkFocusInitial (click)="onYesClick()">{{data.leftButton}}</button>
 
 </div>

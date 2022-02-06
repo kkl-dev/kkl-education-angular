@@ -20,7 +20,6 @@ import { SquadDetailsService } from './squad-assemble/components/squad-details/s
 import { SquadGroupService } from './squad-assemble/components/squad-group/squad-group.service';
 import { SquadClientService } from './squad-assemble/components/squad-client/squad-client.service';
 
-
 @Component({
   selector: 'app-order-tour',
   templateUrl: './order-tour.component.html',
@@ -382,9 +381,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       let year = date.getFullYear();
       let month = date.getMonth() + 1;
       let day = date.getDate();
-       let monthStr=month>=10?month:'0'+month;
-        let dayStr=day>=10?day:'0'+day;
-      let dateFormat = year + '-' +monthStr + '-' + dayStr;   
+      let monthStr = month >= 10 ? month : '0' + month;
+      let dayStr = day >= 10 ? day : '0' + day;
+      let dateFormat = year + '-' + monthStr + '-' + dayStr;
       this.squadAssemble.tripInfo.generateTime = dateFormat;
       if (startDate == endDate) {
         this.tripService.isOneDayTrip = true;
@@ -402,9 +401,70 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       return flag;
     }
     console.log('tripInfo obj is: ', this.squadAssemble.tripInfo);
+    if (this.squadAssemble.tripInfofromService != undefined) {
+      this.checkingUpdateTrip();
+
+    }
     return flag;
   }
+  getDaysArray = function (start, end) {
+    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+      arr.push(new Date(dt));
+    }
+    return arr;
+  };
+  checkingUpdateTrip() {
+    // var DaysArrayFromService = this.getDaysArray(new Date(this.squadAssemble.tripInfofromService.trip.tripStart), new Date(this.squadAssemble.tripInfofromService.trip.tripEnding));
+    // var DaysArrayToService = this.getDaysArray(new Date(this.squadAssemble.tripInfo.tripStart), new Date(this.squadAssemble.tripInfo.tripEnding));
+    //לא נצרך
+    // if (DaysArrayFromService !== DaysArrayToService) {//בשינוי מספר הימים
+    //   let dialogRef = this._dialog.open(ConfirmDialogComponent, {
+    //     width: '500px',
+    //     data: { message: 'שים לב מס הימים השתנה, האם להמשיך בכל זאת ?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+    //   })
+    //   dialogRef.afterClosed().subscribe(dialogResult => {
+    //     if (dialogResult !== true) { return; }
+    //   });
+    // }
+    var tripEnding = this.squadAssemble.tripInfofromService.trip.tripEnding.split('T')[0];
+    var tripStart = this.squadAssemble.tripInfofromService.trip.tripStart.split('T')[0];
+    if (tripEnding !== this.squadAssemble.tripInfo.tripEnding || tripStart !== this.squadAssemble.tripInfo.tripStart) {//בשינוי תאריכי הטיול
+      let dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'נא הזן את סיבת שינוי תאריכי הטיול:', content: '', isWithFillField: true, rightButton: 'ביטול', leftButton: 'אישור' }
+      })
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if (dialogResult === false) { return; }
+        else { dialogResult }//to update trip
+      });
+    }
+    if (this.squadAssemble.tripInfofromService.trip.centerField.id !== this.squadAssemble.tripInfo.centerField.id) {
+      var centerField = this.tripService.fieldForestCentersOriginal.filter(el => el.id === this.squadAssemble.tripInfofromService.trip.centerField.id)[0];
+      if (centerField.chevelCode !== this.squadAssemble.tripInfo.centerField.chevelCode) {
+        let dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'האם למחוק את הזמנת האירוח החיצונית?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+        })
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          if (dialogResult === false) { ; }//send to server :dont delete outsidehosting order
+          else { dialogResult }//send to server : delete outsidehosting order
+          dialogRef = this._dialog.open(ConfirmDialogComponent, {
+            width: '500px',
+            data: { message: 'האם למחוק את החרוזים בעקבות שינוי המרחב?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+          })
+          dialogRef.afterClosed().subscribe(dialogResult => {
+            if (dialogResult === false) { ; }//send to server :dont delete outsidehosting order
+            else { dialogResult }//send to server : delete outsidehosting order
+          });
+        });
+      
+      }
+    }
+    //     if (this.squadAssemble.tripInfofromService.trip.numAdultAndYoung !== this.squadAssemble.tripInfo.numAdultAndYoung) {
+    //       // this.setDialogMessage('בעקבות השינוי ההזמנות יעודכנו על פי התאריכים ומרכז שדה החדשים');
+    //     }
 
+  }
   checkWhichControlIsInvalid(formName, index) {
     let ifControlFound = false;
     for (let i = 0; i < this.squadAssemble.formsArray.length; i++) {
@@ -443,15 +503,12 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createTrip(route) {
-
-    if (this.squadAssemble.tripInfofromService != undefined) {
-
-      this.router.navigateByUrl(
-        `/education/order-tour/${route}`
-      );
-      return;
-    }
-
+    // if (this.squadAssemble.tripInfofromService != undefined) {
+    //   this.router.navigateByUrl(
+    //     `/education/order-tour/${route}`
+    //   );
+    //   return;
+    // }
     let tripInfo = this.squadAssemble.tripInfo;
     let obj = this.squadAssemble.filledNightsArray;
     tripInfo.lodgingReservation = obj;
@@ -476,15 +533,15 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             let dateFormat = tripInfo.lodgingReservation[i].nightsCount[j].date;
             let dateArray = dateFormat.split("/");
             //test
-             if (parseInt(dateArray[0]) <10 && (parseInt(dateArray[1])<10))
-             dateFormat = dateArray[2] + '-' +'0'+ dateArray[1] + '-' +'0'+dateArray[0];
-             else if(parseInt(dateArray[0]) <10 && parseInt(dateArray[1]) >10)
-             dateFormat = dateArray[2] + '-'+ dateArray[1] + '-' +'0'+dateArray[0];
-             else if(parseInt(dateArray[1]) <10 && parseInt(dateArray[0]) >10)
-             dateFormat = dateArray[2] + '-'+'0'+ dateArray[1] + '-'+dateArray[0];
-             else
-             dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
-           
+            if (parseInt(dateArray[0]) < 10 && (parseInt(dateArray[1]) < 10))
+              dateFormat = dateArray[2] + '-' + '0' + dateArray[1] + '-' + '0' + dateArray[0];
+            else if (parseInt(dateArray[0]) < 10 && parseInt(dateArray[1]) > 10)
+              dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + '0' + dateArray[0];
+            else if (parseInt(dateArray[1]) < 10 && parseInt(dateArray[0]) > 10)
+              dateFormat = dateArray[2] + '-' + '0' + dateArray[1] + '-' + dateArray[0];
+            else
+              dateFormat = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+
             tripInfo.lodgingReservation[i].nightsCount[j].date = dateFormat;
           }
         }
@@ -520,30 +577,60 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sendTripToServer(route, tripInfo) {
     this.spinner.show();
-    this.userService.createTrip(tripInfo).subscribe(res => {
-      this.spinner.hide();
-      console.log('tripInfo from server is :', res);
-      this.squadAssemble.tripInfofromService = res;
-      //test
-      this.squadAssembleService.isRouteToNewTrip=false;
-      //end test
-      localStorage.setItem('tripId', res.trip.id.toString());
-      localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'פרטי הטיול נשמרו בהצלחה', content: '', leftButton: 'אישור' }
+    //if updateTrip
+    if (this.squadAssemble.tripInfofromService != undefined) {
+      this.userService.updateTrip(this.squadAssemble.tripInfofromService.trip.id, tripInfo).subscribe(res => {
+        this.spinner.hide();
+        console.log('tripInfo from server is :', res);
+        this.squadAssemble.tripInfofromService = res;
+        //test
+        this.squadAssembleService.isRouteToNewTrip = false;
+        //end test
+        localStorage.setItem('tripId', res.trip.id.toString());
+        localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'פרטי הטיול עודכנו בהצלחה', content: '', leftButton: 'אישור' }
+        })
+        this.router.navigateByUrl(
+          `/education/order-tour/${route}`
+        );
+      }, (err) => {
+        this.spinner.hide();
+        console.log(err);
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'אירעה שגיאה בעדכון הטיול, נא פנה למנהל המערכת', content: '', leftButton: 'אישור' }
+        })
       })
-      this.router.navigateByUrl(
-        `/education/order-tour/${route}`
-      );
-    }, (err) => {
-      this.spinner.hide();
-      console.log(err);
-      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        width: '500px',
-        data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', leftButton: 'אישור' }
+    }
+    //if createTrip
+    else {
+      this.userService.createTrip(tripInfo).subscribe(res => {
+        this.spinner.hide();
+        console.log('tripInfo from server is :', res);
+        this.squadAssemble.tripInfofromService = res;
+        //test
+        this.squadAssembleService.isRouteToNewTrip = false;
+        //end test
+        localStorage.setItem('tripId', res.trip.id.toString());
+        localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'פרטי הטיול נשמרו בהצלחה', content: '', leftButton: 'אישור' }
+        })
+        this.router.navigateByUrl(
+          `/education/order-tour/${route}`
+        );
+      }, (err) => {
+        this.spinner.hide();
+        console.log(err);
+        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+          width: '500px',
+          data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', leftButton: 'אישור' }
+        })
       })
-    })
+    }
   }
 
   // createTripActivities(route) {
@@ -605,12 +692,12 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-      // if(this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id')
+    // if(this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id')
     if (routeIndex <= this.steps.length) {
-      if (routeIndex == 1 || this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id') {
+      if (routeIndex == 1 || this.route.snapshot.firstChild.routeConfig.path == 'squad-assemble/:id') {
         routeIndex == 1
         let flag = this.syncToTripInfo();
-        if (!flag ) {
+        if (!flag) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
             width: '500px',
             data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
