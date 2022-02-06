@@ -8,8 +8,9 @@ import { SquadGroupComponent } from './squad-group/squad-group.component';
 import { SquadClientService } from './squad-client/squad-client.service';
 
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
-import { TripInfo, TripModel, UserService } from 'src/app/open-api';
+import { BudgetByParams, TripInfo, TripModel, UserService } from 'src/app/open-api';
 import {ActivatedRoute , Router} from '@angular/router';
+import { SquadDetailsService } from './squad-details/squad-details.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class SquadAssembleComponent implements OnInit {
   //regionList=[];
   public md$ : Observable<boolean>
   constructor(private squadAssembleService: SquadAssembleService,private tripService:TripService, private breakpointService : BreakpointService,
-    private squadClientService: SquadClientService,private userService:UserService, private _route:Router,private _activeRoute : ActivatedRoute) {
+    private squadClientService: SquadClientService,private userService:UserService, private _route:Router,private _activeRoute : ActivatedRoute,
+    private squadDetailsService: SquadDetailsService) {
       this.options = {
       firstCalendarDay: 0,
       format: 'dd/LL/yyyy',
@@ -36,14 +38,22 @@ export class SquadAssembleComponent implements OnInit {
     }
   
   ngOnInit(): void {
-    let param= this._activeRoute.snapshot.params["id"];
-    if(param ){
+    // this.squadAssembleService.isRouteToNewTrip1.subscribe(res=>{
+    //   debugger;
+    //   console.log(res);
+    // })
+    if( this.squadAssembleService.isRouteToNewTrip==true){
       console.log('I am route to new trip');
-      this.squadAssembleService.isRouteToNewTrip=true;
-      this.resetTripInfoObj()
+     this.resetTripInfoObj()
     }
-    else
-    console.log('I am regular  route ')
+    // let param= this._activeRoute.snapshot.params["id"];
+    // if(param ){
+    //   console.log('I am route to new trip');
+    //   this.squadAssembleService.isRouteToNewTrip=true;
+    //   this.resetTripInfoObj()
+    // }
+    // else
+    // console.log('I am regular  route ')
     this.tripService.getLookUp();
    
     this.subscribeToNewClient();
@@ -88,41 +98,7 @@ export class SquadAssembleComponent implements OnInit {
   }
 
  
-//   setClientSquadValues(){
-//     if(this.squadAssembleService.tripInfo.tripStart!=undefined){
-//       console.log('trip info is full');
-//       let custObj={
-//         label: this.squadAssembleService.tripInfo.customer.name,
-//         value : this.squadAssembleService.tripInfo.customer.id.toString()
-//       }
-//       let payerCust={label:'',value:''}
-//       if(this.squadAssembleService.tripInfo.customerPay?.id){
-//         payerCust.value= this.squadAssembleService.tripInfo.customerPay.id.toString()
-//         payerCust.label = this.squadAssembleService.tripInfo.customerPay.name
-//       }
-//       let custArr= [];
-//       custArr.push(custObj);
-//       let payerCustArr=[];
-     
-//       this.squadClientService.questions[0].group.questions[0].inputProps.options=custArr;     
-//       this.squadClientService.questions[0].group.questions[0].value=custObj.value;
-//       //this.squadClientService.questions[0].group.questions[0].value= `${custObj.value} - ${custObj.label}`;
-//       if(this.squadAssembleService.tripInfo.customerPay?.id){
-//         payerCustArr.push(payerCust);
-//         this.squadClientService.questions[2].group.questions[0].inputProps.options=payerCustArr;
-//         this.squadClientService.questions[2].group.questions[0].value=payerCust.value;
-//       }
-//       let contactGroupIndex=  this.squadClientService.questions.findIndex(i => i.key=='contact');
-//       let contactGroup = this.squadClientService.questions.find(i => i.key=='contact');
-//       let contactNameIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactName');
-//       this.squadClientService.questions[contactGroupIndex].group.questions[contactNameIndex].value= this.squadAssembleService.tripInfo.contactName;
-//       let contactPhoneIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactPhone');
-//       this.squadClientService.questions[contactGroupIndex].group.questions[contactPhoneIndex].value= this.squadAssembleService.tripInfo.contactPhone;
-//       let contactImailIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactEmail');
-//       this.squadClientService.questions[contactGroupIndex].group.questions[contactImailIndex].value= this.squadAssembleService.tripInfo.contactEmail;
-//     }
-  
-//  }
+
 
  setClientSquadValues(){
   let contactGroupIndex=  this.squadClientService.questions.findIndex(i => i.key=='contact');
@@ -132,14 +108,6 @@ export class SquadAssembleComponent implements OnInit {
   let contactImailIndex= contactGroup.group.questions.findIndex(i=> i.key== 'contactEmail');
   if(this.squadAssembleService.tripInfo?.tripStart!=undefined && !this.squadAssembleService.isRouteToNewTrip){
     console.log('trip info is full');
-    // let custObj={
-    //   label: this.squadAssembleService.tripInfo.customer.name,
-    //   value : this.squadAssembleService.tripInfo.customer.id.toString()
-    // }
-    // let custArr= [];
-    // custArr.push(custObj);
-    // this.squadClientService.questions[0].group.questions[0].inputProps.options=custArr;
-    // this.squadClientService.questions[0].group.questions[0].value=custObj.value;
     let custObj={
       label: this.squadAssembleService.tripInfo.customer.name,
       value : this.squadAssembleService.tripInfo.customer.id.toString()
@@ -155,7 +123,6 @@ export class SquadAssembleComponent implements OnInit {
    
     this.squadClientService.questions[0].group.questions[0].inputProps.options=custArr;     
     this.squadClientService.questions[0].group.questions[0].value=custObj.value;
-    //this.squadClientService.questions[0].group.questions[0].value= `${custObj.value} - ${custObj.label}`;
     if(this.squadAssembleService.tripInfo.customerPay?.id){
       payerCustArr.push(payerCust);
       this.squadClientService.questions[2].group.questions[0].inputProps.options=payerCustArr;
@@ -180,6 +147,8 @@ resetTripInfoObj(){
   this.squadAssembleService.formsArray=[];
   this.squadAssembleService.tripInfo= {} as TripInfo;
   this.squadAssembleService.tripInfofromService= undefined;
+  this.squadDetailsService.budget={};
+  this.squadDetailsService.budgetByParam={} as BudgetByParams
    this.squadAssembleService.filledNightsArray= [];
    this.tripService.centerField={ id: 0,name: ''};
     this.tripService.sleepingDates={ from: '', till: '' };

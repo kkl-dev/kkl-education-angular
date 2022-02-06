@@ -25,6 +25,7 @@ export class TripService {
   //formGroupSquadAssembles = [];
   dateRange: any;
   formOptions!: FieldForestCenter[];
+  
   lodgingFacilityListArrayObservable: any = new BehaviorSubject<any>([
     {
       "fieldForestCenterName": "מרכז שדה לביא",

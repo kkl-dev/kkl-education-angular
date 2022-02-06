@@ -1,6 +1,7 @@
 import { UserDataService } from './../../utilities/services/user-data.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SquadAssembleService } from 'src/app/screens/order-tour/squad-assemble/services/squad-assemble.service';
 
 @Component({
   selector: 'app-wizard',
@@ -24,7 +25,7 @@ export class WizardComponent implements OnInit {
   
   constructor(
     private route: ActivatedRoute,
-    private userDataService: UserDataService) {
+    private userDataService: UserDataService, private squadAssembleService: SquadAssembleService) {
     this.prefix = this.userDataService.user.urlPrefix
     this.wizardItems = [
       // {
@@ -35,7 +36,7 @@ export class WizardComponent implements OnInit {
       {
         src: 'assets/images/button.svg',
         text: 'טיול חדש',
-        link: '/education/order-tour/squad-assemble/newTrip'
+        link: '/education/order-tour/squad-assemble'
       },
       {
         src: 'assets/images/report.svg',
@@ -51,4 +52,13 @@ export class WizardComponent implements OnInit {
   }
 
   ngOnInit(): void { }
+  test( link){
+    debugger;
+    if(link=='/education/order-tour/squad-assemble'){
+      //this.squadAssembleService.isRouteToNewTrip1.next(true);
+      this.squadAssembleService.isRouteToNewTrip=true;
+      console.log('I am wizard',link);
+    }
+    
+  }
 }

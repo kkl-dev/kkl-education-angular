@@ -101,6 +101,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
     }
     this.generalFormService.setDatesValues();
+    //
     if (this.generalFormService.tripInfo.trip.tripStatus.id != 10)
       this.getSupplierList(this.orderType, this.tripId, 0);
     else {

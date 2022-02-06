@@ -109,8 +109,10 @@ export class FacilitiesComponent implements OnInit {
     //get sleeping Dates from trip service
     this.sleepingDates = this.tripService.convertDatesFromSlashToMinus();
     // add another day to last day
-    let lastDay = new Date(this.days[this.days.length - 1].date);
-    this.till = new Date(lastDay.setDate(lastDay.getDate() + 1));
+    // let lastDay = new Date(this.days[this.days.length - 1].date);
+    // this.till = new Date(lastDay.setDate(lastDay.getDate() + 1));
+    let lastDay1 = new Date(this.squadAssembleService.tripInfofromService.trip.tripEnding)
+    this.till = new Date(lastDay1.setDate(lastDay1.getDate() + 1));
   }
 
   ngOnInit(): void {
@@ -278,9 +280,27 @@ export class FacilitiesComponent implements OnInit {
     })
   }
 
-  getAvailableFacilities() {
+  getAvailableFacilities1() {
     this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
     this.facilitiesArray.map(n => { n.orderTypeCode = 7 });
+  }
+
+  getAvailableFacilities(){
+    let sleepingDates = this.tripService.convertDatesFromSlashToMinus();    
+    this.usersService.getAvailableFacilities(this.tripService.centerField.id, sleepingDates.from, sleepingDates.till).subscribe((facilities: any) => {
+      console.log('get Available Facilities: ', facilities);
+      if (facilities) {
+        this.facilityForDay = facilities[0].facilitiesList;
+        this.facilitiesArray = facilities;
+        this.tripService.setfacilitiesArray(facilities);
+        //console.log('facility For Day: ', this.facilityForDay);
+      }
+      this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
+      this.facilitiesArray.map(n => { n.orderTypeCode = 7 });
+    },
+      error => {
+        console.log("error: ", { error });
+      });
   }
 
   logForm(form) {

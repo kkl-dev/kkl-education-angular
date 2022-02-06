@@ -106,6 +106,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   // step logic
   private updateStepsStatus(step: StepModel) {
     if (step.label == 'לינה') {
+
       this.syncToTripInfo();
     }
     this.orderTourService.updateStepStatus(step, 'label')
@@ -174,6 +175,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
 
   syncToTripInfo() {
     //let flagObj={flag:false,msg:''}
+    this.squadAssembleService.isRouteToNewTrip=false;
     let flag = false;
     let scheduleForm;
     let detalisForm;
@@ -635,10 +637,9 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
-      // if(this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id')
     if (routeIndex <= this.steps.length) {
-      if (routeIndex == 1 || this.route.snapshot.firstChild.routeConfig.path=='squad-assemble/:id') {
-        routeIndex = 1
+      if (routeIndex == 1 ) {
+        this.squadAssembleService.isRouteToNewTrip=false;
         let flag = this.syncToTripInfo();
         if (!flag ) {
           const dialogRef = this._dialog.open(ConfirmDialogComponent, {
@@ -675,12 +676,23 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   public changeActiveStepPrevNavigation(): void {
-    const routeIndex =
+    let routeIndex =
       this.steps.findIndex(
         (step) => step.path === this.route.snapshot.firstChild.routeConfig.path
       ) + 1;
 
     this.activeStep = +this.activeStep--;
+    // if(routeIndex === 2){
+    //   routeIndex=0
+    //   console.log('_____________navigate___________'); 
+    //   this.squadAssembleService.isRouteToNewTrip=false;
+    //   this.router.navigateByUrl(
+    //     `/education/order-tour/${this.steps[routeIndex].path}`
+    //   );
+    // }
+    // else{
+    //   this.location.back();
+    // }
     this.location.back();
   }
 

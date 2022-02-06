@@ -12,7 +12,7 @@
       </ng-container>
 
       <ng-template #href>
-        <a href="{{item.link}}" target="_blank">
+        <a href="{{item.link}}" target="_blank" (click)="test(item.link)">
           <svg-icon class="list__item-svg" [ngClass]="{
         ' education-svg': i != chosenWizardItem,
         white: i == chosenWizardItem
@@ -24,7 +24,7 @@
         </a>
       </ng-template>
       <ng-template #routerLink>
-        <a routerLink="{{item.link}}">
+        <a routerLink="{{item.link}}" (click)="test(item.link)">
           <svg-icon class="list__item-svg" [ngClass]="{
               ' education-svg': i != chosenWizardItem,
               white: i == chosenWizardItem

@@ -1044,11 +1044,35 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OrderEvent'
+  /order/gudianceOrder/{tripId}:
+    get:
+      tags:
+      - order
+      operationId: AddGudianceOrdersByGudiesNum
+      description: 'need to check two conditions on the server aboute activities before adding orders'
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer    
+      responses:
+        "200":
+          description: gudiance order List using polymorphishem
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderEvent'
+   
+   
   /order/AddOrder:
     post:
       tags:
       - order
       operationId: AddOrder
+      description: using polymorphishem 
       # parameters:
       # - name: permissionId
       #   in: path
@@ -1738,7 +1762,7 @@ components:
         name:
           type: string
           example: סמינר הקיבוצים
-        addresss:
+        address:
            type: string
            example: לביא
         lastName:

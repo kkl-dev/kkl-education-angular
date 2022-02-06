@@ -37,53 +37,11 @@ export class SquadDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.tablet$ = this.breakpoints.isTablet();
-    // if(this.squadDetailsService.attributes.length>0)
     this.setSquadDetails();
    
   }
-  // getAttributes(){
-  //   this.userService.getAttributes().subscribe(
-  //     response => {
-  //       this.squadDetailsService.attributesOriginal = response;
-  //       this.squadDetailsService.attributes=[];
-  //       response.forEach(element => {
-  //         this.squadDetailsService.attributes.push({ label: element.name, value: element.id.toString() });
-  //       });
-  //       this.setSquadDetails();
-  //     },
-  //     error => console.log(error),       // error
-  //     () => console.log('completed')     // complete
-  //   )
-  // }
-  // setSquadDetails(){
-  //   if(this.squadAssembleService.tripInfo.tripStart!=undefined){
-  //     console.log('trip info is full');
-  //     let attributeIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='attribute');
-  //     this.squadDetailsService.questions[attributeIndex].value= this.squadAssembleService.tripInfo.attribute.id.toString();
-  //     let activityIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='activityType');
-  //     this.squadDetailsService.questions[activityIndex].value= this.squadAssembleService.tripInfo.activity.id.toString();
-  //     // let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='departmentId');
-  //     // this.squadDetailsService.questions[departmentIdIndex].value= this.squadAssembleService.tripInfo.departmentId.toString();
-  //     let departmentIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='department');
-  //     this.squadDetailsService.questions[departmentIdIndex].value= this.squadAssembleService.tripInfo.departmentId.toString();
-  //     let tripLocationIndex = this.squadDetailsService.questions.findIndex(i => i.key ==='tripLocation');
-  //     if(this.squadAssembleService.tripInfo.departmentId.toString() =='8')
-  //     this.squadDetailsService.questions[tripLocationIndex].value ='8';
-  //     else if(this.squadAssembleService.tripInfo.departmentId.toString() =='1'){
-  //       this.squadDetailsService.questions[tripLocationIndex].inputProps.options=[];
-  //       this.countriesList = this.setCountryList(this.tripService.countries)
-  //       this.squadDetailsService.questions[tripLocationIndex].inputProps.options = this.countriesList;
-  //       this.squadDetailsService.questions[tripLocationIndex].value= this.squadAssembleService.tripInfo.country.id.toString();
-  //     }
-  //     let insideCenterFieldIdIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='insideCenterFieldId');
-  //     this.squadDetailsService.questions[insideCenterFieldIdIndex].value= this.squadAssembleService.tripInfo.insideCenterFieldId.toString();
-      
-  //   }
-  //   else{
-  //    console.log('trip info is undefined');
-  //   }
-  // }
 
+  
   setSquadDetails(){
     let attributeIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='attribute');
     let activityIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='activityType');
@@ -177,16 +135,7 @@ export class SquadDetailsComponent implements OnInit {
       return this.countriesList;
    }
   public logForm(form) {
-    // this.form=form;
-    // if(form.controls['department'].value =='8'){
-    //   this.form.controls['tripLocation'].patchValue('900', { emitEvent: false });
-    //   this.form.controls['tripLocation'].disable({ emitEvent: false }); 
-    // }
-  
-    // this.listenToRadioButton(form);
-    // console.log('I am form details: ', form);
-    // this.squadAssembleService.updateFormArray(form);
-
+    
     console.log('I am form details event', form);
     this.form=form;
     this.squadAssembleService.updateFormArray(form);

@@ -13,7 +13,7 @@ import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
 import { BaseCustomer, Movements, TripInfo, TripModel, UserService } from 'src/app/open-api';
 import { SquadDetailsService } from '../components/squad-details/squad-details.service';
 import { SquadBudgetService } from '../components/squad-budget/squad-budget.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { SquadClientService } from '../components/squad-client/squad-client.service';
 import { SquadNewClientService } from '../components/squad-new-client/squad-new-client.service';
 import { QuestionGroup } from 'src/app/components/form/logic/question-group';
@@ -46,6 +46,7 @@ export class SquadAssembleService {
   regionList = [];
   originalRegionList = [];
   isRouteToNewTrip: boolean=false;
+  //public isRouteToNewTrip1 = new BehaviorSubject(null);
 
   // public freeSpacesArrayGenarator(start: Date, end: Date) {
   //   const i = 0;
@@ -115,7 +116,7 @@ export class SquadAssembleService {
 
     // console.log(this.options);
   }
-
+  
   public scheduleQuestions: QuestionBase<string | Date>[] = [
     new QuestionTextbox({
       key: 'tripDescription',
@@ -226,4 +227,6 @@ export class SquadAssembleService {
     this.filledNightsArray = array;
     console.log('filledNightsArray is: ', this.filledNightsArray);
   }
+
+ 
 }
