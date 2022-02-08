@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
@@ -10,6 +10,7 @@ import { BreakpointService } from 'src/app/utilities/services/breakpoint.service
 import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from '../squad-client/squad-client.service';
 import { CalendarOptions, FreeSpace } from 'comrax-alex-airbnb-calendar';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-squad-schedule',
@@ -44,7 +45,8 @@ export class SquadScheduleComponent implements OnInit {
     private breakpoints: BreakpointService,
     private tripService:TripService,
     private userService: UserService,
-    private squadClientService: SquadClientService
+    private squadClientService: SquadClientService,
+    private spinner: NgxSpinnerService
   ) {   this.options = {
     firstCalendarDay: 0,
     format: 'dd/LL/yyyy',
@@ -123,7 +125,7 @@ export class SquadScheduleComponent implements OnInit {
         this.centerFieldId= parseInt(localStorage.getItem("centerFieldId"));
       }        
        let datesIndex= this.squadAssembleService.scheduleQuestions.findIndex(i => i.key ==='dates');
-        if(!this.options.freeSpacesArray)
+        if(!this.options.freeSpacesArray && this.centerFieldId)
          this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),this.centerFieldId);
          else
         this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions= this.options;
@@ -143,8 +145,11 @@ export class SquadScheduleComponent implements OnInit {
    getAvailableDates(fromDate: string, tillDate: string,centerFieldId) {
     fromDate = fromDate.substring(0, 10);
     tillDate = tillDate.substring(0, 10);
+    if(!this.options.freeSpacesArray && this.centerFieldId)
+     this.spinner.show();
     this.userService.getAvailableAccomodationDates(this.centerFieldId, fromDate, tillDate).subscribe(
       response => {
+        this.spinner.hide();
         console.log(response)
         this.AvailableDates = response;
         this.AvailableDates.forEach(element => element.freeSpace.forEach(element => { if (element.availableBeds === undefined) { element.availableBeds = 0; } }));

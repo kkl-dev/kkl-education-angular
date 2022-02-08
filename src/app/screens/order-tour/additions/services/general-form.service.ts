@@ -37,6 +37,7 @@ export class GeneralFormService {
   originalSupplierList = [];
   public siteList = [];
   tripOrdersList: OrderEvent[];
+  isGudianceOrderByGuidesNumExist:boolean=false;
 
   //public tempOrderReduce = new BehaviorSubject<any>(null)
   public tempOrderReduce = new BehaviorSubject<{ tempOrderReduce: any, orderType: any }>(null)
@@ -581,7 +582,13 @@ export class GeneralFormService {
     });
   }
 
-
+  setGudianceOrderList(res){
+    this.gudianceOrderList = [];
+    res.forEach(element => {
+        this.gudianceOrderList.push(element)    
+    });
+    this.isGudianceOrderByGuidesNumExist=true;
+   }
   findInvalidControls(form: any) {
     const controls = form.controls.details.controls;
     var indx = 0;

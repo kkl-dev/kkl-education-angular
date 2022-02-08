@@ -1,6 +1,6 @@
 import { StepperService } from './../../utilities/services/stepper.service';
 import { OrderTourService } from './../../utilities/services/order-tour.service';
-import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy,ViewChild  } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -43,6 +43,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   public currentStep: StepModel;
   addOrderSub: Subscription;
   createActivitiesSub: Subscription;
+  @ViewChild ('spinnerText') spinnerTextElem;
 
   constructor(
     private router: Router, private squadAssembleService: SquadAssembleService,
@@ -200,15 +201,17 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
             if(invalid.length==1){
                if (invalid[0]=='dates'){
                  if(this.squadAssemble.formsArray[i].get('dates').value){
-                  isContinue==false;
+                  isContinue=false;
                  }  
                  else{
-                  isContinue==true;
+                  isContinue=true;
                  }    
                }
+               else
+               isContinue=true;
             }
             else{
-              isContinue==true
+              isContinue=true
             }
             console.log('schedule is invalid');
             if(isContinue==true){
@@ -551,6 +554,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   sendTripToServer(route, tripInfo) {
+    this.spinnerTextElem.nativeElement.innerText= 'אנא המתן לשמירת הנתונים';
+    //let elem = this.spinnerTextElem;
     this.spinner.show();
     this.userService.createTrip(tripInfo).subscribe(res => {
       this.spinner.hide();

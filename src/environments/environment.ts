@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl:'http://knf-appl-dev3/EducationApiDev',
+  //apiUrl:'https://kkl-education-api-dev.azurewebsites.net'
 };
 
 /*
