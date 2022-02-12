@@ -1765,6 +1765,9 @@ components:
         address:
            type: string
            example: לביא
+        settlementId:
+           type: integer
+           example: 12
         lastName:
           type: string
           example: kkl

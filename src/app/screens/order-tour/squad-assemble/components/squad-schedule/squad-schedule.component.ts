@@ -25,7 +25,7 @@ export class SquadScheduleComponent implements OnInit {
   freeSpacesArray: FreeSpace[] = [];
   public tripId: number ;
   centerFieldId: number;
-  
+  isShowSpinner: boolean =false;
 
   public list: ListItem[] = [
     {
@@ -145,7 +145,7 @@ export class SquadScheduleComponent implements OnInit {
    getAvailableDates(fromDate: string, tillDate: string,centerFieldId) {
     fromDate = fromDate.substring(0, 10);
     tillDate = tillDate.substring(0, 10);
-    if(!this.options.freeSpacesArray && this.centerFieldId)
+    if((!this.options.freeSpacesArray &&  this.centerFieldId)||this.isShowSpinner)
      this.spinner.show();
     this.userService.getAvailableAccomodationDates(this.centerFieldId, fromDate, tillDate).subscribe(
       response => {
@@ -202,6 +202,7 @@ export class SquadScheduleComponent implements OnInit {
      form.controls["areaTrip"].patchValue('', { emitEvent: false });
      this.centerFieldId= value;
       this.getRegionList(value,'centerFieldId');
+      this.isShowSpinner =true;
       this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),this.centerFieldId);
     });
 

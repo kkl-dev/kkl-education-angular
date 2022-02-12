@@ -151,6 +151,13 @@ resetTripInfoObj(){
   this.squadDetailsService.budgetByParam={} as BudgetByParams
    this.squadAssembleService.filledNightsArray= [];
    this.tripService.centerField={ id: 0,name: ''};
+   if(this.tripService.fieldForestCenters.length>0)
+   this.tripService.fieldForestCenters=[];
+   if(this.tripService.attributes.length>0)
+   this.tripService.attributes=[];
+   if(this.tripService.ageGroup.length>0)
+   this.tripService.ageGroup=[];
+  
     this.tripService.sleepingDates={ from: '', till: '' };
    localStorage.clear();
 }

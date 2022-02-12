@@ -400,7 +400,7 @@ export class SecuringOrderFormComponent implements OnInit, OnDestroy {
   public onEdit() {
     this.editMode = false;
     this.isEditable = true;
-    this.form.enable();
+    this.form.enable({ emitEvent: false });
     this.disableFormFields();
   }
 

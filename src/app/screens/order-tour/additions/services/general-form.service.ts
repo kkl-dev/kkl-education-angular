@@ -398,11 +398,21 @@ export class GeneralFormService {
       if (control.key == 'exitPoint') {
         control.value = data.exitPoint += '';
       }
+      if (control.key == 'guideInstructions') {
+        control.value = data.guideInstructions;
+      }
+      if (control.key == 'guideName') {
+        control.value = data.guideName ;
+      }
+      // if (control.key == 'languageGuidance') {
+      //   control.value = data.languageGuidance += '';
+      // }
+
       if (this.isOneDayTrip && control.key == 'startDate') {
-        control.value = this.changeDateFormat(this.tripInfo.tripStart, 'israel');;
+        control.value = this.changeDateFormat(this.tripInfo.trip.tripStart, 'israel');;
       } 
       if (this.isOneDayTrip && control.key == 'endDate') {
-        control.value = this.changeDateFormat(this.tripInfo.tripStart, 'israel');;
+        control.value = this.changeDateFormat(this.tripInfo.trip.tripStart, 'israel');;
       }
       // if (control.key === 'comments') {
       //   control.value = data;

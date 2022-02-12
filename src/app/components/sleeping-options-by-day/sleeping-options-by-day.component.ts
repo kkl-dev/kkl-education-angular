@@ -43,6 +43,9 @@ export class SleepingOptionsByDayComponent implements OnInit {
       this.AvailableSleepingOptions = sleepingOptions; // this set's the username to the default observable value
       //console.log('sleeping -- > AvailableSleepingOptions:', this.AvailableSleepingOptions);
     });
+
+    
+ 
   }
 
   previousPage() {

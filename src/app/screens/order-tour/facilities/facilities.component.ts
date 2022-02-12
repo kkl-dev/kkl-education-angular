@@ -105,6 +105,7 @@ export class FacilitiesComponent implements OnInit {
   constructor(private facilitiesService: FacilitiesService, private usersService: UserService, private tripService: TripService,
     private activitiyService: ActivitiesService, private facilitiesConvertingService: FacilitiesConvertingService,
     private userDataService: UserDataService, private orderService: OrderService, private squadAssembleService: SquadAssembleService,
+    private userService:UserService,
     private resolver: ComponentFactoryResolver) {
     //get sleeping Dates from trip service
     this.sleepingDates = this.tripService.convertDatesFromSlashToMinus();
@@ -121,6 +122,7 @@ export class FacilitiesComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+    this.getAvaliableSleepingOptions();
     this.getAvailableFacilities();
     this.fillTimes();
     this.getAreas();
@@ -283,6 +285,23 @@ export class FacilitiesComponent implements OnInit {
   getAvailableFacilities1() {
     this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
     this.facilitiesArray.map(n => { n.orderTypeCode = 7 });
+  }
+
+  getAvaliableSleepingOptions(){
+    let start = this.squadAssembleService.tripInfofromService.trip.tripStart;
+    let startArr= start.split("T");
+    start=startArr[0];
+    let end = this.squadAssembleService.tripInfofromService.trip.tripEnding;
+    let endArr= end.split("T");
+    end= endArr[0];
+    this.userService.getAvailableSleepingOptionsByDates(this.squadAssembleService.tripInfofromService.trip.centerField.id, start, end).subscribe((sleepingAvailability: any) => {
+      if (sleepingAvailability) {
+        this.tripService.AvailableSleepingOptionsByDay.next(sleepingAvailability);
+      }
+    },
+      error => {
+        console.log({ error });
+      });
   }
 
   getAvailableFacilities(){

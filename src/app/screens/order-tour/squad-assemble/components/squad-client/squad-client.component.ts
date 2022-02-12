@@ -169,19 +169,21 @@ export class SquadClientComponent implements OnInit, OnDestroy {
       if (control.parent.controls.hasOwnProperty('customer')) {//if choose customer
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === 'customer');
-        if (control.parent.value.clientPool !== 'kklWorker') {
-          this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2,'customer')
-        }
-        else { this.getKKLWorkers(control.value, indx1, indx2,'customer'); }
+        // if (control.parent.value.clientPool !== 'kklWorker') {
+        //   this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2,'customer')
+        // }
+        // else { this.getKKLWorkers(control.value, indx1, indx2,'customer'); }
+        this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2,'customer')
       }
 
       else {//if choose payer customer
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerName");
-        if (control.parent.value.payerName !== 'kklWorker') {
-          this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
-        }
-        else { this.getKKLWorkers(control.value, indx1, indx2,'payer'); }
+        // if (control.parent.value.payerName !== 'kklWorker') {
+        //   this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
+        // }
+        // else { this.getKKLWorkers(control.value, indx1, indx2,'payer'); }
+        this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
       }
     }
     // end old code
