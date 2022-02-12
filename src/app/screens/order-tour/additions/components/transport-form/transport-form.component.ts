@@ -91,16 +91,20 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     else {
       let peopleInTripIndex = this.generalFormService.details.findIndex(i => i.key === 'peopleInTrip');
       this.generalFormService.details[peopleInTripIndex].value = (this.generalFormService.peopleInTrip).toString();
-      if (this.generalFormService.isOneDayTrip) {
-        let startDateIndex = this.generalFormService.details.findIndex(i => i.key === 'startDate');
-        this.generalFormService.details[startDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripStart, 'israel');;
-        let endDateIndex = this.generalFormService.details.findIndex(i => i.key === 'endDate');
-        this.generalFormService.details[endDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripEnding, 'israel');;
-      }
+      // if (this.generalFormService.isOneDayTrip) {
+      //   let startDateIndex = this.generalFormService.details.findIndex(i => i.key === 'startDate');
+      //   this.generalFormService.details[startDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripStart, 'israel');;
+      //   let endDateIndex = this.generalFormService.details.findIndex(i => i.key === 'endDate');
+      //   this.generalFormService.details[endDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripEnding, 'israel');;
+      // }
 
 
     }
     this.generalFormService.setDatesValues();
+    let startDateIndex = this.generalFormService.details.findIndex(i => i.key === 'startDate');
+    this.generalFormService.details[startDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripStart, 'israel');;
+    let endDateIndex = this.generalFormService.details.findIndex(i => i.key === 'endDate');
+    this.generalFormService.details[endDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripEnding, 'israel');;
     //
     if (this.generalFormService.tripInfo.trip.tripStatus.id != 10)
       this.getSupplierList(this.orderType, this.tripId, 0);
@@ -282,6 +286,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   }
 
   public onSave(): void {
+    if (this.form.controls["details"].get('startHour').value === "") { this.startTimeChanged('8:00'); }
+    if (this.form.controls["details"].get('endHour').value === "") { this.endTimeChanged('17:00'); }
     if (this.form) {
       let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
       // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
@@ -382,7 +388,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       this.tableData = res;
       this.ifShowtable = true;
       this.editMode = true;
-      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem,undefined);
+      this.generalFormService.setOrderList(res, this.orderType, 'adding', this.isTempuraryItem, undefined);
       this.setDialogMessage('ההזמנה נשמרה בהצלחה');
       this.generalFormService.enableButton.next(true);
 
@@ -397,7 +403,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   editOrder(item) {
     this.editOrderSub = this.orderService.editOrder(item).subscribe(res => {
       console.log(res);
-      this.generalFormService.setOrderList(res, this.orderType, 'updating', false,undefined);
+      this.generalFormService.setOrderList(res, this.orderType, 'updating', false, undefined);
       this.editMode = true;
       this.setDialogMessage('ההזמנה עודכנה בהצלחה');
     }, (err) => {
@@ -423,8 +429,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     let hourFormat = str[0] + 'T' + hour;
     return hourFormat;
   }
-
-
 
   validationsTransport() {
     if (this.generalFormService.originalItemList.length > 0) {
@@ -603,8 +607,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   // new am-pm
   setDefaultTime(question) {
     console.log('question of startHour is : ', question);
-    if (!question.value)
-      return "00:00";
+    if (!question.value) {
+      return "08:00";
+    }
     else {
       return question.value;
     }
@@ -612,7 +617,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   setDefaultTime1(question) {
     console.log('question of endHour is : ', question);
     if (!question.value)
-      return "00:00";
+      return "17:00";
     else {
       return question.value;
     }
