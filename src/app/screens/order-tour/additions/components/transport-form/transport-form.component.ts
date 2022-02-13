@@ -101,11 +101,15 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
     }
     this.generalFormService.setDatesValues();
-    let startDateIndex = this.generalFormService.details.findIndex(i => i.key === 'startDate');
-    this.generalFormService.details[startDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripStart, 'israel');;
-    let endDateIndex = this.generalFormService.details.findIndex(i => i.key === 'endDate');
-    this.generalFormService.details[endDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripEnding, 'israel');;
-    //
+    if (!this.isItemOrderExist) {
+      let startDateIndex = this.generalFormService.details.findIndex(i => i.key === 'startDate');
+      this.generalFormService.details[startDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripStart, 'israel');
+      let endDateIndex = this.generalFormService.details.findIndex(i => i.key === 'endDate');
+      this.generalFormService.details[endDateIndex].value = this.generalFormService.changeDateFormat(this.generalFormService.tripInfo.trip.tripEnding, 'israel');
+      let locationIndex = this.generalFormService.details.findIndex(i => i.key === 'location');
+      this.generalFormService.details[locationIndex].value = this.generalFormService.tripInfo.trip.customer.address;
+    }// let scatterLocationIndex = this.generalFormService.details.findIndex(i => i.key === 'scatterLocation');
+    // this.generalFormService.details[scatterLocationIndex].value = this.generalFormService.tripInfo.trip.customer.address;
     if (this.generalFormService.tripInfo.trip.tripStatus.id != 10)
       this.getSupplierList(this.orderType, this.tripId, 0);
     else {
@@ -132,7 +136,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     detailsArr = this.changeLabels(detailsArr);
     //test 
     let scatterLocationIndex = this.generalFormService.transport.findIndex(i => i.key == 'scatterLocation')
-    this.generalFormService.transport[scatterLocationIndex].value = '';
+    this.generalFormService.transport[scatterLocationIndex].value = this.generalFormService.tripInfo.trip.customer.address;
     let exitPointIndex = this.generalFormService.transport.findIndex(i => i.key == 'exitPoint')
     this.generalFormService.transport[exitPointIndex].value = '';
     //end test
@@ -251,6 +255,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       this.generalFormService.questionGroups[0].questions[exitLocationIndex].inputProps.options = this.generalFormService.settlementList;
       if (this.isItemOrderExist)
         this.generalFormService.questionGroups[0].questions[exitLocationIndex].value = this.item.exitPoint.toString();
+      // else
+      // this.generalFormService.questionGroups[0].questions[exitLocationIndex].value = this.generalFormService.tripInfo.trip.customer.cityName;
+
       this.setForm();
 
     }, (err) => {
@@ -606,7 +613,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   // new am-pm
   setDefaultTime(question) {
-    console.log('question of startHour is : ', question);
+    // console.log('question of startHour is : ', question);
     if (!question.value) {
       return "08:00";
     }
@@ -615,7 +622,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
   }
   setDefaultTime1(question) {
-    console.log('question of endHour is : ', question);
+    // console.log('question of endHour is : ', question);
     if (!question.value)
       return "17:00";
     else {
