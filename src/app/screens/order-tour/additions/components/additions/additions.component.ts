@@ -68,11 +68,11 @@ export class AdditionsComponent implements OnInit {
     }
 
      this.tourTitle= this.generalFormService.tripInfo.trip.tripDescription;
-    //  if(!this.generalFormService.isGudianceOrderByGuidesNumExist && this.generalFormService.tripInfo?.numGuides>0)
-    //   this.createGudianceOrders();
-    //   else
-    //   this.getOrders();
-     this.getOrders();
+     if(!this.generalFormService.isGudianceOrderByGuidesNumExist && this.generalFormService.tripInfo.trip?.numGuides>0)
+      this.createGudianceOrders();
+      else
+      this.getOrders();
+     //this.getOrders();
      this.generalFormService.enableButton.subscribe(res=>{
        this.disabled=!res;
        this.addItem = false;
@@ -88,11 +88,13 @@ export class AdditionsComponent implements OnInit {
   createGudianceOrders(){
     this.orderService.addGudianceOrdersByGudiesNum(this.tripId).subscribe(res=>{
       console.log(res);
-      if(res.length>0)
+     if(res.length>0)
+     this.generalFormService.isGudianceOrderByGuidesNumExist=true;
       this.getOrders();
       //this.generalFormService.setGudianceOrderList(res);
     },(err)=>{
       console.log(err);
+      this.getOrders();
     })
   }
   getOrders() {
