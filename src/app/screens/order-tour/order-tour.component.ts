@@ -143,32 +143,107 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activeStep = newActiveStep;
   }
 
+  // public onChangeStep1(step: StepModel) {
+  //   // just for test
+  //   if (step.path == 'facilities') {
+  //     this.createTrip(this.steps[2].path);
+  //   }
+  //   if (step.label == 'לינה') {
+  //     let flag = this.syncToTripInfo();
+  //     if (flag == false) {
+  //       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+  //         width: '500px',
+  //         data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
+  //       })
+  //       step.path = 'squad-assemble';
+  //       this.router.navigateByUrl(`/education/order-tour/${step.path}`)
+  //       return;
+  //     }
+  //     else {
+  //       if (this.tripService.isOneDayTrip) {
+  //         step.path = "facilities";
+  //       }
+  //     }
+  //   }
+  //   this.router.navigateByUrl(`/education/order-tour/${step.path}`);
+  //   this.updateStepsStatus(step);
+
+  // }
+
   public onChangeStep(step: StepModel) {
-    // just for test
-    if (step.path == 'facilities') {
-      this.createTrip(this.steps[2].path);
-    }
-    if (step.label == 'לינה') {
-      let flag = this.syncToTripInfo();
-      if (flag == false) {
-        const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-          width: '500px',
-          data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
-        })
-        step.path = 'squad-assemble';
-        this.router.navigateByUrl(`/education/order-tour/${step.path}`)
-        return;
-      }
-      else {
-        if (this.tripService.isOneDayTrip) {
-          step.path = "facilities";
+   
+    let activeStep= this.steps.find(i=> i.isActive==true).path;
+    if (step.label == 'לינה' || step.path == 'facilities' || step.path == 'additions' || step.path == 'summary'   ) {
+      if (!this.squadAssemble.tripInfofromService ) {
+        if(activeStep =='squad-assemble'){
+          let flag = this.syncToTripInfo();
+          if (!flag) {
+             this.showMsgForInvalidForm();
+            return;
+          }
+          else{
+            if( step.path !='sleeping' && !this.tripService.isOneDayTrip){
+                this.shoWMsg(step);
+                return;
+            }
+            if(step.path =='sleeping' && this.tripService.isOneDayTrip){
+              const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+                width: '500px',
+                data: { message: 'בטיול חד יומי לא ניתן לשריין לינה', content: '', leftButton: 'אישור' }
+              })
+              return;
+            }
+            if(this.tripService.isOneDayTrip){
+              this.sendTripToServer(step,this.squadAssembleService.tripInfo);
+              return;
+            }
+          }
         }
+        else if(activeStep=='sleeping'){
+          this.createTrip(step);
+          return;
+        }
+      
       }
+    }
+    
+    if(step.path =='sleeping' && this.tripService.isOneDayTrip){
+      const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        width: '500px',
+        data: { message: 'בטיול חד יומי לא ניתן לשריין לינה', content: '', leftButton: 'אישור' }
+      })
+      return;
     }
     this.router.navigateByUrl(`/education/order-tour/${step.path}`);
     this.updateStepsStatus(step);
-
   }
+  
+  showMsgForInvalidForm(){
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
+    })
+  }
+  shoWMsg(step){
+    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: { message: 'לתשומת ליבך לא הוזנו נתונים עבור שריון לינה האם ברצונך לדלג על מסך זה?', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
+    })
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log('dialogResult is : ' + dialogResult);
+      if (dialogResult == true) {
+        this.squadAssembleService.tripInfo.lodgingReservation=[];
+        this.sendTripToServer(step,this.squadAssembleService.tripInfo);
+      }
+      else{
+        let step= this.steps.find(i=>i.path=='sleeping')
+        this.router.navigateByUrl(`/education/order-tour/${step.path}`);
+        this.updateStepsStatus(step);
+      }
+    });
+  }
+ 
+
 
   public changeActiveStepBottomNavigation(newActiveStep: number): void {
     this.activeStep = +newActiveStep;
@@ -412,7 +487,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       if (startDate == endDate) {
         this.tripService.isOneDayTrip = true;
         this.squadAssemble.isOneDayTrip = true;
-        this.createTrip(this.steps[2].path);
+        //this.createTrip(this.steps[2].path);
       }
       else {
         this.tripService.isOneDayTrip = false;
@@ -533,24 +608,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sendTripToServer(route, tripInfo);
     }
 
-    // this.spinner.show();
-    // this.userService.createTrip(tripInfo).subscribe(res => {
-    //   this.spinner.hide();
-    //   console.log('tripInfo from server is :', res);
-    //   this.squadAssemble.tripInfofromService = res;
-    //   localStorage.setItem('tripId', res.trip.id.toString());
-    //   localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
-    //   this.router.navigateByUrl(
-    //     `/education/order-tour/${route}`
-    //   );
-    // }, (err) => {
-    //   this.spinner.hide();
-    //   console.log(err);
-    //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-    //     width: '500px',
-    //     data: { message: 'אירעה שגיאה בשמירת הטיול, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-    //   })
-    // })
+  
   }
 
   sendTripToServer(route, tripInfo) {
@@ -558,12 +616,14 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     //let elem = this.spinnerTextElem;
     this.spinner.show();
     this.userService.createTrip(tripInfo).subscribe(res => {
+      if(route?.label){
+        this.updateStepsStatus(route);
+        route= route.path;
+      }
       this.spinner.hide();
       console.log('tripInfo from server is :', res);
       this.squadAssemble.tripInfofromService = res;
-      //test
       this.squadAssembleService.isRouteToNewTrip=false;
-      //end test
       localStorage.setItem('tripId', res.trip.id.toString());
       localStorage.setItem('tripInfofromService', JSON.stringify(this.squadAssemble.tripInfofromService));
       const dialogRef = this._dialog.open(ConfirmDialogComponent, {
@@ -583,28 +643,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  // createTripActivities(route) {
-  //   // this.router.navigateByUrl(
-  //   //       `/education/order-tour/${route}`
-  //   //     );
-  //   ////  ------   yak del since it is being called in facilities
-  //   //let userName = this.userDataService.user.name || 'שחר גל';
-  //   let events = this._facilitiesService.calendarEventsArr.value;
-  //   let eventsArr: any = this._facilitiesConvertingService.convertActivityForApi(events);
-  //   this.createActivitiesSub = this.activitiyService.createTripActivities(eventsArr).subscribe(res => {
-  //     console.log(res);
-  //     this.router.navigateByUrl(
-  //       `/education/order-tour/${route}`
-  //     );
-  //   }, (err) => {
-  //     console.log(err);
-  //     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-  //       width: '500px',
-  //       data: { message: 'אירעה שגיאה בשליחת הנתונים, נא פנה למנהל המערכת', content: '', rightButton: 'ביטול', leftButton: 'אישור' }
-  //     })
-  //   })
-  // }
-
+  
 
   sendToOrderCenter() {
     this.setDialogMessage("להכנסת הזמנה חדשה לחץ על הכפתור היעודי במסך תור העבודות");
@@ -645,21 +684,38 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
     if (routeIndex <= this.steps.length) {
       if (routeIndex == 1 ) {
         this.squadAssembleService.isRouteToNewTrip=false;
-        let flag = this.syncToTripInfo();
-        if (!flag ) {
-          const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-            width: '500px',
-            data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
-          })
-          // this.router.navigateByUrl(
-          //   `/education/order-tour/${this.steps[0].path}`
-          // );
-          return;
-        }
-        else {
-          if (this.tripService.isOneDayTrip == true)
+        if(!this.squadAssembleService.tripInfofromService){
+          let flag = this.syncToTripInfo();
+          if (!flag ) {
+            const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+              width: '500px',
+              data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
+            })
             return;
+          }
+          else {
+            if (this.tripService.isOneDayTrip == true){
+              this.createTrip(this.steps[2].path);
+              return;
+            }
+          
+          }
         }
+        // let flag = this.syncToTripInfo();
+        // if (!flag ) {
+        //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
+        //     width: '500px',
+        //     data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
+        //   })
+        //   // this.router.navigateByUrl(
+        //   //   `/education/order-tour/${this.steps[0].path}`
+        //   // );
+        //   return;
+        // }
+        // else {
+        //   if (this.tripService.isOneDayTrip == true)
+        //     return;
+        // }
       }
       if (routeIndex == 2) {
         this.createTrip(this.steps[routeIndex].path);
@@ -687,17 +743,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
       ) + 1;
 
     this.activeStep = +this.activeStep--;
-    // if(routeIndex === 2){
-    //   routeIndex=0
-    //   console.log('_____________navigate___________'); 
-    //   this.squadAssembleService.isRouteToNewTrip=false;
-    //   this.router.navigateByUrl(
-    //     `/education/order-tour/${this.steps[routeIndex].path}`
-    //   );
-    // }
-    // else{
-    //   this.location.back();
-    // }
+  
     this.location.back();
   }
 
