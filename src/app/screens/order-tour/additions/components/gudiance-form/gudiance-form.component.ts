@@ -108,7 +108,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
         //this.getOrderItemBySupplierId();
       }
     }
-    this.getLanguages();
+    //this.getLanguages();
 
   }
 
@@ -213,7 +213,6 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
   }
 
 
-
   getOrderItemBySupplierId() {
     this.itemListSub = this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
       response => {
@@ -230,15 +229,24 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
           return;
         if (this.itemId != undefined)
           this.generalFormService.details[itemIndex].value = this.itemId.toString();
-        if (this.item != undefined && this.item != null) {
+        if(this.item){
           this.item.globalParameters.supplierId = this.supplierId.toString();
-          if (this.item.globalParameters.orderId)
-            this.isItemOrderExist = true;
-          this.generalFormService.setFormValues(this.item, this.isItemOrderExist);
+          if (this.generalFormService.languageList.length > 0 && this.item.languageGuidance ) {
+            let languageGuidanceIndex = this.generalFormService.questionGroups[0].questions.findIndex(i => i.key === 'languageGuidance');
+            //this.generalFormService.questionGroups[0].questions[languageGuidanceIndex].inputProps.options = this.generalFormService.languageList;
+            this.generalFormService.questionGroups[0].questions[languageGuidanceIndex].value = this.item.languageGuidance.toString();
+            this.generalFormService.setFormValues(this.item, this.isItemOrderExist);
+            this.initiateForm();
+          }
+          else{
+            this.getLanguages();
+          }      
         }
-        this.initiateForm();
-        if (this.item != undefined && this.item != null) {
-          if (this.item.globalParameters.supplierId != undefined && this.item.globalParameters.itemId != undefined)
+        else{
+          this.getLanguages();
+        }   
+        if (this.item) {
+          if (this.item.globalParameters.supplierId  && this.item.globalParameters.itemId )
             this.displayTable();
         }
       },
@@ -251,10 +259,17 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
     this.languageSub = this.userService.getLanguages().subscribe(res => {
       console.log(res);
       res.forEach(element => {
-        this.generalFormService.languageList.push({ label: element.name, value: element.id });
+        this.generalFormService.languageList.push({ label: element.name, value: element.id.toString() });
       })
-      let languageIndex = this.generalFormService.details.findIndex(i => i.key === 'languageGuidance');
-      this.generalFormService.details[languageIndex].inputProps.options = this.generalFormService.languageList;
+        let languageIndex = this.generalFormService.questionGroups[0].questions.findIndex(i => i.key === 'languageGuidance');
+        this.generalFormService.questionGroups[0].questions[languageIndex].inputProps.options = this.generalFormService.languageList;
+        if(this.isItemOrderExist)
+        this.generalFormService.questionGroups[0].questions[languageIndex].value = this.item.languageGuidance.toString();
+        else{
+          let hebrewCode= this.generalFormService.languageList.find(i=>i.label=='עברית').value;
+          this.generalFormService.questionGroups[0].questions[languageIndex].value =hebrewCode;
+        }
+         this.initiateForm();
     }, (err) => {
 
       console.log(err);
@@ -264,10 +279,9 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
   public onSave(): void {
     if (this.form) {
-      //if (!this.additionsService.globalValidations(this.form)) { return; }
-      //if (!this.validationsGudiance()) { return; }
+     
       let item = this.generalFormService.originalItemList.find(el => el.id.toString() === this.form.value.details['itemId']);
-      // if((item.credit!=1 || item.orderItemDetails.classroomTypeId==null)){
+    
       if (item?.amountLimit != null) {
         this.orderService.checkItemsExistInDateTime(this.tripId,
           this.centerFieldId, item).subscribe(res => {
