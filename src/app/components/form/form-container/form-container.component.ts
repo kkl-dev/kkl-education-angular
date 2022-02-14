@@ -42,7 +42,7 @@ export class FormContainerComponent implements OnInit {
     groupInputs?: ElementRef;
   };
   @Output() optionSelected: EventEmitter<any> = new EventEmitter();
-
+  @Output() dateInputChanged: EventEmitter<any> = new EventEmitter()
   @Output() register: EventEmitter<FormGroup> = new EventEmitter();
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
   //@Output() optionSelected: EventEmitter<any> = new EventEmitter();
@@ -98,7 +98,10 @@ export class FormContainerComponent implements OnInit {
     this.form.enable();
   }
 
- 
+  dateObjChanged(newDate: any) {
+    console.log(newDate);
+    this.dateInputChanged.emit(newDate)
+  }
 
   public onAutocomplete(control) {
     console.log("onAutocomplete: ", control);

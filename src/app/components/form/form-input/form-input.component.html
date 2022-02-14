@@ -11,7 +11,7 @@
       (input)="handleChange($event.target.value)" [name]="type" (focusout)="validate()" min="0" #input
       [placeholder]="label" />
 
-    <input #dateInput *ngIf="controlType === 'calendar'" matInput type="text" (newDate)="newDateReceived($event)"
+    <input #dateInput *ngIf="controlType === 'calendar'" matInput type="text" (ngModelChange)="dateObjChanged($event)" (newDate)="newDateReceived($event)"
       (sleepingPlace)="newSleepingPlaceReceived($event)" (prevDate)="prevDateReceived($event)" [options]="dateOptions"
       airbnb-calendar control="control" [(ngModel)]="control.value" dir="rtl" autocomplete="chrome-off" />
 

@@ -236,4 +236,7 @@ export class SquadScheduleComponent implements OnInit {
       console.log(err);
     })
   }
+  dateObjChanged($event){
+    console.log('event from calendar is:',$event)
+  }
 }
