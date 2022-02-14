@@ -324,6 +324,7 @@ export class FacilitiesComponent implements OnInit {
   }
 
   logForm(form) {
+    this.form=form;
     console.log("facility - form: ", form);
     let obj = form.value;
     //let tripActivities = this.tripActivitiesInfoTotal;
