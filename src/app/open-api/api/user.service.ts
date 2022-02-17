@@ -38,7 +38,7 @@ import { ParticipantType } from '../model/models';
 import { TripAttribute } from '../model/models';
 import { TripInfo } from '../model/models';
 import { TripModel } from '../model/models';
-
+import {environment} from '../../../environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -49,7 +49,7 @@ import { Configuration }                                     from '../configurat
 })
 export class UserService {
 
-    protected basePath = 'http://knf-appl-dev3:8077';
+    protected basePath= environment.apiUrl;
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
