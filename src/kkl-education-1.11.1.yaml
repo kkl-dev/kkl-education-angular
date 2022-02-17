@@ -2515,6 +2515,7 @@ components:
           nullable: true
         subItemId:
           type: integer
+          nullable: true
           example: 221
         activityName: 
           type: string
@@ -2557,6 +2558,7 @@ components:
           example: 1
         subItemId:
           type: integer
+          nullable: true
           example: 221
         name:
           type: string

@@ -214,7 +214,7 @@ export class GudianceFormComponent implements OnInit, OnDestroy {
 
 
   getOrderItemBySupplierId() {
-    this.itemListSub = this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, false).subscribe(
+    this.itemListSub = this.orderService.getOrdersItemBySupplierID(this.supplierId, this.centerFieldId, this.generalFormService.isOneDayTrip).subscribe(
       response => {
         console.log(response);
         this.itemsList = [];

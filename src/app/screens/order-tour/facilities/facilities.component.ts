@@ -579,7 +579,7 @@ export class FacilitiesComponent implements OnInit {
 
   onOptionSelected(e: any) {
     console.log('onOptionSelected - e', e);
-    this.form.get('activity').patchValue(e.option.label,{ emitEvent: false })
+    //this.form.get('activity').patchValue(e.option.label,{ emitEvent: false })
   }
   
 
