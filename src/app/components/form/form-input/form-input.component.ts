@@ -62,6 +62,7 @@ export class FormInputComponent implements OnInit {
 
 
   ngOnInit(): void {
+    debugger;
     this.name = this.getName(this.control);
     let name = this.getName(this.control);
     // if (name == 'dates' || name == 'centerField')
@@ -70,19 +71,23 @@ export class FormInputComponent implements OnInit {
   }
 
   public handleChange(value: any) {
+    debugger;
     this.value = value;
   }
 
   // CALENDAR METHODS
   newDateReceived(newDate: any) {
+    debugger;
     console.log(newDate);
 
   }
   prevDateReceived(prevDate: any) {
+    debugger;
     console.log(prevDate);
   }
 
   newSleepingPlaceReceived(sleepingPlace: any) {
+    debugger;
     console.log(sleepingPlace);
   }
 
@@ -156,6 +161,7 @@ export class FormInputComponent implements OnInit {
     });
   }
   public onSelectChange() {
+    debugger;
     // if (this.control.parent.value.attribute) {
     //   this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
     // }

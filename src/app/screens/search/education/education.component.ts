@@ -63,12 +63,14 @@ export class EducationComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     this.getLookupFieldForestCenters();
   }
 
  
   
   getLookupFieldForestCenters(){
+    debugger;
      this.usersService.getLookupFieldForestCenters().subscribe(res=>{
         this.fieldForestCentersLookUp=res;
         this.fieldForestCentersLookUp = res.filter(aco => aco.accommodationList.length > 0);
@@ -89,6 +91,7 @@ export class EducationComponent implements OnInit {
  
 
   selectChange(event: any) {
+    debugger;
     this.tripService.centerField = this.tripService.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
     this.disableDates = false;
@@ -151,7 +154,7 @@ export class EducationComponent implements OnInit {
 
   freeSpacesArrayGenarator(start: Date, end: Date) {
     //const i = 0;
-
+debugger;
     let freeSpacesArray = [];
     var x = new Date(end.setDate(end.getDate() - 1))
     start.setDate(start.getDate() - 1);
@@ -178,6 +181,7 @@ export class EducationComponent implements OnInit {
   }
 
   newDateRecived(newDate: any) {
+    debugger;
     console.log(newDate);
     // if (new Date(newDate).getFullYear() === new Date(this.AvailableDates[this.AvailableDates.length].date).getFullYear()) {
     //   this.getAvailableDates(
@@ -196,17 +200,19 @@ export class EducationComponent implements OnInit {
     // }
   }
   prevDateRecived(prevDate: any) {
+    debugger;
     console.log(prevDate);
 
   }
 
   newSleepingPlaceRecived(sleepingPlace: any) {
+    debugger;
     console.log('sleepingPlace: ' + sleepingPlace);
     this.AcommodationTypes = sleepingPlace;
   }
 
   public dateObjChanged(e: string) {
-
+debugger;
     if (e.includes('-')) {
       let tempDateArr: string[] = [];
       tempDateArr = e.split('-');
@@ -237,6 +243,7 @@ export class EducationComponent implements OnInit {
   }
 
   closeCalendarHandler(event: any) {
+    debugger;
     console.log('asd');
   }
 
@@ -276,7 +283,7 @@ export class EducationComponent implements OnInit {
   }
 
   printFormValues() {
-    
+    debugger;
     if (this.signupForm != undefined && this.AvailableDaysChecking()) {
       this.emitFormValues.emit(this.signupForm);
       this.checkAvailabilltyService.saveCheackAvailabilltyValues(

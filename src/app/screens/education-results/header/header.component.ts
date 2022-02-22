@@ -73,6 +73,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     this.forestCenterOptions = this.tripService.formOptions;
     console.log('forestCenterOptions: ', this.forestCenterOptions);
     this.forestCenterOptions = this.forestCenterOptions.filter(aco => aco.accommodationList.length > 0);

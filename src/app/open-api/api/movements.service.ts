@@ -18,10 +18,10 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Movements } from '../model/models';
-import {environment} from '../../../environments/environment';  
+
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-
+import {environment} from '../../../environments/environment';
 
 
 @Injectable({
@@ -29,6 +29,7 @@ import { Configuration }                                     from '../configurat
 })
 export class MovementsService {
 
+    
     protected basePath= environment.apiUrl;
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();

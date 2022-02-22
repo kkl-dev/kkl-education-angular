@@ -28,10 +28,10 @@ import { Site } from '../model/models';
 import { Status } from '../model/models';
 import { Supplier } from '../model/models';
 import { TempOrder } from '../model/models';
-import {environment} from '../../../environments/environment';  
+
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-
+import {environment} from '../../../environments/environment';
 
 
 @Injectable({

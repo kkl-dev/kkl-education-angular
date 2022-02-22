@@ -50,6 +50,7 @@ export class FormContainerComponent implements OnInit {
   constructor(private formService: FormService) { }
 
   ngOnInit() {
+    debugger;
     this.initFormGroup();
     this.subscribeToQuestions();
     this.subscribeToFormValues();

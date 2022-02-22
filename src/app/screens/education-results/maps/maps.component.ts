@@ -153,6 +153,7 @@ export class MapsComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     if (this.tripService.centerField) {
       this.forestCenter = this.tripService.centerField;
     }
@@ -173,6 +174,7 @@ export class MapsComponent implements OnInit {
   }
 
   genderButtonDivClick() {
+    debugger;
     this.viewGenderIcons = !this.viewGenderIcons;
     this.queryandrender();
   }

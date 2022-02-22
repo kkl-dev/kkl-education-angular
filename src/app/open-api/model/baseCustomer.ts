@@ -15,6 +15,7 @@ export interface BaseCustomer {
     id: number;
     name: string;
     address?: string;
+    settlementId?: number;
     lastName?: string;
     contactName?: string;
     contactMobile?: string;

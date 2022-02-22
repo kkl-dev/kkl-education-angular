@@ -22,10 +22,10 @@ import { TempOrder } from '../model/models';
 import { TripActivity } from '../model/models';
 import { TripActivityLookup } from '../model/models';
 import { TripCalendar } from '../model/models';
-import {environment} from '../../../environments/environment';  
+
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-
+import {environment} from '../../../environments/environment';
 
 
 @Injectable({
@@ -33,6 +33,7 @@ import { Configuration }                                     from '../configurat
 })
 export class ActivitiesService {
 
+    
     protected basePath= environment.apiUrl;
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();

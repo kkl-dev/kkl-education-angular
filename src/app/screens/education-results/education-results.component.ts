@@ -183,6 +183,7 @@ export class EducationResultsComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     console.log(this.tripService);
     //this.changeDatesHandler(this.tripService.sleepingDates.from + "-" + this.tripService.sleepingDates.till);
 
@@ -278,7 +279,7 @@ export class EducationResultsComponent implements OnInit {
 
   currentDayHandler(newCurrentDay: number) {
     //this.emitCurrentDay.emit(newCurrentDay);
-
+debugger;
     this.child.currentDayHandler(newCurrentDay);
     console.log('facility For Day: ', this.facilitiesArray[newCurrentDay].facilitiesList);
     //this.facilitiesArray = this.checkAvailabilityService.getNewFacilitiesArray(this.sleepingOptionsByDay[newCurrentDay].day);
