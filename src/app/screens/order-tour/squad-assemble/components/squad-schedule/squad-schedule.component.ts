@@ -27,7 +27,7 @@ export class SquadScheduleComponent implements OnInit {
       value: '3',
     },
   ];
-
+//test
   public tablet$: Observable<boolean>;
 
   constructor(
