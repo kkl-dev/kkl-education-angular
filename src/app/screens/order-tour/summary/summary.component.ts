@@ -30,6 +30,7 @@ export class SummaryComponent implements OnInit {
     else { this.tripId = parseInt(localStorage.getItem('tripId')); }
     this.userService.getTripDetails(this.tripId).subscribe(TM => {
       this.tripDetails = TM;
+      if (this.tripDetails.trip.tripStart.split('T')[0] === this.tripDetails.trip.tripEnding.split('T')[0]) { this.squadAssembleService.isOneDayTrip = true }
       this.SetArrays();
       this.moveOrderCenterInDb();
     });
