@@ -39,7 +39,7 @@ export class SquadScheduleComponent implements OnInit {
   ];
 
   public tablet$: Observable<boolean>;
-
+//test
   constructor(
     private squadAssembleService: SquadAssembleService,
     private breakpoints: BreakpointService,
