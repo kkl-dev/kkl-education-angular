@@ -194,6 +194,7 @@ export class SquadScheduleComponent implements OnInit {
   
   public logForm(form) {
     debugger;
+    //command
     console.log('I am form Event',form);
     // form.controls["details"].get('endDate').valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
      
