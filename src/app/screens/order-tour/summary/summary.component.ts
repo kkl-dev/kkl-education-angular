@@ -26,10 +26,11 @@ export class SummaryComponent implements OnInit {
   constructor(private squadAssembleService: SquadAssembleService, private _dialog: MatDialog, private userService: UserService, private movementsService: MovementsService, private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.tripId = this.squadAssembleService.tripInfofromService.trip.id;
+    if (this.squadAssembleService.tripInfofromService) { this.tripId = this.squadAssembleService.tripInfofromService.trip.id; }
+    else { this.tripId = parseInt(localStorage.getItem('tripId')); }
     this.userService.getTripDetails(this.tripId).subscribe(TM => {
       this.tripDetails = TM;
-      this.SetArrays(); 
+      this.SetArrays();
       this.moveOrderCenterInDb();
     });
 
@@ -202,12 +203,12 @@ export class SummaryComponent implements OnInit {
       this.tripDetails.orderList.forEach(element => { if (element.order.orderType.id === 1) flag = true; })
       if (!flag) { this.setDialogMessage('בטיול מסוג חזון להגשמה - חובה להזמין אוטובוס'); return; }
     }
-//בטיול מעל יום עם לינה במרכז שדה חובה להוסיף הזמנת אבטחה
-if (!this.squadAssembleService.isOneDayTrip) {
-  var flag = false;
-  this.tripDetails.orderList.forEach(element => { if (element.order.orderType.id === 2) flag = true; })
-  if (!flag) { this.setDialogMessage('בטיול מעל יום עם לינה במרכז שדה - חובה להוסיף הזמנת אבטחה'); return; }
-}
+    //בטיול מעל יום עם לינה במרכז שדה חובה להוסיף הזמנת אבטחה
+    if (!this.squadAssembleService.isOneDayTrip) {
+      var flag = false;
+      this.tripDetails.orderList.forEach(element => { if (element.order.orderType.id === 2) flag = true; })
+      if (!flag) { this.setDialogMessage('בטיול מעל יום עם לינה במרכז שדה - חובה להוסיף הזמנת אבטחה'); return; }
+    }
     // הודעה הבסיסית שמציגים למשתמש
     let msg = "האם להעביר את הטיול לאישור מרכז ההזמנות"
     var transaction = {} as Movements

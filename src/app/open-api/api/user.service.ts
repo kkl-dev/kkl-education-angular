@@ -42,6 +42,8 @@ import { TripModel } from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
+import {environment} from '../../../environments/environment';
+
 
 
 @Injectable({
@@ -49,7 +51,9 @@ import { Configuration }                                     from '../configurat
 })
 export class UserService {
 
-    protected basePath = 'http://knf-appl-dev3:8077';
+    // protected basePath = 'http://knf-appl-dev3:8077';
+    protected basePath= environment.apiUrl;
+
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
