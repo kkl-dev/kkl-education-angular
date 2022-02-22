@@ -34,7 +34,6 @@ export class SummaryComponent implements OnInit {
       this.SetArrays();
       this.moveOrderCenterInDb();
     });
-
   }
 
   public SetArrays() {
