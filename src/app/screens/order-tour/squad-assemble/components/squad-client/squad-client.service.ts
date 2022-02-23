@@ -44,6 +44,7 @@ export class SquadClientService {
                 { label: 'הכל', value: 'all' },
                 { label: 'לקוחות כלליים', value: 'global' },
                 { label: 'לקוחות חו"ל', value: 'abroad' },
+                // { label: 'מחלקות קק"ל', value: 'kklDepartments' },
                 { label: 'עובד קק"ל', value: 'kklWorker' },
               ],
             },

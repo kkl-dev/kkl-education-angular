@@ -276,17 +276,15 @@ export class FacilitiesComponent implements OnInit {
       // this.pagesAmount = res.length + 1
       res.forEach(element => {  
         //this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
-        this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+        //this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+        this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.subItemId.toString() })
       });
       this.setFormArray();
 
     })
   }
 
-  getAvailableFacilities1() {
-    this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
-    this.facilitiesArray.map(n => { n.orderTypeCode = 7 });
-  }
+  
 
   getAvaliableSleepingOptions(){
     let start = this.squadAssembleService.tripInfofromService.trip.tripStart;
@@ -579,7 +577,7 @@ export class FacilitiesComponent implements OnInit {
 
   onOptionSelected(e: any) {
     console.log('onOptionSelected - e', e);
-    //this.form.get('activity').patchValue(e.option.label,{ emitEvent: false })
+    this.form.get('activity').patchValue(e.option.label,{ emitEvent: false })
   }
   
 
