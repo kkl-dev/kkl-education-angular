@@ -31,8 +31,6 @@ import { Configuration }                                     from '../configurat
 
 
 
-import { environment } from '../../../environments/environment';
-
 @Injectable({
     providedIn: 'root'
 })
