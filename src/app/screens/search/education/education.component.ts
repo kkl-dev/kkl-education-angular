@@ -49,7 +49,7 @@ export class EducationComponent implements OnInit {
   };
 
   constructor(public usersService: UserService, private router: Router, private _dialog: MatDialog, public tripService: TripService,
-    private checkAvailabilltyService: CheckAvailabilityService,private spinner: NgxSpinnerService, private http:HttpClient ) {
+    private checkAvailabilltyService: CheckAvailabilityService, private spinner: NgxSpinnerService, private http: HttpClient) {
 
     this.freeSpacesArray = this.freeSpacesArrayGenarator(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
     this.options = {
@@ -66,31 +66,37 @@ export class EducationComponent implements OnInit {
     this.getLookupFieldForestCenters();
   }
 
- 
-  
-  getLookupFieldForestCenters(){
-     this.usersService.getLookupFieldForestCenters().subscribe(res=>{
-        this.fieldForestCentersLookUp=res;
-        this.fieldForestCentersLookUp = res.filter(aco => aco.accommodationList.length > 0);
-        this.tripService.formOptions=this.fieldForestCentersLookUp;
-        console.log('fieldForestCentersLookUp after filter is: ',this.tripService.formOptions)
-        this.forestCenterId = this.tripService.centerField.id.toString() || null;
-        if (this.forestCenterId != 0 && this.forestCenterId != null) {
-          this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
-          this.sleepingDates = this.tripService.sleepingDates;
-          this.disableContinueBtn = false;
-        }
-     },(err)=>{
-       console.log(err);
-     })
+
+
+  getLookupFieldForestCenters() {
+    this.usersService.getLookupFieldForestCenters().subscribe(res => {
+      this.fieldForestCentersLookUp = res;
+      this.fieldForestCentersLookUp = res.filter(aco => aco.accommodationList.length > 0);
+      this.tripService.formOptions = this.fieldForestCentersLookUp;
+      console.log('fieldForestCentersLookUp after filter is: ', this.tripService.formOptions)
+      this.forestCenterId = this.tripService.centerField.id.toString() || null;
+      if (this.forestCenterId != 0 && this.forestCenterId != null) {
+        var tillDate = new Date()
+        tillDate.setFullYear(new Date().getFullYear() + 1);
+        tillDate.setMonth(new Date().getMonth() + 6);
+        this.getAvailableDates(new Date().toISOString(), tillDate.toISOString());
+        this.sleepingDates = this.tripService.sleepingDates;
+        this.disableContinueBtn = false;
+      }
+    }, (err) => {
+      console.log(err);
+    })
   }
 
   //end test
- 
+
 
   selectChange(event: any) {
     this.tripService.centerField = this.tripService.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
-    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+    var tillDate = new Date()
+    tillDate.setFullYear(new Date().getFullYear() + 1);
+    tillDate.setMonth(new Date().getMonth() + 6);
+    this.getAvailableDates(new Date().toISOString(), tillDate.toISOString());
     this.disableDates = false;
   }
 
@@ -111,7 +117,7 @@ export class EducationComponent implements OnInit {
         this.options = {
           firstCalendarDay: 0,
           format: 'dd/LL/yyyy',
-          maxDate: new Date(tillDate), 
+          maxDate: new Date(tillDate),
           closeOnSelected: true,
           minYear: new Date().getFullYear() - 1,
           maxYear: new Date(tillDate).getFullYear() + 1,
@@ -212,10 +218,10 @@ export class EducationComponent implements OnInit {
       tempDateArr = e.split('-');
       //change date from obj to new Date format
       const dateFormat1 = tempDateArr[0].split('/').reverse();
-      dateFormat1[1] = (+dateFormat1[1] ).toString();
+      dateFormat1[1] = (+dateFormat1[1]).toString();
       dateFormat1[2] = (+dateFormat1[2]).toString();
       const dateFormat2 = tempDateArr[1].split('/').reverse();
-      dateFormat2[1] = (+dateFormat2[1] ).toString();
+      dateFormat2[1] = (+dateFormat2[1]).toString();
       dateFormat2[2] = (+dateFormat2[2]).toString();
       if (new Date(dateFormat1.join(',')) < new Date(dateFormat2.join(','))) {
         this.sleepingDates.from = tempDateArr[0];
@@ -241,8 +247,8 @@ export class EducationComponent implements OnInit {
   }
 
   AvailableDaysChecking() {
-    if(!this.forestCenterId || !this.sleepingDates.from || !this.sleepingDates.till )
-    return false;
+    if (!this.forestCenterId || !this.sleepingDates.from || !this.sleepingDates.till)
+      return false;
     let from = this.sleepingDates.from;
     let till = this.sleepingDates.till;
     let fromArr = from.split("/");
@@ -259,7 +265,7 @@ export class EducationComponent implements OnInit {
         const dialogRef = this._dialog.open(ConfirmDialogComponent, {
           width: '300px',
           data: { message: 'אחד  הימים בטווח התאריכים אינו פנוי', content: '', leftButton: 'המשך' }
-        });  return flag;
+        }); return flag;
       }
     }
     return flag;
@@ -276,18 +282,18 @@ export class EducationComponent implements OnInit {
   }
 
   printFormValues() {
-    
+
     if (this.signupForm != undefined && this.AvailableDaysChecking()) {
       this.emitFormValues.emit(this.signupForm);
       this.checkAvailabilltyService.saveCheackAvailabilltyValues(
         this.signupForm
       );
-      if(this.sleepingDates.from != this.sleepingDates.till){
-        this.tripService.isOneDayTrip=false
+      if (this.sleepingDates.from != this.sleepingDates.till) {
+        this.tripService.isOneDayTrip = false
         this.router.navigate([this.routerLinkContinue])
-      }   
-      else{
-        this.tripService.isOneDayTrip=true;
+      }
+      else {
+        this.tripService.isOneDayTrip = true;
         this.router.navigate([this.routerLinkContinueForOneDayTrip])
       }
       this.router.navigate([this.routerLinkContinue])
@@ -311,14 +317,14 @@ export class EducationComponent implements OnInit {
 
   getDaysArray(start: any, end: any) {
     var arr = [];
-    start.setHours( 0,0,0,0 );
-    end.setHours( 0,0,0,0 );
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
     let index = this.freeSpacesArray.findIndex(Start => Start.date.getDate() === new Date(start).getDate());
-    this.freeSpacesArray[index].date.setHours( 0,0,0,0 );
-    while (new Date(this.freeSpacesArray[index].date) <= new Date(end)) { 
+    this.freeSpacesArray[index].date.setHours(0, 0, 0, 0);
+    while (new Date(this.freeSpacesArray[index].date) <= new Date(end)) {
       arr.push(this.freeSpacesArray[index]);
       index++;
-      this.freeSpacesArray[index].date.setHours( 0,0,0,0 );
+      this.freeSpacesArray[index].date.setHours(0, 0, 0, 0);
     }
     return arr;
   }
