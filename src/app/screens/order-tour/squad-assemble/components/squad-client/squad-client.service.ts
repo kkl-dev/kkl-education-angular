@@ -7,7 +7,7 @@ import { QuestionAutocomplete } from 'src/app/components/form/logic/question-aut
 import { QuestionBase } from 'src/app/components/form/logic/question-base';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
 import { QuestionTextbox } from 'src/app/components/form/logic/question-textbox';
-import { BaseCustomer, UserService } from 'src/app/open-api';
+import { BaseCustomer, KKLWorker, UserService } from 'src/app/open-api';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +21,8 @@ export class SquadClientService {
   customers = [];
   customersOriginal: BaseCustomer[];
   baseCustomer: BaseCustomer;
+  kklWorkerOriginal: KKLWorker[];
+  kklWorkers=[];
   
   public questions: QuestionBase<string>[] = [
     new QuestionBase({
@@ -44,7 +46,7 @@ export class SquadClientService {
                 { label: 'הכל', value: 'all' },
                 { label: 'לקוחות כלליים', value: 'global' },
                 { label: 'לקוחות חו"ל', value: 'abroad' },
-                // { label: 'מחלקות קק"ל', value: 'kklDepartments' },
+                { label: 'מחלקות קק"ל', value: 'kklDepartments' },
                 { label: 'עובד קק"ל', value: 'kklWorker' },
               ],
             },
@@ -118,7 +120,8 @@ export class SquadClientService {
                 { label: 'הכל', value: 'all' },
                 { label: 'לקוחות כלליים', value: 'global' },
                 { label: 'לקוחות חו"ל', value: 'abroad' },
-                { label: 'עובד קק"ל', value: 'kklWorker' },
+                { label: 'מחלקות קק"ל', value: 'kklDepartments' }
+                // { label: 'עובד קק"ל', value: 'kklWorker' },
               ],
             },
           }),

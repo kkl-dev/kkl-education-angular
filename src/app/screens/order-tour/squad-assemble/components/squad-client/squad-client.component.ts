@@ -16,7 +16,7 @@ import { SquadAssembleService } from '../../services/squad-assemble.service';
 import { SquadClientService } from './squad-client.service';
 import { SquadNewClientService } from '../squad-new-client/squad-new-client.service';
 import { TripService } from 'src/app/services/trip.service';
-import { BaseCustomer, UserService } from 'src/app/open-api';
+import { BaseCustomer, KKLWorker, UserService } from 'src/app/open-api';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { MatDialog } from '@angular/material/dialog';
@@ -57,6 +57,8 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   private unsubscribeToEdit: Subscription;
   private unsubscribeToClient: Subscription;
   flag :boolean=false;
+  isCustomerHasDept: boolean=false;
+  isKKlWorkerSelected: boolean=false;
 
   constructor(
     private formService: FormService,
@@ -137,12 +139,23 @@ export class SquadClientComponent implements OnInit, OnDestroy {
   }
 
   private updateClientForm(value?: string): void {
-    var customer = this.squadClientService.customersOriginal.filter(el => el.id ===  parseInt(value))[0]
-    this.formGroup.controls.contact.patchValue({
-      contactName: customer.contactName || '',
-      contactPhone: customer.contactMobile || '',
-      contactEmail: customer.contactEmail || '',
-    });
+    if(!this.isKKlWorkerSelected){
+      var customer = this.squadClientService.customersOriginal.filter(el => el.id ===  parseInt(value))[0]
+      this.formGroup.controls.contact.patchValue({
+        contactName: customer.contactName || '',
+        contactPhone: customer.contactMobile || '',
+        contactEmail: customer.contactEmail || '',
+      });
+    }
+    else{
+      let kklWorker = this.squadClientService.kklWorkerOriginal.filter(el => el.id ===  parseInt(value))[0]
+      this.formGroup.controls.contact.patchValue({
+        contactName: kklWorker.name || '',
+        contactPhone: kklWorker.phone || '',
+        contactEmail: kklWorker.email || '',
+      });
+    }
+  
   }
 
   // EVENTS METHODS SECTION
@@ -170,20 +183,24 @@ export class SquadClientComponent implements OnInit, OnDestroy {
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'client');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === 'customer');
         if (control.parent.value.clientPool !== 'kklWorker') {
+          this.isKKlWorkerSelected=false;
           this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2,'customer')
         }
-        else { this.getKKLWorkers(control.value, indx1, indx2,'customer'); }
+        else { this.getKKLWorkers(control.value, indx1, indx2,'customer'); 
+              this.isKKlWorkerSelected=true;
+             }
         //this.getCustomersByParameters(control.value, control.parent.value.clientPool, indx1, indx2,'customer')
       }
 
       else {//if choose payer customer
         var indx1 = this.squadClientService.questions.findIndex(o => o.key === 'payer');
         var indx2 = this.squadClientService.questions[indx1].group.questions.findIndex(o => o.key === "payerName");
-        if (control.parent.value.payerName !== 'kklWorker') {
-          this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
-        }
-        else { this.getKKLWorkers(control.value, indx1, indx2,'payer'); }
-        //this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
+        // if (control.parent.value.payerName !== 'kklWorker') {
+        //   this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
+        // }
+        // else { this.getKKLWorkers(control.value, indx1, indx2,'payer'); }
+        this.isKKlWorkerSelected=false;
+        this.getCustomersByParameters(control.value, control.parent.value.payerPull, indx1, indx2,'payer')
       }
     }
     // end old code
@@ -249,8 +266,19 @@ export class SquadClientComponent implements OnInit, OnDestroy {
 
     if (groupKey === 'client') {
       this.subjectSchool.next(option);
-      this.squadAssembleService.Customer.id=option.value;
-      this.squadAssembleService.Customer.name= option.label;
+      if(!this.isKKlWorkerSelected){
+        this.squadAssembleService.kklWorker=undefined;
+        this.squadAssembleService.Customer.id=option.value;
+        this.squadAssembleService.Customer.name= option.label;
+      }
+      else{
+        this.squadAssembleService.Customer.id=125000573;
+        this.squadAssembleService.Customer.name= 'עובד קק"ל';
+        this.squadAssembleService.kklWorker={} as KKLWorker;
+        this.squadAssembleService.kklWorker.id=option.value;
+        this.squadAssembleService.kklWorker.name= option.label;
+      }
+      
     }
     if (groupKey === 'payer') {
       this.subjectPayer.next(option);
@@ -393,12 +421,12 @@ export class SquadClientComponent implements OnInit, OnDestroy {
     this.userService.getKKLWorkers(customer).subscribe(
       response => {
         console.log('response', response)
-        this.squadClientService.customersOriginal = response;
-        this.squadClientService.customers = [];
+        this.squadClientService.kklWorkerOriginal = response;
+        this.squadClientService.kklWorkers = [];
         response.forEach(element => {
-          this.squadClientService.customers.push({ label: element.name, value: element.id.toString() });
+          this.squadClientService.kklWorkers.push({ label: element.name, value: element.id.toString() });
         });
-        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.squadClientService.customers;
+        this.squadClientService.questions[indx1].group.questions[indx2].inputProps.options = this.squadClientService.kklWorkers;
         if (this.flag ==true ){
           if(type=='customer')
            this.clearCustomerFields();

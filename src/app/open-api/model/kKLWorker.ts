@@ -9,12 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Order } from './order';
-import { OrderItemCommonDetails } from './orderItemCommonDetails';
 
 
-export interface OrderEvent { 
-    order?: Order;
-    globalParameters?: OrderItemCommonDetails;
+export interface KKLWorker { 
+    id?: number;
+    /**
+     * first name and last name
+     */
+    name?: string;
+    phone?: string;
+    email?: string;
 }
 

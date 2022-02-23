@@ -1891,6 +1891,13 @@ components:
       name: 
        type: string
        description: first name and last name
+      phone:
+          type: string
+          example: "95869805"
+      email:
+          type: string
+          example: test@gmail.com
+      
 
     TripInfo:
       required:

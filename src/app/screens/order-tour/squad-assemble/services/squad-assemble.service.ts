@@ -38,6 +38,7 @@ export class SquadAssembleService {
   filledNightsArray = [];
   Customer = {} as BaseCustomer;
   payerCustomer = {} as BaseCustomer;
+  kklWorker ;
   kklWorkerId;
   kklWorkerName;
   tripInfofromService: TripModel;

@@ -421,7 +421,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         customerFlag = true;
       else
         customerFlag = false;
-
+        if (this.squadAssembleService.kklWorker)
+        this.squadAssemble.tripInfo.kklWorker=this.squadAssembleService.kklWorker;
       //  if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
       if (scheduleForm == true && ContactForm == true && ageGroupForm == true && detalisForm == true && customerFlag == true) {
 

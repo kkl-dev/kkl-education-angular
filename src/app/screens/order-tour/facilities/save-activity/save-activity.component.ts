@@ -101,10 +101,15 @@ export class SaveActivityComponent implements OnInit {
     let newActivity = {} as TripActivity;
     newActivity.activityId = this.form.value.activityId;
     newActivity.activityName = this.form.value.title;
-    newActivity.date = this.form.value.start;
+    //newActivity.date = this.form.value.start;
+    //test
+    let dateArr= this.form.value.start.split('T');
+    newActivity.date= dateArr[0];
+    //endTest
     newActivity.description = this.form.value.title;
     newActivity.fromHour = this.form.value.start;
     newActivity.tillHour = this.form.value.end;
+   
     newActivity.tripId = this.squadAssembleService.tripInfofromService.trip.id;
 
     if (this.updateForm && this.form.value.tripActivityIdentity)

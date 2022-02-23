@@ -277,7 +277,8 @@ export class FacilitiesComponent implements OnInit {
       res.forEach(element => {  
         //this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
         //this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
-        this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.subItemId.toString() })
+        //let value= element.subItemId?element.subItemId:element.activityId
+        this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
       });
       this.setFormArray();
 
