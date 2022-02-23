@@ -311,10 +311,14 @@ export class EducationComponent implements OnInit {
 
   getDaysArray(start: any, end: any) {
     var arr = [];
+    start.setHours( 0,0,0,0 );
+    end.setHours( 0,0,0,0 );
     let index = this.freeSpacesArray.findIndex(Start => Start.date.getDate() === new Date(start).getDate());
-    while (this.freeSpacesArray[index].date.getDate() <= new Date(end).getDate()) {
+    this.freeSpacesArray[index].date.setHours( 0,0,0,0 );
+    while (new Date(this.freeSpacesArray[index].date) <= new Date(end)) { 
       arr.push(this.freeSpacesArray[index]);
       index++;
+      this.freeSpacesArray[index].date.setHours( 0,0,0,0 );
     }
     return arr;
   }

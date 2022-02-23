@@ -42,6 +42,8 @@ import {environment} from '../../../environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
+import {environment} from '../../../environments/environment';
+
 
 
 @Injectable({
@@ -50,6 +52,7 @@ import { Configuration }                                     from '../configurat
 export class UserService {
 
     protected basePath= environment.apiUrl;
+
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
