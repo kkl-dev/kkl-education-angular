@@ -16,7 +16,7 @@ import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent, HttpParameterCodec }       from '@angular/common/http';
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
-
+import {environment} from '../../../environments/environment';
 import { Movements } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -28,9 +28,9 @@ import {environment} from '../../../environments/environment';
   providedIn: 'root'
 })
 export class MovementsService {
+
     protected basePath= environment.apiUrl;
 
-    // protected basePath = 'http://knf-appl-dev3:8077';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

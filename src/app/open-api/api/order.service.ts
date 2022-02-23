@@ -28,7 +28,7 @@ import { Site } from '../model/models';
 import { Status } from '../model/models';
 import { Supplier } from '../model/models';
 import { TempOrder } from '../model/models';
-
+import {environment} from '../../../environments/environment';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
@@ -38,9 +38,9 @@ import {environment} from '../../../environments/environment';
   providedIn: 'root'
 })
 export class OrderService {
+
     protected basePath= environment.apiUrl;
 
-    // protected basePath = 'http://knf-appl-dev3:8077';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
