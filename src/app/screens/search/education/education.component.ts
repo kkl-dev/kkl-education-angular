@@ -76,10 +76,11 @@ export class EducationComponent implements OnInit {
       console.log('fieldForestCentersLookUp after filter is: ', this.tripService.formOptions)
       this.forestCenterId = this.tripService.centerField.id.toString() || null;
       if (this.forestCenterId != 0 && this.forestCenterId != null) {
-        var tillDate = new Date()
-        tillDate.setFullYear(new Date().getFullYear() + 1);
-        tillDate.setMonth(new Date().getMonth() + 6);
-        this.getAvailableDates(new Date().toISOString(), tillDate.toISOString());
+        this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+        // var tillDate = new Date()  
+        // tillDate.setFullYear(new Date().getFullYear() + 1);
+        // tillDate.setMonth(new Date().getMonth() + 6);
+        // this.getAvailableDates(new Date().toISOString(), tillDate.toISOString());
         this.sleepingDates = this.tripService.sleepingDates;
         this.disableContinueBtn = false;
       }
@@ -93,10 +94,11 @@ export class EducationComponent implements OnInit {
 
   selectChange(event: any) {
     this.tripService.centerField = this.tripService.formOptions.filter((el: { id: number; }) => el.id === parseInt(event.value))[0];
-    var tillDate = new Date()
-    tillDate.setFullYear(new Date().getFullYear() + 1);
-    tillDate.setMonth(new Date().getMonth() + 6);
-    this.getAvailableDates(new Date().toISOString(), tillDate.toISOString());
+    this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+    // var tillDate = new Date()
+    // tillDate.setFullYear(new Date().getFullYear() + 1);
+    // tillDate.setMonth(new Date().getMonth() + 6);
+    // this.getAvailableDates(new Date().toISOString(), tillDate.toISOString());
     this.disableDates = false;
   }
 
