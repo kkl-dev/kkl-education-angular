@@ -128,10 +128,11 @@ export class SquadScheduleComponent implements OnInit {
     }
     let datesIndex = this.squadAssembleService.scheduleQuestions.findIndex(i => i.key === 'dates');
     if (!this.options.freeSpacesArray && this.centerFieldId) {
-      var tillDate = new Date()
-      tillDate.setFullYear(new Date().getFullYear() + 1);
-      tillDate.setMonth(new Date().getMonth() + 6);
-      this.getAvailableDates(new Date().toISOString(), tillDate.toISOString(), this.centerFieldId);
+      this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(), this.centerFieldId);
+      // var tillDate = new Date()
+      // tillDate.setFullYear(new Date().getFullYear() + 1);
+      // tillDate.setMonth(new Date().getMonth() + 6);
+      // this.getAvailableDates(new Date().toISOString(), tillDate.toISOString(), this.centerFieldId);
     } else
       this.squadAssembleService.scheduleQuestions[datesIndex].dateOptions = this.options;
     if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
@@ -208,10 +209,11 @@ export class SquadScheduleComponent implements OnInit {
       this.centerFieldId = value;
       this.getRegionList(value, 'centerFieldId');
       this.isShowSpinner = true;
-      var tillDate = new Date()
-      tillDate.setFullYear(new Date().getFullYear() + 1);
-      tillDate.setMonth(new Date().getMonth() + 6);
-      this.getAvailableDates(new Date().toISOString(), tillDate.toISOString(), this.centerFieldId);
+      this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(), this.centerFieldId);
+      // var tillDate = new Date()
+      // tillDate.setFullYear(new Date().getFullYear() + 1);
+      // tillDate.setMonth(new Date().getMonth() + 6);
+      // this.getAvailableDates(new Date().toISOString(), tillDate.toISOString(), this.centerFieldId);
     });
 
     form.controls["dates"].valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
