@@ -2009,6 +2009,9 @@ components:
         numDrivers:
           type: integer
           example: 4
+        numKids: 
+          type: integer
+          description: number of kids less from two years old
         numShtilim:
           type: integer
           example: 10

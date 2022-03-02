@@ -40,6 +40,7 @@ import { TripAttribute } from '../model/models';
 import { TripInfo } from '../model/models';
 import { TripModel } from '../model/models';
 import {environment} from '../../../environments/environment';
+
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
