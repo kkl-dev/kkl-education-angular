@@ -49,6 +49,7 @@ export class HeaderComponent implements OnInit {
     private checkAvailabilityService: CheckAvailabilityService, public tripService: TripService, public fakeApi: FakeService) {
 
     this.freeSpacesArray = this.tripService.freeSpacesArray;
+    debugger;
     this.tripService.getAvailableSleepingOptions();
     let str = this.sleepingDates.from.split("/");
     let str2 = this.sleepingDates.till.split("/");
@@ -152,6 +153,7 @@ export class HeaderComponent implements OnInit {
   // }
 
   dateObjChanged(e: string) {
+    debugger;
     if (e && e.includes('-')) {
       console.log('dateObj Changed =>', + e);
       this.emitNewDates.emit(e);

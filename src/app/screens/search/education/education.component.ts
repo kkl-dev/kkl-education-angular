@@ -128,6 +128,7 @@ export class EducationComponent implements OnInit {
   }
 
   freeSpacesArrayGenaratorFromServer(start: Date, end: Date) {
+    debugger;
     let i = 0;
     let freeSpacesArray = [];
     start.setDate(start.getDate() - 1);
@@ -248,6 +249,7 @@ debugger;
   }
 
   AvailableDaysChecking() {
+    debugger;
     if(!this.forestCenterId || !this.sleepingDates.from || !this.sleepingDates.till )
     return false;
     let from = this.sleepingDates.from;
@@ -277,6 +279,7 @@ debugger;
   }
 
   showSelectPlaceholder(sel: MatSelect) {
+    debugger;
     if (sel.value === '') {
       sel.placeholder = 'בחר מרכז שדה';
     }

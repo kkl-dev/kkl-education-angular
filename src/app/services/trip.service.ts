@@ -112,6 +112,7 @@ export class TripService {
   }
 
   getAvailableSleepingOptions() {
+    debugger;
     let str = this.sleepingDates.from.split("/");
     let str2 = this.sleepingDates.till.split("/");
     let from = str[2] + '-' + str[1] + '-' + str[0];
