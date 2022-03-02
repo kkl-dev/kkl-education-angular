@@ -83,9 +83,9 @@ export class SquadGroupComponent {
     if (Number.isInteger(+form.controls.numAccompanied.value)) {
       sum = sum + (+form.controls.numAccompanied.value);
     }
-    if (Number.isInteger(+form.controls.kids.value)) {
-      sum = sum + (+form.controls.kids.value);
-    }
+    // if (Number.isInteger(+form.controls.kids.value)) {
+    //   sum = sum + (+form.controls.kids.value);
+    // }
     this.list[0].value = sum;
     this.squadAssembleService.peopleInTrip = sum;
     localStorage.setItem('peopleInTrip', sum.toString())
