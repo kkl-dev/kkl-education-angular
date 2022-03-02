@@ -62,6 +62,10 @@ export interface TripInfo {
     numAccompaniedAndGuide?: number;
     numGuides?: number;
     numDrivers?: number;
+    /**
+     * number of kids less from two years old
+     */
+    numKids?: number;
     numShtilim?: number;
     noPayment?: number | null;
     tripStatus?: Status;
