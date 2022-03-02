@@ -16,6 +16,7 @@
         [cols]="group.cols"
         [questions]="group.questions"
         (register)="logForm($event)"
+        (dateInputChanged)="dateObjChanged($event)"
       > 
       </app-form-container>
     </div>

@@ -5,7 +5,7 @@ info:
   description: Education new project|
   contact:
     email: yochai@one1.co.il
-  version: 1.8.1
+  version: 1.12.1
 servers:
 # - url: https://virtserver.swaggerhub.com/shivek/kkl-education/1.1.0
 - url: http://knf-appl-dev3:8077
@@ -517,13 +517,13 @@ paths:
                 items:
                   $ref: '#/components/schemas/BaseCustomer' 
 
-  /getKKLWorkers/{custAutoComplete}:
+  /getKKLWorkers/{searchText}:
     get:
       tags:
       - user
       operationId: GetKKLWorkers
       parameters:
-      - name: custAutoComplete
+      - name: searchText
         in: path
         required: true
         schema:
@@ -536,7 +536,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseCustomer'
+                  $ref: '#/components/schemas/KKLWorker'
 
   
   /budget/expensesAndIncome:
@@ -705,28 +705,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TripModel' 
-  /createTripActivities:
-    post:
-      tags:
-      - activities
-      operationId: CreateTripActivities
-      description:  adding activities ,orderFacilities, and tempurary orders
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TripCalendar'
-      responses:
-        "201":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripCalendar'
-        "500":
-          description: internal server error
-        "400": 
-          description: invalid data
+  # /createTripActivities:
+  #   post:
+  #     tags:
+  #     - activities
+  #     operationId: CreateTripActivities
+  #     description:  adding activities ,orderFacilities, and tempurary orders
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/TripCalendar'
+  #     responses:
+  #       "201":
+  #         description: successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/TripCalendar'
+  #       "500":
+  #         description: internal server error
+  #       "400": 
+  #         description: invalid data
   
   /createActivity:
     post:
@@ -843,11 +843,12 @@ paths:
           description: id not found
          '500' : 
           description: internal server error
-  /deleteCalendarOrderItem/{tripId}/{tempOrderId}: 
+  /deleteCalendarTempOrderItem/{tripId}/{tempOrderId}: 
     delete: 
         tags:
         - activities
-        operationId: DeleteCalendarOrderItem
+        operationId: DeleteCalendarTempOrderItem
+        description: delete tempurary order item from calendar
         parameters:
         - name: tripId
           in: path
@@ -868,31 +869,62 @@ paths:
           description: id not found
          '500' : 
           description: internal server error
-
-  /updateTrip:
-    put:
-      tags:
+  /deleteCalendarOrderItem/{tripId}/{orderId}/{orderItemIdentity}: 
+    delete: 
+        tags:
         - activities
-      operationId: UpdateTripActivities
-      description:  update activities ,orderFacilities, and Start an order
-      requestBody:
-        required: true
-        description: a tripCalendar to be updated
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TripCalendar'
-      responses:
-        "200":
-          description: seker object
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripCalendar'
-        "400":
-          description: invalid data
-        "500":
+        operationId: DeleteCalendarOrderItem
+        parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: orderId
+          description: Order record ID
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: orderItemIdentity
+          description: refers to identity of item index on the order table
+          in: path
+          required: true
+          schema:
+            type: integer
+        summary: Delete  order item from calendar by id
+        responses:
+         '204':
+          description: Deleted
+         '404':
+          description: id not found
+         '500' : 
           description: internal server error
+
+  # /updateTrip:
+  #   put:
+  #     tags:
+  #       - activities
+  #     operationId: UpdateTripActivities
+  #     description:  update activities ,orderFacilities, and Start an order
+  #     requestBody:
+  #       required: true
+  #       description: a tripCalendar to be updated
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/TripCalendar'
+  #     responses:
+  #       "200":
+  #         description: seker object
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/TripCalendar'
+  #       "400":
+  #         description: invalid data
+  #       "500":
+  #         description: internal server error
 
 
   /tripCalendar/{tripId}:
@@ -1012,11 +1044,35 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OrderEvent'
+  /order/gudianceOrder/{tripId}:
+    get:
+      tags:
+      - order
+      operationId: AddGudianceOrdersByGudiesNum
+      description: 'need to check two conditions on the server aboute activities before adding orders'
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer    
+      responses:
+        "200":
+          description: gudiance order List using polymorphishem
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderEvent'
+   
+   
   /order/AddOrder:
     post:
       tags:
       - order
       operationId: AddOrder
+      description: using polymorphishem 
       # parameters:
       # - name: permissionId
       #   in: path
@@ -1706,6 +1762,13 @@ components:
         name:
           type: string
           example: סמינר הקיבוצים
+        address:
+           type: string
+           example: לביא
+        settlementId:
+           type: integer
+           nullable: true
+           example: 12
         lastName:
           type: string
           example: kkl
@@ -1718,6 +1781,13 @@ components:
         contactEmail:
           type: string
           example: test@gmail.com
+        typeCode :
+          type: integer
+          nullable: true
+        noPayment :
+          type: integer
+          nullable: true
+          description: Is the customer defined as not need to pay 
         
     Customer:
       type: object
@@ -1813,6 +1883,22 @@ components:
           nullable: true
           example: 15
  
+    KKLWorker :
+     type: object
+     properties:       
+      id: 
+       type: integer
+      name: 
+       type: string
+       description: first name and last name
+      phone:
+          type: string
+          example: "95869805"
+      email:
+          type: string
+          example: test@gmail.com
+      
+
     TripInfo:
       required:
        - tripDescription
@@ -1860,12 +1946,14 @@ components:
           $ref: '#/components/schemas/BaseCustomer'
         groupGender: 
           $ref: '#/components/schemas/GroupGender'
-        kklWorkerId:
-          type: integer
-          example: 12
-        kklWorkerName:
-          type: string
-          example: 'yaniv'
+        # kklWorkerId:
+        #   type: integer
+        #   example: 12
+        # kklWorkerName:
+        #   type: string
+        #   example: 'yaniv'
+        kklWorker :
+          $ref: '#/components/schemas/KKLWorker'
         customerPay:
           $ref: '#/components/schemas/BaseCustomer'
         commentManager:
@@ -2192,6 +2280,9 @@ components:
         name:
           type: string
           example: אגם החולה
+        webSite:
+          type: string
+          example: 'http://'
     Settlement:
       type: object
       properties:
@@ -2405,7 +2496,7 @@ components:
          nullable: true
        orderItemIdentity:
          type: integer
-         description: refers to indentity record on the order table
+         description: refers to identity of item index on the order table
          example : 12345
          nullable: true
        itemId:
@@ -2419,7 +2510,7 @@ components:
       #  tripActivityIdentity:
       #    type: integer
       #    description : need for activity with additions of temp orders
-         nullable: true
+      #    nullable: true
        startDate: 
           type: string
           format: date-time
@@ -2450,6 +2541,10 @@ components:
           description :  the unique activity Id
           example: 1
           nullable: true
+        subItemId:
+          type: integer
+          nullable: true
+          example: 221
         activityName: 
           type: string
           example: 'חינוך'
@@ -2489,6 +2584,10 @@ components:
         activityId:
           type: integer
           example: 1
+        subItemId:
+          type: integer
+          nullable: true
+          example: 221
         name:
           type: string
           example: 'education'
@@ -2932,9 +3031,9 @@ components:
         openDate:
           type: string
           format: date-time
-        isVat:
-           type: boolean
-           nullable: true 
+        # isVat:
+        #    type: boolean
+        #    nullable: true 
         userInfo:
           type: string
 
@@ -3099,6 +3198,11 @@ components:
         isXemptedFromVat:
           type: integer
           example: 0
+        supplierFinStatusCode:
+          type: integer
+          format : int16
+          nullable: true
+          example: 12
         
     ItemsByTypeOrder:
       type: object

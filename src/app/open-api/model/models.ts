@@ -23,6 +23,7 @@ export * from './groupGender';
 export * from './guidanceOrder';
 export * from './hostingOrder';
 export * from './itemsByTypeOrder';
+export * from './kKLWorker';
 export * from './language';
 export * from './lodgingDetailsPerDay';
 export * from './lodgingGISFacility';

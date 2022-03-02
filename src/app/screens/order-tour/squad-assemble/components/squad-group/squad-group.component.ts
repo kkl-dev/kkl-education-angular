@@ -32,72 +32,63 @@ export class SquadGroupComponent {
   ]
 
   constructor(
-    private squadAssembleService: SquadAssembleService, private squadGroupService:SquadGroupService
+    private squadAssembleService: SquadAssembleService, private squadGroupService: SquadGroupService
   ) { }
 
   ngOnInit(): void {
     // this.onGenderChange()
     this.setSquadGroupDetails();
   }
-
-  
-  setSquadGroupDetails(){
-    let ageGroupIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='ageGroup');
-    let numAccompaniedIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAccompanied');
-    let numAdultAndYoungIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numAdultAndYoung');
-    let numDriversIndex= this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numDrivers');
-    let numGuidesIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key ==='numGuides');
-    if(this.squadAssembleService.tripInfo?.tripStart!=undefined && !this.squadAssembleService.isRouteToNewTrip ){
-      this.squadGroupService.mixedQuestions[ageGroupIndex].value= this.squadAssembleService.tripInfo.ageGroup.id.toString();
-      this.squadGroupService.mixedQuestions[numAccompaniedIndex].value= this.squadAssembleService.tripInfo.numAccompanied;
-      this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value= this.squadAssembleService.tripInfo.numAdultAndYoung;
-      this.squadGroupService.mixedQuestions[numDriversIndex].value= this.squadAssembleService.tripInfo.numDrivers;
-      this.squadGroupService.mixedQuestions[numGuidesIndex].value= this.squadAssembleService.tripInfo.numGuides;
+  setSquadGroupDetails() {
+    let ageGroupIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key === 'ageGroup');
+    let numAccompaniedIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key === 'numAccompanied');
+    let numAdultAndYoungIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key === 'numAdultAndYoung');
+    let numDriversIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key === 'numDrivers');
+    let numGuidesIndex = this.squadGroupService.mixedQuestions.findIndex(i => i.key === 'numGuides');
+    if (this.squadAssembleService.tripInfo?.tripStart != undefined && !this.squadAssembleService.isRouteToNewTrip) {
+      this.squadGroupService.mixedQuestions[ageGroupIndex].value = this.squadAssembleService.tripInfo.ageGroup.id.toString();
+      this.squadGroupService.mixedQuestions[numAccompaniedIndex].value = this.squadAssembleService.tripInfo.numAccompanied;
+      this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value = this.squadAssembleService.tripInfo.numAdultAndYoung;
+      this.squadGroupService.mixedQuestions[numDriversIndex].value = this.squadAssembleService.tripInfo.numDrivers;
+      this.squadGroupService.mixedQuestions[numGuidesIndex].value = this.squadAssembleService.tripInfo.numGuides;
     }
-    else if( this.squadAssembleService.isRouteToNewTrip){
-      this.squadGroupService.mixedQuestions[ageGroupIndex].value= undefined;
-      this.squadGroupService.mixedQuestions[numAccompaniedIndex].value= undefined;
-      this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value= undefined;
-      this.squadGroupService.mixedQuestions[numDriversIndex].value= undefined;
-      this.squadGroupService.mixedQuestions[numGuidesIndex].value= undefined;
+    else if (this.squadAssembleService.isRouteToNewTrip) {
+      this.squadGroupService.mixedQuestions[ageGroupIndex].value = undefined;
+      this.squadGroupService.mixedQuestions[numAccompaniedIndex].value = undefined;
+      this.squadGroupService.mixedQuestions[numAdultAndYoungIndex].value = undefined;
+      this.squadGroupService.mixedQuestions[numDriversIndex].value = undefined;
+      this.squadGroupService.mixedQuestions[numGuidesIndex].value = undefined;
     }
   }
-
- 
   // method to change squad assemble form
   public onGenderChange() {
     this.mixed = !this.mixed;
-
     this.$questions.next(
       this.mixed
         ? this.squadAssembleService.groupAssembleFormMixedInputs
         : this.squadAssembleService.groupAssembleFormInputs
     );
   }
-
   public logForm(form) {
-     let sum=0;    
-     if ( Number.isInteger(+form.controls.numAdultAndYoung.value)) {
-       sum= +form.controls.numAdultAndYoung.value;
+    let sum = 0;
+    if (Number.isInteger(+form.controls.numAdultAndYoung.value)) {
+      sum = +form.controls.numAdultAndYoung.value;
     }
-    if ( Number.isInteger(+form.controls.numGuides.value)) {
-      sum=sum+ (+form.controls.numGuides.value);
-   }
-   if ( Number.isInteger(+form.controls.numDrivers.value)) {
-     sum=sum+ (+form.controls.numDrivers.value);
-   }
-   if ( Number.isInteger(+form.controls.numAccompanied.value)) {
-    sum=sum+ (+form.controls.numAccompanied.value);
-  }
-  if ( Number.isInteger(+form.controls.kids.value)) {
-    sum=sum+ (+form.controls.kids.value);
-  }
-     this.list[0].value= sum;
-     this.squadAssembleService.peopleInTrip=sum;
-     localStorage.setItem('peopleInTrip',sum.toString())
+    if (Number.isInteger(+form.controls.numGuides.value)) {
+      sum = sum + (+form.controls.numGuides.value);
+    }
+    if (Number.isInteger(+form.controls.numDrivers.value)) {
+      sum = sum + (+form.controls.numDrivers.value);
+    }
+    if (Number.isInteger(+form.controls.numAccompanied.value)) {
+      sum = sum + (+form.controls.numAccompanied.value);
+    }
+    if (Number.isInteger(+form.controls.kids.value)) {
+      sum = sum + (+form.controls.kids.value);
+    }
+    this.list[0].value = sum;
+    this.squadAssembleService.peopleInTrip = sum;
+    localStorage.setItem('peopleInTrip', sum.toString())
     this.squadAssembleService.updateFormArray(form);
   }
-
-
-
 }

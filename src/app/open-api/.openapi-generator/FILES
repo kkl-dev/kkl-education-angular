@@ -36,6 +36,7 @@ model/groupGender.ts
 model/guidanceOrder.ts
 model/hostingOrder.ts
 model/itemsByTypeOrder.ts
+model/kKLWorker.ts
 model/language.ts
 model/lodgingDetailsPerDay.ts
 model/lodgingGISFacility.ts

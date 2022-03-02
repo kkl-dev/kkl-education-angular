@@ -85,13 +85,6 @@ export class SquadDetailsComponent implements OnInit {
     
     this.value$ = radioControl.valueChanges.pipe(
       distinctUntilChanged(),
-      // map((value: string) => {
-      //   value === 'domestic'
-      //     ? departmentId.disable({ emitEvent: false })
-      //     : departmentId.enable({ emitEvent: false });
-
-      //   return value;
-      // })
       map((value: string) => {
         value === '8'
           ? this.setVal()
@@ -104,7 +97,7 @@ export class SquadDetailsComponent implements OnInit {
  
    setVal(){
     let tripLocationIndex= this.squadDetailsService.questions.findIndex(i => i.key ==='tripLocation');
-    //this.squadDetailsService.questions[departmentIdIndex].value= '1';
+   
     let options =   [
       { label: 'ישראל', value: '900' },
       { label: 'חו"ל', value: '' },
@@ -121,9 +114,6 @@ export class SquadDetailsComponent implements OnInit {
        console.log('countries is: ',res);
        this.tripService.countries=res;
        this.setCountryList(res);
-      // res.forEach(element=>{
-      //   this.countriesList.push({ label: element.name, value: element.id })
-      // })
       this.squadDetailsService.questions[tripLocationIndex].inputProps.options=[];
       this.squadDetailsService.questions[tripLocationIndex].inputProps.options = this.countriesList;
      })     

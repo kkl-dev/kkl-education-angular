@@ -53,7 +53,11 @@ export class AddActivityComponent implements OnInit {
     let newActivity = {} as TripActivity;
     newActivity.activityId = this.form.value.itemId;
     newActivity.activityName = this.form.value.title;
-    newActivity.date = this.form.value.start;
+    //newActivity.date = this.form.value.start;
+    //test
+    let dateArr= this.form.value.start.split('T');
+    newActivity.date= dateArr[0];
+    //endtest 
     newActivity.description = this.form.value.title;
     newActivity.fromHour = this.form.value.start;
     newActivity.tillHour = this.form.value.end;

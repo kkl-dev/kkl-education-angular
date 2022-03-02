@@ -338,20 +338,16 @@ export class GeneralFormService {
   ) {
     questions.map((control: QuestionBase<string | number | Date | QuestionGroup>) => {
       // control.value = data[control.key]
-      let startDate = data.globalParameters.startDate;
-      let endDate = data.globalParameters.endDate;
+      //let startDate = data.globalParameters.startDate;
+      //let endDate = data.globalParameters.endDate;
       control.value = data.globalParameters[control.key];
       if (control.key == 'itemId') {
         if (data.globalParameters[control.key] != undefined)
           control.value = data.globalParameters[control.key].toString();
       }
       if (control.key == 'peopleInTrip' && !isItemOrderExist) {
-        //control.value = this.squadAssembleService.peopleInTrip;
         control.value = this.peopleInTrip;
       }
-      // if (control.key == 'startHour' && data.globalParameters[control.key].includes('T')) {
-      //   control.value = this.setTimeFormat(data.globalParameters[control.key]);
-      // }
       if (control.key == 'startHour') {
         let IfIncludeTime: boolean;
         if (data.globalParameters[control.key].includes('T'))
@@ -360,9 +356,7 @@ export class GeneralFormService {
           false
         control.value = this.setTimeFormat(data.globalParameters[control.key], IfIncludeTime);
       }
-      // if (control.key == 'endHour' && data.globalParameters[control.key].includes('T')) {
-      //   control.value = this.setTimeFormat(data.globalParameters[control.key]);
-      // }
+   
       if (control.key == 'endHour') {
         let IfIncludeTime: boolean;
         if (data.globalParameters[control.key].includes('T'))
@@ -404,9 +398,12 @@ export class GeneralFormService {
       if (control.key == 'guideName') {
         control.value = data.guideName ;
       }
-      // if (control.key == 'languageGuidance') {
-      //   control.value = data.languageGuidance += '';
-      // }
+      if (control.key == 'languageGuidance') {
+        control.value = data.languageGuidance += '';
+      }
+      if (control.key == 'totalHours') {
+        control.value = data.totalHours;
+      }
 
       if (this.isOneDayTrip && control.key == 'startDate') {
         control.value = this.changeDateFormat(this.tripInfo.trip.tripStart, 'israel');;
@@ -414,6 +411,8 @@ export class GeneralFormService {
       if (this.isOneDayTrip && control.key == 'endDate') {
         control.value = this.changeDateFormat(this.tripInfo.trip.tripStart, 'israel');;
       }
+
+
       // if (control.key === 'comments') {
       //   control.value = data;
       // }

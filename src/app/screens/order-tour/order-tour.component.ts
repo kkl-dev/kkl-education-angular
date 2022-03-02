@@ -421,7 +421,8 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
         customerFlag = true;
       else
         customerFlag = false;
-
+        if (this.squadAssembleService.kklWorker)
+        this.squadAssemble.tripInfo.kklWorker=this.squadAssembleService.kklWorker;
       //  if(scheduleForm ==true && ContactForm ==true && ageGroupForm ==true && detalisForm==true && customerFlag==true && budgetFlag==true)
       if (scheduleForm == true && ContactForm == true && ageGroupForm == true && detalisForm == true && customerFlag == true) {
 
@@ -701,21 +702,7 @@ export class OrderTourComponent implements OnInit, AfterViewInit, OnDestroy {
           
           }
         }
-        // let flag = this.syncToTripInfo();
-        // if (!flag ) {
-        //   const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-        //     width: '500px',
-        //     data: { message: 'נא מלא את שדות החובה בטופס', content: '', leftButton: 'אישור' }
-        //   })
-        //   // this.router.navigateByUrl(
-        //   //   `/education/order-tour/${this.steps[0].path}`
-        //   // );
-        //   return;
-        // }
-        // else {
-        //   if (this.tripService.isOneDayTrip == true)
-        //     return;
-        // }
+      
       }
       if (routeIndex == 2) {
         this.createTrip(this.steps[routeIndex].path);

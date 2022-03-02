@@ -54,7 +54,7 @@ export class FormInputComponent implements OnInit {
   @Output() select: EventEmitter<FormControl> = new EventEmitter()
   //@Output() groupEvent: EventEmitter<FormGroup> = new EventEmitter()
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter()
-
+  @Output() dateInputChanged: EventEmitter<any> = new EventEmitter()
   constructor(private formService: FormService, public additionsService: AdditionsService, public transportService: TransportService, public squadBudgetService: SquadBudgetService, private tripService: TripService, private squadAssemble: SquadAssembleService, public squadGroupService: SquadGroupService
     , private generalFormService: GeneralFormService) {
     console.log(this.dateOptions);
@@ -81,6 +81,10 @@ export class FormInputComponent implements OnInit {
     console.log(newDate);
 
   }
+  dateObjChanged(newDate: any) {
+    console.log(newDate);
+    this.dateInputChanged.emit(newDate)
+  }
   prevDateReceived(prevDate: any) {
     debugger;
     console.log(prevDate);
@@ -91,34 +95,7 @@ export class FormInputComponent implements OnInit {
     console.log(sleepingPlace);
   }
 
-  // setDefaultValues(name: string) {
-  //   switch (name) {
-  //     case 'dates':
-  //       if (this.tripService.sleepingDates.from != '' && this.tripService.sleepingDates.till != '') {
-  //         this.control.setValue(this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
-  //         if (typeof (Storage) !== "undefined") {
-  //           localStorage.setItem("sleepingDates", this.tripService.sleepingDates.from + '-' + this.tripService.sleepingDates.till);
-  //         }
-  //       }
-  //       else {
-  //         this.control.setValue(localStorage.getItem("sleepingDates"));
-  //       }
-  //       break;
-
-  //     case 'centerField':
-  //       if (this.tripService.centerField.id != 0) {
-  //         this.control.setValue(this.tripService.centerField.id.toString());
-  //         if (typeof (Storage) !== "undefined") {
-  //           localStorage.setItem("centerFieldId", this.tripService.centerField.id.toString());
-  //           localStorage.setItem("centerFieldName", this.tripService.centerField.name);
-  //         }
-  //       }
-  //       else {
-  //         this.control.setValue(localStorage.getItem("centerFieldId"));
-  //       }
-  //   }
-  // }
-
+  
   getName(control: AbstractControl): string | null {
     let group = <FormGroup>control.parent;
 
@@ -161,6 +138,7 @@ export class FormInputComponent implements OnInit {
     });
   }
   public onSelectChange() {
+<<<<<<< HEAD
     debugger;
     // if (this.control.parent.value.attribute) {
     //   this.tripService.getActivityLookupsByAttribute(this.control.parent.value.attribute, 'שחר גל');
@@ -230,9 +208,11 @@ export class FormInputComponent implements OnInit {
     // }
 
 
+=======
+    
+>>>>>>> 412dcd0d517e804f2277e22a93f0401e29d906fd
     this.select.emit(this.control);
-    console.log(this.control.value)
-    //this.groupEvent.emit(this.group);
+    console.log(this.control.value);
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {

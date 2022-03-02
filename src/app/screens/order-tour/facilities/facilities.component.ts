@@ -11,7 +11,7 @@ import { FacilitiesConvertingService } from 'src/app/services/facilities-convert
 import { ActivitiesService, UserService, OrderService } from 'src/app/open-api';
 import { TripService } from 'src/app/services/trip.service';
 import { QuestionSelect } from 'src/app/components/form/logic/question-select';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionAutocomplete } from 'src/app/components/form/logic/question-autocomplete';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { SquadAssembleService } from '../squad-assemble/services/squad-assemble.service';
@@ -48,6 +48,7 @@ export class FacilitiesComponent implements OnInit {
   public colors = { green: '#37C56B', blue: '#448ECD' }
   public activityIsUpComing: boolean = false;
   formArray: QuestionBase<string | number>[];
+  public form: FormGroup;
   flag: boolean= false;
   tripActivitiesArr:any=[];
   tripId: number = 0;
@@ -275,6 +276,8 @@ export class FacilitiesComponent implements OnInit {
       // this.pagesAmount = res.length + 1
       res.forEach(element => {  
         //this.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+        //this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
+        //let value= element.subItemId?element.subItemId:element.activityId
         this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
       });
       this.setFormArray();
@@ -282,10 +285,7 @@ export class FacilitiesComponent implements OnInit {
     })
   }
 
-  getAvailableFacilities1() {
-    this.facilitiesArray = this.tripService.facilitiesArray[0].facilitiesList;
-    this.facilitiesArray.map(n => { n.orderTypeCode = 7 });
-  }
+  
 
   getAvaliableSleepingOptions(){
     let start = this.squadAssembleService.tripInfofromService.trip.tripStart;
@@ -323,6 +323,7 @@ export class FacilitiesComponent implements OnInit {
   }
 
   logForm(form) {
+    this.form=form;
     console.log("facility - form: ", form);
     let obj = form.value;
     //let tripActivities = this.tripActivitiesInfoTotal;
@@ -577,13 +578,11 @@ export class FacilitiesComponent implements OnInit {
 
   onOptionSelected(e: any) {
     console.log('onOptionSelected - e', e);
+    this.form.get('activity').patchValue(e.option.label,{ emitEvent: false })
   }
   
 
-  // onOptionSelected(event: any, groupKey: string) {
-  //   console.log('onOptionSelected :', event );
-  //   console.log('onOptionSelected :', groupKey );
-  // }
+ 
 
   
   public onAutocomplete(control: FormControl) {

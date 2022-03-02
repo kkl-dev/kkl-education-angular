@@ -87,6 +87,10 @@ export class HeaderComponent implements OnInit {
 
     }
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+    // var tillDate = new Date()
+    // tillDate.setFullYear(new Date().getFullYear() + 1);
+    // tillDate.setMonth(new Date().getMonth() + 6);
+    // this.getAvailableDates(new Date().toISOString(), tillDate.toISOString());
   }
 
   getAvailableDates(fromDate: string, tillDate: string) {
@@ -139,6 +143,10 @@ export class HeaderComponent implements OnInit {
     this.tripService.updateForestCenter(this.forestCenter);
     //console.log('update ForestCenter obj =>', this.forestCenter);
     this.getAvailableDates(new Date().toISOString(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString());
+    // var tillDate = new Date()
+    // tillDate.setFullYear(new Date().getFullYear() + 1);
+    // tillDate.setMonth(new Date().getMonth() + 6);
+    // this.getAvailableDates(new Date().toISOString(), tillDate.toISOString());
   }
 
   // getDaysArray(start: any, end: any) {

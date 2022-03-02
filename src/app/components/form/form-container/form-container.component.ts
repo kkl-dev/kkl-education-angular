@@ -42,7 +42,7 @@ export class FormContainerComponent implements OnInit {
     groupInputs?: ElementRef;
   };
   @Output() optionSelected: EventEmitter<any> = new EventEmitter();
-
+  @Output() dateInputChanged: EventEmitter<any> = new EventEmitter()
   @Output() register: EventEmitter<FormGroup> = new EventEmitter();
   @Output() autocomplete: EventEmitter<FormControl> = new EventEmitter();
   //@Output() optionSelected: EventEmitter<any> = new EventEmitter();
@@ -99,7 +99,10 @@ export class FormContainerComponent implements OnInit {
     this.form.enable();
   }
 
- 
+  dateObjChanged(newDate: any) {
+    console.log(newDate);
+    this.dateInputChanged.emit(newDate)
+  }
 
   public onAutocomplete(control) {
     console.log("onAutocomplete: ", control);
@@ -107,19 +110,21 @@ export class FormContainerComponent implements OnInit {
   }
   
   public onOptionSelected(event: MatAutocompleteSelectedEvent) {
-     //console.log('I am option selected');
-    // const autocomplete: QuestionAutocomplete = this.group.questions.find(
-    //   (q) => q instanceof QuestionAutocomplete
-    // );
-    // const option = autocomplete.inputProps.options.find(
-    //   (opt) => opt.value === event.option.value
-    // );
+  //   console.log('I am option selected');
+  
+  //  const autocomplete: any = this.questions.find(
+  //    i=>i.controlType==='autocomplete'
+  //  );
+  //  const option = autocomplete.inputProps.options.find(
+  //    (opt) => opt.value === event.option.value
+  //  );
 
 
-    // console.log(option);
+  //   console.log(option);
 
-    // this.optionSelected.emit({ key: autocomplete.key, option });
-  }
+  //  this.optionSelected.emit({ key: autocomplete.key, option });
+  
+ }
 
  
 }
