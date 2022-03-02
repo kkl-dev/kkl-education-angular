@@ -280,6 +280,15 @@ export class FacilitiesComponent implements OnInit {
         //let value= element.subItemId?element.subItemId:element.activityId
         this.facilitiesService.tripActivitiesShow.push({ label: element.name, value: element.activityId.toString() })
       });
+      // console.log("this.facilitiesService.tripActivitiesShow",this.facilitiesService.tripActivitiesShow)
+
+      // const lookup = this.facilitiesService.tripActivitiesShow.reduce((a, e) => {
+      //   a[e.value] = ++a[e.value] || 0;
+      //   return a;
+      // }, {});
+      
+      // console.log(this.facilitiesService.tripActivitiesShow.filter(e => lookup[e.value]));
+
       this.setFormArray();
 
     })
