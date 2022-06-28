@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl:'http://knf-appl-dev3/EducationApiDev',
-  //apiUrl:'https://kkl-education-api-dev.azurewebsites.net'
+  // apiUrl:'https://kkl-education-api-dev.azurewebsites.net'
 };
 
 /*
